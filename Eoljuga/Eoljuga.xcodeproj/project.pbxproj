@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		14826C242923844A00087151 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C232923844A00087151 /* Coordinator.swift */; };
-		14826C282923869D00087151 /* TabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C272923869D00087151 /* TabCoordinator.swift */; };
+		14826C282923869D00087151 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C272923869D00087151 /* TabBarCoordinator.swift */; };
 		14826C2A2923A20D00087151 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C292923A20D00087151 /* AuthCoordinator.swift */; };
 		14826C2C2923A4C200087151 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C2B2923A4C200087151 /* AppCoordinator.swift */; };
 		14826C312923AA7300087151 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C302923AA7300087151 /* HomeViewController.swift */; };
@@ -56,7 +56,7 @@
 
 /* Begin PBXFileReference section */
 		14826C232923844A00087151 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
-		14826C272923869D00087151 /* TabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabCoordinator.swift; sourceTree = "<group>"; };
+		14826C272923869D00087151 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		14826C292923A20D00087151 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		14826C2B2923A4C200087151 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		14826C302923AA7300087151 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -119,7 +119,7 @@
 			children = (
 				14826C232923844A00087151 /* Coordinator.swift */,
 				14826C2B2923A4C200087151 /* AppCoordinator.swift */,
-				14826C272923869D00087151 /* TabCoordinator.swift */,
+				14826C272923869D00087151 /* TabBarCoordinator.swift */,
 				14826C292923A20D00087151 /* AuthCoordinator.swift */,
 			);
 			path = Coordinator;
@@ -397,7 +397,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14826C282923869D00087151 /* TabCoordinator.swift in Sources */,
+				14826C282923869D00087151 /* TabBarCoordinator.swift in Sources */,
 				14826C332923AACB00087151 /* BookmarkViewController.swift in Sources */,
 				14826C242923844A00087151 /* Coordinator.swift in Sources */,
 				B53EC9FF29236FCE00B87A55 /* ViewController.swift in Sources */,

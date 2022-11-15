@@ -8,7 +8,11 @@
 import UIKit
 
 protocol AuthCoordinatorProtocol: Coordinator {
-    func toGithubWebView()
+    func toGithubWebView() // github WebView
+    // to 회원가입 - 도메인 선택
+    // to 회원가입 - 캠퍼ID 선택
+    // to 회원가입 - 블로그 선택
+    // to 홈 화면
 }
 
 final class AuthCoordinator: AuthCoordinatorProtocol {

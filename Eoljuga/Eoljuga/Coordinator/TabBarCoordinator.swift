@@ -45,14 +45,14 @@ enum TabBarPage {
     }
 }
 
-protocol TabCoordinatorProtocol: Coordinator {
+protocol TabBarCoordinatorProtocol: Coordinator {
     var tabBarController: UITabBarController { get set }
     func selectPage(_ page: TabBarPage)
     func setSelectedIndex(_ index: Int)
     func currentPage() -> TabBarPage?
 }
 
-class TabCoordinator: NSObject, TabCoordinatorProtocol {
+class TabBarCoordinator: NSObject, TabBarCoordinatorProtocol {
     var childCoordinator: [Coordinator] = []
     var navigationController: UINavigationController
     var tabBarController: UITabBarController
@@ -121,5 +121,5 @@ class TabCoordinator: NSObject, TabCoordinatorProtocol {
     }
 }
 
-extension TabCoordinator: UITabBarControllerDelegate {
+extension TabBarCoordinator: UITabBarControllerDelegate {
 }
