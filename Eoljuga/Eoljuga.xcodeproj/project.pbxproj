@@ -25,6 +25,8 @@
 		B53ECA3B2923736400B87A55 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = B53ECA3A2923736400B87A55 /* FirebaseFunctions */; };
 		B53ECA3D2923736400B87A55 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = B53ECA3C2923736400B87A55 /* FirebaseMessaging */; };
 		B53ECA3F2923736400B87A55 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = B53ECA3E2923736400B87A55 /* FirebaseStorage */; };
+		B53ECA412923741600B87A55 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B53ECA402923741600B87A55 /* GoogleService-Info.plist */; };
+		B53ECA43292375AF00B87A55 /* Service-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B53ECA42292375AF00B87A55 /* Service-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,8 @@
 		B53ECA1D29236FCF00B87A55 /* EoljugaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EoljugaUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B53ECA2A2923704600B87A55 /* .swiftlint.auto.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.auto.yml; sourceTree = "<group>"; };
 		B53ECA2B2923704700B87A55 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		B53ECA402923741600B87A55 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B53ECA42292375AF00B87A55 /* Service-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Service-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +101,8 @@
 		B53EC9EE29236FCE00B87A55 = {
 			isa = PBXGroup;
 			children = (
+				B53ECA42292375AF00B87A55 /* Service-Info.plist */,
+				B53ECA402923741600B87A55 /* GoogleService-Info.plist */,
 				B53ECA2A2923704600B87A55 /* .swiftlint.auto.yml */,
 				B53ECA2B2923704700B87A55 /* .swiftlint.yml */,
 				B53EC9F929236FCE00B87A55 /* Eoljuga */,
@@ -268,9 +274,11 @@
 			files = (
 				B53ECA2D2923704700B87A55 /* .swiftlint.yml in Resources */,
 				B53ECA2C2923704700B87A55 /* .swiftlint.auto.yml in Resources */,
+				B53ECA43292375AF00B87A55 /* Service-Info.plist in Resources */,
 				B53ECA0729236FCF00B87A55 /* LaunchScreen.storyboard in Resources */,
 				B53ECA0429236FCF00B87A55 /* Assets.xcassets in Resources */,
 				B53ECA0229236FCE00B87A55 /* Main.storyboard in Resources */,
+				B53ECA412923741600B87A55 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
