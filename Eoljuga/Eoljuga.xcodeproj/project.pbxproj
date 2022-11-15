@@ -11,6 +11,9 @@
 		14826C282923869D00087151 /* TabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C272923869D00087151 /* TabCoordinator.swift */; };
 		14826C2A2923A20D00087151 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C292923A20D00087151 /* AuthCoordinator.swift */; };
 		14826C2C2923A4C200087151 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C2B2923A4C200087151 /* AppCoordinator.swift */; };
+		14826C312923AA7300087151 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C302923AA7300087151 /* HomeViewController.swift */; };
+		14826C332923AACB00087151 /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C322923AACB00087151 /* BookmarkViewController.swift */; };
+		14826C352923AB0300087151 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C342923AB0300087151 /* MyPageViewController.swift */; };
 		14FC3E482923824C0095AE68 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14FC3E472923824C0095AE68 /* GoogleService-Info.plist */; };
 		14FC3E4A292382530095AE68 /* Service-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14FC3E49292382530095AE68 /* Service-Info.plist */; };
 		B53EC9FB29236FCE00B87A55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53EC9FA29236FCE00B87A55 /* AppDelegate.swift */; };
@@ -55,6 +58,9 @@
 		14826C272923869D00087151 /* TabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabCoordinator.swift; sourceTree = "<group>"; };
 		14826C292923A20D00087151 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		14826C2B2923A4C200087151 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		14826C302923AA7300087151 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		14826C322923AACB00087151 /* BookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
+		14826C342923AB0300087151 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		14FC3E472923824C0095AE68 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		14FC3E49292382530095AE68 /* Service-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Service-Info.plist"; path = "../../../../../Downloads/Service-Info.plist"; sourceTree = "<group>"; };
 		B53EC9F729236FCE00B87A55 /* Eoljuga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eoljuga.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,8 +133,35 @@
 		14826C262923846900087151 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				14826C302923AA7300087151 /* HomeViewController.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		14826C2D2923AA5600087151 /* Tab */ = {
+			isa = PBXGroup;
+			children = (
+				14826C2F2923AA6500087151 /* MyPage */,
+				14826C2E2923AA5F00087151 /* Bookmark */,
+				14826C262923846900087151 /* Home */,
+			);
+			path = Tab;
+			sourceTree = "<group>";
+		};
+		14826C2E2923AA5F00087151 /* Bookmark */ = {
+			isa = PBXGroup;
+			children = (
+				14826C322923AACB00087151 /* BookmarkViewController.swift */,
+			);
+			path = Bookmark;
+			sourceTree = "<group>";
+		};
+		14826C2F2923AA6500087151 /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				14826C342923AB0300087151 /* MyPageViewController.swift */,
+			);
+			path = MyPage;
 			sourceTree = "<group>";
 		};
 		B53EC9EE29236FCE00B87A55 = {
@@ -162,7 +195,7 @@
 				B53EC9FC29236FCE00B87A55 /* SceneDelegate.swift */,
 				B53EC9FE29236FCE00B87A55 /* ViewController.swift */,
 				14826C222923844100087151 /* Coordinator */,
-				14826C262923846900087151 /* Home */,
+				14826C2D2923AA5600087151 /* Tab */,
 				14826C252923846500087151 /* Auth */,
 				B53ECA0029236FCE00B87A55 /* Main.storyboard */,
 				B53ECA0329236FCF00B87A55 /* Assets.xcassets */,
@@ -362,8 +395,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				14826C282923869D00087151 /* TabCoordinator.swift in Sources */,
+				14826C332923AACB00087151 /* BookmarkViewController.swift in Sources */,
 				14826C242923844A00087151 /* Coordinator.swift in Sources */,
 				B53EC9FF29236FCE00B87A55 /* ViewController.swift in Sources */,
+				14826C312923AA7300087151 /* HomeViewController.swift in Sources */,
+				14826C352923AB0300087151 /* MyPageViewController.swift in Sources */,
 				B53EC9FB29236FCE00B87A55 /* AppDelegate.swift in Sources */,
 				14826C2A2923A20D00087151 /* AuthCoordinator.swift in Sources */,
 				B53EC9FD29236FCE00B87A55 /* SceneDelegate.swift in Sources */,

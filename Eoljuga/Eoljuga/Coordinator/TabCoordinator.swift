@@ -36,3 +36,73 @@ protocol TabCoordinatorProtocol: Coordinator {
     func setSelectedIndex(_ index: Int)
     func currentPage() -> TabBarPage?
 }
+
+class TabCoordinator: NSObject, TabCoordinatorProtocol {
+    var childCoordinator: [Coordinator] = []
+    var navigationCotroller: UINavigationController
+    var tabBarController: UITabBarController
+    var finishDelegate: CoordinatorFinishDelegate?
+    var type: CoordinatorType = .tab
+
+    required init(_ navigationController: UINavigationController) {
+        self.navigationCotroller = navigationController
+        tabBarController = UITabBarController()
+    }
+
+    func start() {
+        let pages: [TabBarPage] = [.myPage, .bookmark, .home]
+            .sorted(by: { $0.pageOrderNumber() < $1.pageOrderNumber() })
+
+        let controllers: [UINavigationController] = pages.map({ getTabController($0) })
+
+        prepareTabBarController(withTabControllers: controllers)
+    }
+
+    func selectPage(_ page: TabBarPage) {
+        tabBarController.selectedIndex = page.pageOrderNumber()
+    }
+
+    func setSelectedIndex(_ index: Int) {
+        guard let page = TabBarPage.init(index: index) else { return }
+        tabBarController.selectedIndex = page.pageOrderNumber()
+    }
+
+    func currentPage() -> TabBarPage? {
+        TabBarPage.init(index: tabBarController.selectedIndex)
+    }
+
+    private func prepareTabBarController(withTabControllers tabBarControllers: [UIViewController]) {
+        self.tabBarController.delegate = self
+        self.tabBarController.setViewControllers(tabBarControllers, animated: true)
+//        self.tabBarController.selectedIndex = TabBarPage
+        self.tabBarController.tabBar.isTranslucent = false
+        navigationCotroller.viewControllers = [tabBarController]
+    }
+
+    private func getTabController(_ page: TabBarPage) -> UINavigationController {
+        let navigationController = UINavigationController()
+        navigationController.setNavigationBarHidden(false, animated: false)
+        navigationController.tabBarItem = UITabBarItem(
+            title: "home",
+            image: nil,
+            tag: page.pageOrderNumber()
+        )
+
+        switch page {
+        case .home:
+            let homeViewController = HomeViewController()
+            self.navigationCotroller.pushViewController(homeViewController, animated: true)
+        case .bookmark:
+            let bookmarkViewController = BookmarkViewController()
+            self.navigationCotroller.pushViewController(bookmarkViewController, animated: true)
+        case .myPage:
+            let myPageViewController = MyPageViewController()
+            self.navigationCotroller.pushViewController(myPageViewController, animated: true)
+        }
+
+        return navigationController
+    }
+}
+
+extension TabCoordinator: UITabBarControllerDelegate {
+}
