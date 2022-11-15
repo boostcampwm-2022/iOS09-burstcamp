@@ -8,7 +8,8 @@
 import UIKit
 
 protocol AuthCoordinatorProtocol: Coordinator {
-    func toGithubWebView() // github WebView
+    func showGithubWebView()
+    // TODO: 지우기
     // to 회원가입 - 도메인 선택
     // to 회원가입 - 캠퍼ID 선택
     // to 회원가입 - 블로그 선택
@@ -17,7 +18,7 @@ protocol AuthCoordinatorProtocol: Coordinator {
 
 final class AuthCoordinator: AuthCoordinatorProtocol {
 
-    var childCoordinator: [Coordinator] = []
+    var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     weak var finishDelegate: CoordinatorFinishDelegate?
     var type: CoordinatorType = .auth
@@ -31,6 +32,6 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
         navigationController.pushViewController(loginViewController, animated: true)
     }
 
-    func toGithubWebView() {
+    func showGithubWebView() {
     }
 }

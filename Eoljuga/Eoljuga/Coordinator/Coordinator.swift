@@ -10,7 +10,7 @@ import UIKit
 enum CoordinatorType {
     case app
     case auth
-    case tab
+    case tabBar
 }
 
 protocol CoordinatorFinishDelegate: AnyObject {
@@ -18,7 +18,7 @@ protocol CoordinatorFinishDelegate: AnyObject {
 }
 
 protocol Coordinator: AnyObject {
-    var childCoordinator: [Coordinator] { get set }
+    var childCoordinators: [Coordinator] { get set }
     var navigationController: UINavigationController { get set }
     var finishDelegate: CoordinatorFinishDelegate? { get set }
     var type: CoordinatorType { get }
@@ -30,7 +30,7 @@ protocol Coordinator: AnyObject {
 
 extension Coordinator {
     func finish() {
-        childCoordinator.removeAll()
+        childCoordinators.removeAll()
         finishDelegate?.coordinatorDidFinish(childCoordinator: self)
     }
 }

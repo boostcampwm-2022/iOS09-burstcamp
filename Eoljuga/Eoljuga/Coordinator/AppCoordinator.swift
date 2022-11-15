@@ -8,7 +8,7 @@
 import UIKit
 
 final class AppCoordinator: Coordinator {
-    var childCoordinator: [Coordinator] = []
+    var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     weak var finishDelegate: CoordinatorFinishDelegate?
     var type: CoordinatorType = .app
@@ -18,26 +18,22 @@ final class AppCoordinator: Coordinator {
     }
 
     func start() {
-        if isLogin() {
-            toTabBar()
-        } else {
-            toAuth()
-        }
+        return isLoggedIn() ? showTabBarFlow() : showAuthFlow()
     }
 
-    func isLogin() -> Bool {
+    func isLoggedIn() -> Bool {
         return true
     }
 
-    func toTabBar() {
+    func showTabBarFlow() {
         let tabCoordinator = TabBarCoordinator(navigationController)
-        childCoordinator.append(tabCoordinator)
+        childCoordinators.append(tabCoordinator)
         tabCoordinator.start()
     }
 
-    func toAuth() {
+    func showAuthFlow() {
         let authCoordinator = AuthCoordinator(navigationController)
-        childCoordinator.append(authCoordinator)
+        childCoordinators.append(authCoordinator)
         authCoordinator.start()
     }
 }

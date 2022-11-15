@@ -11,7 +11,7 @@ class BookmarkViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Book Mark")
+        // TODO: 지우기
         view.backgroundColor = .systemBlue
         // Do any additional setup after loading the view.
     }

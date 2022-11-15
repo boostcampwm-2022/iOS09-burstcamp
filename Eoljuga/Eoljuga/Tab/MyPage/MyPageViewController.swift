@@ -11,7 +11,7 @@ class MyPageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("My Page")
+        // TODO: 지우기
         view.backgroundColor = .systemBrown
         // Do any additional setup after loading the view.
     }

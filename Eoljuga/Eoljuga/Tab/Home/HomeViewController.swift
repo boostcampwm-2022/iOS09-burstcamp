@@ -11,7 +11,7 @@ final class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Home")
+        // TODO: 지우기
         view.backgroundColor = .systemPink
     }
 }

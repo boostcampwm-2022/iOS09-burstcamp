@@ -27,12 +27,9 @@ enum TabBarPage {
 
     func pageTitle() -> String {
         switch self {
-        case .home:
-            return "홈"
-        case .bookmark:
-            return "모아보기"
-        case .myPage:
-            return "마이페이지"
+        case .home: return "홈"
+        case .bookmark: return "모아보기"
+        case .myPage: return "마이페이지"
         }
     }
 
@@ -53,11 +50,11 @@ protocol TabBarCoordinatorProtocol: Coordinator {
 }
 
 class TabBarCoordinator: NSObject, TabBarCoordinatorProtocol {
-    var childCoordinator: [Coordinator] = []
+    var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     var tabBarController: UITabBarController
     weak var finishDelegate: CoordinatorFinishDelegate?
-    var type: CoordinatorType = .tab
+    var type: CoordinatorType = .tabBar
 
     required init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -91,13 +88,14 @@ class TabBarCoordinator: NSObject, TabBarCoordinatorProtocol {
         tabBarController.setViewControllers(tabControllers, animated: true)
         tabBarController.selectedIndex = TabBarPage.home.pageOrderNumber()
         tabBarController.tabBar.backgroundColor = .white
-        print(TabBarPage.home.pageOrderNumber())
+        // TODO: TabBar 설정 각자 View에서 처리
         tabBarController.tabBar.isTranslucent = false
         navigationController.viewControllers = [tabBarController]
     }
 
     private func getTabController(_ page: TabBarPage) -> UINavigationController {
         let navigationController = UINavigationController()
+        // TODO: NavigationBar 설정 각자 View에서 처리
         navigationController.setNavigationBarHidden(false, animated: false)
         navigationController.tabBarItem = UITabBarItem(
             title: page.pageTitle(),
