@@ -11,7 +11,7 @@ protocol AuthCoordinatorProtocol: Coordinator {
     func toGithubWebView()
 }
 
-final class AuthoCoordinator: AuthCoordinatorProtocol {
+final class AuthCoordinator: AuthCoordinatorProtocol {
 
     var childCoordinator: [Coordinator] = []
     var navigationCotroller: UINavigationController
