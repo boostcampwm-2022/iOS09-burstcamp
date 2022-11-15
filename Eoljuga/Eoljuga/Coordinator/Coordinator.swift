@@ -9,6 +9,8 @@ import UIKit
 
 enum CoordinatorType {
     case app
+    case auth
+    case tab
 }
 
 protocol CoordinatorFinishDelegate: AnyObject {

@@ -30,7 +30,7 @@ enum TabBarPage {
     }
 }
 
-protocol TabCoordinator: Coordinator {
+protocol TabCoordinatorProtocol: Coordinator {
     var tabBarController: UITabBarController { get set }
     func selectPage(_ page: TabBarPage)
     func setSelectedIndex(_ index: Int)
