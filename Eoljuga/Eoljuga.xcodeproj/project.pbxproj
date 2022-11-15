@@ -18,6 +18,13 @@
 		B53ECA1E29236FCF00B87A55 /* EoljugaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53ECA1D29236FCF00B87A55 /* EoljugaUITestsLaunchTests.swift */; };
 		B53ECA2C2923704700B87A55 /* .swiftlint.auto.yml in Resources */ = {isa = PBXBuildFile; fileRef = B53ECA2A2923704600B87A55 /* .swiftlint.auto.yml */; };
 		B53ECA2D2923704700B87A55 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B53ECA2B2923704700B87A55 /* .swiftlint.yml */; };
+		B53ECA312923727100B87A55 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B53ECA302923727100B87A55 /* SnapKit */; };
+		B53ECA342923729700B87A55 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = B53ECA332923729700B87A55 /* Then */; };
+		B53ECA372923736400B87A55 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B53ECA362923736400B87A55 /* FirebaseAuth */; };
+		B53ECA392923736400B87A55 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B53ECA382923736400B87A55 /* FirebaseFirestore */; };
+		B53ECA3B2923736400B87A55 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = B53ECA3A2923736400B87A55 /* FirebaseFunctions */; };
+		B53ECA3D2923736400B87A55 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = B53ECA3C2923736400B87A55 /* FirebaseMessaging */; };
+		B53ECA3F2923736400B87A55 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = B53ECA3E2923736400B87A55 /* FirebaseStorage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +67,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B53ECA3D2923736400B87A55 /* FirebaseMessaging in Frameworks */,
+				B53ECA312923727100B87A55 /* SnapKit in Frameworks */,
+				B53ECA392923736400B87A55 /* FirebaseFirestore in Frameworks */,
+				B53ECA3B2923736400B87A55 /* FirebaseFunctions in Frameworks */,
+				B53ECA3F2923736400B87A55 /* FirebaseStorage in Frameworks */,
+				B53ECA372923736400B87A55 /* FirebaseAuth in Frameworks */,
+				B53ECA342923729700B87A55 /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,6 +164,15 @@
 			dependencies = (
 			);
 			name = Eoljuga;
+			packageProductDependencies = (
+				B53ECA302923727100B87A55 /* SnapKit */,
+				B53ECA332923729700B87A55 /* Then */,
+				B53ECA362923736400B87A55 /* FirebaseAuth */,
+				B53ECA382923736400B87A55 /* FirebaseFirestore */,
+				B53ECA3A2923736400B87A55 /* FirebaseFunctions */,
+				B53ECA3C2923736400B87A55 /* FirebaseMessaging */,
+				B53ECA3E2923736400B87A55 /* FirebaseStorage */,
+			);
 			productName = Eoljuga;
 			productReference = B53EC9F729236FCE00B87A55 /* Eoljuga.app */;
 			productType = "com.apple.product-type.application";
@@ -222,6 +245,11 @@
 				Base,
 			);
 			mainGroup = B53EC9EE29236FCE00B87A55;
+			packageReferences = (
+				B53ECA2F2923727100B87A55 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				B53ECA322923729700B87A55 /* XCRemoteSwiftPackageReference "Then" */,
+				B53ECA352923736400B87A55 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = B53EC9F829236FCE00B87A55 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -635,6 +663,71 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B53ECA2F2923727100B87A55 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 5.6.0;
+			};
+		};
+		B53ECA322923729700B87A55 /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+		B53ECA352923736400B87A55 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 9.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B53ECA302923727100B87A55 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B53ECA2F2923727100B87A55 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		B53ECA332923729700B87A55 /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B53ECA322923729700B87A55 /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
+		};
+		B53ECA362923736400B87A55 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B53ECA352923736400B87A55 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		B53ECA382923736400B87A55 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B53ECA352923736400B87A55 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		B53ECA3A2923736400B87A55 /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B53ECA352923736400B87A55 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
+		};
+		B53ECA3C2923736400B87A55 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B53ECA352923736400B87A55 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		B53ECA3E2923736400B87A55 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B53ECA352923736400B87A55 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B53EC9EF29236FCE00B87A55 /* Project object */;
 }
