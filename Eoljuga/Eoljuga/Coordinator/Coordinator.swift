@@ -19,7 +19,7 @@ protocol CoordinatorFinishDelegate: AnyObject {
 
 protocol Coordinator: AnyObject {
     var childCoordinator: [Coordinator] { get set }
-    var navigationCotroller: UINavigationController { get set }
+    var navigationController: UINavigationController { get set }
     var finishDelegate: CoordinatorFinishDelegate? { get set }
     var type: CoordinatorType { get }
 

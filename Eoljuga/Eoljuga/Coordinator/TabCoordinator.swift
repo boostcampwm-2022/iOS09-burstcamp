@@ -14,10 +14,25 @@ enum TabBarPage {
 
     init?(index: Int) {
         switch index {
-        case 0: self = .home
-        case 1: self = .bookmark
-        case 2: self = .myPage
-        default: return nil
+        case 0:
+            self = .home
+        case 1:
+            self = .bookmark
+        case 2:
+            self = .myPage
+        default:
+            return nil
+        }
+    }
+
+    func pageTitle() -> String {
+        switch self {
+        case .home:
+            return "홈"
+        case .bookmark:
+            return "모아보기"
+        case .myPage:
+            return "마이페이지"
         }
     }
 
@@ -39,13 +54,13 @@ protocol TabCoordinatorProtocol: Coordinator {
 
 class TabCoordinator: NSObject, TabCoordinatorProtocol {
     var childCoordinator: [Coordinator] = []
-    var navigationCotroller: UINavigationController
+    var navigationController: UINavigationController
     var tabBarController: UITabBarController
-    var finishDelegate: CoordinatorFinishDelegate?
+    weak var finishDelegate: CoordinatorFinishDelegate?
     var type: CoordinatorType = .tab
 
     required init(_ navigationController: UINavigationController) {
-        self.navigationCotroller = navigationController
+        self.navigationController = navigationController
         tabBarController = UITabBarController()
     }
 
@@ -68,22 +83,24 @@ class TabCoordinator: NSObject, TabCoordinatorProtocol {
     }
 
     func currentPage() -> TabBarPage? {
-        TabBarPage.init(index: tabBarController.selectedIndex)
+        return TabBarPage.init(index: tabBarController.selectedIndex)
     }
 
-    private func prepareTabBarController(withTabControllers tabBarControllers: [UIViewController]) {
-        self.tabBarController.delegate = self
-        self.tabBarController.setViewControllers(tabBarControllers, animated: true)
-//        self.tabBarController.selectedIndex = TabBarPage
-        self.tabBarController.tabBar.isTranslucent = false
-        navigationCotroller.viewControllers = [tabBarController]
+    private func prepareTabBarController(withTabControllers tabControllers: [UIViewController]) {
+        tabBarController.delegate = self
+        tabBarController.setViewControllers(tabControllers, animated: true)
+        tabBarController.selectedIndex = TabBarPage.home.pageOrderNumber()
+        tabBarController.tabBar.backgroundColor = .white
+        print(TabBarPage.home.pageOrderNumber())
+        tabBarController.tabBar.isTranslucent = false
+        navigationController.viewControllers = [tabBarController]
     }
 
     private func getTabController(_ page: TabBarPage) -> UINavigationController {
         let navigationController = UINavigationController()
         navigationController.setNavigationBarHidden(false, animated: false)
         navigationController.tabBarItem = UITabBarItem(
-            title: "home",
+            title: page.pageTitle(),
             image: nil,
             tag: page.pageOrderNumber()
         )
@@ -91,13 +108,13 @@ class TabCoordinator: NSObject, TabCoordinatorProtocol {
         switch page {
         case .home:
             let homeViewController = HomeViewController()
-            self.navigationCotroller.pushViewController(homeViewController, animated: true)
+            navigationController.pushViewController(homeViewController, animated: true)
         case .bookmark:
             let bookmarkViewController = BookmarkViewController()
-            self.navigationCotroller.pushViewController(bookmarkViewController, animated: true)
+            navigationController.pushViewController(bookmarkViewController, animated: true)
         case .myPage:
             let myPageViewController = MyPageViewController()
-            self.navigationCotroller.pushViewController(myPageViewController, animated: true)
+            navigationController.pushViewController(myPageViewController, animated: true)
         }
 
         return navigationController

@@ -9,14 +9,26 @@ import UIKit
 
 final class AppCoordinator: Coordinator {
     var childCoordinator: [Coordinator] = []
-    var navigationCotroller: UINavigationController
+    var navigationController: UINavigationController
     weak var finishDelegate: CoordinatorFinishDelegate?
     var type: CoordinatorType = .app
 
     init(_ navigationController: UINavigationController) {
-        self.navigationCotroller = navigationController
+        self.navigationController = navigationController
     }
 
     func start() {
+        if isLogin() {
+            toTabBar()
+        }
+    }
+
+    func isLogin() -> Bool {
+        return true
+    }
+
+    func toTabBar() {
+        let tabCoordinator = TabCoordinator(navigationController)
+        tabCoordinator.start()
     }
 }

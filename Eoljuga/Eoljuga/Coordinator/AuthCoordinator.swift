@@ -14,12 +14,12 @@ protocol AuthCoordinatorProtocol: Coordinator {
 final class AuthCoordinator: AuthCoordinatorProtocol {
 
     var childCoordinator: [Coordinator] = []
-    var navigationCotroller: UINavigationController
+    var navigationController: UINavigationController
     weak var finishDelegate: CoordinatorFinishDelegate?
     var type: CoordinatorType = .auth
 
     init(_ navigationController: UINavigationController) {
-        self.navigationCotroller = navigationController
+        self.navigationController = navigationController
     }
 
     func start() {
