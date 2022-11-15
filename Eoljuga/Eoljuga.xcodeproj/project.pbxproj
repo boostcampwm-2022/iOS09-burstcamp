@@ -14,6 +14,7 @@
 		14826C312923AA7300087151 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C302923AA7300087151 /* HomeViewController.swift */; };
 		14826C332923AACB00087151 /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C322923AACB00087151 /* BookmarkViewController.swift */; };
 		14826C352923AB0300087151 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C342923AB0300087151 /* MyPageViewController.swift */; };
+		14826C372923B49100087151 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C362923B49100087151 /* LoginViewController.swift */; };
 		14FC3E482923824C0095AE68 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14FC3E472923824C0095AE68 /* GoogleService-Info.plist */; };
 		14FC3E4A292382530095AE68 /* Service-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14FC3E49292382530095AE68 /* Service-Info.plist */; };
 		B53EC9FB29236FCE00B87A55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53EC9FA29236FCE00B87A55 /* AppDelegate.swift */; };
@@ -61,6 +62,7 @@
 		14826C302923AA7300087151 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		14826C322923AACB00087151 /* BookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
 		14826C342923AB0300087151 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		14826C362923B49100087151 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		14FC3E472923824C0095AE68 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		14FC3E49292382530095AE68 /* Service-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Service-Info.plist"; path = "../../../../../Downloads/Service-Info.plist"; sourceTree = "<group>"; };
 		B53EC9F729236FCE00B87A55 /* Eoljuga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eoljuga.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +128,7 @@
 		14826C252923846500087151 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				14826C362923B49100087151 /* LoginViewController.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 				14826C2A2923A20D00087151 /* AuthCoordinator.swift in Sources */,
 				B53EC9FD29236FCE00B87A55 /* SceneDelegate.swift in Sources */,
 				14826C2C2923A4C200087151 /* AppCoordinator.swift in Sources */,
+				14826C372923B49100087151 /* LoginViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

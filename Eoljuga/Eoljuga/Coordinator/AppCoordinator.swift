@@ -20,6 +20,8 @@ final class AppCoordinator: Coordinator {
     func start() {
         if isLogin() {
             toTabBar()
+        } else {
+            toAuth()
         }
     }
 
@@ -29,6 +31,13 @@ final class AppCoordinator: Coordinator {
 
     func toTabBar() {
         let tabCoordinator = TabCoordinator(navigationController)
+        childCoordinator.append(tabCoordinator)
         tabCoordinator.start()
+    }
+
+    func toAuth() {
+        let authCoordinator = AuthCoordinator(navigationController)
+        childCoordinator.append(authCoordinator)
+        authCoordinator.start()
     }
 }

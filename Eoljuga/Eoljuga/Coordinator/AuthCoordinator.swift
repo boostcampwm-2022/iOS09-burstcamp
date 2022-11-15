@@ -23,6 +23,8 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
     }
 
     func start() {
+        let loginViewController = LoginViewController()
+        navigationController.pushViewController(loginViewController, animated: true)
     }
 
     func toGithubWebView() {
