@@ -1,0 +1,601 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B53EC9FB29236FCE00B87A55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53EC9FA29236FCE00B87A55 /* AppDelegate.swift */; };
+		B53EC9FD29236FCE00B87A55 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53EC9FC29236FCE00B87A55 /* SceneDelegate.swift */; };
+		B53EC9FF29236FCE00B87A55 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53EC9FE29236FCE00B87A55 /* ViewController.swift */; };
+		B53ECA0229236FCE00B87A55 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B53ECA0029236FCE00B87A55 /* Main.storyboard */; };
+		B53ECA0429236FCF00B87A55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B53ECA0329236FCF00B87A55 /* Assets.xcassets */; };
+		B53ECA0729236FCF00B87A55 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B53ECA0529236FCF00B87A55 /* LaunchScreen.storyboard */; };
+		B53ECA1229236FCF00B87A55 /* EoljugaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53ECA1129236FCF00B87A55 /* EoljugaTests.swift */; };
+		B53ECA1C29236FCF00B87A55 /* EoljugaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53ECA1B29236FCF00B87A55 /* EoljugaUITests.swift */; };
+		B53ECA1E29236FCF00B87A55 /* EoljugaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53ECA1D29236FCF00B87A55 /* EoljugaUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B53ECA0E29236FCF00B87A55 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B53EC9EF29236FCE00B87A55 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B53EC9F629236FCE00B87A55;
+			remoteInfo = Eoljuga;
+		};
+		B53ECA1829236FCF00B87A55 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B53EC9EF29236FCE00B87A55 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B53EC9F629236FCE00B87A55;
+			remoteInfo = Eoljuga;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B53EC9F729236FCE00B87A55 /* Eoljuga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eoljuga.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B53EC9FA29236FCE00B87A55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B53EC9FC29236FCE00B87A55 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		B53EC9FE29236FCE00B87A55 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B53ECA0129236FCE00B87A55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B53ECA0329236FCF00B87A55 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B53ECA0629236FCF00B87A55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B53ECA0829236FCF00B87A55 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B53ECA0D29236FCF00B87A55 /* EoljugaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EoljugaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B53ECA1129236FCF00B87A55 /* EoljugaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EoljugaTests.swift; sourceTree = "<group>"; };
+		B53ECA1729236FCF00B87A55 /* EoljugaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EoljugaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B53ECA1B29236FCF00B87A55 /* EoljugaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EoljugaUITests.swift; sourceTree = "<group>"; };
+		B53ECA1D29236FCF00B87A55 /* EoljugaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EoljugaUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B53EC9F429236FCE00B87A55 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B53ECA0A29236FCF00B87A55 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B53ECA1429236FCF00B87A55 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B53EC9EE29236FCE00B87A55 = {
+			isa = PBXGroup;
+			children = (
+				B53EC9F929236FCE00B87A55 /* Eoljuga */,
+				B53ECA1029236FCF00B87A55 /* EoljugaTests */,
+				B53ECA1A29236FCF00B87A55 /* EoljugaUITests */,
+				B53EC9F829236FCE00B87A55 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B53EC9F829236FCE00B87A55 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B53EC9F729236FCE00B87A55 /* Eoljuga.app */,
+				B53ECA0D29236FCF00B87A55 /* EoljugaTests.xctest */,
+				B53ECA1729236FCF00B87A55 /* EoljugaUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B53EC9F929236FCE00B87A55 /* Eoljuga */ = {
+			isa = PBXGroup;
+			children = (
+				B53EC9FA29236FCE00B87A55 /* AppDelegate.swift */,
+				B53EC9FC29236FCE00B87A55 /* SceneDelegate.swift */,
+				B53EC9FE29236FCE00B87A55 /* ViewController.swift */,
+				B53ECA0029236FCE00B87A55 /* Main.storyboard */,
+				B53ECA0329236FCF00B87A55 /* Assets.xcassets */,
+				B53ECA0529236FCF00B87A55 /* LaunchScreen.storyboard */,
+				B53ECA0829236FCF00B87A55 /* Info.plist */,
+			);
+			path = Eoljuga;
+			sourceTree = "<group>";
+		};
+		B53ECA1029236FCF00B87A55 /* EoljugaTests */ = {
+			isa = PBXGroup;
+			children = (
+				B53ECA1129236FCF00B87A55 /* EoljugaTests.swift */,
+			);
+			path = EoljugaTests;
+			sourceTree = "<group>";
+		};
+		B53ECA1A29236FCF00B87A55 /* EoljugaUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B53ECA1B29236FCF00B87A55 /* EoljugaUITests.swift */,
+				B53ECA1D29236FCF00B87A55 /* EoljugaUITestsLaunchTests.swift */,
+			);
+			path = EoljugaUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B53EC9F629236FCE00B87A55 /* Eoljuga */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B53ECA2129236FCF00B87A55 /* Build configuration list for PBXNativeTarget "Eoljuga" */;
+			buildPhases = (
+				B53EC9F329236FCE00B87A55 /* Sources */,
+				B53EC9F429236FCE00B87A55 /* Frameworks */,
+				B53EC9F529236FCE00B87A55 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Eoljuga;
+			productName = Eoljuga;
+			productReference = B53EC9F729236FCE00B87A55 /* Eoljuga.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B53ECA0C29236FCF00B87A55 /* EoljugaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B53ECA2429236FCF00B87A55 /* Build configuration list for PBXNativeTarget "EoljugaTests" */;
+			buildPhases = (
+				B53ECA0929236FCF00B87A55 /* Sources */,
+				B53ECA0A29236FCF00B87A55 /* Frameworks */,
+				B53ECA0B29236FCF00B87A55 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B53ECA0F29236FCF00B87A55 /* PBXTargetDependency */,
+			);
+			name = EoljugaTests;
+			productName = EoljugaTests;
+			productReference = B53ECA0D29236FCF00B87A55 /* EoljugaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B53ECA1629236FCF00B87A55 /* EoljugaUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B53ECA2729236FCF00B87A55 /* Build configuration list for PBXNativeTarget "EoljugaUITests" */;
+			buildPhases = (
+				B53ECA1329236FCF00B87A55 /* Sources */,
+				B53ECA1429236FCF00B87A55 /* Frameworks */,
+				B53ECA1529236FCF00B87A55 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B53ECA1929236FCF00B87A55 /* PBXTargetDependency */,
+			);
+			name = EoljugaUITests;
+			productName = EoljugaUITests;
+			productReference = B53ECA1729236FCF00B87A55 /* EoljugaUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B53EC9EF29236FCE00B87A55 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1400;
+				LastUpgradeCheck = 1400;
+				TargetAttributes = {
+					B53EC9F629236FCE00B87A55 = {
+						CreatedOnToolsVersion = 14.0;
+					};
+					B53ECA0C29236FCF00B87A55 = {
+						CreatedOnToolsVersion = 14.0;
+						TestTargetID = B53EC9F629236FCE00B87A55;
+					};
+					B53ECA1629236FCF00B87A55 = {
+						CreatedOnToolsVersion = 14.0;
+						TestTargetID = B53EC9F629236FCE00B87A55;
+					};
+				};
+			};
+			buildConfigurationList = B53EC9F229236FCE00B87A55 /* Build configuration list for PBXProject "Eoljuga" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B53EC9EE29236FCE00B87A55;
+			productRefGroup = B53EC9F829236FCE00B87A55 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B53EC9F629236FCE00B87A55 /* Eoljuga */,
+				B53ECA0C29236FCF00B87A55 /* EoljugaTests */,
+				B53ECA1629236FCF00B87A55 /* EoljugaUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B53EC9F529236FCE00B87A55 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B53ECA0729236FCF00B87A55 /* LaunchScreen.storyboard in Resources */,
+				B53ECA0429236FCF00B87A55 /* Assets.xcassets in Resources */,
+				B53ECA0229236FCE00B87A55 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B53ECA0B29236FCF00B87A55 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B53ECA1529236FCF00B87A55 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B53EC9F329236FCE00B87A55 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B53EC9FF29236FCE00B87A55 /* ViewController.swift in Sources */,
+				B53EC9FB29236FCE00B87A55 /* AppDelegate.swift in Sources */,
+				B53EC9FD29236FCE00B87A55 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B53ECA0929236FCF00B87A55 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B53ECA1229236FCF00B87A55 /* EoljugaTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B53ECA1329236FCF00B87A55 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B53ECA1E29236FCF00B87A55 /* EoljugaUITestsLaunchTests.swift in Sources */,
+				B53ECA1C29236FCF00B87A55 /* EoljugaUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B53ECA0F29236FCF00B87A55 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B53EC9F629236FCE00B87A55 /* Eoljuga */;
+			targetProxy = B53ECA0E29236FCF00B87A55 /* PBXContainerItemProxy */;
+		};
+		B53ECA1929236FCF00B87A55 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B53EC9F629236FCE00B87A55 /* Eoljuga */;
+			targetProxy = B53ECA1829236FCF00B87A55 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B53ECA0029236FCE00B87A55 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B53ECA0129236FCE00B87A55 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B53ECA0529236FCF00B87A55 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B53ECA0629236FCF00B87A55 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B53ECA1F29236FCF00B87A55 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B53ECA2029236FCF00B87A55 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B53ECA2229236FCF00B87A55 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Eoljuga/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.booscamp.Eoljuga;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B53ECA2329236FCF00B87A55 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Eoljuga/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.booscamp.Eoljuga;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B53ECA2529236FCF00B87A55 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.booscamp.EoljugaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Eoljuga.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Eoljuga";
+			};
+			name = Debug;
+		};
+		B53ECA2629236FCF00B87A55 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.booscamp.EoljugaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Eoljuga.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Eoljuga";
+			};
+			name = Release;
+		};
+		B53ECA2829236FCF00B87A55 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.booscamp.EoljugaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Eoljuga;
+			};
+			name = Debug;
+		};
+		B53ECA2929236FCF00B87A55 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.booscamp.EoljugaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Eoljuga;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B53EC9F229236FCE00B87A55 /* Build configuration list for PBXProject "Eoljuga" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B53ECA1F29236FCF00B87A55 /* Debug */,
+				B53ECA2029236FCF00B87A55 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B53ECA2129236FCF00B87A55 /* Build configuration list for PBXNativeTarget "Eoljuga" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B53ECA2229236FCF00B87A55 /* Debug */,
+				B53ECA2329236FCF00B87A55 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B53ECA2429236FCF00B87A55 /* Build configuration list for PBXNativeTarget "EoljugaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B53ECA2529236FCF00B87A55 /* Debug */,
+				B53ECA2629236FCF00B87A55 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B53ECA2729236FCF00B87A55 /* Build configuration list for PBXNativeTarget "EoljugaUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B53ECA2829236FCF00B87A55 /* Debug */,
+				B53ECA2929236FCF00B87A55 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B53EC9EF29236FCE00B87A55 /* Project object */;
+}
