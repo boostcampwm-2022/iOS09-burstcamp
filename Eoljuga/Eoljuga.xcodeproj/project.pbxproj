@@ -16,6 +16,8 @@
 		B53ECA1229236FCF00B87A55 /* EoljugaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53ECA1129236FCF00B87A55 /* EoljugaTests.swift */; };
 		B53ECA1C29236FCF00B87A55 /* EoljugaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53ECA1B29236FCF00B87A55 /* EoljugaUITests.swift */; };
 		B53ECA1E29236FCF00B87A55 /* EoljugaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53ECA1D29236FCF00B87A55 /* EoljugaUITestsLaunchTests.swift */; };
+		B53ECA2C2923704700B87A55 /* .swiftlint.auto.yml in Resources */ = {isa = PBXBuildFile; fileRef = B53ECA2A2923704600B87A55 /* .swiftlint.auto.yml */; };
+		B53ECA2D2923704700B87A55 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B53ECA2B2923704700B87A55 /* .swiftlint.yml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		B53ECA1729236FCF00B87A55 /* EoljugaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EoljugaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B53ECA1B29236FCF00B87A55 /* EoljugaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EoljugaUITests.swift; sourceTree = "<group>"; };
 		B53ECA1D29236FCF00B87A55 /* EoljugaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EoljugaUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B53ECA2A2923704600B87A55 /* .swiftlint.auto.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.auto.yml; sourceTree = "<group>"; };
+		B53ECA2B2923704700B87A55 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,8 @@
 		B53EC9EE29236FCE00B87A55 = {
 			isa = PBXGroup;
 			children = (
+				B53ECA2A2923704600B87A55 /* .swiftlint.auto.yml */,
+				B53ECA2B2923704700B87A55 /* .swiftlint.yml */,
 				B53EC9F929236FCE00B87A55 /* Eoljuga */,
 				B53ECA1029236FCF00B87A55 /* EoljugaTests */,
 				B53ECA1A29236FCF00B87A55 /* EoljugaUITests */,
@@ -137,6 +143,7 @@
 				B53EC9F329236FCE00B87A55 /* Sources */,
 				B53EC9F429236FCE00B87A55 /* Frameworks */,
 				B53EC9F529236FCE00B87A55 /* Resources */,
+				B53ECA2E2923704D00B87A55 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -231,6 +238,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B53ECA2D2923704700B87A55 /* .swiftlint.yml in Resources */,
+				B53ECA2C2923704700B87A55 /* .swiftlint.auto.yml in Resources */,
 				B53ECA0729236FCF00B87A55 /* LaunchScreen.storyboard in Resources */,
 				B53ECA0429236FCF00B87A55 /* Assets.xcassets in Resources */,
 				B53ECA0229236FCE00B87A55 /* Main.storyboard in Resources */,
@@ -252,6 +261,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B53ECA2E2923704D00B87A55 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint --fix --config \".swiftlint.auto.yml\" && swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B53EC9F329236FCE00B87A55 /* Sources */ = {

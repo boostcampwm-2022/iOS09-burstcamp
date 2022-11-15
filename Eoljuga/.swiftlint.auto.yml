@@ -1,0 +1,6 @@
+whitelist_rules:
+  - leading_whitespace
+  - trailing_whitespace
+  - vertical_whitespace
+  - vertical_whitespace_closing_braces 
+  - trailing_newline
