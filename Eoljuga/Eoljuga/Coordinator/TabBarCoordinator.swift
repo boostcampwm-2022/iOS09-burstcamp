@@ -65,7 +65,7 @@ class TabBarCoordinator: NSObject, TabBarCoordinatorProtocol {
         let pages: [TabBarPage] = [.myPage, .bookmark, .home]
             .sorted(by: { $0.pageOrderNumber() < $1.pageOrderNumber() })
 
-        let controllers: [UINavigationController] = pages.map({ getTabController($0) })
+        let controllers: [UINavigationController] = pages.map({ prepareTabController($0) })
 
         prepareTabBarController(withTabControllers: controllers)
     }
@@ -93,7 +93,7 @@ class TabBarCoordinator: NSObject, TabBarCoordinatorProtocol {
         navigationController.viewControllers = [tabBarController]
     }
 
-    private func getTabController(_ page: TabBarPage) -> UINavigationController {
+    private func prepareTabController(_ page: TabBarPage) -> UINavigationController {
         let navigationController = UINavigationController()
         // TODO: NavigationBar 설정 각자 View에서 처리
         navigationController.setNavigationBarHidden(false, animated: false)
