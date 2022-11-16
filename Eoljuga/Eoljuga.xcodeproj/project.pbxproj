@@ -21,6 +21,7 @@
 		14826C9E2924D06000087151 /* Service-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14826C9C2924D06000087151 /* Service-Info.plist */; };
 		14826C9F2924D06000087151 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14826C9D2924D06000087151 /* GoogleService-Info.plist */; };
 		B50A26B12924E5FB00DF3E1F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B50A26B02924E5FB00DF3E1F /* FirebaseAnalytics */; };
+		B50A26B82925047700DF3E1F /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B50A26B72925047700DF3E1F /* Colors.xcassets */; };
 		B53EC9FB29236FCE00B87A55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53EC9FA29236FCE00B87A55 /* AppDelegate.swift */; };
 		B53EC9FD29236FCE00B87A55 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53EC9FC29236FCE00B87A55 /* SceneDelegate.swift */; };
 		B53ECA0429236FCF00B87A55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B53ECA0329236FCF00B87A55 /* Assets.xcassets */; };
@@ -73,6 +74,7 @@
 		14826C9A2924CECF00087151 /* CoordinatorPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorPublisher.swift; sourceTree = "<group>"; };
 		14826C9C2924D06000087151 /* Service-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Service-Info.plist"; sourceTree = "<group>"; };
 		14826C9D2924D06000087151 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B50A26B72925047700DF3E1F /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		B53EC9F729236FCE00B87A55 /* Eoljuga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eoljuga.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B53EC9FA29236FCE00B87A55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B53EC9FC29236FCE00B87A55 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 			children = (
 				D85FB6DA2924EB57006ED875 /* Font */,
 				B53ECA0329236FCF00B87A55 /* Assets.xcassets */,
+				B50A26B72925047700DF3E1F /* Colors.xcassets */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -472,6 +475,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B53ECA2D2923704700B87A55 /* .swiftlint.yml in Resources */,
+				B50A26B82925047700DF3E1F /* Colors.xcassets in Resources */,
 				D85FB6DF2924EFCA006ED875 /* NanumSquareB.otf in Resources */,
 				14826C9E2924D06000087151 /* Service-Info.plist in Resources */,
 				B53ECA2C2923704700B87A55 /* .swiftlint.auto.yml in Resources */,
