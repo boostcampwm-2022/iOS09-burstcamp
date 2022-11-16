@@ -77,7 +77,14 @@ class TabBarCoordinator: TabBarCoordinatorProtocol {
             navigationController.pushViewController(bookmarkViewController, animated: true)
         case .myPage:
             let myPageViewController = MyPageViewController()
-
+            myPageViewController
+                .coordinatrPublisher
+                .sink { coordinatorEvent in
+                    if coordinatorEvent == .moveToAuthFlow {
+                        self.coordinatorPublisher.send(.moveToAuthFlow)
+                    }
+                }
+                .store(in: &disposableBag)
             navigationController.pushViewController(myPageViewController, animated: true)
         }
 

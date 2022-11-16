@@ -5,6 +5,7 @@
 //  Created by youtak on 2022/11/15.
 //
 
+import Combine
 import UIKit
 
 class MyPageViewController: UIViewController {
@@ -15,6 +16,8 @@ class MyPageViewController: UIViewController {
         button.addTarget(self, action: #selector(logoutButtonTouched), for: .touchUpInside)
         return button
     }()
+
+    var coordinatrPublisher = PassthroughSubject<CoordinatorEvent, Never>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +37,12 @@ class MyPageViewController: UIViewController {
     }
 
     @objc func logoutButtonTouched() {
-        print("버튼 터치")
+        moveToAuthFlow()
+    }
+}
+
+extension MyPageViewController: CoordinatorPublisher {
+    func moveToAuthFlow() {
+        coordinatrPublisher.send(.moveToAuthFlow)
     }
 }

@@ -23,7 +23,7 @@ final class AppCoordinator: Coordinator {
     }
 
     func isLoggedIn() -> Bool {
-        return false
+        return true
     }
 
     func showAuthFlow() {
@@ -42,8 +42,17 @@ final class AppCoordinator: Coordinator {
     }
 
     func showTabBarFlow() {
-        let tabCoordinator = TabBarCoordinator(navigationController: navigationController)
-        childCoordinators.append(tabCoordinator)
-        tabCoordinator.start()
+        let tabBarCoordinator = TabBarCoordinator(navigationController: navigationController)
+        tabBarCoordinator
+            .coordinatorPublisher
+            .sink { coordinatorEvent in
+                if coordinatorEvent == .moveToAuthFlow {
+                    self.finish(childCoordinator: tabBarCoordinator)
+                    self.showAuthFlow()
+                }
+            }
+            .store(in: &disposableBag)
+        childCoordinators.append(tabBarCoordinator)
+        tabBarCoordinator.start()
     }
 }
