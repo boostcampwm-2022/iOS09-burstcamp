@@ -5,15 +5,16 @@
 //  Created by youtak on 2022/11/15.
 //
 
+import Combine
 import UIKit
 
 final class AppCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
-    weak var finishDelegate: CoordinatorFinishDelegate?
-    var type: CoordinatorType = .app
+    var coordinatorPublisher = PassthroughSubject<CoordinatorEvent, Never>()
+    var disposableBag = Set<AnyCancellable>()
 
-    init(_ navigationController: UINavigationController) {
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
 
@@ -25,15 +26,15 @@ final class AppCoordinator: Coordinator {
         return true
     }
 
-    func showTabBarFlow() {
-        let tabCoordinator = TabBarCoordinator(navigationController)
-        childCoordinators.append(tabCoordinator)
-        tabCoordinator.start()
-    }
-
     func showAuthFlow() {
-        let authCoordinator = AuthCoordinator(navigationController)
+        let authCoordinator = AuthCoordinator(navigationController: navigationController)
         childCoordinators.append(authCoordinator)
         authCoordinator.start()
+    }
+
+    func showTabBarFlow() {
+        let tabCoordinator = TabBarCoordinator(navigationController: navigationController)
+        childCoordinators.append(tabCoordinator)
+        tabCoordinator.start()
     }
 }

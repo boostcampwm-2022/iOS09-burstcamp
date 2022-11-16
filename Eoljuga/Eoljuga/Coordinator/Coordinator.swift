@@ -5,32 +5,27 @@
 //  Created by youtak on 2022/11/15.
 //
 
+import Combine
 import UIKit
 
-enum CoordinatorType {
-    case app
-    case auth
-    case tabBar
-}
-
-protocol CoordinatorFinishDelegate: AnyObject {
-    func coordinatorDidFinish(childCoordinator: Coordinator)
+enum CoordinatorEvent {
+    case moveToAuthFlow
+    case moveToTabBarFlow
 }
 
 protocol Coordinator: AnyObject {
     var childCoordinators: [Coordinator] { get set }
     var navigationController: UINavigationController { get set }
-    var finishDelegate: CoordinatorFinishDelegate? { get set }
-    var type: CoordinatorType { get }
+    var coordinatorPublisher: PassthroughSubject<CoordinatorEvent, Never> { get }
+    var disposableBag: Set<AnyCancellable> { get }
 
-    init(_ navigationController: UINavigationController)
+    init(navigationController: UINavigationController)
 
     func start()
 }
 
 extension Coordinator {
-    func finish() {
-        childCoordinators.removeAll()
-        finishDelegate?.coordinatorDidFinish(childCoordinator: self)
+    func finish(coordinator: Coordinator) {
+        childCoordinators = childCoordinators.filter({ $0 !== coordinator })
     }
 }

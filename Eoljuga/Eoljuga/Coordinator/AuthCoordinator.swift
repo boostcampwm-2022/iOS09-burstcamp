@@ -5,11 +5,13 @@
 //  Created by youtak on 2022/11/15.
 //
 
+import Combine
 import UIKit
 
 protocol AuthCoordinatorProtocol: Coordinator {
-    func showGithubWebView()
-    // TODO: 지우기
+    func moveToTabBarFlow()
+    // TODO: 할 일
+    // to Github WebView
     // to 회원가입 - 도메인 선택
     // to 회원가입 - 캠퍼ID 선택
     // to 회원가입 - 블로그 선택
@@ -17,13 +19,12 @@ protocol AuthCoordinatorProtocol: Coordinator {
 }
 
 final class AuthCoordinator: AuthCoordinatorProtocol {
-
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
-    weak var finishDelegate: CoordinatorFinishDelegate?
-    var type: CoordinatorType = .auth
+    var coordinatorPublisher = PassthroughSubject<CoordinatorEvent, Never>()
+    var disposableBag = Set<AnyCancellable>()
 
-    init(_ navigationController: UINavigationController) {
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
 
@@ -32,6 +33,7 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
         navigationController.pushViewController(loginViewController, animated: true)
     }
 
-    func showGithubWebView() {
+    func moveToTabBarFlow() {
+        coordinatorPublisher.send(.moveToTabBarFlow)
     }
 }

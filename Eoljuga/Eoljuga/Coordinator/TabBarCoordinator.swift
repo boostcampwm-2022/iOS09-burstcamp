@@ -5,42 +5,8 @@
 //  Created by youtak on 2022/11/15.
 //
 
+import Combine
 import UIKit
-
-enum TabBarPage {
-    case home
-    case bookmark
-    case myPage
-
-    init?(index: Int) {
-        switch index {
-        case 0:
-            self = .home
-        case 1:
-            self = .bookmark
-        case 2:
-            self = .myPage
-        default:
-            return nil
-        }
-    }
-
-    func pageTitle() -> String {
-        switch self {
-        case .home: return "홈"
-        case .bookmark: return "모아보기"
-        case .myPage: return "마이페이지"
-        }
-    }
-
-    func pageOrderNumber() -> Int {
-        switch self {
-        case .home: return 0
-        case .bookmark: return 1
-        case .myPage: return 2
-        }
-    }
-}
 
 protocol TabBarCoordinatorProtocol: Coordinator {
     var tabBarController: UITabBarController { get set }
@@ -49,14 +15,14 @@ protocol TabBarCoordinatorProtocol: Coordinator {
     func currentPage() -> TabBarPage?
 }
 
-class TabBarCoordinator: NSObject, TabBarCoordinatorProtocol {
+class TabBarCoordinator: TabBarCoordinatorProtocol {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     var tabBarController: UITabBarController
-    weak var finishDelegate: CoordinatorFinishDelegate?
-    var type: CoordinatorType = .tabBar
+    var coordinatorPublisher = PassthroughSubject<CoordinatorEvent, Never>()
+    var disposableBag = Set<AnyCancellable>()
 
-    required init(_ navigationController: UINavigationController) {
+    required init(navigationController: UINavigationController) {
         self.navigationController = navigationController
         tabBarController = UITabBarController()
     }
@@ -84,7 +50,6 @@ class TabBarCoordinator: NSObject, TabBarCoordinatorProtocol {
     }
 
     private func prepareTabBarController(withTabControllers tabControllers: [UIViewController]) {
-        tabBarController.delegate = self
         tabBarController.setViewControllers(tabControllers, animated: true)
         tabBarController.selectedIndex = TabBarPage.home.pageOrderNumber()
         tabBarController.tabBar.backgroundColor = .white
@@ -99,7 +64,7 @@ class TabBarCoordinator: NSObject, TabBarCoordinatorProtocol {
         navigationController.setNavigationBarHidden(false, animated: false)
         navigationController.tabBarItem = UITabBarItem(
             title: page.pageTitle(),
-            image: nil,
+            image: UIImage(systemName: page.pageIconTitle()),
             tag: page.pageOrderNumber()
         )
 
@@ -117,7 +82,4 @@ class TabBarCoordinator: NSObject, TabBarCoordinatorProtocol {
 
         return navigationController
     }
-}
-
-extension TabBarCoordinator: UITabBarControllerDelegate {
 }
