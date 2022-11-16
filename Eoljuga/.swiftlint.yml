@@ -17,8 +17,7 @@ opt_in_rules:
   
 excluded:
   - Pods
-  - Eoljuga/AppDelegate.swift
-  - Eoljuga/SceneDelegate.swift
+  - Eoljuga/App/*
   - EoljugaTests
   - EoljugaUITests
 

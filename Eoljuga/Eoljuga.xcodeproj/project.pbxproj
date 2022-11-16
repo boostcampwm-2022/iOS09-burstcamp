@@ -15,12 +15,10 @@
 		14826C332923AACB00087151 /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C322923AACB00087151 /* BookmarkViewController.swift */; };
 		14826C352923AB0300087151 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C342923AB0300087151 /* MyPageViewController.swift */; };
 		14826C372923B49100087151 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C362923B49100087151 /* LoginViewController.swift */; };
-		14FC3E482923824C0095AE68 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14FC3E472923824C0095AE68 /* GoogleService-Info.plist */; };
-		14FC3E4A292382530095AE68 /* Service-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14FC3E49292382530095AE68 /* Service-Info.plist */; };
+		B50A26402924810500DF3E1F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B50A263F2924810500DF3E1F /* GoogleService-Info.plist */; };
+		B50A26422924810A00DF3E1F /* Service-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B50A26412924810A00DF3E1F /* Service-Info.plist */; };
 		B53EC9FB29236FCE00B87A55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53EC9FA29236FCE00B87A55 /* AppDelegate.swift */; };
 		B53EC9FD29236FCE00B87A55 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53EC9FC29236FCE00B87A55 /* SceneDelegate.swift */; };
-		B53EC9FF29236FCE00B87A55 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53EC9FE29236FCE00B87A55 /* ViewController.swift */; };
-		B53ECA0229236FCE00B87A55 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B53ECA0029236FCE00B87A55 /* Main.storyboard */; };
 		B53ECA0429236FCF00B87A55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B53ECA0329236FCF00B87A55 /* Assets.xcassets */; };
 		B53ECA0729236FCF00B87A55 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B53ECA0529236FCF00B87A55 /* LaunchScreen.storyboard */; };
 		B53ECA1229236FCF00B87A55 /* EoljugaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53ECA1129236FCF00B87A55 /* EoljugaTests.swift */; };
@@ -63,13 +61,11 @@
 		14826C322923AACB00087151 /* BookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
 		14826C342923AB0300087151 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		14826C362923B49100087151 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		14FC3E472923824C0095AE68 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		14FC3E49292382530095AE68 /* Service-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Service-Info.plist"; path = "../../../../../Downloads/Service-Info.plist"; sourceTree = "<group>"; };
+		B50A263F2924810500DF3E1F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B50A26412924810A00DF3E1F /* Service-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Service-Info.plist"; sourceTree = "<group>"; };
 		B53EC9F729236FCE00B87A55 /* Eoljuga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eoljuga.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B53EC9FA29236FCE00B87A55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B53EC9FC29236FCE00B87A55 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B53EC9FE29236FCE00B87A55 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B53ECA0129236FCE00B87A55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B53ECA0329236FCF00B87A55 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B53ECA0629236FCF00B87A55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B53ECA0829236FCF00B87A55 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -167,11 +163,108 @@
 			path = MyPage;
 			sourceTree = "<group>";
 		};
+		B50A26442924B9D200DF3E1F /* App */ = {
+			isa = PBXGroup;
+			children = (
+				B53EC9FA29236FCE00B87A55 /* AppDelegate.swift */,
+				B53EC9FC29236FCE00B87A55 /* SceneDelegate.swift */,
+				B53ECA0829236FCF00B87A55 /* Info.plist */,
+				B53ECA0529236FCF00B87A55 /* LaunchScreen.storyboard */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		B50A26452924BA0700DF3E1F /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				B50A264D2924C06E00DF3E1F /* Common */,
+				14826C252923846500087151 /* Auth */,
+				14826C2D2923AA5600087151 /* Tab */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		B50A26462924BA3100DF3E1F /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				B53ECA0329236FCF00B87A55 /* Assets.xcassets */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		B50A26472924BABE00DF3E1F /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				B50A264A2924BD7600DF3E1F /* Constant */,
+				B50A264B2924BD8C00DF3E1F /* Error */,
+				B50A26492924BD6E00DF3E1F /* Extension */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		B50A26482924BCF000DF3E1F /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		B50A26492924BD6E00DF3E1F /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		B50A264A2924BD7600DF3E1F /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Constant;
+			sourceTree = "<group>";
+		};
+		B50A264B2924BD8C00DF3E1F /* Error */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		B50A264D2924C06E00DF3E1F /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				B50A264E2924C12300DF3E1F /* View */,
+				B50A264F2924C12800DF3E1F /* ViewModel */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		B50A264E2924C12300DF3E1F /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B50A264F2924C12800DF3E1F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B50A26502924C1D200DF3E1F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		B53EC9EE29236FCE00B87A55 = {
 			isa = PBXGroup;
 			children = (
-				14FC3E49292382530095AE68 /* Service-Info.plist */,
-				14FC3E472923824C0095AE68 /* GoogleService-Info.plist */,
+				B50A26412924810A00DF3E1F /* Service-Info.plist */,
+				B50A263F2924810500DF3E1F /* GoogleService-Info.plist */,
 				B53ECA2A2923704600B87A55 /* .swiftlint.auto.yml */,
 				B53ECA2B2923704700B87A55 /* .swiftlint.yml */,
 				B53EC9F929236FCE00B87A55 /* Eoljuga */,
@@ -194,16 +287,13 @@
 		B53EC9F929236FCE00B87A55 /* Eoljuga */ = {
 			isa = PBXGroup;
 			children = (
-				B53EC9FA29236FCE00B87A55 /* AppDelegate.swift */,
-				B53EC9FC29236FCE00B87A55 /* SceneDelegate.swift */,
-				B53EC9FE29236FCE00B87A55 /* ViewController.swift */,
+				B50A26442924B9D200DF3E1F /* App */,
+				B50A26482924BCF000DF3E1F /* Service */,
+				B50A26452924BA0700DF3E1F /* Scene */,
 				14826C222923844100087151 /* Coordinator */,
-				14826C2D2923AA5600087151 /* Tab */,
-				14826C252923846500087151 /* Auth */,
-				B53ECA0029236FCE00B87A55 /* Main.storyboard */,
-				B53ECA0329236FCF00B87A55 /* Assets.xcassets */,
-				B53ECA0529236FCF00B87A55 /* LaunchScreen.storyboard */,
-				B53ECA0829236FCF00B87A55 /* Info.plist */,
+				B50A26502924C1D200DF3E1F /* Model */,
+				B50A26462924BA3100DF3E1F /* Resource */,
+				B50A26472924BABE00DF3E1F /* Util */,
 			);
 			path = Eoljuga;
 			sourceTree = "<group>";
@@ -345,12 +435,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				B53ECA2D2923704700B87A55 /* .swiftlint.yml in Resources */,
-				14FC3E482923824C0095AE68 /* GoogleService-Info.plist in Resources */,
+				B50A26422924810A00DF3E1F /* Service-Info.plist in Resources */,
+				B50A26402924810500DF3E1F /* GoogleService-Info.plist in Resources */,
 				B53ECA2C2923704700B87A55 /* .swiftlint.auto.yml in Resources */,
 				B53ECA0729236FCF00B87A55 /* LaunchScreen.storyboard in Resources */,
 				B53ECA0429236FCF00B87A55 /* Assets.xcassets in Resources */,
-				14FC3E4A292382530095AE68 /* Service-Info.plist in Resources */,
-				B53ECA0229236FCE00B87A55 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,7 +489,6 @@
 				14826C282923869D00087151 /* TabBarCoordinator.swift in Sources */,
 				14826C332923AACB00087151 /* BookmarkViewController.swift in Sources */,
 				14826C242923844A00087151 /* Coordinator.swift in Sources */,
-				B53EC9FF29236FCE00B87A55 /* ViewController.swift in Sources */,
 				14826C312923AA7300087151 /* HomeViewController.swift in Sources */,
 				14826C352923AB0300087151 /* MyPageViewController.swift in Sources */,
 				B53EC9FB29236FCE00B87A55 /* AppDelegate.swift in Sources */,
@@ -444,14 +532,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		B53ECA0029236FCE00B87A55 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B53ECA0129236FCE00B87A55 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B53ECA0529236FCF00B87A55 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -585,7 +665,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Eoljuga/Info.plist;
+				INFOPLIST_FILE = Eoljuga/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -616,7 +696,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Eoljuga/Info.plist;
+				INFOPLIST_FILE = Eoljuga/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -757,24 +837,24 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
 			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 5.6.0;
+				kind = exactVersion;
+				version = 5.6.0;
 			};
 		};
 		B53ECA322923729700B87A55 /* XCRemoteSwiftPackageReference "Then" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/devxoul/Then.git";
 			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 3.0.0;
+				kind = exactVersion;
+				version = 3.0.0;
 			};
 		};
 		B53ECA352923736400B87A55 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 9.6.0;
+				kind = exactVersion;
+				version = 10.2.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
