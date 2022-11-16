@@ -25,7 +25,7 @@ protocol Coordinator: AnyObject {
 }
 
 extension Coordinator {
-    func finish(coordinator: Coordinator) {
-        childCoordinators = childCoordinators.filter({ $0 !== coordinator })
+    func finish(childCoordinator: Coordinator) {
+        childCoordinators = childCoordinators.filter({ $0 !== childCoordinator })
     }
 }

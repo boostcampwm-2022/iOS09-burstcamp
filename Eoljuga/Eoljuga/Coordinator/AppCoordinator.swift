@@ -23,11 +23,20 @@ final class AppCoordinator: Coordinator {
     }
 
     func isLoggedIn() -> Bool {
-        return true
+        return false
     }
 
     func showAuthFlow() {
         let authCoordinator = AuthCoordinator(navigationController: navigationController)
+        authCoordinator
+            .coordinatorPublisher
+            .sink { coordinatorEvent in
+                if coordinatorEvent == .moveToTabBarFlow {
+                    self.finish(childCoordinator: authCoordinator)
+                    self.showTabBarFlow()
+                }
+            }
+            .store(in: &disposableBag)
         childCoordinators.append(authCoordinator)
         authCoordinator.start()
     }

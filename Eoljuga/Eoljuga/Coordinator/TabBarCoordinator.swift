@@ -77,6 +77,7 @@ class TabBarCoordinator: TabBarCoordinatorProtocol {
             navigationController.pushViewController(bookmarkViewController, animated: true)
         case .myPage:
             let myPageViewController = MyPageViewController()
+
             navigationController.pushViewController(myPageViewController, animated: true)
         }
 

@@ -30,6 +30,14 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
 
     func start() {
         let loginViewController = LoginViewController()
+        loginViewController
+            .coordinatrPublisher
+            .sink { coordinatorEvent in
+                if coordinatorEvent == .moveToTabBarFlow {
+                    self.coordinatorPublisher.send(.moveToTabBarFlow)
+                }
+            }
+            .store(in: &disposableBag)
         navigationController.pushViewController(loginViewController, animated: true)
     }
 

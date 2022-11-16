@@ -5,6 +5,7 @@
 //  Created by youtak on 2022/11/15.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -17,6 +18,8 @@ class LoginViewController: UIViewController {
         button.addTarget(self, action: #selector(loginButtonTouched), for: .touchUpInside)
         return button
     }()
+
+    var coordinatrPublisher = PassthroughSubject<CoordinatorEvent, Never>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +37,12 @@ class LoginViewController: UIViewController {
     }
 
     @objc func loginButtonTouched() {
-        print("버튼 터치")
+        moveToTabBarFlow()
+    }
+}
+
+extension LoginViewController: CoordinatorPublisher {
+    func moveToTabBarFlow() {
+        coordinatrPublisher.send(.moveToTabBarFlow)
     }
 }
