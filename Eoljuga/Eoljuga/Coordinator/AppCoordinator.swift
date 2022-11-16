@@ -31,9 +31,12 @@ final class AppCoordinator: Coordinator {
         authCoordinator
             .coordinatorPublisher
             .sink { coordinatorEvent in
-                if coordinatorEvent == .moveToTabBarFlow {
+                switch coordinatorEvent {
+                case .moveToTabBarFlow:
                     self.finish(childCoordinator: authCoordinator)
                     self.showTabBarFlow()
+                case .moveToAuthFlow:
+                    return
                 }
             }
             .store(in: &disposableBag)
@@ -46,7 +49,10 @@ final class AppCoordinator: Coordinator {
         tabBarCoordinator
             .coordinatorPublisher
             .sink { coordinatorEvent in
-                if coordinatorEvent == .moveToAuthFlow {
+                switch coordinatorEvent {
+                case .moveToTabBarFlow:
+                    return
+                case .moveToAuthFlow:
                     self.finish(childCoordinator: tabBarCoordinator)
                     self.showAuthFlow()
                 }

@@ -13,7 +13,7 @@ class MyPageViewController: UIViewController {
         let button = UIButton()
         button.setTitle("로그아웃", for: .normal)
         button.backgroundColor = .systemBlue
-        button.addTarget(self, action: #selector(logoutButtonTouched), for: .touchUpInside)
+        button.addTarget(self, action: #selector(logoutButtonDidTap), for: .touchUpInside)
         return button
     }()
 
@@ -36,7 +36,7 @@ class MyPageViewController: UIViewController {
         }
     }
 
-    @objc func logoutButtonTouched() {
+    @objc func logoutButtonDidTap() {
         moveToAuthFlow()
     }
 }

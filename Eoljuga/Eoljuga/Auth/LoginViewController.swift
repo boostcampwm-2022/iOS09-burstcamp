@@ -15,7 +15,7 @@ class LoginViewController: UIViewController {
         let button = UIButton()
         button.setTitle("로그인", for: .normal)
         button.backgroundColor = .systemBlue
-        button.addTarget(self, action: #selector(loginButtonTouched), for: .touchUpInside)
+        button.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
         return button
     }()
 
@@ -36,7 +36,7 @@ class LoginViewController: UIViewController {
         }
     }
 
-    @objc func loginButtonTouched() {
+    @objc func loginButtonDidTap() {
         moveToTabBarFlow()
     }
 }

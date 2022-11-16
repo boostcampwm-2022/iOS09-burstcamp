@@ -33,7 +33,7 @@ class TabBarCoordinator: TabBarCoordinatorProtocol {
 
         let controllers: [UINavigationController] = pages.map({ prepareTabController($0) })
 
-        prepareTabBarController(withTabControllers: controllers)
+        prepareTabBarController(with: controllers)
     }
 
     func selectPage(_ page: TabBarPage) {
@@ -49,7 +49,7 @@ class TabBarCoordinator: TabBarCoordinatorProtocol {
         return TabBarPage.init(index: tabBarController.selectedIndex)
     }
 
-    private func prepareTabBarController(withTabControllers tabControllers: [UIViewController]) {
+    private func prepareTabBarController(with tabControllers: [UIViewController]) {
         tabBarController.setViewControllers(tabControllers, animated: true)
         tabBarController.selectedIndex = TabBarPage.home.pageOrderNumber()
         tabBarController.tabBar.backgroundColor = .white
@@ -80,8 +80,11 @@ class TabBarCoordinator: TabBarCoordinatorProtocol {
             myPageViewController
                 .coordinatrPublisher
                 .sink { coordinatorEvent in
-                    if coordinatorEvent == .moveToAuthFlow {
+                    switch coordinatorEvent {
+                    case .moveToAuthFlow:
                         self.coordinatorPublisher.send(.moveToAuthFlow)
+                    case .moveToTabBarFlow:
+                        return
                     }
                 }
                 .store(in: &disposableBag)

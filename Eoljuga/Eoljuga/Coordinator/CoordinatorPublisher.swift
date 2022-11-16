@@ -9,6 +9,6 @@ import Combine
 
 /// UIViewController에서 채택
 /// Coordinator에게 이벤트를 쏴준다
-protocol CoordinatorPublisher: AnyObject {
+protocol CoordinatorPublisher {
     var coordinatrPublisher: PassthroughSubject<CoordinatorEvent, Never> { get }
 }

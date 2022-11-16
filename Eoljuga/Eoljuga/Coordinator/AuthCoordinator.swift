@@ -33,7 +33,10 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
         loginViewController
             .coordinatrPublisher
             .sink { coordinatorEvent in
-                if coordinatorEvent == .moveToTabBarFlow {
+                switch coordinatorEvent {
+                case .moveToAuthFlow:
+                    return
+                case .moveToTabBarFlow:
                     self.coordinatorPublisher.send(.moveToTabBarFlow)
                 }
             }
