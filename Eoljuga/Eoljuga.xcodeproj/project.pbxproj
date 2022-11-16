@@ -37,6 +37,9 @@
 		B53ECA3B2923736400B87A55 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = B53ECA3A2923736400B87A55 /* FirebaseFunctions */; };
 		B53ECA3D2923736400B87A55 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = B53ECA3C2923736400B87A55 /* FirebaseMessaging */; };
 		B53ECA3F2923736400B87A55 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = B53ECA3E2923736400B87A55 /* FirebaseStorage */; };
+		D85FB6DF2924EFCA006ED875 /* NanumSquareB.otf in Resources */ = {isa = PBXBuildFile; fileRef = D85FB6DD2924EB94006ED875 /* NanumSquareB.otf */; };
+		D85FB6E02924EFCC006ED875 /* NanumSquareEB.otf in Resources */ = {isa = PBXBuildFile; fileRef = D85FB6DB2924EB94006ED875 /* NanumSquareEB.otf */; };
+		D85FB6E12924EFCE006ED875 /* NanumSquareR.otf in Resources */ = {isa = PBXBuildFile; fileRef = D85FB6DC2924EB94006ED875 /* NanumSquareR.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +86,9 @@
 		B53ECA1D29236FCF00B87A55 /* EoljugaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EoljugaUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B53ECA2A2923704600B87A55 /* .swiftlint.auto.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.auto.yml; sourceTree = "<group>"; };
 		B53ECA2B2923704700B87A55 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		D85FB6DB2924EB94006ED875 /* NanumSquareEB.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareEB.otf; sourceTree = "<group>"; };
+		D85FB6DC2924EB94006ED875 /* NanumSquareR.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareR.otf; sourceTree = "<group>"; };
+		D85FB6DD2924EB94006ED875 /* NanumSquareB.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareB.otf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +204,7 @@
 		B50A26462924BA3100DF3E1F /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				D85FB6DA2924EB57006ED875 /* Font */,
 				B53ECA0329236FCF00B87A55 /* Assets.xcassets */,
 			);
 			path = Resource;
@@ -334,6 +341,16 @@
 			path = EoljugaUITests;
 			sourceTree = "<group>";
 		};
+		D85FB6DA2924EB57006ED875 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				D85FB6DD2924EB94006ED875 /* NanumSquareB.otf */,
+				D85FB6DB2924EB94006ED875 /* NanumSquareEB.otf */,
+				D85FB6DC2924EB94006ED875 /* NanumSquareR.otf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -455,10 +472,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B53ECA2D2923704700B87A55 /* .swiftlint.yml in Resources */,
+				D85FB6DF2924EFCA006ED875 /* NanumSquareB.otf in Resources */,
 				14826C9E2924D06000087151 /* Service-Info.plist in Resources */,
 				B53ECA2C2923704700B87A55 /* .swiftlint.auto.yml in Resources */,
 				B53ECA0729236FCF00B87A55 /* LaunchScreen.storyboard in Resources */,
 				B53ECA0429236FCF00B87A55 /* Assets.xcassets in Resources */,
+				D85FB6E02924EFCC006ED875 /* NanumSquareEB.otf in Resources */,
+				D85FB6E12924EFCE006ED875 /* NanumSquareR.otf in Resources */,
 				14826C9F2924D06000087151 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
