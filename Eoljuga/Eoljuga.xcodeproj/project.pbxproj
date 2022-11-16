@@ -20,6 +20,7 @@
 		14826C9B2924CECF00087151 /* CoordinatorPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C9A2924CECF00087151 /* CoordinatorPublisher.swift */; };
 		14826C9E2924D06000087151 /* Service-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14826C9C2924D06000087151 /* Service-Info.plist */; };
 		14826C9F2924D06000087151 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14826C9D2924D06000087151 /* GoogleService-Info.plist */; };
+		B50A26B12924E5FB00DF3E1F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B50A26B02924E5FB00DF3E1F /* FirebaseAnalytics */; };
 		B53EC9FB29236FCE00B87A55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53EC9FA29236FCE00B87A55 /* AppDelegate.swift */; };
 		B53EC9FD29236FCE00B87A55 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53EC9FC29236FCE00B87A55 /* SceneDelegate.swift */; };
 		B53ECA0429236FCF00B87A55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B53ECA0329236FCF00B87A55 /* Assets.xcassets */; };
@@ -91,6 +92,7 @@
 			files = (
 				B53ECA3D2923736400B87A55 /* FirebaseMessaging in Frameworks */,
 				B53ECA312923727100B87A55 /* SnapKit in Frameworks */,
+				B50A26B12924E5FB00DF3E1F /* FirebaseAnalytics in Frameworks */,
 				B53ECA392923736400B87A55 /* FirebaseFirestore in Frameworks */,
 				B53ECA3B2923736400B87A55 /* FirebaseFunctions in Frameworks */,
 				B53ECA3F2923736400B87A55 /* FirebaseStorage in Frameworks */,
@@ -269,6 +271,13 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		B50A26AF2924E5FB00DF3E1F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B53EC9EE29236FCE00B87A55 = {
 			isa = PBXGroup;
 			children = (
@@ -280,6 +289,7 @@
 				B53ECA1029236FCF00B87A55 /* EoljugaTests */,
 				B53ECA1A29236FCF00B87A55 /* EoljugaUITests */,
 				B53EC9F829236FCE00B87A55 /* Products */,
+				B50A26AF2924E5FB00DF3E1F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -349,6 +359,7 @@
 				B53ECA3A2923736400B87A55 /* FirebaseFunctions */,
 				B53ECA3C2923736400B87A55 /* FirebaseMessaging */,
 				B53ECA3E2923736400B87A55 /* FirebaseStorage */,
+				B50A26B02924E5FB00DF3E1F /* FirebaseAnalytics */,
 			);
 			productName = Eoljuga;
 			productReference = B53EC9F729236FCE00B87A55 /* Eoljuga.app */;
@@ -680,7 +691,6 @@
 				INFOPLIST_FILE = Eoljuga/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -689,7 +699,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.booscamp.Eoljuga;
+				PRODUCT_BUNDLE_IDENTIFIER = com.boostcamp.Eoljuga;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -711,7 +721,6 @@
 				INFOPLIST_FILE = Eoljuga/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -720,7 +729,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.booscamp.Eoljuga;
+				PRODUCT_BUNDLE_IDENTIFIER = com.boostcamp.Eoljuga;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -872,6 +881,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B50A26B02924E5FB00DF3E1F /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B53ECA352923736400B87A55 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
 		B53ECA302923727100B87A55 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B53ECA2F2923727100B87A55 /* XCRemoteSwiftPackageReference "SnapKit" */;
