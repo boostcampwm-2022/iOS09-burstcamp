@@ -26,6 +26,7 @@
 		B50A26CF2925124800DF3E1F /* Fonts+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A26CD2925124800DF3E1F /* Fonts+Generated.swift */; };
 		B50A26D02925124800DF3E1F /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A26CE2925124800DF3E1F /* Colors+Generated.swift */; };
 		B50A26D22925129A00DF3E1F /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A26D12925129A00DF3E1F /* UIColor.swift */; };
+		B50A26D42925131500DF3E1F /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A26D32925131500DF3E1F /* UIFont.swift */; };
 		B53EC9FB29236FCE00B87A55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53EC9FA29236FCE00B87A55 /* AppDelegate.swift */; };
 		B53EC9FD29236FCE00B87A55 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53EC9FC29236FCE00B87A55 /* SceneDelegate.swift */; };
 		B53ECA0429236FCF00B87A55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B53ECA0329236FCF00B87A55 /* Assets.xcassets */; };
@@ -83,6 +84,7 @@
 		B50A26CD2925124800DF3E1F /* Fonts+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Fonts+Generated.swift"; sourceTree = "<group>"; };
 		B50A26CE2925124800DF3E1F /* Colors+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Colors+Generated.swift"; sourceTree = "<group>"; };
 		B50A26D12925129A00DF3E1F /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		B50A26D32925131500DF3E1F /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		B53EC9F729236FCE00B87A55 /* Eoljuga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eoljuga.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B53EC9FA29236FCE00B87A55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B53EC9FC29236FCE00B87A55 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				B50A26D12925129A00DF3E1F /* UIColor.swift */,
+				B50A26D32925131500DF3E1F /* UIFont.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -572,6 +575,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14826C8D2924AC8B00087151 /* TabBarPage.swift in Sources */,
+				B50A26D42925131500DF3E1F /* UIFont.swift in Sources */,
 				14826C992924CEB600087151 /* CoordinatorEvent.swift in Sources */,
 				14826C282923869D00087151 /* TabBarCoordinator.swift in Sources */,
 				B50A26CF2925124800DF3E1F /* Fonts+Generated.swift in Sources */,
