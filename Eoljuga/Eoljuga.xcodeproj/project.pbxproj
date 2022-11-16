@@ -23,6 +23,8 @@
 		B50A26B12924E5FB00DF3E1F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B50A26B02924E5FB00DF3E1F /* FirebaseAnalytics */; };
 		B50A26B82925047700DF3E1F /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B50A26B72925047700DF3E1F /* Colors.xcassets */; };
 		B50A26C52925112000DF3E1F /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = B50A26C42925112000DF3E1F /* swiftgen.yml */; };
+		B50A26C82925117500DF3E1F /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A26C62925117500DF3E1F /* Colors+Generated.swift */; };
+		B50A26C92925117500DF3E1F /* Fonts+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A26C72925117500DF3E1F /* Fonts+Generated.swift */; };
 		B53EC9FB29236FCE00B87A55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53EC9FA29236FCE00B87A55 /* AppDelegate.swift */; };
 		B53EC9FD29236FCE00B87A55 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53EC9FC29236FCE00B87A55 /* SceneDelegate.swift */; };
 		B53ECA0429236FCF00B87A55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B53ECA0329236FCF00B87A55 /* Assets.xcassets */; };
@@ -77,6 +79,8 @@
 		14826C9D2924D06000087151 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B50A26B72925047700DF3E1F /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		B50A26C42925112000DF3E1F /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
+		B50A26C62925117500DF3E1F /* Colors+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Colors+Generated.swift"; sourceTree = "<group>"; };
+		B50A26C72925117500DF3E1F /* Fonts+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Fonts+Generated.swift"; sourceTree = "<group>"; };
 		B53EC9F729236FCE00B87A55 /* Eoljuga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eoljuga.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B53EC9FA29236FCE00B87A55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B53EC9FC29236FCE00B87A55 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -242,6 +246,8 @@
 		B50A264A2924BD7600DF3E1F /* Constant */ = {
 			isa = PBXGroup;
 			children = (
+				B50A26C62925117500DF3E1F /* Colors+Generated.swift */,
+				B50A26C72925117500DF3E1F /* Fonts+Generated.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -557,6 +563,7 @@
 				14826C8D2924AC8B00087151 /* TabBarPage.swift in Sources */,
 				14826C992924CEB600087151 /* CoordinatorEvent.swift in Sources */,
 				14826C282923869D00087151 /* TabBarCoordinator.swift in Sources */,
+				B50A26C92925117500DF3E1F /* Fonts+Generated.swift in Sources */,
 				14826C332923AACB00087151 /* BookmarkViewController.swift in Sources */,
 				14826C9B2924CECF00087151 /* CoordinatorPublisher.swift in Sources */,
 				14826C312923AA7300087151 /* HomeViewController.swift in Sources */,
@@ -567,6 +574,7 @@
 				B53EC9FD29236FCE00B87A55 /* SceneDelegate.swift in Sources */,
 				14826C2C2923A4C200087151 /* AppCoordinator.swift in Sources */,
 				14826C372923B49100087151 /* LoginViewController.swift in Sources */,
+				B50A26C82925117500DF3E1F /* Colors+Generated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
