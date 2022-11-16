@@ -22,7 +22,7 @@ final class AppCoordinator: Coordinator {
     }
 
     func isLoggedIn() -> Bool {
-        return true
+        return false
     }
 
     func showTabBarFlow() {
