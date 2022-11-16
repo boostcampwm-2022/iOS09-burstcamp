@@ -11,7 +11,6 @@ import UIKit
 protocol Coordinator: AnyObject {
     var childCoordinators: [Coordinator] { get set }
     var navigationController: UINavigationController { get set }
-    var coordinatorPublisher: PassthroughSubject<CoordinatorEvent, Never> { get }
     var disposableBag: Set<AnyCancellable> { get }
 
     init(navigationController: UINavigationController)
@@ -20,7 +19,11 @@ protocol Coordinator: AnyObject {
 }
 
 extension Coordinator {
-    func finish(childCoordinator: Coordinator) {
-        childCoordinators = childCoordinators.filter({ $0 !== childCoordinator })
+    func finish() {
+        childCoordinators.removeAll()
+    }
+
+    func remove(childCoodridnator: Coordinator) {
+        childCoordinators = childCoordinators.filter({ $0 !== childCoodridnator })
     }
 }

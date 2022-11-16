@@ -123,12 +123,10 @@
 		14826C222923844100087151 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
-				14826C232923844A00087151 /* Coordinator.swift */,
-				14826C922924C76900087151 /* CoordinatorEvent.swift */,
-				14826C8E2924AD6F00087151 /* CoordinatorPublisher.swift */,
+				14826C942924CD1200087151 /* Base */,
 				14826C2B2923A4C200087151 /* AppCoordinator.swift */,
-				14826C272923869D00087151 /* TabBarCoordinator.swift */,
 				14826C292923A20D00087151 /* AuthCoordinator.swift */,
+				14826C272923869D00087151 /* TabBarCoordinator.swift */,
 				14826C8C2924AC8B00087151 /* TabBarPage.swift */,
 			);
 			path = Coordinator;
@@ -174,6 +172,16 @@
 				14826C342923AB0300087151 /* MyPageViewController.swift */,
 			);
 			path = MyPage;
+			sourceTree = "<group>";
+		};
+		14826C942924CD1200087151 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				14826C232923844A00087151 /* Coordinator.swift */,
+				14826C922924C76900087151 /* CoordinatorEvent.swift */,
+				14826C8E2924AD6F00087151 /* CoordinatorPublisher.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		B53EC9EE29236FCE00B87A55 = {

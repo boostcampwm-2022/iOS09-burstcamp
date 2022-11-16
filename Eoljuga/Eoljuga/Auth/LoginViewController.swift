@@ -10,6 +10,10 @@ import UIKit
 
 import SnapKit
 
+protocol LoginScreenFlow {
+    func moveToTabBarFlow()
+}
+
 class LoginViewController: UIViewController {
     lazy var loginButton: UIButton = {
         let button = UIButton()
@@ -41,7 +45,7 @@ class LoginViewController: UIViewController {
     }
 }
 
-extension LoginViewController: CoordinatorPublisher {
+extension LoginViewController: LoginScreenFlow {
     func moveToTabBarFlow() {
         coordinatrPublisher.send(.moveToTabBarFlow)
     }

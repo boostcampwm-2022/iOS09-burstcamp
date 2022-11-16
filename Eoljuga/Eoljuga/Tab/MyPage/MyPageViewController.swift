@@ -8,6 +8,10 @@
 import Combine
 import UIKit
 
+protocol MyPageScreenFlow {
+    func moveToAuthFlow()
+}
+
 class MyPageViewController: UIViewController {
     lazy var logoutButton: UIButton = {
         let button = UIButton()
@@ -41,7 +45,7 @@ class MyPageViewController: UIViewController {
     }
 }
 
-extension MyPageViewController: CoordinatorPublisher {
+extension MyPageViewController {
     func moveToAuthFlow() {
         coordinatrPublisher.send(.moveToAuthFlow)
     }

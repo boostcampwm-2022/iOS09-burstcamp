@@ -8,7 +8,7 @@
 import Combine
 import UIKit
 
-protocol AuthCoordinatorProtocol: Coordinator {
+protocol AuthCoordinatorProtocol: CoordinatorPublisher {
     func moveToTabBarFlow()
     // TODO: 할 일
     // to Github WebView
@@ -46,5 +46,6 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
 
     func moveToTabBarFlow() {
         coordinatorPublisher.send(.moveToTabBarFlow)
+        finish()
     }
 }

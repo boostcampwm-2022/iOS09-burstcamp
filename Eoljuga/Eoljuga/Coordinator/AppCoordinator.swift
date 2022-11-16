@@ -11,7 +11,6 @@ import UIKit
 final class AppCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
-    var coordinatorPublisher = PassthroughSubject<CoordinatorEvent, Never>()
     var disposableBag = Set<AnyCancellable>()
 
     init(navigationController: UINavigationController) {
@@ -33,7 +32,7 @@ final class AppCoordinator: Coordinator {
             .sink { coordinatorEvent in
                 switch coordinatorEvent {
                 case .moveToTabBarFlow:
-                    self.finish(childCoordinator: authCoordinator)
+                    self.remove(childCoodridnator: authCoordinator)
                     self.showTabBarFlow()
                 case .moveToAuthFlow:
                     return
@@ -53,7 +52,7 @@ final class AppCoordinator: Coordinator {
                 case .moveToTabBarFlow:
                     return
                 case .moveToAuthFlow:
-                    self.finish(childCoordinator: tabBarCoordinator)
+                    self.remove(childCoodridnator: tabBarCoordinator)
                     self.showAuthFlow()
                 }
             }
