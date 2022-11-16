@@ -13,7 +13,17 @@ final class DefaultFeedCell: UICollectionViewCell {
 
     lazy var headerStackView = UIStackView().then {
         $0.axis = .horizontal
-        $0.distribution = .fill
+        $0.distribution = .equalSpacing
+        $0.alignment = .fill
+    }
+    lazy var mainStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.distribution = .equalSpacing
+        $0.alignment = .fill
+    }
+    lazy var footerStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.distribution = .equalSpacing
         $0.alignment = .fill
     }
 
@@ -23,6 +33,8 @@ final class DefaultFeedCell: UICollectionViewCell {
 
     private func configure() {
         configureHeaderStackView()
+        configureMainStackView()
+        configureFooterStackView()
     }
 
     private func configureHeaderStackView() {
@@ -32,6 +44,26 @@ final class DefaultFeedCell: UICollectionViewCell {
             $0.top.equalToSuperview().inset(5)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(40)
+        }
+    }
+
+    private func configureMainStackView() {
+        addSubview(mainStackView)
+        mainStackView.backgroundColor = .systemRed
+        mainStackView.snp.makeConstraints {
+            $0.top.equalTo(headerStackView.snp.bottom)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(75)
+        }
+    }
+
+    private func configureFooterStackView() {
+        addSubview(footerStackView)
+        footerStackView.backgroundColor = .systemGreen
+        footerStackView.snp.makeConstraints {
+            $0.top.equalTo(mainStackView.snp.bottom)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(30)
         }
     }
 }
