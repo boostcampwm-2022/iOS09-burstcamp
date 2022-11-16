@@ -18,6 +18,8 @@
 		14826C972924CEAC00087151 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C962924CEAC00087151 /* Coordinator.swift */; };
 		14826C992924CEB600087151 /* CoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C982924CEB600087151 /* CoordinatorEvent.swift */; };
 		14826C9B2924CECF00087151 /* CoordinatorPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C9A2924CECF00087151 /* CoordinatorPublisher.swift */; };
+		14826C9E2924D06000087151 /* Service-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14826C9C2924D06000087151 /* Service-Info.plist */; };
+		14826C9F2924D06000087151 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14826C9D2924D06000087151 /* GoogleService-Info.plist */; };
 		B53EC9FB29236FCE00B87A55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53EC9FA29236FCE00B87A55 /* AppDelegate.swift */; };
 		B53EC9FD29236FCE00B87A55 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53EC9FC29236FCE00B87A55 /* SceneDelegate.swift */; };
 		B53ECA0429236FCF00B87A55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B53ECA0329236FCF00B87A55 /* Assets.xcassets */; };
@@ -66,6 +68,8 @@
 		14826C962924CEAC00087151 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		14826C982924CEB600087151 /* CoordinatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorEvent.swift; sourceTree = "<group>"; };
 		14826C9A2924CECF00087151 /* CoordinatorPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorPublisher.swift; sourceTree = "<group>"; };
+		14826C9C2924D06000087151 /* Service-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Service-Info.plist"; path = "../../../../../Downloads/Service-Info.plist"; sourceTree = "<group>"; };
+		14826C9D2924D06000087151 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B53EC9F729236FCE00B87A55 /* Eoljuga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eoljuga.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B53EC9FA29236FCE00B87A55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B53EC9FC29236FCE00B87A55 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -277,6 +281,8 @@
 		B53EC9EE29236FCE00B87A55 = {
 			isa = PBXGroup;
 			children = (
+				14826C9D2924D06000087151 /* GoogleService-Info.plist */,
+				14826C9C2924D06000087151 /* Service-Info.plist */,
 				B53ECA2A2923704600B87A55 /* .swiftlint.auto.yml */,
 				B53ECA2B2923704700B87A55 /* .swiftlint.yml */,
 				B53EC9F929236FCE00B87A55 /* Eoljuga */,
@@ -448,9 +454,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				B53ECA2D2923704700B87A55 /* .swiftlint.yml in Resources */,
+				14826C9E2924D06000087151 /* Service-Info.plist in Resources */,
 				B53ECA2C2923704700B87A55 /* .swiftlint.auto.yml in Resources */,
 				B53ECA0729236FCF00B87A55 /* LaunchScreen.storyboard in Resources */,
 				B53ECA0429236FCF00B87A55 /* Assets.xcassets in Resources */,
+				14826C9F2924D06000087151 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
