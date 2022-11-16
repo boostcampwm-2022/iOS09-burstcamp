@@ -1,5 +1,5 @@
  input_dir: ${TARGETNAME}/Resource/
- output_dir: ${TARGETNAME}/Util/Constant/
+ output_dir: ${TARGETNAME}/Resource/Generated/
 
  xcassets:
    inputs:
