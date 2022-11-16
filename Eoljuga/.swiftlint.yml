@@ -16,8 +16,8 @@ opt_in_rules:
   - weak_delegate
   
 excluded:
-  - Pods
-  - Eoljuga/App/*
+  - Eoljuga/App
+  - Eoljuga/Resource
   - EoljugaTests
   - EoljugaUITests
 
