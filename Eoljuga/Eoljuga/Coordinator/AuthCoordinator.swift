@@ -42,6 +42,7 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
             }
             .store(in: &disposableBag)
         navigationController.viewControllers = [loginViewController]
+        navigationController.showNavigationBar()
     }
 
     func moveToTabBarFlow() {
