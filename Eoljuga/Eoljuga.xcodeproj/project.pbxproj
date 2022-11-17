@@ -17,7 +17,6 @@
 		141BC27D29261860003C415B /* UIView+addSubViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC27C29261860003C415B /* UIView+addSubViews.swift */; };
 		141BC27F29261874003C415B /* UIStackView+addArrangedSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC27E29261874003C415B /* UIStackView+addArrangedSubviews.swift */; };
 		141BC28129264AEA003C415B /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC28029264AEA003C415B /* Constant.swift */; };
-		141BC28329264D88003C415B /* Int+cgFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC28229264D88003C415B /* Int+cgFloat.swift */; };
 		141BC28A2926653C003C415B /* UILabel+LineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC2892926653C003C415B /* UILabel+LineHeight.swift */; };
 		14665BBF292500C100BC3F7D /* DefaultFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14665BBE292500C100BC3F7D /* DefaultFeedCell.swift */; };
 		14826C282923869D00087151 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C272923869D00087151 /* TabBarCoordinator.swift */; };
@@ -33,6 +32,7 @@
 		14826C9B2924CECF00087151 /* CoordinatorPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C9A2924CECF00087151 /* CoordinatorPublisher.swift */; };
 		14826C9E2924D06000087151 /* Service-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14826C9C2924D06000087151 /* Service-Info.plist */; };
 		14826C9F2924D06000087151 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14826C9D2924D06000087151 /* GoogleService-Info.plist */; };
+		14C1B8B0292688C100FFC194 /* TypeCasting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C1B8AF292688C100FFC194 /* TypeCasting.swift */; };
 		B50A26B12924E5FB00DF3E1F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B50A26B02924E5FB00DF3E1F /* FirebaseAnalytics */; };
 		B50A26B82925047700DF3E1F /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B50A26B72925047700DF3E1F /* Colors.xcassets */; };
 		B50A26C52925112000DF3E1F /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = B50A26C42925112000DF3E1F /* swiftgen.yml */; };
@@ -89,10 +89,6 @@
 		141BC27C29261860003C415B /* UIView+addSubViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addSubViews.swift"; sourceTree = "<group>"; };
 		141BC27E29261874003C415B /* UIStackView+addArrangedSubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+addArrangedSubviews.swift"; sourceTree = "<group>"; };
 		141BC28029264AEA003C415B /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Constant.swift; path = Eoljuga/Util/Extension/Constant.swift; sourceTree = SOURCE_ROOT; };
-		141BC28229264D88003C415B /* Int+cgFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+cgFloat.swift"; sourceTree = "<group>"; };
-		141BC286292660A0003C415B /* Eoljuga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Eoljuga.app; path = "/Users/youtak/Documents/study/boostcamp/eoljuga/Eoljuga/build/Debug-iphoneos/Eoljuga.app"; sourceTree = "<absolute>"; };
-		141BC287292660A0003C415B /* EoljugaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = EoljugaTests.xctest; path = "/Users/youtak/Documents/study/boostcamp/eoljuga/Eoljuga/build/Debug-iphoneos/EoljugaTests.xctest"; sourceTree = "<absolute>"; };
-		141BC288292660A0003C415B /* EoljugaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = EoljugaUITests.xctest; path = "/Users/youtak/Documents/study/boostcamp/eoljuga/Eoljuga/build/Debug-iphoneos/EoljugaUITests.xctest"; sourceTree = "<absolute>"; };
 		141BC2892926653C003C415B /* UILabel+LineHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+LineHeight.swift"; sourceTree = "<group>"; };
 		14665BBE292500C100BC3F7D /* DefaultFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFeedCell.swift; sourceTree = "<group>"; };
 		14826C272923869D00087151 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
@@ -108,6 +104,10 @@
 		14826C9A2924CECF00087151 /* CoordinatorPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorPublisher.swift; sourceTree = "<group>"; };
 		14826C9C2924D06000087151 /* Service-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Service-Info.plist"; sourceTree = "<group>"; };
 		14826C9D2924D06000087151 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		14C1B8AB2926883B00FFC194 /* Eoljuga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eoljuga.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		14C1B8AC2926883B00FFC194 /* EoljugaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EoljugaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		14C1B8AD2926883B00FFC194 /* EoljugaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EoljugaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		14C1B8AF292688C100FFC194 /* TypeCasting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCasting.swift; sourceTree = "<group>"; };
 		B50A26B72925047700DF3E1F /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		B50A26C42925112000DF3E1F /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		B50A26CD2925124800DF3E1F /* Fonts+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Fonts+Generated.swift"; sourceTree = "<group>"; };
@@ -323,7 +323,7 @@
 				B50A26D32925131500DF3E1F /* UIFont+FontSet.swift */,
 				141BC27C29261860003C415B /* UIView+addSubViews.swift */,
 				141BC27E29261874003C415B /* UIStackView+addArrangedSubviews.swift */,
-				141BC28229264D88003C415B /* Int+cgFloat.swift */,
+				14C1B8AF292688C100FFC194 /* TypeCasting.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -393,6 +393,9 @@
 				B53EC9F929236FCE00B87A55 /* Eoljuga */,
 				B53ECA1029236FCF00B87A55 /* EoljugaTests */,
 				B53ECA1A29236FCF00B87A55 /* EoljugaUITests */,
+				14C1B8AB2926883B00FFC194 /* Eoljuga.app */,
+				14C1B8AC2926883B00FFC194 /* EoljugaTests.xctest */,
+				14C1B8AD2926883B00FFC194 /* EoljugaUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -466,7 +469,7 @@
 				B50A26B02924E5FB00DF3E1F /* FirebaseAnalytics */,
 			);
 			productName = Eoljuga;
-			productReference = 141BC286292660A0003C415B /* Eoljuga.app */;
+			productReference = 14C1B8AB2926883B00FFC194 /* Eoljuga.app */;
 			productType = "com.apple.product-type.application";
 		};
 		B53ECA0C29236FCF00B87A55 /* EoljugaTests */ = {
@@ -484,7 +487,7 @@
 			);
 			name = EoljugaTests;
 			productName = EoljugaTests;
-			productReference = 141BC287292660A0003C415B /* EoljugaTests.xctest */;
+			productReference = 14C1B8AC2926883B00FFC194 /* EoljugaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		B53ECA1629236FCF00B87A55 /* EoljugaUITests */ = {
@@ -502,7 +505,7 @@
 			);
 			name = EoljugaUITests;
 			productName = EoljugaUITests;
-			productReference = 141BC288292660A0003C415B /* EoljugaUITests.xctest */;
+			productReference = 14C1B8AD2926883B00FFC194 /* EoljugaUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -653,12 +656,12 @@
 				141BC2712925C499003C415B /* ReusableView.swift in Sources */,
 				B53EC9FB29236FCE00B87A55 /* AppDelegate.swift in Sources */,
 				14826C2A2923A20D00087151 /* AuthCoordinator.swift in Sources */,
+				14C1B8B0292688C100FFC194 /* TypeCasting.swift in Sources */,
 				14826C972924CEAC00087151 /* Coordinator.swift in Sources */,
 				B53EC9FD29236FCE00B87A55 /* SceneDelegate.swift in Sources */,
 				141BC28A2926653C003C415B /* UILabel+LineHeight.swift in Sources */,
 				B50A26D02925124800DF3E1F /* Colors+Generated.swift in Sources */,
 				14826C2C2923A4C200087151 /* AppCoordinator.swift in Sources */,
-				141BC28329264D88003C415B /* Int+cgFloat.swift in Sources */,
 				14826C372923B49100087151 /* LoginViewController.swift in Sources */,
 				141BC27429260E3D003C415B /* DefaultFeedCellHeader.swift in Sources */,
 				141BC27829261001003C415B /* DefaultFeedCellFooter.swift in Sources */,
