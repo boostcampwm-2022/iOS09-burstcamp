@@ -43,7 +43,7 @@ final class HomeViewController: UIViewController {
     }
 
     private func configureViewController() {
-        view.backgroundColor = .orange
+        view.backgroundColor = .white
     }
 
     private func configureDefaultFeedCollectionView() {

@@ -35,5 +35,6 @@ enum Constant {
         static let profileSmall = 24
         static let thumbnailWidth = 100
         static let thumbnailHeight = 100
+        static let thumbnailCornerRadius = 10
     }
 }

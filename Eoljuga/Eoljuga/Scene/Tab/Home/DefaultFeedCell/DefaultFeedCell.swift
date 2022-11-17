@@ -46,7 +46,6 @@ final class DefaultFeedCell: UICollectionViewCell {
 
     private func configureMainStackView() {
         addSubview(mainStackView)
-        mainStackView.backgroundColor = .systemRed
         mainStackView.snp.makeConstraints {
             $0.top.equalTo(headerStackView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
