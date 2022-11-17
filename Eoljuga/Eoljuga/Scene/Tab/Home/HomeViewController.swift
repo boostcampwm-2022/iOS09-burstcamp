@@ -47,7 +47,6 @@ final class HomeViewController: UIViewController {
 
     private func configureDefaultFeedCollectionView() {
         view.addSubview(defaultFeedCollectionView)
-        defaultFeedCollectionView.backgroundColor = .orange
         defaultFeedCollectionView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
         }

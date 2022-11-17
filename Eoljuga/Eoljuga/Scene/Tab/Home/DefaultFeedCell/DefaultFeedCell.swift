@@ -23,9 +23,14 @@ final class DefaultFeedCell: UICollectionViewCell {
     }
 
     private func configureUI() {
+        configureCell()
         configureHeaderStackView()
         configureMainStackView()
         configureFooterStackView()
+    }
+
+    private func configureCell() {
+        backgroundColor = .clear
     }
 
     private func configureHeaderStackView() {
