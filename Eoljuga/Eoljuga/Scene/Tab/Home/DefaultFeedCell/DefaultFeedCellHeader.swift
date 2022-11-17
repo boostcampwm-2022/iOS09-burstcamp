@@ -15,6 +15,12 @@ class DefaultFeedCellHeader: UIStackView {
         $0.image = UIImage(systemName: "person")
     }
 
+    lazy var nameLabel = UILabel().then {
+        $0.textColor = UIColor.systemGray
+        $0.font = UIFont.bold12
+        $0.text = "S057"
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -26,7 +32,7 @@ class DefaultFeedCellHeader: UIStackView {
 
     private func configureUI() {
         configureStackView()
-        configureProfileImageView()
+        configureSubViews()
     }
 
     private func configureStackView() {
@@ -35,7 +41,8 @@ class DefaultFeedCellHeader: UIStackView {
         alignment = .fill
     }
 
-    private func configureProfileImageView() {
+    private func configureSubViews() {
         addArrangedSubview(profileImageView)
+        addArrangedSubview(nameLabel)
     }
 }
