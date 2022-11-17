@@ -23,7 +23,6 @@ class DefaultFeedCellMain: UIStackView {
         label.lineBreakMode = .byWordWrapping
         label.lineBreakStrategy = .hangulWordPriority
         label.numberOfLines = 3
-        $0.backgroundColor = UIColor.systemGray2
     }
 
     lazy var thumbnailImageView = UIImageView().then {

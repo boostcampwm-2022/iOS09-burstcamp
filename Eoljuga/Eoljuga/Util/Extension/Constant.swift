@@ -37,4 +37,8 @@ enum Constant {
         static let thumbnailHeight = 100
         static let thumbnailCornerRadius = 10
     }
+
+    enum Button {
+        static let script = 24
+    }
 }

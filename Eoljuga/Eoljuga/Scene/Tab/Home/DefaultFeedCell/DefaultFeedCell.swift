@@ -55,7 +55,6 @@ final class DefaultFeedCell: UICollectionViewCell {
 
     private func configureFooterStackView() {
         addSubview(footerStackView)
-        footerStackView.backgroundColor = .systemGreen
         footerStackView.snp.makeConstraints {
             $0.top.equalTo(mainStackView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
