@@ -83,7 +83,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        let width = defaultFeedCollectionView.frame.width - Constant.Padding.horizontral.cgFloat * 2
+        let width = defaultFeedCollectionView.frame.width - Constant.Padding.horizontal.cgFloat * 2
         return CGSize(width: width, height: 150)
     }
 }

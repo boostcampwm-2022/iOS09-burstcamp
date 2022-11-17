@@ -90,9 +90,9 @@
 		141BC27E29261874003C415B /* UIStackView+addArrangedSubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+addArrangedSubviews.swift"; sourceTree = "<group>"; };
 		141BC28029264AEA003C415B /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Constant.swift; path = Eoljuga/Util/Extension/Constant.swift; sourceTree = SOURCE_ROOT; };
 		141BC28229264D88003C415B /* Int+cgFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+cgFloat.swift"; sourceTree = "<group>"; };
-		141BC286292660A0003C415B /* Eoljuga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eoljuga.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		141BC287292660A0003C415B /* EoljugaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EoljugaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		141BC288292660A0003C415B /* EoljugaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EoljugaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		141BC286292660A0003C415B /* Eoljuga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Eoljuga.app; path = "/Users/youtak/Documents/study/boostcamp/eoljuga/Eoljuga/build/Debug-iphoneos/Eoljuga.app"; sourceTree = "<absolute>"; };
+		141BC287292660A0003C415B /* EoljugaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = EoljugaTests.xctest; path = "/Users/youtak/Documents/study/boostcamp/eoljuga/Eoljuga/build/Debug-iphoneos/EoljugaTests.xctest"; sourceTree = "<absolute>"; };
+		141BC288292660A0003C415B /* EoljugaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = EoljugaUITests.xctest; path = "/Users/youtak/Documents/study/boostcamp/eoljuga/Eoljuga/build/Debug-iphoneos/EoljugaUITests.xctest"; sourceTree = "<absolute>"; };
 		141BC2892926653C003C415B /* UILabel+LineHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+LineHeight.swift"; sourceTree = "<group>"; };
 		14665BBE292500C100BC3F7D /* DefaultFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFeedCell.swift; sourceTree = "<group>"; };
 		14826C272923869D00087151 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
@@ -393,9 +393,6 @@
 				B53EC9F929236FCE00B87A55 /* Eoljuga */,
 				B53ECA1029236FCF00B87A55 /* EoljugaTests */,
 				B53ECA1A29236FCF00B87A55 /* EoljugaUITests */,
-				141BC286292660A0003C415B /* Eoljuga.app */,
-				141BC287292660A0003C415B /* EoljugaTests.xctest */,
-				141BC288292660A0003C415B /* EoljugaUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};

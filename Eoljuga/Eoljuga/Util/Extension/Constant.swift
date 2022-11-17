@@ -21,7 +21,7 @@ enum Constant {
     static let space48 = 48
 
     enum Padding {
-        static let horizontral = 16
+        static let horizontal = 16
     }
 
     enum Cell {
