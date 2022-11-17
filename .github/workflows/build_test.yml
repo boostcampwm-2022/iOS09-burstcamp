@@ -1,0 +1,17 @@
+name: CI_Test
+
+on:
+  push:
+    branches: [ develop, feature/*, refactor/*, fix/* ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build & Test
+      run: xcodebuild clean test -project github-action-ex/github-action-ex.xcodeproj -scheme github-action-ex -destination 'platform=iOS Simulator,name=iPhone 14 Pro'
