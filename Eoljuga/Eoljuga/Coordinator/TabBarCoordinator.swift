@@ -32,7 +32,7 @@ class TabBarCoordinator: TabBarCoordinatorProtocol {
 
         let controllers: [UINavigationController] = pages.map({ prepareTabController($0) })
 
-        navigationController.navigationBar.isHidden = true
+        navigationController.hideNavigationBar()
         prepareTabBarController(with: controllers)
     }
 
