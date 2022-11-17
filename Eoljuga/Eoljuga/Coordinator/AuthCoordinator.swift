@@ -19,6 +19,7 @@ protocol AuthCoordinatorProtocol: CoordinatorPublisher {
 }
 
 final class AuthCoordinator: AuthCoordinatorProtocol {
+
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     var coordinatorPublisher = PassthroughSubject<CoordinatorEvent, Never>()
@@ -42,7 +43,6 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
             }
             .store(in: &disposableBag)
         navigationController.viewControllers = [loginViewController]
-        navigationController.showNavigationBar()
     }
 
     func moveToTabBarFlow() {

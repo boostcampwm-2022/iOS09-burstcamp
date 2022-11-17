@@ -7,25 +7,18 @@
 
 import Foundation
 
-enum TabBarPage {
+enum TabBarPage: Int {
     case home
     case bookmark
     case myPage
+}
 
+extension TabBarPage {
     init?(index: Int) {
-        switch index {
-        case 0:
-            self = .home
-        case 1:
-            self = .bookmark
-        case 2:
-            self = .myPage
-        default:
-            return nil
-        }
+        self.init(rawValue: index)
     }
 
-    func pageTitle() -> String {
+    var pageTitle: String {
         switch self {
         case .home: return "홈"
         case .bookmark: return "모아보기"
@@ -33,7 +26,7 @@ enum TabBarPage {
         }
     }
 
-    func pageIconTitle() -> String {
+    var pageIconTitle: String {
         switch self {
         case .home: return "house"
         case .bookmark: return "bookmark"
@@ -41,11 +34,7 @@ enum TabBarPage {
         }
     }
 
-    func pageOrderNumber() -> Int {
-        switch self {
-        case .home: return 0
-        case .bookmark: return 1
-        case .myPage: return 2
-        }
+    var index: Int {
+        return self.rawValue
     }
 }

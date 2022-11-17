@@ -11,17 +11,22 @@ import Then
 
 protocol TabBarCoordinatorProtocol: CoordinatorPublisher {
     var tabBarController: UITabBarController { get set }
+    var currentPage: TabBarPage? { get }
+
     func selectPage(_ page: TabBarPage)
-    func setSelectedIndex(_ index: Int)
-    func currentPage() -> TabBarPage?
 }
 
 final class TabBarCoordinator: TabBarCoordinatorProtocol {
+
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     var tabBarController = UITabBarController()
     var coordinatorPublisher = PassthroughSubject<CoordinatorEvent, Never>()
     var disposableBag = Set<AnyCancellable>()
+
+    var currentPage: TabBarPage? {
+        return TabBarPage.init(index: tabBarController.selectedIndex)
+    }
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -29,41 +34,29 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
 
     func start() {
         let controllers = [TabBarPage.myPage, TabBarPage.bookmark, TabBarPage.home]
-            .sorted(by: { $0.pageOrderNumber() < $1.pageOrderNumber() })
+            .sorted(by: { $0.index < $1.index })
             .map({ prepareTabController($0) })
 
         configureTabBarController(with: controllers)
-//        configureNavigationController()
     }
 
     func selectPage(_ page: TabBarPage) {
-        tabBarController.selectedIndex = page.pageOrderNumber()
-    }
-
-    func setSelectedIndex(_ index: Int) {
-        guard let page = TabBarPage.init(index: index) else { return }
-        tabBarController.selectedIndex = page.pageOrderNumber()
-    }
-
-    func currentPage() -> TabBarPage? {
-        return TabBarPage.init(index: tabBarController.selectedIndex)
+        tabBarController.selectedIndex = page.index
     }
 
     private func configureTabBarController(with tabControllers: [UIViewController]) {
         tabBarController.setViewControllers(tabControllers, animated: true)
-        tabBarController.selectedIndex = TabBarPage.home.pageOrderNumber()
+        tabBarController.selectedIndex = TabBarPage.home.index
         tabBarController.tabBar.backgroundColor = .white
-        // TODO: TabBar 설정 각자 View에서 처리
         tabBarController.tabBar.isTranslucent = false
         navigationController.viewControllers = [tabBarController]
     }
 
     private func configureTabBarItem(of viewController: UIViewController, with page: TabBarPage) {
-//        navigationController.setNavigationBarHidden(false, animated: false)
         viewController.tabBarItem = UITabBarItem(
-            title: page.pageTitle(),
-            image: UIImage(systemName: page.pageIconTitle()),
-            tag: page.pageOrderNumber()
+            title: page.pageTitle,
+            image: UIImage(systemName: page.pageIconTitle),
+            tag: page.index
         )
     }
 
