@@ -15,13 +15,14 @@ class DefaultFeedCellMain: UIView {
         $0.textAlignment = .left
         $0.textColor = UIColor.black
         $0.font = UIFont.bold14
+        print(UIFont.bold14.pointSize)
         $0.text = """
         [Swift 5.7+][Concurrency] AsyncStream, AsyncThrowingStream 알아보기 - Continuation vs unfoldin
         g [Swift 5.7+][Concurrency
         """
+        $0.lineHeight160()
         $0.lineBreakMode = .byWordWrapping
         $0.lineBreakStrategy = .hangulWordPriority
-
         $0.numberOfLines = 3
     }
 
