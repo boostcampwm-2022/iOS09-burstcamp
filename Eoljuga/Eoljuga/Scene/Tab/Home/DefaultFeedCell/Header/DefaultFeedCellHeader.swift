@@ -12,7 +12,8 @@ class DefaultFeedCellHeader: UIStackView {
     lazy var profileImageView = UIImageView().then {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 12
-        $0.image = UIImage(systemName: "person")
+        $0.image = UIImage(systemName: "square.fill")
+        $0.contentMode = .scaleAspectFill
     }
 
     lazy var nameLabel = UILabel().then {
@@ -42,6 +43,8 @@ class DefaultFeedCellHeader: UIStackView {
         distribution = .equalSpacing
         alignment = .fill
         spacing = 8
+        layoutMargins = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
+        isLayoutMarginsRelativeArrangement = true
     }
 
     private func configureSubViews() {
