@@ -9,11 +9,7 @@ import UIKit
 
 final class DefaultFeedCell: UICollectionViewCell {
 
-    lazy var headerStackView = UIStackView().then {
-        $0.axis = .horizontal
-        $0.distribution = .equalSpacing
-        $0.alignment = .fill
-    }
+    lazy var headerStackView = DefaultFeedCellHeader()
     lazy var mainStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.distribution = .equalSpacing

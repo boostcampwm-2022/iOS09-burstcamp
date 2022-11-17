@@ -10,6 +10,7 @@
 		141BC26C2925BDBA003C415B /* UINavigationController+navigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC26B2925BDBA003C415B /* UINavigationController+navigationBar.swift */; };
 		141BC26E2925BEA3003C415B /* UICollectionViewCell+identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC26D2925BEA3003C415B /* UICollectionViewCell+identifier.swift */; };
 		141BC2712925C499003C415B /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC2702925C499003C415B /* ReusableView.swift */; };
+		141BC27429260E3D003C415B /* DefaultFeedCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC27329260E3D003C415B /* DefaultFeedCellHeader.swift */; };
 		14665BBF292500C100BC3F7D /* DefaultFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14665BBE292500C100BC3F7D /* DefaultFeedCell.swift */; };
 		14826C282923869D00087151 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C272923869D00087151 /* TabBarCoordinator.swift */; };
 		14826C2A2923A20D00087151 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C292923A20D00087151 /* AuthCoordinator.swift */; };
@@ -73,6 +74,7 @@
 		141BC26B2925BDBA003C415B /* UINavigationController+navigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UINavigationController+navigationBar.swift"; path = "Eoljuga/Scene/Tab/Home/UINavigationController+navigationBar.swift"; sourceTree = SOURCE_ROOT; };
 		141BC26D2925BEA3003C415B /* UICollectionViewCell+identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UICollectionViewCell+identifier.swift"; path = "Eoljuga/Scene/Tab/Home/UICollectionViewCell+identifier.swift"; sourceTree = SOURCE_ROOT; };
 		141BC2702925C499003C415B /* ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
+		141BC27329260E3D003C415B /* DefaultFeedCellHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFeedCellHeader.swift; sourceTree = "<group>"; };
 		14665BBE292500C100BC3F7D /* DefaultFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFeedCell.swift; sourceTree = "<group>"; };
 		14826C272923869D00087151 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		14826C292923A20D00087151 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
@@ -152,6 +154,15 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		141BC27229260E11003C415B /* DefaultFeedCell */ = {
+			isa = PBXGroup;
+			children = (
+				14665BBE292500C100BC3F7D /* DefaultFeedCell.swift */,
+				141BC27329260E3D003C415B /* DefaultFeedCellHeader.swift */,
+			);
+			path = DefaultFeedCell;
+			sourceTree = "<group>";
+		};
 		14826C222923844100087151 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
@@ -177,8 +188,8 @@
 		14826C262923846900087151 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				141BC27229260E11003C415B /* DefaultFeedCell */,
 				14826C302923AA7300087151 /* HomeViewController.swift */,
-				14665BBE292500C100BC3F7D /* DefaultFeedCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -595,6 +606,7 @@
 				B50A26D02925124800DF3E1F /* Colors+Generated.swift in Sources */,
 				14826C2C2923A4C200087151 /* AppCoordinator.swift in Sources */,
 				14826C372923B49100087151 /* LoginViewController.swift in Sources */,
+				141BC27429260E3D003C415B /* DefaultFeedCellHeader.swift in Sources */,
 				14665BBF292500C100BC3F7D /* DefaultFeedCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
