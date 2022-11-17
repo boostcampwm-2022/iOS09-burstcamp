@@ -23,7 +23,7 @@ extension Coordinator {
         childCoordinators.removeAll()
     }
 
-    func remove(childCoodridnator: Coordinator) {
-        childCoordinators = childCoordinators.filter({ $0 !== childCoodridnator })
+    func remove(childCoordinator: Coordinator) {
+        childCoordinators = childCoordinators.filter({ $0 !== childCoordinator })
     }
 }

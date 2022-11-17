@@ -32,7 +32,7 @@ final class AppCoordinator: Coordinator {
             .sink { coordinatorEvent in
                 switch coordinatorEvent {
                 case .moveToTabBarFlow:
-                    self.remove(childCoodridnator: authCoordinator)
+                    self.remove(childCoordinator: authCoordinator)
                     self.showTabBarFlow()
                 case .moveToAuthFlow:
                     return
@@ -52,7 +52,7 @@ final class AppCoordinator: Coordinator {
                 case .moveToTabBarFlow:
                     return
                 case .moveToAuthFlow:
-                    self.remove(childCoodridnator: tabBarCoordinator)
+                    self.remove(childCoordinator: tabBarCoordinator)
                     self.showAuthFlow()
                 }
             }

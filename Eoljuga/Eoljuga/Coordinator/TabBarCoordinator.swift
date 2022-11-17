@@ -68,8 +68,8 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
         case .bookmark:
             controller = BookmarkViewController()
         case .myPage:
-            let mypageViewController = MyPageViewController()
-            mypageViewController.coordinatorPublisher
+            let myPageViewController = MyPageViewController()
+            myPageViewController.coordinatorPublisher
                 .sink { coordinatorEvent in
                     switch coordinatorEvent {
                     case .moveToAuthFlow:
@@ -80,7 +80,7 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
                     }
                 }
                 .store(in: &disposableBag)
-            controller = mypageViewController
+            controller = myPageViewController
         }
         configureTabBarItem(of: controller, with: page)
         return controller
