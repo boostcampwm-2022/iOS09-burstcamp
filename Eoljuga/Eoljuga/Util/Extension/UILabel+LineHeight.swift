@@ -8,7 +8,7 @@
 import UIKit
 
 extension UILabel {
-    func lineHeight160() {
+    func setLineHeight160() {
         guard let labelText = self.text else { return }
         let fontSize = self.font.pointSize
         let lineHeight = fontSize * 1.6
