@@ -28,21 +28,20 @@ final class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configure()
+        configureUI()
     }
 
-    private func configure() {
+    private func configureUI() {
         configureNavigationBar()
-        configureView()
+        configureViewController()
         configureDefaultFeedCollectionView()
     }
 
     private func configureNavigationBar() {
-//        navigationController?.navigationBar.isHidden = true
         navigationController?.navigationBar.backgroundColor = .brown
     }
 
-    private func configureView() {
+    private func configureViewController() {
         view.backgroundColor = .white
     }
 

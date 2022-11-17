@@ -27,11 +27,16 @@ final class DefaultFeedCell: UICollectionViewCell {
         $0.alignment = .fill
     }
 
-    override func layoutSubviews() {
-        configure()
+    override init(frame: CGRect) {
+        super.init(frame: .zero)
+        configureUI()
     }
 
-    private func configure() {
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
+    private func configureUI() {
         configureHeaderStackView()
         configureMainStackView()
         configureFooterStackView()
