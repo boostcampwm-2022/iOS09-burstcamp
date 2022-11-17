@@ -45,8 +45,6 @@ class DefaultFeedCellHeader: UIStackView {
     }
 
     private func configureSubViews() {
-        addArrangedSubview(profileImageView)
-        addArrangedSubview(nameLabel)
-        addArrangedSubview(badgeStackView)
+        addArrangedSubViews([profileImageView, nameLabel, badgeStackView])
     }
 }

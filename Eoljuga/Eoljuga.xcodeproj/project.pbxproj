@@ -14,6 +14,8 @@
 		141BC27629260FA8003C415B /* DefaultFeedCellMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC27529260FA8003C415B /* DefaultFeedCellMain.swift */; };
 		141BC27829261001003C415B /* DefaultFeedCellFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC27729261001003C415B /* DefaultFeedCellFooter.swift */; };
 		141BC27B292614EA003C415B /* DefaultFeedCellBadgeStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC27A292614EA003C415B /* DefaultFeedCellBadgeStackView.swift */; };
+		141BC27D29261860003C415B /* UIView+addSubViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC27C29261860003C415B /* UIView+addSubViews.swift */; };
+		141BC27F29261874003C415B /* UIStackView+addArrangedSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC27E29261874003C415B /* UIStackView+addArrangedSubviews.swift */; };
 		14665BBF292500C100BC3F7D /* DefaultFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14665BBE292500C100BC3F7D /* DefaultFeedCell.swift */; };
 		14826C282923869D00087151 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C272923869D00087151 /* TabBarCoordinator.swift */; };
 		14826C2A2923A20D00087151 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C292923A20D00087151 /* AuthCoordinator.swift */; };
@@ -81,6 +83,8 @@
 		141BC27529260FA8003C415B /* DefaultFeedCellMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFeedCellMain.swift; sourceTree = "<group>"; };
 		141BC27729261001003C415B /* DefaultFeedCellFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFeedCellFooter.swift; sourceTree = "<group>"; };
 		141BC27A292614EA003C415B /* DefaultFeedCellBadgeStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFeedCellBadgeStackView.swift; sourceTree = "<group>"; };
+		141BC27C29261860003C415B /* UIView+addSubViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addSubViews.swift"; sourceTree = "<group>"; };
+		141BC27E29261874003C415B /* UIStackView+addArrangedSubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+addArrangedSubviews.swift"; sourceTree = "<group>"; };
 		14665BBE292500C100BC3F7D /* DefaultFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFeedCell.swift; sourceTree = "<group>"; };
 		14826C272923869D00087151 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		14826C292923A20D00087151 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
@@ -294,6 +298,8 @@
 				141BC26D2925BEA3003C415B /* UICollectionViewCell+identifier.swift */,
 				B50A26D12925129A00DF3E1F /* UIColor+ColorSet.swift */,
 				B50A26D32925131500DF3E1F /* UIFont+FontSet.swift */,
+				141BC27C29261860003C415B /* UIView+addSubViews.swift */,
+				141BC27E29261874003C415B /* UIStackView+addArrangedSubviews.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -607,6 +613,7 @@
 				B50A26D42925131500DF3E1F /* UIFont+FontSet.swift in Sources */,
 				14826C992924CEB600087151 /* CoordinatorEvent.swift in Sources */,
 				141BC27629260FA8003C415B /* DefaultFeedCellMain.swift in Sources */,
+				141BC27F29261874003C415B /* UIStackView+addArrangedSubviews.swift in Sources */,
 				141BC26C2925BDBA003C415B /* UINavigationController+navigationBar.swift in Sources */,
 				14826C282923869D00087151 /* TabBarCoordinator.swift in Sources */,
 				B50A26CF2925124800DF3E1F /* Fonts+Generated.swift in Sources */,
@@ -627,6 +634,7 @@
 				14826C372923B49100087151 /* LoginViewController.swift in Sources */,
 				141BC27429260E3D003C415B /* DefaultFeedCellHeader.swift in Sources */,
 				141BC27829261001003C415B /* DefaultFeedCellFooter.swift in Sources */,
+				141BC27D29261860003C415B /* UIView+addSubViews.swift in Sources */,
 				14665BBF292500C100BC3F7D /* DefaultFeedCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
