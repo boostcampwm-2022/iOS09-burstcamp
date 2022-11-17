@@ -7,12 +7,12 @@
 
 import UIKit
 
-extension UIViewController {
+extension UINavigationController {
     func hideNavigationBar() {
-        navigationController?.navigationBar.isHidden = true
+        navigationBar.isHidden = true
     }
 
     func showNavigationBar() {
-        navigationController?.navigationBar.isHidden = false
+        navigationBar.isHidden = false
     }
 }
