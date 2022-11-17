@@ -38,7 +38,7 @@ class DefaultFeedCellBadgeStackView: UIStackView {
 
     private func configureUI() {
         configureStackView()
-        addSubviews()
+        addArrangedSubViews([domainLabel, numberLabel, camperIDLabel])
     }
 
     private func configureStackView() {
@@ -46,9 +46,5 @@ class DefaultFeedCellBadgeStackView: UIStackView {
         distribution = .equalSpacing
         alignment = .fill
         spacing = Constant.space4.cgFloat
-    }
-
-    private func addSubviews() {
-        addArrangedSubViews([domainLabel, numberLabel, camperIDLabel])
     }
 }

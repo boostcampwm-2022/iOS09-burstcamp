@@ -39,7 +39,8 @@ final class HomeViewController: UIViewController {
     }
 
     private func configureNavigationBar() {
-        navigationController?.navigationBar.backgroundColor = .brown
+        navigationController?.navigationBar.backgroundColor = .white
+        navigationController?.navigationBar.topItem?.title = "Hello, 얼죽아"
     }
 
     private func configureViewController() {

@@ -37,7 +37,7 @@ class DefaultFeedCellHeader: UIStackView {
 
     private func configureUI() {
         configureStackView()
-        addSubViews()
+        addArrangedSubViews([profileImageView, nameLabel, badgeStackView])
         configureProfileImageView()
     }
 
@@ -47,10 +47,6 @@ class DefaultFeedCellHeader: UIStackView {
         alignment = .center
         spacing = Constant.space8.cgFloat
         isLayoutMarginsRelativeArrangement = true
-    }
-
-    private func addSubViews() {
-        addArrangedSubViews([profileImageView, nameLabel, badgeStackView])
     }
 
     private func configureProfileImageView() {

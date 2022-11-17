@@ -171,10 +171,10 @@
 		141BC27229260E11003C415B /* DefaultFeedCell */ = {
 			isa = PBXGroup;
 			children = (
-				141BC279292614BE003C415B /* Header */,
 				14665BBE292500C100BC3F7D /* DefaultFeedCell.swift */,
-				141BC27529260FA8003C415B /* DefaultFeedCellMain.swift */,
-				141BC27729261001003C415B /* DefaultFeedCellFooter.swift */,
+				141BC279292614BE003C415B /* Header */,
+				141BC28429265CAE003C415B /* Main */,
+				141BC28529265CB1003C415B /* Footer */,
 			);
 			path = DefaultFeedCell;
 			sourceTree = "<group>";
@@ -186,6 +186,22 @@
 				141BC27A292614EA003C415B /* DefaultFeedCellBadgeStackView.swift */,
 			);
 			path = Header;
+			sourceTree = "<group>";
+		};
+		141BC28429265CAE003C415B /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				141BC27529260FA8003C415B /* DefaultFeedCellMain.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		141BC28529265CB1003C415B /* Footer */ = {
+			isa = PBXGroup;
+			children = (
+				141BC27729261001003C415B /* DefaultFeedCellFooter.swift */,
+			);
+			path = Footer;
 			sourceTree = "<group>";
 		};
 		14826C222923844100087151 /* Coordinator */ = {
