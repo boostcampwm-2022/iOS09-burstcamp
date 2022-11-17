@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		141BC26C2925BDBA003C415B /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC26B2925BDBA003C415B /* UIViewController+.swift */; };
-		141BC26E2925BEA3003C415B /* UICollectionViewCell+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC26D2925BEA3003C415B /* UICollectionViewCell+.swift */; };
+		141BC26C2925BDBA003C415B /* UIViewController+navigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC26B2925BDBA003C415B /* UIViewController+navigationBar.swift */; };
+		141BC26E2925BEA3003C415B /* UICollectionViewCell+identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC26D2925BEA3003C415B /* UICollectionViewCell+identifier.swift */; };
+		141BC2712925C499003C415B /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC2702925C499003C415B /* ReusableView.swift */; };
 		14665BBF292500C100BC3F7D /* DefaultFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14665BBE292500C100BC3F7D /* DefaultFeedCell.swift */; };
 		14826C282923869D00087151 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C272923869D00087151 /* TabBarCoordinator.swift */; };
 		14826C2A2923A20D00087151 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C292923A20D00087151 /* AuthCoordinator.swift */; };
@@ -24,6 +25,12 @@
 		14826C9E2924D06000087151 /* Service-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14826C9C2924D06000087151 /* Service-Info.plist */; };
 		14826C9F2924D06000087151 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14826C9D2924D06000087151 /* GoogleService-Info.plist */; };
 		B50A26B12924E5FB00DF3E1F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B50A26B02924E5FB00DF3E1F /* FirebaseAnalytics */; };
+		B50A26B82925047700DF3E1F /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B50A26B72925047700DF3E1F /* Colors.xcassets */; };
+		B50A26C52925112000DF3E1F /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = B50A26C42925112000DF3E1F /* swiftgen.yml */; };
+		B50A26CF2925124800DF3E1F /* Fonts+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A26CD2925124800DF3E1F /* Fonts+Generated.swift */; };
+		B50A26D02925124800DF3E1F /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A26CE2925124800DF3E1F /* Colors+Generated.swift */; };
+		B50A26D22925129A00DF3E1F /* UIColor+ColorSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A26D12925129A00DF3E1F /* UIColor+ColorSet.swift */; };
+		B50A26D42925131500DF3E1F /* UIFont+FontSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A26D32925131500DF3E1F /* UIFont+FontSet.swift */; };
 		B53EC9FB29236FCE00B87A55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53EC9FA29236FCE00B87A55 /* AppDelegate.swift */; };
 		B53EC9FD29236FCE00B87A55 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53EC9FC29236FCE00B87A55 /* SceneDelegate.swift */; };
 		B53ECA0429236FCF00B87A55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B53ECA0329236FCF00B87A55 /* Assets.xcassets */; };
@@ -63,8 +70,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		141BC26B2925BDBA003C415B /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIViewController+.swift"; path = "Eoljuga/Scene/Tab/Home/UIViewController+.swift"; sourceTree = SOURCE_ROOT; };
-		141BC26D2925BEA3003C415B /* UICollectionViewCell+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UICollectionViewCell+.swift"; path = "Eoljuga/Scene/Tab/Home/UICollectionViewCell+.swift"; sourceTree = SOURCE_ROOT; };
+		141BC26B2925BDBA003C415B /* UIViewController+navigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIViewController+navigationBar.swift"; path = "Eoljuga/Scene/Tab/Home/UIViewController+navigationBar.swift"; sourceTree = SOURCE_ROOT; };
+		141BC26D2925BEA3003C415B /* UICollectionViewCell+identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UICollectionViewCell+identifier.swift"; path = "Eoljuga/Scene/Tab/Home/UICollectionViewCell+identifier.swift"; sourceTree = SOURCE_ROOT; };
+		141BC2702925C499003C415B /* ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
 		14665BBE292500C100BC3F7D /* DefaultFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFeedCell.swift; sourceTree = "<group>"; };
 		14826C272923869D00087151 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		14826C292923A20D00087151 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
@@ -79,6 +87,12 @@
 		14826C9A2924CECF00087151 /* CoordinatorPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorPublisher.swift; sourceTree = "<group>"; };
 		14826C9C2924D06000087151 /* Service-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Service-Info.plist"; sourceTree = "<group>"; };
 		14826C9D2924D06000087151 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B50A26B72925047700DF3E1F /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		B50A26C42925112000DF3E1F /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
+		B50A26CD2925124800DF3E1F /* Fonts+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Fonts+Generated.swift"; sourceTree = "<group>"; };
+		B50A26CE2925124800DF3E1F /* Colors+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Colors+Generated.swift"; sourceTree = "<group>"; };
+		B50A26D12925129A00DF3E1F /* UIColor+ColorSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+ColorSet.swift"; sourceTree = "<group>"; };
+		B50A26D32925131500DF3E1F /* UIFont+FontSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+FontSet.swift"; sourceTree = "<group>"; };
 		B53EC9F729236FCE00B87A55 /* Eoljuga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eoljuga.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B53EC9FA29236FCE00B87A55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B53EC9FC29236FCE00B87A55 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -130,6 +144,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		141BC26F2925C468003C415B /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				141BC2702925C499003C415B /* ReusableView.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		14826C222923844100087151 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,8 +233,10 @@
 		B50A26462924BA3100DF3E1F /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				B50A26CC2925123600DF3E1F /* Generated */,
 				D85FB6DA2924EB57006ED875 /* Font */,
 				B53ECA0329236FCF00B87A55 /* Assets.xcassets */,
+				B50A26B72925047700DF3E1F /* Colors.xcassets */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -220,6 +244,7 @@
 		B50A26472924BABE00DF3E1F /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				141BC26F2925C468003C415B /* Protocol */,
 				B50A264A2924BD7600DF3E1F /* Constant */,
 				B50A264B2924BD8C00DF3E1F /* Error */,
 				B50A26492924BD6E00DF3E1F /* Extension */,
@@ -237,8 +262,10 @@
 		B50A26492924BD6E00DF3E1F /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				141BC26B2925BDBA003C415B /* UIViewController+.swift */,
-				141BC26D2925BEA3003C415B /* UICollectionViewCell+.swift */,
+				141BC26B2925BDBA003C415B /* UIViewController+navigationBar.swift */,
+				141BC26D2925BEA3003C415B /* UICollectionViewCell+identifier.swift */,
+				B50A26D12925129A00DF3E1F /* UIColor+ColorSet.swift */,
+				B50A26D32925131500DF3E1F /* UIFont+FontSet.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -294,6 +321,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B50A26CC2925123600DF3E1F /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				B50A26CE2925124800DF3E1F /* Colors+Generated.swift */,
+				B50A26CD2925124800DF3E1F /* Fonts+Generated.swift */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
 		B53EC9EE29236FCE00B87A55 = {
 			isa = PBXGroup;
 			children = (
@@ -301,6 +337,7 @@
 				14826C9C2924D06000087151 /* Service-Info.plist */,
 				B53ECA2A2923704600B87A55 /* .swiftlint.auto.yml */,
 				B53ECA2B2923704700B87A55 /* .swiftlint.yml */,
+				B50A26C42925112000DF3E1F /* swiftgen.yml */,
 				B53EC9F929236FCE00B87A55 /* Eoljuga */,
 				B53ECA1029236FCF00B87A55 /* EoljugaTests */,
 				B53ECA1A29236FCF00B87A55 /* EoljugaUITests */,
@@ -367,6 +404,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B53ECA2129236FCF00B87A55 /* Build configuration list for PBXNativeTarget "Eoljuga" */;
 			buildPhases = (
+				B50A26C3292510FC00DF3E1F /* SwiftGen */,
 				B53EC9F329236FCE00B87A55 /* Sources */,
 				B53EC9F429236FCE00B87A55 /* Frameworks */,
 				B53EC9F529236FCE00B87A55 /* Resources */,
@@ -481,12 +519,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				B53ECA2D2923704700B87A55 /* .swiftlint.yml in Resources */,
+				B50A26B82925047700DF3E1F /* Colors.xcassets in Resources */,
 				D85FB6DF2924EFCA006ED875 /* NanumSquareB.otf in Resources */,
 				14826C9E2924D06000087151 /* Service-Info.plist in Resources */,
 				B53ECA2C2923704700B87A55 /* .swiftlint.auto.yml in Resources */,
 				B53ECA0729236FCF00B87A55 /* LaunchScreen.storyboard in Resources */,
 				B53ECA0429236FCF00B87A55 /* Assets.xcassets in Resources */,
 				D85FB6E02924EFCC006ED875 /* NanumSquareEB.otf in Resources */,
+				B50A26C52925112000DF3E1F /* swiftgen.yml in Resources */,
 				D85FB6E12924EFCE006ED875 /* NanumSquareR.otf in Resources */,
 				14826C9F2924D06000087151 /* GoogleService-Info.plist in Resources */,
 			);
@@ -509,6 +549,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		B50A26C3292510FC00DF3E1F /* SwiftGen */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftGen;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftgen > /dev/null; then\n  swiftgen\nelse\n  echo \"warning: SwiftGen not installed, download from https://github.com/SwiftGen/SwiftGen\"\nfi\n";
+		};
 		B53ECA2E2923704D00B87A55 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -536,18 +595,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				14826C8D2924AC8B00087151 /* TabBarPage.swift in Sources */,
+				B50A26D42925131500DF3E1F /* UIFont+FontSet.swift in Sources */,
 				14826C992924CEB600087151 /* CoordinatorEvent.swift in Sources */,
-				141BC26C2925BDBA003C415B /* UIViewController+.swift in Sources */,
+				141BC26C2925BDBA003C415B /* UIViewController+navigationBar.swift in Sources */,
 				14826C282923869D00087151 /* TabBarCoordinator.swift in Sources */,
+				B50A26CF2925124800DF3E1F /* Fonts+Generated.swift in Sources */,
 				14826C332923AACB00087151 /* BookmarkViewController.swift in Sources */,
+				B50A26D22925129A00DF3E1F /* UIColor+ColorSet.swift in Sources */,
 				14826C9B2924CECF00087151 /* CoordinatorPublisher.swift in Sources */,
-				141BC26E2925BEA3003C415B /* UICollectionViewCell+.swift in Sources */,
+				141BC26E2925BEA3003C415B /* UICollectionViewCell+identifier.swift in Sources */,
 				14826C312923AA7300087151 /* HomeViewController.swift in Sources */,
 				14826C352923AB0300087151 /* MyPageViewController.swift in Sources */,
+				141BC2712925C499003C415B /* ReusableView.swift in Sources */,
 				B53EC9FB29236FCE00B87A55 /* AppDelegate.swift in Sources */,
 				14826C2A2923A20D00087151 /* AuthCoordinator.swift in Sources */,
 				14826C972924CEAC00087151 /* Coordinator.swift in Sources */,
 				B53EC9FD29236FCE00B87A55 /* SceneDelegate.swift in Sources */,
+				B50A26D02925124800DF3E1F /* Colors+Generated.swift in Sources */,
 				14826C2C2923A4C200087151 /* AppCoordinator.swift in Sources */,
 				14826C372923B49100087151 /* LoginViewController.swift in Sources */,
 				14665BBF292500C100BC3F7D /* DefaultFeedCell.swift in Sources */,
