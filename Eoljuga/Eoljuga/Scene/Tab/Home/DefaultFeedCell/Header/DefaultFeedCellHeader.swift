@@ -18,9 +18,11 @@ class DefaultFeedCellHeader: UIStackView {
     lazy var nameLabel = UILabel().then {
         $0.textColor = UIColor.systemGray
         $0.font = UIFont.bold12
-        $0.text = "S057"
+        $0.text = "하늘이"
     }
-    
+
+    lazy var badgeStackView = DefaultFeedCellBadgeStackView()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -39,10 +41,12 @@ class DefaultFeedCellHeader: UIStackView {
         axis = .horizontal
         distribution = .equalSpacing
         alignment = .fill
+        spacing = 8
     }
 
     private func configureSubViews() {
         addArrangedSubview(profileImageView)
         addArrangedSubview(nameLabel)
+        addArrangedSubview(badgeStackView)
     }
 }

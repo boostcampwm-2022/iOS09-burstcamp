@@ -32,7 +32,7 @@ final class DefaultFeedCell: UICollectionViewCell {
         addSubview(headerStackView)
         headerStackView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(5)
-            $0.horizontalEdges.equalToSuperview()
+            $0.leading.equalToSuperview()
             $0.height.equalTo(40)
         }
     }

@@ -13,6 +13,7 @@
 		141BC27429260E3D003C415B /* DefaultFeedCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC27329260E3D003C415B /* DefaultFeedCellHeader.swift */; };
 		141BC27629260FA8003C415B /* DefaultFeedCellMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC27529260FA8003C415B /* DefaultFeedCellMain.swift */; };
 		141BC27829261001003C415B /* DefaultFeedCellFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC27729261001003C415B /* DefaultFeedCellFooter.swift */; };
+		141BC27B292614EA003C415B /* DefaultFeedCellBadgeStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC27A292614EA003C415B /* DefaultFeedCellBadgeStackView.swift */; };
 		14665BBF292500C100BC3F7D /* DefaultFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14665BBE292500C100BC3F7D /* DefaultFeedCell.swift */; };
 		14826C282923869D00087151 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C272923869D00087151 /* TabBarCoordinator.swift */; };
 		14826C2A2923A20D00087151 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C292923A20D00087151 /* AuthCoordinator.swift */; };
@@ -79,6 +80,7 @@
 		141BC27329260E3D003C415B /* DefaultFeedCellHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFeedCellHeader.swift; sourceTree = "<group>"; };
 		141BC27529260FA8003C415B /* DefaultFeedCellMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFeedCellMain.swift; sourceTree = "<group>"; };
 		141BC27729261001003C415B /* DefaultFeedCellFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFeedCellFooter.swift; sourceTree = "<group>"; };
+		141BC27A292614EA003C415B /* DefaultFeedCellBadgeStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFeedCellBadgeStackView.swift; sourceTree = "<group>"; };
 		14665BBE292500C100BC3F7D /* DefaultFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFeedCell.swift; sourceTree = "<group>"; };
 		14826C272923869D00087151 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		14826C292923A20D00087151 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
@@ -161,12 +163,21 @@
 		141BC27229260E11003C415B /* DefaultFeedCell */ = {
 			isa = PBXGroup;
 			children = (
+				141BC279292614BE003C415B /* Header */,
 				14665BBE292500C100BC3F7D /* DefaultFeedCell.swift */,
-				141BC27329260E3D003C415B /* DefaultFeedCellHeader.swift */,
 				141BC27529260FA8003C415B /* DefaultFeedCellMain.swift */,
 				141BC27729261001003C415B /* DefaultFeedCellFooter.swift */,
 			);
 			path = DefaultFeedCell;
+			sourceTree = "<group>";
+		};
+		141BC279292614BE003C415B /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				141BC27329260E3D003C415B /* DefaultFeedCellHeader.swift */,
+				141BC27A292614EA003C415B /* DefaultFeedCellBadgeStackView.swift */,
+			);
+			path = Header;
 			sourceTree = "<group>";
 		};
 		14826C222923844100087151 /* Coordinator */ = {
@@ -604,6 +615,7 @@
 				14826C9B2924CECF00087151 /* CoordinatorPublisher.swift in Sources */,
 				141BC26E2925BEA3003C415B /* UICollectionViewCell+identifier.swift in Sources */,
 				14826C312923AA7300087151 /* HomeViewController.swift in Sources */,
+				141BC27B292614EA003C415B /* DefaultFeedCellBadgeStackView.swift in Sources */,
 				14826C352923AB0300087151 /* MyPageViewController.swift in Sources */,
 				141BC2712925C499003C415B /* ReusableView.swift in Sources */,
 				B53EC9FB29236FCE00B87A55 /* AppDelegate.swift in Sources */,
