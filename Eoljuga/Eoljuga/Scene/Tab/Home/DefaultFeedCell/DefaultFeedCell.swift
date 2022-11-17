@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SnapKit
+
 final class DefaultFeedCell: UICollectionViewCell {
 
     lazy var headerStackView = DefaultFeedCellHeader()

@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SnapKit
+
 class DefaultFeedCellHeader: UIStackView {
 
     lazy var profileImageView = UIImageView().then {
@@ -35,19 +37,25 @@ class DefaultFeedCellHeader: UIStackView {
 
     private func configureUI() {
         configureStackView()
-        configureSubViews()
+        addSubViews()
+        configureProfileImageView()
     }
 
     private func configureStackView() {
         axis = .horizontal
         distribution = .equalSpacing
-        alignment = .fill
+        alignment = .center
         spacing = 8
-        layoutMargins = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
         isLayoutMarginsRelativeArrangement = true
     }
 
-    private func configureSubViews() {
+    private func addSubViews() {
         addArrangedSubViews([profileImageView, nameLabel, badgeStackView])
+    }
+
+    private func configureProfileImageView() {
+        profileImageView.snp.makeConstraints {
+            $0.width.height.equalTo(24)
+        }
     }
 }

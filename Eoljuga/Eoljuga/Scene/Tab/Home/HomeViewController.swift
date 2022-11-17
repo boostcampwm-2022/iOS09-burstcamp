@@ -21,6 +21,7 @@ final class HomeViewController: UIViewController {
         layout.minimumLineSpacing = 0
         layout.sectionInset = .zero
         $0.collectionViewLayout = layout
+        $0.showsVerticalScrollIndicator = false
         $0.delegate = self
         $0.dataSource = self
         $0.register(DefaultFeedCell.self, forCellWithReuseIdentifier: DefaultFeedCell.identifier)
@@ -42,7 +43,7 @@ final class HomeViewController: UIViewController {
     }
 
     private func configureViewController() {
-        view.backgroundColor = .white
+        view.backgroundColor = .orange
     }
 
     private func configureDefaultFeedCollectionView() {
@@ -81,6 +82,6 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return CGSize(width: view.frame.width, height: 150)
+        return CGSize(width: defaultFeedCollectionView.frame.width - 32, height: 150)
     }
 }
