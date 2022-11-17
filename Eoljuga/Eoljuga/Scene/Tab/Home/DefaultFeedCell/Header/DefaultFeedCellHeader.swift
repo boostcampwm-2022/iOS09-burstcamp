@@ -13,7 +13,7 @@ class DefaultFeedCellHeader: UIStackView {
 
     lazy var profileImageView = UIImageView().then {
         $0.clipsToBounds = true
-        $0.layer.cornerRadius = 12
+        $0.layer.cornerRadius = Constant.Image.profileSmall.cgFloat / 2
         $0.image = UIImage(systemName: "square.fill")
         $0.contentMode = .scaleAspectFill
     }
@@ -45,7 +45,7 @@ class DefaultFeedCellHeader: UIStackView {
         axis = .horizontal
         distribution = .equalSpacing
         alignment = .center
-        spacing = 8
+        spacing = Constant.space8.cgFloat
         isLayoutMarginsRelativeArrangement = true
     }
 
@@ -55,7 +55,7 @@ class DefaultFeedCellHeader: UIStackView {
 
     private func configureProfileImageView() {
         profileImageView.snp.makeConstraints {
-            $0.width.height.equalTo(24)
+            $0.width.height.equalTo(Constant.Image.profileSmall)
         }
     }
 }

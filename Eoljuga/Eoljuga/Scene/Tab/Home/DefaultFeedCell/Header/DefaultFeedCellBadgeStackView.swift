@@ -45,7 +45,7 @@ class DefaultFeedCellBadgeStackView: UIStackView {
         axis = .horizontal
         distribution = .equalSpacing
         alignment = .fill
-        spacing = 4
+        spacing = Constant.space4.cgFloat
     }
 
     private func addSubviews() {

@@ -38,9 +38,9 @@ final class DefaultFeedCell: UICollectionViewCell {
     private func configureHeaderStackView() {
         addSubview(headerStackView)
         headerStackView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(5)
+            $0.top.equalToSuperview().inset(Constant.Cell.topMargin)
             $0.leading.equalToSuperview()
-            $0.height.equalTo(40)
+            $0.height.equalTo(Constant.Cell.headerHeight)
         }
     }
 
@@ -50,7 +50,7 @@ final class DefaultFeedCell: UICollectionViewCell {
         mainStackView.snp.makeConstraints {
             $0.top.equalTo(headerStackView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(75)
+            $0.height.equalTo(Constant.Cell.mainHeight)
         }
     }
 
@@ -60,7 +60,7 @@ final class DefaultFeedCell: UICollectionViewCell {
         footerStackView.snp.makeConstraints {
             $0.top.equalTo(mainStackView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(30)
+            $0.height.equalTo(Constant.Cell.footerHeight)
         }
     }
 }

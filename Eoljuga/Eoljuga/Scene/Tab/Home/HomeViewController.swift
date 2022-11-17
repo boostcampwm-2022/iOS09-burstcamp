@@ -18,7 +18,7 @@ final class HomeViewController: UIViewController {
     ).then {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 0
+        layout.minimumLineSpacing = Constant.zero.cgFloat
         layout.sectionInset = .zero
         $0.collectionViewLayout = layout
         $0.showsVerticalScrollIndicator = false
@@ -82,6 +82,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return CGSize(width: defaultFeedCollectionView.frame.width - 32, height: 150)
+        let width = defaultFeedCollectionView.frame.width - Constant.Padding.horizontral.cgFloat * 2
+        return CGSize(width: width, height: 150)
     }
 }
