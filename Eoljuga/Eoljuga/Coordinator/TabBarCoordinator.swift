@@ -22,7 +22,7 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
     var navigationController: UINavigationController
     var tabBarController = UITabBarController()
     var coordinatorPublisher = PassthroughSubject<CoordinatorEvent, Never>()
-    var disposableBag = Set<AnyCancellable>()
+    var cancelBag = Set<AnyCancellable>()
 
     var currentPage: TabBarPage? {
         return TabBarPage.init(index: tabBarController.selectedIndex)
@@ -79,7 +79,7 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
                         return
                     }
                 }
-                .store(in: &disposableBag)
+                .store(in: &cancelBag)
             controller = myPageViewController
         }
         configureTabBarItem(of: controller, with: page)

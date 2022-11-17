@@ -11,7 +11,7 @@ import UIKit
 final class AppCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
-    var disposableBag = Set<AnyCancellable>()
+    var cancelBag = Set<AnyCancellable>()
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -38,7 +38,7 @@ final class AppCoordinator: Coordinator {
                     return
                 }
             }
-            .store(in: &disposableBag)
+            .store(in: &cancelBag)
         childCoordinators.append(authCoordinator)
         authCoordinator.start()
     }
@@ -56,7 +56,7 @@ final class AppCoordinator: Coordinator {
                     self.showAuthFlow()
                 }
             }
-            .store(in: &disposableBag)
+            .store(in: &cancelBag)
         childCoordinators.append(tabBarCoordinator)
         tabBarCoordinator.start()
     }
