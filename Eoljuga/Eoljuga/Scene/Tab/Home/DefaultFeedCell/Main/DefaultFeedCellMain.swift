@@ -9,20 +9,20 @@ import UIKit
 
 import SnapKit
 
-class DefaultFeedCellMain: UIStackView {
+class DefaultFeedCellMain: UIView {
 
     lazy var titleLabel = UILabel().then {
         $0.textAlignment = .left
         $0.textColor = UIColor.black
         $0.font = UIFont.bold14
         $0.text = """
-        hello world, hello world, hello world, hello world, hello world, hello world,
-        hello world, hello world, hello world, hello world, hello world, hello world,
+        [Swift 5.7+][Concurrency] AsyncStream, AsyncThrowingStream 알아보기 - Continuation vs unfoldin
+        g [Swift 5.7+][Concurrency
         """
-        let label = UILabel()
-        label.lineBreakMode = .byWordWrapping
-        label.lineBreakStrategy = .hangulWordPriority
-        label.numberOfLines = 3
+        $0.lineBreakMode = .byWordWrapping
+        $0.lineBreakStrategy = .hangulWordPriority
+
+        $0.numberOfLines = 3
     }
 
     lazy var thumbnailImageView = UIImageView().then {
@@ -41,31 +41,25 @@ class DefaultFeedCellMain: UIStackView {
     }
 
     private func configureUI() {
-        configureStackView()
-        configureTitleLabel()
         configureThumbnailImageView()
-    }
-
-    private func configureStackView() {
-        axis = .horizontal
-        distribution = .equalSpacing
-        alignment = .fill
-        spacing = Constant.space8.cgFloat
-    }
-
-    private func configureTitleLabel() {
-        addArrangedSubview(titleLabel)
-        titleLabel.snp.makeConstraints {
-//            $0.height.equalToSuperview()
-            $0.bottom.greaterThanOrEqualToSuperview()
-        }
+        configureTitleLabel()
     }
 
     private func configureThumbnailImageView() {
-        addArrangedSubview(thumbnailImageView)
+        addSubview(thumbnailImageView)
         thumbnailImageView.snp.makeConstraints {
             $0.height.equalToSuperview()
+            $0.trailing.equalToSuperview()
             $0.width.equalTo(Constant.Image.thumbnailWidth)
+        }
+    }
+
+    private func configureTitleLabel() {
+        addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.trailing.equalTo(thumbnailImageView.snp.leading).offset(-Constant.space8)
         }
     }
 }
