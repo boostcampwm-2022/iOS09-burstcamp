@@ -11,11 +11,7 @@ final class DefaultFeedCell: UICollectionViewCell {
 
     lazy var headerStackView = DefaultFeedCellHeader()
     lazy var mainStackView = DefaultFeedCellMain()
-    lazy var footerStackView = UIStackView().then {
-        $0.axis = .horizontal
-        $0.distribution = .equalSpacing
-        $0.alignment = .fill
-    }
+    lazy var footerStackView = DefaultFeedCellFooter()
 
     override init(frame: CGRect) {
         super.init(frame: .zero)
