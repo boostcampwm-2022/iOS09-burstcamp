@@ -8,6 +8,13 @@
 import UIKit
 
 class DefaultFeedCellHeader: UIStackView {
+
+    lazy var profileImageView = UIImageView().then {
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 12
+        $0.image = UIImage(systemName: "person")
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -18,8 +25,17 @@ class DefaultFeedCellHeader: UIStackView {
     }
 
     private func configureUI() {
+        configureStackView()
+        configureProfileImageView()
+    }
+
+    private func configureStackView() {
         axis = .horizontal
         distribution = .equalSpacing
         alignment = .fill
+    }
+
+    private func configureProfileImageView() {
+        addArrangedSubview(profileImageView)
     }
 }
