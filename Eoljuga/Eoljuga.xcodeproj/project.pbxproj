@@ -93,15 +93,15 @@
 		B50A26CE2925124800DF3E1F /* Colors+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Colors+Generated.swift"; sourceTree = "<group>"; };
 		B50A26D12925129A00DF3E1F /* UIColor+ColorSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+ColorSet.swift"; sourceTree = "<group>"; };
 		B50A26D32925131500DF3E1F /* UIFont+FontSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+FontSet.swift"; sourceTree = "<group>"; };
-		B53EC9F729236FCE00B87A55 /* Eoljuga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Eoljuga.app; path = "/Users/youtak/Documents/study/boostcamp/eoljuga/Eoljuga/build/Debug-iphoneos/Eoljuga.app"; sourceTree = "<absolute>"; };
+		B50A26E52926517300DF3E1F /* Eoljuga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Eoljuga.app; path = "/Users/seuoh/Documents/workspace/Boostcamp/Membership/groupProject/iOS09-eoljug-a/Eoljuga/build/Debug-iphoneos/Eoljuga.app"; sourceTree = "<absolute>"; };
+		B50A26E62926517300DF3E1F /* EoljugaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = EoljugaTests.xctest; path = "/Users/seuoh/Documents/workspace/Boostcamp/Membership/groupProject/iOS09-eoljug-a/Eoljuga/build/Debug-iphoneos/EoljugaTests.xctest"; sourceTree = "<absolute>"; };
+		B50A26E72926517300DF3E1F /* EoljugaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = EoljugaUITests.xctest; path = "/Users/seuoh/Documents/workspace/Boostcamp/Membership/groupProject/iOS09-eoljug-a/Eoljuga/build/Debug-iphoneos/EoljugaUITests.xctest"; sourceTree = "<absolute>"; };
 		B53EC9FA29236FCE00B87A55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B53EC9FC29236FCE00B87A55 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B53ECA0329236FCF00B87A55 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B53ECA0629236FCF00B87A55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B53ECA0829236FCF00B87A55 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B53ECA0D29236FCF00B87A55 /* EoljugaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = EoljugaTests.xctest; path = "/Users/youtak/Documents/study/boostcamp/eoljuga/Eoljuga/build/Debug-iphoneos/EoljugaTests.xctest"; sourceTree = "<absolute>"; };
 		B53ECA1129236FCF00B87A55 /* EoljugaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EoljugaTests.swift; sourceTree = "<group>"; };
-		B53ECA1729236FCF00B87A55 /* EoljugaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = EoljugaUITests.xctest; path = "/Users/youtak/Documents/study/boostcamp/eoljuga/Eoljuga/build/Debug-iphoneos/EoljugaUITests.xctest"; sourceTree = "<absolute>"; };
 		B53ECA1B29236FCF00B87A55 /* EoljugaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EoljugaUITests.swift; sourceTree = "<group>"; };
 		B53ECA1D29236FCF00B87A55 /* EoljugaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EoljugaUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B53ECA2A2923704600B87A55 /* .swiftlint.auto.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.auto.yml; sourceTree = "<group>"; };
@@ -407,7 +407,7 @@
 				B50A26B02924E5FB00DF3E1F /* FirebaseAnalytics */,
 			);
 			productName = Eoljuga;
-			productReference = B53EC9F729236FCE00B87A55 /* Eoljuga.app */;
+			productReference = B50A26E52926517300DF3E1F /* Eoljuga.app */;
 			productType = "com.apple.product-type.application";
 		};
 		B53ECA0C29236FCF00B87A55 /* EoljugaTests */ = {
@@ -425,7 +425,7 @@
 			);
 			name = EoljugaTests;
 			productName = EoljugaTests;
-			productReference = B53ECA0D29236FCF00B87A55 /* EoljugaTests.xctest */;
+			productReference = B50A26E62926517300DF3E1F /* EoljugaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		B53ECA1629236FCF00B87A55 /* EoljugaUITests */ = {
@@ -443,7 +443,7 @@
 			);
 			name = EoljugaUITests;
 			productName = EoljugaUITests;
-			productReference = B53ECA1729236FCF00B87A55 /* EoljugaUITests.xctest */;
+			productReference = B50A26E72926517300DF3E1F /* EoljugaUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
