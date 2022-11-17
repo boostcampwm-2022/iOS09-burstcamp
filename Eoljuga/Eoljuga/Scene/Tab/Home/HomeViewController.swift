@@ -33,6 +33,7 @@ final class HomeViewController: UIViewController {
     }
 
     private func configureUI() {
+        view.addSubViews([defaultFeedCollectionView])
         configureNavigationBar()
         configureViewController()
         configureDefaultFeedCollectionView()
@@ -48,7 +49,6 @@ final class HomeViewController: UIViewController {
     }
 
     private func configureDefaultFeedCollectionView() {
-        view.addSubview(defaultFeedCollectionView)
         defaultFeedCollectionView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
         }

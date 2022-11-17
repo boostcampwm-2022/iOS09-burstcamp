@@ -37,13 +37,13 @@ class DefaultFeedCellFooter: UIView {
     }
 
     private func configureUI() {
+        addSubViews([scriptButton, countLabel, timeLabel])
         configureScriptButton()
         configureCountLabel()
         configureTimeLabel()
     }
 
     private func configureScriptButton() {
-        addSubview(scriptButton)
         scriptButton.snp.makeConstraints {
             $0.width.height.equalTo(Constant.Button.script)
             $0.leading.equalToSuperview()
@@ -52,7 +52,6 @@ class DefaultFeedCellFooter: UIView {
     }
 
     private func configureCountLabel() {
-        addSubview(countLabel)
         countLabel.snp.makeConstraints {
             $0.height.equalToSuperview()
             $0.centerY.equalToSuperview()
@@ -61,7 +60,6 @@ class DefaultFeedCellFooter: UIView {
     }
 
     private func configureTimeLabel() {
-        addSubview(timeLabel)
         timeLabel.snp.makeConstraints {
             $0.height.equalToSuperview()
             $0.centerY.equalToSuperview()

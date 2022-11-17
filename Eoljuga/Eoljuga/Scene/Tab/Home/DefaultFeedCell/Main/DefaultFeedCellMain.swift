@@ -42,12 +42,12 @@ class DefaultFeedCellMain: UIView {
     }
 
     private func configureUI() {
+        addSubViews([thumbnailImageView, titleLabel])
         configureThumbnailImageView()
         configureTitleLabel()
     }
 
     private func configureThumbnailImageView() {
-        addSubview(thumbnailImageView)
         thumbnailImageView.snp.makeConstraints {
             $0.height.equalToSuperview()
             $0.trailing.equalToSuperview()
@@ -56,7 +56,6 @@ class DefaultFeedCellMain: UIView {
     }
 
     private func configureTitleLabel() {
-        addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview()
