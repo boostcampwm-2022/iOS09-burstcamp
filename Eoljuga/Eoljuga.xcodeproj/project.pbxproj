@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		141BC26C2925BDBA003C415B /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC26B2925BDBA003C415B /* UIViewController+.swift */; };
+		141BC26E2925BEA3003C415B /* UICollectionViewCell+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BC26D2925BEA3003C415B /* UICollectionViewCell+.swift */; };
 		14665BBF292500C100BC3F7D /* DefaultFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14665BBE292500C100BC3F7D /* DefaultFeedCell.swift */; };
 		14826C282923869D00087151 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C272923869D00087151 /* TabBarCoordinator.swift */; };
 		14826C2A2923A20D00087151 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14826C292923A20D00087151 /* AuthCoordinator.swift */; };
@@ -63,6 +64,7 @@
 
 /* Begin PBXFileReference section */
 		141BC26B2925BDBA003C415B /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIViewController+.swift"; path = "Eoljuga/Scene/Tab/Home/UIViewController+.swift"; sourceTree = SOURCE_ROOT; };
+		141BC26D2925BEA3003C415B /* UICollectionViewCell+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UICollectionViewCell+.swift"; path = "Eoljuga/Scene/Tab/Home/UICollectionViewCell+.swift"; sourceTree = SOURCE_ROOT; };
 		14665BBE292500C100BC3F7D /* DefaultFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFeedCell.swift; sourceTree = "<group>"; };
 		14826C272923869D00087151 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		14826C292923A20D00087151 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				141BC26B2925BDBA003C415B /* UIViewController+.swift */,
+				141BC26D2925BEA3003C415B /* UICollectionViewCell+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -538,6 +541,7 @@
 				14826C282923869D00087151 /* TabBarCoordinator.swift in Sources */,
 				14826C332923AACB00087151 /* BookmarkViewController.swift in Sources */,
 				14826C9B2924CECF00087151 /* CoordinatorPublisher.swift in Sources */,
+				141BC26E2925BEA3003C415B /* UICollectionViewCell+.swift in Sources */,
 				14826C312923AA7300087151 /* HomeViewController.swift in Sources */,
 				14826C352923AB0300087151 /* MyPageViewController.swift in Sources */,
 				B53EC9FB29236FCE00B87A55 /* AppDelegate.swift in Sources */,
