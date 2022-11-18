@@ -10,6 +10,6 @@ import UIKit
 final class LogInViewModel {
 
     func logInButtonDidTap() {
-        LogInManager.shared.requestCode()
+        LogInManager.shared.openGithubLoginView()
     }
 }

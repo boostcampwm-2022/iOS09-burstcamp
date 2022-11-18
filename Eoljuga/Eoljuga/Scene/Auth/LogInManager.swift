@@ -15,27 +15,27 @@ final class LogInManager {
 
     private let baseURL: String = "https://github.com/login/oauth"
 
-    private var clientInfo: Github? {
+    private var githubAPIKey: Github? {
         guard let serviceInfoURL = Bundle.main.url(
             forResource: "Service-Info",
             withExtension: "plist"
         ),
               let data = try? Data(contentsOf: serviceInfoURL),
-              let info = try? PropertyListDecoder().decode(Info.self, from: data)
+              let apiKey = try? PropertyListDecoder().decode(APIKey.self, from: data)
         else { return nil }
-        return info.github
+        return apiKey.github
     }
 
-    func requestCode() {
-        guard let clientID = clientInfo?.clientID,
-        let url = URL(string: baseURL + "/authorize?client_id=\(clientID)")
+    func openGithubLoginView() {
+        guard let clientID = githubAPIKey?.clientID,
+              let url = URL(string: baseURL + "/authorize?client_id=\(clientID)")
         else { return }
 
         UIApplication.shared.open(url)
     }
 
     func requestAccessToken(code: String) -> String? {
-        guard let clientInfo = clientInfo else { return nil }
+        guard let githubAPIKey = githubAPIKey else { return nil }
         print(code)
         // TODO: accessToken요청
 
