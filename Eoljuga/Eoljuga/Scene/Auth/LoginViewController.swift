@@ -23,7 +23,7 @@ class LoginViewController: UIViewController {
         return button
     }()
 
-    var coordinatrPublisher = PassthroughSubject<CoordinatorEvent, Never>()
+    var coordinatorPublisher = PassthroughSubject<CoordinatorEvent, Never>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +47,6 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController: LoginScreenFlow {
     func moveToTabBarFlow() {
-        coordinatrPublisher.send(.moveToTabBarFlow)
+        coordinatorPublisher.send(.moveToTabBarFlow)
     }
 }

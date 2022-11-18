@@ -11,14 +11,15 @@ import UIKit
 final class AppCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
-    var disposableBag = Set<AnyCancellable>()
+    var cancelBag = Set<AnyCancellable>()
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
 
     func start() {
-        return isLoggedIn() ? showTabBarFlow() : showAuthFlow()
+        if isLoggedIn() { showTabBarFlow() }
+        else { showAuthFlow() }
     }
 
     func isLoggedIn() -> Bool {
@@ -27,36 +28,34 @@ final class AppCoordinator: Coordinator {
 
     func showAuthFlow() {
         let authCoordinator = AuthCoordinator(navigationController: navigationController)
-        authCoordinator
-            .coordinatorPublisher
+        authCoordinator.coordinatorPublisher
             .sink { coordinatorEvent in
                 switch coordinatorEvent {
                 case .moveToTabBarFlow:
-                    self.remove(childCoodridnator: authCoordinator)
+                    self.remove(childCoordinator: authCoordinator)
                     self.showTabBarFlow()
                 case .moveToAuthFlow:
                     return
                 }
             }
-            .store(in: &disposableBag)
+            .store(in: &cancelBag)
         childCoordinators.append(authCoordinator)
         authCoordinator.start()
     }
 
     func showTabBarFlow() {
         let tabBarCoordinator = TabBarCoordinator(navigationController: navigationController)
-        tabBarCoordinator
-            .coordinatorPublisher
+        tabBarCoordinator.coordinatorPublisher
             .sink { coordinatorEvent in
                 switch coordinatorEvent {
                 case .moveToTabBarFlow:
                     return
                 case .moveToAuthFlow:
-                    self.remove(childCoodridnator: tabBarCoordinator)
+                    self.remove(childCoordinator: tabBarCoordinator)
                     self.showAuthFlow()
                 }
             }
-            .store(in: &disposableBag)
+            .store(in: &cancelBag)
         childCoordinators.append(tabBarCoordinator)
         tabBarCoordinator.start()
     }

@@ -21,7 +21,7 @@ class MyPageViewController: UIViewController {
         return button
     }()
 
-    var coordinatrPublisher = PassthroughSubject<CoordinatorEvent, Never>()
+    var coordinatorPublisher = PassthroughSubject<CoordinatorEvent, Never>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +47,6 @@ class MyPageViewController: UIViewController {
 
 extension MyPageViewController {
     func moveToAuthFlow() {
-        coordinatrPublisher.send(.moveToAuthFlow)
+        coordinatorPublisher.send(.moveToAuthFlow)
     }
 }

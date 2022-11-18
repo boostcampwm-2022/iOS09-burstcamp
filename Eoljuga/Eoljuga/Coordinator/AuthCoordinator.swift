@@ -19,10 +19,11 @@ protocol AuthCoordinatorProtocol: CoordinatorPublisher {
 }
 
 final class AuthCoordinator: AuthCoordinatorProtocol {
+
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     var coordinatorPublisher = PassthroughSubject<CoordinatorEvent, Never>()
-    var disposableBag = Set<AnyCancellable>()
+    var cancelBag = Set<AnyCancellable>()
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -30,8 +31,7 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
 
     func start() {
         let loginViewController = LoginViewController()
-        loginViewController
-            .coordinatrPublisher
+        loginViewController.coordinatorPublisher
             .sink { coordinatorEvent in
                 switch coordinatorEvent {
                 case .moveToAuthFlow:
@@ -40,9 +40,8 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
                     self.coordinatorPublisher.send(.moveToTabBarFlow)
                 }
             }
-            .store(in: &disposableBag)
+            .store(in: &cancelBag)
         navigationController.viewControllers = [loginViewController]
-        navigationController.showNavigationBar()
     }
 
     func moveToTabBarFlow() {
