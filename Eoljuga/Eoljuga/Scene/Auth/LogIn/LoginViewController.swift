@@ -34,8 +34,7 @@ final class LoginViewController: UIViewController {
     }
 
     override func loadView() {
-        let logInView = LogInView()
-        self.view = logInView
+        self.view = LogInView()
     }
 
     override func viewDidLoad() {
