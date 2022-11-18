@@ -18,9 +18,10 @@ final class HomeViewController: UIViewController {
     ).then {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 0
+        layout.minimumLineSpacing = Constant.zero.cgFloat
         layout.sectionInset = .zero
         $0.collectionViewLayout = layout
+        $0.showsVerticalScrollIndicator = false
         $0.delegate = self
         $0.dataSource = self
         $0.register(DefaultFeedCell.self, forCellWithReuseIdentifier: DefaultFeedCell.identifier)
@@ -32,13 +33,15 @@ final class HomeViewController: UIViewController {
     }
 
     private func configureUI() {
+        view.addSubViews([defaultFeedCollectionView])
         configureNavigationBar()
         configureViewController()
         configureDefaultFeedCollectionView()
     }
 
     private func configureNavigationBar() {
-        navigationController?.navigationBar.backgroundColor = .brown
+        navigationController?.navigationBar.backgroundColor = .white
+        navigationController?.navigationBar.topItem?.title = "Hello, 얼죽아"
     }
 
     private func configureViewController() {
@@ -46,8 +49,6 @@ final class HomeViewController: UIViewController {
     }
 
     private func configureDefaultFeedCollectionView() {
-        view.addSubview(defaultFeedCollectionView)
-        defaultFeedCollectionView.backgroundColor = .orange
         defaultFeedCollectionView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
@@ -82,6 +83,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return CGSize(width: view.frame.width, height: 150)
+        let width = defaultFeedCollectionView.frame.width - Constant.Padding.horizontal.cgFloat * 2
+        return CGSize(width: width, height: 150)
     }
 }
