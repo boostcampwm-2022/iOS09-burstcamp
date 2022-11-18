@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let code = url.absoluteString.components(separatedBy: "code=").last else { return }
         LogInManager.shared.requestAccessToken(code: code)
     }
-    
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         startApp(windowScene: windowScene)

@@ -30,8 +30,9 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
     }
 
     func start() {
-        let loginViewController = LoginViewController()
-        loginViewController.coordinatrPublisher
+        let logInViewModel: LogInViewModel = LogInViewModel()
+        let logInViewController = LoginViewController(viewModel: logInViewModel)
+        logInViewController.coordinatorPublisher
             .sink { coordinatorEvent in
                 switch coordinatorEvent {
                 case .moveToAuthFlow:
@@ -41,7 +42,7 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
                 }
             }
             .store(in: &cancelBag)
-        navigationController.viewControllers = [loginViewController]
+        navigationController.viewControllers = [logInViewController]
     }
 
     func moveToTabBarFlow() {
