@@ -11,12 +11,12 @@ import UIKit
 import SnapKit
 import Then
 
-protocol LoginScreenFlow {
+protocol LogInScreenFlow {
     func moveToTabBarFlow()
 }
 
-final class LoginViewController: UIViewController {
-    private var loginView: LogInView {
+final class LogInViewController: UIViewController {
+    private var logInView: LogInView {
         guard let view = view as? LogInView else { return LogInView() }
         return view
     }
@@ -43,7 +43,7 @@ final class LoginViewController: UIViewController {
     }
 
     private func bind() {
-        loginView.githubLogInButton.addTarget(
+        logInView.githubLogInButton.addTarget(
             self,
             action: #selector(loginButtonDidTap),
             for: .touchUpInside
@@ -56,7 +56,7 @@ final class LoginViewController: UIViewController {
     }
 }
 
-extension LoginViewController: LoginScreenFlow {
+extension LogInViewController: LogInScreenFlow {
     func moveToTabBarFlow() {
         coordinatorPublisher.send(.moveToTabBarFlow)
     }

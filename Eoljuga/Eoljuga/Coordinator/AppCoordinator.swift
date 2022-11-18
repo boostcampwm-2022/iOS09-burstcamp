@@ -18,8 +18,7 @@ final class AppCoordinator: Coordinator {
     }
 
     func start() {
-        if isLoggedIn() { showTabBarFlow() }
-        else { showAuthFlow() }
+        if isLoggedIn() { showTabBarFlow() } else { showAuthFlow() }
     }
 
     func isLoggedIn() -> Bool {
