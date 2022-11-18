@@ -28,8 +28,7 @@ final class AppCoordinator: Coordinator {
 
     func showAuthFlow() {
         let authCoordinator = AuthCoordinator(navigationController: navigationController)
-        authCoordinator
-            .coordinatorPublisher
+        authCoordinator.coordinatorPublisher
             .sink { coordinatorEvent in
                 switch coordinatorEvent {
                 case .moveToTabBarFlow:
@@ -46,8 +45,7 @@ final class AppCoordinator: Coordinator {
 
     func showTabBarFlow() {
         let tabBarCoordinator = TabBarCoordinator(navigationController: navigationController)
-        tabBarCoordinator
-            .coordinatorPublisher
+        tabBarCoordinator.coordinatorPublisher
             .sink { coordinatorEvent in
                 switch coordinatorEvent {
                 case .moveToTabBarFlow:
