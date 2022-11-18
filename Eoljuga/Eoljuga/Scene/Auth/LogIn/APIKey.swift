@@ -1,5 +1,5 @@
 //
-//  GithubModel.swift
+//  APIKey.swift
 //  Eoljuga
 //
 //  Created by 김기훈 on 2022/11/18.

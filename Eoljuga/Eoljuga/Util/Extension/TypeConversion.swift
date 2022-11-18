@@ -1,5 +1,5 @@
 //
-//  TypeCasting.swift
+//  TypeConversion.swift
 //  Eoljuga
 //
 //  Created by youtak on 2022/11/18.
