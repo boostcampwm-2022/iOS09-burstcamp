@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Info: Codable {
+struct APIKey: Codable {
     let github: Github
 }
 
