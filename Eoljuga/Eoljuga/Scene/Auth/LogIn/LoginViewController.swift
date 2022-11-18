@@ -16,92 +16,39 @@ protocol LoginScreenFlow {
 }
 
 final class LoginViewController: UIViewController {
-
-    lazy var bossImage: UIImageView = UIImageView().then {
-        $0.image = UIImage(systemName: "pencil.circle")
+    private var loginView: LogInView {
+        guard let view = view as? LogInView else { return LogInView() }
+        return view
     }
 
-    lazy var bossTitleL: UILabel = UILabel().then {
-        $0.text = "BOSS"
-        $0.font = UIFont.extraBold40
-        $0.textColor = UIColor.main
+    var coordinatorPublisher = PassthroughSubject<CoordinatorEvent, Never>()
+    let viewModel: LogInViewModel
+
+    init(viewModel: LogInViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
 
-    lazy var fullNameLabel: UILabel = UILabel().then {
-        $0.text = "Boostcamp Other StorieS"
-        $0.font = UIFont.bold12
-        $0.textColor = .systemGray2
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
-    lazy var identitySentence: UILabel = UILabel().then {
-        $0.text = "부스트 캠프, 또 하나의 이야기"
-        $0.font = UIFont.bold20
+    override func loadView() {
+        let logInView = LogInView()
+        self.view = logInView
     }
-
-    lazy var githubLogInButton: UIButton = UIButton().then {
-        $0.setTitle("Github으로 로그인", for: .normal)
-        $0.titleLabel?.font = UIFont.extraBold14
-        $0.backgroundColor = .black
-        $0.layer.cornerRadius = 8
-        $0.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
-    }
-
-    lazy var githubLogInLabel: UILabel = UILabel().then {
-        $0.text = "캠퍼 인증을 위해 Github으로 로그인을 해주세요."
-        $0.font = UIFont.regular12
-        $0.textColor = .systemGray2
-    }
-
-    var coordinatrPublisher = PassthroughSubject<CoordinatorEvent, Never>()
-    let viewModel: LogInViewModel = LogInViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        configureUI()
+        bind()
     }
 
-    private func configureUI() {
-        view.backgroundColor = .systemBackground
-
-        view.addSubview(bossImage)
-        bossImage.snp.makeConstraints {
-            $0.height.equalTo(36)
-            $0.width.equalTo(36)
-            $0.centerY.equalToSuperview().offset(-72)
-            $0.leading.equalToSuperview().offset(16)
-        }
-
-        view.addSubview(bossTitleL)
-        bossTitleL.snp.makeConstraints {
-            $0.leading.equalTo(bossImage.snp.trailing)
-            $0.centerY.equalToSuperview().offset(-72)
-        }
-
-        view.addSubview(fullNameLabel)
-        fullNameLabel.snp.makeConstraints {
-            $0.top.equalTo(bossImage.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(16)
-        }
-
-        view.addSubview(identitySentence)
-        identitySentence.snp.makeConstraints {
-            $0.top.equalTo(fullNameLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(16)
-        }
-
-        view.addSubview(githubLogInLabel)
-        githubLogInLabel.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(-88)
-            $0.centerX.equalToSuperview()
-        }
-
-        view.addSubview(githubLogInButton)
-        githubLogInButton.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(16)
-            $0.height.equalTo(44)
-            $0.bottom.equalTo(githubLogInLabel.snp.top).offset(-12)
-        }
+    private func bind() {
+        loginView.githubLogInButton.addTarget(
+            self,
+            action: #selector(loginButtonDidTap),
+            for: .touchUpInside
+        )
     }
 
     @objc private func loginButtonDidTap() {
@@ -112,6 +59,6 @@ final class LoginViewController: UIViewController {
 
 extension LoginViewController: LoginScreenFlow {
     func moveToTabBarFlow() {
-        coordinatrPublisher.send(.moveToTabBarFlow)
+        coordinatorPublisher.send(.moveToTabBarFlow)
     }
 }
