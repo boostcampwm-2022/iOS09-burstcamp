@@ -31,7 +31,7 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
 
     func start() {
         let loginViewController = LoginViewController()
-        loginViewController.coordinatorPublisher
+        loginViewController.coordinatrPublisher
             .sink { coordinatorEvent in
                 switch coordinatorEvent {
                 case .moveToAuthFlow:
