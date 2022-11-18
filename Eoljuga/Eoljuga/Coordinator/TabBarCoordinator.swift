@@ -68,7 +68,10 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
         case .bookmark:
             controller = BookmarkViewController()
         case .myPage:
-            let myPageViewController = MyPageViewController()
+            // TODO: ViewModel 주입 방식 변경
+            let myPageViewController = MyPageViewController(
+                viewModel: MyPageViewModel()
+            )
             myPageViewController.coordinatorPublisher
                 .sink { coordinatorEvent in
                     switch coordinatorEvent {
