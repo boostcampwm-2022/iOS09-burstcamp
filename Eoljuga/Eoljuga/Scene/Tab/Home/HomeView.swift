@@ -26,8 +26,8 @@ final class HomeView: UIView {
             forCellWithReuseIdentifier: RecommendFeedCell.identifier
         )
         $0.register(
-            DefaultFeedCell.self,
-            forCellWithReuseIdentifier: DefaultFeedCell.identifier
+            NormalFeedCell.self,
+            forCellWithReuseIdentifier: NormalFeedCell.identifier
         )
     }
 

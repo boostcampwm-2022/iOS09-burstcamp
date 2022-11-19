@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class DefaultFeedCellHeader: UIStackView {
+class NormalFeedCellHeader: UIStackView {
 
     lazy var profileImageView = UIImageView().then {
         $0.clipsToBounds = true
@@ -24,7 +24,7 @@ class DefaultFeedCellHeader: UIStackView {
         $0.text = "하늘이"
     }
 
-    lazy var badgeStackView = DefaultFeedCellBadgeStackView()
+    lazy var badgeStackView = NormalFeedCellBadgeStackView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class DefaultFeedCellMain: UIView {
+class NormalFeedCellMain: UIView {
 
     lazy var titleLabel = UILabel().then {
         $0.textAlignment = .left

@@ -86,9 +86,9 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: DefaultFeedCell.identifier,
+                withReuseIdentifier: NormalFeedCell.identifier,
                 for: indexPath
-            ) as? DefaultFeedCell
+            ) as? NormalFeedCell
             else {
                 return UICollectionViewCell()
             }

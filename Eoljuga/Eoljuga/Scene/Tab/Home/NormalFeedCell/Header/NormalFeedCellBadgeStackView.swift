@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DefaultFeedCellBadgeStackView: UIStackView {
+class NormalFeedCellBadgeStackView: UIStackView {
 
     lazy var domainLabel = UILabel().then {
         $0.textColor = UIColor.customOrange

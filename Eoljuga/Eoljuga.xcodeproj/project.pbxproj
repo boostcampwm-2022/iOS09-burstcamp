@@ -31,10 +31,10 @@
 		B50A27E529279F5D00DF3E1F /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27A829279F5D00DF3E1F /* LogInView.swift */; };
 		B50A27E629279F5D00DF3E1F /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27A929279F5D00DF3E1F /* LogInViewController.swift */; };
 		B50A27E829279F5D00DF3E1F /* UICollectionViewCell+identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27AD29279F5D00DF3E1F /* UICollectionViewCell+identifier.swift */; };
-		B50A27E929279F5D00DF3E1F /* DefaultFeedCellFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B029279F5D00DF3E1F /* DefaultFeedCellFooter.swift */; };
-		B50A27EA29279F5D00DF3E1F /* DefaultFeedCellMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B229279F5D00DF3E1F /* DefaultFeedCellMain.swift */; };
-		B50A27EB29279F5D00DF3E1F /* DefaultFeedCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B429279F5D00DF3E1F /* DefaultFeedCellHeader.swift */; };
-		B50A27EC29279F5D00DF3E1F /* DefaultFeedCellBadgeStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B529279F5D00DF3E1F /* DefaultFeedCellBadgeStackView.swift */; };
+		B50A27E929279F5D00DF3E1F /* NormalFeedCellFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B029279F5D00DF3E1F /* NormalFeedCellFooter.swift */; };
+		B50A27EA29279F5D00DF3E1F /* NormalFeedCellMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B229279F5D00DF3E1F /* NormalFeedCellMain.swift */; };
+		B50A27EB29279F5D00DF3E1F /* NormalFeedCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B429279F5D00DF3E1F /* NormalFeedCellHeader.swift */; };
+		B50A27EC29279F5D00DF3E1F /* NormalFeedCellBadgeStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B529279F5D00DF3E1F /* NormalFeedCellBadgeStackView.swift */; };
 		B50A27ED29279F5D00DF3E1F /* DefaultFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B629279F5D00DF3E1F /* DefaultFeedCell.swift */; };
 		B50A27EE29279F5D00DF3E1F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B729279F5D00DF3E1F /* HomeViewController.swift */; };
 		B50A27EF29279F5D00DF3E1F /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B929279F5D00DF3E1F /* BookmarkViewController.swift */; };
@@ -98,10 +98,10 @@
 		B50A27A829279F5D00DF3E1F /* LogInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
 		B50A27A929279F5D00DF3E1F /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		B50A27AD29279F5D00DF3E1F /* UICollectionViewCell+identifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+identifier.swift"; sourceTree = "<group>"; };
-		B50A27B029279F5D00DF3E1F /* DefaultFeedCellFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFeedCellFooter.swift; sourceTree = "<group>"; };
-		B50A27B229279F5D00DF3E1F /* DefaultFeedCellMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFeedCellMain.swift; sourceTree = "<group>"; };
-		B50A27B429279F5D00DF3E1F /* DefaultFeedCellHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFeedCellHeader.swift; sourceTree = "<group>"; };
-		B50A27B529279F5D00DF3E1F /* DefaultFeedCellBadgeStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFeedCellBadgeStackView.swift; sourceTree = "<group>"; };
+		B50A27B029279F5D00DF3E1F /* NormalFeedCellFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalFeedCellFooter.swift; sourceTree = "<group>"; };
+		B50A27B229279F5D00DF3E1F /* NormalFeedCellMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalFeedCellMain.swift; sourceTree = "<group>"; };
+		B50A27B429279F5D00DF3E1F /* NormalFeedCellHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalFeedCellHeader.swift; sourceTree = "<group>"; };
+		B50A27B529279F5D00DF3E1F /* NormalFeedCellBadgeStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalFeedCellBadgeStackView.swift; sourceTree = "<group>"; };
 		B50A27B629279F5D00DF3E1F /* DefaultFeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFeedCell.swift; sourceTree = "<group>"; };
 		B50A27B729279F5D00DF3E1F /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		B50A27B929279F5D00DF3E1F /* BookmarkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
@@ -299,7 +299,7 @@
 			isa = PBXGroup;
 			children = (
 				1459C3B82929102400FA885D /* RecommendFeedCell */,
-				B50A27AE29279F5D00DF3E1F /* DefaultFeedCell */,
+				B50A27AE29279F5D00DF3E1F /* NormalFeedCell */,
 				B50A27B729279F5D00DF3E1F /* HomeViewController.swift */,
 				1458C6942928FB1B00E00B80 /* HomeView.swift */,
 				1459C3BB2929150200FA885D /* FeedCellType.swift */,
@@ -307,7 +307,7 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
-		B50A27AE29279F5D00DF3E1F /* DefaultFeedCell */ = {
+		B50A27AE29279F5D00DF3E1F /* NormalFeedCell */ = {
 			isa = PBXGroup;
 			children = (
 				B50A27AF29279F5D00DF3E1F /* Footer */,
@@ -315,13 +315,13 @@
 				B50A27B329279F5D00DF3E1F /* Header */,
 				B50A27B629279F5D00DF3E1F /* DefaultFeedCell.swift */,
 			);
-			path = DefaultFeedCell;
+			path = NormalFeedCell;
 			sourceTree = "<group>";
 		};
 		B50A27AF29279F5D00DF3E1F /* Footer */ = {
 			isa = PBXGroup;
 			children = (
-				B50A27B029279F5D00DF3E1F /* DefaultFeedCellFooter.swift */,
+				B50A27B029279F5D00DF3E1F /* NormalFeedCellFooter.swift */,
 			);
 			path = Footer;
 			sourceTree = "<group>";
@@ -329,7 +329,7 @@
 		B50A27B129279F5D00DF3E1F /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				B50A27B229279F5D00DF3E1F /* DefaultFeedCellMain.swift */,
+				B50A27B229279F5D00DF3E1F /* NormalFeedCellMain.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -337,8 +337,8 @@
 		B50A27B329279F5D00DF3E1F /* Header */ = {
 			isa = PBXGroup;
 			children = (
-				B50A27B429279F5D00DF3E1F /* DefaultFeedCellHeader.swift */,
-				B50A27B529279F5D00DF3E1F /* DefaultFeedCellBadgeStackView.swift */,
+				B50A27B429279F5D00DF3E1F /* NormalFeedCellHeader.swift */,
+				B50A27B529279F5D00DF3E1F /* NormalFeedCellBadgeStackView.swift */,
 			);
 			path = Header;
 			sourceTree = "<group>";
@@ -610,7 +610,7 @@
 				B50A27DC29279F5D00DF3E1F /* Fonts+Generated.swift in Sources */,
 				B50A27EE29279F5D00DF3E1F /* HomeViewController.swift in Sources */,
 				B50A27E629279F5D00DF3E1F /* LogInViewController.swift in Sources */,
-				B50A27EB29279F5D00DF3E1F /* DefaultFeedCellHeader.swift in Sources */,
+				B50A27EB29279F5D00DF3E1F /* NormalFeedCellHeader.swift in Sources */,
 				B50A27CF29279F5D00DF3E1F /* Constant.swift in Sources */,
 				D8494D502927CEAA008157F1 /* DefaultBadgeLabel.swift in Sources */,
 				B50A27E429279F5D00DF3E1F /* APIKey.swift in Sources */,
@@ -627,11 +627,11 @@
 				1458C6952928FB1B00E00B80 /* HomeView.swift in Sources */,
 				B50A27FE29279F5D00DF3E1F /* Coordinator.swift in Sources */,
 				B50A27F429279F5D00DF3E1F /* SceneDelegate.swift in Sources */,
-				B50A27E929279F5D00DF3E1F /* DefaultFeedCellFooter.swift in Sources */,
+				B50A27E929279F5D00DF3E1F /* NormalFeedCellFooter.swift in Sources */,
 				D8494D522927D086008157F1 /* MyPageProfileView.swift in Sources */,
 				B50A27F629279F5D00DF3E1F /* AuthCoordinator.swift in Sources */,
 				D8494D542927D0DC008157F1 /* User.swift in Sources */,
-				B50A27EA29279F5D00DF3E1F /* DefaultFeedCellMain.swift in Sources */,
+				B50A27EA29279F5D00DF3E1F /* NormalFeedCellMain.swift in Sources */,
 				B50A27D329279F5D00DF3E1F /* UIFont+FontSet.swift in Sources */,
 				B50A27FC29279F5D00DF3E1F /* CoordinatorEvent.swift in Sources */,
 				B50A27D129279F5D00DF3E1F /* UILabel+LineHeight.swift in Sources */,
@@ -648,7 +648,7 @@
 				B50A27D629279F5D00DF3E1F /* UIView+addSubViews.swift in Sources */,
 				B50A27E329279F5D00DF3E1F /* LogInViewModel.swift in Sources */,
 				B50A27F029279F5D00DF3E1F /* MyPageViewController.swift in Sources */,
-				B50A27EC29279F5D00DF3E1F /* DefaultFeedCellBadgeStackView.swift in Sources */,
+				B50A27EC29279F5D00DF3E1F /* NormalFeedCellBadgeStackView.swift in Sources */,
 				B50A27D429279F5D00DF3E1F /* UIColor+ColorSet.swift in Sources */,
 				B50A27F229279F5D00DF3E1F /* AppDelegate.swift in Sources */,
 				B50A27D029279F5D00DF3E1F /* TypeConversion.swift in Sources */,

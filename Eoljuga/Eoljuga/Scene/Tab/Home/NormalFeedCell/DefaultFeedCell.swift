@@ -9,11 +9,11 @@ import UIKit
 
 import SnapKit
 
-final class DefaultFeedCell: UICollectionViewCell {
+final class NormalFeedCell: UICollectionViewCell {
 
-    lazy var headerStackView = DefaultFeedCellHeader()
-    lazy var mainView = DefaultFeedCellMain()
-    lazy var footerView = DefaultFeedCellFooter()
+    lazy var headerStackView = NormalFeedCellHeader()
+    lazy var mainView = NormalFeedCellMain()
+    lazy var footerView = NormalFeedCellFooter()
 
     override init(frame: CGRect) {
         super.init(frame: .zero)

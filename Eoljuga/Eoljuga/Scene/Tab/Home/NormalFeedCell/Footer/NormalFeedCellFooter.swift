@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DefaultFeedCellFooter: UIView {
+class NormalFeedCellFooter: UIView {
 
     lazy var scriptButton = UIButton().then {
         let image = UIImage(systemName: "bookmark")
