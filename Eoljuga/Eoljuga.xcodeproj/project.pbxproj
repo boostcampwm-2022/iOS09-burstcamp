@@ -27,7 +27,6 @@
 		B50A27E429279F5D00DF3E1F /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27A729279F5D00DF3E1F /* APIKey.swift */; };
 		B50A27E529279F5D00DF3E1F /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27A829279F5D00DF3E1F /* LogInView.swift */; };
 		B50A27E629279F5D00DF3E1F /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27A929279F5D00DF3E1F /* LogInViewController.swift */; };
-		B50A27E729279F5D00DF3E1F /* UINavigationController+navigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27AC29279F5D00DF3E1F /* UINavigationController+navigationBar.swift */; };
 		B50A27E829279F5D00DF3E1F /* UICollectionViewCell+identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27AD29279F5D00DF3E1F /* UICollectionViewCell+identifier.swift */; };
 		B50A27E929279F5D00DF3E1F /* DefaultFeedCellFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B029279F5D00DF3E1F /* DefaultFeedCellFooter.swift */; };
 		B50A27EA29279F5D00DF3E1F /* DefaultFeedCellMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B229279F5D00DF3E1F /* DefaultFeedCellMain.swift */; };
@@ -68,9 +67,6 @@
 		D8494D522927D086008157F1 /* MyPageProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D512927D085008157F1 /* MyPageProfileView.swift */; };
 		D8494D542927D0DC008157F1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D532927D0DC008157F1 /* User.swift */; };
 		D8494D562927D6EB008157F1 /* DefaultBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D552927D6EB008157F1 /* DefaultBadgeView.swift */; };
-		D8494D5D2927E987008157F1 /* MyPageEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D5C2927E987008157F1 /* MyPageEditViewModel.swift */; };
-		D8494D5F2927E9D4008157F1 /* MyPageEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D5E2927E9D4008157F1 /* MyPageEditView.swift */; };
-		D8494D612927F09C008157F1 /* MyPageEditViewControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D602927F09C008157F1 /* MyPageEditViewControllerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -95,7 +91,6 @@
 		B50A27A729279F5D00DF3E1F /* APIKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		B50A27A829279F5D00DF3E1F /* LogInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
 		B50A27A929279F5D00DF3E1F /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
-		B50A27AC29279F5D00DF3E1F /* UINavigationController+navigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+navigationBar.swift"; sourceTree = "<group>"; };
 		B50A27AD29279F5D00DF3E1F /* UICollectionViewCell+identifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+identifier.swift"; sourceTree = "<group>"; };
 		B50A27B029279F5D00DF3E1F /* DefaultFeedCellFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFeedCellFooter.swift; sourceTree = "<group>"; };
 		B50A27B229279F5D00DF3E1F /* DefaultFeedCellMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFeedCellMain.swift; sourceTree = "<group>"; };
@@ -130,9 +125,6 @@
 		D8494D512927D085008157F1 /* MyPageProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageProfileView.swift; sourceTree = "<group>"; };
 		D8494D532927D0DC008157F1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D8494D552927D6EB008157F1 /* DefaultBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBadgeView.swift; sourceTree = "<group>"; };
-		D8494D5C2927E987008157F1 /* MyPageEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewModel.swift; sourceTree = "<group>"; };
-		D8494D5E2927E9D4008157F1 /* MyPageEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditView.swift; sourceTree = "<group>"; };
-		D8494D602927F09C008157F1 /* MyPageEditViewControllerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewControllerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -293,7 +285,6 @@
 			isa = PBXGroup;
 			children = (
 				B50A27AE29279F5D00DF3E1F /* DefaultFeedCell */,
-				B50A27AC29279F5D00DF3E1F /* UINavigationController+navigationBar.swift */,
 				B50A27B729279F5D00DF3E1F /* HomeViewController.swift */,
 			);
 			path = Home;
@@ -443,7 +434,6 @@
 			children = (
 				D8494D452927C97E008157F1 /* MyPageView.swift */,
 				D8494D512927D085008157F1 /* MyPageProfileView.swift */,
-				D8494D5E2927E9D4008157F1 /* MyPageEditView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -452,7 +442,6 @@
 			isa = PBXGroup;
 			children = (
 				B50A27BB29279F5D00DF3E1F /* MyPageViewController.swift */,
-				D8494D602927F09C008157F1 /* MyPageEditViewControllerViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -461,7 +450,6 @@
 			isa = PBXGroup;
 			children = (
 				D8494D472927C9E8008157F1 /* MyPageViewModel.swift */,
-				D8494D5C2927E987008157F1 /* MyPageEditViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -621,7 +609,6 @@
 				B50A27FE29279F5D00DF3E1F /* Coordinator.swift in Sources */,
 				B50A27F429279F5D00DF3E1F /* SceneDelegate.swift in Sources */,
 				B50A27E929279F5D00DF3E1F /* DefaultFeedCellFooter.swift in Sources */,
-				D8494D5D2927E987008157F1 /* MyPageEditViewModel.swift in Sources */,
 				D8494D522927D086008157F1 /* MyPageProfileView.swift in Sources */,
 				B50A27F629279F5D00DF3E1F /* AuthCoordinator.swift in Sources */,
 				D8494D542927D0DC008157F1 /* User.swift in Sources */,
@@ -631,12 +618,9 @@
 				B50A27D129279F5D00DF3E1F /* UILabel+LineHeight.swift in Sources */,
 				B50A27E229279F5D00DF3E1F /* LogInManager.swift in Sources */,
 				B50A27E829279F5D00DF3E1F /* UICollectionViewCell+identifier.swift in Sources */,
-				B50A27E729279F5D00DF3E1F /* UINavigationController+navigationBar.swift in Sources */,
-				D8494D5F2927E9D4008157F1 /* MyPageEditView.swift in Sources */,
 				B50A27F529279F5D00DF3E1F /* AppCoordinator.swift in Sources */,
 				B50A27F929279F5D00DF3E1F /* TabBarPage.swift in Sources */,
 				B50A27DB29279F5D00DF3E1F /* Colors+Generated.swift in Sources */,
-				D8494D612927F09C008157F1 /* MyPageEditViewControllerViewController.swift in Sources */,
 				B50A27D929279F5D00DF3E1F /* UIStackView+addArrangedSubviews.swift in Sources */,
 				B50A27DA29279F5D00DF3E1F /* ReusableView.swift in Sources */,
 				B50A27FB29279F5D00DF3E1F /* CoordinatorPublisher.swift in Sources */,
