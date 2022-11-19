@@ -13,7 +13,7 @@ final class LogInView: UIView {
         $0.image = UIImage(systemName: "pencil.circle")
     }
 
-    lazy var bossTitleL: UILabel = UILabel().then {
+    lazy var bossTitle: UILabel = UILabel().then {
         $0.text = "BOSS"
         $0.font = UIFont.extraBold40
         $0.textColor = UIColor.main
@@ -63,8 +63,8 @@ final class LogInView: UIView {
             $0.leading.equalToSuperview().offset(16)
         }
 
-        addSubview(bossTitleL)
-        bossTitleL.snp.makeConstraints {
+        addSubview(bossTitle)
+        bossTitle.snp.makeConstraints {
             $0.leading.equalTo(bossImage.snp.trailing)
             $0.centerY.equalToSuperview().offset(-72)
         }
