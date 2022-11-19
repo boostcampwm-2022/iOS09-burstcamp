@@ -8,5 +8,11 @@
 import UIKit
 
 final class DomainViewController: UIViewController {
-    
+    override func loadView() {
+        self.view = DomainView()
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
 }
