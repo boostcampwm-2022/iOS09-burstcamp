@@ -12,31 +12,27 @@ import Then
 
 final class HomeViewController: UIViewController {
 
-    lazy var defaultFeedCollectionView = UICollectionView(
-        frame: .zero,
-        collectionViewLayout: UICollectionViewFlowLayout()
-    ).then {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = Constant.zero.cgFloat
-        layout.sectionInset = .zero
-        $0.collectionViewLayout = layout
-        $0.showsVerticalScrollIndicator = false
-        $0.delegate = self
-        $0.dataSource = self
-        $0.register(DefaultFeedCell.self, forCellWithReuseIdentifier: DefaultFeedCell.identifier)
+    private var homeView: HomeView {
+        guard let view = view as? HomeView else {
+            return HomeView(frame: view.frame)
+        }
+        return view
+    }
+
+    override func loadView() {
+        super.loadView()
+        view = HomeView(frame: view.frame)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        collectionViewDelegate()
     }
 
     private func configureUI() {
-        view.addSubViews([defaultFeedCollectionView])
         configureNavigationBar()
         configureViewController()
-        configureDefaultFeedCollectionView()
     }
 
     private func configureNavigationBar() {
@@ -48,10 +44,12 @@ final class HomeViewController: UIViewController {
         view.backgroundColor = .white
     }
 
-    private func configureDefaultFeedCollectionView() {
-        defaultFeedCollectionView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
-        }
+    private func collectionViewDelegate() {
+        homeView.defaultFeedCollectionView.delegate = self
+        homeView.defaultFeedCollectionView.dataSource = self
+    }
+
+    private func bind() {
     }
 }
 
@@ -83,7 +81,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        let width = defaultFeedCollectionView.frame.width - Constant.Padding.horizontal.cgFloat * 2
+        let width = view.frame.width - Constant.Padding.horizontal.cgFloat * 2
         return CGSize(width: width, height: 150)
     }
 }
