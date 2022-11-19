@@ -45,8 +45,10 @@ final class HomeViewController: UIViewController {
     }
 
     private func collectionViewDelegate() {
-        homeView.defaultFeedCollectionView.delegate = self
-        homeView.defaultFeedCollectionView.dataSource = self
+        homeView.feedCollectionView.delegate = self
+        homeView.feedCollectionView.dataSource = self
+//        homeView.defaultFeedCollectionView.delegate = self
+//        homeView.defaultFeedCollectionView.dataSource = self
     }
 
     private func bind() {
@@ -54,6 +56,11 @@ final class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
@@ -76,12 +83,12 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         return cell
     }
 
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath
-    ) -> CGSize {
-        let width = view.frame.width - Constant.Padding.horizontal.cgFloat * 2
-        return CGSize(width: width, height: 150)
-    }
+//    func collectionView(
+//        _ collectionView: UICollectionView,
+//        layout collectionViewLayout: UICollectionViewLayout,
+//        sizeForItemAt indexPath: IndexPath
+//    ) -> CGSize {
+//        let width = view.frame.width - Constant.Padding.horizontal.cgFloat * 2
+//        return CGSize(width: width, height: 150)
+//    }
 }
