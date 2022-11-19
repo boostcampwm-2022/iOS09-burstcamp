@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1458C6952928FB1B00E00B80 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458C6942928FB1B00E00B80 /* HomeView.swift */; };
+		1459C3BA292910B300FA885D /* RecommendFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3B9292910B300FA885D /* RecommendFeedCell.swift */; };
 		B50A27CF29279F5D00DF3E1F /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A278B29279F5D00DF3E1F /* Constant.swift */; };
 		B50A27D029279F5D00DF3E1F /* TypeConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A278C29279F5D00DF3E1F /* TypeConversion.swift */; };
 		B50A27D129279F5D00DF3E1F /* UILabel+LineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A278D29279F5D00DF3E1F /* UILabel+LineHeight.swift */; };
@@ -72,6 +73,7 @@
 
 /* Begin PBXFileReference section */
 		1458C6942928FB1B00E00B80 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		1459C3B9292910B300FA885D /* RecommendFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedCell.swift; sourceTree = "<group>"; };
 		B50A277129279F2600DF3E1F /* Eoljuga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eoljuga.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B50A278B29279F5D00DF3E1F /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		B50A278C29279F5D00DF3E1F /* TypeConversion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeConversion.swift; sourceTree = "<group>"; };
@@ -147,6 +149,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1459C3B82929102400FA885D /* RecommendFeedCell */ = {
+			isa = PBXGroup;
+			children = (
+				1459C3B9292910B300FA885D /* RecommendFeedCell.swift */,
+			);
+			path = RecommendFeedCell;
+			sourceTree = "<group>";
+		};
 		B50A276829279F2600DF3E1F = {
 			isa = PBXGroup;
 			children = (
@@ -286,6 +296,7 @@
 		B50A27AB29279F5D00DF3E1F /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				1459C3B82929102400FA885D /* RecommendFeedCell */,
 				B50A27AE29279F5D00DF3E1F /* DefaultFeedCell */,
 				B50A27B729279F5D00DF3E1F /* HomeViewController.swift */,
 				1458C6942928FB1B00E00B80 /* HomeView.swift */,
@@ -605,6 +616,7 @@
 				D8494D562927D6EB008157F1 /* DefaultBadgeView.swift in Sources */,
 				B50A27F729279F5D00DF3E1F /* TabBarCoordinator.swift in Sources */,
 				B50A27EF29279F5D00DF3E1F /* BookmarkViewController.swift in Sources */,
+				1459C3BA292910B300FA885D /* RecommendFeedCell.swift in Sources */,
 				B50A27E529279F5D00DF3E1F /* LogInView.swift in Sources */,
 				D8494D4E2927CE64008157F1 /* Domain.swift in Sources */,
 				D8494D482927C9E8008157F1 /* MyPageViewModel.swift in Sources */,

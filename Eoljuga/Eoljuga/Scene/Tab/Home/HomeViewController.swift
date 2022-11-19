@@ -47,8 +47,6 @@ final class HomeViewController: UIViewController {
     private func collectionViewDelegate() {
         homeView.feedCollectionView.delegate = self
         homeView.feedCollectionView.dataSource = self
-//        homeView.defaultFeedCollectionView.delegate = self
-//        homeView.defaultFeedCollectionView.dataSource = self
     }
 
     private func bind() {
@@ -56,11 +54,6 @@ final class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
@@ -73,16 +66,16 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: DefaultFeedCell.identifier,
+            withReuseIdentifier: RecommendFeedCell.identifier,
             for: indexPath
-        ) as? DefaultFeedCell
+        ) as? RecommendFeedCell
         else {
             return UICollectionViewCell()
         }
 
         return cell
     }
-
+//
 //    func collectionView(
 //        _ collectionView: UICollectionView,
 //        layout collectionViewLayout: UICollectionViewLayout,

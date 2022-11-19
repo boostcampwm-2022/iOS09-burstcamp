@@ -21,20 +21,10 @@ final class HomeView: UIView {
         $0.contentInset = .zero
         $0.backgroundColor = .clear
         $0.clipsToBounds = true
-        $0.register(DefaultFeedCell.self, forCellWithReuseIdentifier: DefaultFeedCell.identifier)
-    }
-
-    lazy var defaultFeedCollectionView = UICollectionView(
-        frame: .zero,
-        collectionViewLayout: UICollectionViewFlowLayout()
-    ).then {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = Constant.zero.cgFloat
-        layout.sectionInset = .zero
-        $0.collectionViewLayout = layout
-        $0.showsVerticalScrollIndicator = false
-        $0.register(DefaultFeedCell.self, forCellWithReuseIdentifier: DefaultFeedCell.identifier)
+        $0.register(
+            RecommendFeedCell.self,
+            forCellWithReuseIdentifier: RecommendFeedCell.identifier
+        )
     }
 
     override init(frame: CGRect) {
@@ -49,13 +39,9 @@ final class HomeView: UIView {
     private func configureUI() {
         addSubview(feedCollectionView)
         feedCollectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(400)
         }
-
-//        addSubview(defaultFeedCollectionView)
-//        defaultFeedCollectionView.snp.makeConstraints {
-//            $0.edges.equalToSuperview()
-//        }
     }
 
     private func createLayout() -> UICollectionViewLayout {
@@ -65,7 +51,6 @@ final class HomeView: UIView {
             heightDimension: .fractionalHeight(1.0)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(300),
             heightDimension: .absolute(150)
@@ -73,6 +58,12 @@ final class HomeView: UIView {
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize,
             subitems: [item]
+        )
+        group.contentInsets = NSDirectionalEdgeInsets(
+            top: 15,
+            leading: 15,
+            bottom: 15,
+            trailing: 15
         )
 
         let section = NSCollectionLayoutSection(group: group)
