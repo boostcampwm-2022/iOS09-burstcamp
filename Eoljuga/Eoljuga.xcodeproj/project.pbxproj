@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1458C6952928FB1B00E00B80 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458C6942928FB1B00E00B80 /* HomeView.swift */; };
 		1459C3BA292910B300FA885D /* RecommendFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3B9292910B300FA885D /* RecommendFeedCell.swift */; };
+		1459C3BC2929150200FA885D /* FeedCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3BB2929150200FA885D /* FeedCellType.swift */; };
 		B50A27CF29279F5D00DF3E1F /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A278B29279F5D00DF3E1F /* Constant.swift */; };
 		B50A27D029279F5D00DF3E1F /* TypeConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A278C29279F5D00DF3E1F /* TypeConversion.swift */; };
 		B50A27D129279F5D00DF3E1F /* UILabel+LineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A278D29279F5D00DF3E1F /* UILabel+LineHeight.swift */; };
@@ -74,6 +75,7 @@
 /* Begin PBXFileReference section */
 		1458C6942928FB1B00E00B80 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		1459C3B9292910B300FA885D /* RecommendFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedCell.swift; sourceTree = "<group>"; };
+		1459C3BB2929150200FA885D /* FeedCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellType.swift; sourceTree = "<group>"; };
 		B50A277129279F2600DF3E1F /* Eoljuga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eoljuga.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B50A278B29279F5D00DF3E1F /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		B50A278C29279F5D00DF3E1F /* TypeConversion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeConversion.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				B50A27AE29279F5D00DF3E1F /* DefaultFeedCell */,
 				B50A27B729279F5D00DF3E1F /* HomeViewController.swift */,
 				1458C6942928FB1B00E00B80 /* HomeView.swift */,
+				1459C3BB2929150200FA885D /* FeedCellType.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -637,6 +640,7 @@
 				B50A27F529279F5D00DF3E1F /* AppCoordinator.swift in Sources */,
 				B50A27F929279F5D00DF3E1F /* TabBarPage.swift in Sources */,
 				B50A27DB29279F5D00DF3E1F /* Colors+Generated.swift in Sources */,
+				1459C3BC2929150200FA885D /* FeedCellType.swift in Sources */,
 				B50A27D929279F5D00DF3E1F /* UIStackView+addArrangedSubviews.swift in Sources */,
 				B50A27DA29279F5D00DF3E1F /* ReusableView.swift in Sources */,
 				B50A27FB29279F5D00DF3E1F /* CoordinatorPublisher.swift in Sources */,
