@@ -38,7 +38,7 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
                 case .moveToAuthFlow:
                     return
                 case .moveToTabBarFlow:
-                    self.coordinatorPublisher.send(.moveToTabBarFlow)
+                    self.moveToTabBarFlow()
                 }
             }
             .store(in: &cancelBag)
@@ -48,5 +48,10 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
     func moveToTabBarFlow() {
         coordinatorPublisher.send(.moveToTabBarFlow)
         finish()
+    }
+
+    func moveToSignUpFlow() {
+        let domainViewController = DomainViewController()
+        navigationController.pushViewController(domainViewController, animated: true)
     }
 }

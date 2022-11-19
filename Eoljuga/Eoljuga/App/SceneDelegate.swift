@@ -15,7 +15,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let url = URLContexts.first?.url else { return }
         guard let code = url.absoluteString.components(separatedBy: "code=").last else { return }
-        LogInManager.shared.requestAccessToken(code: code)
+
+        let token = LogInManager.shared.requestGithubAccessToken(code: code)
+        //TODO: token으로 부캠 기관인증
+
+        //TODO: 이미 회원이면
+        //appCoordinator.showTabBarFlow()
+
+        //TODO: 회원 가입해야하면
+        guard let coordinator = appCoordinator.childCoordinators.last as? AuthCoordinator else { return }
+
+        coordinator.moveToSignUpFlow()
     }
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {

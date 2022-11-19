@@ -34,12 +34,27 @@ final class LogInManager {
         UIApplication.shared.open(url)
     }
 
-    func requestAccessToken(code: String) -> String? {
-        guard let githubAPIKey = githubAPIKey else { return nil }
-        print(code)
-        // TODO: accessToken요청
+    func requestGithubAccessToken(code: String) -> String? {
+//        guard let githubAPIKey = githubAPIKey,
+//              let url = URL(string: baseURL + "/access_token")
+//        else { return nil }
+//
+//        guard var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return nil }
+//
+//        urlComponents.queryItems = [
+//            URLQueryItem(name: "client_id", value: githubAPIKey.clientID),
+//            URLQueryItem(name: "client_secret", value: githubAPIKey.clientSecret),
+//            URLQueryItem(name: "code", value: code)
+//        ]
+//
+//        guard let urlWithParam = urlComponents.url else { return nil }
+//
+//        let (data, response) = try await URLSession.shared.data(from: urlWithParam)
+//
+//        print(data)
+        
+        //TODO: accessToken 요청, Network Manager 필요
 
-        let url = baseURL + "/access_token"
         return ""
     }
 }
