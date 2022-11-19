@@ -55,8 +55,6 @@ final class HomeView: UIView {
             guard let feedCellType = FeedCellType(rawValue: sectionIndex)
             else { return nil }
 
-            let columns = feedCellType.columnCount
-
             let itemSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
                 heightDimension: .fractionalHeight(1.0)
@@ -65,24 +63,31 @@ final class HomeView: UIView {
 
             let groupWidth = self.groupWidth(feedCellType: feedCellType)
             let groupHeight = self.groupHeight(feedCellType: feedCellType)
-
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: groupWidth,
                 heightDimension: groupHeight
             )
-
+            let columns = feedCellType.columnCount
             let group = NSCollectionLayoutGroup.horizontal(
                 layoutSize: groupSize,
                 subitem: item,
                 count: columns
             )
+            let padding = Constant.Padding.horizontal.cgFloat
             group.contentInsets = NSDirectionalEdgeInsets(
-                top: 16,
-                leading: 16,
-                bottom: 16,
-                trailing: 16
+                top: padding,
+                leading: padding,
+                bottom: padding,
+                trailing: padding
             )
+
             let section = NSCollectionLayoutSection(group: group)
+            section.contentInsets = NSDirectionalEdgeInsets(
+                top: .zero,
+                leading: .zero,
+                bottom: Constant.space48.cgFloat,
+                trailing: .zero
+            )
             section.orthogonalScrollingBehavior = self.setOrthogonal(feedCellType: feedCellType)
             return section
         }
@@ -92,15 +97,19 @@ final class HomeView: UIView {
 
     private func groupWidth(feedCellType: FeedCellType) -> NSCollectionLayoutDimension {
         switch feedCellType {
-        case .recommend: return NSCollectionLayoutDimension.absolute(300)
-        case .normal: return NSCollectionLayoutDimension.fractionalWidth(1.0)
+        case .recommend:
+            return NSCollectionLayoutDimension.absolute(Constant.Cell.recommendWidth.cgFloat)
+        case .normal:
+            return NSCollectionLayoutDimension.fractionalWidth(1.0)
         }
     }
 
     private func groupHeight(feedCellType: FeedCellType) -> NSCollectionLayoutDimension {
         switch feedCellType {
-        case .recommend: return NSCollectionLayoutDimension.absolute(150)
-        case .normal: return NSCollectionLayoutDimension.absolute(150)
+        case .recommend:
+            return NSCollectionLayoutDimension.absolute(Constant.Cell.recommendHeight.cgFloat)
+        case .normal:
+            return NSCollectionLayoutDimension.absolute(Constant.Cell.normalHeight.cgFloat)
         }
     }
 

@@ -27,10 +27,14 @@ enum Constant {
     }
 
     enum Cell {
-        static let topMargin = 5
-        static let headerHeight = 40
-        static let mainHeight = 75
-        static let footerHeight = 30
+        static let recommendWidth = 300
+        static let recommendHeight = 150
+
+        static let normalHeight = 150
+        static let normalTopMargin = 5
+        static let normalHeaderHeight = 40
+        static let normalMainHeight = 75
+        static let normalFooterHeight = 30
     }
 
     enum Profile {
