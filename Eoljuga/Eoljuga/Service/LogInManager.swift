@@ -52,7 +52,7 @@ final class LogInManager {
 //        let (data, response) = try await URLSession.shared.data(from: urlWithParam)
 //
 //        print(data)
-        
+
         //TODO: accessToken 요청, Network Manager 필요
 
         return ""

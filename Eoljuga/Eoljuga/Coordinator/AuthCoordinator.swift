@@ -8,13 +8,17 @@
 import Combine
 import UIKit
 
+enum AuthCoordinatorEvent {
+    case moveToDomainFlow
+    case moveToIDFlow
+    case moveToBlogFlow
+}
+
 protocol AuthCoordinatorProtocol: CoordinatorPublisher {
     func moveToTabBarFlow()
-    // TODO: 할 일
-    // to Github WebView
-    // to 회원가입 - 도메인 선택
-    // to 회원가입 - 캠퍼ID 선택
-    // to 회원가입 - 블로그 선택
+    func moveToDomainFlow()
+    func moveToIDFlow(viewModel: SignUpViewModel)
+    func moveToBlogFlow(viewModel: SignUpViewModel)
     // to 홈 화면
 }
 
@@ -30,18 +34,7 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
     }
 
     func start() {
-        let logInViewModel: LogInViewModel = LogInViewModel()
-        let logInViewController = LogInViewController(viewModel: logInViewModel)
-        logInViewController.coordinatorPublisher
-            .sink { coordinatorEvent in
-                switch coordinatorEvent {
-                case .moveToAuthFlow:
-                    return
-                case .moveToTabBarFlow:
-                    self.moveToTabBarFlow()
-                }
-            }
-            .store(in: &cancelBag)
+        let logInViewController = LogInViewController(viewModel: LogInViewModel())
         navigationController.viewControllers = [logInViewController]
     }
 
@@ -50,8 +43,30 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
         finish()
     }
 
-    func moveToSignUpFlow() {
-        let domainViewController = DomainViewController()
+    func moveToDomainFlow() {
+        let domainViewController = DomainViewController(viewModel: SignUpViewModel())
+        domainViewController.coordinatorPublisher
+            .sink { coordinatorEvent, viewModel in
+                if coordinatorEvent == .moveToIDFlow {
+                    self.moveToIDFlow(viewModel: viewModel)
+                }
+            }
+            .store(in: &cancelBag)
         navigationController.pushViewController(domainViewController, animated: true)
+    }
+
+    func moveToIDFlow(viewModel: SignUpViewModel) {
+        let camperIDViewController = CamperIDViewController(viewModel: viewModel)
+        camperIDViewController.coordinatorPublisher
+            .sink { coordinatorEvent, viewModel in
+                if coordinatorEvent == .moveToBlogFlow {
+                    self.moveToBlogFlow(viewModel: viewModel)
+                }
+            }
+            .store(in: &cancelBag)
+        navigationController.pushViewController(camperIDViewController, animated: false)
+    }
+
+    func moveToBlogFlow(viewModel: SignUpViewModel) {
     }
 }

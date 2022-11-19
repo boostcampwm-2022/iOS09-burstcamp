@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         //TODO: 회원 가입해야하면
         guard let coordinator = appCoordinator.childCoordinators.last as? AuthCoordinator else { return }
 
-        coordinator.moveToSignUpFlow()
+        coordinator.moveToDomainFlow()
     }
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {

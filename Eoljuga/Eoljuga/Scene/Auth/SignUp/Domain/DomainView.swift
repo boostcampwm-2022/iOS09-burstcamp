@@ -20,27 +20,28 @@ final class DomainView: UIView {
     lazy var subLabel: UILabel = UILabel().then {
         $0.text = "부스트캠프 7기 수료 도메인을 선택해주세요"
         $0.font = UIFont.regular12
+        $0.textColor = .systemGray2
     }
 
     lazy var webButton: UIButton = DefaultButton(
         title: "Web",
         font: .extraBold16
     ).then {
-        $0.backgroundColor = UIColor.customYellow
+        $0.backgroundColor = .systemGray5
     }
 
     lazy var aosButton: UIButton = DefaultButton(
-        title: "aos",
+        title: "Android",
         font: .extraBold16
     ).then {
-        $0.backgroundColor = UIColor.customGreen
+        $0.backgroundColor = .systemGray5
     }
 
     lazy var iosButton: UIButton = DefaultButton(
-        title: "ios",
+        title: "iOS",
         font: .extraBold16
     ).then {
-        $0.backgroundColor = UIColor.customOrange
+        $0.backgroundColor = .systemGray5
     }
 
     override init(frame: CGRect) {

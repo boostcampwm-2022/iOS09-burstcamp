@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		3B061FD82928CC5600BFA71D /* DomainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FD72928CC5600BFA71D /* DomainViewController.swift */; };
 		3B061FDA2928CF7E00BFA71D /* DomainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FD92928CF7E00BFA71D /* DomainView.swift */; };
+		3B061FDD2928E8E300BFA71D /* CamperIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FDC2928E8E300BFA71D /* CamperIDViewController.swift */; };
+		3B061FDF2928E90400BFA71D /* CamperIDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FDE2928E90400BFA71D /* CamperIDView.swift */; };
+		3B061FE2292926DA00BFA71D /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FE1292926DA00BFA71D /* SignUpViewModel.swift */; };
 		B50A27CF29279F5D00DF3E1F /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A278B29279F5D00DF3E1F /* Constant.swift */; };
 		B50A27D029279F5D00DF3E1F /* TypeConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A278C29279F5D00DF3E1F /* TypeConversion.swift */; };
 		B50A27D129279F5D00DF3E1F /* UILabel+LineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A278D29279F5D00DF3E1F /* UILabel+LineHeight.swift */; };
@@ -75,6 +78,9 @@
 /* Begin PBXFileReference section */
 		3B061FD72928CC5600BFA71D /* DomainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainViewController.swift; sourceTree = "<group>"; };
 		3B061FD92928CF7E00BFA71D /* DomainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainView.swift; sourceTree = "<group>"; };
+		3B061FDC2928E8E300BFA71D /* CamperIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamperIDViewController.swift; sourceTree = "<group>"; };
+		3B061FDE2928E90400BFA71D /* CamperIDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamperIDView.swift; sourceTree = "<group>"; };
+		3B061FE1292926DA00BFA71D /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		B50A277129279F2600DF3E1F /* Eoljuga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eoljuga.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B50A278B29279F5D00DF3E1F /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		B50A278C29279F5D00DF3E1F /* TypeConversion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeConversion.swift; sourceTree = "<group>"; };
@@ -158,6 +164,25 @@
 				3B061FD92928CF7E00BFA71D /* DomainView.swift */,
 			);
 			path = Domain;
+			sourceTree = "<group>";
+		};
+		3B061FDB2928E8D200BFA71D /* CamperID */ = {
+			isa = PBXGroup;
+			children = (
+				3B061FDC2928E8E300BFA71D /* CamperIDViewController.swift */,
+				3B061FDE2928E90400BFA71D /* CamperIDView.swift */,
+			);
+			path = CamperID;
+			sourceTree = "<group>";
+		};
+		3B061FE0292926C800BFA71D /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				3B061FE1292926DA00BFA71D /* SignUpViewModel.swift */,
+				3B061FD62928CC4300BFA71D /* Domain */,
+				3B061FDB2928E8D200BFA71D /* CamperID */,
+			);
+			path = SignUp;
 			sourceTree = "<group>";
 		};
 		B50A276829279F2600DF3E1F = {
@@ -270,7 +295,7 @@
 		B50A27A329279F5D00DF3E1F /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				3B061FD62928CC4300BFA71D /* Domain */,
+				3B061FE0292926C800BFA71D /* SignUp */,
 				B50A27A529279F5D00DF3E1F /* LogIn */,
 			);
 			path = Auth;
@@ -608,6 +633,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B50A27DC29279F5D00DF3E1F /* Fonts+Generated.swift in Sources */,
+				3B061FDD2928E8E300BFA71D /* CamperIDViewController.swift in Sources */,
 				B50A27EE29279F5D00DF3E1F /* HomeViewController.swift in Sources */,
 				B50A27E629279F5D00DF3E1F /* LogInViewController.swift in Sources */,
 				B50A27EB29279F5D00DF3E1F /* DefaultFeedCellHeader.swift in Sources */,
@@ -628,6 +654,7 @@
 				B50A27F429279F5D00DF3E1F /* SceneDelegate.swift in Sources */,
 				B50A27E929279F5D00DF3E1F /* DefaultFeedCellFooter.swift in Sources */,
 				D8494D522927D086008157F1 /* MyPageProfileView.swift in Sources */,
+				3B061FDF2928E90400BFA71D /* CamperIDView.swift in Sources */,
 				B50A27F629279F5D00DF3E1F /* AuthCoordinator.swift in Sources */,
 				D8494D542927D0DC008157F1 /* User.swift in Sources */,
 				B50A27EA29279F5D00DF3E1F /* DefaultFeedCellMain.swift in Sources */,
@@ -639,6 +666,7 @@
 				B50A27E729279F5D00DF3E1F /* UINavigationController+navigationBar.swift in Sources */,
 				B50A27F529279F5D00DF3E1F /* AppCoordinator.swift in Sources */,
 				B50A27F929279F5D00DF3E1F /* TabBarPage.swift in Sources */,
+				3B061FE2292926DA00BFA71D /* SignUpViewModel.swift in Sources */,
 				B50A27DB29279F5D00DF3E1F /* Colors+Generated.swift in Sources */,
 				B50A27D929279F5D00DF3E1F /* UIStackView+addArrangedSubviews.swift in Sources */,
 				3B061FD82928CC5600BFA71D /* DomainViewController.swift in Sources */,
