@@ -59,6 +59,18 @@
 		B5BA27832927AEC600BDCE08 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = B5BA27822927AEC600BDCE08 /* FirebaseMessaging */; };
 		B5BA27852927AEC600BDCE08 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = B5BA27842927AEC600BDCE08 /* FirebaseStorage */; };
 		B5BA27872927AEF600BDCE08 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5BA27862927AEF600BDCE08 /* GoogleService-Info.plist */; };
+		D8494D462927C97E008157F1 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D452927C97E008157F1 /* MyPageView.swift */; };
+		D8494D482927C9E8008157F1 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D472927C9E8008157F1 /* MyPageViewModel.swift */; };
+		D8494D4A2927CBD4008157F1 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D492927CBD4008157F1 /* DefaultButton.swift */; };
+		D8494D4C2927CD6C008157F1 /* DefaultProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D4B2927CD6C008157F1 /* DefaultProfileImageView.swift */; };
+		D8494D4E2927CE64008157F1 /* Domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D4D2927CE64008157F1 /* Domain.swift */; };
+		D8494D502927CEAA008157F1 /* DefaultBadgeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D4F2927CEAA008157F1 /* DefaultBadgeLabel.swift */; };
+		D8494D522927D086008157F1 /* MyPageProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D512927D085008157F1 /* MyPageProfileView.swift */; };
+		D8494D542927D0DC008157F1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D532927D0DC008157F1 /* User.swift */; };
+		D8494D562927D6EB008157F1 /* DefaultBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D552927D6EB008157F1 /* DefaultBadgeView.swift */; };
+		D8494D5D2927E987008157F1 /* MyPageEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D5C2927E987008157F1 /* MyPageEditViewModel.swift */; };
+		D8494D5F2927E9D4008157F1 /* MyPageEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D5E2927E9D4008157F1 /* MyPageEditView.swift */; };
+		D8494D612927F09C008157F1 /* MyPageEditViewControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D602927F09C008157F1 /* MyPageEditViewControllerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -109,6 +121,18 @@
 		B52A7F1A2927A4E300E271D2 /* .swiftlint.auto.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.auto.yml; sourceTree = "<group>"; };
 		B52A7F232927A68F00E271D2 /* Service-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Service-Info.plist"; sourceTree = "<group>"; };
 		B5BA27862927AEF600BDCE08 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D8494D452927C97E008157F1 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
+		D8494D472927C9E8008157F1 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
+		D8494D492927CBD4008157F1 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
+		D8494D4B2927CD6C008157F1 /* DefaultProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProfileImageView.swift; sourceTree = "<group>"; };
+		D8494D4D2927CE64008157F1 /* Domain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Domain.swift; sourceTree = "<group>"; };
+		D8494D4F2927CEAA008157F1 /* DefaultBadgeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBadgeLabel.swift; sourceTree = "<group>"; };
+		D8494D512927D085008157F1 /* MyPageProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageProfileView.swift; sourceTree = "<group>"; };
+		D8494D532927D0DC008157F1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		D8494D552927D6EB008157F1 /* DefaultBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBadgeView.swift; sourceTree = "<group>"; };
+		D8494D5C2927E987008157F1 /* MyPageEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewModel.swift; sourceTree = "<group>"; };
+		D8494D5E2927E9D4008157F1 /* MyPageEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditView.swift; sourceTree = "<group>"; };
+		D8494D602927F09C008157F1 /* MyPageEditViewControllerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewControllerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -322,7 +346,9 @@
 		B50A27BA29279F5D00DF3E1F /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
-				B50A27BB29279F5D00DF3E1F /* MyPageViewController.swift */,
+				D8494D582927E915008157F1 /* ViewController */,
+				D8494D572927E8FB008157F1 /* View */,
+				D8494D592927E91F008157F1 /* ViewModel */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -379,6 +405,8 @@
 		B5BA27892927B07300BDCE08 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D8494D532927D0DC008157F1 /* User.swift */,
+				D8494D4D2927CE64008157F1 /* Domain.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -395,6 +423,10 @@
 		B5BA278B2927B08800BDCE08 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D8494D492927CBD4008157F1 /* DefaultButton.swift */,
+				D8494D4B2927CD6C008157F1 /* DefaultProfileImageView.swift */,
+				D8494D4F2927CEAA008157F1 /* DefaultBadgeLabel.swift */,
+				D8494D552927D6EB008157F1 /* DefaultBadgeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -402,6 +434,34 @@
 		B5BA278C2927B08C00BDCE08 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D8494D572927E8FB008157F1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D8494D452927C97E008157F1 /* MyPageView.swift */,
+				D8494D512927D085008157F1 /* MyPageProfileView.swift */,
+				D8494D5E2927E9D4008157F1 /* MyPageEditView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D8494D582927E915008157F1 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B50A27BB29279F5D00DF3E1F /* MyPageViewController.swift */,
+				D8494D602927F09C008157F1 /* MyPageEditViewControllerViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		D8494D592927E91F008157F1 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D8494D472927C9E8008157F1 /* MyPageViewModel.swift */,
+				D8494D5C2927E987008157F1 /* MyPageEditViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -547,15 +607,24 @@
 				B50A27E629279F5D00DF3E1F /* LogInViewController.swift in Sources */,
 				B50A27EB29279F5D00DF3E1F /* DefaultFeedCellHeader.swift in Sources */,
 				B50A27CF29279F5D00DF3E1F /* Constant.swift in Sources */,
+				D8494D502927CEAA008157F1 /* DefaultBadgeLabel.swift in Sources */,
 				B50A27E429279F5D00DF3E1F /* APIKey.swift in Sources */,
 				B50A27ED29279F5D00DF3E1F /* DefaultFeedCell.swift in Sources */,
+				D8494D462927C97E008157F1 /* MyPageView.swift in Sources */,
+				D8494D562927D6EB008157F1 /* DefaultBadgeView.swift in Sources */,
 				B50A27F729279F5D00DF3E1F /* TabBarCoordinator.swift in Sources */,
 				B50A27EF29279F5D00DF3E1F /* BookmarkViewController.swift in Sources */,
 				B50A27E529279F5D00DF3E1F /* LogInView.swift in Sources */,
+				D8494D4E2927CE64008157F1 /* Domain.swift in Sources */,
+				D8494D482927C9E8008157F1 /* MyPageViewModel.swift in Sources */,
+				D8494D4A2927CBD4008157F1 /* DefaultButton.swift in Sources */,
 				B50A27FE29279F5D00DF3E1F /* Coordinator.swift in Sources */,
 				B50A27F429279F5D00DF3E1F /* SceneDelegate.swift in Sources */,
 				B50A27E929279F5D00DF3E1F /* DefaultFeedCellFooter.swift in Sources */,
+				D8494D5D2927E987008157F1 /* MyPageEditViewModel.swift in Sources */,
+				D8494D522927D086008157F1 /* MyPageProfileView.swift in Sources */,
 				B50A27F629279F5D00DF3E1F /* AuthCoordinator.swift in Sources */,
+				D8494D542927D0DC008157F1 /* User.swift in Sources */,
 				B50A27EA29279F5D00DF3E1F /* DefaultFeedCellMain.swift in Sources */,
 				B50A27D329279F5D00DF3E1F /* UIFont+FontSet.swift in Sources */,
 				B50A27FC29279F5D00DF3E1F /* CoordinatorEvent.swift in Sources */,
@@ -563,12 +632,15 @@
 				B50A27E229279F5D00DF3E1F /* LogInManager.swift in Sources */,
 				B50A27E829279F5D00DF3E1F /* UICollectionViewCell+identifier.swift in Sources */,
 				B50A27E729279F5D00DF3E1F /* UINavigationController+navigationBar.swift in Sources */,
+				D8494D5F2927E9D4008157F1 /* MyPageEditView.swift in Sources */,
 				B50A27F529279F5D00DF3E1F /* AppCoordinator.swift in Sources */,
 				B50A27F929279F5D00DF3E1F /* TabBarPage.swift in Sources */,
 				B50A27DB29279F5D00DF3E1F /* Colors+Generated.swift in Sources */,
+				D8494D612927F09C008157F1 /* MyPageEditViewControllerViewController.swift in Sources */,
 				B50A27D929279F5D00DF3E1F /* UIStackView+addArrangedSubviews.swift in Sources */,
 				B50A27DA29279F5D00DF3E1F /* ReusableView.swift in Sources */,
 				B50A27FB29279F5D00DF3E1F /* CoordinatorPublisher.swift in Sources */,
+				D8494D4C2927CD6C008157F1 /* DefaultProfileImageView.swift in Sources */,
 				B50A27D629279F5D00DF3E1F /* UIView+addSubViews.swift in Sources */,
 				B50A27E329279F5D00DF3E1F /* LogInViewModel.swift in Sources */,
 				B50A27F029279F5D00DF3E1F /* MyPageViewController.swift in Sources */,
