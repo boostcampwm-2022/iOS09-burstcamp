@@ -33,9 +33,10 @@ final class SignUpCamperIDView: UIView {
         $0.layer.borderWidth = 1
     }
 
-    lazy var nextButton: UIButton = DefaultButton(title: "다음").then {
-        $0.backgroundColor = UIColor.customBlue
-    }
+    lazy var nextButton: UIButton = DefaultButton(
+        title: "다음",
+        backgroundColor: UIColor.customBlue
+    )
 
     override init(frame: CGRect) {
         super.init(frame: frame)

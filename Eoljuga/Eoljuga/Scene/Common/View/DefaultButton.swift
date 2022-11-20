@@ -11,12 +11,13 @@ final class DefaultButton: UIButton {
 
     init(
         title: String,
-        font: UIFont = .extraBold16
+        font: UIFont = .extraBold16,
+        backgroundColor: UIColor
     ) {
         super.init(frame: .zero)
         setTitle(title, for: .normal)
         setTitleColor(.white, for: .normal)
-        backgroundColor = .main
+        self.backgroundColor = backgroundColor
         titleLabel?.font = font
         layer.cornerRadius = Constant.CornerRadius.radius8.cgFloat
     }

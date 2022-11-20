@@ -8,7 +8,6 @@
 import UIKit
 
 import SnapKit
-import Then
 
 final class SignUpDomainView: UIView {
 
@@ -25,24 +24,21 @@ final class SignUpDomainView: UIView {
 
     lazy var webButton: UIButton = DefaultButton(
         title: Domain.web.rawValue,
-        font: .extraBold16
-    ).then {
-        $0.backgroundColor = .systemGray5
-    }
+        font: .extraBold16,
+        backgroundColor: .systemGray5
+    )
 
     lazy var aosButton: UIButton = DefaultButton(
         title: Domain.android.rawValue,
-        font: .extraBold16
-    ).then {
-        $0.backgroundColor = .systemGray5
-    }
+        font: .extraBold16,
+        backgroundColor: .systemGray5
+    )
 
     lazy var iosButton: UIButton = DefaultButton(
         title: Domain.iOS.rawValue,
-        font: .extraBold16
-    ).then {
-        $0.backgroundColor = .systemGray5
-    }
+        font: .extraBold16,
+        backgroundColor: .systemGray5
+    )
 
     override init(frame: CGRect) {
         super.init(frame: frame)
