@@ -31,11 +31,11 @@ final class SignUpCamperIDView: UIView {
     lazy var idTextField: UITextField = UITextField().then {
         $0.layer.borderWidth = 1
         $0.keyboardType = .numberPad
+        $0.becomeFirstResponder()
     }
 
     lazy var nextButton: UIButton = DefaultButton(
-        title: "다음",
-        backgroundColor: UIColor.customBlue
+        title: "다음"
     )
 
     override init(frame: CGRect) {
@@ -60,7 +60,7 @@ final class SignUpCamperIDView: UIView {
         addSubview(mainLabel)
         mainLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(176)
-            $0.leading.equalTo(domainLabel.snp.trailing).offset(16)
+            $0.leading.equalTo(domainLabel.snp.trailing).offset(8)
         }
 
         addSubview(subLabel)
@@ -83,5 +83,8 @@ final class SignUpCamperIDView: UIView {
         }
 
         addSubview(nextButton)
+        nextButton.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(16)
+        }
     }
 }

@@ -19,8 +19,7 @@ final class MyPageView: UIView {
 
     private let myInfoEditButton = DefaultButton(
         title: "내 정보 수정하기",
-        font: .bold14,
-        backgroundColor: UIColor.customBlue
+        font: .bold14
     )
 
     // MARK: - Initializer

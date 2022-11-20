@@ -12,7 +12,7 @@ final class DefaultButton: UIButton {
     init(
         title: String,
         font: UIFont = .extraBold16,
-        backgroundColor: UIColor
+        backgroundColor: UIColor = .main
     ) {
         super.init(frame: .zero)
         setTitle(title, for: .normal)
