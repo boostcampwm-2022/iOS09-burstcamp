@@ -93,7 +93,7 @@ final class HomeView: UIView {
                 bottom: Constant.space48.cgFloat,
                 trailing: .zero
             )
-            section.orthogonalScrollingBehavior = self.setOrthogonal(feedCellType: feedCellType)
+            section.orthogonalScrollingBehavior = self.orthogonalMode(feedCellType: feedCellType)
             section.boundarySupplementaryItems = self.sectionHeader(feedCellType: feedCellType)
             return section
         }
@@ -121,7 +121,7 @@ final class HomeView: UIView {
         }
     }
 
-    private func setOrthogonal(feedCellType: FeedCellType)
+    private func orthogonalMode(feedCellType: FeedCellType)
     -> UICollectionLayoutSectionOrthogonalScrollingBehavior {
         switch feedCellType {
         case .recommend: return .continuous
