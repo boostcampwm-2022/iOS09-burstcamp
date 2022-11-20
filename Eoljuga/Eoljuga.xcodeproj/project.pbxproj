@@ -7,17 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3B061FD82928CC5600BFA71D /* SignUpDomainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FD72928CC5600BFA71D /* SignUpDomainViewController.swift */; };
-		3B061FDA2928CF7E00BFA71D /* SighUpDomainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FD92928CF7E00BFA71D /* SighUpDomainView.swift */; };
-		3B061FDD2928E8E300BFA71D /* SignUpCamperIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FDC2928E8E300BFA71D /* SignUpCamperIDViewController.swift */; };
-		3B061FDF2928E90400BFA71D /* SignUpCamperIDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FDE2928E90400BFA71D /* SignUpCamperIDView.swift */; };
-		3B061FE2292926DA00BFA71D /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FE1292926DA00BFA71D /* SignUpViewModel.swift */; };
 		1458C6952928FB1B00E00B80 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458C6942928FB1B00E00B80 /* HomeView.swift */; };
 		1459C3BA292910B300FA885D /* RecommendFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3B9292910B300FA885D /* RecommendFeedCell.swift */; };
 		1459C3BC2929150200FA885D /* FeedCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3BB2929150200FA885D /* FeedCellType.swift */; };
 		14927E1E2929C71C001F2E97 /* RecommendFeedUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14927E1D2929C71C001F2E97 /* RecommendFeedUserView.swift */; };
 		14927E202929CCA0001F2E97 /* RecommendFeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */; };
 		14927E222929CF37001F2E97 /* UI+ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14927E212929CF37001F2E97 /* UI+ReusableView.swift */; };
+		3B061FD82928CC5600BFA71D /* SignUpDomainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FD72928CC5600BFA71D /* SignUpDomainViewController.swift */; };
+		3B061FDA2928CF7E00BFA71D /* SighUpDomainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FD92928CF7E00BFA71D /* SighUpDomainView.swift */; };
+		3B061FDD2928E8E300BFA71D /* SignUpCamperIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FDC2928E8E300BFA71D /* SignUpCamperIDViewController.swift */; };
+		3B061FDF2928E90400BFA71D /* SignUpCamperIDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FDE2928E90400BFA71D /* SignUpCamperIDView.swift */; };
+		3B061FE2292926DA00BFA71D /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FE1292926DA00BFA71D /* SignUpViewModel.swift */; };
 		B50A27CF29279F5D00DF3E1F /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A278B29279F5D00DF3E1F /* Constant.swift */; };
 		B50A27D029279F5D00DF3E1F /* TypeConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A278C29279F5D00DF3E1F /* TypeConversion.swift */; };
 		B50A27D129279F5D00DF3E1F /* UILabel+LineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A278D29279F5D00DF3E1F /* UILabel+LineHeight.swift */; };
@@ -77,6 +77,15 @@
 		D8494D522927D086008157F1 /* MyPageProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D512927D085008157F1 /* MyPageProfileView.swift */; };
 		D8494D542927D0DC008157F1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D532927D0DC008157F1 /* User.swift */; };
 		D8494D562927D6EB008157F1 /* DefaultBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D552927D6EB008157F1 /* DefaultBadgeView.swift */; };
+		D88295EB292A43CD005B4273 /* FireStoreConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295EA292A43CD005B4273 /* FireStoreConfiguration.swift */; };
+		D88295ED292A43E2005B4273 /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295EC292A43E2005B4273 /* UserDTO.swift */; };
+		D88295EF292A43EB005B4273 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295EE292A43EB005B4273 /* NetworkError.swift */; };
+		D88295F2292A4419005B4273 /* UserQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295F1292A4419005B4273 /* UserQuery.swift */; };
+		D88295F6292A4428005B4273 /* FireStoreValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295F5292A4428005B4273 /* FireStoreValues.swift */; };
+		D88295FA292A4448005B4273 /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295F9292A4448005B4273 /* Query.swift */; };
+		D88295FC292A4452005B4273 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295FB292A4452005B4273 /* HTTPMethod.swift */; };
+		D88295FE292A4459005B4273 /* URLSessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295FD292A4459005B4273 /* URLSessionService.swift */; };
+		D8829600292A44B9005B4273 /* FireStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295FF292A44B9005B4273 /* FireStoreService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -145,6 +154,15 @@
 		D8494D512927D085008157F1 /* MyPageProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageProfileView.swift; sourceTree = "<group>"; };
 		D8494D532927D0DC008157F1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D8494D552927D6EB008157F1 /* DefaultBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBadgeView.swift; sourceTree = "<group>"; };
+		D88295EA292A43CD005B4273 /* FireStoreConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireStoreConfiguration.swift; sourceTree = "<group>"; };
+		D88295EC292A43E2005B4273 /* UserDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
+		D88295EE292A43EB005B4273 /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		D88295F1292A4419005B4273 /* UserQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserQuery.swift; sourceTree = "<group>"; };
+		D88295F5292A4428005B4273 /* FireStoreValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireStoreValues.swift; sourceTree = "<group>"; };
+		D88295F9292A4448005B4273 /* Query.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
+		D88295FB292A4452005B4273 /* HTTPMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		D88295FD292A4459005B4273 /* URLSessionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionService.swift; sourceTree = "<group>"; };
+		D88295FF292A44B9005B4273 /* FireStoreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireStoreService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +183,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1459C3B82929102400FA885D /* RecommendFeedSection */ = {
+			isa = PBXGroup;
+			children = (
+				1459C3B9292910B300FA885D /* RecommendFeedCell.swift */,
+				14927E1D2929C71C001F2E97 /* RecommendFeedUserView.swift */,
+				14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */,
+			);
+			path = RecommendFeedSection;
+			sourceTree = "<group>";
+		};
 		3B061FD62928CC4300BFA71D /* Domain */ = {
 			isa = PBXGroup;
 			children = (
@@ -191,16 +219,6 @@
 				3B061FDB2928E8D200BFA71D /* CamperID */,
 			);
 			path = SignUp;
-			sourceTree = "<group>";
-		};
-		1459C3B82929102400FA885D /* RecommendFeedSection */ = {
-			isa = PBXGroup;
-			children = (
-				1459C3B9292910B300FA885D /* RecommendFeedCell.swift */,
-				14927E1D2929C71C001F2E97 /* RecommendFeedUserView.swift */,
-				14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */,
-			);
-			path = RecommendFeedSection;
 			sourceTree = "<group>";
 		};
 		B50A276829279F2600DF3E1F = {
@@ -241,6 +259,7 @@
 		B50A278829279F5D00DF3E1F /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				D88295F0292A4410005B4273 /* Query */,
 				B5BA27882927AFC200BDCE08 /* Constant */,
 				B50A278929279F5D00DF3E1F /* Extension */,
 				B50A279629279F5D00DF3E1F /* Protocol */,
@@ -441,6 +460,8 @@
 		B50A28002927A16F00DF3E1F /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				D88295FD292A4459005B4273 /* URLSessionService.swift */,
+				D88295FF292A44B9005B4273 /* FireStoreService.swift */,
 				B50A27A429279F5D00DF3E1F /* LogInManager.swift */,
 			);
 			path = Service;
@@ -449,7 +470,10 @@
 		B5BA27882927AFC200BDCE08 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
+				D88295EA292A43CD005B4273 /* FireStoreConfiguration.swift */,
 				B50A278B29279F5D00DF3E1F /* Constant.swift */,
+				D88295EE292A43EB005B4273 /* NetworkError.swift */,
+				D88295FB292A4452005B4273 /* HTTPMethod.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -459,6 +483,7 @@
 			children = (
 				B50A27A729279F5D00DF3E1F /* APIKey.swift */,
 				D8494D532927D0DC008157F1 /* User.swift */,
+				D88295EC292A43E2005B4273 /* UserDTO.swift */,
 				D8494D4D2927CE64008157F1 /* Domain.swift */,
 			);
 			path = Model;
@@ -514,6 +539,16 @@
 				D8494D472927C9E8008157F1 /* MyPageViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D88295F0292A4410005B4273 /* Query */ = {
+			isa = PBXGroup;
+			children = (
+				D88295F5292A4428005B4273 /* FireStoreValues.swift */,
+				D88295F9292A4448005B4273 /* Query.swift */,
+				D88295F1292A4419005B4273 /* UserQuery.swift */,
+			);
+			path = Query;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -659,14 +694,20 @@
 				B50A27E629279F5D00DF3E1F /* LogInViewController.swift in Sources */,
 				B50A27EB29279F5D00DF3E1F /* NormalFeedCellHeader.swift in Sources */,
 				B50A27CF29279F5D00DF3E1F /* Constant.swift in Sources */,
+				D88295FC292A4452005B4273 /* HTTPMethod.swift in Sources */,
 				D8494D502927CEAA008157F1 /* DefaultBadgeLabel.swift in Sources */,
 				14927E1E2929C71C001F2E97 /* RecommendFeedUserView.swift in Sources */,
+				D88295EF292A43EB005B4273 /* NetworkError.swift in Sources */,
+				D88295EB292A43CD005B4273 /* FireStoreConfiguration.swift in Sources */,
 				B50A27E429279F5D00DF3E1F /* APIKey.swift in Sources */,
 				B50A27ED29279F5D00DF3E1F /* NormalFeedCell.swift in Sources */,
 				D8494D462927C97E008157F1 /* MyPageView.swift in Sources */,
 				D8494D562927D6EB008157F1 /* DefaultBadgeView.swift in Sources */,
+				D88295FE292A4459005B4273 /* URLSessionService.swift in Sources */,
 				B50A27F729279F5D00DF3E1F /* TabBarCoordinator.swift in Sources */,
+				D88295F6292A4428005B4273 /* FireStoreValues.swift in Sources */,
 				B50A27EF29279F5D00DF3E1F /* BookmarkViewController.swift in Sources */,
+				D8829600292A44B9005B4273 /* FireStoreService.swift in Sources */,
 				1459C3BA292910B300FA885D /* RecommendFeedCell.swift in Sources */,
 				B50A27E529279F5D00DF3E1F /* LogInView.swift in Sources */,
 				D8494D4E2927CE64008157F1 /* Domain.swift in Sources */,
@@ -686,9 +727,6 @@
 				B50A27FC29279F5D00DF3E1F /* CoordinatorEvent.swift in Sources */,
 				B50A27D129279F5D00DF3E1F /* UILabel+LineHeight.swift in Sources */,
 				B50A27E229279F5D00DF3E1F /* LogInManager.swift in Sources */,
-				B50A27E829279F5D00DF3E1F /* UICollectionViewCell+identifier.swift in Sources */,
-				B50A27E729279F5D00DF3E1F /* UINavigationController+navigationBar.swift in Sources */,
-				D8494D5F2927E9D4008157F1 /* MyPageEditView.swift in Sources */,
 				B50A27F529279F5D00DF3E1F /* AppCoordinator.swift in Sources */,
 				B50A27F929279F5D00DF3E1F /* TabBarPage.swift in Sources */,
 				3B061FE2292926DA00BFA71D /* SignUpViewModel.swift in Sources */,
@@ -696,6 +734,7 @@
 				1459C3BC2929150200FA885D /* FeedCellType.swift in Sources */,
 				B50A27D929279F5D00DF3E1F /* UIStackView+addArrangedSubviews.swift in Sources */,
 				3B061FD82928CC5600BFA71D /* SignUpDomainViewController.swift in Sources */,
+				D88295ED292A43E2005B4273 /* UserDTO.swift in Sources */,
 				B50A27DA29279F5D00DF3E1F /* ReusableView.swift in Sources */,
 				B50A27FB29279F5D00DF3E1F /* CoordinatorPublisher.swift in Sources */,
 				D8494D4C2927CD6C008157F1 /* DefaultProfileImageView.swift in Sources */,
@@ -705,8 +744,10 @@
 				B50A27EC29279F5D00DF3E1F /* NormalFeedCellBadgeStackView.swift in Sources */,
 				B50A27D429279F5D00DF3E1F /* UIColor+ColorSet.swift in Sources */,
 				14927E202929CCA0001F2E97 /* RecommendFeedHeader.swift in Sources */,
+				D88295FA292A4448005B4273 /* Query.swift in Sources */,
 				B50A27F229279F5D00DF3E1F /* AppDelegate.swift in Sources */,
 				B50A27D029279F5D00DF3E1F /* TypeConversion.swift in Sources */,
+				D88295F2292A4419005B4273 /* UserQuery.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
