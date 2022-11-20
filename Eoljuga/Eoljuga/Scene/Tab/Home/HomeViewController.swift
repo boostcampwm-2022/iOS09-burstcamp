@@ -14,14 +14,14 @@ final class HomeViewController: UIViewController {
 
     private var homeView: HomeView {
         guard let view = view as? HomeView else {
-            return HomeView(frame: view.frame)
+            return HomeView()
         }
         return view
     }
 
     override func loadView() {
         super.loadView()
-        view = HomeView(frame: view.frame)
+        view = HomeView()
     }
 
     override func viewDidLoad() {

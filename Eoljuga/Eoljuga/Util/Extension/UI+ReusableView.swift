@@ -7,4 +7,6 @@
 
 import UIKit
 
+extension UICollectionViewCell: ReusableView {}
+
 extension UICollectionReusableView: ReusableView {}
