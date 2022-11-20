@@ -18,6 +18,7 @@ final class SignUpCamperIDViewController: UIViewController {
     var cancelBag = Set<AnyCancellable>()
     var coordinatorPublisher = PassthroughSubject<(AuthCoordinatorEvent, SignUpViewModel), Never>()
     let viewModel: SignUpViewModel
+    let idTextFieldMaxCount = 3
 
     init(viewModel: SignUpViewModel) {
         self.viewModel = viewModel
@@ -34,6 +35,7 @@ final class SignUpCamperIDViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        signUpCamperIDView.idTextField.delegate = self
         bind()
     }
 
@@ -43,5 +45,23 @@ final class SignUpCamperIDViewController: UIViewController {
             self.signUpCamperIDView.representingDomainLabel.text = domain.representingDomain
         }
         .store(in: &cancelBag)
+    }
+}
+
+extension SignUpCamperIDViewController: UITextFieldDelegate {
+    func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
+        guard let text = textField.text else { return false }
+
+        if text.count >= idTextFieldMaxCount
+            && range.length == 0
+            && range.location + 1 >= idTextFieldMaxCount {
+            return false
+        }
+
+        return true
     }
 }
