@@ -22,6 +22,11 @@ final class HomeView: UIView {
         $0.backgroundColor = .clear
         $0.clipsToBounds = true
         $0.register(
+            RecommendFeedHeader.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: RecommendFeedHeader.identifier
+        )
+        $0.register(
             RecommendFeedCell.self,
             forCellWithReuseIdentifier: RecommendFeedCell.identifier
         )
@@ -89,6 +94,27 @@ final class HomeView: UIView {
                 trailing: .zero
             )
             section.orthogonalScrollingBehavior = self.setOrthogonal(feedCellType: feedCellType)
+            if feedCellType == .recommend {
+                let padding = Constant.Padding.horizontal.cgFloat
+                let headerHeight = 80 + padding * 2
+                let headerSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .absolute(headerHeight)
+                )
+                let header = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: headerSize,
+                    elementKind: UICollectionView.elementKindSectionHeader,
+                    alignment: .top
+                )
+                header.contentInsets = NSDirectionalEdgeInsets(
+                    top: padding,
+                    leading: padding,
+                    bottom: padding,
+                    trailing: padding
+                )
+                section.boundarySupplementaryItems = [header]
+            }
+
             return section
         }
 

@@ -96,4 +96,23 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
             return cell
         }
     }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader && indexPath.section == 0 {
+            guard let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: UICollectionView.elementKindSectionHeader,
+                withReuseIdentifier: RecommendFeedHeader.identifier,
+                for: indexPath
+            ) as? RecommendFeedHeader else {
+                return UICollectionReusableView()
+            }
+
+            return header
+        }
+        return UICollectionReusableView()
+    }
 }

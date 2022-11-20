@@ -11,6 +11,8 @@
 		1459C3BA292910B300FA885D /* RecommendFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3B9292910B300FA885D /* RecommendFeedCell.swift */; };
 		1459C3BC2929150200FA885D /* FeedCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3BB2929150200FA885D /* FeedCellType.swift */; };
 		14927E1E2929C71C001F2E97 /* RecommendFeedUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14927E1D2929C71C001F2E97 /* RecommendFeedUserView.swift */; };
+		14927E202929CCA0001F2E97 /* RecommendFeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */; };
+		14927E222929CF37001F2E97 /* UICollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14927E212929CF37001F2E97 /* UICollectionReusableView.swift */; };
 		B50A27CF29279F5D00DF3E1F /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A278B29279F5D00DF3E1F /* Constant.swift */; };
 		B50A27D029279F5D00DF3E1F /* TypeConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A278C29279F5D00DF3E1F /* TypeConversion.swift */; };
 		B50A27D129279F5D00DF3E1F /* UILabel+LineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A278D29279F5D00DF3E1F /* UILabel+LineHeight.swift */; };
@@ -78,6 +80,8 @@
 		1459C3B9292910B300FA885D /* RecommendFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedCell.swift; sourceTree = "<group>"; };
 		1459C3BB2929150200FA885D /* FeedCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellType.swift; sourceTree = "<group>"; };
 		14927E1D2929C71C001F2E97 /* RecommendFeedUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedUserView.swift; sourceTree = "<group>"; };
+		14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedHeader.swift; sourceTree = "<group>"; };
+		14927E212929CF37001F2E97 /* UICollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionReusableView.swift; sourceTree = "<group>"; };
 		B50A277129279F2600DF3E1F /* Eoljuga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eoljuga.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B50A278B29279F5D00DF3E1F /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		B50A278C29279F5D00DF3E1F /* TypeConversion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeConversion.swift; sourceTree = "<group>"; };
@@ -153,13 +157,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1459C3B82929102400FA885D /* RecommendFeedCell */ = {
+		1459C3B82929102400FA885D /* RecommendFeedSection */ = {
 			isa = PBXGroup;
 			children = (
 				1459C3B9292910B300FA885D /* RecommendFeedCell.swift */,
 				14927E1D2929C71C001F2E97 /* RecommendFeedUserView.swift */,
+				14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */,
 			);
-			path = RecommendFeedCell;
+			path = RecommendFeedSection;
 			sourceTree = "<group>";
 		};
 		B50A276829279F2600DF3E1F = {
@@ -217,6 +222,7 @@
 				B50A279229279F5D00DF3E1F /* UIView+addSubViews.swift */,
 				B50A279529279F5D00DF3E1F /* UIStackView+addArrangedSubviews.swift */,
 				B50A27AD29279F5D00DF3E1F /* UICollectionViewCell+identifier.swift */,
+				14927E212929CF37001F2E97 /* UICollectionReusableView.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -301,7 +307,7 @@
 		B50A27AB29279F5D00DF3E1F /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				1459C3B82929102400FA885D /* RecommendFeedCell */,
+				1459C3B82929102400FA885D /* RecommendFeedSection */,
 				B50A27AE29279F5D00DF3E1F /* NormalFeedCell */,
 				B50A27B729279F5D00DF3E1F /* HomeViewController.swift */,
 				1458C6942928FB1B00E00B80 /* HomeView.swift */,
@@ -611,6 +617,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B50A27DC29279F5D00DF3E1F /* Fonts+Generated.swift in Sources */,
+				14927E222929CF37001F2E97 /* UICollectionReusableView.swift in Sources */,
 				B50A27EE29279F5D00DF3E1F /* HomeViewController.swift in Sources */,
 				B50A27E629279F5D00DF3E1F /* LogInViewController.swift in Sources */,
 				B50A27EB29279F5D00DF3E1F /* NormalFeedCellHeader.swift in Sources */,
@@ -654,6 +661,7 @@
 				B50A27F029279F5D00DF3E1F /* MyPageViewController.swift in Sources */,
 				B50A27EC29279F5D00DF3E1F /* NormalFeedCellBadgeStackView.swift in Sources */,
 				B50A27D429279F5D00DF3E1F /* UIColor+ColorSet.swift in Sources */,
+				14927E202929CCA0001F2E97 /* RecommendFeedHeader.swift in Sources */,
 				B50A27F229279F5D00DF3E1F /* AppDelegate.swift in Sources */,
 				B50A27D029279F5D00DF3E1F /* TypeConversion.swift in Sources */,
 			);
