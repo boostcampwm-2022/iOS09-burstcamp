@@ -73,12 +73,12 @@ final class HomeView: UIView {
                 subitem: item,
                 count: columns
             )
-            let padding = Constant.Padding.horizontal.cgFloat
+            let margin = Constant.Cell.recommendMargin.cgFloat
             group.contentInsets = NSDirectionalEdgeInsets(
-                top: padding,
-                leading: padding,
-                bottom: padding,
-                trailing: padding
+                top: margin,
+                leading: margin,
+                bottom: margin,
+                trailing: margin
             )
 
             let section = NSCollectionLayoutSection(group: group)
@@ -98,7 +98,8 @@ final class HomeView: UIView {
     private func groupWidth(feedCellType: FeedCellType) -> NSCollectionLayoutDimension {
         switch feedCellType {
         case .recommend:
-            return NSCollectionLayoutDimension.absolute(Constant.Cell.recommendWidth.cgFloat)
+            let width = Constant.Cell.recommendWidth + Constant.Cell.recommendMargin * 2
+            return NSCollectionLayoutDimension.absolute(width.cgFloat)
         case .normal:
             return NSCollectionLayoutDimension.fractionalWidth(1.0)
         }
@@ -107,7 +108,8 @@ final class HomeView: UIView {
     private func groupHeight(feedCellType: FeedCellType) -> NSCollectionLayoutDimension {
         switch feedCellType {
         case .recommend:
-            return NSCollectionLayoutDimension.absolute(Constant.Cell.recommendHeight.cgFloat)
+            let height = Constant.Cell.recommendHeight + Constant.Cell.recommendMargin * 2
+            return NSCollectionLayoutDimension.absolute(height.cgFloat)
         case .normal:
             return NSCollectionLayoutDimension.absolute(Constant.Cell.normalHeight.cgFloat)
         }
