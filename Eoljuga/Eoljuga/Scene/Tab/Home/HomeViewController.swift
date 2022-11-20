@@ -55,17 +55,19 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return FeedCellType.count
     }
 
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        if section == 0 {
-           return 3
-        } else {
-            return 5
+        // TODO: ViewModel의 data count로 바꿔줘야함
+        let feedCellType = FeedCellType(index: section)
+        switch feedCellType {
+        case .recommend: return 3
+        case .normal: return 5
+        case .none: return 0
         }
     }
 
@@ -73,8 +75,10 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
+        let feedCellType = FeedCellType(index: indexPath.section)
 
-        if indexPath.section == 0 {
+        switch feedCellType {
+        case .recommend:
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: RecommendFeedCell.identifier,
                 for: indexPath
@@ -84,7 +88,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
             }
 
             return cell
-        } else {
+        case .normal:
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: NormalFeedCell.identifier,
                 for: indexPath
@@ -94,6 +98,8 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
             }
 
             return cell
+        case .none:
+            return UICollectionViewCell()
         }
     }
 
@@ -102,7 +108,8 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
-        if kind == UICollectionView.elementKindSectionHeader && indexPath.section == 0 {
+        if kind == UICollectionView.elementKindSectionHeader
+            && FeedCellType(index: indexPath.section) == .recommend {
             guard let header = collectionView.dequeueReusableSupplementaryView(
                 ofKind: UICollectionView.elementKindSectionHeader,
                 withReuseIdentifier: RecommendFeedHeader.identifier,

@@ -57,7 +57,7 @@ final class HomeView: UIView {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, _
             -> NSCollectionLayoutSection? in
 
-            guard let feedCellType = FeedCellType(rawValue: sectionIndex)
+            guard let feedCellType = FeedCellType(index: sectionIndex)
             else { return nil }
 
             let itemSize = NSCollectionLayoutSize(
@@ -94,27 +94,7 @@ final class HomeView: UIView {
                 trailing: .zero
             )
             section.orthogonalScrollingBehavior = self.setOrthogonal(feedCellType: feedCellType)
-            if feedCellType == .recommend {
-                let padding = Constant.Padding.horizontal.cgFloat
-                let headerHeight = 80 + padding * 2
-                let headerSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .absolute(headerHeight)
-                )
-                let header = NSCollectionLayoutBoundarySupplementaryItem(
-                    layoutSize: headerSize,
-                    elementKind: UICollectionView.elementKindSectionHeader,
-                    alignment: .top
-                )
-                header.contentInsets = NSDirectionalEdgeInsets(
-                    top: padding,
-                    leading: padding,
-                    bottom: padding,
-                    trailing: padding
-                )
-                section.boundarySupplementaryItems = [header]
-            }
-
+            section.boundarySupplementaryItems = self.sectionHeader(feedCellType: feedCellType)
             return section
         }
 
@@ -146,6 +126,33 @@ final class HomeView: UIView {
         switch feedCellType {
         case .recommend: return .continuous
         case .normal: return .none
+        }
+    }
+
+    private func sectionHeader(feedCellType: FeedCellType)
+    -> [NSCollectionLayoutBoundarySupplementaryItem] {
+        switch feedCellType {
+        case .recommend:
+            let padding = Constant.Padding.horizontal.cgFloat
+            let headerHeight = 80 + padding * 2
+            let headerSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(headerHeight)
+            )
+            let header = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerSize,
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .top
+            )
+            header.contentInsets = NSDirectionalEdgeInsets(
+                top: padding,
+                leading: padding,
+                bottom: padding,
+                trailing: padding
+            )
+            return [header]
+        case .normal:
+            return []
         }
     }
 }
