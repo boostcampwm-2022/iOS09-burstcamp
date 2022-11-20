@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class DomainView: UIView {
+final class SignUpDomainView: UIView {
 
     lazy var mainLabel: UILabel = UILabel().then {
         $0.text = "도메인을 선택해주세요"
@@ -24,21 +24,21 @@ final class DomainView: UIView {
     }
 
     lazy var webButton: UIButton = DefaultButton(
-        title: "Web",
+        title: Domain.web.rawValue,
         font: .extraBold16
     ).then {
         $0.backgroundColor = .systemGray5
     }
 
     lazy var aosButton: UIButton = DefaultButton(
-        title: "Android",
+        title: Domain.android.rawValue,
         font: .extraBold16
     ).then {
         $0.backgroundColor = .systemGray5
     }
 
     lazy var iosButton: UIButton = DefaultButton(
-        title: "iOS",
+        title: Domain.iOS.rawValue,
         font: .extraBold16
     ).then {
         $0.backgroundColor = .systemGray5

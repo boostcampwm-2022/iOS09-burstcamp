@@ -8,10 +8,10 @@
 import Combine
 import UIKit
 
-final class CamperIDViewController: UIViewController {
+final class SignUpCamperIDViewController: UIViewController {
 
-    private var camperIDView: CamperIDView {
-        guard let view = view as? CamperIDView else { return CamperIDView() }
+    private var signUpCamperIDView: SignUpCamperIDView {
+        guard let view = view as? SignUpCamperIDView else { return SignUpCamperIDView() }
         return view
     }
 
@@ -29,7 +29,7 @@ final class CamperIDViewController: UIViewController {
     }
 
     override func loadView() {
-        self.view = CamperIDView()
+        self.view = SignUpCamperIDView()
     }
 
     override func viewDidLoad() {
@@ -39,8 +39,8 @@ final class CamperIDViewController: UIViewController {
 
     private func bind() {
         viewModel.$domain.sink { domain in
-            self.camperIDView.domainLabel.text = domain.rawValue
-            self.camperIDView.representingDomainLabel.text = domain.representingDomain
+            self.signUpCamperIDView.domainLabel.text = domain.rawValue
+            self.signUpCamperIDView.representingDomainLabel.text = domain.representingDomain
         }
         .store(in: &cancelBag)
     }

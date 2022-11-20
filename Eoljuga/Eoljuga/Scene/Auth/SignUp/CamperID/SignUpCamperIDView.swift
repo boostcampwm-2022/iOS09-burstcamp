@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class CamperIDView: UIView {
+final class SignUpCamperIDView: UIView {
 
     lazy var domainLabel: UILabel = UILabel().then {
         $0.font = UIFont.extraBold20
@@ -76,7 +76,7 @@ final class CamperIDView: UIView {
 
         addSubview(idTextField)
         idTextField.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(276)
+            $0.centerY.equalTo(representingDomainLabel.snp.centerY)
             $0.leading.equalTo(representingDomainLabel.snp.trailing).offset(12)
             $0.height.equalTo(50)
         }

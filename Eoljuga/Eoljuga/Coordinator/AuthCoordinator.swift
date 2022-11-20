@@ -9,16 +9,15 @@ import Combine
 import UIKit
 
 enum AuthCoordinatorEvent {
-    case moveToDomainFlow
-    case moveToIDFlow
-    case moveToBlogFlow
+    case moveToIDScreen
+    case moveToBlogScreen
 }
 
 protocol AuthCoordinatorProtocol: CoordinatorPublisher {
     func moveToTabBarFlow()
-    func moveToDomainFlow()
-    func moveToIDFlow(viewModel: SignUpViewModel)
-    func moveToBlogFlow(viewModel: SignUpViewModel)
+    func moveToDomainScreen()
+    func moveToIDScreen(viewModel: SignUpViewModel)
+    func moveToBlogScreen(viewModel: SignUpViewModel)
     // to 홈 화면
 }
 
@@ -43,30 +42,30 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
         finish()
     }
 
-    func moveToDomainFlow() {
-        let domainViewController = DomainViewController(viewModel: SignUpViewModel())
-        domainViewController.coordinatorPublisher
+    func moveToDomainScreen() {
+        let sighUpDomainViewController = SignUpDomainViewController(viewModel: SignUpViewModel())
+        sighUpDomainViewController.coordinatorPublisher
             .sink { coordinatorEvent, viewModel in
-                if coordinatorEvent == .moveToIDFlow {
-                    self.moveToIDFlow(viewModel: viewModel)
+                if coordinatorEvent == .moveToIDScreen {
+                    self.moveToIDScreen(viewModel: viewModel)
                 }
             }
             .store(in: &cancelBag)
-        navigationController.pushViewController(domainViewController, animated: true)
+        navigationController.pushViewController(sighUpDomainViewController, animated: true)
     }
 
-    func moveToIDFlow(viewModel: SignUpViewModel) {
-        let camperIDViewController = CamperIDViewController(viewModel: viewModel)
-        camperIDViewController.coordinatorPublisher
+    func moveToIDScreen(viewModel: SignUpViewModel) {
+        let signUpCamperIDViewController = SignUpCamperIDViewController(viewModel: viewModel)
+        signUpCamperIDViewController.coordinatorPublisher
             .sink { coordinatorEvent, viewModel in
-                if coordinatorEvent == .moveToBlogFlow {
-                    self.moveToBlogFlow(viewModel: viewModel)
+                if coordinatorEvent == .moveToBlogScreen {
+                    self.moveToBlogScreen(viewModel: viewModel)
                 }
             }
             .store(in: &cancelBag)
-        navigationController.pushViewController(camperIDViewController, animated: false)
+        navigationController.pushViewController(signUpCamperIDViewController, animated: false)
     }
 
-    func moveToBlogFlow(viewModel: SignUpViewModel) {
+    func moveToBlogScreen(viewModel: SignUpViewModel) {
     }
 }

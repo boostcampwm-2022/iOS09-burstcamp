@@ -8,10 +8,10 @@
 import Combine
 import UIKit
 
-final class DomainViewController: UIViewController {
+final class SignUpDomainViewController: UIViewController {
 
-    private var domainView: DomainView {
-        guard let view = view as? DomainView else { return DomainView() }
+    private var signUpDomainView: SignUpDomainView {
+        guard let view = view as? SignUpDomainView else { return SignUpDomainView() }
         return view
     }
 
@@ -28,7 +28,7 @@ final class DomainViewController: UIViewController {
     }
 
     override func loadView() {
-        self.view = DomainView()
+        self.view = SignUpDomainView()
     }
 
     override func viewDidLoad() {
@@ -37,17 +37,17 @@ final class DomainViewController: UIViewController {
     }
 
     private func bind() {
-        domainView.webButton.addTarget(
+        signUpDomainView.webButton.addTarget(
             self,
             action: #selector(domainButtonDidTap(_:)),
             for: .touchUpInside
         )
-        domainView.aosButton.addTarget(
+        signUpDomainView.aosButton.addTarget(
             self,
             action: #selector(domainButtonDidTap(_:)),
             for: .touchUpInside
         )
-        domainView.iosButton.addTarget(
+        signUpDomainView.iosButton.addTarget(
             self,
             action: #selector(domainButtonDidTap(_:)),
             for: .touchUpInside
@@ -57,7 +57,11 @@ final class DomainViewController: UIViewController {
     @objc private func domainButtonDidTap(_ sender: UIButton) {
         guard let title = sender.currentTitle else { return }
 
-        let buttons: [UIButton] = [domainView.webButton, domainView.aosButton, domainView.iosButton]
+        let buttons: [UIButton] = [
+            signUpDomainView.webButton,
+            signUpDomainView.aosButton,
+            signUpDomainView.iosButton
+        ]
         let domains: [Domain] = [Domain.web, Domain.android, Domain.iOS]
 
         zip(buttons, domains).forEach { button, domain in
@@ -69,6 +73,6 @@ final class DomainViewController: UIViewController {
             }
         }
 
-        coordinatorPublisher.send((.moveToIDFlow, viewModel))
+        coordinatorPublisher.send((.moveToIDScreen, viewModel))
     }
 }
