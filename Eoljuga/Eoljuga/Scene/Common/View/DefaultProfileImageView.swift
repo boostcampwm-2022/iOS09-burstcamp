@@ -13,7 +13,6 @@ final class DefaultProfileImageView: UIImageView {
         super.init(frame: .zero)
         layer.cornerRadius = imageSize.cgFloat / 2
         clipsToBounds = true
-        layer.masksToBounds = true
         image = UIImage(systemName: "square.fill")
         contentMode = .scaleAspectFill
     }

@@ -13,19 +13,21 @@ final class MyPageViewController: UIViewController {
     // MARK: - Properties
 
     // TODO: 임시 유저
-    private var user = User(userUUID: "test",
-                            name: "NEULiee",
-                            profileImageURL: "",
-                            domain: .iOS,
-                            camperID: "S057",
-                            blogUUID: "",
-                            signupDate: "",
-                            scrapFeedUUIDs: [],
-                            isPushNotification: false)
+    private var user = User(
+        userUUID: "test",
+        name: "NEULiee",
+        profileImageURL: "",
+        domain: .iOS,
+        camperID: "S057",
+        blogUUID: "",
+        signupDate: "",
+        scrapFeedUUIDs: [],
+        isPushNotification: false
+    )
 
     private var myPageView: MyPageView {
         guard let view = view as? MyPageView else {
-            return MyPageView(frame: UIScreen.main.bounds, user: user)
+            return MyPageView(user: user)
         }
         return view
     }
@@ -56,7 +58,7 @@ final class MyPageViewController: UIViewController {
     // MARK: - Life Cycle
 
     override func loadView() {
-        view = MyPageView(frame: UIScreen.main.bounds, user: user)
+        view = MyPageView(user: user)
     }
 
     override func viewDidLoad() {
@@ -79,12 +81,12 @@ final class MyPageViewController: UIViewController {
 
     // TODO: 추후 삭제
     private func configureLogoutButton() {
-        view.addSubview(logoutButton)
-        logoutButton.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(16)
-            $0.height.equalTo(44)
-            $0.center.equalToSuperview()
-        }
+//        view.addSubview(logoutButton)
+//        logoutButton.snp.makeConstraints {
+//            $0.horizontalEdges.equalToSuperview().inset(16)
+//            $0.height.equalTo(44)
+//            $0.center.equalToSuperview()
+//        }
     }
 
     private func bind() {
