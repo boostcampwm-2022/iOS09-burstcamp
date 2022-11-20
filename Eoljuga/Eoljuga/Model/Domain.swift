@@ -19,4 +19,12 @@ enum Domain: String, Codable {
         case .web: return UIColor.customYellow
         }
     }
+
+    var representingDomain: String {
+        switch self {
+        case .iOS: return "S"
+        case .android: return "K"
+        case .web: return "J"
+        }
+    }
 }
