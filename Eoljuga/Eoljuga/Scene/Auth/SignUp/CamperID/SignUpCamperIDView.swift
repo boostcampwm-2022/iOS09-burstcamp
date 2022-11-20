@@ -25,12 +25,12 @@ final class SignUpCamperIDView: UIView {
     }
 
     lazy var representingDomainLabel: UILabel = UILabel().then {
-        $0.text = ""
         $0.font = UIFont.extraBold16
     }
 
     lazy var idTextField: UITextField = UITextField().then {
         $0.layer.borderWidth = 1
+        $0.keyboardType = .numberPad
     }
 
     lazy var nextButton: UIButton = DefaultButton(
