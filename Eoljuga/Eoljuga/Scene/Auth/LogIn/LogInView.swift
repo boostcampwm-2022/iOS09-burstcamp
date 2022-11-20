@@ -9,11 +9,11 @@ import UIKit
 
 final class LogInView: UIView {
 
-    lazy var bossImage: UIImageView = UIImageView().then {
+    lazy var titleImage: UIImageView = UIImageView().then {
         $0.image = UIImage(systemName: "pencil.circle")
     }
 
-    lazy var bossTitleL: UILabel = UILabel().then {
+    lazy var titleLabel: UILabel = UILabel().then {
         $0.text = "BOSS"
         $0.font = UIFont.extraBold40
         $0.textColor = UIColor.main
@@ -25,7 +25,7 @@ final class LogInView: UIView {
         $0.textColor = .systemGray2
     }
 
-    lazy var identitySentence: UILabel = UILabel().then {
+    lazy var identitySentenceLabel: UILabel = UILabel().then {
         $0.text = "부스트 캠프, 또 하나의 이야기"
         $0.font = UIFont.bold20
     }
@@ -56,27 +56,27 @@ final class LogInView: UIView {
     private func configureUI() {
         backgroundColor = .systemBackground
 
-        addSubview(bossImage)
-        bossImage.snp.makeConstraints {
+        addSubview(titleImage)
+        titleImage.snp.makeConstraints {
             $0.height.width.equalTo(36)
             $0.centerY.equalToSuperview().offset(-72)
             $0.leading.equalToSuperview().offset(16)
         }
 
-        addSubview(bossTitleL)
-        bossTitleL.snp.makeConstraints {
-            $0.leading.equalTo(bossImage.snp.trailing)
+        addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
+            $0.leading.equalTo(titleImage.snp.trailing)
             $0.centerY.equalToSuperview().offset(-72)
         }
 
         addSubview(fullNameLabel)
         fullNameLabel.snp.makeConstraints {
-            $0.top.equalTo(bossImage.snp.bottom).offset(10)
+            $0.top.equalTo(titleImage.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(16)
         }
 
-        addSubview(identitySentence)
-        identitySentence.snp.makeConstraints {
+        addSubview(identitySentenceLabel)
+        identitySentenceLabel.snp.makeConstraints {
             $0.top.equalTo(fullNameLabel.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(16)
         }

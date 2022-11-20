@@ -11,17 +11,13 @@ import UIKit
 import SnapKit
 import Then
 
-protocol LogInScreenFlow {
-    func moveToTabBarFlow()
-}
-
 final class LogInViewController: UIViewController {
+
     private var logInView: LogInView {
         guard let view = view as? LogInView else { return LogInView() }
         return view
     }
 
-    var coordinatorPublisher = PassthroughSubject<CoordinatorEvent, Never>()
     let viewModel: LogInViewModel
 
     init(viewModel: LogInViewModel) {
@@ -52,12 +48,5 @@ final class LogInViewController: UIViewController {
 
     @objc private func loginButtonDidTap() {
         viewModel.logInButtonDidTap()
-//        moveToTabBarFlow()
-    }
-}
-
-extension LogInViewController: LogInScreenFlow {
-    func moveToTabBarFlow() {
-        coordinatorPublisher.send(.moveToTabBarFlow)
     }
 }
