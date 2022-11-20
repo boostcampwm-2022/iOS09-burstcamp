@@ -12,6 +12,15 @@ enum Domain: String, Codable {
     case android = "Android"
     case web = "Web"
 
+    init?(rawValue: String) {
+        switch rawValue {
+        case "iOS": self = .iOS
+        case "Android": self = .android
+        case "Web": self = .web
+        default: return nil
+        }
+    }
+
     var color: UIColor {
         switch self {
         case .iOS: return UIColor.customOrange
