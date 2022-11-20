@@ -1,30 +1,32 @@
 //
-//  DefaultFeedCellHeader.swift
+//  RecommendFeedUserView.swift
 //  Eoljuga
 //
-//  Created by youtak on 2022/11/17.
+//  Created by youtak on 2022/11/20.
 //
 
 import UIKit
 
-import SnapKit
+final class RecommendFeedUserView: UIStackView {
 
-class DefaultFeedCellHeader: UIStackView {
-
-    lazy var profileImageView = UIImageView().then {
+    private lazy var profileImageView = UIImageView().then {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = Constant.Image.profileSmall.cgFloat / 2
         $0.image = UIImage(systemName: "square.fill")
         $0.contentMode = .scaleAspectFill
     }
 
-    lazy var nameLabel = UILabel().then {
-        $0.textColor = UIColor.systemGray
-        $0.font = UIFont.bold12
+    private lazy var nameLabel = UILabel().then {
+        $0.textColor = .systemGray2
+        $0.font = .bold12
         $0.text = "하늘이"
     }
 
-    lazy var badgeStackView = DefaultFeedCellBadgeStackView()
+    private lazy var blogNameLabel = UILabel().then {
+        $0.textColor = .systemGray2
+        $0.font = .regular8
+        $0.text = "성이 하씨고 이름이 늘이, 성이 하씨고 이름이 늘이, 성이 하씨고 이름이 늘이"
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,7 +38,7 @@ class DefaultFeedCellHeader: UIStackView {
     }
 
     private func configureUI() {
-        addArrangedSubViews([profileImageView, nameLabel, badgeStackView])
+        addArrangedSubViews([profileImageView, nameLabel, blogNameLabel])
         configureStackView()
         configureProfileImageView()
     }

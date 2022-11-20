@@ -7,21 +7,21 @@
 
 import UIKit
 
-class DefaultFeedCellFooter: UIView {
+class NormalFeedCellFooter: UIView {
 
-    lazy var scriptButton = UIButton().then {
+    private lazy var scriptButton = UIButton().then {
         let image = UIImage(systemName: "bookmark")
         $0.setImage(image, for: .normal)
         $0.tintColor = UIColor.main
     }
 
-    lazy var countLabel = UILabel().then {
+    private lazy var countLabel = UILabel().then {
         $0.textColor = UIColor.systemGray2
         $0.font = UIFont.regular12
         $0.text = "20"
     }
 
-    lazy var timeLabel = UILabel().then {
+    private lazy var timeLabel = UILabel().then {
         $0.textColor = UIColor.systemGray2
         $0.font = UIFont.regular12
         $0.text = "20분전"
