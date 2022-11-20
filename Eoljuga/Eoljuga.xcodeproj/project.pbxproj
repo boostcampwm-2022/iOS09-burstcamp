@@ -35,7 +35,7 @@
 		B50A27EA29279F5D00DF3E1F /* NormalFeedCellMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B229279F5D00DF3E1F /* NormalFeedCellMain.swift */; };
 		B50A27EB29279F5D00DF3E1F /* NormalFeedCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B429279F5D00DF3E1F /* NormalFeedCellHeader.swift */; };
 		B50A27EC29279F5D00DF3E1F /* NormalFeedCellBadgeStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B529279F5D00DF3E1F /* NormalFeedCellBadgeStackView.swift */; };
-		B50A27ED29279F5D00DF3E1F /* DefaultFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B629279F5D00DF3E1F /* DefaultFeedCell.swift */; };
+		B50A27ED29279F5D00DF3E1F /* NormalFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B629279F5D00DF3E1F /* NormalFeedCell.swift */; };
 		B50A27EE29279F5D00DF3E1F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B729279F5D00DF3E1F /* HomeViewController.swift */; };
 		B50A27EF29279F5D00DF3E1F /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B929279F5D00DF3E1F /* BookmarkViewController.swift */; };
 		B50A27F029279F5D00DF3E1F /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27BB29279F5D00DF3E1F /* MyPageViewController.swift */; };
@@ -102,7 +102,7 @@
 		B50A27B229279F5D00DF3E1F /* NormalFeedCellMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalFeedCellMain.swift; sourceTree = "<group>"; };
 		B50A27B429279F5D00DF3E1F /* NormalFeedCellHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalFeedCellHeader.swift; sourceTree = "<group>"; };
 		B50A27B529279F5D00DF3E1F /* NormalFeedCellBadgeStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalFeedCellBadgeStackView.swift; sourceTree = "<group>"; };
-		B50A27B629279F5D00DF3E1F /* DefaultFeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFeedCell.swift; sourceTree = "<group>"; };
+		B50A27B629279F5D00DF3E1F /* NormalFeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalFeedCell.swift; sourceTree = "<group>"; };
 		B50A27B729279F5D00DF3E1F /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		B50A27B929279F5D00DF3E1F /* BookmarkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
 		B50A27BB29279F5D00DF3E1F /* MyPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
@@ -313,7 +313,7 @@
 				B50A27AF29279F5D00DF3E1F /* Footer */,
 				B50A27B129279F5D00DF3E1F /* Main */,
 				B50A27B329279F5D00DF3E1F /* Header */,
-				B50A27B629279F5D00DF3E1F /* DefaultFeedCell.swift */,
+				B50A27B629279F5D00DF3E1F /* NormalFeedCell.swift */,
 			);
 			path = NormalFeedCell;
 			sourceTree = "<group>";
@@ -614,7 +614,7 @@
 				B50A27CF29279F5D00DF3E1F /* Constant.swift in Sources */,
 				D8494D502927CEAA008157F1 /* DefaultBadgeLabel.swift in Sources */,
 				B50A27E429279F5D00DF3E1F /* APIKey.swift in Sources */,
-				B50A27ED29279F5D00DF3E1F /* DefaultFeedCell.swift in Sources */,
+				B50A27ED29279F5D00DF3E1F /* NormalFeedCell.swift in Sources */,
 				D8494D462927C97E008157F1 /* MyPageView.swift in Sources */,
 				D8494D562927D6EB008157F1 /* DefaultBadgeView.swift in Sources */,
 				B50A27F729279F5D00DF3E1F /* TabBarCoordinator.swift in Sources */,
