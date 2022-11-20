@@ -11,6 +11,13 @@ import SnapKit
 
 final class RecommendFeedCell: UICollectionViewCell {
 
+    lazy var stackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.distribution = .equalSpacing
+        $0.alignment = .leading
+        $0.spacing = Constant.space6.cgFloat
+    }
+
     lazy var titleLabel = UILabel().then {
         $0.textAlignment = .left
         $0.textColor = UIColor.black
@@ -25,6 +32,8 @@ final class RecommendFeedCell: UICollectionViewCell {
         $0.numberOfLines = 3
     }
 
+    lazy var userView = RecommendFeedUserView()
+
     override init(frame: CGRect) {
         super.init(frame: .zero)
         configureUI()
@@ -35,18 +44,19 @@ final class RecommendFeedCell: UICollectionViewCell {
     }
 
     private func configureUI() {
-        addSubViews([titleLabel])
+        addSubview(stackView)
+        stackView.addArrangedSubViews([titleLabel, userView])
         configureCell()
-        configureTitleLabel()
+        configureStackView()
     }
 
     private func configureCell() {
-        backgroundColor = .orange
+        backgroundColor = .customGreen
         layer.cornerRadius = Constant.space24.cgFloat
     }
 
-    private func configureTitleLabel() {
-        titleLabel.snp.makeConstraints {
+    private func configureStackView() {
+        stackView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview().inset(20)
         }
     }
