@@ -65,10 +65,10 @@ final class MyPageViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         bind()
-
-        // TODO: 추후 삭제
-        configureLogoutButton()
+        collectionViewDelegate()
     }
+
+    // MARK: - Methods
 
     private func configureUI() {
         view.backgroundColor = .systemBackground
@@ -79,17 +79,11 @@ final class MyPageViewController: UIViewController {
         navigationItem.title = "마이페이지"
     }
 
-    // TODO: 추후 삭제
-    private func configureLogoutButton() {
-//        view.addSubview(logoutButton)
-//        logoutButton.snp.makeConstraints {
-//            $0.horizontalEdges.equalToSuperview().inset(16)
-//            $0.height.equalTo(44)
-//            $0.center.equalToSuperview()
-//        }
+    private func bind() {
     }
 
-    private func bind() {
+    private func collectionViewDelegate() {
+        myPageView.settingCollectionView.delegate = self
     }
 
     // TODO: 추후 삭제
@@ -101,5 +95,29 @@ final class MyPageViewController: UIViewController {
 extension MyPageViewController {
     func moveToAuthFlow() {
         coordinatorPublisher.send(.moveToAuthFlow)
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension MyPageViewController: UICollectionViewDelegate {
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        collectionView.deselectItem(at: indexPath, animated: false)
+
+        // TODO: 기능 추가
+        switch indexPath.section {
+        case SettingSection.setting.rawValue:
+            switch indexPath.row {
+            case SettingCell.withDrawal.rawValue:
+                moveToAuthFlow()
+            default: break
+            }
+        case SettingSection.appInfo.rawValue: break
+        default: break
+        }
     }
 }

@@ -7,42 +7,54 @@
 
 import UIKit
 
+enum SettingSection: Int, CaseIterable {
+    case setting
+    case appInfo
+}
+
+enum SettingCell: Int, CaseIterable {
+    case settingHeader
+    case notification
+    case darkMode
+    case withDrawal
+    case appInfoHeader
+    case openSource
+    case appVersion
+
+    var title: String {
+        switch self {
+        case .settingHeader: return "설정"
+        case .notification: return "알림설정"
+        case .darkMode: return "다크모드"
+        case .withDrawal: return "탈퇴하기"
+        case .appInfoHeader: return "앱 정보"
+        case .openSource: return "오픈소스 라이선스"
+        case .appVersion: return "앱 버전"
+        }
+    }
+
+    var section: SettingSection {
+        switch self {
+        case .settingHeader, .notification, .darkMode, .withDrawal:
+            return .setting
+        case .appInfoHeader, .openSource, .appVersion:
+            return .appInfo
+        }
+    }
+
+    var icon: UIImage? {
+        switch self {
+        case .notification: return UIImage(systemName: "bell.fill")
+        case .darkMode: return UIImage(systemName: "moon.fill")
+        case .withDrawal: return UIImage(systemName: "airplane.departure")
+        default: return nil
+        }
+    }
+}
+
 final class MyPageView: UIView {
 
     // MARK: - Properties
-
-    enum SettingSection: CaseIterable {
-        case setting
-        case appInfo
-    }
-
-    enum SettingCell: String, CaseIterable {
-        case settingHeader = "설정"
-        case notification = "알림설정"
-        case darkMode = "다크모드"
-        case withDrawal = "탈퇴하기"
-        case appInfoHeader = "앱 정보"
-        case openSource = "오픈소스 라이선스"
-        case appVersion = "앱 버전"
-
-        var section: SettingSection {
-            switch self {
-            case .settingHeader, .notification, .darkMode, .withDrawal:
-                return .setting
-            case .appInfoHeader, .openSource, .appVersion:
-                return .appInfo
-            }
-        }
-
-        var icon: UIImage? {
-            switch self {
-            case .notification: return UIImage(systemName: "bell.fill")
-            case .darkMode: return UIImage(systemName: "moon.fill")
-            case .withDrawal: return UIImage(systemName: "airplane.departure")
-            default: return nil
-            }
-        }
-    }
 
     typealias DataSource = UICollectionViewDiffableDataSource<SettingSection, SettingCell>
     typealias Snapshot = NSDiffableDataSourceSnapshot<SettingSection, SettingCell>
@@ -58,12 +70,10 @@ final class MyPageView: UIView {
         font: .bold14
     )
 
-    private lazy var settingCollectionView = UICollectionView(
+    lazy var settingCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: listLayout()
-    ).then {
-        $0.delegate = self
-    }
+    )
     private var settingDataSource: DataSource!
 
     // MARK: - Initializer
@@ -164,7 +174,7 @@ extension MyPageView {
         itemIdentifier: SettingCell
     ) {
         var contentConfiguration = cell.defaultContentConfiguration()
-        contentConfiguration.text = itemIdentifier.rawValue
+        contentConfiguration.text = itemIdentifier.title
 
         switch itemIdentifier {
         case .settingHeader, .appInfoHeader:
@@ -238,17 +248,5 @@ extension MyPageView {
             snapshot.appendItems([cell], toSection: cell.section)
         }
         settingDataSource.apply(snapshot)
-    }
-}
-
-// MARK: - UICollectionViewDelegate
-
-extension MyPageView: UICollectionViewDelegate {
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        didSelectItemAt indexPath: IndexPath
-    ) {
-        collectionView.deselectItem(at: indexPath, animated: false)
     }
 }
