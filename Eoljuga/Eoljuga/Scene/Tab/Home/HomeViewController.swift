@@ -12,31 +12,27 @@ import Then
 
 final class HomeViewController: UIViewController {
 
-    lazy var defaultFeedCollectionView = UICollectionView(
-        frame: .zero,
-        collectionViewLayout: UICollectionViewFlowLayout()
-    ).then {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = Constant.zero.cgFloat
-        layout.sectionInset = .zero
-        $0.collectionViewLayout = layout
-        $0.showsVerticalScrollIndicator = false
-        $0.delegate = self
-        $0.dataSource = self
-        $0.register(DefaultFeedCell.self, forCellWithReuseIdentifier: DefaultFeedCell.identifier)
+    private var homeView: HomeView {
+        guard let view = view as? HomeView else {
+            return HomeView()
+        }
+        return view
+    }
+
+    override func loadView() {
+        super.loadView()
+        view = HomeView()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        collectionViewDelegate()
     }
 
     private func configureUI() {
-        view.addSubViews([defaultFeedCollectionView])
         configureNavigationBar()
         configureViewController()
-        configureDefaultFeedCollectionView()
     }
 
     private func configureNavigationBar() {
@@ -48,42 +44,82 @@ final class HomeViewController: UIViewController {
         view.backgroundColor = .white
     }
 
-    private func configureDefaultFeedCollectionView() {
-        defaultFeedCollectionView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
-        }
+    private func collectionViewDelegate() {
+        homeView.feedCollectionView.delegate = self
+        homeView.feedCollectionView.dataSource = self
+    }
+
+    private func bind() {
     }
 }
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return FeedCellType.count
+    }
+
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return 10
+        // TODO: ViewModel의 data count로 바꿔줘야함
+        let feedCellType = FeedCellType(index: section)
+        switch feedCellType {
+        case .recommend: return 3
+        case .normal: return 5
+        case .none: return 0
+        }
     }
 
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: DefaultFeedCell.identifier,
-            for: indexPath
-        ) as? DefaultFeedCell
-        else {
+        let feedCellType = FeedCellType(index: indexPath.section)
+
+        switch feedCellType {
+        case .recommend:
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: RecommendFeedCell.identifier,
+                for: indexPath
+            ) as? RecommendFeedCell
+            else {
+                return UICollectionViewCell()
+            }
+
+            return cell
+        case .normal:
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: NormalFeedCell.identifier,
+                for: indexPath
+            ) as? NormalFeedCell
+            else {
+                return UICollectionViewCell()
+            }
+
+            return cell
+        case .none:
             return UICollectionViewCell()
         }
-
-        return cell
     }
 
     func collectionView(
         _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath
-    ) -> CGSize {
-        let width = defaultFeedCollectionView.frame.width - Constant.Padding.horizontal.cgFloat * 2
-        return CGSize(width: width, height: 150)
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader
+            && FeedCellType(index: indexPath.section) == .recommend {
+            guard let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: UICollectionView.elementKindSectionHeader,
+                withReuseIdentifier: RecommendFeedHeader.identifier,
+                for: indexPath
+            ) as? RecommendFeedHeader else {
+                return UICollectionReusableView()
+            }
+
+            return header
+        }
+        return UICollectionReusableView()
     }
 }

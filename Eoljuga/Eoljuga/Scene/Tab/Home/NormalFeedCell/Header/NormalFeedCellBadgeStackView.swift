@@ -7,21 +7,21 @@
 
 import UIKit
 
-class DefaultFeedCellBadgeStackView: UIStackView {
+class NormalFeedCellBadgeStackView: UIStackView {
 
-    lazy var domainLabel = UILabel().then {
+    private lazy var domainLabel = UILabel().then {
         $0.textColor = UIColor.customOrange
         $0.font = UIFont.bold10
         $0.text = "iOS"
     }
 
-    lazy var numberLabel = UILabel().then {
+    private lazy var numberLabel = UILabel().then {
         $0.textColor = UIColor.customBlue
         $0.font = UIFont.bold12
         $0.text = "7기"
     }
 
-    lazy var camperIDLabel = UILabel().then {
+    private lazy var camperIDLabel = UILabel().then {
         $0.textColor = UIColor.systemGray2
         $0.font = UIFont.bold12
         $0.text = "S057"

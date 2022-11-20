@@ -9,9 +9,9 @@ import UIKit
 
 import SnapKit
 
-class DefaultFeedCellMain: UIView {
+class NormalFeedCellMain: UIView {
 
-    lazy var titleLabel = UILabel().then {
+    private lazy var titleLabel = UILabel().then {
         $0.textAlignment = .left
         $0.textColor = UIColor.black
         $0.font = UIFont.bold14
@@ -25,7 +25,7 @@ class DefaultFeedCellMain: UIView {
         $0.numberOfLines = 3
     }
 
-    lazy var thumbnailImageView = UIImageView().then {
+    private lazy var thumbnailImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = Constant.Image.thumbnailCornerRadius.cgFloat
         $0.backgroundColor = UIColor.systemGray2

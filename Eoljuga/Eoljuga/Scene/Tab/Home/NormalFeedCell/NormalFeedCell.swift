@@ -9,11 +9,11 @@ import UIKit
 
 import SnapKit
 
-final class DefaultFeedCell: UICollectionViewCell {
+final class NormalFeedCell: UICollectionViewCell {
 
-    lazy var headerStackView = DefaultFeedCellHeader()
-    lazy var mainView = DefaultFeedCellMain()
-    lazy var footerView = DefaultFeedCellFooter()
+    private lazy var headerStackView = NormalFeedCellHeader()
+    private lazy var mainView = NormalFeedCellMain()
+    private lazy var footerView = NormalFeedCellFooter()
 
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -38,9 +38,9 @@ final class DefaultFeedCell: UICollectionViewCell {
 
     private func configureHeaderStackView() {
         headerStackView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(Constant.Cell.topMargin)
+            $0.top.equalToSuperview().inset(Constant.Cell.normalTopMargin)
             $0.leading.equalToSuperview()
-            $0.height.equalTo(Constant.Cell.headerHeight)
+            $0.height.equalTo(Constant.Cell.normalHeaderHeight)
         }
     }
 
@@ -48,7 +48,7 @@ final class DefaultFeedCell: UICollectionViewCell {
         mainView.snp.makeConstraints {
             $0.top.equalTo(headerStackView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(Constant.Cell.mainHeight)
+            $0.height.equalTo(Constant.Cell.normalMainHeight)
         }
     }
 
@@ -56,7 +56,7 @@ final class DefaultFeedCell: UICollectionViewCell {
         footerView.snp.makeConstraints {
             $0.top.equalTo(mainView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(Constant.Cell.footerHeight)
+            $0.height.equalTo(Constant.Cell.normalFooterHeight)
         }
     }
 }
