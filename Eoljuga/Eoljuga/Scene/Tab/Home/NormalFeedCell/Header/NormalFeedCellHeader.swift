@@ -11,20 +11,20 @@ import SnapKit
 
 class NormalFeedCellHeader: UIStackView {
 
-    lazy var profileImageView = UIImageView().then {
+    private lazy var profileImageView = UIImageView().then {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = Constant.Image.profileSmall.cgFloat / 2
         $0.image = UIImage(systemName: "square.fill")
         $0.contentMode = .scaleAspectFill
     }
 
-    lazy var nameLabel = UILabel().then {
+    private lazy var nameLabel = UILabel().then {
         $0.textColor = UIColor.systemGray
         $0.font = UIFont.bold12
         $0.text = "하늘이"
     }
 
-    lazy var badgeStackView = NormalFeedCellBadgeStackView()
+    private lazy var badgeStackView = NormalFeedCellBadgeStackView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)

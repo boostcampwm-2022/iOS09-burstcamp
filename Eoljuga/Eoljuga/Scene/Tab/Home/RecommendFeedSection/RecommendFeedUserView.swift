@@ -9,20 +9,20 @@ import UIKit
 
 final class RecommendFeedUserView: UIStackView {
 
-    lazy var profileImageView = UIImageView().then {
+    private lazy var profileImageView = UIImageView().then {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = Constant.Image.profileSmall.cgFloat / 2
         $0.image = UIImage(systemName: "square.fill")
         $0.contentMode = .scaleAspectFill
     }
 
-    lazy var nameLabel = UILabel().then {
+    private lazy var nameLabel = UILabel().then {
         $0.textColor = .systemGray2
         $0.font = .bold12
         $0.text = "하늘이"
     }
 
-    lazy var blogNameLabel = UILabel().then {
+    private lazy var blogNameLabel = UILabel().then {
         $0.textColor = .systemGray2
         $0.font = .regular8
         $0.text = "성이 하씨고 이름이 늘이, 성이 하씨고 이름이 늘이, 성이 하씨고 이름이 늘이"
