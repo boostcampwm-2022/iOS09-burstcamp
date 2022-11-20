@@ -20,14 +20,14 @@ final class MyPageView: UIView {
         case settingHeader = "설정"
         case notification = "알림설정"
         case darkMode = "다크모드"
-        case secession = "탈퇴하기"
+        case withDrawal = "탈퇴하기"
         case appInfoHeader = "앱 정보"
         case openSource = "오픈소스 라이선스"
         case appVersion = "앱 버전"
 
         var section: SettingSection {
             switch self {
-            case .settingHeader, .notification, .darkMode, .secession:
+            case .settingHeader, .notification, .darkMode, .withDrawal:
                 return .setting
             case .appInfoHeader, .openSource, .appVersion:
                 return .appInfo
@@ -38,7 +38,7 @@ final class MyPageView: UIView {
             switch self {
             case .notification: return UIImage(systemName: "bell.fill")
             case .darkMode: return UIImage(systemName: "moon.fill")
-            case .secession: return UIImage(systemName: "airplane.departure")
+            case .withDrawal: return UIImage(systemName: "airplane.departure")
             default: return nil
             }
         }
@@ -86,8 +86,7 @@ final class MyPageView: UIView {
         addSubview(myPageProfileView)
         myPageProfileView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(103)
-            make.leading.equalToSuperview().offset(Constant.space16)
-            make.trailing.equalToSuperview().inset(Constant.space16)
+            make.horizontalEdges.equalToSuperview().inset(Constant.Padding.horizontal)
             make.height.equalTo(Constant.Profile.height)
         }
 
@@ -95,16 +94,14 @@ final class MyPageView: UIView {
         myInfoEditButton.snp.makeConstraints { make in
             make.top.equalTo(myPageProfileView.snp.bottom)
                 .offset(Constant.space16)
-            make.leading.equalToSuperview().offset(Constant.space16)
-            make.trailing.equalToSuperview().inset(Constant.space16)
+            make.horizontalEdges.equalToSuperview().inset(Constant.Padding.horizontal)
             make.height.equalTo(Constant.Button.editButton)
         }
 
         addSubview(settingCollectionView)
         settingCollectionView.snp.makeConstraints { make in
             make.top.equalTo(myInfoEditButton.snp.bottom).offset(64)
-            make.leading.equalToSuperview().offset(Constant.space16)
-            make.trailing.equalToSuperview().inset(Constant.space16)
+            make.horizontalEdges.equalToSuperview().inset(Constant.Padding.horizontal)
             make.bottom.equalToSuperview()
         }
     }
@@ -190,7 +187,7 @@ extension MyPageView {
             cell.accessories = [
                 .customView(configuration: iconAccessoryConfiguration(cell: itemIdentifier)),
                 .customView(configuration: switchAccessoryConfiguration())]
-        case .secession:
+        case .withDrawal:
             cell.accessories = [
                 .customView(configuration: iconAccessoryConfiguration(cell: itemIdentifier))]
         case .openSource:
