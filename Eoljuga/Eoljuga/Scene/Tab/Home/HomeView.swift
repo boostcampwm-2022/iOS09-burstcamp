@@ -124,7 +124,7 @@ final class HomeView: UIView {
     private func orthogonalMode(feedCellType: FeedCellType)
     -> UICollectionLayoutSectionOrthogonalScrollingBehavior {
         switch feedCellType {
-        case .recommend: return .continuous
+        case .recommend: return .groupPagingCentered
         case .normal: return .none
         }
     }
