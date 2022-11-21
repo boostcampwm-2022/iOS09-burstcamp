@@ -11,7 +11,9 @@ final class OpenSourceLicenseView: UIView {
 
     // MARK: - Properties
 
-    private let openSources: [(name: String, link: String)] = [
+    private typealias OpenSource = [(name: String, link: String)]
+
+    private let openSources: OpenSource = [
         ("firebase-ios-sdk", "https://github.com/firebase/firebase-ios-sdk"),
         ("Then", "https://github.com/devxoul/Then"),
         ("SnapKit", "https://github.com/SnapKit/SnapKit")
@@ -21,6 +23,20 @@ final class OpenSourceLicenseView: UIView {
         $0.text = "오픈소스 라이선스"
         $0.textColor = .black
         $0.font = .extraBold24
+    }
+
+    private lazy var openSourcesStackView = UIStackView(
+        arrangedSubviews: openSources.map {
+            openSourceStackView(
+                nameLabel: openSourceNameLabel(name: $0.name),
+                linkButton: openSourceLinkLabel(link: $0.link)
+            )
+        }
+    ).then {
+        $0.axis = .vertical
+        $0.distribution = .equalSpacing
+        $0.alignment = .fill
+        $0.spacing = Constant.space16.cgFloat
     }
 
     override init(frame: CGRect) {
@@ -39,20 +55,6 @@ final class OpenSourceLicenseView: UIView {
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(120)
             make.horizontalEdges.equalToSuperview().inset(Constant.space16)
-        }
-
-        let openSourcesStackView = UIStackView(
-            arrangedSubviews: openSources.map {
-                openSourceStackView(
-                    nameLabel: openSourceNameLabel(name: $0.name),
-                    linkButton: openSourceLinkLabel(link: $0.link)
-                )
-            }
-        ).then {
-            $0.axis = .vertical
-            $0.distribution = .equalSpacing
-            $0.alignment = .fill
-            $0.spacing = Constant.space16.cgFloat
         }
 
         addSubview(openSourcesStackView)
