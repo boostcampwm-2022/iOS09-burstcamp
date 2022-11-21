@@ -11,7 +11,7 @@ import SnapKit
 
 final class HomeView: UIView {
 
-    lazy var feedCollectionView = UICollectionView(
+    private lazy var feedCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: createLayout()
     ).then {
@@ -159,5 +159,15 @@ final class HomeView: UIView {
         case .normal:
             return []
         }
+    }
+}
+
+extension HomeView {
+    func collectionViewDelegate(
+        viewController:
+        UICollectionViewDelegate & UICollectionViewDataSource
+    ) {
+        feedCollectionView.delegate = viewController
+        feedCollectionView.dataSource = viewController
     }
 }

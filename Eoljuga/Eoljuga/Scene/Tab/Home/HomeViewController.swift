@@ -54,15 +54,14 @@ final class HomeViewController: UIViewController {
     }
 
     private func collectionViewDelegate() {
-        homeView.feedCollectionView.delegate = self
-        homeView.feedCollectionView.dataSource = self
+        homeView.collectionViewDelegate(viewController: self)
     }
 
     private func bind() {
     }
 }
 
-extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return FeedCellType.count
     }
