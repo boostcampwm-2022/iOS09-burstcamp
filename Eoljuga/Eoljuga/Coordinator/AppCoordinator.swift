@@ -22,7 +22,7 @@ final class AppCoordinator: Coordinator {
     }
 
     func isLoggedIn() -> Bool {
-        return false
+        return true
     }
 
     func showAuthFlow() {

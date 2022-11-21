@@ -19,8 +19,18 @@ final class HomeViewController: UIViewController {
         return view
     }
 
+    private var viewModel: HomeViewModel
+
+    init(viewModel: HomeViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func loadView() {
-        super.loadView()
         view = HomeView()
     }
 
@@ -30,30 +40,31 @@ final class HomeViewController: UIViewController {
         collectionViewDelegate()
     }
 
-    private func configureUI() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         configureNavigationBar()
-        configureViewController()
     }
+
+    private func configureUI() {}
 
     private func configureNavigationBar() {
-        navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.topItem?.title = "Hello, 얼죽아"
-    }
-
-    private func configureViewController() {
-        view.backgroundColor = .white
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(scrollToTop))
+        navigationController?.navigationBar.addGestureRecognizer(tapGesture)
     }
 
     private func collectionViewDelegate() {
-        homeView.feedCollectionView.delegate = self
-        homeView.feedCollectionView.dataSource = self
+        homeView.collectionViewDelegate(viewController: self)
     }
 
+    @objc private func scrollToTop() {
+        homeView.collectionViewScrollToTop()
+    }
     private func bind() {
     }
 }
 
-extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return FeedCellType.count
     }
@@ -66,7 +77,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         let feedCellType = FeedCellType(index: section)
         switch feedCellType {
         case .recommend: return 3
-        case .normal: return 5
+        case .normal: return 100
         case .none: return 0
         }
     }

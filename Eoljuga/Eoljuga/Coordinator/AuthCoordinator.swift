@@ -33,9 +33,8 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
     }
 
     func start() {
-        moveToIDScreen(viewModel: SignUpViewModel())
-//        let logInViewController = LogInViewController(viewModel: LogInViewModel())
-//        navigationController.viewControllers = [logInViewController]
+        let logInViewController = LogInViewController(viewModel: LogInViewModel())
+        navigationController.viewControllers = [logInViewController]
     }
 
     func moveToTabBarFlow() {

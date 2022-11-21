@@ -13,19 +13,21 @@ final class MyPageViewController: UIViewController {
     // MARK: - Properties
 
     // TODO: 임시 유저
-    private var user = User(userUUID: "test",
-                            name: "NEULiee",
-                            profileImageURL: "",
-                            domain: .iOS,
-                            camperID: "S057",
-                            blogUUID: "",
-                            signupDate: "",
-                            scrapFeedUUIDs: [],
-                            isPushNotification: false)
+    private var user = User(
+        userUUID: "test",
+        name: "NEULiee",
+        profileImageURL: "",
+        domain: .iOS,
+        camperID: "S057",
+        blogUUID: "",
+        signupDate: "",
+        scrapFeedUUIDs: [],
+        isPushNotification: false
+    )
 
     private var myPageView: MyPageView {
         guard let view = view as? MyPageView else {
-            return MyPageView(frame: UIScreen.main.bounds, user: user)
+            return MyPageView(user: user)
         }
         return view
     }
@@ -56,17 +58,22 @@ final class MyPageViewController: UIViewController {
     // MARK: - Life Cycle
 
     override func loadView() {
-        view = MyPageView(frame: UIScreen.main.bounds, user: user)
+        view = MyPageView(user: user)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         bind()
-
-        // TODO: 추후 삭제
-        configureLogoutButton()
+        collectionViewDelegate()
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNavigationBar()
+    }
+
+    // MARK: - Methods
 
     private func configureUI() {
         view.backgroundColor = .systemBackground
@@ -74,20 +81,14 @@ final class MyPageViewController: UIViewController {
     }
 
     private func configureNavigationBar() {
-        navigationItem.title = "마이페이지"
-    }
-
-    // TODO: 추후 삭제
-    private func configureLogoutButton() {
-        view.addSubview(logoutButton)
-        logoutButton.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(16)
-            $0.height.equalTo(44)
-            $0.center.equalToSuperview()
-        }
+        navigationController?.navigationBar.topItem?.title = "마이페이지"
     }
 
     private func bind() {
+    }
+
+    private func collectionViewDelegate() {
+        myPageView.setCollectionViewDelegate(viewController: self)
     }
 
     // TODO: 추후 삭제
@@ -99,5 +100,25 @@ final class MyPageViewController: UIViewController {
 extension MyPageViewController {
     func moveToAuthFlow() {
         coordinatorPublisher.send(.moveToAuthFlow)
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension MyPageViewController: UICollectionViewDelegate {
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        collectionView.deselectItem(at: indexPath, animated: false)
+
+        // TODO: 기능 추가
+        switch (indexPath.section, indexPath.row) {
+        case (SettingSection.setting.rawValue, SettingCell.withDrawal.rawValue):
+            moveToAuthFlow()
+        case (SettingSection.appInfo.rawValue, _): break
+        default: break
+        }
     }
 }
