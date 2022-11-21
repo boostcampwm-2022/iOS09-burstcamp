@@ -1,4 +1,6 @@
 disabled_rules:
+  - nesting
+  - file_types_order
 
 opt_in_rules:
   - empty_count
