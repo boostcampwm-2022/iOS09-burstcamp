@@ -16,15 +16,15 @@ struct DocumentResult: Decodable {
 }
 
 struct UserDTO: Codable {
-    private let userUUID: StringValue
-    private let name: StringValue
-    private let profileImageURL: StringValue
-    private let domain: StringValue
-    private let camperID: StringValue
-    private let blogUUID: StringValue
-    private let signupDate: StringValue
-    private let scrapFeedUUIDs: ArrayValue<StringValue>
-    private let isPushNotification: BooleanValue
+    private let userUUID: FireStoreValues.StringValue
+    private let name: FireStoreValues.StringValue
+    private let profileImageURL: FireStoreValues.StringValue
+    private let domain: FireStoreValues.StringValue
+    private let camperID: FireStoreValues.StringValue
+    private let blogUUID: FireStoreValues.StringValue
+    private let signupDate: FireStoreValues.StringValue
+    private let scrapFeedUUIDs: FireStoreValues.ArrayValue<FireStoreValues.StringValue>
+    private let isPushNotification: FireStoreValues.BooleanValue
 
     private enum RootKey: String, CodingKey {
         case fields
@@ -43,33 +43,57 @@ struct UserDTO: Codable {
     }
 
     init(user: User) {
-        self.userUUID = StringValue(value: user.userUUID)
-        self.name = StringValue(value: user.name)
-        self.profileImageURL = StringValue(value: user.profileImageURL)
-        self.domain = StringValue(value: user.domain.rawValue)
-        self.camperID = StringValue(value: user.camperID)
-        self.blogUUID = StringValue(value: user.blogUUID)
-        self.signupDate = StringValue(value: user.signupDate)
-        self.scrapFeedUUIDs = ArrayValue<StringValue>(values: user.scrapFeedUUIDs.map {
-            StringValue(value: $0) })
-        self.isPushNotification = BooleanValue(value: user.isPushNotification)
+        self.userUUID = FireStoreValues.StringValue(value: user.userUUID)
+        self.name = FireStoreValues.StringValue(value: user.name)
+        self.profileImageURL = FireStoreValues.StringValue(value: user.profileImageURL)
+        self.domain = FireStoreValues.StringValue(value: user.domain.rawValue)
+        self.camperID = FireStoreValues.StringValue(value: user.camperID)
+        self.blogUUID = FireStoreValues.StringValue(value: user.blogUUID)
+        self.signupDate = FireStoreValues.StringValue(value: user.signupDate)
+        self.scrapFeedUUIDs = FireStoreValues.ArrayValue<FireStoreValues.StringValue>(
+            values: user.scrapFeedUUIDs.map {
+            FireStoreValues.StringValue(value: $0)
+            }
+        )
+        self.isPushNotification = FireStoreValues.BooleanValue(value: user.isPushNotification)
     }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.userUUID = try container.decode(StringValue.self, forKey: .userUUID)
-        self.name = try container.decode(StringValue.self, forKey: .name)
-        self.profileImageURL = try container.decode(StringValue.self, forKey: .profileImageURL)
-        self.domain = try container.decode(StringValue.self, forKey: .domain)
-        self.camperID = try container.decode(StringValue.self, forKey: .camperID)
-        self.blogUUID = try container.decode(StringValue.self, forKey: .blogUUID)
-        self.signupDate = try container.decode(StringValue.self, forKey: .signupDate)
+        self.userUUID = try container.decode(
+            FireStoreValues.StringValue.self,
+            forKey: .userUUID
+        )
+        self.name = try container.decode(
+            FireStoreValues.StringValue.self,
+            forKey: .name
+        )
+        self.profileImageURL = try container.decode(
+            FireStoreValues.StringValue.self,
+            forKey: .profileImageURL
+        )
+        self.domain = try container.decode(
+            FireStoreValues.StringValue.self,
+            forKey: .domain
+        )
+        self.camperID = try container.decode(
+            FireStoreValues.StringValue.self,
+            forKey: .camperID
+        )
+        self.blogUUID = try container.decode(
+            FireStoreValues.StringValue.self,
+            forKey: .blogUUID
+        )
+        self.signupDate = try container.decode(
+            FireStoreValues.StringValue.self,
+            forKey: .signupDate
+        )
         self.scrapFeedUUIDs = try container.decode(
-            ArrayValue<StringValue>.self,
+            FireStoreValues.ArrayValue<FireStoreValues.StringValue>.self,
             forKey: .scrapFeedUUIDs
         )
         self.isPushNotification = try container.decode(
-            BooleanValue.self,
+            FireStoreValues.BooleanValue.self,
             forKey: .isPushNotification
         )
     }

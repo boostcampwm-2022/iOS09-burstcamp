@@ -7,38 +7,40 @@
 
 import Foundation
 
-struct StringValue: Codable {
-    let value: String
+struct FireStoreValues {
+    struct StringValue: Codable {
+        let value: String
 
-    private enum CodingKeys: String, CodingKey {
-        case value = "stringValue"
-    }
-}
-
-struct BooleanValue: Codable {
-    let value: Bool
-
-    private enum CodingKeys: String, CodingKey {
-        case value = "booleanValue"
-    }
-}
-
-struct TimeStampValue: Codable {
-    let value: String
-
-    private enum CodingKeys: String, CodingKey {
-        case value = "timestampValue"
-    }
-}
-
-struct ArrayValue<T: Codable>: Codable {
-    let arrayValue: [String: [T]]
-
-    private enum CodingKeys: String, CodingKey {
-        case arrayValue
+        private enum CodingKeys: String, CodingKey {
+            case value = "stringValue"
+        }
     }
 
-    init(values: [T]) {
-        arrayValue = ["values": values]
+    struct BooleanValue: Codable {
+        let value: Bool
+
+        private enum CodingKeys: String, CodingKey {
+            case value = "booleanValue"
+        }
+    }
+
+    struct TimeStampValue: Codable {
+        let value: String
+
+        private enum CodingKeys: String, CodingKey {
+            case value = "timestampValue"
+        }
+    }
+
+    struct ArrayValue<T: Codable>: Codable {
+        let arrayValue: [String: [T]]
+
+        private enum CodingKeys: String, CodingKey {
+            case arrayValue
+        }
+
+        init(values: [T]) {
+            arrayValue = ["values": values]
+        }
     }
 }
