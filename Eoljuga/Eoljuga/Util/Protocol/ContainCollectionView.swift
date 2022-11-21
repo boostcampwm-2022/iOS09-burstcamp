@@ -14,8 +14,7 @@ protocol ContainCollectionView {
 
 extension ContainCollectionView {
     func collectionViewDelegate(
-        viewController:
-        UICollectionViewDelegate & UICollectionViewDataSource
+        viewController: UICollectionViewDelegate & UICollectionViewDataSource
     ) {
         collectionView.delegate = viewController
         collectionView.dataSource = viewController
