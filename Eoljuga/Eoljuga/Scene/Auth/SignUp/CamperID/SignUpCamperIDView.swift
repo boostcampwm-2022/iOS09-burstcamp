@@ -32,11 +32,20 @@ final class SignUpCamperIDView: UIView {
         $0.layer.borderWidth = 1
         $0.keyboardType = .numberPad
         $0.becomeFirstResponder()
+        $0.placeholder = "000"
+        $0.inputAccessoryView = toolBar
     }
 
-    lazy var nextButton: UIButton = DefaultButton(
-        title: "다음"
-    )
+    lazy var toolBar: UIToolbar = UIToolbar().then {
+        $0.items = [barButtonItem]
+        $0.barTintColor = .white
+        $0.clipsToBounds = true
+        $0.layoutMargins = .init(top: 12, left: 16, bottom: 12, right: 16)
+    }
+
+    lazy var barButtonItem: UIBarButtonItem = UIBarButtonItem(customView: nextButton)
+
+    lazy var nextButton: UIButton = DefaultButton(title: "다음")
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -82,9 +91,12 @@ final class SignUpCamperIDView: UIView {
             $0.height.equalTo(50)
         }
 
-        addSubview(nextButton)
+        toolBar.snp.makeConstraints {
+            $0.height.equalTo(72)
+        }
+
         nextButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(48)
         }
     }
 }

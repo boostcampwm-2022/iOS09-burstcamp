@@ -45,6 +45,29 @@ final class SignUpCamperIDViewController: UIViewController {
             self.signUpCamperIDView.representingDomainLabel.text = domain.representingDomain
         }
         .store(in: &cancelBag)
+
+        signUpCamperIDView.idTextField.addTarget(
+            self,
+            action: #selector(idDidChange(_:)),
+            for: .editingChanged
+        )
+
+        signUpCamperIDView.nextButton.addTarget(
+            self,
+            action: #selector(nextButtonDidTap),
+            for: .touchUpInside
+        )
+    }
+
+    @objc func idDidChange(_ sender: UITextField) {
+        guard let id = sender.text else { return }
+        viewModel.camperID = id
+    }
+
+    @objc func nextButtonDidTap() {
+        //TODO: 캠퍼ID 중복 확인
+
+        coordinatorPublisher.send((.moveToBlogScreen, viewModel))
     }
 }
 

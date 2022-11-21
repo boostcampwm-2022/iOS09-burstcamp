@@ -33,8 +33,9 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
     }
 
     func start() {
-        let logInViewController = LogInViewController(viewModel: LogInViewModel())
-        navigationController.viewControllers = [logInViewController]
+        moveToIDScreen(viewModel: SignUpViewModel())
+//        let logInViewController = LogInViewController(viewModel: LogInViewModel())
+//        navigationController.viewControllers = [logInViewController]
     }
 
     func moveToTabBarFlow() {
@@ -67,5 +68,7 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
     }
 
     func moveToBlogScreen(viewModel: SignUpViewModel) {
+        let signUpBlogViewController = SignUpBlogViewController(viewModel: viewModel)
+        navigationController.pushViewController(signUpBlogViewController, animated: false)
     }
 }
