@@ -50,7 +50,6 @@ final class HomeViewController: UIViewController {
 
     private func configureNavigationBar() {
         navigationController?.navigationBar.topItem?.title = "Hello, 얼죽아"
-        navigationController?.hidesBarsOnSwipe = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(scrollToTop))
         navigationController?.navigationBar.addGestureRecognizer(tapGesture)
     }

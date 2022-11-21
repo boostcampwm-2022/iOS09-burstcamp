@@ -173,10 +173,6 @@ extension HomeView {
     }
 
     func collectionViewScrollToTop() {
-        let padding = Constant.Padding.horizontal.cgFloat
-        // TODO: Header의 height에 padding을 더하면 될 것 같은데 2를 더해야 제자리로 돌아감 -> 왜지?
-        let headerHeight = 80 + padding + 2
-        let initialOffset = CGPoint(x: 0, y: -headerHeight)
-        feedCollectionView.setContentOffset(initialOffset, animated: true)
+        feedCollectionView.setContentOffset(.zero, animated: true)
     }
 }
