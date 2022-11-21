@@ -56,38 +56,38 @@ final class SignUpDomainView: UIView {
 
         addSubview(mainLabel)
         mainLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(176)
-            $0.leading.equalToSuperview().offset(16)
+            $0.top.equalToSuperview().offset(Constant.space176)
+            $0.leading.equalToSuperview().offset(Constant.space16)
         }
 
         addSubview(subLabel)
         subLabel.snp.makeConstraints {
-            $0.top.equalTo(mainLabel.snp.bottom).offset(8)
-            $0.leading.equalToSuperview().offset(16)
+            $0.top.equalTo(mainLabel.snp.bottom).offset(Constant.space8)
+            $0.leading.equalToSuperview().offset(Constant.space16)
         }
 
         addSubview(webButton)
         webButton.snp.makeConstraints {
-            $0.width.equalTo(120)
-            $0.height.equalTo(60)
+            $0.width.equalTo(Constant.Button.domainWidth)
+            $0.height.equalTo(Constant.Button.domainHeight)
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(326)
+            $0.top.equalToSuperview().offset(Constant.space326)
         }
 
         addSubview(aosButton)
         aosButton.snp.makeConstraints {
-            $0.width.equalTo(120)
-            $0.height.equalTo(60)
+            $0.width.equalTo(Constant.Button.domainWidth)
+            $0.height.equalTo(Constant.Button.domainHeight)
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(webButton.snp.bottom).offset(48)
+            $0.top.equalTo(webButton.snp.bottom).offset(Constant.space48)
         }
 
         addSubview(iosButton)
         iosButton.snp.makeConstraints {
-            $0.width.equalTo(120)
-            $0.height.equalTo(60)
+            $0.width.equalTo(Constant.Button.domainWidth)
+            $0.height.equalTo(Constant.Button.domainHeight)
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(aosButton.snp.bottom).offset(48)
+            $0.top.equalTo(aosButton.snp.bottom).offset(Constant.space48)
         }
     }
 }

@@ -19,7 +19,6 @@ final class SignUpBlogView: UIView {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        configureUI()
     }
 
     private func configureUI() {

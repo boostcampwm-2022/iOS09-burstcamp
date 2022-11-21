@@ -68,6 +68,13 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
 
     func moveToBlogScreen(viewModel: SignUpViewModel) {
         let signUpBlogViewController = SignUpBlogViewController(viewModel: viewModel)
+        signUpBlogViewController.coordinatorPublisher
+            .sink { coordinatorEvent, viewModel in
+                if coordinatorEvent == .moveToTabBarFlow {
+                    self.coordinatorPublisher.send(.moveToTabBarFlow)
+                }
+            }
+            .store(in: &cancelBag)
         navigationController.pushViewController(signUpBlogViewController, animated: false)
     }
 }

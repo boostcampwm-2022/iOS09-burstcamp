@@ -34,7 +34,7 @@ final class LogInView: UIView {
         $0.setTitle("Github으로 로그인", for: .normal)
         $0.titleLabel?.font = UIFont.extraBold14
         $0.backgroundColor = .black
-        $0.layer.cornerRadius = 8
+        $0.layer.cornerRadius = CGFloat(Constant.CornerRadius.radius8)
     }
 
     lazy var githubLogInLabel: UILabel = UILabel().then {
@@ -58,40 +58,42 @@ final class LogInView: UIView {
 
         addSubview(titleImage)
         titleImage.snp.makeConstraints {
-            $0.height.width.equalTo(36)
-            $0.centerY.equalToSuperview().offset(-72)
-            $0.leading.equalToSuperview().offset(16)
+            $0.height.width.equalTo(Constant.Image.appTitle)
+            $0.centerY.equalToSuperview().offset(Constant.spaceMinus72)
+            $0.leading.equalToSuperview().offset(Constant.space16)
         }
 
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.leading.equalTo(titleImage.snp.trailing)
-            $0.centerY.equalToSuperview().offset(-72)
+            $0.centerY.equalToSuperview().offset(Constant.spaceMinus72)
         }
 
         addSubview(fullNameLabel)
         fullNameLabel.snp.makeConstraints {
-            $0.top.equalTo(titleImage.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(16)
+            $0.top.equalTo(titleImage.snp.bottom).offset(Constant.space10)
+            $0.leading.equalToSuperview().offset(Constant.space16)
         }
 
         addSubview(identitySentenceLabel)
         identitySentenceLabel.snp.makeConstraints {
-            $0.top.equalTo(fullNameLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(16)
+            $0.top.equalTo(fullNameLabel.snp.bottom).offset(Constant.space10)
+            $0.leading.equalToSuperview().offset(Constant.space16)
         }
 
-        addSubview(githubLogInLabel)
-        githubLogInLabel.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(-88)
-            $0.centerX.equalToSuperview()
-        }
+        
 
         addSubview(githubLogInButton)
         githubLogInButton.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(16)
-            $0.height.equalTo(44)
-            $0.bottom.equalTo(githubLogInLabel.snp.top).offset(-12)
+            $0.horizontalEdges.equalToSuperview().inset(Constant.space16)
+            $0.height.equalTo(Constant.Button.defaultButton)
+            $0.bottom.equalToSuperview().offset(Constant.spaceMinus110)
+        }
+        
+        addSubview(githubLogInLabel)
+        githubLogInLabel.snp.makeConstraints {
+            $0.bottom.equalTo(githubLogInButton).offset(Constant.space12)
+            $0.centerX.equalToSuperview()
         }
     }
 }

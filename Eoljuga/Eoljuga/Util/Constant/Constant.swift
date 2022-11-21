@@ -19,6 +19,12 @@ enum Constant {
     static let space24 = 24
     static let space32 = 32
     static let space48 = 48
+    static let space176 = 176
+    static let space288 = 288
+    static let space326 = 326
+    
+    static let spaceMinus72 = -72
+    static let spaceMinus110 = -110
 
     enum Padding {
         static let horizontal = 16
@@ -41,6 +47,7 @@ enum Constant {
     }
 
     enum Image {
+        static let appTitle = 36
         static let profileSmall = 24
         static let profileMedium = 64
         static let profileLarge = 100
@@ -53,10 +60,20 @@ enum Constant {
         static let script = 24
         static let editButton = 40
         static let defaultButton = 48
+        static let domainWidth = 120
+        static let domainHeight = 60
     }
 
     enum CornerRadius {
         static let radius8 = 8
         static let radius12 = 12
+    }
+    
+    enum TextField {
+        static let camperIDHeight = 50
+    }
+    
+    enum ToolBar {
+        static let height = 72
     }
 }
