@@ -7,9 +7,9 @@
 
 import UIKit
 
-class ScrapPageView: UIView {
+class ScrapPageView: UIView, ContainCollectionView {
 
-    private lazy var scrapCollectionView = UICollectionView(
+    lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout()
     ).then {
@@ -33,8 +33,8 @@ class ScrapPageView: UIView {
 
     private func configureUI() {
         configureScrapView()
-        addSubview(scrapCollectionView)
-        scrapCollectionView.snp.makeConstraints {
+        addSubview(collectionView)
+        collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
@@ -42,8 +42,4 @@ class ScrapPageView: UIView {
     private func configureScrapView() {
         backgroundColor = .white
     }
-}
-
-extension ScrapPageView {
-    
 }

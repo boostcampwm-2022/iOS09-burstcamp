@@ -9,9 +9,9 @@ import UIKit
 
 import SnapKit
 
-final class HomeView: UIView {
+final class HomeView: UIView, ContainCollectionView {
 
-    private lazy var feedCollectionView = UICollectionView(
+    lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: createLayout()
     ).then {
@@ -47,8 +47,8 @@ final class HomeView: UIView {
 
     private func configureUI() {
         configureHomeView()
-        addSubview(feedCollectionView)
-        feedCollectionView.snp.makeConstraints {
+        addSubview(collectionView)
+        collectionView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide.snp.top)
             $0.leading.trailing.bottom.equalToSuperview()
         }
@@ -160,19 +160,5 @@ final class HomeView: UIView {
         case .normal:
             return []
         }
-    }
-}
-
-extension HomeView {
-    func collectionViewDelegate(
-        viewController:
-        UICollectionViewDelegate & UICollectionViewDataSource
-    ) {
-        feedCollectionView.delegate = viewController
-        feedCollectionView.dataSource = viewController
-    }
-
-    func collectionViewScrollToTop() {
-        feedCollectionView.setContentOffset(.zero, animated: true)
     }
 }
