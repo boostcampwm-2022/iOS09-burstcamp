@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		143185E8292B46F9008CE459 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185E7292B46F9008CE459 /* HomeViewModel.swift */; };
+		143185EA292B4A8D008CE459 /* ScrapPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185E9292B4A8D008CE459 /* ScrapPageViewController.swift */; };
+		143185EC292B4AB8008CE459 /* ScrapPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185EB292B4AB8008CE459 /* ScrapPageViewModel.swift */; };
+		143185EE292B4ABC008CE459 /* ScrapPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185ED292B4ABC008CE459 /* ScrapPageView.swift */; };
 		1458C6952928FB1B00E00B80 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458C6942928FB1B00E00B80 /* HomeView.swift */; };
 		1459C3BA292910B300FA885D /* RecommendFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3B9292910B300FA885D /* RecommendFeedCell.swift */; };
 		1459C3BC2929150200FA885D /* FeedCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3BB2929150200FA885D /* FeedCellType.swift */; };
@@ -45,7 +48,6 @@
 		B50A27EC29279F5D00DF3E1F /* NormalFeedCellBadgeStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B529279F5D00DF3E1F /* NormalFeedCellBadgeStackView.swift */; };
 		B50A27ED29279F5D00DF3E1F /* NormalFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B629279F5D00DF3E1F /* NormalFeedCell.swift */; };
 		B50A27EE29279F5D00DF3E1F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B729279F5D00DF3E1F /* HomeViewController.swift */; };
-		B50A27EF29279F5D00DF3E1F /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B929279F5D00DF3E1F /* BookmarkViewController.swift */; };
 		B50A27F029279F5D00DF3E1F /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27BB29279F5D00DF3E1F /* MyPageViewController.swift */; };
 		B50A27F129279F5D00DF3E1F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B50A27BD29279F5D00DF3E1F /* LaunchScreen.storyboard */; };
 		B50A27F229279F5D00DF3E1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27BF29279F5D00DF3E1F /* AppDelegate.swift */; };
@@ -91,6 +93,9 @@
 
 /* Begin PBXFileReference section */
 		143185E7292B46F9008CE459 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		143185E9292B4A8D008CE459 /* ScrapPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageViewController.swift; sourceTree = "<group>"; };
+		143185EB292B4AB8008CE459 /* ScrapPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageViewModel.swift; sourceTree = "<group>"; };
+		143185ED292B4ABC008CE459 /* ScrapPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageView.swift; sourceTree = "<group>"; };
 		1458C6942928FB1B00E00B80 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		1459C3B9292910B300FA885D /* RecommendFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedCell.swift; sourceTree = "<group>"; };
 		1459C3BB2929150200FA885D /* FeedCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellType.swift; sourceTree = "<group>"; };
@@ -129,7 +134,6 @@
 		B50A27B529279F5D00DF3E1F /* NormalFeedCellBadgeStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalFeedCellBadgeStackView.swift; sourceTree = "<group>"; };
 		B50A27B629279F5D00DF3E1F /* NormalFeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalFeedCell.swift; sourceTree = "<group>"; };
 		B50A27B729279F5D00DF3E1F /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		B50A27B929279F5D00DF3E1F /* BookmarkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
 		B50A27BB29279F5D00DF3E1F /* MyPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		B50A27BE29279F5D00DF3E1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B50A27BF29279F5D00DF3E1F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -354,7 +358,7 @@
 			isa = PBXGroup;
 			children = (
 				B50A27AB29279F5D00DF3E1F /* Home */,
-				B50A27B829279F5D00DF3E1F /* Bookmark */,
+				B50A27B829279F5D00DF3E1F /* ScrapPage */,
 				B50A27BA29279F5D00DF3E1F /* MyPage */,
 			);
 			path = Tab;
@@ -409,12 +413,14 @@
 			path = Header;
 			sourceTree = "<group>";
 		};
-		B50A27B829279F5D00DF3E1F /* Bookmark */ = {
+		B50A27B829279F5D00DF3E1F /* ScrapPage */ = {
 			isa = PBXGroup;
 			children = (
-				B50A27B929279F5D00DF3E1F /* BookmarkViewController.swift */,
+				143185E9292B4A8D008CE459 /* ScrapPageViewController.swift */,
+				143185EB292B4AB8008CE459 /* ScrapPageViewModel.swift */,
+				143185ED292B4ABC008CE459 /* ScrapPageView.swift */,
 			);
-			path = Bookmark;
+			path = ScrapPage;
 			sourceTree = "<group>";
 		};
 		B50A27BA29279F5D00DF3E1F /* MyPage */ = {
@@ -709,7 +715,7 @@
 				D88295FE292A4459005B4273 /* URLSessionService.swift in Sources */,
 				B50A27F729279F5D00DF3E1F /* TabBarCoordinator.swift in Sources */,
 				D88295F6292A4428005B4273 /* FireStoreValues.swift in Sources */,
-				B50A27EF29279F5D00DF3E1F /* BookmarkViewController.swift in Sources */,
+				143185EA292B4A8D008CE459 /* ScrapPageViewController.swift in Sources */,
 				D8829600292A44B9005B4273 /* FireStoreService.swift in Sources */,
 				1459C3BA292910B300FA885D /* RecommendFeedCell.swift in Sources */,
 				B50A27E529279F5D00DF3E1F /* LogInView.swift in Sources */,
@@ -721,6 +727,7 @@
 				B50A27FE29279F5D00DF3E1F /* Coordinator.swift in Sources */,
 				143185E8292B46F9008CE459 /* HomeViewModel.swift in Sources */,
 				B50A27F429279F5D00DF3E1F /* SceneDelegate.swift in Sources */,
+				143185EC292B4AB8008CE459 /* ScrapPageViewModel.swift in Sources */,
 				B50A27E929279F5D00DF3E1F /* NormalFeedCellFooter.swift in Sources */,
 				D8494D522927D086008157F1 /* MyPageProfileView.swift in Sources */,
 				3B061FDF2928E90400BFA71D /* SignUpCamperIDView.swift in Sources */,
@@ -751,6 +758,7 @@
 				D88295FA292A4448005B4273 /* Query.swift in Sources */,
 				B50A27F229279F5D00DF3E1F /* AppDelegate.swift in Sources */,
 				B50A27D029279F5D00DF3E1F /* TypeConversion.swift in Sources */,
+				143185EE292B4ABC008CE459 /* ScrapPageView.swift in Sources */,
 				D88295F2292A4419005B4273 /* UserQuery.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

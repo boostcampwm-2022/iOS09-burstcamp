@@ -67,7 +67,8 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
             let homeViewModel = HomeViewModel()
             controller = HomeViewController(viewModel: homeViewModel)
         case .bookmark:
-            controller = BookmarkViewController()
+            let scrapPageViewModel = ScrapPageViewModel()
+            controller = ScrapPageViewController(viewModel: scrapPageViewModel)
         case .myPage:
             // TODO: ViewModel 주입 방식 변경
             let myPageViewController = MyPageViewController(
