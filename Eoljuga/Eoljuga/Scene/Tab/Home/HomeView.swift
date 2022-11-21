@@ -46,10 +46,15 @@ final class HomeView: UIView {
     }
 
     private func configureUI() {
+        configureHomeView()
         addSubview(feedCollectionView)
         feedCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+    }
+
+    private func configureHomeView() {
+        backgroundColor = .white
     }
 
     private func createLayout() -> UICollectionViewLayout {

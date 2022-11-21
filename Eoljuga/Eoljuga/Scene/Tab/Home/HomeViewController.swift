@@ -35,13 +35,7 @@ final class HomeViewController: UIViewController {
         configureNavigationBar()
     }
 
-    private func configureUI() {
-        configureViewController()
-    }
-
-    private func configureViewController() {
-        view.backgroundColor = .white
-    }
+    private func configureUI() {}
 
     private func configureNavigationBar() {
         navigationController?.navigationBar.backgroundColor = .white
