@@ -56,8 +56,8 @@ final class MyPageView: UIView {
 
     // MARK: - Properties
 
-    typealias DataSource = UICollectionViewDiffableDataSource<SettingSection, SettingCell>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<SettingSection, SettingCell>
+    private typealias DataSource = UICollectionViewDiffableDataSource<SettingSection, SettingCell>
+    private typealias Snapshot = NSDiffableDataSourceSnapshot<SettingSection, SettingCell>
 
     private let user: User
 
@@ -70,7 +70,7 @@ final class MyPageView: UIView {
         font: .bold14
     )
 
-    lazy var settingCollectionView = UICollectionView(
+    private lazy var settingCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: listLayout()
     )
@@ -127,10 +127,16 @@ final class MyPageView: UIView {
                 return collectionView.dequeueConfiguredReusableCell(
                     using: cellRegistration,
                     for: indexPath,
-                    item: itemIdentifier)}
+                    item: itemIdentifier
+                )
+            }
         )
 
         makeSnapshot()
+    }
+
+    func setCollectionViewDelegate(viewController: UICollectionViewDelegate) {
+        settingCollectionView.delegate = viewController
     }
 }
 
@@ -196,10 +202,12 @@ extension MyPageView {
         case .notification, .darkMode:
             cell.accessories = [
                 .customView(configuration: iconAccessoryConfiguration(cell: itemIdentifier)),
-                .customView(configuration: switchAccessoryConfiguration())]
+                .customView(configuration: switchAccessoryConfiguration())
+            ]
         case .withDrawal:
             cell.accessories = [
-                .customView(configuration: iconAccessoryConfiguration(cell: itemIdentifier))]
+                .customView(configuration: iconAccessoryConfiguration(cell: itemIdentifier))
+            ]
         case .openSource:
             cell.accessories = [.outlineDisclosure(
                 displayed: .always,
@@ -225,7 +233,8 @@ extension MyPageView {
         }
         return UICellAccessory.CustomViewConfiguration(
             customView: iconImageView,
-            placement: .leading())
+            placement: .leading()
+        )
     }
 
     private func switchAccessoryConfiguration()
@@ -238,7 +247,8 @@ extension MyPageView {
         // switch.addTarget
         return UICellAccessory.CustomViewConfiguration(
             customView: switchButton,
-            placement: .trailing())
+            placement: .trailing()
+        )
     }
 
     private func makeSnapshot() {

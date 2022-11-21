@@ -88,7 +88,7 @@ final class MyPageViewController: UIViewController {
     }
 
     private func collectionViewDelegate() {
-        myPageView.settingCollectionView.delegate = self
+        myPageView.setCollectionViewDelegate(viewController: self)
     }
 
     // TODO: 추후 삭제
@@ -114,14 +114,10 @@ extension MyPageViewController: UICollectionViewDelegate {
         collectionView.deselectItem(at: indexPath, animated: false)
 
         // TODO: 기능 추가
-        switch indexPath.section {
-        case SettingSection.setting.rawValue:
-            switch indexPath.row {
-            case SettingCell.withDrawal.rawValue:
-                moveToAuthFlow()
-            default: break
-            }
-        case SettingSection.appInfo.rawValue: break
+        switch (indexPath.section, indexPath.row) {
+        case (SettingSection.setting.rawValue, SettingCell.withDrawal.rawValue):
+            moveToAuthFlow()
+        case (SettingSection.appInfo.rawValue, _): break
         default: break
         }
     }
