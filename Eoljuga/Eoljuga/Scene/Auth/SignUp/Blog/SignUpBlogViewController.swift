@@ -15,7 +15,7 @@ final class SignUpBlogViewController: UIViewController {
         return view
     }
 
-    var coordinatorPublisher = PassthroughSubject<(CoordinatorEvent, SignUpViewModel), Never>()
+    var coordinatorPublisher = PassthroughSubject<CoordinatorEvent, Never>()
     let viewModel: SignUpViewModel
 
     init(viewModel: SignUpViewModel) {
@@ -37,5 +37,35 @@ final class SignUpBlogViewController: UIViewController {
     }
 
     private func bind() {
+        signUpBlogView.blogTextField.addTarget(
+            self,
+            action: #selector(blogTextFieldChanged(_:)),
+            for: .editingChanged
+        )
+
+        signUpBlogView.skipButton.addTarget(
+            self,
+            action: #selector(skipButtonDidTouch),
+            for: .touchUpInside
+        )
+
+        signUpBlogView.nextButton.addTarget(
+            self,
+            action: #selector(nextButtonDidTouch),
+            for: .touchUpInside
+        )
+    }
+
+    @objc func blogTextFieldChanged(_ sender: UITextField) {
+        guard let text = sender.text else { return }
+        viewModel.blogAddress = text
+    }
+
+    @objc func skipButtonDidTouch() {
+        coordinatorPublisher.send(.moveToTabBarFlow)
+    }
+
+    @objc func nextButtonDidTouch() {
+        coordinatorPublisher.send(.moveToTabBarFlow)
     }
 }

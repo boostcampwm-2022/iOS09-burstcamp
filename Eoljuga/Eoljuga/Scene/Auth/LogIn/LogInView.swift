@@ -81,18 +81,16 @@ final class LogInView: UIView {
             $0.leading.equalToSuperview().offset(Constant.space16)
         }
 
-        
-
         addSubview(githubLogInButton)
         githubLogInButton.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(Constant.space16)
             $0.height.equalTo(Constant.Button.defaultButton)
             $0.bottom.equalToSuperview().offset(Constant.spaceMinus110)
         }
-        
+
         addSubview(githubLogInLabel)
         githubLogInLabel.snp.makeConstraints {
-            $0.bottom.equalTo(githubLogInButton).offset(Constant.space12)
+            $0.top.equalTo(githubLogInButton.snp.bottom).offset(Constant.space12)
             $0.centerX.equalToSuperview()
         }
     }

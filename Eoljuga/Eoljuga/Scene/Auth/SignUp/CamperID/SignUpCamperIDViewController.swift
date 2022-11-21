@@ -38,7 +38,7 @@ final class SignUpCamperIDViewController: UIViewController {
         setDelegate()
         bind()
     }
-    
+
     private func setDelegate() {
         signUpCamperIDView.idTextField.delegate = self
     }
@@ -81,14 +81,14 @@ extension SignUpCamperIDViewController: UITextFieldDelegate {
         && range.length == 0
         && range.location + 1 >= idTextFieldMaxCount)
     }
-    
+
     func textField(
         _ textField: UITextField,
         shouldChangeCharactersIn range: NSRange,
         replacementString string: String
     ) -> Bool {
         guard let text = textField.text else { return false }
-        
+
         return idLengthValidate(text: text, range: range)
     }
 }
