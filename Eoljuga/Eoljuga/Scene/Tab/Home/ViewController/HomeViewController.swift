@@ -51,12 +51,17 @@ final class HomeViewController: UIViewController {
     private func configureNavigationBar() {
         navigationController?.navigationBar.topItem?.title = "Hello, 얼죽아"
         navigationController?.hidesBarsOnSwipe = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(scrollToTop))
+        navigationController?.navigationBar.addGestureRecognizer(tapGesture)
     }
 
     private func collectionViewDelegate() {
         homeView.collectionViewDelegate(viewController: self)
     }
 
+    @objc private func scrollToTop() {
+        homeView.collectionViewScrollToTop()
+    }
     private func bind() {
     }
 }
@@ -74,7 +79,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let feedCellType = FeedCellType(index: section)
         switch feedCellType {
         case .recommend: return 3
-        case .normal: return 5
+        case .normal: return 100
         case .none: return 0
         }
     }
