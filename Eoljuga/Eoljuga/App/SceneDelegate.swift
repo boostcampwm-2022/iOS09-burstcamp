@@ -34,7 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func startApp(windowScene: UIWindowScene) {
-        let navigationController = UINavigationController()
+        let navigationController = UINavigationController(backgroundColor: .white)
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
