@@ -40,6 +40,7 @@ final class ScrapPageViewController: UIViewController {
     override func viewDidLoad() {
         configureUI()
         bind()
+        collectionViewDelegate()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -51,11 +52,48 @@ final class ScrapPageViewController: UIViewController {
     private func configureUI() {
     }
 
+    private func bind() {
+    }
+
+    private func collectionViewDelegate() {
+        scrapPageView.collectionViewDelegate(viewController: self)
+    }
+
     private func configureNavigationBar() {
         navigationController?.navigationBar.topItem?.title = "모아보기"
         navigationController?.isNavigationBarHidden = false
     }
+}
 
-    private func bind() {
+extension ScrapPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+        return 10
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: NormalFeedCell.identifier,
+            for: indexPath
+        ) as? NormalFeedCell
+        else {
+            return UICollectionViewCell()
+        }
+
+        return cell
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        let width = view.frame.width - Constant.Padding.horizontal.cgFloat * 2
+        return CGSize(width: width, height: 150)
     }
 }
