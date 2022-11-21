@@ -64,7 +64,8 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
         var controller: UIViewController
         switch page {
         case .home:
-            controller = HomeViewController()
+            let homeViewModel = HomeViewModel()
+            controller = HomeViewController(viewModel: homeViewModel)
         case .bookmark:
             controller = BookmarkViewController()
         case .myPage:
