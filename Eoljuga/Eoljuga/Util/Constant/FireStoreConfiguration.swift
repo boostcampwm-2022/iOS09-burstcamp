@@ -21,9 +21,9 @@ enum FireStoreCollection: String {
 
     var path: String {
         switch self {
-        case .user: return "/\(FireStoreCollection.user.rawValue)"
-        case .blog: return "/\(FireStoreCollection.blog.rawValue)"
-        case .feed: return "/\(FireStoreCollection.feed.rawValue)"
+        case .user: return "/\(self.rawValue)"
+        case .blog: return "/\(self.rawValue)"
+        case .feed: return "/\(self.rawValue)"
         }
     }
 }

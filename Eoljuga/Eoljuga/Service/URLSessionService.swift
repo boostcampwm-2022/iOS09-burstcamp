@@ -39,10 +39,10 @@ final class URLSessionService {
                         )
                     }
                 } else {
-                    throw NetworkError.unknown
+                    throw NetworkError.unknown()
                 }
             }
-            .mapError { NetworkError.unknownMessage($0.localizedDescription) }
+            .mapError { NetworkError.unknown($0.localizedDescription) }
             .eraseToAnyPublisher()
     }
 }

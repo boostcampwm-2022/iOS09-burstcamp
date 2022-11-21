@@ -11,6 +11,5 @@ enum NetworkError: Error {
     case error(statusCode: Int)
     case urlError
     case decodeError
-    case unknown
-    case unknownMessage(_ message: String)
+    case unknown(_ message: String = "")
 }
