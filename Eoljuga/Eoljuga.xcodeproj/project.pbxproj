@@ -86,6 +86,8 @@
 		D88295FC292A4452005B4273 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295FB292A4452005B4273 /* HTTPMethod.swift */; };
 		D88295FE292A4459005B4273 /* URLSessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295FD292A4459005B4273 /* URLSessionService.swift */; };
 		D8829600292A44B9005B4273 /* FireStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295FF292A44B9005B4273 /* FireStoreService.swift */; };
+		D8C3866A292B4AEF005A2563 /* OpenSourceLicenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C38669292B4AEF005A2563 /* OpenSourceLicenseViewController.swift */; };
+		D8C3866C292B4B0B005A2563 /* OpenSourceLicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3866B292B4B0B005A2563 /* OpenSourceLicenseView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -163,6 +165,8 @@
 		D88295FB292A4452005B4273 /* HTTPMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		D88295FD292A4459005B4273 /* URLSessionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionService.swift; sourceTree = "<group>"; };
 		D88295FF292A44B9005B4273 /* FireStoreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireStoreService.swift; sourceTree = "<group>"; };
+		D8C38669292B4AEF005A2563 /* OpenSourceLicenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSourceLicenseViewController.swift; sourceTree = "<group>"; };
+		D8C3866B292B4B0B005A2563 /* OpenSourceLicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSourceLicenseView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -521,6 +525,7 @@
 			children = (
 				D8494D452927C97E008157F1 /* MyPageView.swift */,
 				D8494D512927D085008157F1 /* MyPageProfileView.swift */,
+				D8C3866B292B4B0B005A2563 /* OpenSourceLicenseView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -529,6 +534,7 @@
 			isa = PBXGroup;
 			children = (
 				B50A27BB29279F5D00DF3E1F /* MyPageViewController.swift */,
+				D8C38669292B4AEF005A2563 /* OpenSourceLicenseViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -730,8 +736,10 @@
 				B50A27F529279F5D00DF3E1F /* AppCoordinator.swift in Sources */,
 				B50A27F929279F5D00DF3E1F /* TabBarPage.swift in Sources */,
 				3B061FE2292926DA00BFA71D /* SignUpViewModel.swift in Sources */,
+				D8C3866C292B4B0B005A2563 /* OpenSourceLicenseView.swift in Sources */,
 				B50A27DB29279F5D00DF3E1F /* Colors+Generated.swift in Sources */,
 				1459C3BC2929150200FA885D /* FeedCellType.swift in Sources */,
+				D8C3866A292B4AEF005A2563 /* OpenSourceLicenseViewController.swift in Sources */,
 				B50A27D929279F5D00DF3E1F /* UIStackView+addArrangedSubviews.swift in Sources */,
 				3B061FD82928CC5600BFA71D /* SignUpDomainViewController.swift in Sources */,
 				D88295ED292A43E2005B4273 /* UserDTO.swift in Sources */,
