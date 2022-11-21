@@ -52,8 +52,9 @@ final class ScrapPageViewController: UIViewController {
     }
 
     private func configureNavigationBar() {
-        navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.topItem?.title = "모아보기"
+        navigationController?.hidesBarsOnSwipe = false
+        navigationController?.isNavigationBarHidden = false
     }
 
     private func bind() {

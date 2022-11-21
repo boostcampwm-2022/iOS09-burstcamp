@@ -19,6 +19,6 @@ class ScrapPageView: UIView {
     }
 
     private func configureUI() {
-        backgroundColor = .orange
+        backgroundColor = .white
     }
 }

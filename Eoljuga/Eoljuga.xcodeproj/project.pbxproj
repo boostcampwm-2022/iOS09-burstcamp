@@ -11,6 +11,7 @@
 		143185EA292B4A8D008CE459 /* ScrapPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185E9292B4A8D008CE459 /* ScrapPageViewController.swift */; };
 		143185EC292B4AB8008CE459 /* ScrapPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185EB292B4AB8008CE459 /* ScrapPageViewModel.swift */; };
 		143185EE292B4ABC008CE459 /* ScrapPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185ED292B4ABC008CE459 /* ScrapPageView.swift */; };
+		143185F6292B4F63008CE459 /* UINavigationController+configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185F5292B4F63008CE459 /* UINavigationController+configure.swift */; };
 		1458C6952928FB1B00E00B80 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458C6942928FB1B00E00B80 /* HomeView.swift */; };
 		1459C3BA292910B300FA885D /* RecommendFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3B9292910B300FA885D /* RecommendFeedCell.swift */; };
 		1459C3BC2929150200FA885D /* FeedCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3BB2929150200FA885D /* FeedCellType.swift */; };
@@ -96,6 +97,7 @@
 		143185E9292B4A8D008CE459 /* ScrapPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageViewController.swift; sourceTree = "<group>"; };
 		143185EB292B4AB8008CE459 /* ScrapPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageViewModel.swift; sourceTree = "<group>"; };
 		143185ED292B4ABC008CE459 /* ScrapPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageView.swift; sourceTree = "<group>"; };
+		143185F5292B4F63008CE459 /* UINavigationController+configure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+configure.swift"; sourceTree = "<group>"; };
 		1458C6942928FB1B00E00B80 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		1459C3B9292910B300FA885D /* RecommendFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedCell.swift; sourceTree = "<group>"; };
 		1459C3BB2929150200FA885D /* FeedCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellType.swift; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 				B50A279229279F5D00DF3E1F /* UIView+addSubViews.swift */,
 				B50A279529279F5D00DF3E1F /* UIStackView+addArrangedSubviews.swift */,
 				14927E212929CF37001F2E97 /* UI+ReusableView.swift */,
+				143185F5292B4F63008CE459 /* UINavigationController+configure.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -802,6 +805,7 @@
 				B50A27F029279F5D00DF3E1F /* MyPageViewController.swift in Sources */,
 				B50A27EC29279F5D00DF3E1F /* NormalFeedCellBadgeStackView.swift in Sources */,
 				B50A27D429279F5D00DF3E1F /* UIColor+ColorSet.swift in Sources */,
+				143185F6292B4F63008CE459 /* UINavigationController+configure.swift in Sources */,
 				14927E202929CCA0001F2E97 /* RecommendFeedHeader.swift in Sources */,
 				D88295FA292A4448005B4273 /* Query.swift in Sources */,
 				B50A27F229279F5D00DF3E1F /* AppDelegate.swift in Sources */,

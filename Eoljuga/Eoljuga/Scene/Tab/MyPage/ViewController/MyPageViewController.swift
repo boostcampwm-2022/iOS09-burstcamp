@@ -82,6 +82,7 @@ final class MyPageViewController: UIViewController {
 
     private func configureNavigationBar() {
         navigationController?.navigationBar.topItem?.title = "마이페이지"
+        navigationController?.isNavigationBarHidden = false
     }
 
     private func bind() {

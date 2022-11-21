@@ -49,8 +49,8 @@ final class HomeViewController: UIViewController {
     private func configureUI() {}
 
     private func configureNavigationBar() {
-        navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.topItem?.title = "Hello, 얼죽아"
+        navigationController?.hidesBarsOnSwipe = true
     }
 
     private func collectionViewDelegate() {
