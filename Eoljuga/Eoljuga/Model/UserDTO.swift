@@ -31,9 +31,15 @@ struct UserDTO: Codable {
     }
 
     private enum FieldKeys: String, CodingKey {
-        case userUUID, name, profileImageURL, domain, caperID
-        case blogUUID, signupDate, scrapFeedUUIDs
-        case isPushNotification, isDarkMode
+        case userUUID
+        case name
+        case profileImageURL
+        case domain
+        case caperID
+        case blogUUID
+        case signupDate
+        case scrapFeedUUIDs
+        case isPushNotification
     }
 
     init(user: User) {
