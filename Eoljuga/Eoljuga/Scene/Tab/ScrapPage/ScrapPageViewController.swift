@@ -42,9 +42,18 @@ final class ScrapPageViewController: UIViewController {
         bind()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNavigationBar()
+    }
     // MARK: - Methods
 
     private func configureUI() {
+    }
+
+    private func configureNavigationBar() {
+        navigationController?.navigationBar.backgroundColor = .white
+        navigationController?.navigationBar.topItem?.title = "모아보기"
     }
 
     private func bind() {
