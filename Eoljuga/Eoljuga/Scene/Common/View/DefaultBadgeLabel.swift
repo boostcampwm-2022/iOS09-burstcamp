@@ -12,10 +12,10 @@ final class DefaultBadgeLabel: UILabel {
     // MARK: - Properties
 
     private let padding = UIEdgeInsets(
-        top: Constant.Padding.padding2.cgFloat,
-        left: Constant.Padding.padding8.cgFloat,
-        bottom: Constant.Padding.padding2.cgFloat,
-        right: Constant.Padding.padding8.cgFloat
+        top: Constant.space2.cgFloat,
+        left: Constant.space8.cgFloat,
+        bottom: Constant.space2.cgFloat,
+        right: Constant.space8.cgFloat
     )
 
     override var intrinsicContentSize: CGSize {
