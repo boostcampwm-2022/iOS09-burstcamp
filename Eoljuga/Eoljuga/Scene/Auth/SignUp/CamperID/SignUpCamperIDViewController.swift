@@ -18,6 +18,7 @@ final class SignUpCamperIDViewController: UIViewController {
     var cancelBag = Set<AnyCancellable>()
     var coordinatorPublisher = PassthroughSubject<(AuthCoordinatorEvent, SignUpViewModel), Never>()
     let viewModel: SignUpViewModel
+    private let idTextFieldMaxCount = 3
 
     init(viewModel: SignUpViewModel) {
         self.viewModel = viewModel
@@ -29,12 +30,17 @@ final class SignUpCamperIDViewController: UIViewController {
     }
 
     override func loadView() {
-        self.view = SignUpCamperIDView()
+        view = SignUpCamperIDView()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setDelegate()
         bind()
+    }
+    
+    private func setDelegate() {
+        signUpCamperIDView.idTextField.delegate = self
     }
 
     private func bind() {
@@ -43,5 +49,46 @@ final class SignUpCamperIDViewController: UIViewController {
             self.signUpCamperIDView.representingDomainLabel.text = domain.representingDomain
         }
         .store(in: &cancelBag)
+
+        signUpCamperIDView.idTextField.addTarget(
+            self,
+            action: #selector(idDidChange(_:)),
+            for: .editingChanged
+        )
+
+        signUpCamperIDView.nextButton.addTarget(
+            self,
+            action: #selector(nextButtonDidTap),
+            for: .touchUpInside
+        )
+    }
+
+    @objc func idDidChange(_ sender: UITextField) {
+        guard let id = sender.text else { return }
+        viewModel.camperID = id
+    }
+
+    @objc func nextButtonDidTap() {
+        //TODO: 캠퍼ID 중복 확인
+
+        coordinatorPublisher.send((.moveToBlogScreen, viewModel))
+    }
+}
+
+extension SignUpCamperIDViewController: UITextFieldDelegate {
+    func idLengthValidate(text: String, range: NSRange) -> Bool {
+        return !(text.count >= idTextFieldMaxCount
+        && range.length == 0
+        && range.location + 1 >= idTextFieldMaxCount)
+    }
+    
+    func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
+        guard let text = textField.text else { return false }
+        
+        return idLengthValidate(text: text, range: range)
     }
 }

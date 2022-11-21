@@ -25,17 +25,32 @@ final class SignUpCamperIDView: UIView {
     }
 
     lazy var representingDomainLabel: UILabel = UILabel().then {
-        $0.text = ""
         $0.font = UIFont.extraBold16
     }
 
     lazy var idTextField: UITextField = UITextField().then {
         $0.layer.borderWidth = 1
+        $0.keyboardType = .numberPad
+        $0.becomeFirstResponder()
+        $0.placeholder = "000"
+        $0.inputAccessoryView = toolBar
     }
 
-    lazy var nextButton: UIButton = DefaultButton(title: "다음").then {
-        $0.backgroundColor = UIColor.customBlue
+    lazy var toolBar: UIToolbar = UIToolbar().then {
+        $0.items = [barButtonItem]
+        $0.barTintColor = .white
+        $0.clipsToBounds = true
+        $0.layoutMargins = .init(
+            top: CGFloat(Constant.space12),
+            left: CGFloat(Constant.space16),
+            bottom: CGFloat(Constant.space12),
+            right: CGFloat(Constant.space16)
+        )
     }
+
+    lazy var barButtonItem: UIBarButtonItem = UIBarButtonItem(customView: nextButton)
+
+    lazy var nextButton: UIButton = DefaultButton(title: "다음")
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -52,35 +67,41 @@ final class SignUpCamperIDView: UIView {
 
         addSubview(domainLabel)
         domainLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(176)
-            $0.leading.equalToSuperview().offset(16)
+            $0.top.equalToSuperview().offset(Constant.space176)
+            $0.leading.equalToSuperview().offset(Constant.space16)
         }
 
         addSubview(mainLabel)
         mainLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(176)
-            $0.leading.equalTo(domainLabel.snp.trailing).offset(16)
+            $0.top.equalToSuperview().offset(Constant.space176)
+            $0.leading.equalTo(domainLabel.snp.trailing).offset(Constant.space8)
         }
 
         addSubview(subLabel)
         subLabel.snp.makeConstraints {
-            $0.top.equalTo(mainLabel.snp.bottom).offset(8)
-            $0.leading.equalToSuperview().offset(16)
+            $0.top.equalTo(mainLabel.snp.bottom).offset(Constant.space8)
+            $0.leading.equalToSuperview().offset(Constant.space16)
         }
 
         addSubview(representingDomainLabel)
         representingDomainLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(288)
-            $0.leading.equalToSuperview().offset(24)
+            $0.top.equalToSuperview().offset(Constant.space288)
+            $0.leading.equalToSuperview().offset(Constant.space24)
         }
 
         addSubview(idTextField)
         idTextField.snp.makeConstraints {
             $0.centerY.equalTo(representingDomainLabel.snp.centerY)
-            $0.leading.equalTo(representingDomainLabel.snp.trailing).offset(12)
-            $0.height.equalTo(50)
+            $0.leading.equalTo(representingDomainLabel.snp.trailing).offset(Constant.space12)
+            $0.height.equalTo(Constant.TextField.camperIDHeight)
         }
 
-        addSubview(nextButton)
+        toolBar.snp.makeConstraints {
+            $0.height.equalTo(Constant.ToolBar.height)
+        }
+
+        nextButton.snp.makeConstraints {
+            $0.height.equalTo(Constant.space48)
+        }
     }
 }
