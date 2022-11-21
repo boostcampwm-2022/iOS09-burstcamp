@@ -30,18 +30,22 @@ final class HomeViewController: UIViewController {
         collectionViewDelegate()
     }
 
-    private func configureUI() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         configureNavigationBar()
+    }
+
+    private func configureUI() {
         configureViewController()
+    }
+
+    private func configureViewController() {
+        view.backgroundColor = .white
     }
 
     private func configureNavigationBar() {
         navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.topItem?.title = "Hello, 얼죽아"
-    }
-
-    private func configureViewController() {
-        view.backgroundColor = .white
     }
 
     private func collectionViewDelegate() {
