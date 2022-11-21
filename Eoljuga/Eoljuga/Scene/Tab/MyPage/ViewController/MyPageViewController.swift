@@ -68,6 +68,11 @@ final class MyPageViewController: UIViewController {
         collectionViewDelegate()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNavigationBar()
+    }
+
     // MARK: - Methods
 
     private func configureUI() {
@@ -76,7 +81,7 @@ final class MyPageViewController: UIViewController {
     }
 
     private func configureNavigationBar() {
-        navigationItem.title = "마이페이지"
+        navigationController?.navigationBar.topItem?.title = "마이페이지"
     }
 
     private func bind() {
