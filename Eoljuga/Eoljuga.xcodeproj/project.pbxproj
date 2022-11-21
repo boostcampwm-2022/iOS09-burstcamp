@@ -189,6 +189,57 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		143185EF292B4D35008CE459 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B50A27B729279F5D00DF3E1F /* HomeViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		143185F0292B4D3D008CE459 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1459C3BB2929150200FA885D /* FeedCellType.swift */,
+				1458C6942928FB1B00E00B80 /* HomeView.swift */,
+				1459C3B82929102400FA885D /* RecommendFeedSection */,
+				B50A27AE29279F5D00DF3E1F /* NormalFeedCell */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		143185F1292B4D43008CE459 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				143185E7292B46F9008CE459 /* HomeViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		143185F2292B4D6C008CE459 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				143185E9292B4A8D008CE459 /* ScrapPageViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		143185F3292B4D73008CE459 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				143185ED292B4ABC008CE459 /* ScrapPageView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		143185F4292B4D75008CE459 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				143185EB292B4AB8008CE459 /* ScrapPageViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		1459C3B82929102400FA885D /* RecommendFeedSection */ = {
 			isa = PBXGroup;
 			children = (
@@ -367,12 +418,9 @@
 		B50A27AB29279F5D00DF3E1F /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				1459C3B82929102400FA885D /* RecommendFeedSection */,
-				B50A27AE29279F5D00DF3E1F /* NormalFeedCell */,
-				B50A27B729279F5D00DF3E1F /* HomeViewController.swift */,
-				143185E7292B46F9008CE459 /* HomeViewModel.swift */,
-				1458C6942928FB1B00E00B80 /* HomeView.swift */,
-				1459C3BB2929150200FA885D /* FeedCellType.swift */,
+				143185EF292B4D35008CE459 /* ViewController */,
+				143185F0292B4D3D008CE459 /* View */,
+				143185F1292B4D43008CE459 /* ViewModel */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -416,9 +464,9 @@
 		B50A27B829279F5D00DF3E1F /* ScrapPage */ = {
 			isa = PBXGroup;
 			children = (
-				143185E9292B4A8D008CE459 /* ScrapPageViewController.swift */,
-				143185EB292B4AB8008CE459 /* ScrapPageViewModel.swift */,
-				143185ED292B4ABC008CE459 /* ScrapPageView.swift */,
+				143185F2292B4D6C008CE459 /* ViewController */,
+				143185F3292B4D73008CE459 /* View */,
+				143185F4292B4D75008CE459 /* ViewModel */,
 			);
 			path = ScrapPage;
 			sourceTree = "<group>";
