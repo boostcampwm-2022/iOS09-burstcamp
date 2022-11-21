@@ -9,6 +9,19 @@ import UIKit
 
 class ScrapPageView: UIView {
 
+    private lazy var scrapCollectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: UICollectionViewFlowLayout()
+    ).then {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = Constant.zero.cgFloat
+        layout.sectionInset = .zero
+        $0.collectionViewLayout = layout
+        $0.showsVerticalScrollIndicator = false
+        $0.register(NormalFeedCell.self, forCellWithReuseIdentifier: NormalFeedCell.identifier)
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -19,6 +32,18 @@ class ScrapPageView: UIView {
     }
 
     private func configureUI() {
+        configureScrapView()
+        addSubview(scrapCollectionView)
+        scrapCollectionView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
+
+    private func configureScrapView() {
         backgroundColor = .white
     }
+}
+
+extension ScrapPageView {
+    
 }
