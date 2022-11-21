@@ -49,7 +49,8 @@ final class HomeView: UIView {
         configureHomeView()
         addSubview(feedCollectionView)
         feedCollectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
 
