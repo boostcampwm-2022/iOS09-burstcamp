@@ -11,21 +11,21 @@ import Foundation
 final class MyPageViewModel {
 
     struct Input {
-        let darkmodeValueChanged: AnyPublisher<Appearance, Never>
+        let darkModeValueChanged: AnyPublisher<Appearance, Never>
     }
 
     struct Output {
-        let darkmodeInitialValue: CurrentValueSubject<Appearance, Never>
+        let darkModeInitialValue: Just<Appearance>
     }
 
     func transform(input: Input, cancelBag: inout Set<AnyCancellable>) -> Output {
         let output = Output(
-            darkmodeInitialValue: CurrentValueSubject<Appearance, Never>(
+            darkModeInitialValue: Just<Appearance>(
                 DarkModeManager.currentAppearance
             )
         )
 
-        input.darkmodeValueChanged
+        input.darkModeValueChanged
             .sink { appearance in
                 DarkModeManager.currentAppearance = appearance
             }

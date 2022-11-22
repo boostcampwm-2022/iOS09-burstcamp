@@ -87,18 +87,14 @@ final class MyPageViewController: UIViewController {
 
     private func bind() {
         let input = MyPageViewModel.Input(
-            darkmodeValueChanged: myPageView.darkModeSwitch
-                .controlPublisher(for: .valueChanged)
+            darkModeValueChanged: myPageView.darkModeSwitch.controlPublisher(for: .valueChanged)
                 .compactMap { $0 as? UISwitch }
-                .map { Appearance.appearance(isOn: $0.isOn) }
+                .compactMap { Appearance.appearance(isOn: $0.isOn) }
                 .eraseToAnyPublisher()
         )
 
-        viewModel.transform(
-            input: input,
-            cancelBag: &cancelBag
-        )
-            .darkmodeInitialValue
+        let output = viewModel.transform(input: input, cancelBag: &cancelBag)
+        output.darkModeInitialValue
             .sink { appearance in
                 self.myPageView.setDarkModeSwitch(appearance: appearance)
             }

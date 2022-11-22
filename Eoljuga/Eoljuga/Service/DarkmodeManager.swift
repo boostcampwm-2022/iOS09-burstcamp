@@ -8,7 +8,6 @@
 import UIKit
 
 struct DarkModeManager {
-
     static var currentAppearance: Appearance = UserDefaultsManager.currentAppearance() {
         didSet {
             setAppearance(currentAppearance)
