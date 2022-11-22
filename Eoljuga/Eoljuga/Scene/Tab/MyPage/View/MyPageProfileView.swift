@@ -11,6 +11,7 @@ final class MyPageProfileView: UIView {
 
     // MARK: - Properties
 
+    // TODO: 추후 삭제
     private let user: User!
 
     private lazy var profileImageView = DefaultProfileImageView(

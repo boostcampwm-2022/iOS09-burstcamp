@@ -7,12 +7,12 @@
 
 import UIKit
 
-enum SettingSection: Int, CaseIterable {
+enum SettingSection: CaseIterable {
     case setting
     case appInfo
 }
 
-enum SettingCell: Int, CaseIterable {
+enum SettingCell: CaseIterable {
     case settingHeader
     case notification
     case darkMode
@@ -59,13 +59,14 @@ final class MyPageView: UIView {
     private typealias DataSource = UICollectionViewDiffableDataSource<SettingSection, SettingCell>
     private typealias Snapshot = NSDiffableDataSourceSnapshot<SettingSection, SettingCell>
 
+    // TODO: 삭제~
     private let user: User
 
     private lazy var myPageProfileView = MyPageProfileView(
         user: user
     )
 
-    private let myInfoEditButton = DefaultButton(
+    let myInfoEditButton = DefaultButton(
         title: "내 정보 수정하기",
         font: .bold14
     )
@@ -107,7 +108,7 @@ final class MyPageView: UIView {
     private func configureUI() {
         addSubview(myPageProfileView)
         myPageProfileView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(103)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top)
             make.horizontalEdges.equalToSuperview().inset(Constant.Padding.horizontal)
             make.height.equalTo(Constant.Profile.height)
         }
@@ -129,6 +130,7 @@ final class MyPageView: UIView {
     }
 
     private func configureCollectionView() {
+        settingCollectionView.isScrollEnabled = false
         let cellRegistration = UICollectionView.CellRegistration(
             handler: cellRegistrationHandler
         )

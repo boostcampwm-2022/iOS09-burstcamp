@@ -51,6 +51,8 @@ final class OpenSourceLicenseView: UIView {
     // MARK: - Methods
 
     private func configureUI() {
+        backgroundColor = .background
+
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(120)
