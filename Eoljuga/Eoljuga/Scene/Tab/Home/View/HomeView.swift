@@ -11,6 +11,8 @@ import SnapKit
 
 final class HomeView: UIView, ContainCollectionView {
 
+    private let recommendFeedCount = 3
+
     lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: createLayout()
@@ -101,8 +103,8 @@ final class HomeView: UIView, ContainCollectionView {
             )
             section.orthogonalScrollingBehavior = self.orthogonalMode(feedCellType: feedCellType)
             section.boundarySupplementaryItems = self.sectionHeader(feedCellType: feedCellType)
-            section.visibleItemsInvalidationHandler = { [weak self] (item, offset, environment) in
-                guard let self = self else { return}
+            section.visibleItemsInvalidationHandler = { [weak self] item, offset, environment in
+                guard let self = self else { return }
                 self.carousel(
                     item: item, offset: offset, environment: environment, itemInset: itemInset
                 )
@@ -127,12 +129,12 @@ final class HomeView: UIView, ContainCollectionView {
         let screenWidth = environment.container.contentSize.width
         let startOffsetX = -((screenWidth - contentSize) / 2)
 
-        let contentCount = Constant.recommendFeed
+        let contentCount = recommendFeedCount
         let leftLimitOffsetX = startOffsetX + contentSize
         let rightLimitOffsetX = startOffsetX + contentSize * (2 * contentCount + 1).cgFloat
         let currentOffsetX = offset.x
         if currentOffsetX <= leftLimitOffsetX || currentOffsetX >= rightLimitOffsetX {
-            self.scrollToCenter()
+            scrollToCenter()
         }
     }
 
