@@ -15,9 +15,9 @@ final class SignUpCamperIDViewController: UIViewController {
         return view
     }
 
-    var cancelBag = Set<AnyCancellable>()
+    private var cancelBag = Set<AnyCancellable>()
     var coordinatorPublisher = PassthroughSubject<(AuthCoordinatorEvent, SignUpViewModel), Never>()
-    let viewModel: SignUpViewModel
+    private let viewModel: SignUpViewModel
     private let idTextFieldMaxCount = 3
 
     init(viewModel: SignUpViewModel) {
@@ -38,7 +38,7 @@ final class SignUpCamperIDViewController: UIViewController {
         setDelegate()
         bind()
     }
-    
+
     private func setDelegate() {
         signUpCamperIDView.idTextField.delegate = self
     }
@@ -58,17 +58,39 @@ final class SignUpCamperIDViewController: UIViewController {
 
         signUpCamperIDView.nextButton.addTarget(
             self,
-            action: #selector(nextButtonDidTap),
+            action: #selector(nextButtonTouchDown(_:)),
+            for: .touchDown
+        )
+
+        signUpCamperIDView.nextButton.addTarget(
+            self,
+            action: #selector(nextButtonTouchUpOutside(_:)),
+            for: .touchUpOutside
+        )
+
+        signUpCamperIDView.nextButton.addTarget(
+            self,
+            action: #selector(nextButtonTouchUpInside(_:)),
             for: .touchUpInside
         )
     }
 
-    @objc func idDidChange(_ sender: UITextField) {
+    @objc private func idDidChange(_ sender: UITextField) {
         guard let id = sender.text else { return }
         viewModel.camperID = id
     }
 
-    @objc func nextButtonDidTap() {
+    @objc private func nextButtonTouchDown(_ sender: UITextField) {
+        sender.alpha = 0.5
+    }
+
+    @objc private func nextButtonTouchUpOutside(_ sender: UITextField) {
+        sender.alpha = 1.0
+    }
+
+    @objc func nextButtonTouchUpInside(_ sender: UIButton) {
+        sender.alpha = 1.0
+
         //TODO: 캠퍼ID 중복 확인
 
         coordinatorPublisher.send((.moveToBlogScreen, viewModel))
@@ -76,19 +98,19 @@ final class SignUpCamperIDViewController: UIViewController {
 }
 
 extension SignUpCamperIDViewController: UITextFieldDelegate {
-    func idLengthValidate(text: String, range: NSRange) -> Bool {
+    private func idLengthValidate(text: String, range: NSRange) -> Bool {
         return !(text.count >= idTextFieldMaxCount
         && range.length == 0
         && range.location + 1 >= idTextFieldMaxCount)
     }
-    
+
     func textField(
         _ textField: UITextField,
         shouldChangeCharactersIn range: NSRange,
         replacementString string: String
     ) -> Bool {
         guard let text = textField.text else { return false }
-        
+
         return idLengthValidate(text: text, range: range)
     }
 }

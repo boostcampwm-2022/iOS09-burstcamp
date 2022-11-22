@@ -22,7 +22,7 @@ enum Constant {
     static let space176 = 176
     static let space288 = 288
     static let space326 = 326
-    
+
     static let spaceMinus72 = -72
     static let spaceMinus110 = -110
 
@@ -68,11 +68,11 @@ enum Constant {
         static let radius8 = 8
         static let radius12 = 12
     }
-    
+
     enum TextField {
         static let camperIDHeight = 50
     }
-    
+
     enum ToolBar {
         static let height = 72
     }

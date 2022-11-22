@@ -15,8 +15,8 @@ final class SignUpBlogViewController: UIViewController {
         return view
     }
 
-    var coordinatorPublisher = PassthroughSubject<(CoordinatorEvent, SignUpViewModel), Never>()
-    let viewModel: SignUpViewModel
+    var coordinatorPublisher = PassthroughSubject<CoordinatorEvent, Never>()
+    private let viewModel: SignUpViewModel
 
     init(viewModel: SignUpViewModel) {
         self.viewModel = viewModel
@@ -37,5 +37,64 @@ final class SignUpBlogViewController: UIViewController {
     }
 
     private func bind() {
+        signUpBlogView.blogTextField.addTarget(
+            self,
+            action: #selector(blogTextFieldChanged(_:)),
+            for: .editingChanged
+        )
+
+        signUpBlogView.skipButton.addTarget(
+            self,
+            action: #selector(skipButtonDidTouch),
+            for: .touchUpInside
+        )
+
+        signUpBlogView.nextButton.addTarget(
+            self,
+            action: #selector(nextButtonTouchDown(_:)),
+            for: .touchDown
+        )
+
+        signUpBlogView.nextButton.addTarget(
+            self,
+            action: #selector(nextButtonTouchUpOutside(_:)),
+            for: .touchUpOutside
+        )
+
+        signUpBlogView.nextButton.addTarget(
+            self,
+            action: #selector(nextButtonTouchUpInside(_:)),
+            for: .touchUpInside
+        )
+    }
+
+    @objc private func blogTextFieldChanged(_ sender: UITextField) {
+        guard let text = sender.text else { return }
+        viewModel.blogAddress = text
+    }
+
+    @objc private func skipButtonDidTouch() {
+        coordinatorPublisher.send(.moveToTabBarFlow)
+    }
+
+    @objc private func idDidChange(_ sender: UITextField) {
+        guard let id = sender.text else { return }
+        viewModel.camperID = id
+    }
+
+    @objc private func nextButtonTouchDown(_ sender: UITextField) {
+        sender.alpha = 0.5
+    }
+
+    @objc private func nextButtonTouchUpOutside(_ sender: UITextField) {
+        sender.alpha = 0.5
+    }
+
+    @objc private func nextButtonTouchUpInside(_ sender: UIButton) {
+        sender.alpha = 1.0
+
+        //TODO: 블로그 주소 검증
+
+        coordinatorPublisher.send(.moveToTabBarFlow)
     }
 }

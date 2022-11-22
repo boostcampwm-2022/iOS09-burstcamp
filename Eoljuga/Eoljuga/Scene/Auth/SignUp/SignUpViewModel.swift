@@ -11,4 +11,5 @@ import Foundation
 final class SignUpViewModel {
     @Published var domain: Domain = .iOS
     var camperID: String = ""
+    var blogAddress: String = ""
 }

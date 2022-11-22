@@ -15,8 +15,16 @@ final class SignUpDomainViewController: UIViewController {
         return view
     }
 
+    private var domainButtons: [UIButton] {
+        return [
+            signUpDomainView.webButton,
+            signUpDomainView.aosButton,
+            signUpDomainView.iosButton
+        ]
+    }
+
     var coordinatorPublisher = PassthroughSubject<(AuthCoordinatorEvent, SignUpViewModel), Never>()
-    let viewModel: SignUpViewModel
+    private let viewModel: SignUpViewModel
 
     init(viewModel: SignUpViewModel) {
         self.viewModel = viewModel
@@ -37,34 +45,34 @@ final class SignUpDomainViewController: UIViewController {
     }
 
     private func bind() {
-        signUpDomainView.webButton.addTarget(
-            self,
-            action: #selector(domainButtonDidTap(_:)),
-            for: .touchUpInside
-        )
-        signUpDomainView.aosButton.addTarget(
-            self,
-            action: #selector(domainButtonDidTap(_:)),
-            for: .touchUpInside
-        )
-        signUpDomainView.iosButton.addTarget(
-            self,
-            action: #selector(domainButtonDidTap(_:)),
-            for: .touchUpInside
-        )
+        [signUpDomainView.webButton, signUpDomainView.aosButton, signUpDomainView.iosButton]
+            .forEach { button in
+                button.addTarget(
+                    self,
+                    action: #selector(domainButtonStartTouch(_:)),
+                    for: .touchDown
+                )
+
+                button.addTarget(
+                    self,
+                    action: #selector(domainButtonDidTouch(_:)),
+                    for: .touchUpInside
+                )
+
+                button.addTarget(
+                    self,
+                    action: #selector(domainButtonTouchUpOutside(_:)),
+                    for: .touchUpOutside
+                )
+            }
     }
 
-    @objc private func domainButtonDidTap(_ sender: UIButton) {
+    @objc private func domainButtonStartTouch(_ sender: UIButton) {
         guard let title = sender.currentTitle else { return }
 
-        let buttons: [UIButton] = [
-            signUpDomainView.webButton,
-            signUpDomainView.aosButton,
-            signUpDomainView.iosButton
-        ]
         let domains: [Domain] = [Domain.web, Domain.android, Domain.iOS]
 
-        zip(buttons, domains).forEach { button, domain in
+        zip(domainButtons, domains).forEach { button, domain in
             if title == domain.rawValue {
                 button.backgroundColor = domain.color
                 viewModel.domain = domain
@@ -72,7 +80,15 @@ final class SignUpDomainViewController: UIViewController {
                 button.backgroundColor = .systemGray5
             }
         }
+    }
 
+    @objc private func domainButtonDidTouch(_ sender: UIButton) {
         coordinatorPublisher.send((.moveToIDScreen, viewModel))
+    }
+
+    @objc private func domainButtonTouchUpOutside(_ sender: UIButton) {
+        domainButtons.forEach { button in
+            button.backgroundColor = .systemGray5
+        }
     }
 }
