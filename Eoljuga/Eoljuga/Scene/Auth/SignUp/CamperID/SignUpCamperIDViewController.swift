@@ -104,7 +104,7 @@ extension SignUpCamperIDViewController: UITextFieldDelegate {
         && range.location + 1 >= idTextFieldMaxCount)
     }
 
-    private func textField(
+    func textField(
         _ textField: UITextField,
         shouldChangeCharactersIn range: NSRange,
         replacementString string: String

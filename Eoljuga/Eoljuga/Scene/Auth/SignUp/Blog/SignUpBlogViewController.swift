@@ -76,7 +76,7 @@ final class SignUpBlogViewController: UIViewController {
     @objc private func skipButtonDidTouch() {
         coordinatorPublisher.send(.moveToTabBarFlow)
     }
-    
+
     @objc private func idDidChange(_ sender: UITextField) {
         guard let id = sender.text else { return }
         viewModel.camperID = id
@@ -86,11 +86,15 @@ final class SignUpBlogViewController: UIViewController {
         sender.alpha = 0.5
     }
 
-    @objc private func nextButtonTouchUpInside() {
+    @objc private func nextButtonTouchUpOutside(_ sender: UITextField) {
+        sender.alpha = 0.5
+    }
+
+    @objc private func nextButtonTouchUpInside(_ sender: UIButton) {
         sender.alpha = 1.0
-        
+
         //TODO: 블로그 주소 검증
-        
+
         coordinatorPublisher.send(.moveToTabBarFlow)
     }
 }
