@@ -95,6 +95,10 @@
 		D8829600292A44B9005B4273 /* FireStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295FF292A44B9005B4273 /* FireStoreService.swift */; };
 		D8C3866A292B4AEF005A2563 /* OpenSourceLicenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C38669292B4AEF005A2563 /* OpenSourceLicenseViewController.swift */; };
 		D8C3866C292B4B0B005A2563 /* OpenSourceLicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3866B292B4B0B005A2563 /* OpenSourceLicenseView.swift */; };
+		D8C38672292B88DE005A2563 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C38671292B88DE005A2563 /* UserDefaultsManager.swift */; };
+		D8C38674292B8D82005A2563 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C38673292B8D82005A2563 /* Appearance.swift */; };
+		D8C38676292B8DB6005A2563 /* DarkmodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C38675292B8DB6005A2563 /* DarkmodeManager.swift */; };
+		D8C38678292BAE6B005A2563 /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C38677292BAE6B005A2563 /* UIControl+Combine.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -181,6 +185,10 @@
 		D88295FF292A44B9005B4273 /* FireStoreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireStoreService.swift; sourceTree = "<group>"; };
 		D8C38669292B4AEF005A2563 /* OpenSourceLicenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSourceLicenseViewController.swift; sourceTree = "<group>"; };
 		D8C3866B292B4B0B005A2563 /* OpenSourceLicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSourceLicenseView.swift; sourceTree = "<group>"; };
+		D8C38671292B88DE005A2563 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		D8C38673292B8D82005A2563 /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
+		D8C38675292B8DB6005A2563 /* DarkmodeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkmodeManager.swift; sourceTree = "<group>"; };
+		D8C38677292BAE6B005A2563 /* UIControl+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Combine.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,16 +258,6 @@
 				143185EB292B4AB8008CE459 /* ScrapPageViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		1459C3B82929102400FA885D /* RecommendFeedSection */ = {
-			isa = PBXGroup;
-			children = (
-				1459C3B9292910B300FA885D /* RecommendFeedCell.swift */,
-				14927E1D2929C71C001F2E97 /* RecommendFeedUserView.swift */,
-				14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */,
-			);
-			path = RecommendFeedSection;
 			sourceTree = "<group>";
 		};
 		1459C3B82929102400FA885D /* RecommendFeedSection */ = {
@@ -367,6 +365,7 @@
 				B50A279529279F5D00DF3E1F /* UIStackView+addArrangedSubviews.swift */,
 				14927E212929CF37001F2E97 /* UI+ReusableView.swift */,
 				143185F5292B4F63008CE459 /* UINavigationController+configure.swift */,
+				D8C38677292BAE6B005A2563 /* UIControl+Combine.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -554,6 +553,8 @@
 				D88295FD292A4459005B4273 /* URLSessionService.swift */,
 				D88295FF292A44B9005B4273 /* FireStoreService.swift */,
 				B50A27A429279F5D00DF3E1F /* LogInManager.swift */,
+				D8C38671292B88DE005A2563 /* UserDefaultsManager.swift */,
+				D8C38675292B8DB6005A2563 /* DarkmodeManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -576,6 +577,7 @@
 				D8494D532927D0DC008157F1 /* User.swift */,
 				D88295EC292A43E2005B4273 /* UserDTO.swift */,
 				D8494D4D2927CE64008157F1 /* Domain.swift */,
+				D8C38673292B8D82005A2563 /* Appearance.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -799,6 +801,7 @@
 				D8494D562927D6EB008157F1 /* DefaultBadgeView.swift in Sources */,
 				3B061FE7292A1F9600BFA71D /* SignUpBlogView.swift in Sources */,
 				D88295FE292A4459005B4273 /* URLSessionService.swift in Sources */,
+				D8C38674292B8D82005A2563 /* Appearance.swift in Sources */,
 				B50A27F729279F5D00DF3E1F /* TabBarCoordinator.swift in Sources */,
 				D88295F6292A4428005B4273 /* FireStoreValues.swift in Sources */,
 				143185EA292B4A8D008CE459 /* ScrapPageViewController.swift in Sources */,
@@ -816,6 +819,7 @@
 				143185EC292B4AB8008CE459 /* ScrapPageViewModel.swift in Sources */,
 				B50A27E929279F5D00DF3E1F /* NormalFeedCellFooter.swift in Sources */,
 				143185F8292B5C88008CE459 /* ContainCollectionView.swift in Sources */,
+				D8C38678292BAE6B005A2563 /* UIControl+Combine.swift in Sources */,
 				D8494D522927D086008157F1 /* MyPageProfileView.swift in Sources */,
 				3B061FDF2928E90400BFA71D /* SignUpCamperIDView.swift in Sources */,
 				B50A27F629279F5D00DF3E1F /* AuthCoordinator.swift in Sources */,
@@ -830,6 +834,7 @@
 				3B061FE2292926DA00BFA71D /* SignUpViewModel.swift in Sources */,
 				D8C3866C292B4B0B005A2563 /* OpenSourceLicenseView.swift in Sources */,
 				B50A27DB29279F5D00DF3E1F /* Colors+Generated.swift in Sources */,
+				D8C38672292B88DE005A2563 /* UserDefaultsManager.swift in Sources */,
 				1459C3BC2929150200FA885D /* FeedCellType.swift in Sources */,
 				D8C3866A292B4AEF005A2563 /* OpenSourceLicenseViewController.swift in Sources */,
 				B50A27D929279F5D00DF3E1F /* UIStackView+addArrangedSubviews.swift in Sources */,
@@ -850,6 +855,7 @@
 				B50A27D029279F5D00DF3E1F /* TypeConversion.swift in Sources */,
 				143185EE292B4ABC008CE459 /* ScrapPageView.swift in Sources */,
 				D88295F2292A4419005B4273 /* UserQuery.swift in Sources */,
+				D8C38676292B8DB6005A2563 /* DarkmodeManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

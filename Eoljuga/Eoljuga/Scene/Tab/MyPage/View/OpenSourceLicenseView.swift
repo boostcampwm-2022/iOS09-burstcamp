@@ -21,7 +21,7 @@ final class OpenSourceLicenseView: UIView {
 
     private lazy var titleLabel = UILabel().then {
         $0.text = "오픈소스 라이선스"
-        $0.textColor = .black
+        $0.textColor = .dynamicBlack
         $0.font = .extraBold24
     }
 
@@ -67,7 +67,7 @@ final class OpenSourceLicenseView: UIView {
     private func openSourceNameLabel(name: String) -> UILabel {
         return UILabel().then {
             $0.text = name
-            $0.textColor = .black
+            $0.textColor = .dynamicBlack
             $0.font = .regular16
         }
     }

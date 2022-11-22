@@ -76,6 +76,18 @@ final class MyPageView: UIView {
     )
     private var settingDataSource: DataSource!
 
+    // TODO: 현재는 private을 풀고 Combine Switch.Publisher를 추후 internal로 바꾸기?
+
+    lazy var darkModeSwitch = UISwitch().then {
+        $0.onTintColor = .main
+        $0.tintColor = .main
+    }
+
+    lazy var notificationSwitch = UISwitch().then {
+        $0.onTintColor = .main
+        $0.tintColor = .main
+    }
+
     // MARK: - Initializer
 
     init(user: User) {
@@ -135,8 +147,18 @@ final class MyPageView: UIView {
         makeSnapshot()
     }
 
+    private func cellBackgroundView() -> UIView {
+        return UIView().then {
+            $0.backgroundColor = .background
+        }
+    }
+
     func setCollectionViewDelegate(viewController: UICollectionViewDelegate) {
         settingCollectionView.delegate = viewController
+    }
+
+    func setDarkModeSwitch(appearance: Appearance) {
+        darkModeSwitch.isOn = appearance.switchMode
     }
 }
 
@@ -191,6 +213,7 @@ extension MyPageView {
         }
 
         cell.contentConfiguration = contentConfiguration
+        cell.backgroundView = cellBackgroundView()
     }
 
     private func setCellAccessoryConfiguration(
@@ -202,7 +225,7 @@ extension MyPageView {
         case .notification, .darkMode:
             cell.accessories = [
                 .customView(configuration: iconAccessoryConfiguration(cell: itemIdentifier)),
-                .customView(configuration: switchAccessoryConfiguration())
+                .customView(configuration: switchAccessoryConfiguration(cell: itemIdentifier))
             ]
         case .withDrawal:
             cell.accessories = [
@@ -237,14 +260,20 @@ extension MyPageView {
         )
     }
 
-    private func switchAccessoryConfiguration()
+    private func switchAccessoryConfiguration(cell: SettingCell)
     -> UICellAccessory.CustomViewConfiguration {
-        let switchButton = UISwitch()
-        switchButton.onTintColor = .main
-        switchButton.tintColor = .main
-        // TODO: 변경필요
-        switchButton.isOn = false
-        // switch.addTarget
+        var switchButton = UISwitch()
+
+        switch cell {
+        case .darkMode:
+            switchButton = darkModeSwitch
+        case .notification:
+            switchButton = notificationSwitch
+            // TODO: 알림
+            switchButton.isOn = false
+        default: break
+        }
+
         return UICellAccessory.CustomViewConfiguration(
             customView: switchButton,
             placement: .trailing()

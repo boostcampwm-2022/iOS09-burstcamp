@@ -9,7 +9,7 @@ import UIKit
 
 extension UINavigationController {
 
-    convenience init(backgroundColor: UIColor) {
+    convenience init(backgroundColor: UIColor = .background) {
         self.init()
         self.navigationBar.backgroundColor = backgroundColor
     }

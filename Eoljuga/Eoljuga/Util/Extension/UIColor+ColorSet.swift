@@ -8,8 +8,9 @@
 import UIKit
 
 extension UIColor {
-    static let absoluteBlack = Asset.black.color
-    static let absoluteWhite = Asset.white.color
+    static let dynamicBlack = Asset.black.color
+    static let dynamicWhite = Asset.white.color
+    static let background = Asset.background.color
     static let main = Asset.main.color
     static let customRed = Asset.red.color
     static let customOrange = Asset.orange.color

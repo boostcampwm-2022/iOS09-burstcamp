@@ -20,7 +20,7 @@ final class MyPageProfileView: UIView {
 
     private lazy var nickNameLabel = UILabel().then {
         $0.text = user.name
-        $0.textColor = .black
+        $0.textColor = .dynamicBlack
         $0.font = .extraBold16
     }
 

@@ -34,12 +34,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func startApp(windowScene: UIWindowScene) {
-        let navigationController = UINavigationController(backgroundColor: .white)
+        let navigationController = UINavigationController()
         window = UIWindow(windowScene: windowScene)
+        setInitialDarkMode()
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
 
         appCoordinator = AppCoordinator(navigationController: navigationController)
         appCoordinator.start()
+    }
+
+    private func setInitialDarkMode() {
+        DarkModeManager.currentAppearance = UserDefaultsManager.currentAppearance()
     }
 }

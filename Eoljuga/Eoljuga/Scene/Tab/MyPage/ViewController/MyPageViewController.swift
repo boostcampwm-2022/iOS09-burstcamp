@@ -32,6 +32,7 @@ final class MyPageViewController: UIViewController {
         return view
     }
     private var viewModel: MyPageViewModel
+    private var cancelBag = Set<AnyCancellable>()
 
     // TODO: 추후 삭제
     lazy var logoutButton: UIButton = {
@@ -76,7 +77,7 @@ final class MyPageViewController: UIViewController {
     // MARK: - Methods
 
     private func configureUI() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .background
         configureNavigationBar()
     }
 
@@ -85,6 +86,19 @@ final class MyPageViewController: UIViewController {
     }
 
     private func bind() {
+        let input = MyPageViewModel.Input(
+            darkModeValueChanged: myPageView.darkModeSwitch.controlPublisher(for: .valueChanged)
+                .compactMap { $0 as? UISwitch }
+                .compactMap { Appearance.appearance(isOn: $0.isOn) }
+                .eraseToAnyPublisher()
+        )
+
+        let output = viewModel.transform(input: input, cancelBag: &cancelBag)
+        output.darkModeInitialValue
+            .sink { appearance in
+                self.myPageView.setDarkModeSwitch(appearance: appearance)
+            }
+            .store(in: &cancelBag)
     }
 
     private func collectionViewDelegate() {
