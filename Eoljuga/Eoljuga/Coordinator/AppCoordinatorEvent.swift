@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum CoordinatorEvent {
+enum AppCoordinatorEvent {
     case moveToAuthFlow
     case moveToTabBarFlow
 }

@@ -8,12 +8,7 @@
 import Combine
 import UIKit
 
-enum AuthCoordinatorEvent {
-    case moveToIDScreen
-    case moveToBlogScreen
-}
-
-protocol AuthCoordinatorProtocol: CoordinatorPublisher {
+protocol AuthCoordinatorProtocol: Coordinator {
     func moveToTabBarFlow()
     func moveToDomainScreen()
     func moveToIDScreen(viewModel: SignUpViewModel)
@@ -25,7 +20,7 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
 
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
-    var coordinatorPublisher = PassthroughSubject<CoordinatorEvent, Never>()
+    var coordinatorPublisher = PassthroughSubject<AppCoordinatorEvent, Never>()
     var cancelBag = Set<AnyCancellable>()
 
     init(navigationController: UINavigationController) {
