@@ -16,6 +16,7 @@ protocol TabBarCoordinatorProtocol: Coordinator {
     func selectPage(_ page: TabBarPage)
     func moveToMyPageEditScreen()
     func moveToOpenSourceScreen()
+    func moveToAuthFlow()
 }
 
 final class TabBarCoordinator: TabBarCoordinatorProtocol {
@@ -86,13 +87,9 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
         myPageViewController.coordinatorPublisher
             .sink { [weak self] event in
                 switch event {
-//                case .moveToAuthFlow:
-//                    self.finish()
-//                    self.coordinatorPublisher.send(.moveToAuthFlow)
+                case .moveToAuthFlow: self?.moveToAuthFlow()
                 case .moveToMyPageEditScreen: self?.moveToMyPageEditScreen()
                 case .moveToOpenSourceScreen: self?.moveToOpenSourceScreen()
-                // TODO: 탈퇴
-                case .moveToTabBarFlow: break
                 }
             }
             .store(in: &cancelBag)
@@ -114,5 +111,10 @@ extension TabBarCoordinator {
     func moveToOpenSourceScreen() {
         let openSourceLicenseViewController = OpenSourceLicenseViewController()
         navigationController.pushViewController(openSourceLicenseViewController, animated: true)
+    }
+
+    func moveToAuthFlow() {
+        finish()
+        coordinatorPublisher.send(.moveToAuthFlow)
     }
 }

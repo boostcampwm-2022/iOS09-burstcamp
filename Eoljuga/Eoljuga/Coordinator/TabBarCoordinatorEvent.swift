@@ -12,5 +12,6 @@ enum TabBarCoordinatorEvent {
     // 마이페이지
     case moveToMyPageEditScreen
     case moveToOpenSourceScreen
-    case moveToTabBarFlow // 탈퇴..
+    // TODO: 탈퇴
+    case moveToAuthFlow
 }

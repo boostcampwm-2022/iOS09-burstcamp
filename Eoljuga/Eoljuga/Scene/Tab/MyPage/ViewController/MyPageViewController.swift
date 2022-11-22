@@ -112,7 +112,7 @@ extension MyPageViewController: UICollectionViewDelegate {
         // TODO: 기능 추가
         switch (indexPath.section, indexPath.row) {
         case (0, 3): // TODO: 탈퇴 alert
-            break
+            moveToAuthFlow()
         case (1, 1):
             moveToOpenSourceScreen()
         default: break
@@ -131,5 +131,10 @@ extension MyPageViewController {
 
     private func moveToOpenSourceScreen() {
         coordinatorPublisher.send(.moveToOpenSourceScreen)
+    }
+
+    private func moveToAuthFlow() {
+        // TODO: 탈퇴 로직 추가
+        coordinatorPublisher.send(.moveToAuthFlow)
     }
 }
