@@ -78,6 +78,8 @@
 		D84452EC292CA55F008E811B /* MyPageEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452EB292CA55F008E811B /* MyPageEditView.swift */; };
 		D84452EE292CA569008E811B /* MyPageEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452ED292CA569008E811B /* MyPageEditViewModel.swift */; };
 		D84452F0292CA57D008E811B /* MyPageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452EF292CA57D008E811B /* MyPageEditViewController.swift */; };
+		D84452F2292CCA80008E811B /* SettingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452F1292CCA80008E811B /* SettingSection.swift */; };
+		D84452F4292CCA92008E811B /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452F3292CCA92008E811B /* SettingCell.swift */; };
 		D8494D462927C97E008157F1 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D452927C97E008157F1 /* MyPageView.swift */; };
 		D8494D482927C9E8008157F1 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D472927C9E8008157F1 /* MyPageViewModel.swift */; };
 		D8494D4A2927CBD4008157F1 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D492927CBD4008157F1 /* DefaultButton.swift */; };
@@ -172,6 +174,8 @@
 		D84452EB292CA55F008E811B /* MyPageEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditView.swift; sourceTree = "<group>"; };
 		D84452ED292CA569008E811B /* MyPageEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewModel.swift; sourceTree = "<group>"; };
 		D84452EF292CA57D008E811B /* MyPageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewController.swift; sourceTree = "<group>"; };
+		D84452F1292CCA80008E811B /* SettingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSection.swift; sourceTree = "<group>"; };
+		D84452F3292CCA92008E811B /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		D8494D452927C97E008157F1 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		D8494D472927C9E8008157F1 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		D8494D492927CBD4008157F1 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
@@ -625,6 +629,8 @@
 				D84452EB292CA55F008E811B /* MyPageEditView.swift */,
 				D8494D512927D085008157F1 /* MyPageProfileView.swift */,
 				D8C3866B292B4B0B005A2563 /* OpenSourceLicenseView.swift */,
+				D84452F1292CCA80008E811B /* SettingSection.swift */,
+				D84452F3292CCA92008E811B /* SettingCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -804,6 +810,7 @@
 				D84452EE292CA569008E811B /* MyPageEditViewModel.swift in Sources */,
 				B50A27CF29279F5D00DF3E1F /* Constant.swift in Sources */,
 				D88295FC292A4452005B4273 /* HTTPMethod.swift in Sources */,
+				D84452F2292CCA80008E811B /* SettingSection.swift in Sources */,
 				D8494D502927CEAA008157F1 /* DefaultBadgeLabel.swift in Sources */,
 				14927E1E2929C71C001F2E97 /* RecommendFeedUserView.swift in Sources */,
 				D88295EF292A43EB005B4273 /* NetworkError.swift in Sources */,
@@ -851,6 +858,7 @@
 				D8C3866C292B4B0B005A2563 /* OpenSourceLicenseView.swift in Sources */,
 				B50A27DB29279F5D00DF3E1F /* Colors+Generated.swift in Sources */,
 				D8C38672292B88DE005A2563 /* UserDefaultsManager.swift in Sources */,
+				D84452F4292CCA92008E811B /* SettingCell.swift in Sources */,
 				1459C3BC2929150200FA885D /* FeedCellType.swift in Sources */,
 				D8C3866A292B4AEF005A2563 /* OpenSourceLicenseViewController.swift in Sources */,
 				B50A27D929279F5D00DF3E1F /* UIStackView+addArrangedSubviews.swift in Sources */,
