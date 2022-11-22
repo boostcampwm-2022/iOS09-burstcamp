@@ -34,8 +34,8 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
 
     func start() {
         let controllers = [TabBarPage.myPage, TabBarPage.bookmark, TabBarPage.home]
-            .sorted(by: { $0.index < $1.index })
-            .map({ prepareTabController($0) })
+            .sorted { $0.index < $1.index }
+            .map { prepareTabController($0) }
 
         configureTabBarController(with: controllers)
     }
@@ -47,7 +47,8 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
     private func configureTabBarController(with tabControllers: [UIViewController]) {
         tabBarController.setViewControllers(tabControllers, animated: true)
         tabBarController.selectedIndex = TabBarPage.home.index
-        tabBarController.tabBar.backgroundColor = .white
+        tabBarController.tabBar.backgroundColor = .main
+        tabBarController.tabBar.barTintColor = .background
         tabBarController.tabBar.isTranslucent = false
         navigationController.viewControllers = [tabBarController]
     }
