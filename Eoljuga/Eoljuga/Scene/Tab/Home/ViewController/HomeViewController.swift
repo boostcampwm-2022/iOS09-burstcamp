@@ -76,7 +76,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         // TODO: ViewModel의 data count로 바꿔줘야함
         let feedCellType = FeedCellType(index: section)
         switch feedCellType {
-        case .recommend: return 3
+        case .recommend: return Constant.recommendFeed * 3
         case .normal: return 100
         case .none: return 0
         }
@@ -97,7 +97,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             else {
                 return UICollectionViewCell()
             }
-
+            // TODO : 유저 도메인에 따른 컬러 설정
+            let colors = [UIColor.customOrange, UIColor.customGreen, UIColor.customYellow]
+            cell.backgroundColor = colors[indexPath.row % Constant.recommendFeed]
             return cell
         case .normal:
             guard let cell = collectionView.dequeueReusableCell(

@@ -8,6 +8,8 @@
 import Foundation
 
 enum Constant {
+    static let recommendFeed = 3
+
     static let zero = 0
     static let space2 = 2
     static let space4 = 4
@@ -33,7 +35,7 @@ enum Constant {
     enum Cell {
         static let recommendWidth = 300
         static let recommendHeight = 150
-        static let recommendMargin = 15
+        static let recommendMargin = 16
 
         static let normalHeight = 150
         static let normalTopMargin = 5

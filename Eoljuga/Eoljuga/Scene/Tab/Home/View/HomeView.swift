@@ -11,6 +11,8 @@ import SnapKit
 
 final class HomeView: UIView, ContainCollectionView {
 
+    private let recommendFeedCount = 3
+
     lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: createLayout()
@@ -71,6 +73,13 @@ final class HomeView: UIView, ContainCollectionView {
                 heightDimension: .fractionalHeight(1.0)
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            let itemInset = Constant.Cell.recommendMargin.cgFloat
+            item.contentInsets = NSDirectionalEdgeInsets(
+                top: itemInset,
+                leading: itemInset,
+                bottom: itemInset,
+                trailing: itemInset
+            )
 
             let groupWidth = self.groupWidth(feedCellType: feedCellType)
             let groupHeight = self.groupHeight(feedCellType: feedCellType)
@@ -84,13 +93,6 @@ final class HomeView: UIView, ContainCollectionView {
                 subitem: item,
                 count: columns
             )
-            let margin = Constant.Cell.recommendMargin.cgFloat
-            group.contentInsets = NSDirectionalEdgeInsets(
-                top: margin,
-                leading: margin,
-                bottom: margin,
-                trailing: margin
-            )
 
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets = NSDirectionalEdgeInsets(
@@ -101,17 +103,55 @@ final class HomeView: UIView, ContainCollectionView {
             )
             section.orthogonalScrollingBehavior = self.orthogonalMode(feedCellType: feedCellType)
             section.boundarySupplementaryItems = self.sectionHeader(feedCellType: feedCellType)
+            section.visibleItemsInvalidationHandler = { [weak self] item, offset, environment in
+                guard let self = self else { return }
+                self.carousel(
+                    item: item, offset: offset, environment: environment, itemInset: itemInset
+                )
+            }
             return section
         }
 
         return layout
     }
 
+    private func carousel(
+        item: [NSCollectionLayoutVisibleItem],
+        offset: CGPoint,
+        environment: NSCollectionLayoutEnvironment,
+        itemInset: CGFloat
+    ) {
+        guard let itemSize = item.first?.frame.width,
+              let section = item.first?.indexPath.section,
+              section == 0
+        else { return }
+        let contentSize = itemSize + itemInset * 2
+        let screenWidth = environment.container.contentSize.width
+        let startOffsetX = -((screenWidth - contentSize) / 2)
+
+        let contentCount = recommendFeedCount
+        let leftLimitOffsetX = startOffsetX + contentSize
+        let rightLimitOffsetX = startOffsetX + contentSize * (2 * contentCount + 1).cgFloat
+        let currentOffsetX = offset.x
+        if currentOffsetX <= leftLimitOffsetX || currentOffsetX >= rightLimitOffsetX {
+            scrollToCenter()
+        }
+    }
+
+    private func scrollToCenter() {
+        DispatchQueue.main.async { [weak self] in
+            self?.collectionView.scrollToItem(
+                at: IndexPath(row: Constant.recommendFeed + 1, section: 0),
+                at: .centeredHorizontally,
+                animated: false
+            )
+        }
+    }
+
     private func groupWidth(feedCellType: FeedCellType) -> NSCollectionLayoutDimension {
         switch feedCellType {
         case .recommend:
-            let width = Constant.Cell.recommendWidth + Constant.Cell.recommendMargin * 2
-            return NSCollectionLayoutDimension.absolute(width.cgFloat)
+            return NSCollectionLayoutDimension.fractionalWidth(0.85)
         case .normal:
             return NSCollectionLayoutDimension.fractionalWidth(1.0)
         }
@@ -120,8 +160,7 @@ final class HomeView: UIView, ContainCollectionView {
     private func groupHeight(feedCellType: FeedCellType) -> NSCollectionLayoutDimension {
         switch feedCellType {
         case .recommend:
-            let height = Constant.Cell.recommendHeight + Constant.Cell.recommendMargin * 2
-            return NSCollectionLayoutDimension.absolute(height.cgFloat)
+            return NSCollectionLayoutDimension.fractionalWidth(0.5)
         case .normal:
             return NSCollectionLayoutDimension.absolute(Constant.Cell.normalHeight.cgFloat)
         }
