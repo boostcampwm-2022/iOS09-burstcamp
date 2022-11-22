@@ -21,9 +21,8 @@ String.prototype.hashCode = function (seed = 0) {
 async function convertURL(blogLink) {
 	if (blogLink.includes('tistory')) {
 		return `${blogLink}/rss`;
-	} else if (blogLink.URL.includes('velog')) {
-		"hiell".match(hi / g).l;
-		const nicknameCandidate = blogLink.match(/@\w+/g);
+	} else if (blogLink.includes('velog')) {
+		const nicknameCandidate = blogLink.match(/@[\w-]+/g);
 		const nickname = nicknameCandidate[nicknameCandidate.length - 1];
 		return `v2.velog.io/rss/${nickname}`;
 	}
