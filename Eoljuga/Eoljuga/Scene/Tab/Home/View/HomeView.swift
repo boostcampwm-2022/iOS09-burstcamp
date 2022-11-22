@@ -131,9 +131,10 @@ final class HomeView: UIView, ContainCollectionView {
         let leftLimitOffsetX = startOffsetX + contentSize
         let rightLimitOffsetX = startOffsetX + contentSize * (2 * contentCount + 1).cgFloat
         let currentOffsetX = offset.x
-
+        print(currentOffsetX)
         if currentOffsetX <= leftLimitOffsetX || currentOffsetX >= rightLimitOffsetX {
             self.scrollToCenter()
+            print("fff")
         }
     }
 

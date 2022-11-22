@@ -45,14 +45,6 @@ final class HomeViewController: UIViewController {
         configureNavigationBar()
     }
 
-    override func viewDidLayoutSubviews() {
-        homeView.collectionView.scrollToItem(
-            at: IndexPath(row: Constant.recommendFeed + 1, section: 0),
-            at: .centeredHorizontally,
-            animated: false
-        )
-    }
-
     private func configureUI() {}
 
     private func configureNavigationBar() {
