@@ -36,7 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func startApp(windowScene: UIWindowScene) {
         let navigationController = UINavigationController()
         window = UIWindow(windowScene: windowScene)
-        setDarkMode()
+        setInitialDarkMode()
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
 
@@ -44,8 +44,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         appCoordinator.start()
     }
 
-    private func setDarkMode() {
-        let appearance = DarkModeManager.appearance()
-        DarkModeManager.setAppearance(appearance)
+    private func setInitialDarkMode() {
+        DarkModeManager.currentAppearance = UserDefaultsManager.currentAppearance()
     }
 }

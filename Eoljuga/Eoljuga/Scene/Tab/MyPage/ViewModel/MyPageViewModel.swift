@@ -21,13 +21,13 @@ final class MyPageViewModel {
     func transform(input: Input, cancelBag: inout Set<AnyCancellable>) -> Output {
         let output = Output(
             darkmodeInitialValue: CurrentValueSubject<Appearance, Never>(
-                DarkModeManager.appearance()
+                DarkModeManager.currentAppearance
             )
         )
 
         input.darkmodeValueChanged
             .sink { appearance in
-                DarkModeManager.setAppearance(appearance)
+                DarkModeManager.currentAppearance = appearance
             }
             .store(in: &cancelBag)
 

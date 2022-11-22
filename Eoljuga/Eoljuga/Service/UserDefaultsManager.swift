@@ -15,9 +15,10 @@ struct UserDefaultsManager {
         UserDefaults.standard.set(appearance.theme, forKey: appearanceKey)
     }
 
-    static func appearance() -> Appearance? {
-        guard let appearanceString = UserDefaults.standard.string(forKey: appearanceKey)
-        else { return nil }
-        return Appearance(rawValue: appearanceString)
+    static func currentAppearance() -> Appearance {
+        guard let appearanceString = UserDefaults.standard.string(forKey: appearanceKey),
+              let currentAppearance = Appearance(rawValue: appearanceString)
+        else { return .light }
+        return currentAppearance
     }
 }
