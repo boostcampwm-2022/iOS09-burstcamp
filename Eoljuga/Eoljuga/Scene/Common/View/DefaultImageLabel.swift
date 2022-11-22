@@ -41,7 +41,7 @@ final class DefaultImageLabel: UILabel {
 
         let attributeString = NSMutableAttributedString()
         attributeString.append(imageAttributeString)
-        attributeString.append(NSAttributedString(string: "  "))
+        attributeString.append(NSAttributedString(string: " "))
         attributeString.append(textAttributeString)
         return attributeString
     }
