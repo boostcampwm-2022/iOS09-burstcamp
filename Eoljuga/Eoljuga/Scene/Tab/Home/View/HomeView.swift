@@ -104,23 +104,37 @@ final class HomeView: UIView, ContainCollectionView {
             section.visibleItemsInvalidationHandler = { [weak self](item, offset, environment) in
                 guard let self = self,
                       let itemSize = item.first?.frame.width,
-                      let section = item.first?.indexPath.section
+                      let section = item.first?.indexPath.section,
+                      section == 0
                 else { return }
-                if section != 0 { return }
-                let contentNumber = Constant.recommendFeed
                 let contentSize = itemSize + margin * 2
-                let padding = (environment.container.contentSize.width - contentSize) / 2
-                let leftLastItemOffsetX = -padding + contentSize
-                let rightLastItemOffsetX = -padding + contentSize * (2 * contentNumber + 1).cgFloat
-                print(section, offset.x, leftLastItemOffsetX, rightLastItemOffsetX)
-                if offset.x <= leftLastItemOffsetX || offset.x >= rightLastItemOffsetX {
-                    self.scrollToCenter()
-                }
+                let startOffset = -((environment.container.contentSize.width - contentSize) / 2)
+                self.carousel(offsetX: offset.x, contentSize: contentSize, startOffset: startOffset)
             }
             return section
         }
 
         return layout
+    }
+
+    private func carousel(offsetX: Double, contentSize: Double, startOffset: Double) {
+        let contentNumber = Constant.recommendFeed
+        let leftLastItemOffsetX = startOffset + contentSize
+        let rightLastItemOffsetX = startOffset + contentSize * (2 * contentNumber + 1).cgFloat
+//        print(startOffset, offsetX, leftLastItemOffsetX, rightLastItemOffsetX)
+        if offsetX <= leftLastItemOffsetX || offsetX >= rightLastItemOffsetX {
+            self.scrollToCenter()
+        }
+    }
+
+    private func scrollToCenter() {
+        DispatchQueue.main.async { [weak self] in
+            self?.collectionView.scrollToItem(
+                at: IndexPath(row: Constant.recommendFeed + 1, section: 0),
+                at: .centeredHorizontally,
+                animated: false
+            )
+        }
     }
 
     private func groupWidth(feedCellType: FeedCellType) -> NSCollectionLayoutDimension {
@@ -173,18 +187,6 @@ final class HomeView: UIView, ContainCollectionView {
             return [header]
         case .normal:
             return []
-        }
-    }
-}
-
-extension HomeView {
-    func scrollToCenter() {
-        DispatchQueue.main.async { [weak self] in
-            self?.collectionView.scrollToItem(
-                at: IndexPath(row: Constant.recommendFeed + 1, section: 0),
-                at: .centeredHorizontally,
-                animated: false
-            )
         }
     }
 }
