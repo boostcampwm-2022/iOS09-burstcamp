@@ -13,12 +13,12 @@ final class SignUpCamperIDView: UIView {
         $0.font = UIFont.extraBold20
     }
 
-    lazy var mainLabel: UILabel = UILabel().then {
+    private lazy var mainLabel: UILabel = UILabel().then {
         $0.text = "캠퍼님 아이디를 입력해주세요"
         $0.font = UIFont.extraBold20
     }
 
-    lazy var subLabel: UILabel = UILabel().then {
+    private lazy var subLabel: UILabel = UILabel().then {
         $0.text = "세자리로 입력해주세요"
         $0.font = UIFont.regular12
         $0.textColor = .systemGray2
@@ -36,7 +36,7 @@ final class SignUpCamperIDView: UIView {
         $0.inputAccessoryView = toolBar
     }
 
-    lazy var toolBar: UIToolbar = UIToolbar().then {
+    private lazy var toolBar: UIToolbar = UIToolbar().then {
         $0.items = [barButtonItem]
         $0.barTintColor = .white
         $0.clipsToBounds = true
@@ -48,7 +48,7 @@ final class SignUpCamperIDView: UIView {
         )
     }
 
-    lazy var barButtonItem: UIBarButtonItem = UIBarButtonItem(customView: nextButton)
+    private lazy var barButtonItem: UIBarButtonItem = UIBarButtonItem(customView: nextButton)
 
     lazy var nextButton: UIButton = DefaultButton(title: "다음")
 

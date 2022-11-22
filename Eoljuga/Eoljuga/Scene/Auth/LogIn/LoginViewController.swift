@@ -18,7 +18,7 @@ final class LogInViewController: UIViewController {
         return view
     }
 
-    let viewModel: LogInViewModel
+    private let viewModel: LogInViewModel
 
     init(viewModel: LogInViewModel) {
         self.viewModel = viewModel

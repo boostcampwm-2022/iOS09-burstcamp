@@ -9,23 +9,23 @@ import UIKit
 
 final class LogInView: UIView {
 
-    lazy var titleImage: UIImageView = UIImageView().then {
+    private lazy var titleImage: UIImageView = UIImageView().then {
         $0.image = UIImage(systemName: "pencil.circle")
     }
 
-    lazy var titleLabel: UILabel = UILabel().then {
+    private lazy var titleLabel: UILabel = UILabel().then {
         $0.text = "BOSS"
         $0.font = UIFont.extraBold40
         $0.textColor = UIColor.main
     }
 
-    lazy var fullNameLabel: UILabel = UILabel().then {
+    private lazy var fullNameLabel: UILabel = UILabel().then {
         $0.text = "Boostcamp Other StorieS"
         $0.font = UIFont.bold12
         $0.textColor = .systemGray2
     }
 
-    lazy var identitySentenceLabel: UILabel = UILabel().then {
+    private lazy var identitySentenceLabel: UILabel = UILabel().then {
         $0.text = "부스트 캠프, 또 하나의 이야기"
         $0.font = UIFont.bold20
     }
@@ -37,7 +37,7 @@ final class LogInView: UIView {
         $0.layer.cornerRadius = CGFloat(Constant.CornerRadius.radius8)
     }
 
-    lazy var githubLogInLabel: UILabel = UILabel().then {
+    private lazy var githubLogInLabel: UILabel = UILabel().then {
         $0.text = "캠퍼 인증을 위해 Github으로 로그인을 해주세요."
         $0.font = UIFont.regular12
         $0.textColor = .systemGray2

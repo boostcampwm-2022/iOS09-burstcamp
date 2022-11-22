@@ -12,12 +12,12 @@ import Then
 
 final class SignUpDomainView: UIView {
 
-    lazy var mainLabel: UILabel = UILabel().then {
+    private lazy var mainLabel: UILabel = UILabel().then {
         $0.text = "도메인을 선택해주세요"
         $0.font = UIFont.extraBold20
     }
 
-    lazy var subLabel: UILabel = UILabel().then {
+    private lazy var subLabel: UILabel = UILabel().then {
         $0.text = "부스트캠프 7기 수료 도메인을 선택해주세요"
         $0.font = UIFont.regular12
         $0.textColor = .systemGray2

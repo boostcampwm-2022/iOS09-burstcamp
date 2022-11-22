@@ -16,7 +16,7 @@ final class SignUpBlogViewController: UIViewController {
     }
 
     var coordinatorPublisher = PassthroughSubject<CoordinatorEvent, Never>()
-    let viewModel: SignUpViewModel
+    private let viewModel: SignUpViewModel
 
     init(viewModel: SignUpViewModel) {
         self.viewModel = viewModel
@@ -51,21 +51,46 @@ final class SignUpBlogViewController: UIViewController {
 
         signUpBlogView.nextButton.addTarget(
             self,
-            action: #selector(nextButtonDidTouch),
+            action: #selector(nextButtonTouchDown(_:)),
+            for: .touchDown
+        )
+
+        signUpBlogView.nextButton.addTarget(
+            self,
+            action: #selector(nextButtonTouchUpOutside(_:)),
+            for: .touchUpOutside
+        )
+
+        signUpBlogView.nextButton.addTarget(
+            self,
+            action: #selector(nextButtonTouchUpInside(_:)),
             for: .touchUpInside
         )
     }
 
-    @objc func blogTextFieldChanged(_ sender: UITextField) {
+    @objc private func blogTextFieldChanged(_ sender: UITextField) {
         guard let text = sender.text else { return }
         viewModel.blogAddress = text
     }
 
-    @objc func skipButtonDidTouch() {
+    @objc private func skipButtonDidTouch() {
         coordinatorPublisher.send(.moveToTabBarFlow)
     }
+    
+    @objc private func idDidChange(_ sender: UITextField) {
+        guard let id = sender.text else { return }
+        viewModel.camperID = id
+    }
 
-    @objc func nextButtonDidTouch() {
+    @objc private func nextButtonTouchDown(_ sender: UITextField) {
+        sender.alpha = 0.5
+    }
+
+    @objc private func nextButtonTouchUpInside() {
+        sender.alpha = 1.0
+        
+        //TODO: 블로그 주소 검증
+        
         coordinatorPublisher.send(.moveToTabBarFlow)
     }
 }

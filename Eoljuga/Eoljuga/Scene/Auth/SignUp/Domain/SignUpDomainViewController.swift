@@ -24,7 +24,7 @@ final class SignUpDomainViewController: UIViewController {
     }
 
     var coordinatorPublisher = PassthroughSubject<(AuthCoordinatorEvent, SignUpViewModel), Never>()
-    let viewModel: SignUpViewModel
+    private let viewModel: SignUpViewModel
 
     init(viewModel: SignUpViewModel) {
         self.viewModel = viewModel

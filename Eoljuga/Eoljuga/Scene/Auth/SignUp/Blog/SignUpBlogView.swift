@@ -12,12 +12,12 @@ import Then
 
 final class SignUpBlogView: UIView {
 
-    lazy var mainLabel: UILabel = UILabel().then {
+    private lazy var mainLabel: UILabel = UILabel().then {
         $0.text = "블로그 주소를 입력해주세요"
         $0.font = UIFont.extraBold20
     }
 
-    lazy var subLabel: UILabel = UILabel().then {
+    private lazy var subLabel: UILabel = UILabel().then {
         $0.text = "주소는 추후에 추가/수정할 수 있어요\n현재는 Tistory, Velog만 지원 중 이에요"
         $0.font = UIFont.regular12
         $0.textColor = .systemGray2
@@ -27,7 +27,7 @@ final class SignUpBlogView: UIView {
         $0.layer.borderWidth = 1
         $0.keyboardType = .URL
         $0.becomeFirstResponder()
-        $0.placeholder = "텍스트 필드"
+        $0.placeholder = "https://luen.tistory.com"
         $0.inputAccessoryView = toolBar
     }
 
@@ -37,7 +37,7 @@ final class SignUpBlogView: UIView {
         $0.titleLabel?.font = UIFont.bold12
     }
 
-    lazy var toolBar: UIToolbar = UIToolbar().then {
+    private lazy var toolBar: UIToolbar = UIToolbar().then {
         $0.items = [barButtonItem]
         $0.barTintColor = .white
         $0.clipsToBounds = true
@@ -49,7 +49,7 @@ final class SignUpBlogView: UIView {
         )
     }
 
-    lazy var barButtonItem: UIBarButtonItem = UIBarButtonItem(customView: nextButton)
+    private lazy var barButtonItem: UIBarButtonItem = UIBarButtonItem(customView: nextButton)
 
     lazy var nextButton: UIButton = DefaultButton(title: "다음")
 
