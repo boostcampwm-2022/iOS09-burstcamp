@@ -15,7 +15,7 @@ final class SignUpBlogViewController: UIViewController {
         return view
     }
 
-    var coordinatorPublisher = PassthroughSubject<CoordinatorEvent, Never>()
+    var coordinatorPublisher = PassthroughSubject<AppCoordinatorEvent, Never>()
     private let viewModel: SignUpViewModel
 
     init(viewModel: SignUpViewModel) {

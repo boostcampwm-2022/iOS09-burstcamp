@@ -11,21 +11,18 @@ final class MyPageProfileView: UIView {
 
     // MARK: - Properties
 
-    // TODO: 추후 삭제
-    private let user: User!
-
     private lazy var profileImageView = DefaultProfileImageView(
         imageSize: Constant.Image.profileMedium
         // TODO: set user Image
     )
 
     private lazy var nickNameLabel = UILabel().then {
-        $0.text = user.name
+        $0.text = "하늘이"
         $0.textColor = .dynamicBlack
         $0.font = .extraBold16
     }
 
-    private lazy var badgeView = DefaultBadgeView(user: user)
+    private lazy var badgeView = DefaultBadgeView()
 
     private lazy var blogTitleLabel = UILabel().then {
         // TODO: set Blog Title
@@ -36,8 +33,7 @@ final class MyPageProfileView: UIView {
 
     // MARK: - Initializer
 
-    init(user: User) {
-        self.user = user
+    init() {
         super.init(frame: .zero)
 
         configureUI()

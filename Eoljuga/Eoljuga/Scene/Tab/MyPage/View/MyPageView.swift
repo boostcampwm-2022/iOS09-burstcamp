@@ -59,12 +59,7 @@ final class MyPageView: UIView {
     private typealias DataSource = UICollectionViewDiffableDataSource<SettingSection, SettingCell>
     private typealias Snapshot = NSDiffableDataSourceSnapshot<SettingSection, SettingCell>
 
-    // TODO: 삭제~
-    private let user: User
-
-    private lazy var myPageProfileView = MyPageProfileView(
-        user: user
-    )
+    private lazy var myPageProfileView = MyPageProfileView()
 
     let myInfoEditButton = DefaultButton(
         title: "내 정보 수정하기",
@@ -76,8 +71,6 @@ final class MyPageView: UIView {
         collectionViewLayout: listLayout()
     )
     private var settingDataSource: DataSource!
-
-    // TODO: 현재는 private을 풀고 Combine Switch.Publisher를 추후 internal로 바꾸기?
 
     lazy var darkModeSwitch = UISwitch().then {
         $0.onTintColor = .main
@@ -91,8 +84,7 @@ final class MyPageView: UIView {
 
     // MARK: - Initializer
 
-    init(user: User) {
-        self.user = user
+    init() {
         super.init(frame: .zero)
 
         configureCollectionView()

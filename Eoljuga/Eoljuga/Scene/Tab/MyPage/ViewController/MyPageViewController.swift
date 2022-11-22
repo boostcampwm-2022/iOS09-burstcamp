@@ -27,7 +27,7 @@ final class MyPageViewController: UIViewController {
 
     private var myPageView: MyPageView {
         guard let view = view as? MyPageView else {
-            return MyPageView(user: user)
+            return MyPageView()
         }
         return view
     }
@@ -50,7 +50,7 @@ final class MyPageViewController: UIViewController {
     // MARK: - Life Cycle
 
     override func loadView() {
-        view = MyPageView(user: user)
+        view = MyPageView()
     }
 
     override func viewDidLoad() {
