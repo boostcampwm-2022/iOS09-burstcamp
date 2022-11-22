@@ -107,7 +107,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             // TODO : 유저 도메인에 따른 컬러 설정
             let colors = [UIColor.customOrange, UIColor.customGreen, UIColor.customYellow]
-            cell.backgroundColor = colors[indexPath.row % 3]
+            cell.backgroundColor = colors[indexPath.row % Constant.recommendFeed]
             return cell
         case .normal:
             guard let cell = collectionView.dequeueReusableCell(

@@ -71,12 +71,12 @@ final class HomeView: UIView, ContainCollectionView {
                 heightDimension: .fractionalHeight(1.0)
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            let margin = Constant.Cell.recommendMargin.cgFloat
+            let itemInset = Constant.Cell.recommendMargin.cgFloat
             item.contentInsets = NSDirectionalEdgeInsets(
-                top: margin,
-                leading: margin,
-                bottom: margin,
-                trailing: margin
+                top: itemInset,
+                leading: itemInset,
+                bottom: itemInset,
+                trailing: itemInset
             )
 
             let groupWidth = self.groupWidth(feedCellType: feedCellType)
@@ -101,15 +101,11 @@ final class HomeView: UIView, ContainCollectionView {
             )
             section.orthogonalScrollingBehavior = self.orthogonalMode(feedCellType: feedCellType)
             section.boundarySupplementaryItems = self.sectionHeader(feedCellType: feedCellType)
-            section.visibleItemsInvalidationHandler = { [weak self](item, offset, environment) in
-                guard let self = self,
-                      let itemSize = item.first?.frame.width,
-                      let section = item.first?.indexPath.section,
-                      section == 0
-                else { return }
-                let contentSize = itemSize + margin * 2
-                let startOffset = -((environment.container.contentSize.width - contentSize) / 2)
-                self.carousel(offsetX: offset.x, contentSize: contentSize, startOffset: startOffset)
+            section.visibleItemsInvalidationHandler = { [weak self] (item, offset, environment) in
+                guard let self = self else { return}
+                self.carousel(
+                    item: item, offset: offset, environment: environment, itemInset: itemInset
+                )
             }
             return section
         }
@@ -117,12 +113,26 @@ final class HomeView: UIView, ContainCollectionView {
         return layout
     }
 
-    private func carousel(offsetX: Double, contentSize: Double, startOffset: Double) {
-        let contentNumber = Constant.recommendFeed
-        let leftLastItemOffsetX = startOffset + contentSize
-        let rightLastItemOffsetX = startOffset + contentSize * (2 * contentNumber + 1).cgFloat
-//        print(startOffset, offsetX, leftLastItemOffsetX, rightLastItemOffsetX)
-        if offsetX <= leftLastItemOffsetX || offsetX >= rightLastItemOffsetX {
+    private func carousel(
+        item: [NSCollectionLayoutVisibleItem],
+        offset: CGPoint,
+        environment: NSCollectionLayoutEnvironment,
+        itemInset: CGFloat
+    ) {
+        guard let itemSize = item.first?.frame.width,
+              let section = item.first?.indexPath.section,
+              section == 0
+        else { return }
+        let contentSize = itemSize + itemInset * 2
+        let screenWidth = environment.container.contentSize.width
+        let startOffsetX = -((screenWidth - contentSize) / 2)
+
+        let contentCount = Constant.recommendFeed
+        let leftLimitOffsetX = startOffsetX + contentSize
+        let rightLimitOffsetX = startOffsetX + contentSize * (2 * contentCount + 1).cgFloat
+        let currentOffsetX = offset.x
+
+        if currentOffsetX <= leftLimitOffsetX || currentOffsetX >= rightLimitOffsetX {
             self.scrollToCenter()
         }
     }
