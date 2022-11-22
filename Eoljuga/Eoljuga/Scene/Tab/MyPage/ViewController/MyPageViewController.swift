@@ -89,10 +89,12 @@ final class MyPageViewController: UIViewController {
         let input = MyPageViewModel.Input(
             darkmodeValueChanged: myPageView.darkModeSwitch
                 .controlPublisher(for: .valueChanged)
+                .compactMap { $0 as? UISwitch }
+                .map { Appearance.appearance(isOn: $0.isOn) }
                 .eraseToAnyPublisher()
         )
 
-        let output = viewModel.transform(
+        viewModel.transform(
             input: input,
             cancelBag: &cancelBag
         )

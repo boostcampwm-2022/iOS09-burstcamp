@@ -6,12 +6,12 @@
 //
 
 import Combine
-import UIKit
+import Foundation
 
 final class MyPageViewModel {
 
     struct Input {
-        let darkmodeValueChanged: AnyPublisher<UIControl, Never>
+        let darkmodeValueChanged: AnyPublisher<Appearance, Never>
     }
 
     struct Output {
@@ -26,8 +26,6 @@ final class MyPageViewModel {
         )
 
         input.darkmodeValueChanged
-            .compactMap { $0 as? UISwitch }
-            .map { Appearance.appearance(isOn: $0.isOn) }
             .sink { appearance in
                 DarkModeManager.setAppearance(appearance)
             }
