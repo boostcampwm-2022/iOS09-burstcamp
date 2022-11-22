@@ -45,6 +45,14 @@ final class HomeViewController: UIViewController {
         configureNavigationBar()
     }
 
+    override func viewDidLayoutSubviews() {
+        homeView.collectionView.scrollToItem(
+            at: IndexPath(row: Constant.recommendFeed + 1, section: 0),
+            at: .centeredHorizontally,
+            animated: false
+        )
+    }
+
     private func configureUI() {}
 
     private func configureNavigationBar() {
@@ -76,7 +84,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         // TODO: ViewModel의 data count로 바꿔줘야함
         let feedCellType = FeedCellType(index: section)
         switch feedCellType {
-        case .recommend: return 3
+        case .recommend: return Constant.recommendFeed * 3
         case .normal: return 100
         case .none: return 0
         }

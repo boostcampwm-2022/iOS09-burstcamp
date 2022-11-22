@@ -101,6 +101,22 @@ final class HomeView: UIView, ContainCollectionView {
             )
             section.orthogonalScrollingBehavior = self.orthogonalMode(feedCellType: feedCellType)
             section.boundarySupplementaryItems = self.sectionHeader(feedCellType: feedCellType)
+            section.visibleItemsInvalidationHandler = { [weak self](item, offset, environment) in
+                guard let self = self,
+                      let itemSize = item.first?.frame.width,
+                      let section = item.first?.indexPath.section
+                else { return }
+                if section != 0 { return }
+                let contentNumber = Constant.recommendFeed
+                let contentSize = itemSize + margin * 2
+                let padding = (environment.container.contentSize.width - contentSize) / 2
+                let leftLastItemOffsetX = -padding + contentSize
+                let rightLastItemOffsetX = -padding + contentSize * (2 * contentNumber + 1).cgFloat
+                print(section, offset.x, leftLastItemOffsetX, rightLastItemOffsetX)
+                if offset.x <= leftLastItemOffsetX || offset.x >= rightLastItemOffsetX {
+                    self.scrollToCenter()
+                }
+            }
             return section
         }
 
@@ -157,6 +173,18 @@ final class HomeView: UIView, ContainCollectionView {
             return [header]
         case .normal:
             return []
+        }
+    }
+}
+
+extension HomeView {
+    func scrollToCenter() {
+        DispatchQueue.main.async { [weak self] in
+            self?.collectionView.scrollToItem(
+                at: IndexPath(row: Constant.recommendFeed + 1, section: 0),
+                at: .centeredHorizontally,
+                animated: false
+            )
         }
     }
 }

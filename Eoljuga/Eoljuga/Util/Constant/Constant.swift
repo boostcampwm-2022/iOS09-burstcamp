@@ -8,6 +8,8 @@
 import Foundation
 
 enum Constant {
+    static let recommendFeed = 3
+
     static let zero = 0
     static let space2 = 2
     static let space4 = 4
