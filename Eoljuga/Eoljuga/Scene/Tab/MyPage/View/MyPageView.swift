@@ -7,76 +7,25 @@
 
 import UIKit
 
-enum SettingSection: Int, CaseIterable {
-    case setting
-    case appInfo
-}
-
-enum SettingCell: Int, CaseIterable {
-    case settingHeader
-    case notification
-    case darkMode
-    case withDrawal
-    case appInfoHeader
-    case openSource
-    case appVersion
-
-    var title: String {
-        switch self {
-        case .settingHeader: return "설정"
-        case .notification: return "알림설정"
-        case .darkMode: return "다크모드"
-        case .withDrawal: return "탈퇴하기"
-        case .appInfoHeader: return "앱 정보"
-        case .openSource: return "오픈소스 라이선스"
-        case .appVersion: return "앱 버전"
-        }
-    }
-
-    var section: SettingSection {
-        switch self {
-        case .settingHeader, .notification, .darkMode, .withDrawal:
-            return .setting
-        case .appInfoHeader, .openSource, .appVersion:
-            return .appInfo
-        }
-    }
-
-    var icon: UIImage? {
-        switch self {
-        case .notification: return UIImage(systemName: "bell.fill")
-        case .darkMode: return UIImage(systemName: "moon.fill")
-        case .withDrawal: return UIImage(systemName: "airplane.departure")
-        default: return nil
-        }
-    }
-}
-
-final class MyPageView: UIView {
+final class MyPageView: UIView, ContainCollectionView {
 
     // MARK: - Properties
 
     private typealias DataSource = UICollectionViewDiffableDataSource<SettingSection, SettingCell>
     private typealias Snapshot = NSDiffableDataSourceSnapshot<SettingSection, SettingCell>
 
-    private let user: User
+    private lazy var myPageProfileView = MyPageProfileView()
 
-    private lazy var myPageProfileView = MyPageProfileView(
-        user: user
-    )
-
-    private let myInfoEditButton = DefaultButton(
+    let myInfoEditButton = DefaultButton(
         title: "내 정보 수정하기",
         font: .bold14
     )
 
-    private lazy var settingCollectionView = UICollectionView(
+    lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: listLayout()
     )
     private var settingDataSource: DataSource!
-
-    // TODO: 현재는 private을 풀고 Combine Switch.Publisher를 추후 internal로 바꾸기?
 
     lazy var darkModeSwitch = UISwitch().then {
         $0.onTintColor = .main
@@ -90,8 +39,7 @@ final class MyPageView: UIView {
 
     // MARK: - Initializer
 
-    init(user: User) {
-        self.user = user
+    init() {
         super.init(frame: .zero)
 
         configureCollectionView()
@@ -107,7 +55,7 @@ final class MyPageView: UIView {
     private func configureUI() {
         addSubview(myPageProfileView)
         myPageProfileView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(103)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top)
             make.horizontalEdges.equalToSuperview().inset(Constant.Padding.horizontal)
             make.height.equalTo(Constant.Profile.height)
         }
@@ -120,8 +68,8 @@ final class MyPageView: UIView {
             make.height.equalTo(Constant.Button.editButton)
         }
 
-        addSubview(settingCollectionView)
-        settingCollectionView.snp.makeConstraints { make in
+        addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
             make.top.equalTo(myInfoEditButton.snp.bottom).offset(64)
             make.horizontalEdges.equalToSuperview().inset(Constant.Padding.horizontal)
             make.bottom.equalToSuperview()
@@ -129,12 +77,13 @@ final class MyPageView: UIView {
     }
 
     private func configureCollectionView() {
+        collectionView.isScrollEnabled = false
         let cellRegistration = UICollectionView.CellRegistration(
             handler: cellRegistrationHandler
         )
 
         settingDataSource = DataSource(
-            collectionView: settingCollectionView,
+            collectionView: collectionView,
             cellProvider: { collectionView, indexPath, itemIdentifier in
                 return collectionView.dequeueConfiguredReusableCell(
                     using: cellRegistration,
@@ -154,7 +103,7 @@ final class MyPageView: UIView {
     }
 
     func setCollectionViewDelegate(viewController: UICollectionViewDelegate) {
-        settingCollectionView.delegate = viewController
+        collectionView.delegate = viewController
     }
 
     func setDarkModeSwitch(appearance: Appearance) {

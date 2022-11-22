@@ -9,11 +9,14 @@ import UIKit
 
 import Then
 
-protocol TabBarCoordinatorProtocol: CoordinatorPublisher {
+protocol TabBarCoordinatorProtocol: Coordinator {
     var tabBarController: UITabBarController { get set }
     var currentPage: TabBarPage? { get }
 
     func selectPage(_ page: TabBarPage)
+    func moveToMyPageEditScreen()
+    func moveToOpenSourceScreen()
+    func moveToAuthFlow()
 }
 
 final class TabBarCoordinator: TabBarCoordinatorProtocol {
@@ -21,7 +24,7 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     var tabBarController = UITabBarController()
-    var coordinatorPublisher = PassthroughSubject<CoordinatorEvent, Never>()
+    var coordinatorPublisher = PassthroughSubject<AppCoordinatorEvent, Never>()
     var cancelBag = Set<AnyCancellable>()
 
     var currentPage: TabBarPage? {
@@ -71,24 +74,47 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
             let scrapPageViewModel = ScrapPageViewModel()
             controller = ScrapPageViewController(viewModel: scrapPageViewModel)
         case .myPage:
-            // TODO: ViewModel 주입 방식 변경
-            let myPageViewController = MyPageViewController(
-                viewModel: MyPageViewModel()
-            )
-            myPageViewController.coordinatorPublisher
-                .sink { coordinatorEvent in
-                    switch coordinatorEvent {
-                    case .moveToAuthFlow:
-                        self.finish()
-                        self.coordinatorPublisher.send(.moveToAuthFlow)
-                    case .moveToTabBarFlow:
-                        return
-                    }
-                }
-                .store(in: &cancelBag)
-            controller = myPageViewController
+            controller = prepareMyPageViewController()
         }
         configureTabBarItem(of: controller, with: page)
         return controller
+    }
+
+    private func prepareMyPageViewController() -> MyPageViewController {
+        let viewModel = MyPageViewModel()
+        let myPageViewController = MyPageViewController(viewModel: viewModel)
+
+        myPageViewController.coordinatorPublisher
+            .sink { [weak self] event in
+                switch event {
+                case .moveToAuthFlow: self?.moveToAuthFlow()
+                case .moveToMyPageEditScreen: self?.moveToMyPageEditScreen()
+                case .moveToOpenSourceScreen: self?.moveToOpenSourceScreen()
+                }
+            }
+            .store(in: &cancelBag)
+
+        return myPageViewController
+    }
+}
+
+// MARK: - MyPageEvent
+
+extension TabBarCoordinator {
+
+    func moveToMyPageEditScreen() {
+        let viewModel = MyPageEditViewModel()
+        let myPageEditViewController = MyPageEditViewController(viewModel: viewModel)
+        navigationController.pushViewController(myPageEditViewController, animated: true)
+    }
+
+    func moveToOpenSourceScreen() {
+        let openSourceLicenseViewController = OpenSourceLicenseViewController()
+        navigationController.pushViewController(openSourceLicenseViewController, animated: true)
+    }
+
+    func moveToAuthFlow() {
+        finish()
+        coordinatorPublisher.send(.moveToAuthFlow)
     }
 }

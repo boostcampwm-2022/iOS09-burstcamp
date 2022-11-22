@@ -27,23 +27,14 @@ final class MyPageViewController: UIViewController {
 
     private var myPageView: MyPageView {
         guard let view = view as? MyPageView else {
-            return MyPageView(user: user)
+            return MyPageView()
         }
         return view
     }
     private var viewModel: MyPageViewModel
     private var cancelBag = Set<AnyCancellable>()
 
-    // TODO: 추후 삭제
-    lazy var logoutButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("로그아웃", for: .normal)
-        button.backgroundColor = .systemBlue
-        button.addTarget(self, action: #selector(logoutButtonDidTap), for: .touchUpInside)
-        return button
-    }()
-
-    var coordinatorPublisher = PassthroughSubject<CoordinatorEvent, Never>()
+    var coordinatorPublisher = PassthroughSubject<TabBarCoordinatorEvent, Never>()
 
     // MARK: - Initializer
 
@@ -59,14 +50,14 @@ final class MyPageViewController: UIViewController {
     // MARK: - Life Cycle
 
     override func loadView() {
-        view = MyPageView(user: user)
+        view = MyPageView()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         bind()
-        collectionViewDelegate()
+        setCollectionViewDelegate()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -99,21 +90,14 @@ final class MyPageViewController: UIViewController {
                 self.myPageView.setDarkModeSwitch(appearance: appearance)
             }
             .store(in: &cancelBag)
+
+        myPageView.myInfoEditButton.tapPublisher
+            .sink { _ in self.moveToMyPageEditScreen() }
+            .store(in: &cancelBag)
     }
 
-    private func collectionViewDelegate() {
+    private func setCollectionViewDelegate() {
         myPageView.setCollectionViewDelegate(viewController: self)
-    }
-
-    // TODO: 추후 삭제
-    @objc func logoutButtonDidTap() {
-        moveToAuthFlow()
-    }
-}
-
-extension MyPageViewController {
-    func moveToAuthFlow() {
-        coordinatorPublisher.send(.moveToAuthFlow)
     }
 }
 
@@ -125,14 +109,32 @@ extension MyPageViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        collectionView.deselectItem(at: indexPath, animated: false)
-
         // TODO: 기능 추가
         switch (indexPath.section, indexPath.row) {
-        case (SettingSection.setting.rawValue, SettingCell.withDrawal.rawValue):
+        case (0, 3): // TODO: 탈퇴 alert
             moveToAuthFlow()
-        case (SettingSection.appInfo.rawValue, _): break
+        case (1, 1):
+            moveToOpenSourceScreen()
         default: break
         }
+
+        collectionView.deselectItem(at: indexPath, animated: false)
+    }
+}
+
+// MARK: - TabBarCoordinatorEvent
+
+extension MyPageViewController {
+    private func moveToMyPageEditScreen() {
+        coordinatorPublisher.send(.moveToMyPageEditScreen)
+    }
+
+    private func moveToOpenSourceScreen() {
+        coordinatorPublisher.send(.moveToOpenSourceScreen)
+    }
+
+    private func moveToAuthFlow() {
+        // TODO: 탈퇴 로직 추가
+        coordinatorPublisher.send(.moveToAuthFlow)
     }
 }

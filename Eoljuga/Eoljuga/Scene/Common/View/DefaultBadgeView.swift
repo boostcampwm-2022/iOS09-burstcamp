@@ -9,13 +9,11 @@ import UIKit
 
 final class DefaultBadgeView: UIView {
 
-    private let user: User
-
     // MARK: - Properties
 
     private lazy var domainLabel = DefaultBadgeLabel(
-        text: user.domain.rawValue,
-        textColor: user.domain.color
+        text: "iOS",
+        textColor: Domain.iOS.color
     )
 
     private lazy var numberLabel = DefaultBadgeLabel(
@@ -24,16 +22,14 @@ final class DefaultBadgeView: UIView {
     )
 
     private lazy var camperIDLabel = DefaultBadgeLabel(
-        text: user.camperID,
+        text: "S057",
         textColor: .systemGray2
     )
 
     // MARK: - Initializer
 
-    init(user: User) {
-        self.user = user
+    init() {
         super.init(frame: .zero)
-
         configureUI()
     }
 
