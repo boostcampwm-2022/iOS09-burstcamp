@@ -57,7 +57,8 @@ final class RecommendFeedCell: UICollectionViewCell {
 
     private func configureStackView() {
         stackView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview().inset(20)
+            $0.centerX.centerY.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
     }
 }
