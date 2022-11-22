@@ -80,6 +80,8 @@
 		D84452F0292CA57D008E811B /* MyPageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452EF292CA57D008E811B /* MyPageEditViewController.swift */; };
 		D84452F2292CCA80008E811B /* SettingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452F1292CCA80008E811B /* SettingSection.swift */; };
 		D84452F4292CCA92008E811B /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452F3292CCA92008E811B /* SettingCell.swift */; };
+		D84452F6292CF4BC008E811B /* DefaultImageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452F5292CF4BC008E811B /* DefaultImageLabel.swift */; };
+		D84452F8292CF4E0008E811B /* DefaultTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452F7292CF4E0008E811B /* DefaultTextField.swift */; };
 		D8494D462927C97E008157F1 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D452927C97E008157F1 /* MyPageView.swift */; };
 		D8494D482927C9E8008157F1 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D472927C9E8008157F1 /* MyPageViewModel.swift */; };
 		D8494D4A2927CBD4008157F1 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D492927CBD4008157F1 /* DefaultButton.swift */; };
@@ -176,6 +178,8 @@
 		D84452EF292CA57D008E811B /* MyPageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewController.swift; sourceTree = "<group>"; };
 		D84452F1292CCA80008E811B /* SettingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSection.swift; sourceTree = "<group>"; };
 		D84452F3292CCA92008E811B /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
+		D84452F5292CF4BC008E811B /* DefaultImageLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImageLabel.swift; sourceTree = "<group>"; };
+		D84452F7292CF4E0008E811B /* DefaultTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTextField.swift; sourceTree = "<group>"; };
 		D8494D452927C97E008157F1 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		D8494D472927C9E8008157F1 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		D8494D492927CBD4008157F1 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
@@ -611,6 +615,8 @@
 				D8494D4B2927CD6C008157F1 /* DefaultProfileImageView.swift */,
 				D8494D4F2927CEAA008157F1 /* DefaultBadgeLabel.swift */,
 				D8494D552927D6EB008157F1 /* DefaultBadgeView.swift */,
+				D84452F5292CF4BC008E811B /* DefaultImageLabel.swift */,
+				D84452F7292CF4E0008E811B /* DefaultTextField.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -626,8 +632,8 @@
 			isa = PBXGroup;
 			children = (
 				D8494D452927C97E008157F1 /* MyPageView.swift */,
-				D84452EB292CA55F008E811B /* MyPageEditView.swift */,
 				D8494D512927D085008157F1 /* MyPageProfileView.swift */,
+				D84452EB292CA55F008E811B /* MyPageEditView.swift */,
 				D8C3866B292B4B0B005A2563 /* OpenSourceLicenseView.swift */,
 				D84452F1292CCA80008E811B /* SettingSection.swift */,
 				D84452F3292CCA92008E811B /* SettingCell.swift */,
@@ -855,8 +861,10 @@
 				B50A27F529279F5D00DF3E1F /* AppCoordinator.swift in Sources */,
 				B50A27F929279F5D00DF3E1F /* TabBarPage.swift in Sources */,
 				3B061FE2292926DA00BFA71D /* SignUpViewModel.swift in Sources */,
+				D84452F8292CF4E0008E811B /* DefaultTextField.swift in Sources */,
 				D8C3866C292B4B0B005A2563 /* OpenSourceLicenseView.swift in Sources */,
 				B50A27DB29279F5D00DF3E1F /* Colors+Generated.swift in Sources */,
+				D84452F6292CF4BC008E811B /* DefaultImageLabel.swift in Sources */,
 				D8C38672292B88DE005A2563 /* UserDefaultsManager.swift in Sources */,
 				D84452F4292CCA92008E811B /* SettingCell.swift in Sources */,
 				1459C3BC2929150200FA885D /* FeedCellType.swift in Sources */,

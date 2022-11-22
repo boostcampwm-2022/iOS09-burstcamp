@@ -36,7 +36,7 @@ final class DefaultBadgeLabel: UILabel {
         font = UIFont.bold10
         self.text = text
         self.textColor = textColor
-        backgroundColor = .systemGray6
+        backgroundColor = .systemGray5
         layer.cornerRadius = Constant.CornerRadius.radius8.cgFloat
         clipsToBounds = true
     }
