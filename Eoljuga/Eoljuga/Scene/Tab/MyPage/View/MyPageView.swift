@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class MyPageView: UIView {
+final class MyPageView: UIView, ContainCollectionView {
 
     // MARK: - Properties
 
@@ -21,7 +21,7 @@ final class MyPageView: UIView {
         font: .bold14
     )
 
-    private lazy var settingCollectionView = UICollectionView(
+    lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: listLayout()
     )
@@ -68,8 +68,8 @@ final class MyPageView: UIView {
             make.height.equalTo(Constant.Button.editButton)
         }
 
-        addSubview(settingCollectionView)
-        settingCollectionView.snp.makeConstraints { make in
+        addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
             make.top.equalTo(myInfoEditButton.snp.bottom).offset(64)
             make.horizontalEdges.equalToSuperview().inset(Constant.Padding.horizontal)
             make.bottom.equalToSuperview()
@@ -77,13 +77,13 @@ final class MyPageView: UIView {
     }
 
     private func configureCollectionView() {
-        settingCollectionView.isScrollEnabled = false
+        collectionView.isScrollEnabled = false
         let cellRegistration = UICollectionView.CellRegistration(
             handler: cellRegistrationHandler
         )
 
         settingDataSource = DataSource(
-            collectionView: settingCollectionView,
+            collectionView: collectionView,
             cellProvider: { collectionView, indexPath, itemIdentifier in
                 return collectionView.dequeueConfiguredReusableCell(
                     using: cellRegistration,
@@ -103,7 +103,7 @@ final class MyPageView: UIView {
     }
 
     func setCollectionViewDelegate(viewController: UICollectionViewDelegate) {
-        settingCollectionView.delegate = viewController
+        collectionView.delegate = viewController
     }
 
     func setDarkModeSwitch(appearance: Appearance) {
