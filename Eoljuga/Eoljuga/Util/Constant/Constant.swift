@@ -33,7 +33,7 @@ enum Constant {
     enum Cell {
         static let recommendWidth = 300
         static let recommendHeight = 150
-        static let recommendMargin = 15
+        static let recommendMargin = 16
 
         static let normalHeight = 150
         static let normalTopMargin = 5

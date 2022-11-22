@@ -71,6 +71,13 @@ final class HomeView: UIView, ContainCollectionView {
                 heightDimension: .fractionalHeight(1.0)
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            let margin = Constant.Cell.recommendMargin.cgFloat
+            item.contentInsets = NSDirectionalEdgeInsets(
+                top: margin,
+                leading: margin,
+                bottom: margin,
+                trailing: margin
+            )
 
             let groupWidth = self.groupWidth(feedCellType: feedCellType)
             let groupHeight = self.groupHeight(feedCellType: feedCellType)
@@ -83,13 +90,6 @@ final class HomeView: UIView, ContainCollectionView {
                 layoutSize: groupSize,
                 subitem: item,
                 count: columns
-            )
-            let margin = Constant.Cell.recommendMargin.cgFloat
-            group.contentInsets = NSDirectionalEdgeInsets(
-                top: margin,
-                leading: margin,
-                bottom: margin,
-                trailing: margin
             )
 
             let section = NSCollectionLayoutSection(group: group)
@@ -110,8 +110,7 @@ final class HomeView: UIView, ContainCollectionView {
     private func groupWidth(feedCellType: FeedCellType) -> NSCollectionLayoutDimension {
         switch feedCellType {
         case .recommend:
-            let width = Constant.Cell.recommendWidth + Constant.Cell.recommendMargin * 2
-            return NSCollectionLayoutDimension.absolute(width.cgFloat)
+            return NSCollectionLayoutDimension.fractionalWidth(0.85)
         case .normal:
             return NSCollectionLayoutDimension.fractionalWidth(1.0)
         }
@@ -120,8 +119,7 @@ final class HomeView: UIView, ContainCollectionView {
     private func groupHeight(feedCellType: FeedCellType) -> NSCollectionLayoutDimension {
         switch feedCellType {
         case .recommend:
-            let height = Constant.Cell.recommendHeight + Constant.Cell.recommendMargin * 2
-            return NSCollectionLayoutDimension.absolute(height.cgFloat)
+            return NSCollectionLayoutDimension.fractionalWidth(0.5)
         case .normal:
             return NSCollectionLayoutDimension.absolute(Constant.Cell.normalHeight.cgFloat)
         }

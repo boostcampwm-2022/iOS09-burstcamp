@@ -15,7 +15,7 @@ final class RecommendFeedCell: UICollectionViewCell {
         $0.axis = .vertical
         $0.distribution = .equalSpacing
         $0.alignment = .leading
-        $0.spacing = Constant.space6.cgFloat
+        $0.spacing = Constant.space12.cgFloat
     }
 
     private lazy var titleLabel = UILabel().then {
