@@ -5,7 +5,7 @@
 //  Created by 김기훈 on 2022/11/18.
 //
 
-import UIKit
+import Foundation
 
 final class LogInViewModel {
 

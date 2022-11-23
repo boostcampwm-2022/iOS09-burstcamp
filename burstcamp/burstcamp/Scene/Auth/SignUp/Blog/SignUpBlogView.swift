@@ -39,7 +39,7 @@ final class SignUpBlogView: UIView {
 
     private lazy var toolBar: UIToolbar = UIToolbar().then {
         $0.items = [barButtonItem]
-        $0.barTintColor = .white
+        $0.barTintColor = .dynamicWhite
         $0.clipsToBounds = true
         $0.layoutMargins = .init(
             top: CGFloat(Constant.space12),
