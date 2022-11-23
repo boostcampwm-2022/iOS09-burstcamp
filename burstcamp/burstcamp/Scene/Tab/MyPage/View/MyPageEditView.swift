@@ -11,7 +11,7 @@ final class MyPageEditView: UIView {
 
     // MARK: - Properties
 
-    private lazy var profileImageView = DefaultProfileImageView(
+    lazy var profileImageView = DefaultProfileImageView(
         imageSize: Constant.Image.profileLarge
     )
 
@@ -24,7 +24,7 @@ final class MyPageEditView: UIView {
     )?
         .withTintColor(.dynamicWhite, renderingMode: .alwaysOriginal)
 
-    private lazy var cameraButton = UIButton().then {
+    lazy var cameraButton = UIButton().then {
         $0.setImage(cameraIcon, for: .normal)
         $0.backgroundColor = .main
         $0.layer.borderWidth = 1
@@ -50,6 +50,11 @@ final class MyPageEditView: UIView {
         $0.font = .bold14
     }
 
+    private lazy var nickNameStackView = UIStackView(
+        views: [nickNameLabel, nickNameTextField],
+        spacing: Constant.space8
+    )
+
     private let blogLinkChangeButton = DefaultButton(
         title: "변경",
         font: .bold14
@@ -65,6 +70,16 @@ final class MyPageEditView: UIView {
     private let blogTitleImageLabel = DefaultImageLabel(
         icon: nil,
         text: "말차맛 개발공부"
+    )
+
+    private lazy var blogLinkStackView = UIStackView(
+        views: [blogLinkLabel, blogLinkTextField, blogTitleImageLabel],
+        spacing: Constant.space8
+    )
+
+    lazy var editStackView = UIStackView(
+        views: [nickNameStackView, blogLinkStackView, finishEditButton],
+        spacing: Constant.space48
     )
 
     private lazy var finishEditButton = DefaultButton(title: "수정완료")
@@ -107,11 +122,6 @@ final class MyPageEditView: UIView {
             make.height.equalTo(Constant.TextField.camperIDHeight)
         }
 
-        let nickNameStackView = UIStackView(
-            views: [nickNameLabel, nickNameTextField],
-            spacing: Constant.space8
-        )
-
         blogLinkTextField.snp.makeConstraints { make in
             make.height.equalTo(Constant.TextField.camperIDHeight)
         }
@@ -121,15 +131,6 @@ final class MyPageEditView: UIView {
             make.height.equalTo(Constant.Button.blogLinkChangeHeight)
         }
 
-        let blogLinkStackView = UIStackView(
-            views: [blogLinkLabel, blogLinkTextField, blogTitleImageLabel],
-            spacing: Constant.space8
-        )
-
-        let editStackView = UIStackView(
-            views: [nickNameStackView, blogLinkStackView, finishEditButton],
-            spacing: Constant.space48
-        )
         addSubview(editStackView)
         editStackView.snp.makeConstraints { make in
             make.top.equalTo(profileImageView.snp.bottom).offset(Constant.space48)
