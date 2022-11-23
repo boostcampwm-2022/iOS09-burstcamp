@@ -488,7 +488,6 @@
 			children = (
 				B50A27AF29279F5D00DF3E1F /* Footer */,
 				B50A27B129279F5D00DF3E1F /* Main */,
-				B50A27B329279F5D00DF3E1F /* Header */,
 				B50A27B629279F5D00DF3E1F /* NormalFeedCell.swift */,
 			);
 			path = NormalFeedCell;
@@ -508,13 +507,6 @@
 				B50A27B229279F5D00DF3E1F /* NormalFeedCellMain.swift */,
 			);
 			path = Main;
-			sourceTree = "<group>";
-		};
-		B50A27B329279F5D00DF3E1F /* Header */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Header;
 			sourceTree = "<group>";
 		};
 		B50A27B829279F5D00DF3E1F /* ScrapPage */ = {

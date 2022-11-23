@@ -18,7 +18,7 @@ final class RecommendFeedCell: UICollectionViewCell {
         $0.spacing = Constant.space12.cgFloat
     }
 
-    private lazy var titleLabel = DefaultMultilLineLabel().then {
+    private lazy var titleLabel = DefaultMultiLineLabel().then {
         $0.textAlignment = .left
         $0.textColor = UIColor.black
         $0.font = UIFont.extraBold16

@@ -28,7 +28,7 @@ final class FeedDetailViewController: UIViewController {
     }
 
     override func loadView() {
-        self.view = FeedDetailView()
+        view = FeedDetailView()
     }
 
     override func viewDidLoad() {

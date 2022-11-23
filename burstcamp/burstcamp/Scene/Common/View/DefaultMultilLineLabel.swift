@@ -10,7 +10,7 @@ import UIKit
 class DefaultMultiLineLabel: UILabel {
     override var text: String? {
         didSet {
-            self.setLineHeight160()
+            setLineHeight160()
         }
     }
 

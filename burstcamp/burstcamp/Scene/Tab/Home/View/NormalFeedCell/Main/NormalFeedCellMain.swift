@@ -11,7 +11,7 @@ import SnapKit
 
 class NormalFeedCellMain: UIView {
 
-    private lazy var titleLabel = DefaultMultilLineLabel().then {
+    private lazy var titleLabel = DefaultMultiLineLabel().then {
         $0.textAlignment = .left
         $0.textColor = UIColor.black
         $0.font = UIFont.bold14
