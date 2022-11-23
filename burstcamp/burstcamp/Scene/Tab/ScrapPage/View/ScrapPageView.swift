@@ -19,6 +19,7 @@ class ScrapPageView: UIView, ContainCollectionView {
         layout.sectionInset = .zero
         $0.collectionViewLayout = layout
         $0.showsVerticalScrollIndicator = false
+        $0.backgroundColor = .clear
         $0.register(NormalFeedCell.self, forCellWithReuseIdentifier: NormalFeedCell.identifier)
     }
 
@@ -40,6 +41,6 @@ class ScrapPageView: UIView, ContainCollectionView {
     }
 
     private func configureScrapView() {
-        backgroundColor = .white
+        backgroundColor = .background
     }
 }
