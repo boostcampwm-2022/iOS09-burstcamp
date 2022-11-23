@@ -19,14 +19,87 @@ final class burstcampTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-
+    func test_시간포매팅_분전_01() throws {
+        let today = Date()
+        let one_day_before = Date(timeIntervalSinceNow: -86400)
+        let pubDate = one_day_before
+        DateFormatter.time(pubDate: pubDate)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
-        }
+    func test_시간포매팅_분전_02() throws {
+        let today = Date()
+        let one_day_before = Date(timeIntervalSinceNow: -86400)
+        let pubDate = one_day_before
+        DateFormatter.time(pubDate: pubDate)
+    }
+
+    func test_시간포매팅_분전_03() throws {
+        let today = Date()
+        let one_day_before = Date(timeIntervalSinceNow: -86400)
+        let pubDate = one_day_before
+        DateFormatter.time(pubDate: pubDate)
+    }
+    
+    func test_시간포매팅_시간전_01() throws {
+        let today = Date()
+        let one_day_before = Date(timeIntervalSinceNow: -86400)
+        let pubDate = one_day_before
+        DateFormatter.time(pubDate: pubDate)
+    }
+    
+    func test_시간포매팅_시간전_02() throws {
+        let today = Date()
+        let one_day_before = Date(timeIntervalSinceNow: -86400)
+        let pubDate = one_day_before
+        DateFormatter.time(pubDate: pubDate)
+    }
+    
+    func test_시간포매팅_시간전_03() throws {
+        let today = Date()
+        let one_day_before = Date(timeIntervalSinceNow: -86400)
+        let pubDate = one_day_before
+        DateFormatter.time(pubDate: pubDate)
+    }
+    
+    func test_시간포매팅_일전_01() throws {
+        let today = Date()
+        let one_day_before = Date(timeIntervalSinceNow: -86400)
+        let pubDate = one_day_before
+        DateFormatter.time(pubDate: pubDate)
+    }
+    
+    func test_시간포매팅_일전_02() throws {
+        let today = Date()
+        let one_day_before = Date(timeIntervalSinceNow: -86400)
+        let pubDate = one_day_before
+        DateFormatter.time(pubDate: pubDate)
+    }
+    
+    func test_시간포매팅_일전_03() throws {
+        let today = Date()
+        let one_day_before = Date(timeIntervalSinceNow: -86400)
+        let pubDate = one_day_before
+        DateFormatter.time(pubDate: pubDate)
+    }
+    
+    func test_시간포매팅_특정날짜_01() throws {
+        let today = Date()
+        let one_day_before = Date(timeIntervalSinceNow: -86400)
+        let pubDate = one_day_before
+        DateFormatter.time(pubDate: pubDate)
+    }
+    
+    func test_시간포매팅_특정날짜_02() throws {
+        let today = Date()
+        let one_day_before = Date(timeIntervalSinceNow: -86400)
+        let pubDate = one_day_before
+        DateFormatter.time(pubDate: pubDate)
+    }
+    
+    func test_시간포매팅_특정날짜_03() throws {
+        let today = Date()
+        let one_day_before = Date(timeIntervalSinceNow: -86400)
+        let pubDate = one_day_before
+        DateFormatter.time(pubDate: pubDate)
     }
 }
