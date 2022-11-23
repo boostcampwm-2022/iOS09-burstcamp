@@ -13,12 +13,16 @@ final class URLSessionService {
     static func makeRequest(
         url: URL,
         httpMethod: HttpMethod,
-        httpBody: Data? = nil
+        httpBody: Data? = nil,
+        httpHeaders: [(key: String, value: String)]
     ) -> URLRequest {
         var request = URLRequest(url: url)
-        request.addValue("text/plain", forHTTPHeaderField: "Content-Type")
+        httpHeaders.forEach { httpHeader in
+            request.addValue(httpHeader.value, forHTTPHeaderField: httpHeader.key)
+        }
         request.httpMethod = httpMethod.rawValue
         request.httpBody = httpBody
+
         return request
     }
 
