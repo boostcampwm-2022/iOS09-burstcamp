@@ -63,7 +63,7 @@ final class MyPageEditView: UIView {
     }
 
     private let blogTitleImageLabel = DefaultImageLabel(
-        icon: UIImage(systemName: "book.fill"),
+        icon: nil,
         text: "말차맛 개발공부"
     )
 
@@ -89,16 +89,14 @@ final class MyPageEditView: UIView {
         profileImageView.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(Constant.space32)
             make.centerX.equalToSuperview()
-            make.width.equalTo(profileImageView.imageSize)
-            make.height.equalTo(profileImageView.imageSize)
+            make.width.height.equalTo(profileImageView.imageSize)
         }
 
         addSubview(cameraButton)
         cameraButton.snp.makeConstraints { make in
-            make.width.equalTo(Constant.Button.camera)
-            make.height.equalTo(Constant.Button.camera)
             make.trailing.equalTo(profileImageView.snp.trailing)
             make.bottom.equalTo(profileImageView.snp.bottom)
+            make.width.height.equalTo(Constant.Button.camera)
         }
 
         finishEditButton.snp.makeConstraints { make in
@@ -109,7 +107,7 @@ final class MyPageEditView: UIView {
             make.height.equalTo(Constant.TextField.camperIDHeight)
         }
 
-        let nickNameStackView = stackView(
+        let nickNameStackView = UIStackView(
             views: [nickNameLabel, nickNameTextField],
             spacing: Constant.space8
         )
@@ -123,12 +121,12 @@ final class MyPageEditView: UIView {
             make.height.equalTo(Constant.Button.blogLinkChangeHeight)
         }
 
-        let blogLinkStackView = stackView(
+        let blogLinkStackView = UIStackView(
             views: [blogLinkLabel, blogLinkTextField, blogTitleImageLabel],
             spacing: Constant.space8
         )
 
-        let editStackView = stackView(
+        let editStackView = UIStackView(
             views: [nickNameStackView, blogLinkStackView, finishEditButton],
             spacing: Constant.space48
         )
@@ -136,21 +134,6 @@ final class MyPageEditView: UIView {
         editStackView.snp.makeConstraints { make in
             make.top.equalTo(profileImageView.snp.bottom).offset(Constant.space48)
             make.horizontalEdges.equalToSuperview().inset(Constant.space16)
-        }
-    }
-
-    private func stackView(
-        views: [UIView],
-        axis: NSLayoutConstraint.Axis = .vertical,
-        distribution: UIStackView.Distribution = .equalSpacing,
-        alignment: UIStackView.Alignment = .fill,
-        spacing: Int
-    ) -> UIStackView {
-        return UIStackView(arrangedSubviews: views).then {
-            $0.axis = axis
-            $0.distribution = distribution
-            $0.alignment = alignment
-            $0.spacing = spacing.cgFloat
         }
     }
 }

@@ -32,16 +32,16 @@ final class DefaultImageLabel: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func attributeString(
-        icon: UIImage?,
-        text: String
-    ) -> NSAttributedString {
-        let imageAttributeString = imageAttributeString(icon: icon)
-        let textAttributeString = textAttributeString(text: text)
-
+    private func attributeString(icon: UIImage?, text: String) -> NSAttributedString {
         let attributeString = NSMutableAttributedString()
-        attributeString.append(imageAttributeString)
-        attributeString.append(NSAttributedString(string: " "))
+
+        if let icon = icon {
+            let imageAttributeString = imageAttributeString(icon: icon)
+            attributeString.append(imageAttributeString)
+            attributeString.append(NSAttributedString(string: " "))
+        }
+
+        let textAttributeString = textAttributeString(text: text)
         attributeString.append(textAttributeString)
         return attributeString
     }

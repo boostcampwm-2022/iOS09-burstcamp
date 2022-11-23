@@ -82,6 +82,7 @@
 		D84452F4292CCA92008E811B /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452F3292CCA92008E811B /* SettingCell.swift */; };
 		D84452F6292CF4BC008E811B /* DefaultImageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452F5292CF4BC008E811B /* DefaultImageLabel.swift */; };
 		D84452F8292CF4E0008E811B /* DefaultTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452F7292CF4E0008E811B /* DefaultTextField.swift */; };
+		D84452FC292DB7DE008E811B /* CellIndexPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452FB292DB7DE008E811B /* CellIndexPath.swift */; };
 		D8494D462927C97E008157F1 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D452927C97E008157F1 /* MyPageView.swift */; };
 		D8494D482927C9E8008157F1 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D472927C9E8008157F1 /* MyPageViewModel.swift */; };
 		D8494D4A2927CBD4008157F1 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D492927CBD4008157F1 /* DefaultButton.swift */; };
@@ -180,6 +181,7 @@
 		D84452F3292CCA92008E811B /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		D84452F5292CF4BC008E811B /* DefaultImageLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImageLabel.swift; sourceTree = "<group>"; };
 		D84452F7292CF4E0008E811B /* DefaultTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTextField.swift; sourceTree = "<group>"; };
+		D84452FB292DB7DE008E811B /* CellIndexPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellIndexPath.swift; sourceTree = "<group>"; };
 		D8494D452927C97E008157F1 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		D8494D472927C9E8008157F1 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		D8494D492927CBD4008157F1 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
@@ -595,6 +597,7 @@
 				D88295EC292A43E2005B4273 /* UserDTO.swift */,
 				D8494D4D2927CE64008157F1 /* Domain.swift */,
 				D8C38673292B8D82005A2563 /* Appearance.swift */,
+				D84452FB292DB7DE008E811B /* CellIndexPath.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -821,6 +824,7 @@
 				14927E1E2929C71C001F2E97 /* RecommendFeedUserView.swift in Sources */,
 				D88295EF292A43EB005B4273 /* NetworkError.swift in Sources */,
 				D84452F0292CA57D008E811B /* MyPageEditViewController.swift in Sources */,
+				D84452FC292DB7DE008E811B /* CellIndexPath.swift in Sources */,
 				D88295EB292A43CD005B4273 /* FireStoreConfiguration.swift in Sources */,
 				D84452E7292C9A54008E811B /* TabBarCoordinatorEvent.swift in Sources */,
 				B50A27E429279F5D00DF3E1F /* APIKey.swift in Sources */,

@@ -10,4 +10,11 @@ import Foundation
 enum SettingSection: CaseIterable {
     case setting
     case appInfo
+
+    var index: Int {
+        switch self {
+        case .setting: return 0
+        case .appInfo: return 1
+        }
+    }
 }

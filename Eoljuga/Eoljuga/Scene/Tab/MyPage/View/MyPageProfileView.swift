@@ -61,11 +61,9 @@ final class MyPageProfileView: UIView {
     }
 
     private func profileInfoStackView(views: [UIView]) -> UIStackView {
-        return UIStackView(arrangedSubviews: views).then {
-            $0.axis = .vertical
-            $0.distribution = .equalSpacing
-            $0.alignment = .fill
-            $0.spacing = Constant.space6.cgFloat
-        }
+        return UIStackView(
+            views: views,
+            spacing: Constant.space6
+        )
     }
 }
