@@ -50,7 +50,7 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
     private func configureTabBarController(with tabControllers: [UIViewController]) {
         tabBarController.setViewControllers(tabControllers, animated: true)
         tabBarController.selectedIndex = TabBarPage.home.index
-        tabBarController.tabBar.barTintColor = .background
+        tabBarController.tabBar.backgroundColor = .background
         tabBarController.tabBar.tintColor = .main
         tabBarController.tabBar.isTranslucent = false
         navigationController.viewControllers = [tabBarController]

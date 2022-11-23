@@ -48,7 +48,7 @@ final class HomeViewController: UIViewController {
     private func configureUI() {}
 
     private func configureNavigationBar() {
-        navigationController?.navigationBar.topItem?.title = "Hello, 얼죽아"
+        navigationController?.navigationBar.topItem?.title = "홈"
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(scrollToTop))
         navigationController?.navigationBar.addGestureRecognizer(tapGesture)
     }
