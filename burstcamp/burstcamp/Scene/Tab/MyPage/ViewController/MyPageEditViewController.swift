@@ -28,7 +28,7 @@ final class MyPageEditViewController: UIViewController {
 
     private var viewModel: MyPageEditViewModel
     private var cancelBag = Set<AnyCancellable>()
-    
+
     var coordinatorPublisher = PassthroughSubject<TabBarCoordinatorEvent, Never>()
 
     private lazy var phpickerConfiguration: PHPickerConfiguration = {
@@ -90,20 +90,21 @@ final class MyPageEditViewController: UIViewController {
     }
 }
 
-// MARK: - CoordinatorEvent
-
-extension MyPageEditViewController {
-    
-    private func showPhotoLibraryModal() {
-        coordinatorPublisher.send(.showPhotoLibraryModal)
-    }
-}
-
 // MARK: - PHPickerViewControllerDelegate
 
 extension MyPageEditViewController: PHPickerViewControllerDelegate {
 
-
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        if let itemProvider = results.first?.itemProvider,
+            itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self) { image, error in
+                DispatchQueue.main.async {
+                    self.myPageEditView.profileImageView.image = image as? UIImage
+                }
+            }
+        }
+    }
 }
 
 // MARK: - Keyboard Event
