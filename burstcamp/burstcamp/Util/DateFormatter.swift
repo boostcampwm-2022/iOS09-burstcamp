@@ -9,7 +9,8 @@ import Foundation
 
 struct DateFormatter {
 
-    static func time(pubDate: Date?) {
+    static func time(pubDate: Date?) -> String {
         print(pubDate)
+        return "hello"
     }
 }
