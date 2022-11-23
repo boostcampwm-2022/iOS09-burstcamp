@@ -13,19 +13,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var appCoordinator: AppCoordinator!
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        guard let url = URLContexts.first?.url else { return }
-        guard let code = url.absoluteString.components(separatedBy: "code=").last else { return }
+        guard let url = URLContexts.first?.url,
+              let code = url.absoluteString.components(separatedBy: "code=").last
+        else {
+            return
+        }
 
-        let token = LogInManager.shared.requestGithubAccessToken(code: code)
-        //TODO: token으로 부캠 기관인증
-
-        //TODO: 이미 회원이면
-        //appCoordinator.showTabBarFlow()
-
-        //TODO: 회원 가입해야하면
-        guard let coordinator = appCoordinator.childCoordinators.last as? AuthCoordinator else { return }
-
-        coordinator.moveToDomainScreen()
+        LogInManager.shared.requestGithubAccessToken(code: code)
     }
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
