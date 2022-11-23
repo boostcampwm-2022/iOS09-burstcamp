@@ -76,6 +76,7 @@
 		B5DAD679292E4C6800C4A126 /* FeedDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD674292E4C6800C4A126 /* FeedDetailViewModel.swift */; };
 		B5DAD67A292E4C6800C4A126 /* FeedDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD676292E4C6800C4A126 /* FeedDetailView.swift */; };
 		B5DAD67B292E4C6800C4A126 /* FeedDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD678292E4C6800C4A126 /* FeedDetailViewController.swift */; };
+		B5DAD681292E58BF00C4A126 /* DefaultMultilLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD680292E58BF00C4A126 /* DefaultMultilLineLabel.swift */; };
 		D84452E7292C9A54008E811B /* TabBarCoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452E6292C9A54008E811B /* TabBarCoordinatorEvent.swift */; };
 		D84452EC292CA55F008E811B /* MyPageEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452EB292CA55F008E811B /* MyPageEditView.swift */; };
 		D84452EE292CA569008E811B /* MyPageEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452ED292CA569008E811B /* MyPageEditViewModel.swift */; };
@@ -177,6 +178,7 @@
 		B5DAD674292E4C6800C4A126 /* FeedDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailViewModel.swift; sourceTree = "<group>"; };
 		B5DAD676292E4C6800C4A126 /* FeedDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailView.swift; sourceTree = "<group>"; };
 		B5DAD678292E4C6800C4A126 /* FeedDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailViewController.swift; sourceTree = "<group>"; };
+		B5DAD680292E58BF00C4A126 /* DefaultMultilLineLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMultilLineLabel.swift; sourceTree = "<group>"; };
 		D84452E6292C9A54008E811B /* TabBarCoordinatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinatorEvent.swift; sourceTree = "<group>"; };
 		D84452EB292CA55F008E811B /* MyPageEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditView.swift; sourceTree = "<group>"; };
 		D84452ED292CA569008E811B /* MyPageEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewModel.swift; sourceTree = "<group>"; };
@@ -624,6 +626,7 @@
 				D84452F5292CF4BC008E811B /* DefaultImageLabel.swift */,
 				D84452F7292CF4E0008E811B /* DefaultTextField.swift */,
 				B50A27B429279F5D00DF3E1F /* DefaultUserInfoView.swift */,
+				B5DAD680292E58BF00C4A126 /* DefaultMultilLineLabel.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -848,6 +851,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B061FE5292A1F1E00BFA71D /* SignUpBlogViewController.swift in Sources */,
+				B5DAD681292E58BF00C4A126 /* DefaultMultilLineLabel.swift in Sources */,
 				B50A27DC29279F5D00DF3E1F /* Fonts+Generated.swift in Sources */,
 				14927E222929CF37001F2E97 /* UI+ReusableView.swift in Sources */,
 				3B061FDD2928E8E300BFA71D /* SignUpCamperIDViewController.swift in Sources */,

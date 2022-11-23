@@ -21,7 +21,7 @@ final class FeedDetailView: UIView {
         $0.spacing = 5
     }
 
-    private lazy var titleLabel = UILabel().then {
+    private lazy var titleLabel = DefaultMultilLineLabel().then {
         $0.font = .extraBold16
         $0.textColor = .dynamicBlack
         $0.numberOfLines = 3
