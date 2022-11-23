@@ -10,7 +10,7 @@ import UIKit
 final class RecommendFeedHeader: UICollectionReusableView {
 
     private lazy var titleLabel = UILabel().then {
-        $0.textColor = .black
+        $0.textColor = .dynamicBlack
         $0.font = .extraBold24
         $0.text = "이번 주의\n새로운 글들이에요"
         $0.numberOfLines = 2

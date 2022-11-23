@@ -57,7 +57,7 @@ final class HomeView: UIView, ContainCollectionView {
     }
 
     private func configureHomeView() {
-        backgroundColor = .white
+        backgroundColor = .background
     }
 
     private func createLayout() -> UICollectionViewLayout {

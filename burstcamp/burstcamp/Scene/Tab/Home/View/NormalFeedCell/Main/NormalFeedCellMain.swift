@@ -13,7 +13,7 @@ class NormalFeedCellMain: UIView {
 
     private lazy var titleLabel = UILabel().then {
         $0.textAlignment = .left
-        $0.textColor = UIColor.black
+        $0.textColor = UIColor.dynamicBlack
         $0.font = UIFont.bold14
         $0.text = """
         [Swift 5.7+][Concurrency] AsyncStream, AsyncThrowingStream 알아보기 - Continuation vs unfoldin
