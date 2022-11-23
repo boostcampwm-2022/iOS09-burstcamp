@@ -13,8 +13,7 @@ import Then
 
 final class FeedDetailView: UIView {
 
-    // TODO: DefaultBadgeView로 변경 #85
-    private lazy var userInfoStackView = NormalFeedCellBadgeStackView()
+    private lazy var userInfoStackView = DefaultUserInfoView()
 
     private lazy var feedInfoStackView = UIStackView().then {
         $0.addArrangedSubViews([titleLabel, blogTitleLabel, pubDateLabel])

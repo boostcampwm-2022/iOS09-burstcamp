@@ -1,5 +1,5 @@
 //
-//  DefaultFeedCellHeader.swift
+//  DefaultUserInfoView.swift
 //  Eoljuga
 //
 //  Created by youtak on 2022/11/17.
@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class NormalFeedCellHeader: UIStackView {
+class DefaultUserInfoView: UIStackView {
 
     private lazy var profileImageView = UIImageView().then {
         $0.clipsToBounds = true
@@ -24,7 +24,7 @@ class NormalFeedCellHeader: UIStackView {
         $0.text = "하늘이"
     }
 
-    private lazy var badgeStackView = NormalFeedCellBadgeStackView()
+    private lazy var badgeStackView = DefaultBadgeView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
