@@ -135,4 +135,11 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
         return UICollectionReusableView()
     }
+
+    // FeedDetail Test용
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let viewModel = FeedDetailViewModel()
+        let viewController = FeedDetailViewController(viewModel: viewModel)
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }

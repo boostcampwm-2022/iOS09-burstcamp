@@ -74,6 +74,9 @@
 		B5BA27832927AEC600BDCE08 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = B5BA27822927AEC600BDCE08 /* FirebaseMessaging */; };
 		B5BA27852927AEC600BDCE08 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = B5BA27842927AEC600BDCE08 /* FirebaseStorage */; };
 		B5BA27872927AEF600BDCE08 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5BA27862927AEF600BDCE08 /* GoogleService-Info.plist */; };
+		B5DAD679292E4C6800C4A126 /* FeedDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD674292E4C6800C4A126 /* FeedDetailViewModel.swift */; };
+		B5DAD67A292E4C6800C4A126 /* FeedDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD676292E4C6800C4A126 /* FeedDetailView.swift */; };
+		B5DAD67B292E4C6800C4A126 /* FeedDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD678292E4C6800C4A126 /* FeedDetailViewController.swift */; };
 		D84452E7292C9A54008E811B /* TabBarCoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452E6292C9A54008E811B /* TabBarCoordinatorEvent.swift */; };
 		D84452EC292CA55F008E811B /* MyPageEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452EB292CA55F008E811B /* MyPageEditView.swift */; };
 		D84452EE292CA569008E811B /* MyPageEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452ED292CA569008E811B /* MyPageEditViewModel.swift */; };
@@ -173,6 +176,9 @@
 		B52A7F1A2927A4E300E271D2 /* .swiftlint.auto.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.auto.yml; sourceTree = "<group>"; };
 		B52A7F232927A68F00E271D2 /* Service-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Service-Info.plist"; sourceTree = "<group>"; };
 		B5BA27862927AEF600BDCE08 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B5DAD674292E4C6800C4A126 /* FeedDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailViewModel.swift; sourceTree = "<group>"; };
+		B5DAD676292E4C6800C4A126 /* FeedDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailView.swift; sourceTree = "<group>"; };
+		B5DAD678292E4C6800C4A126 /* FeedDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailViewController.swift; sourceTree = "<group>"; };
 		D84452E6292C9A54008E811B /* TabBarCoordinatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinatorEvent.swift; sourceTree = "<group>"; };
 		D84452EB292CA55F008E811B /* MyPageEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditView.swift; sourceTree = "<group>"; };
 		D84452ED292CA569008E811B /* MyPageEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewModel.swift; sourceTree = "<group>"; };
@@ -459,6 +465,7 @@
 		B50A27AA29279F5D00DF3E1F /* Tab */ = {
 			isa = PBXGroup;
 			children = (
+				B5DAD672292E4C6800C4A126 /* Detail */,
 				B50A27AB29279F5D00DF3E1F /* Home */,
 				B50A27B829279F5D00DF3E1F /* ScrapPage */,
 				B50A27BA29279F5D00DF3E1F /* MyPage */,
@@ -469,8 +476,8 @@
 		B50A27AB29279F5D00DF3E1F /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				143185EF292B4D35008CE459 /* ViewController */,
 				143185F0292B4D3D008CE459 /* View */,
+				143185EF292B4D35008CE459 /* ViewController */,
 				143185F1292B4D43008CE459 /* ViewModel */,
 			);
 			path = Home;
@@ -629,6 +636,40 @@
 			children = (
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B5DAD672292E4C6800C4A126 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				B5DAD673292E4C6800C4A126 /* ViewModel */,
+				B5DAD675292E4C6800C4A126 /* View */,
+				B5DAD677292E4C6800C4A126 /* ViewController */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		B5DAD673292E4C6800C4A126 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B5DAD674292E4C6800C4A126 /* FeedDetailViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B5DAD675292E4C6800C4A126 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B5DAD676292E4C6800C4A126 /* FeedDetailView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B5DAD677292E4C6800C4A126 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B5DAD678292E4C6800C4A126 /* FeedDetailViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		D8494D572927E8FB008157F1 /* View */ = {
@@ -837,6 +878,7 @@
 				B50A27F729279F5D00DF3E1F /* TabBarCoordinator.swift in Sources */,
 				D88295F6292A4428005B4273 /* FireStoreValues.swift in Sources */,
 				143185EA292B4A8D008CE459 /* ScrapPageViewController.swift in Sources */,
+				B5DAD67A292E4C6800C4A126 /* FeedDetailView.swift in Sources */,
 				D8829600292A44B9005B4273 /* FireStoreService.swift in Sources */,
 				1459C3BA292910B300FA885D /* RecommendFeedCell.swift in Sources */,
 				B50A27E529279F5D00DF3E1F /* LogInView.swift in Sources */,
@@ -851,6 +893,7 @@
 				143185EC292B4AB8008CE459 /* ScrapPageViewModel.swift in Sources */,
 				B50A27E929279F5D00DF3E1F /* NormalFeedCellFooter.swift in Sources */,
 				143185F8292B5C88008CE459 /* ContainCollectionView.swift in Sources */,
+				B5DAD67B292E4C6800C4A126 /* FeedDetailViewController.swift in Sources */,
 				D8C38678292BAE6B005A2563 /* UIControl+Combine.swift in Sources */,
 				D84452EC292CA55F008E811B /* MyPageEditView.swift in Sources */,
 				D8494D522927D086008157F1 /* MyPageProfileView.swift in Sources */,
@@ -880,6 +923,7 @@
 				B50A27DA29279F5D00DF3E1F /* ReusableView.swift in Sources */,
 				D8494D4C2927CD6C008157F1 /* DefaultProfileImageView.swift in Sources */,
 				B50A27D629279F5D00DF3E1F /* UIView+addSubViews.swift in Sources */,
+				B5DAD679292E4C6800C4A126 /* FeedDetailViewModel.swift in Sources */,
 				B50A27E329279F5D00DF3E1F /* LogInViewModel.swift in Sources */,
 				B50A27F029279F5D00DF3E1F /* MyPageViewController.swift in Sources */,
 				B50A27EC29279F5D00DF3E1F /* NormalFeedCellBadgeStackView.swift in Sources */,
