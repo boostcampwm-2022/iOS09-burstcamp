@@ -45,4 +45,49 @@ enum SettingCell: CaseIterable {
         default: return nil
         }
     }
+
+    var index: Int {
+        switch self {
+        case .settingHeader: return 0
+        case .notification: return 1
+        case .darkMode: return 2
+        case .withDrawal: return 3
+        case .appInfoHeader: return 0
+        case .openSource: return 1
+        case .appVersion: return 2
+        }
+    }
+
+    var cellIndexPath: CellIndexPath {
+        switch self {
+        case .settingHeader:
+            return CellIndexPath(
+                indexPath: (SettingSection.setting.index, self.index)
+            )
+        case .notification:
+            return CellIndexPath(
+                indexPath: (SettingSection.setting.index, self.index)
+            )
+        case .darkMode:
+            return CellIndexPath(
+                indexPath: (SettingSection.setting.index, self.index)
+            )
+        case .withDrawal:
+            return CellIndexPath(
+                indexPath: (SettingSection.setting.index, self.index)
+            )
+        case .appInfoHeader:
+            return CellIndexPath(
+                indexPath: (SettingSection.appInfo.index, self.index)
+            )
+        case .openSource:
+            return CellIndexPath(
+                indexPath: (SettingSection.appInfo.index, self.index)
+            )
+        case .appVersion:
+            return CellIndexPath(
+                indexPath: (SettingSection.appInfo.index, self.index)
+            )
+        }
+    }
 }

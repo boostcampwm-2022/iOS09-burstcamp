@@ -25,6 +25,7 @@ enum Constant {
     static let space288 = 288
     static let space326 = 326
 
+    static let spaceMinus2 = -2
     static let spaceMinus72 = -72
     static let spaceMinus110 = -110
 
@@ -64,6 +65,9 @@ enum Constant {
         static let defaultButton = 48
         static let domainWidth = 120
         static let domainHeight = 60
+        static let camera = 24
+        static let blogLinkChangeWidth = 50
+        static let blogLinkChangeHeight = 30
     }
 
     enum CornerRadius {
@@ -77,5 +81,9 @@ enum Constant {
 
     enum ToolBar {
         static let height = 72
+    }
+
+    enum Icon {
+        static let camera = 10
     }
 }

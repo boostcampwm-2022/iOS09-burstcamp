@@ -109,11 +109,13 @@ extension MyPageViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
+        let cellIndexPath = CellIndexPath(indexPath: (indexPath.section, indexPath.row))
         // TODO: 기능 추가
-        switch (indexPath.section, indexPath.row) {
-        case (0, 3): // TODO: 탈퇴 alert
+        switch cellIndexPath {
+        case SettingCell.withDrawal.cellIndexPath:
+            // TODO: 탈퇴 alert
             moveToAuthFlow()
-        case (1, 1):
+        case SettingCell.openSource.cellIndexPath:
             moveToOpenSourceScreen()
         default: break
         }

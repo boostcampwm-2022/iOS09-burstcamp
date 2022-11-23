@@ -84,15 +84,7 @@ final class OpenSourceLicenseView: UIView {
         }
     }
 
-    private func openSourceStackView(
-        nameLabel: UILabel,
-        linkButton: UIButton
-    ) -> UIStackView {
-        return UIStackView(arrangedSubviews: [nameLabel, linkButton]).then {
-            $0.axis = .vertical
-            $0.distribution = .equalSpacing
-            $0.alignment = .fill
-            $0.spacing = Constant.space8.cgFloat
-        }
+    private func openSourceStackView(nameLabel: UILabel, linkButton: UIButton) -> UIStackView {
+        return UIStackView(views: [nameLabel, linkButton], spacing: Constant.space8)
     }
 }
