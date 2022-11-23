@@ -20,6 +20,8 @@ opt_in_rules:
 excluded:
   - ${TARGETNAME}/App
   - ${TARGETNAME}/Resource
+  - ${TARGETNAME}Tests/
+  - ${TARGETNAME}UITests/
 
 line_length: 100
 
