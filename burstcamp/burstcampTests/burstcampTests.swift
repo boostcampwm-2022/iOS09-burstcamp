@@ -19,26 +19,20 @@ final class burstcampTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func test_시간포매팅_방금전_01() throws {
-        let today = Date()
-        let one_day_before = Date(timeIntervalSinceNow: -86400)
-        let pubDate = one_day_before
+    func test_시간포매팅_1초() throws {
+        let pubDate = Date(timeIntervalSinceNow: -1)
         let result = DateFormatter.time(pubDate: pubDate)
         XCTAssertEqual(result, "방금 전")
     }
 
-    func test_시간포매팅_방금전_02() throws {
-        let today = Date()
-        let one_day_before = Date(timeIntervalSinceNow: -86400)
-        let pubDate = one_day_before
+    func test_시간포매팅_30초() throws {
+        let pubDate = Date(timeIntervalSinceNow: -30)
         let result = DateFormatter.time(pubDate: pubDate)
         XCTAssertEqual(result, "방금 전")
     }
 
-    func test_시간포매팅_방금전_03() throws {
-        let today = Date()
-        let one_day_before = Date(timeIntervalSinceNow: -86400)
-        let pubDate = one_day_before
+    func test_시간포매팅_40초() throws {
+        let pubDate = Date(timeIntervalSinceNow: -40)
         let result = DateFormatter.time(pubDate: pubDate)
         XCTAssertEqual(result, "방금 전")
     }
