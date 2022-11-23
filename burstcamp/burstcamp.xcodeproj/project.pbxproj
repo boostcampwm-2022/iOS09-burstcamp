@@ -130,7 +130,7 @@
 		3B061FE1292926DA00BFA71D /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		3B061FE4292A1F1E00BFA71D /* SignUpBlogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBlogViewController.swift; sourceTree = "<group>"; };
 		3B061FE6292A1F9600BFA71D /* SignUpBlogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBlogView.swift; sourceTree = "<group>"; };
-		B50A277129279F2600DF3E1F /* Eoljuga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eoljuga.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B50A277129279F2600DF3E1F /* burstcamp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = burstcamp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B50A278B29279F5D00DF3E1F /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		B50A278C29279F5D00DF3E1F /* TypeConversion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeConversion.swift; sourceTree = "<group>"; };
 		B50A278D29279F5D00DF3E1F /* UILabel+LineHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+LineHeight.swift"; sourceTree = "<group>"; };
@@ -334,7 +334,7 @@
 				B52A7F172927A4DD00E271D2 /* swiftgen.yml */,
 				B52A7F232927A68F00E271D2 /* Service-Info.plist */,
 				B5BA27862927AEF600BDCE08 /* GoogleService-Info.plist */,
-				B50A277329279F2600DF3E1F /* Eoljuga */,
+				B50A277329279F2600DF3E1F /* burstcamp */,
 				B50A277229279F2600DF3E1F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -342,12 +342,12 @@
 		B50A277229279F2600DF3E1F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B50A277129279F2600DF3E1F /* Eoljuga.app */,
+				B50A277129279F2600DF3E1F /* burstcamp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B50A277329279F2600DF3E1F /* Eoljuga */ = {
+		B50A277329279F2600DF3E1F /* burstcamp */ = {
 			isa = PBXGroup;
 			children = (
 				B50A27BC29279F5D00DF3E1F /* App */,
@@ -358,7 +358,7 @@
 				B50A279829279F5D00DF3E1F /* Resource */,
 				B50A278829279F5D00DF3E1F /* Util */,
 			);
-			path = Eoljuga;
+			path = burstcamp;
 			sourceTree = "<group>";
 		};
 		B50A278829279F5D00DF3E1F /* Util */ = {
@@ -676,9 +676,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B50A277029279F2600DF3E1F /* Eoljuga */ = {
+		B50A277029279F2600DF3E1F /* burstcamp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B50A278529279F2700DF3E1F /* Build configuration list for PBXNativeTarget "Eoljuga" */;
+			buildConfigurationList = B50A278529279F2700DF3E1F /* Build configuration list for PBXNativeTarget "burstcamp" */;
 			buildPhases = (
 				B50A28042927A24E00DF3E1F /* SwiftGen */,
 				B50A276D29279F2600DF3E1F /* Sources */,
@@ -690,7 +690,7 @@
 			);
 			dependencies = (
 			);
-			name = Eoljuga;
+			name = burstcamp;
 			packageProductDependencies = (
 				B52A7F262927A88F00E271D2 /* Then */,
 				B52A7F292927A89C00E271D2 /* SnapKit */,
@@ -701,7 +701,7 @@
 				B5BA27842927AEC600BDCE08 /* FirebaseStorage */,
 			);
 			productName = Eoljuga;
-			productReference = B50A277129279F2600DF3E1F /* Eoljuga.app */;
+			productReference = B50A277129279F2600DF3E1F /* burstcamp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -719,7 +719,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B50A276C29279F2600DF3E1F /* Build configuration list for PBXProject "Eoljuga" */;
+			buildConfigurationList = B50A276C29279F2600DF3E1F /* Build configuration list for PBXProject "burstcamp" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -737,7 +737,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B50A277029279F2600DF3E1F /* Eoljuga */,
+				B50A277029279F2600DF3E1F /* burstcamp */,
 			);
 		};
 /* End PBXProject section */
@@ -1031,7 +1031,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Eoljuga/App/Info.plist;
+				INFOPLIST_FILE = burstcamp/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1042,7 +1042,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.booscamp.Eoljuga;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codershigh.boostcamp.burstcamp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1061,7 +1061,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Eoljuga/App/Info.plist;
+				INFOPLIST_FILE = burstcamp/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1072,7 +1072,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.booscamp.Eoljuga;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codershigh.boostcamp.burstcamp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1086,7 +1086,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B50A276C29279F2600DF3E1F /* Build configuration list for PBXProject "Eoljuga" */ = {
+		B50A276C29279F2600DF3E1F /* Build configuration list for PBXProject "burstcamp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B50A278329279F2700DF3E1F /* Debug */,
@@ -1095,7 +1095,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B50A278529279F2700DF3E1F /* Build configuration list for PBXNativeTarget "Eoljuga" */ = {
+		B50A278529279F2700DF3E1F /* Build configuration list for PBXNativeTarget "burstcamp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B50A278629279F2700DF3E1F /* Debug */,
