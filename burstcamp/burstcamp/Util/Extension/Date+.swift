@@ -7,9 +7,6 @@
 
 import Foundation
 
-struct DateFormatter {
-}
-
 extension Date {
     static func relativeTime(pubDate: Date) -> String {
         let now = Date()
