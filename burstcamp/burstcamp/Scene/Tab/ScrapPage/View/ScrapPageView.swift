@@ -26,6 +26,7 @@ class ScrapPageView: UIView, ContainCollectionView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
+        configureRefreshControl()
     }
 
     required init?(coder: NSCoder) {

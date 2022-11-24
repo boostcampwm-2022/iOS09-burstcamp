@@ -5,6 +5,7 @@
 //  Created by youtak on 2022/11/21.
 //
 
+import Combine
 import UIKit
 
 final class ScrapPageViewController: UIViewController {
@@ -18,6 +19,7 @@ final class ScrapPageViewController: UIViewController {
         return view
     }
 
+    private var cancelBag = Set<AnyCancellable>()
     private var viewModel: ScrapPageViewModel
 
     // MARK: - Initializer
@@ -53,6 +55,12 @@ final class ScrapPageViewController: UIViewController {
     }
 
     private func bind() {
+        scrapPageView.collectionView.refreshControl?.isRefreshPublisher
+            .sink { _ in
+                //TODO: - 네트워크 업데이트 이후 순차적으로 실행
+                self.scrapPageView.endCollectionViewRefreshing()
+            }
+            .store(in: &cancelBag)
     }
 
     private func collectionViewDelegate() {

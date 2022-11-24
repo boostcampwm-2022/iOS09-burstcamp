@@ -5,6 +5,7 @@
 //  Created by youtak on 2022/11/15.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -20,6 +21,7 @@ final class HomeViewController: UIViewController {
     }
 
     private var viewModel: HomeViewModel
+    private var cancelBag = Set<AnyCancellable>()
 
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
@@ -38,6 +40,7 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         collectionViewDelegate()
+        bind()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -60,7 +63,14 @@ final class HomeViewController: UIViewController {
     @objc private func scrollToTop() {
         homeView.collectionViewScrollToTop()
     }
+
     private func bind() {
+        homeView.collectionView.refreshControl?.isRefreshPublisher
+            .sink { _ in
+                //TODO: - 네트워크 업데이트 이후 순차적으로 실행
+                self.homeView.endCollectionViewRefreshing()
+            }
+            .store(in: &cancelBag)
     }
 }
 

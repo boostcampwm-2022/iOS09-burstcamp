@@ -29,4 +29,14 @@ extension ContainCollectionView {
     func collectionViewScrollToTop() {
         collectionView.setContentOffset(.zero, animated: true)
     }
+
+    func configureRefreshControl() {
+        collectionView.refreshControl = UIRefreshControl()
+    }
+
+    func endCollectionViewRefreshing() {
+        DispatchQueue.main.async {
+            self.collectionView.refreshControl?.endRefreshing()
+        }
+    }
 }
