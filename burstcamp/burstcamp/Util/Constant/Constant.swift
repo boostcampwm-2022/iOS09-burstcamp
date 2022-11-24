@@ -21,6 +21,7 @@ enum Constant {
     static let space24 = 24
     static let space32 = 32
     static let space48 = 48
+    static let space100 = 100
     static let space176 = 176
     static let space288 = 288
     static let space326 = 326
