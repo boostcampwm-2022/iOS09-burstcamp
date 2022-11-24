@@ -33,7 +33,7 @@ final class LogInView: UIView {
     lazy var githubLogInButton: UIButton = UIButton().then {
         $0.setTitle("Github으로 로그인", for: .normal)
         $0.titleLabel?.font = UIFont.extraBold14
-        $0.backgroundColor = .black
+        $0.backgroundColor = .dynamicBlack
         $0.layer.cornerRadius = CGFloat(Constant.CornerRadius.radius8)
     }
 
