@@ -43,7 +43,8 @@ final class burstcampTests: XCTestCase {
     }
 
     func test_시간포매팅_분전_02() throws {
-        let pubDate = Date(timeIntervalSinceNow: -86400)
+        let minute_32 = TimeInterval.interval(days: 0, hours: 0, minute: 32)
+        let pubDate = Date(timeIntervalSinceNow: -minute_32)
         let result = Date.relativeTime(pubDate: pubDate)
         XCTAssertEqual(result, "32분 전")
     }
