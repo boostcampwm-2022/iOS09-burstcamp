@@ -66,11 +66,10 @@ final class HomeViewController: UIViewController {
 
     private func bind() {
         homeView.collectionView.refreshControl?.isRefreshPublisher
-            .sink(receiveValue: { _ in
-
+            .sink { _ in
                 //TODO: - 네트워크 업데이트 이후 순차적으로 실행
                 self.homeView.endCollectionViewRefreshing()
-            })
+            }
             .store(in: &cancelBag)
     }
 }

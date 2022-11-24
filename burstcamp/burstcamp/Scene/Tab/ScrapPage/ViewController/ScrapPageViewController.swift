@@ -56,11 +56,10 @@ final class ScrapPageViewController: UIViewController {
 
     private func bind() {
         scrapPageView.collectionView.refreshControl?.isRefreshPublisher
-            .sink(receiveValue: { _ in
-
+            .sink { _ in
                 //TODO: - 네트워크 업데이트 이후 순차적으로 실행
                 self.scrapPageView.endCollectionViewRefreshing()
-            })
+            }
             .store(in: &cancelBag)
     }
 
