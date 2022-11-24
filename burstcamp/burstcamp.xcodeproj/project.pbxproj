@@ -7,12 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1422C62D292EF51500337710 /* TimeInterval+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1422C62C292EF51500337710 /* TimeInterval+.swift */; };
+		1422C62F292F08BC00337710 /* BCDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1422C62E292F08BC00337710 /* BCDateFormatter.swift */; };
 		143185E8292B46F9008CE459 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185E7292B46F9008CE459 /* HomeViewModel.swift */; };
 		143185EA292B4A8D008CE459 /* ScrapPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185E9292B4A8D008CE459 /* ScrapPageViewController.swift */; };
 		143185EC292B4AB8008CE459 /* ScrapPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185EB292B4AB8008CE459 /* ScrapPageViewModel.swift */; };
 		143185EE292B4ABC008CE459 /* ScrapPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185ED292B4ABC008CE459 /* ScrapPageView.swift */; };
 		143185F6292B4F63008CE459 /* UINavigationController+configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185F5292B4F63008CE459 /* UINavigationController+configure.swift */; };
 		143185F8292B5C88008CE459 /* ContainCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185F7292B5C88008CE459 /* ContainCollectionView.swift */; };
+		143D93A6292E484100C67C27 /* burstcampTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143D93A5292E484100C67C27 /* burstcampTests.swift */; };
+		143D93AD292E48C100C67C27 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 143D93AC292E48C100C67C27 /* FirebaseAuth */; };
+		143D93AF292E499200C67C27 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143D93AE292E499200C67C27 /* Date+.swift */; };
+		143D93B1292E4B9500C67C27 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 143D93B0292E4B9500C67C27 /* FirebaseFirestore */; };
 		1458C6952928FB1B00E00B80 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458C6942928FB1B00E00B80 /* HomeView.swift */; };
 		1459C3BA292910B300FA885D /* RecommendFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3B9292910B300FA885D /* RecommendFeedCell.swift */; };
 		1459C3BC2929150200FA885D /* FeedCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3BB2929150200FA885D /* FeedCellType.swift */; };
@@ -113,13 +119,28 @@
 		D8E02D6B292C981C00C1E59B /* AuthCoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E02D6A292C981C00C1E59B /* AuthCoordinatorEvent.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		143D93A7292E484100C67C27 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B50A276929279F2600DF3E1F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B50A277029279F2600DF3E1F;
+			remoteInfo = burstcamp;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		1422C62C292EF51500337710 /* TimeInterval+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+.swift"; sourceTree = "<group>"; };
+		1422C62E292F08BC00337710 /* BCDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCDateFormatter.swift; sourceTree = "<group>"; };
 		143185E7292B46F9008CE459 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		143185E9292B4A8D008CE459 /* ScrapPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageViewController.swift; sourceTree = "<group>"; };
 		143185EB292B4AB8008CE459 /* ScrapPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageViewModel.swift; sourceTree = "<group>"; };
 		143185ED292B4ABC008CE459 /* ScrapPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageView.swift; sourceTree = "<group>"; };
 		143185F5292B4F63008CE459 /* UINavigationController+configure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+configure.swift"; sourceTree = "<group>"; };
 		143185F7292B5C88008CE459 /* ContainCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainCollectionView.swift; sourceTree = "<group>"; };
+		143D93A3292E484100C67C27 /* burstcampTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = burstcampTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		143D93A5292E484100C67C27 /* burstcampTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = burstcampTests.swift; sourceTree = "<group>"; };
+		143D93AE292E499200C67C27 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		1458C6942928FB1B00E00B80 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		1459C3B9292910B300FA885D /* RecommendFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedCell.swift; sourceTree = "<group>"; };
 		1459C3BB2929150200FA885D /* FeedCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellType.swift; sourceTree = "<group>"; };
@@ -216,6 +237,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		143D93A0292E484100C67C27 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				143D93AD292E48C100C67C27 /* FirebaseAuth in Frameworks */,
+				143D93B1292E4B9500C67C27 /* FirebaseFirestore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B50A276E29279F2600DF3E1F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -283,6 +313,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		143D93A4292E484100C67C27 /* burstcampTests */ = {
+			isa = PBXGroup;
+			children = (
+				143D93A5292E484100C67C27 /* burstcampTests.swift */,
+			);
+			path = burstcampTests;
+			sourceTree = "<group>";
+		};
 		1459C3B82929102400FA885D /* RecommendFeedSection */ = {
 			isa = PBXGroup;
 			children = (
@@ -291,6 +329,13 @@
 				14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */,
 			);
 			path = RecommendFeedSection;
+			sourceTree = "<group>";
+		};
+		145FB8A1292E44B800BA7B3B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		3B061FD62928CC4300BFA71D /* Domain */ = {
@@ -340,7 +385,9 @@
 				B52A7F232927A68F00E271D2 /* Service-Info.plist */,
 				B5BA27862927AEF600BDCE08 /* GoogleService-Info.plist */,
 				B50A277329279F2600DF3E1F /* burstcamp */,
+				143D93A4292E484100C67C27 /* burstcampTests */,
 				B50A277229279F2600DF3E1F /* Products */,
+				145FB8A1292E44B800BA7B3B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -348,6 +395,7 @@
 			isa = PBXGroup;
 			children = (
 				B50A277129279F2600DF3E1F /* burstcamp.app */,
+				143D93A3292E484100C67C27 /* burstcampTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -373,6 +421,7 @@
 				B5BA27882927AFC200BDCE08 /* Constant */,
 				B50A278929279F5D00DF3E1F /* Extension */,
 				B50A279629279F5D00DF3E1F /* Protocol */,
+				1422C62E292F08BC00337710 /* BCDateFormatter.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -389,6 +438,8 @@
 				14927E212929CF37001F2E97 /* UI+ReusableView.swift */,
 				143185F5292B4F63008CE459 /* UINavigationController+configure.swift */,
 				D8C38677292BAE6B005A2563 /* UIControl+Combine.swift */,
+				1422C62C292EF51500337710 /* TimeInterval+.swift */,
+				143D93AE292E499200C67C27 /* Date+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -709,6 +760,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		143D93A2292E484100C67C27 /* burstcampTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 143D93A9292E484100C67C27 /* Build configuration list for PBXNativeTarget "burstcampTests" */;
+			buildPhases = (
+				143D939F292E484100C67C27 /* Sources */,
+				143D93A0292E484100C67C27 /* Frameworks */,
+				143D93A1292E484100C67C27 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				143D93A8292E484100C67C27 /* PBXTargetDependency */,
+			);
+			name = burstcampTests;
+			packageProductDependencies = (
+				143D93AC292E48C100C67C27 /* FirebaseAuth */,
+				143D93B0292E4B9500C67C27 /* FirebaseFirestore */,
+			);
+			productName = burstcampTests;
+			productReference = 143D93A3292E484100C67C27 /* burstcampTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		B50A277029279F2600DF3E1F /* burstcamp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B50A278529279F2700DF3E1F /* Build configuration list for PBXNativeTarget "burstcamp" */;
@@ -747,6 +820,10 @@
 				LastSwiftUpdateCheck = 1400;
 				LastUpgradeCheck = 1400;
 				TargetAttributes = {
+					143D93A2292E484100C67C27 = {
+						CreatedOnToolsVersion = 14.0.1;
+						TestTargetID = B50A277029279F2600DF3E1F;
+					};
 					B50A277029279F2600DF3E1F = {
 						CreatedOnToolsVersion = 14.0;
 					};
@@ -771,11 +848,19 @@
 			projectRoot = "";
 			targets = (
 				B50A277029279F2600DF3E1F /* burstcamp */,
+				143D93A2292E484100C67C27 /* burstcampTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		143D93A1292E484100C67C27 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B50A276F29279F2600DF3E1F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -838,6 +923,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		143D939F292E484100C67C27 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				143D93A6292E484100C67C27 /* burstcampTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B50A276D29279F2600DF3E1F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -859,6 +952,7 @@
 				D88295EF292A43EB005B4273 /* NetworkError.swift in Sources */,
 				D84452F0292CA57D008E811B /* MyPageEditViewController.swift in Sources */,
 				D84452FC292DB7DE008E811B /* CellIndexPath.swift in Sources */,
+				1422C62D292EF51500337710 /* TimeInterval+.swift in Sources */,
 				D88295EB292A43CD005B4273 /* FireStoreConfiguration.swift in Sources */,
 				D84452E7292C9A54008E811B /* TabBarCoordinatorEvent.swift in Sources */,
 				B50A27E429279F5D00DF3E1F /* APIKey.swift in Sources */,
@@ -867,6 +961,7 @@
 				D8494D562927D6EB008157F1 /* DefaultBadgeView.swift in Sources */,
 				3B061FE7292A1F9600BFA71D /* SignUpBlogView.swift in Sources */,
 				D88295FE292A4459005B4273 /* URLSessionService.swift in Sources */,
+				143D93AF292E499200C67C27 /* Date+.swift in Sources */,
 				D8C38674292B8D82005A2563 /* Appearance.swift in Sources */,
 				B50A27F729279F5D00DF3E1F /* TabBarCoordinator.swift in Sources */,
 				D88295F6292A4428005B4273 /* FireStoreValues.swift in Sources */,
@@ -923,6 +1018,7 @@
 				143185F6292B4F63008CE459 /* UINavigationController+configure.swift in Sources */,
 				14927E202929CCA0001F2E97 /* RecommendFeedHeader.swift in Sources */,
 				D88295FA292A4448005B4273 /* Query.swift in Sources */,
+				1422C62F292F08BC00337710 /* BCDateFormatter.swift in Sources */,
 				B50A27F229279F5D00DF3E1F /* AppDelegate.swift in Sources */,
 				B50A27D029279F5D00DF3E1F /* TypeConversion.swift in Sources */,
 				143185EE292B4ABC008CE459 /* ScrapPageView.swift in Sources */,
@@ -932,6 +1028,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		143D93A8292E484100C67C27 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B50A277029279F2600DF3E1F /* burstcamp */;
+			targetProxy = 143D93A7292E484100C67C27 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		B50A27BD29279F5D00DF3E1F /* LaunchScreen.storyboard */ = {
@@ -945,6 +1049,42 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		143D93AA292E484100C67C27 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.boostcamp.burstcampTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/burstcamp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/burstcamp";
+			};
+			name = Debug;
+		};
+		143D93AB292E484100C67C27 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.boostcamp.burstcampTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/burstcamp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/burstcamp";
+			};
+			name = Release;
+		};
 		B50A278329279F2700DF3E1F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1124,6 +1264,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		143D93A9292E484100C67C27 /* Build configuration list for PBXNativeTarget "burstcampTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				143D93AA292E484100C67C27 /* Debug */,
+				143D93AB292E484100C67C27 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B50A276C29279F2600DF3E1F /* Build configuration list for PBXProject "burstcamp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1172,6 +1321,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		143D93AC292E48C100C67C27 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B5BA277B2927AEC600BDCE08 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		143D93B0292E4B9500C67C27 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B5BA277B2927AEC600BDCE08 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
 		B52A7F262927A88F00E271D2 /* Then */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B52A7F252927A88F00E271D2 /* XCRemoteSwiftPackageReference "Then" */;
