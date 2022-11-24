@@ -33,20 +33,21 @@ final class LogInManager {
 
     func openGithubLoginView() {
         let urlString = "https://github.com/login/oauth/authorize"
-        guard var component = URLComponents(string: urlString),
+        
+        guard var urlComponent = URLComponents(string: urlString),
               let clientID = githubAPIKey?.clientID
-        else { return }
-        component.queryItems = [
+        else {
+            return
+        }
+        
+        urlComponent.queryItems = [
             URLQueryItem(name: "client_id", value: clientID),
             URLQueryItem(name: "scope", value: "admin:org")
         ]
-        guard let url = component.url else { return }
+        
+        guard let url = urlComponent.url else { return }
+        
         UIApplication.shared.open(url)
-//        guard let clientID = githubAPIKey?.clientID,
-//              let url = URL(string: urlString + "?client_id=\(clientID)")
-//        else { return }
-//
-//        UIApplication.shared.open(url)
     }
 
     func logIn(code: String) {
