@@ -33,34 +33,34 @@ final class LogInManager {
 
     func openGithubLoginView() {
         let urlString = "https://github.com/login/oauth/authorize"
-        
+
         guard var urlComponent = URLComponents(string: urlString),
               let clientID = githubAPIKey?.clientID
         else {
             return
         }
-        
+
         urlComponent.queryItems = [
             URLQueryItem(name: "client_id", value: clientID),
             URLQueryItem(name: "scope", value: "admin:org")
         ]
-        
+
         guard let url = urlComponent.url else { return }
-        
+
         UIApplication.shared.open(url)
     }
 
     func logIn(code: String) {
         var token: String = ""
         var nickName: String = ""
-        var memberType: String = ""
 
         requestGithubAccessToken(code: code)
             .map { $0.accessToken }
-            .flatMap { accessToken -> AnyPublisher<String, NetworkError> in
+            .flatMap { accessToken -> AnyPublisher<GithubUser, NetworkError> in
                 token = accessToken
                 return self.requestGithubUserInfo(token: accessToken)
             }
+            .map { $0.login }
             .flatMap { name -> AnyPublisher<GithubMembership, NetworkError> in
                 nickName = name
                 return self.getOrganizationMembership(nickName: nickName, token: token)
@@ -74,8 +74,8 @@ final class LogInManager {
                     print("failure")
                 }
             } receiveValue: { gitMembership in
-                print(gitMembership.organization.login) // "boostcampwm-2022"
-                
+                print(gitMembership.user.login)
+
                 //TODO: 멤버면서 이미 회원이면
 
                 //TODO: 멤버인데 회원 가입해야하면
@@ -121,7 +121,7 @@ final class LogInManager {
             .eraseToAnyPublisher()
     }
 
-    func requestGithubUserInfo(token: String) -> AnyPublisher<String, NetworkError> {
+    func requestGithubUserInfo(token: String) -> AnyPublisher<GithubUser, NetworkError> {
         let urlString = "https:/api.github.com/user"
         guard let url = URL(string: urlString)
         else {
@@ -141,13 +141,8 @@ final class LogInManager {
         )
 
         return URLSessionService.request(with: request)
-            .map { userInfo in
-                guard let userJSON = try? JSONSerialization.jsonObject(
-                    with: userInfo, options: []) as? [String: Any],
-                      let nickName = userJSON["login"] as? String
-                else { return "" }
-                return nickName
-            }
+            .decode(type: GithubUser.self, decoder: JSONDecoder())
+            .mapError { _ in NetworkError.decodeError }
             .eraseToAnyPublisher()
     }
 
