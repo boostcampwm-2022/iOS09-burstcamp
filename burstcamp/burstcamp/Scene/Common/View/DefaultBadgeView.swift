@@ -12,17 +12,14 @@ final class DefaultBadgeView: UIView {
     // MARK: - Properties
 
     private lazy var domainLabel = DefaultBadgeLabel(
-        text: "iOS",
         textColor: Domain.iOS.color
     )
 
     private lazy var numberLabel = DefaultBadgeLabel(
-        text: "7기",
         textColor: .main
     )
 
     private lazy var camperIDLabel = DefaultBadgeLabel(
-        text: "S057",
         textColor: .systemGray2
     )
 
@@ -52,5 +49,13 @@ final class DefaultBadgeView: UIView {
         badgeStackView.snp.makeConstraints { make in
             make.top.leading.bottom.equalToSuperview()
         }
+    }
+}
+
+extension DefaultBadgeView {
+    func updateView(user: User) {
+        domainLabel.updateView(text: user.domain.rawValue)
+        numberLabel.updateView(text: "7기")
+        camperIDLabel.updateView(text: user.camperID)
     }
 }

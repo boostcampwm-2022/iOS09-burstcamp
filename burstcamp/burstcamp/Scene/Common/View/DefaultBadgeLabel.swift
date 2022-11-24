@@ -29,8 +29,8 @@ final class DefaultBadgeLabel: UILabel {
     // MARK: - Initializer
 
     init(
-        text: String,
-        textColor: UIColor
+        textColor: UIColor,
+        text: String = ""
     ) {
         super.init(frame: .zero)
         font = UIFont.bold10
@@ -49,5 +49,13 @@ final class DefaultBadgeLabel: UILabel {
 
     override func drawText(in rect: CGRect) {
         super.drawText(in: rect.inset(by: padding))
+    }
+}
+
+extension DefaultBadgeLabel {
+    func updateView(text: String) {
+        DispatchQueue.main.async {
+            self.text = text
+        }
     }
 }
