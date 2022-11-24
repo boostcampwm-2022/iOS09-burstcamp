@@ -11,34 +11,56 @@ extension TimeInterval {
 
     // MARK: - Computed Type Properties
 
-    internal static var secondsPerDay: Double { return 24 * 60 * 60 }
-    internal static var secondsPerHour: Double { return 60 * 60 }
-    internal static var secondsPerMinute: Double { return 60 }
+    static var secondsPerWeek: Double { return 7 * 24 * 60 * 60 }
+    static var secondsPerDay: Double { return 24 * 60 * 60 }
+    static var secondsPerHour: Double { return 60 * 60 }
+    static var secondsPerMinute: Double { return 60 }
 
     // MARK: - Type Methods
 
-    public static func days(before value: Double) -> TimeInterval {
+    static func days(before value: Double) -> TimeInterval {
         return -(value * secondsPerDay)
     }
 
-    public static func hours(before value: Double) -> TimeInterval {
+    static func hours(before value: Double) -> TimeInterval {
         return -(value * secondsPerHour)
     }
 
-    public static func minutes(before value: Double) -> TimeInterval {
+    static func minutes(before value: Double) -> TimeInterval {
         return -(value * secondsPerMinute)
     }
 
-    public static func seconds(before value: Double) -> TimeInterval {
+    static func seconds(before value: Double) -> TimeInterval {
         return value
     }
 
-    public static func before(
+    static func before(
         seconds: Double,
         minutes: Double = 0,
         hours: Double = 0,
         days: Double = 0
     ) -> TimeInterval {
         return -(days*secondsPerDay + hours*secondsPerHour + minutes*secondsPerMinute + seconds)
+    }
+
+    // MARK: - computed properties
+
+    var toJustString: String {
+        return "방금 전"
+    }
+
+    var toMinuteString: String {
+        let minutes = Int(self/TimeInterval.secondsPerMinute)
+        return "\(minutes)분 전"
+    }
+
+    var toHourString: String {
+        let hours = Int(self/TimeInterval.secondsPerHour)
+        return "\(hours)시간 전"
+    }
+
+    var toDayString: String {
+        let days = Int(self/TimeInterval.secondsPerDay)
+        return "\(days)일 전"
     }
 }

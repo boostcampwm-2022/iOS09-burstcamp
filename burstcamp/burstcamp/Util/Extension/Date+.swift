@@ -8,15 +8,22 @@
 import Foundation
 
 extension Date {
-    static func relativeTime(pubDate: Date) -> String {
-        let now = Date()
-        let interval = Int(now.timeIntervalSince(pubDate))
-        switch interval {
-        case 0..<60: return "방금 전"
-        case 60..<3600: return "\(interval/60)분 전"
-        case 3600..<86400: return "\(interval/3600)시간 전"
-        case 86400..<604800: return "\(interval/86400)일 전"
-        default: return "특정 날짜"
-        }
+
+    // MARK: - Properties
+    var monthDateFormatString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM.dd"
+        formatter.locale = Locale(identifier: "ko_KR")
+
+        return formatter.string(from: self)
+    }
+
+    var yearMonthDateFormatString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yy.MM.dd"
+
+        return formatter.string(from: self)
     }
 }
+
+//
