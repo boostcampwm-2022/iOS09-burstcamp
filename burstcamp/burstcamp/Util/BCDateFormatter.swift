@@ -14,7 +14,7 @@ struct BCDateFormatter {
     static var secondsPerDay: Double { return 24 * 60 * 60 }
     static var secondsPerHour: Double { return 60 * 60 }
     static var secondsPerMinute: Double { return 60 }
-    
+
     /// 시간 차이에 따라 String을 리턴해주는 함수
     /// - Parameters:
     ///   - target:블로그 발행시간
