@@ -24,7 +24,7 @@ struct UserDTO: Codable {
     private let blogUUID: FireStoreValues.StringValue
     private let signupDate: FireStoreValues.StringValue
     private let scrapFeedUUIDs: FireStoreValues.ArrayValue<FireStoreValues.StringValue>
-    private let isPushNotification: FireStoreValues.BooleanValue
+    private let isPushOn: FireStoreValues.BooleanValue
 
     private enum RootKey: String, CodingKey {
         case fields
@@ -44,7 +44,7 @@ struct UserDTO: Codable {
 
     init(user: User) {
         self.userUUID = FireStoreValues.StringValue(value: user.userUUID)
-        self.name = FireStoreValues.StringValue(value: user.name)
+        self.name = FireStoreValues.StringValue(value: user.nickName)
         self.profileImageURL = FireStoreValues.StringValue(value: user.profileImageURL)
         self.domain = FireStoreValues.StringValue(value: user.domain.rawValue)
         self.camperID = FireStoreValues.StringValue(value: user.camperID)
@@ -55,7 +55,7 @@ struct UserDTO: Codable {
             FireStoreValues.StringValue(value: $0)
             }
         )
-        self.isPushNotification = FireStoreValues.BooleanValue(value: user.isPushNotification)
+        self.isPushOn = FireStoreValues.BooleanValue(value: user.isPushOn)
     }
 
     init(from decoder: Decoder) throws {
@@ -92,16 +92,16 @@ struct UserDTO: Codable {
             FireStoreValues.ArrayValue<FireStoreValues.StringValue>.self,
             forKey: .scrapFeedUUIDs
         )
-        self.isPushNotification = try container.decode(
+        self.isPushOn = try container.decode(
             FireStoreValues.BooleanValue.self,
-            forKey: .isPushNotification
+            forKey: .isPushOn
         )
     }
 
     func toUser() -> User {
         return User(
             userUUID: userUUID.value,
-            name: name.value,
+            nickName: name.value,
             profileImageURL: profileImageURL.value,
             domain: Domain(rawValue: domain.value) ?? .iOS,
             camperID: camperID.value,
@@ -110,6 +110,6 @@ struct UserDTO: Codable {
             scrapFeedUUIDs: scrapFeedUUIDs
                 .arrayValue["values"]?
                 .compactMap { $0.value } ?? [],
-            isPushNotification: isPushNotification.value)
+            isPushOn: isPushOn.value)
     }
 }

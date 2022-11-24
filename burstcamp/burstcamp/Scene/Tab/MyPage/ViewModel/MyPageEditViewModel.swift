@@ -11,14 +11,14 @@ import Foundation
 // TODO: 임시유저삭제
 let user = User(
     userUUID: "1",
-    name: "하늘이",
+    nickName: "하늘이",
     profileImageURL: "",
     domain: .iOS,
     camperID: "S057",
     blogUUID: "",
     signupDate: "",
     scrapFeedUUIDs: [],
-    isPushNotification: false
+    isPushOn: false
 )
 
 let blog = Blog(userUUID: "1", url: "", rssURL: "", title: "")
@@ -84,7 +84,6 @@ final class MyPageEditViewModel {
     }
 
     private func validate() -> MyPageEditValidationResult {
-        print(nickNameValidation, blogLinkValidation)
         if nickNameValidation && blogLinkValidation {
             return .validationOK
         } else if nickNameValidation {
