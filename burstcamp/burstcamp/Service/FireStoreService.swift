@@ -29,7 +29,8 @@ final class FireStoreService {
         let saveUserRequest = URLSessionService.makeRequest(
             url: url,
             httpMethod: .POST,
-            httpBody: UserQuery.saveQuery(user: user)
+            httpBody: UserQuery.saveQuery(user: user),
+            httpHeaders: [(key: "Content-Type", value: "text/plain")]
         )
 
         return URLSessionService
@@ -54,13 +55,15 @@ final class FireStoreService {
         ].joined()
 
         guard let url = URL(string: endPoint)
-        else { return Fail(error: NetworkError.urlError)
-            .eraseToAnyPublisher() }
+        else {
+            return Fail(error: NetworkError.urlError).eraseToAnyPublisher()
+        }
 
         let fetchUserRequest = URLSessionService.makeRequest(
             url: url,
             httpMethod: .POST,
-            httpBody: UserQuery.selectUser(by: userUUID)
+            httpBody: UserQuery.selectUser(by: userUUID),
+            httpHeaders: [(key: "Content-Type", value: "text/plain")]
         )
 
         return URLSessionService

@@ -11,7 +11,7 @@ import SnapKit
 
 final class NormalFeedCell: UICollectionViewCell {
 
-    private lazy var headerStackView = NormalFeedCellHeader()
+    private lazy var headerStackView = DefaultUserInfoView()
     private lazy var mainView = NormalFeedCellMain()
     private lazy var footerView = NormalFeedCellFooter()
 
