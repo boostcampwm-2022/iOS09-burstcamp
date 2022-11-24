@@ -62,8 +62,8 @@ final class NormalFeedCell: UICollectionViewCell {
 }
 
 extension NormalFeedCell {
-    func updateFeedCell(user: User, feed: Feed) {
-        userInfoView.updateView(user: user)
+    func updateFeedCell(feed: Feed) {
+        userInfoView.updateView(feed: feed)
         mainView.updateView(feed: feed)
         footerView.updateView(feed: feed)
     }

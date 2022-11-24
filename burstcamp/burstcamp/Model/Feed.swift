@@ -8,7 +8,10 @@
 import Foundation
 
 struct Feed {
-    let writerUUID: String
+    let camperName: String
+    let camperDomain: String
+    let camperNumber: Int
+    let camperID: String
     let blogUUID: String
     let title: String
     let pubDate: Date

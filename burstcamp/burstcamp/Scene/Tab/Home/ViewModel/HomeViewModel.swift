@@ -9,11 +9,9 @@ import Foundation
 
 final class HomeViewModel {
     var normalFeedData: [Feed] = []
-    var userData: [User] = []
 
     init() {
         normalFeedData = fetchMockUpFeeds()
-        userData = fetchMockupUsers()
     }
 }
 
@@ -30,7 +28,10 @@ extension HomeViewModel {
 
     private func fetchMockUpFeed(pubDate: Date) -> Feed {
         return Feed(
-            writerUUID: "hello",
+            camperName: "하늘이",
+            camperDomain: "iOS",
+            camperNumber: 7,
+            camperID: "S057",
             blogUUID: "skyisfirstname",
             title: "부스트캠프 웹모바일 7기 합격후기 (챌린지, iOS)",
             pubDate: pubDate,
@@ -46,27 +47,5 @@ extension HomeViewModel {
         let targetDateComponents = DateComponents(year: 2022, month: 7, day: 14, hour: 10, minute: 22, second: 3)
         let pubDate = calendar.date(from: targetDateComponents)
         return pubDate ?? Date()
-    }
-
-    private func fetchMockupUsers() -> [User] {
-        var result:[User] = []
-        for _ in 0..<20 {
-            result.append(fetchMockupUser())
-        }
-        return result
-    }
-
-    private func fetchMockupUser() -> User {
-        return User(
-            userUUID: "hello",
-            name: "버캠러",
-            profileImageURL: "",
-            domain: .iOS,
-            camperID: "S057",
-            blogUUID: "skyisfirstname",
-            signupDate: "22/11/24",
-            scrapFeedUUIDs: ["world"],
-            isPushNotification: false
-        )
     }
 }

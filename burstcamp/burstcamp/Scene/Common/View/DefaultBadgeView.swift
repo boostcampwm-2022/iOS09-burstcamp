@@ -53,9 +53,10 @@ final class DefaultBadgeView: UIView {
 }
 
 extension DefaultBadgeView {
-    func updateView(user: User) {
-        domainLabel.updateView(text: user.domain.rawValue)
-        numberLabel.updateView(text: "7기")
-        camperIDLabel.updateView(text: user.camperID)
+    func updateView(feed: Feed) {
+        domainLabel.updateView(text: feed.camperDomain)
+        let number = "\(feed.camperNumber)기"
+        numberLabel.updateView(text: number)
+        camperIDLabel.updateView(text: feed.camperID)
     }
 }
