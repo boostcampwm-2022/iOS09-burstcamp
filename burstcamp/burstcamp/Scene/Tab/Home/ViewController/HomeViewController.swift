@@ -119,7 +119,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             else {
                 return UICollectionViewCell()
             }
-
+            let index = indexPath.row
+            let user = viewModel.userData[index]
+            let feed = viewModel.normalFeedData[index]
+            cell.updateFeedCell(user: user, feed: feed)
             return cell
         case .none:
             return UICollectionViewCell()

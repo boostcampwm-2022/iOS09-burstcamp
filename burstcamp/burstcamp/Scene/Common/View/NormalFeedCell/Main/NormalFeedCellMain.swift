@@ -20,6 +20,7 @@ class NormalFeedCellMain: UIView {
 
     private lazy var thumbnailImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
+        $0.clipsToBounds = true
         $0.layer.cornerRadius = Constant.Image.thumbnailCornerRadius.cgFloat
         $0.backgroundColor = UIColor.systemGray2
     }
