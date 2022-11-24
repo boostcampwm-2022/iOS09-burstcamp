@@ -10,9 +10,9 @@ import Foundation
 struct BCDateFormatter {
 
     static var secondsPerYear: Double { return 365 * 24 * 60 * 60}
-    static var secondsPerWeek: Double { return 7 * 24 * 60 * 60 }
-    static var secondsPerDay: Double { return 24 * 60 * 60 }
-    static var secondsPerHour: Double { return 60 * 60 }
+    static var secondsPerWeek: Double { return 7 * secondsPerDay }
+    static var secondsPerDay: Double { return 24 * secondsPerHour }
+    static var secondsPerHour: Double { return 60 * secondsPerMinute }
     static var secondsPerMinute: Double { return 60 }
 
     /// 시간 차이에 따라 String을 리턴해주는 함수
