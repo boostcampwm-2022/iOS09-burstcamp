@@ -16,26 +16,8 @@ extension TimeInterval {
     static var secondsPerHour: Double { return 60 * 60 }
     static var secondsPerMinute: Double { return 60 }
 
-    // MARK: - Type Methods
-
-    static func days(before value: Double) -> TimeInterval {
-        return -(value * secondsPerDay)
-    }
-
-    static func hours(before value: Double) -> TimeInterval {
-        return -(value * secondsPerHour)
-    }
-
-    static func minutes(before value: Double) -> TimeInterval {
-        return -(value * secondsPerMinute)
-    }
-
-    static func seconds(before value: Double) -> TimeInterval {
-        return value
-    }
-
     static func before(
-        seconds: Double,
+        seconds: Double = 0,
         minutes: Double = 0,
         hours: Double = 0,
         days: Double = 0
