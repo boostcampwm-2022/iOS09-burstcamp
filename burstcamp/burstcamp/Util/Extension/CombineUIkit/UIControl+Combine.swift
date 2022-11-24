@@ -25,7 +25,7 @@ extension UIControl {
         where S: Subscriber, Never == S.Failure, UIControl == S.Input {
             let subscription = EventSubscription(
                 control: control,
-                subscrier: subscriber,
+                subscriber: subscriber,
                 event: event
             )
             subscriber.receive(subscription: subscription)
@@ -40,9 +40,9 @@ extension UIControl {
         let event: UIControl.Event
         var subscriber: EventSubscriber?
 
-        init(control: UIControl, subscrier: EventSubscriber, event: UIControl.Event) {
+        init(control: UIControl, subscriber: EventSubscriber, event: UIControl.Event) {
             self.control = control
-            self.subscriber = subscrier
+            self.subscriber = subscriber
             self.event = event
 
             control.addTarget(self, action: #selector(eventDidOccur), for: event)
@@ -83,6 +83,15 @@ extension UISwitch {
         controlPublisher(for: .valueChanged)
             .compactMap { $0 as? UISwitch }
             .map { $0.isOn }
+            .eraseToAnyPublisher()
+    }
+}
+
+extension UIRefreshControl {
+    var isRefreshPublisher: AnyPublisher<Bool, Never> {
+        controlPublisher(for: .valueChanged)
+            .compactMap { $0 as? UIRefreshControl }
+            .map { $0.isRefreshing }
             .eraseToAnyPublisher()
     }
 }

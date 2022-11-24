@@ -449,7 +449,6 @@
 		B50A278829279F5D00DF3E1F /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				142C933F292F517200F6428E /* CombineUIkit */,
 				D88295F0292A4410005B4273 /* Query */,
 				B5BA27882927AFC200BDCE08 /* Constant */,
 				B50A278929279F5D00DF3E1F /* Extension */,
@@ -462,6 +461,7 @@
 		B50A278929279F5D00DF3E1F /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				142C933F292F517200F6428E /* CombineUIkit */,
 				142C9341292F51A800F6428E /* Type */,
 				142C9340292F51A500F6428E /* UI */,
 			);
