@@ -14,9 +14,13 @@ protocol TabBarCoordinatorProtocol: Coordinator {
     var currentPage: TabBarPage? { get }
 
     func selectPage(_ page: TabBarPage)
-    func moveToMyPageEditScreen()
+    func moveToMyPageEditScreen(myPageViewController: MyPageViewController)
     func moveToOpenSourceScreen()
     func moveToAuthFlow()
+    func moveMyPageEditScreenToBackScreen(
+        myPageViewController: MyPageViewController,
+        toastMessage: String
+    )
 }
 
 final class TabBarCoordinator: TabBarCoordinatorProtocol {
@@ -88,13 +92,38 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
             .sink { [weak self] event in
                 switch event {
                 case .moveToAuthFlow: self?.moveToAuthFlow()
-                case .moveToMyPageEditScreen: self?.moveToMyPageEditScreen()
+                case .moveToMyPageEditScreen: self?.moveToMyPageEditScreen(
+                    myPageViewController: myPageViewController
+                )
                 case .moveToOpenSourceScreen: self?.moveToOpenSourceScreen()
+                default: break
                 }
             }
             .store(in: &cancelBag)
 
         return myPageViewController
+    }
+
+    private func prepareMyPageEditViewController(
+        myPageViewController: MyPageViewController
+    ) -> MyPageEditViewController {
+        let viewModel = MyPageEditViewModel()
+        let myPageEditViewController = MyPageEditViewController(viewModel: viewModel)
+
+        myPageEditViewController.coordinatorPublisher
+            .sink { [weak self] event in
+                switch event {
+                case .moveMyPageEditScreenToBackScreen(let toastMessage):
+                    self?.moveMyPageEditScreenToBackScreen(
+                        myPageViewController: myPageViewController,
+                        toastMessage: toastMessage
+                    )
+                default: break
+                }
+            }
+            .store(in: &cancelBag)
+
+        return myPageEditViewController
     }
 }
 
@@ -102,9 +131,10 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
 
 extension TabBarCoordinator {
 
-    func moveToMyPageEditScreen() {
-        let viewModel = MyPageEditViewModel()
-        let myPageEditViewController = MyPageEditViewController(viewModel: viewModel)
+    func moveToMyPageEditScreen(myPageViewController: MyPageViewController) {
+        let myPageEditViewController = prepareMyPageEditViewController(
+            myPageViewController: myPageViewController
+        )
         navigationController.pushViewController(myPageEditViewController, animated: true)
     }
 
@@ -116,5 +146,13 @@ extension TabBarCoordinator {
     func moveToAuthFlow() {
         finish()
         coordinatorPublisher.send(.moveToAuthFlow)
+    }
+
+    func moveMyPageEditScreenToBackScreen(
+        myPageViewController: MyPageViewController,
+        toastMessage: String
+    ) {
+        navigationController.popViewController(animated: true)
+        myPageViewController.toastMessagePublisher.send(toastMessage)
     }
 }

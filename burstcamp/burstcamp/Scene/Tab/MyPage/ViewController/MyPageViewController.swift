@@ -35,6 +35,7 @@ final class MyPageViewController: UIViewController {
     private var cancelBag = Set<AnyCancellable>()
 
     var coordinatorPublisher = PassthroughSubject<TabBarCoordinatorEvent, Never>()
+    var toastMessagePublisher = PassthroughSubject<String, Never>()
 
     // MARK: - Initializer
 
@@ -93,6 +94,13 @@ final class MyPageViewController: UIViewController {
 
         myPageView.myInfoEditButton.tapPublisher
             .sink { _ in self.moveToMyPageEditScreen() }
+            .store(in: &cancelBag)
+
+        toastMessagePublisher
+            .sink { message in
+                print(message)
+                self.showToastMessage(text: message)
+            }
             .store(in: &cancelBag)
     }
 

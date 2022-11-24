@@ -11,7 +11,7 @@ final class MyPageEditView: UIView {
 
     // MARK: - Properties
 
-    private lazy var profileImageView = DefaultProfileImageView(
+    lazy var profileImageView = DefaultProfileImageView(
         imageSize: Constant.Image.profileLarge
     )
 
@@ -24,7 +24,7 @@ final class MyPageEditView: UIView {
     )?
         .withTintColor(.dynamicWhite, renderingMode: .alwaysOriginal)
 
-    private lazy var cameraButton = UIButton().then {
+    lazy var cameraButton = UIButton().then {
         $0.setImage(cameraIcon, for: .normal)
         $0.backgroundColor = .main
         $0.layer.borderWidth = 1
@@ -40,7 +40,7 @@ final class MyPageEditView: UIView {
         $0.font = .bold14
     }
 
-    private let nickNameTextField = DefaultTextField(
+    let nickNameTextField = DefaultTextField(
         placeholder: "닉네임을 입력해주세요."
     )
 
@@ -50,24 +50,31 @@ final class MyPageEditView: UIView {
         $0.font = .bold14
     }
 
-    private let blogLinkChangeButton = DefaultButton(
-        title: "변경",
-        font: .bold14
+    private lazy var nickNameStackView = UIStackView(
+        views: [nickNameLabel, nickNameTextField],
+        spacing: Constant.space8
     )
 
-    private lazy var blogLinkTextField = DefaultTextField(
+    let blogLinkTextField = DefaultTextField(
         placeholder: "블로그 주소를 입력해주세요."
-    ).then {
-        $0.rightView = blogLinkChangeButton
-        $0.rightViewMode = .always
-    }
-
-    private let blogTitleImageLabel = DefaultImageLabel(
-        icon: nil,
-        text: "말차맛 개발공부"
     )
 
-    private lazy var finishEditButton = DefaultButton(title: "수정완료")
+    private var blogTitleImageLabel = DefaultImageLabel(
+        icon: UIImage(systemName: ""),
+        text: ""
+    )
+
+    private lazy var blogLinkStackView = UIStackView(
+        views: [blogLinkLabel, blogLinkTextField, blogTitleImageLabel],
+        spacing: Constant.space8
+    )
+
+    lazy var editStackView = UIStackView(
+        views: [nickNameStackView, blogLinkStackView, finishEditButton],
+        spacing: Constant.space48
+    )
+
+    lazy var finishEditButton = DefaultButton(title: "수정완료")
 
     // MARK: - Initializer
 
@@ -107,33 +114,26 @@ final class MyPageEditView: UIView {
             make.height.equalTo(Constant.TextField.camperIDHeight)
         }
 
-        let nickNameStackView = UIStackView(
-            views: [nickNameLabel, nickNameTextField],
-            spacing: Constant.space8
-        )
-
         blogLinkTextField.snp.makeConstraints { make in
             make.height.equalTo(Constant.TextField.camperIDHeight)
         }
 
-        blogLinkChangeButton.snp.makeConstraints { make in
-            make.width.equalTo(Constant.Button.blogLinkChangeWidth)
-            make.height.equalTo(Constant.Button.blogLinkChangeHeight)
-        }
-
-        let blogLinkStackView = UIStackView(
-            views: [blogLinkLabel, blogLinkTextField, blogTitleImageLabel],
-            spacing: Constant.space8
-        )
-
-        let editStackView = UIStackView(
-            views: [nickNameStackView, blogLinkStackView, finishEditButton],
-            spacing: Constant.space48
-        )
         addSubview(editStackView)
         editStackView.snp.makeConstraints { make in
             make.top.equalTo(profileImageView.snp.bottom).offset(Constant.space48)
             make.horizontalEdges.equalToSuperview().inset(Constant.space16)
         }
+    }
+
+    func setCurrentUserInfo(user: User, blog: Blog) {
+        // 프로필 이미지
+        nickNameTextField.text = user.name
+        // 블로그 링크
+        blogLinkTextField.text = blog.url
+        // 블로그 타이틀
+        blogTitleImageLabel = DefaultImageLabel(
+            icon: UIImage(systemName: "book.fill"),
+            text: "말차맛 개발공부"
+        )
     }
 }

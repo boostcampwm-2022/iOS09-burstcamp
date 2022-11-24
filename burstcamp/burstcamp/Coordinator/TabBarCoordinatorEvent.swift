@@ -14,4 +14,6 @@ enum TabBarCoordinatorEvent {
     case moveToOpenSourceScreen
     // TODO: 탈퇴
     case moveToAuthFlow
+
+    case moveMyPageEditScreenToBackScreen(toastMessage: String = "")
 }
