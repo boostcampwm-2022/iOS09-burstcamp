@@ -8,10 +8,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.booscamp.Eoljuga</string>
+			<string>com.codershigh.boostcamp.burstcamp</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>github</string>
+				<string>burstcamp</string>
 			</array>
 		</dict>
 	</array>
