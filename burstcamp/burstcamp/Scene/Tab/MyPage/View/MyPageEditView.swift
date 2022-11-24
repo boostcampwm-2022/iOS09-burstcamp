@@ -125,12 +125,9 @@ final class MyPageEditView: UIView {
         }
     }
 
-    func setCurrentUserInfo(user: User, blog: Blog) {
-        // 프로필 이미지
+    func updateCurrentUserInfo(user: User, blog: Blog) {
         nickNameTextField.text = user.name
-        // 블로그 링크
         blogLinkTextField.text = blog.url
-        // 블로그 타이틀
         blogTitleImageLabel = DefaultImageLabel(
             icon: UIImage(systemName: "book.fill"),
             text: "말차맛 개발공부"

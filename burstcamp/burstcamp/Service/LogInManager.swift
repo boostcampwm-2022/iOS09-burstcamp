@@ -28,7 +28,7 @@ final class LogInManager {
     }
 
     func isLoggedIn() -> Bool {
-        return false
+        return true
     }
 
     func openGithubLoginView() {

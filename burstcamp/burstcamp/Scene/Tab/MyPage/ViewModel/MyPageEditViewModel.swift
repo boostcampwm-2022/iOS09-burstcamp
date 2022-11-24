@@ -76,7 +76,6 @@ final class MyPageEditViewModel {
 
         input.finishEditButtonDidTap
             .sink { _ in
-                print("탭탭")
                 output.validationResult.send(self.validate())
             }
             .store(in: &cancelBag)
