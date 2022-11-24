@@ -15,6 +15,14 @@ final class AppCoordinator: Coordinator {
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
+
+        if #available(iOS 15.0, *) {
+            let navigationBarAppearance = UINavigationBarAppearance()
+            navigationBarAppearance.configureWithDefaultBackground()
+            navigationBarAppearance.backgroundColor = .background
+            self.navigationController.navigationBar.standardAppearance = navigationBarAppearance
+            self.navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+        }
     }
 
     func start() {

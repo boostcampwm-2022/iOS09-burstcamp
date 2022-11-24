@@ -57,6 +57,12 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
         tabBarController.tabBar.backgroundColor = .background
         tabBarController.tabBar.tintColor = .main
         tabBarController.tabBar.isTranslucent = false
+        if #available(iOS 15.0, *) {
+            let tabBarAppearance = UITabBarAppearance()
+            tabBarAppearance.configureWithDefaultBackground()
+            tabBarAppearance.backgroundColor = .background
+            tabBarController.tabBar.standardAppearance = tabBarAppearance
+        }
         navigationController.viewControllers = [tabBarController]
     }
 
