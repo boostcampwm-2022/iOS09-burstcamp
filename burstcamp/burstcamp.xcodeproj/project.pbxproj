@@ -85,6 +85,7 @@
 		B5DAD67A292E4C6800C4A126 /* FeedDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD676292E4C6800C4A126 /* FeedDetailView.swift */; };
 		B5DAD67B292E4C6800C4A126 /* FeedDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD678292E4C6800C4A126 /* FeedDetailViewController.swift */; };
 		B5DAD681292E58BF00C4A126 /* DefaultMultilLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD680292E58BF00C4A126 /* DefaultMultilLineLabel.swift */; };
+		B5E0D948292F0D34001727F5 /* FeedContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E0D947292F0D34001727F5 /* FeedContentView.swift */; };
 		D84452E7292C9A54008E811B /* TabBarCoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452E6292C9A54008E811B /* TabBarCoordinatorEvent.swift */; };
 		D84452EC292CA55F008E811B /* MyPageEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452EB292CA55F008E811B /* MyPageEditView.swift */; };
 		D84452EE292CA569008E811B /* MyPageEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452ED292CA569008E811B /* MyPageEditViewModel.swift */; };
@@ -212,6 +213,7 @@
 		B5DAD676292E4C6800C4A126 /* FeedDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailView.swift; sourceTree = "<group>"; };
 		B5DAD678292E4C6800C4A126 /* FeedDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailViewController.swift; sourceTree = "<group>"; };
 		B5DAD680292E58BF00C4A126 /* DefaultMultilLineLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMultilLineLabel.swift; sourceTree = "<group>"; };
+		B5E0D947292F0D34001727F5 /* FeedContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedContentView.swift; sourceTree = "<group>"; };
 		D84452E6292C9A54008E811B /* TabBarCoordinatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinatorEvent.swift; sourceTree = "<group>"; };
 		D84452EB292CA55F008E811B /* MyPageEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditView.swift; sourceTree = "<group>"; };
 		D84452ED292CA569008E811B /* MyPageEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewModel.swift; sourceTree = "<group>"; };
@@ -755,6 +757,7 @@
 			isa = PBXGroup;
 			children = (
 				B5DAD676292E4C6800C4A126 /* FeedDetailView.swift */,
+				B5E0D947292F0D34001727F5 /* FeedContentView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1054,6 +1057,7 @@
 				D84C812C292E519100C984E8 /* BlogLinkValidation.swift in Sources */,
 				B50A27E929279F5D00DF3E1F /* NormalFeedCellFooter.swift in Sources */,
 				143185F8292B5C88008CE459 /* ContainCollectionView.swift in Sources */,
+				B5E0D948292F0D34001727F5 /* FeedContentView.swift in Sources */,
 				B5DAD67B292E4C6800C4A126 /* FeedDetailViewController.swift in Sources */,
 				D84452EC292CA55F008E811B /* MyPageEditView.swift in Sources */,
 				D8494D522927D086008157F1 /* MyPageProfileView.swift in Sources */,
