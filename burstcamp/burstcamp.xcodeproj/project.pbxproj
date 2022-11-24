@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1422C62D292EF51500337710 /* TimeInterval+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1422C62C292EF51500337710 /* TimeInterval+.swift */; };
-		1422C62F292F08BC00337710 /* BSDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1422C62E292F08BC00337710 /* BSDateFormatter.swift */; };
+		1422C62F292F08BC00337710 /* BCDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1422C62E292F08BC00337710 /* BCDateFormatter.swift */; };
 		143185E8292B46F9008CE459 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185E7292B46F9008CE459 /* HomeViewModel.swift */; };
 		143185EA292B4A8D008CE459 /* ScrapPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185E9292B4A8D008CE459 /* ScrapPageViewController.swift */; };
 		143185EC292B4AB8008CE459 /* ScrapPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185EB292B4AB8008CE459 /* ScrapPageViewModel.swift */; };
@@ -128,7 +128,7 @@
 
 /* Begin PBXFileReference section */
 		1422C62C292EF51500337710 /* TimeInterval+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+.swift"; sourceTree = "<group>"; };
-		1422C62E292F08BC00337710 /* BSDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BSDateFormatter.swift; sourceTree = "<group>"; };
+		1422C62E292F08BC00337710 /* BCDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCDateFormatter.swift; sourceTree = "<group>"; };
 		143185E7292B46F9008CE459 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		143185E9292B4A8D008CE459 /* ScrapPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageViewController.swift; sourceTree = "<group>"; };
 		143185EB292B4AB8008CE459 /* ScrapPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageViewModel.swift; sourceTree = "<group>"; };
@@ -415,7 +415,7 @@
 				B5BA27882927AFC200BDCE08 /* Constant */,
 				B50A278929279F5D00DF3E1F /* Extension */,
 				B50A279629279F5D00DF3E1F /* Protocol */,
-				1422C62E292F08BC00337710 /* BSDateFormatter.swift */,
+				1422C62E292F08BC00337710 /* BCDateFormatter.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -982,7 +982,7 @@
 				143185F6292B4F63008CE459 /* UINavigationController+configure.swift in Sources */,
 				14927E202929CCA0001F2E97 /* RecommendFeedHeader.swift in Sources */,
 				D88295FA292A4448005B4273 /* Query.swift in Sources */,
-				1422C62F292F08BC00337710 /* BSDateFormatter.swift in Sources */,
+				1422C62F292F08BC00337710 /* BCDateFormatter.swift in Sources */,
 				B50A27F229279F5D00DF3E1F /* AppDelegate.swift in Sources */,
 				B50A27D029279F5D00DF3E1F /* TypeConversion.swift in Sources */,
 				143185EE292B4ABC008CE459 /* ScrapPageView.swift in Sources */,
