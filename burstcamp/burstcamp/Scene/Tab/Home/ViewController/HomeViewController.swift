@@ -87,7 +87,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let feedCellType = FeedCellType(index: section)
         switch feedCellType {
         case .recommend: return Constant.recommendFeed * 3
-        case .normal: return 100
+        case .normal: return viewModel.normalFeedData.count
         case .none: return 0
         }
     }

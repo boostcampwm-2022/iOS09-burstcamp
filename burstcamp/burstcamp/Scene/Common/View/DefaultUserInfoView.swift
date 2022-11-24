@@ -21,7 +21,7 @@ class DefaultUserInfoView: UIStackView {
     private lazy var nameLabel = UILabel().then {
         $0.textColor = UIColor.systemGray
         $0.font = UIFont.bold12
-        $0.text = "하늘이"
+        $0.text = ""
     }
 
     private lazy var badgeStackView = DefaultBadgeView()
@@ -53,5 +53,14 @@ class DefaultUserInfoView: UIStackView {
         profileImageView.snp.makeConstraints {
             $0.width.height.equalTo(Constant.Image.profileSmall)
         }
+    }
+}
+
+extension DefaultUserInfoView {
+    func updateView(user: User) {
+        DispatchQueue.main.async {
+            self.nameLabel.text = user.name
+        }
+        badgeStackView.updateView(user: user)
     }
 }

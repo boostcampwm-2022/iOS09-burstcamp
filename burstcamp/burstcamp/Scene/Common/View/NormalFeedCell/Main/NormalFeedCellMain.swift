@@ -15,10 +15,6 @@ class NormalFeedCellMain: UIView {
         $0.textAlignment = .left
         $0.textColor = UIColor.dynamicBlack
         $0.font = UIFont.bold14
-        $0.text = """
-        [Swift 5.7+][Concurrency] AsyncStream, AsyncThrowingStream 알아보기 - Continuation vs unfoldin
-        g [Swift 5.7+][Concurrency
-        """
         $0.numberOfLines = 3
     }
 
@@ -56,6 +52,15 @@ class NormalFeedCellMain: UIView {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview()
             $0.trailing.equalTo(thumbnailImageView.snp.leading).offset(-Constant.space8)
+        }
+    }
+}
+
+extension NormalFeedCellMain {
+    func updateView(feed: Feed) {
+        DispatchQueue.main.async {
+            self.titleLabel.text = feed.title
+            self.thumbnailImageView.image = UIImage(systemName: "person")
         }
     }
 }

@@ -11,7 +11,7 @@ import SnapKit
 
 final class NormalFeedCell: UICollectionViewCell {
 
-    private lazy var headerStackView = DefaultUserInfoView()
+    private lazy var userInfoView = DefaultUserInfoView()
     private lazy var mainView = NormalFeedCellMain()
     private lazy var footerView = NormalFeedCellFooter()
 
@@ -25,7 +25,7 @@ final class NormalFeedCell: UICollectionViewCell {
     }
 
     private func configureUI() {
-        addSubViews([headerStackView, mainView, footerView])
+        addSubViews([userInfoView, mainView, footerView])
         configureCell()
         configureHeaderStackView()
         configureMainStackView()
@@ -37,7 +37,7 @@ final class NormalFeedCell: UICollectionViewCell {
     }
 
     private func configureHeaderStackView() {
-        headerStackView.snp.makeConstraints {
+        userInfoView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(Constant.Cell.normalTopMargin)
             $0.leading.equalToSuperview()
             $0.height.equalTo(Constant.Cell.normalHeaderHeight)
@@ -46,7 +46,7 @@ final class NormalFeedCell: UICollectionViewCell {
 
     private func configureMainStackView() {
         mainView.snp.makeConstraints {
-            $0.top.equalTo(headerStackView.snp.bottom)
+            $0.top.equalTo(userInfoView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(Constant.Cell.normalMainHeight)
         }
@@ -58,5 +58,13 @@ final class NormalFeedCell: UICollectionViewCell {
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(Constant.Cell.normalFooterHeight)
         }
+    }
+}
+
+extension NormalFeedCell {
+    func updateFeedCell(user: User, feed: Feed) {
+        userInfoView.updateView(user: user)
+        mainView.updateView(feed: feed)
+        footerView.updateView(feed: feed)
     }
 }
