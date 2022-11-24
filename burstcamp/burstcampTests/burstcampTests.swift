@@ -57,7 +57,7 @@ final class burstcampTests: XCTestCase {
 
     /// pubDate : 32분 32초 전
     /// 출력 : 32분 전
-    func test_시간포매팅_분전_02() throws {
+    func test_시간포매팅_32분전() throws {
         let beforeTime = TimeInterval.before(seconds: 32, minutes: 32)
         let pubDate = Date(timeIntervalSinceNow: beforeTime)
         let result = Date.relativeTime(pubDate: pubDate)
@@ -66,7 +66,7 @@ final class burstcampTests: XCTestCase {
 
     /// pubDate : 59분 59초전
     /// 출력 : 59분 전
-    func test_시간포매팅_분전_03() throws {
+    func test_시간포매팅_59분전() throws {
         let beforeTime = TimeInterval.before(seconds: 59, minutes: 59)
         let pubDate = Date(timeIntervalSinceNow: beforeTime)
         let result = Date.relativeTime(pubDate: pubDate)
@@ -75,7 +75,7 @@ final class burstcampTests: XCTestCase {
 
     /// pubDate : 1시간 39분 42초전
     /// 출력 : 1시간 전
-    func test_시간포매팅_시간전_01() throws {
+    func test_시간포매팅_1시간전() throws {
         let beforeTime = TimeInterval.before(seconds: 42, minutes: 39, hours: 1)
         let pubDate = Date(timeIntervalSinceNow: beforeTime)
         let result = Date.relativeTime(pubDate: pubDate)
@@ -84,7 +84,7 @@ final class burstcampTests: XCTestCase {
 
     /// pubDate : 12시간 25분 01초전
     /// 출력 : 12시간 전
-    func test_시간포매팅_시간전_02() throws {
+    func test_시간포매팅_12시간전() throws {
         let beforeTime = TimeInterval.before(seconds: 01, minutes: 25, hours: 12)
         let pubDate = Date(timeIntervalSinceNow: beforeTime)
         let result = Date.relativeTime(pubDate: pubDate)
@@ -93,49 +93,37 @@ final class burstcampTests: XCTestCase {
 
     /// pubDate : 23시간 59분 59초전
     /// 출력 : 23시간 전
-    func test_시간포매팅_시간전_03() throws {
+    func test_시간포매팅_23시간전() throws {
         let beforeTime = TimeInterval.before(seconds: 59, minutes: 59, hours: 23)
         let pubDate = Date(timeIntervalSinceNow: beforeTime)
         let result = Date.relativeTime(pubDate: pubDate)
         XCTAssertEqual(result, "23시간 전")
     }
 
-    func test_시간포매팅_일전_01() throws {
+    /// pubDate : 4일 12시간 40분 40초전
+    /// 출력 : 4일전
+    func test_시간포매팅_4일전() throws {
         let beforeTime = TimeInterval.before(seconds: 40, minutes: 40, hours: 12, days: 4)
         let pubDate = Date(timeIntervalSinceNow: beforeTime)
         let result = Date.relativeTime(pubDate: pubDate)
         XCTAssertEqual(result, "4일 전")
     }
 
-    func test_시간포매팅_일전_02() throws {
+    /// pubDate : 1일 0시간 0분 0초전
+    /// 출력 : 1일전
+    func test_시간포매팅_1일전() throws {
         let beforeTime = TimeInterval.before(seconds: 0, minutes: 0, hours: 0, days: 1)
         let pubDate = Date(timeIntervalSinceNow: beforeTime)
         let result = Date.relativeTime(pubDate: pubDate)
         XCTAssertEqual(result, "1일 전")
     }
 
-    func test_시간포매팅_일전_03() throws {
+    /// pubDate : 6일 23시간 59분 59초전
+    /// 출력 : 6일전
+    func test_시간포매팅_6일전() throws {
         let beforeTime = TimeInterval.before(seconds: 59, minutes: 59, hours: 23, days: 6)
         let pubDate = Date(timeIntervalSinceNow: beforeTime)
         let result = Date.relativeTime(pubDate: pubDate)
         XCTAssertEqual(result, "6일 전")
-    }
-
-    func test_시간포매팅_특정날짜_01() throws {
-        let pubDate = Date(timeIntervalSinceNow: -86400)
-        let result = Date.relativeTime(pubDate: pubDate)
-        XCTAssertEqual(result, "10월 29일")
-    }
-
-    func test_시간포매팅_특정날짜_02() throws {
-        let pubDate = Date(timeIntervalSinceNow: -86400)
-        let result = Date.relativeTime(pubDate: pubDate)
-        XCTAssertEqual(result, "11월 04일")
-    }
-
-    func test_시간포매팅_특정날짜_03() throws {
-        let pubDate = Date(timeIntervalSinceNow: -86400)
-        let result = Date.relativeTime(pubDate: pubDate)
-        XCTAssertEqual(result, "11월 16일")
     }
 }
