@@ -40,7 +40,7 @@ final class MyPageEditView: UIView {
         $0.font = .bold14
     }
 
-    private let nickNameTextField = DefaultTextField(
+    let nickNameTextField = DefaultTextField(
         placeholder: "닉네임을 입력해주세요."
     )
 
@@ -55,21 +55,13 @@ final class MyPageEditView: UIView {
         spacing: Constant.space8
     )
 
-    private let blogLinkChangeButton = DefaultButton(
-        title: "변경",
-        font: .bold14
+    let blogLinkTextField = DefaultTextField(
+        placeholder: "블로그 주소를 입력해주세요."
     )
 
-    private lazy var blogLinkTextField = DefaultTextField(
-        placeholder: "블로그 주소를 입력해주세요."
-    ).then {
-        $0.rightView = blogLinkChangeButton
-        $0.rightViewMode = .always
-    }
-
-    private let blogTitleImageLabel = DefaultImageLabel(
-        icon: nil,
-        text: "말차맛 개발공부"
+    private var blogTitleImageLabel = DefaultImageLabel(
+        icon: UIImage(systemName: ""),
+        text: ""
     )
 
     private lazy var blogLinkStackView = UIStackView(
@@ -82,7 +74,7 @@ final class MyPageEditView: UIView {
         spacing: Constant.space48
     )
 
-    private lazy var finishEditButton = DefaultButton(title: "수정완료")
+    lazy var finishEditButton = DefaultButton(title: "수정완료")
 
     // MARK: - Initializer
 
@@ -126,15 +118,22 @@ final class MyPageEditView: UIView {
             make.height.equalTo(Constant.TextField.camperIDHeight)
         }
 
-        blogLinkChangeButton.snp.makeConstraints { make in
-            make.width.equalTo(Constant.Button.blogLinkChangeWidth)
-            make.height.equalTo(Constant.Button.blogLinkChangeHeight)
-        }
-
         addSubview(editStackView)
         editStackView.snp.makeConstraints { make in
             make.top.equalTo(profileImageView.snp.bottom).offset(Constant.space48)
             make.horizontalEdges.equalToSuperview().inset(Constant.space16)
         }
+    }
+
+    func setCurrentUserInfo(user: User, blog: Blog) {
+        // 프로필 이미지
+        nickNameTextField.text = user.name
+        // 블로그 링크
+        blogLinkTextField.text = blog.url
+        // 블로그 타이틀
+        blogTitleImageLabel = DefaultImageLabel(
+            icon: UIImage(systemName: "book.fill"),
+            text: "말차맛 개발공부"
+        )
     }
 }
