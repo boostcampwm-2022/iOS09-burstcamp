@@ -13,11 +13,9 @@ final class MyPageEditViewController: UIViewController {
 
     // MARK: - Properties
 
-    enum PHPickerPolicy {
+    private enum PHPickerPolicy {
         static let selectionLimit = 1
     }
-
-    private lazy var viewHeight = view.frame.height
 
     private var myPageEditView: MyPageEditView {
         guard let view = view as? MyPageEditView else {
@@ -92,7 +90,7 @@ final class MyPageEditViewController: UIViewController {
         let output = viewModel.transform(input: input, cancelBag: &cancelBag)
         output.currentUserInfo
             .sink { userInfo, blogInfo in
-                self.myPageEditView.setCurrentUserInfo(user: userInfo, blog: blogInfo)
+                self.myPageEditView.updateCurrentUserInfo(user: userInfo, blog: blogInfo)
             }
             .store(in: &cancelBag)
 
@@ -116,10 +114,6 @@ final class MyPageEditViewController: UIViewController {
                 self.present(self.phpickerViewController, animated: true)
             }
             .store(in: &cancelBag)
-    }
-
-    private func setBecomeFirstResponder(textField: UITextField) {
-        textField.becomeFirstResponder()
     }
 }
 
@@ -184,7 +178,7 @@ extension MyPageEditViewController {
         ] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
-            let bottomBlankHeight = viewHeight - myPageEditView.editStackView.frame.maxY
+            let bottomBlankHeight = view.frame.height - myPageEditView.editStackView.frame.maxY
             let viewY = 0 - keyboardHeight + bottomBlankHeight - Constant.space12.cgFloat
             self.view.frame.origin.y = viewY
         }

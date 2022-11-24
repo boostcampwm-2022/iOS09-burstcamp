@@ -10,8 +10,9 @@ import UIKit
 final class DefaultImageLabel: UILabel {
 
     init(
-        frame: CGRect = .zero,
         icon: UIImage?,
+        text: String,
+        frame: CGRect = .zero,
         iconBounds: CGRect = CGRect(
             x: Constant.zero,
             y: Constant.spaceMinus2,
@@ -19,7 +20,6 @@ final class DefaultImageLabel: UILabel {
             height: Constant.space12
         ),
         iconColor: UIColor = .systemGray2,
-        text: String,
         font: UIFont = .regular12,
         textColor: UIColor = .systemGray2
     ) {
