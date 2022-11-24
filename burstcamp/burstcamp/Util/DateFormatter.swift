@@ -8,8 +8,10 @@
 import Foundation
 
 struct DateFormatter {
+}
 
-    static func time(pubDate: Date) -> String {
+extension Date {
+    static func relativeTime(pubDate: Date) -> String {
         let now = Date()
         let interval = Int(now.timeIntervalSince(pubDate))
         switch interval {

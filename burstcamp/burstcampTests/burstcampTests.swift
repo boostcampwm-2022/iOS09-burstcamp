@@ -21,114 +21,90 @@ final class burstcampTests: XCTestCase {
 
     func test_시간포매팅_1초() throws {
         let pubDate = Date(timeIntervalSinceNow: -1)
-        let result = DateFormatter.time(pubDate: pubDate)
+        let result = Date.relativeTime(pubDate: pubDate)
         XCTAssertEqual(result, "방금 전")
     }
 
     func test_시간포매팅_30초() throws {
         let pubDate = Date(timeIntervalSinceNow: -30)
-        let result = DateFormatter.time(pubDate: pubDate)
+        let result = Date.relativeTime(pubDate: pubDate)
         XCTAssertEqual(result, "방금 전")
     }
 
     func test_시간포매팅_40초() throws {
         let pubDate = Date(timeIntervalSinceNow: -40)
-        let result = DateFormatter.time(pubDate: pubDate)
+        let result = Date.relativeTime(pubDate: pubDate)
         XCTAssertEqual(result, "방금 전")
     }
-    func test_시간포매팅_분전_01() throws {
-        let today = Date()
-        let one_day_before = Date(timeIntervalSinceNow: -86400)
-        let pubDate = one_day_before
-        let result = DateFormatter.time(pubDate: pubDate)
+    func test_시간포매팅_1분전() throws {
+        let pubDate = Date(timeIntervalSinceNow: -61)
+        let result = Date.relativeTime(pubDate: pubDate)
         XCTAssertEqual(result, "1분 전")
     }
 
     func test_시간포매팅_분전_02() throws {
-        let today = Date()
-        let one_day_before = Date(timeIntervalSinceNow: -86400)
-        let pubDate = one_day_before
-        let result = DateFormatter.time(pubDate: pubDate)
+        let pubDate = Date(timeIntervalSinceNow: -86400)
+        let result = Date.relativeTime(pubDate: pubDate)
         XCTAssertEqual(result, "32분 전")
     }
 
     func test_시간포매팅_분전_03() throws {
-        let today = Date()
-        let one_day_before = Date(timeIntervalSinceNow: -86400)
-        let pubDate = one_day_before
-        let result = DateFormatter.time(pubDate: pubDate)
+        let pubDate = Date(timeIntervalSinceNow: -86400)
+        let result = Date.relativeTime(pubDate: pubDate)
         XCTAssertEqual(result, "59분 전")
     }
 
     func test_시간포매팅_시간전_01() throws {
-        let today = Date()
-        let one_day_before = Date(timeIntervalSinceNow: -86400)
-        let pubDate = one_day_before
-        let result = DateFormatter.time(pubDate: pubDate)
+        let pubDate = Date(timeIntervalSinceNow: -86400)
+        let result = Date.relativeTime(pubDate: pubDate)
         XCTAssertEqual(result, "1시간 전")
     }
 
     func test_시간포매팅_시간전_02() throws {
-        let today = Date()
-        let one_day_before = Date(timeIntervalSinceNow: -86400)
-        let pubDate = one_day_before
-        let result = DateFormatter.time(pubDate: pubDate)
+        let pubDate = Date(timeIntervalSinceNow: -86400)
+        let result = Date.relativeTime(pubDate: pubDate)
         XCTAssertEqual(result, "12시간 전")
     }
 
     func test_시간포매팅_시간전_03() throws {
-        let today = Date()
-        let one_day_before = Date(timeIntervalSinceNow: -86400)
-        let pubDate = one_day_before
-        let result = DateFormatter.time(pubDate: pubDate)
+        let pubDate = Date(timeIntervalSinceNow: -86400)
+        let result = Date.relativeTime(pubDate: pubDate)
         XCTAssertEqual(result, "23시간 전")
     }
 
     func test_시간포매팅_일전_01() throws {
-        let today = Date()
-        let one_day_before = Date(timeIntervalSinceNow: -86400)
-        let pubDate = one_day_before
-        let result = DateFormatter.time(pubDate: pubDate)
+        let pubDate = Date(timeIntervalSinceNow: -86400)
+        let result = Date.relativeTime(pubDate: pubDate)
         XCTAssertEqual(result, "4일 전")
     }
 
     func test_시간포매팅_일전_02() throws {
-        let today = Date()
-        let one_day_before = Date(timeIntervalSinceNow: -86400)
-        let pubDate = one_day_before
-        let result = DateFormatter.time(pubDate: pubDate)
+        let pubDate = Date(timeIntervalSinceNow: -86400)
+        let result = Date.relativeTime(pubDate: pubDate)
         XCTAssertEqual(result, "1일 전")
     }
 
     func test_시간포매팅_일전_03() throws {
-        let today = Date()
-        let one_day_before = Date(timeIntervalSinceNow: -86400)
-        let pubDate = one_day_before
-        let result = DateFormatter.time(pubDate: pubDate)
+        let pubDate = Date(timeIntervalSinceNow: -86400)
+        let result = Date.relativeTime(pubDate: pubDate)
         XCTAssertEqual(result, "6일 전")
     }
 
     func test_시간포매팅_특정날짜_01() throws {
-        let today = Date()
-        let one_day_before = Date(timeIntervalSinceNow: -86400)
-        let pubDate = one_day_before
-        let result = DateFormatter.time(pubDate: pubDate)
+        let pubDate = Date(timeIntervalSinceNow: -86400)
+        let result = Date.relativeTime(pubDate: pubDate)
         XCTAssertEqual(result, "10월 29일")
     }
 
     func test_시간포매팅_특정날짜_02() throws {
-        let today = Date()
-        let one_day_before = Date(timeIntervalSinceNow: -86400)
-        let pubDate = one_day_before
-        let result = DateFormatter.time(pubDate: pubDate)
+        let pubDate = Date(timeIntervalSinceNow: -86400)
+        let result = Date.relativeTime(pubDate: pubDate)
         XCTAssertEqual(result, "11월 04일")
     }
 
     func test_시간포매팅_특정날짜_03() throws {
-        let today = Date()
-        let one_day_before = Date(timeIntervalSinceNow: -86400)
-        let pubDate = one_day_before
-        let result = DateFormatter.time(pubDate: pubDate)
+        let pubDate = Date(timeIntervalSinceNow: -86400)
+        let result = Date.relativeTime(pubDate: pubDate)
         XCTAssertEqual(result, "11월 16일")
     }
 }
