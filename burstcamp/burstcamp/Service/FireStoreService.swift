@@ -10,10 +10,11 @@ import Foundation
 
 final class FireStoreService {
 
+    // MARK: - User
+
     // User 저장
 
-    static func save(user: User)
-    -> AnyPublisher<User, NetworkError> {
+    static func save(user: User) -> AnyPublisher<User, NetworkError> {
         let baseURL = [
             FireStoreURL.baseURL,
             FireStoreURL.documentURL,
@@ -23,7 +24,7 @@ final class FireStoreService {
         return URLSessionService.request(
             urlString: baseURL,
             httpMethod: .POST,
-            httpHeaders: [HTTPHeader.contentType_textPlain],
+            httpHeaders: [HTTPHeader.contentTypeTextPlain.keyValue],
             queryItems: [URLQueryItem(name: QueryParameter.documentID, value: user.userUUID)],
             httpBody: UserQuery.insert(user: user)
         )
@@ -38,8 +39,7 @@ final class FireStoreService {
 
     // userUUID로 User 가져오기
 
-    static func fetchUser(by userUUID: String)
-    -> AnyPublisher<User, NetworkError> {
+    static func fetchUser(by userUUID: String) -> AnyPublisher<User, NetworkError> {
         let baseURL = [
             FireStoreURL.baseURL,
             FireStoreURL.documentURL,
@@ -49,7 +49,7 @@ final class FireStoreService {
         return URLSessionService.request(
             urlString: baseURL,
             httpMethod: .POST,
-            httpHeaders: [HTTPHeader.contentType_textPlain.keyValue],
+            httpHeaders: [HTTPHeader.contentTypeTextPlain.keyValue],
             httpBody: UserQuery.select(by: userUUID)
         )
         .decode(type: [FireStoreResult<UserDocumentResult>].self, decoder: JSONDecoder())
