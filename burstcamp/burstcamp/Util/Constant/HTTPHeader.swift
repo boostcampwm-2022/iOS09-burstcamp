@@ -8,23 +8,23 @@
 import Foundation
 
 enum HTTPHeader {
-    case contentType_applicationJSON
-    case accept_applicationJSON
-    case accept_application_vndGithubJSON
-    case authorization_Bearer(token: String)
-    case contentType_textPlain
-    
+    case contentTypeApplicationJSON
+    case acceptApplicationJSON
+    case acceptApplicationVNDGithubJSON
+    case authorizationBearer(token: String)
+    case contentTypeTextPlain
+
     var keyValue: (key: String, value: String) {
         switch self {
-        case .contentType_applicationJSON:
+        case .contentTypeApplicationJSON:
             return (key: "Content-Type", value: "application/json")
-        case .accept_applicationJSON:
+        case .acceptApplicationJSON:
             return (key: "Accept", value: "application/json")
-        case .accept_application_vndGithubJSON:
+        case .acceptApplicationVNDGithubJSON:
             return (key: "Accept", value: "application/vnd.github+json")
-        case .authorization_Bearer(let token):
+        case .authorizationBearer(let token):
             return (key: "Authorization", value: "Bearer \(token)")
-        case .contentType_textPlain:
+        case .contentTypeTextPlain:
             return (key: "Content-Type", value: "text/plain")
         }
     }

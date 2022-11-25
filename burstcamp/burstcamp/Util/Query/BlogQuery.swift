@@ -8,14 +8,14 @@
 import Foundation
 
 enum BlogQuery: Query {
-    
+
     static func insert(blog: Blog) -> Data? {
         let blogDTO = BlogDTO(blog: blog)
         let queryData = [FireStoreField.fields: blogDTO]
-        
+
         return createHttpBody(data: queryData)
     }
-    
+
     // blogUUID로 Blog select
     static func select(by blogUUID: String) -> Data? {
         return """

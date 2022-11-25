@@ -104,8 +104,8 @@ final class LogInManager {
         }
 
         let httpHeaders = [
-            HTTPHeader.contentType_applicationJSON.keyValue,
-            HTTPHeader.accept_applicationJSON.keyValue
+            HTTPHeader.contentTypeApplicationJSON.keyValue,
+            HTTPHeader.acceptApplicationJSON.keyValue
         ]
 
         let request = URLSessionService.request(
@@ -125,9 +125,9 @@ final class LogInManager {
         let urlString = "https:/api.github.com/user"
 
         let httpHeaders = [
-            HTTPHeader.contentType_applicationJSON.keyValue,
-            HTTPHeader.accept_application_vndGithubJSON.keyValue,
-            HTTPHeader.authorization_Bearer(token: token).keyValue
+            HTTPHeader.contentTypeApplicationJSON.keyValue,
+            HTTPHeader.acceptApplicationVNDGithubJSON.keyValue,
+            HTTPHeader.authorizationBearer(token: token).keyValue
         ]
 
         let request = URLSessionService.request(
@@ -149,9 +149,9 @@ final class LogInManager {
         let urlString = "https://api.github.com/orgs/boostcampwm-2022/memberships/\(nickName)"
 
         let httpHeaders = [
-            HTTPHeader.contentType_applicationJSON.keyValue,
-            HTTPHeader.accept_application_vndGithubJSON.keyValue,
-            HTTPHeader.authorization_Bearer(token: token).keyValue
+            HTTPHeader.contentTypeApplicationJSON.keyValue,
+            HTTPHeader.acceptApplicationVNDGithubJSON.keyValue,
+            HTTPHeader.authorizationBearer(token: token).keyValue
         ]
 
         let request = URLSessionService.request(
