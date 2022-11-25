@@ -11,7 +11,7 @@ import Foundation
 // TODO: 임시유저삭제
 let user = User(
     userUUID: "1",
-    nickName: "하늘이",
+    nickname: "하늘이",
     profileImageURL: "",
     domain: .iOS,
     camperID: "S057",

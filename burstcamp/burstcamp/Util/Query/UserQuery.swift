@@ -41,7 +41,7 @@ enum UserQuery: Query {
         return """
         {
             "fields": {
-                "nickname": { "stringValue": "\(user.nickName)" },
+                "nickname": { "stringValue": "\(user.nickname)" },
                 "blogUUID: { "stringValue": "\(user.blogUUID)" },
                 "profileImageURL: { "stringValue: "\(user.profileImageURL)" }
             }

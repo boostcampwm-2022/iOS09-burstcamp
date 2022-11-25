@@ -15,7 +15,7 @@ final class MyPageViewController: UIViewController {
     // TODO: 임시 유저
     private var user = User(
         userUUID: "test",
-        nickName: "NEULiee",
+        nickname: "NEULiee",
         profileImageURL: "",
         domain: .iOS,
         camperID: "S057",

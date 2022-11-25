@@ -9,7 +9,7 @@ import Foundation
 
 struct User: Codable {
     let userUUID: String
-    let nickName: String
+    let nickname: String
     let profileImageURL: String
     let domain: Domain
     let camperID: String

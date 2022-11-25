@@ -40,7 +40,7 @@ struct UserDTO: Codable {
 
     init(user: User) {
         self.userUUID = FireStoreValues.StringValue(value: user.userUUID)
-        self.name = FireStoreValues.StringValue(value: user.nickName)
+        self.name = FireStoreValues.StringValue(value: user.nickname)
         self.profileImageURL = FireStoreValues.StringValue(value: user.profileImageURL)
         self.domain = FireStoreValues.StringValue(value: user.domain.rawValue)
         self.camperID = FireStoreValues.StringValue(value: user.camperID)
@@ -97,7 +97,7 @@ struct UserDTO: Codable {
     func toUser() -> User {
         return User(
             userUUID: userUUID.value,
-            nickName: name.value,
+            nickname: name.value,
             profileImageURL: profileImageURL.value,
             domain: Domain(rawValue: domain.value) ?? .iOS,
             camperID: camperID.value,
