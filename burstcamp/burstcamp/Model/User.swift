@@ -9,12 +9,12 @@ import Foundation
 
 struct User: Codable {
     let userUUID: String
-    let name: String
+    let nickname: String
     let profileImageURL: String
     let domain: Domain
     let camperID: String
     let blogUUID: String
     let signupDate: String
     let scrapFeedUUIDs: [String]
-    let isPushNotification: Bool
+    let isPushOn: Bool
 }

@@ -14,66 +14,50 @@ final class FireStoreService {
 
     static func save(user: User)
     -> AnyPublisher<User, NetworkError> {
-        let endPoint = [
+        let baseURL = [
             FireStoreURL.baseURL,
             FireStoreURL.documentURL,
-            FireStoreCollection.user.path,
-            QueryParameter.documentID,
-            user.userUUID
+            FireStoreCollection.user.path
         ].joined()
 
-        guard let url = URL(string: endPoint)
-        else { return Fail(error: NetworkError.urlError)
-            .eraseToAnyPublisher() }
-
-        let saveUserRequest = URLSessionService.makeRequest(
-            url: url,
+        return URLSessionService.request(
+            urlString: baseURL,
             httpMethod: .POST,
-            httpBody: UserQuery.saveQuery(user: user),
-            httpHeaders: [(key: "Content-Type", value: "text/plain")]
+            httpHeaders: [HTTPHeader.contentType_textPlain],
+            queryItems: [URLQueryItem(name: QueryParameter.documentID, value: user.userUUID)],
+            httpBody: UserQuery.insert(user: user)
         )
-
-        return URLSessionService
-            .request(with: saveUserRequest)
-            .decode(type: DocumentResult.self, decoder: JSONDecoder())
-            .mapError { _ in NetworkError.decodeError }
-            .map { documentResult in
-                let userDTO = documentResult.fields
-                return userDTO.toUser()
-            }
-            .eraseToAnyPublisher()
+        .decode(type: UserDocumentResult.self, decoder: JSONDecoder())
+        .mapError { _ in NetworkError.responseDecoingError }
+        .map { documentResult in
+            let userDTO = documentResult.fields
+            return userDTO.toUser()
+        }
+        .eraseToAnyPublisher()
     }
 
     // userUUID로 User 가져오기
 
     static func fetchUser(by userUUID: String)
     -> AnyPublisher<User, NetworkError> {
-        let endPoint = [
+        let baseURL = [
             FireStoreURL.baseURL,
             FireStoreURL.documentURL,
             FireStoreURL.runQuery
         ].joined()
 
-        guard let url = URL(string: endPoint)
-        else {
-            return Fail(error: NetworkError.urlError).eraseToAnyPublisher()
-        }
-
-        let fetchUserRequest = URLSessionService.makeRequest(
-            url: url,
+        return URLSessionService.request(
+            urlString: baseURL,
             httpMethod: .POST,
-            httpBody: UserQuery.selectUser(by: userUUID),
-            httpHeaders: [(key: "Content-Type", value: "text/plain")]
+            httpHeaders: [HTTPHeader.contentType_textPlain.keyValue],
+            httpBody: UserQuery.select(by: userUUID)
         )
-
-        return URLSessionService
-            .request(with: fetchUserRequest)
-            .decode(type: [FireStoreResult].self, decoder: JSONDecoder())
-            .mapError { _ in NetworkError.decodeError }
-            .map { fireStoreResult in
-                let userDTO = fireStoreResult[0].document.fields
-                return userDTO.toUser()
-            }
-            .eraseToAnyPublisher()
+        .decode(type: [FireStoreResult<UserDocumentResult>].self, decoder: JSONDecoder())
+        .mapError { _ in NetworkError.responseDecoingError }
+        .map { fireStoreResult in
+            let userDTO = fireStoreResult[0].document.fields
+            return userDTO.toUser()
+        }
+        .eraseToAnyPublisher()
     }
 }

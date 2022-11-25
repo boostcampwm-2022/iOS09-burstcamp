@@ -15,14 +15,14 @@ final class MyPageViewController: UIViewController {
     // TODO: 임시 유저
     private var user = User(
         userUUID: "test",
-        name: "NEULiee",
+        nickname: "NEULiee",
         profileImageURL: "",
         domain: .iOS,
         camperID: "S057",
         blogUUID: "",
         signupDate: "",
         scrapFeedUUIDs: [],
-        isPushNotification: false
+        isPushOn: false
     )
 
     private var myPageView: MyPageView {
@@ -98,7 +98,6 @@ final class MyPageViewController: UIViewController {
 
         toastMessagePublisher
             .sink { message in
-                print(message)
                 self.showToastMessage(text: message)
             }
             .store(in: &cancelBag)
