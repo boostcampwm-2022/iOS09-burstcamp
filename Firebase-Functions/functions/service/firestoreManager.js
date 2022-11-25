@@ -1,6 +1,6 @@
 import { initializeApp, getApps } from 'firebase-admin/app';
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
-import { fetchParsedRSSList } from './feedAPI.js';
+import { fetchContent, fetchParsedRSSList } from './feedAPI.js';
 import { logger } from 'firebase-functions';
 import '../util.js';
 
@@ -42,13 +42,14 @@ async function updateFeedDBFromSingleBlog(parsedRSS) {
  * @param {JSON} feed RSS를 JSON으로 파싱한 정보
  */
 async function createFeedDataIfNeeded(docRef, blogUUID, feed) {
+	const content = await fetchContent(feed.link)
 	docRef.set({
 		// writerUUID: writerUUID,
 		blogUUID: blogUUID,
 		title: feed.title,
 		url: feed.link,
 		thumbnail: feed.thumbnail,
-		content: feed.content,
+		content: content,
 		pubDate: Timestamp.fromDate(new Date(feed.pubDate)),
 		regDate: Timestamp.now(),
 	});
