@@ -124,6 +124,7 @@
 		D8C3AA2329304F70008EE77C /* BlogDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3AA2229304F70008EE77C /* BlogDTO.swift */; };
 		D8C3AA2529304FB9008EE77C /* FireStoreResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3AA2429304FB9008EE77C /* FireStoreResult.swift */; };
 		D8C3AA27293059F7008EE77C /* BlogQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3AA26293059F7008EE77C /* BlogQuery.swift */; };
+		D8C3AA2929305C05008EE77C /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3AA2829305C05008EE77C /* HTTPHeader.swift */; };
 		D8E02D6B292C981C00C1E59B /* AuthCoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E02D6A292C981C00C1E59B /* AuthCoordinatorEvent.swift */; };
 /* End PBXBuildFile section */
 
@@ -249,6 +250,7 @@
 		D8C3AA2229304F70008EE77C /* BlogDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogDTO.swift; sourceTree = "<group>"; };
 		D8C3AA2429304FB9008EE77C /* FireStoreResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreResult.swift; sourceTree = "<group>"; };
 		D8C3AA26293059F7008EE77C /* BlogQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogQuery.swift; sourceTree = "<group>"; };
+		D8C3AA2829305C05008EE77C /* HTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
 		D8E02D6A292C981C00C1E59B /* AuthCoordinatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinatorEvent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -675,6 +677,7 @@
 				D88295EE292A43EB005B4273 /* NetworkError.swift */,
 				D88295FB292A4452005B4273 /* HTTPMethod.swift */,
 				D84C812D292E590300C984E8 /* MyPageEditValidationResult.swift */,
+				D8C3AA2829305C05008EE77C /* HTTPHeader.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -1017,6 +1020,7 @@
 				D8C3AA27293059F7008EE77C /* BlogQuery.swift in Sources */,
 				B50A27E429279F5D00DF3E1F /* APIKey.swift in Sources */,
 				B50A27ED29279F5D00DF3E1F /* NormalFeedCell.swift in Sources */,
+				D8C3AA2929305C05008EE77C /* HTTPHeader.swift in Sources */,
 				141344D6292F801100187B86 /* Date+FormatString.swift in Sources */,
 				D8494D462927C97E008157F1 /* MyPageView.swift in Sources */,
 				D8494D562927D6EB008157F1 /* DefaultBadgeView.swift in Sources */,

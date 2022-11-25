@@ -23,7 +23,7 @@ final class FireStoreService {
         return URLSessionService.request(
             urlString: baseURL,
             httpMethod: .POST,
-            httpHeaders: [(key: "Content-Type", value: "text/plain")],
+            httpHeaders: [HTTPHeader.contentType_textPlain],
             queryItems: [URLQueryItem(name: QueryParameter.documentID, value: user.userUUID)],
             httpBody: UserQuery.insert(user: user)
         )
@@ -49,7 +49,7 @@ final class FireStoreService {
         return URLSessionService.request(
             urlString: baseURL,
             httpMethod: .POST,
-            httpHeaders: [(key: "Content-Type", value: "text/plain")],
+            httpHeaders: [HTTPHeader.contentType_textPlain.keyValue],
             httpBody: UserQuery.select(by: userUUID)
         )
         .decode(type: [FireStoreResult<UserDocumentResult>].self, decoder: JSONDecoder())
