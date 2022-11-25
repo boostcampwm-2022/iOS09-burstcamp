@@ -1069,12 +1069,9 @@
 				B50A27F629279F5D00DF3E1F /* AuthCoordinator.swift in Sources */,
 				D8494D542927D0DC008157F1 /* User.swift in Sources */,
 				B50A27EA29279F5D00DF3E1F /* NormalFeedCellMain.swift in Sources */,
-<<<<<<< develop
 				141344D0292F800300187B86 /* UIView+addSubViews.swift in Sources */,
-=======
 				B50A27D329279F5D00DF3E1F /* UIFont+FontSet.swift in Sources */,
 				B5E0D94C292F750D001727F5 /* FeedContentWebView.swift in Sources */,
->>>>>>> feat: 보기편한 webView 구현 #95
 				B50A27FC29279F5D00DF3E1F /* AppCoordinatorEvent.swift in Sources */,
 				B50A27E229279F5D00DF3E1F /* LogInManager.swift in Sources */,
 				B50A27F529279F5D00DF3E1F /* AppCoordinator.swift in Sources */,
