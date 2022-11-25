@@ -27,7 +27,7 @@ final class FireStoreService {
             queryItems: [URLQueryItem(name: QueryParameter.documentID, value: user.userUUID)],
             httpBody: UserQuery.insert(user: user)
         )
-        .decode(type: DocumentResult.self, decoder: JSONDecoder())
+        .decode(type: UserDocumentResult.self, decoder: JSONDecoder())
         .mapError { _ in NetworkError.responseDecoingError }
         .map { documentResult in
             let userDTO = documentResult.fields
@@ -52,7 +52,7 @@ final class FireStoreService {
             httpHeaders: [(key: "Content-Type", value: "text/plain")],
             httpBody: UserQuery.select(by: userUUID)
         )
-        .decode(type: [FireStoreResult].self, decoder: JSONDecoder())
+        .decode(type: [FireStoreResult<UserDocumentResult>].self, decoder: JSONDecoder())
         .mapError { _ in NetworkError.responseDecoingError }
         .map { fireStoreResult in
             let userDTO = fireStoreResult[0].document.fields

@@ -21,7 +21,7 @@ let user = User(
     isPushOn: false
 )
 
-let blog = Blog(userUUID: "1", url: "", rssURL: "", title: "")
+let blog = Blog(blogUUID: "123", userUUID: "1", url: "", rssURL: "", title: "")
 
 final class MyPageEditViewModel {
 

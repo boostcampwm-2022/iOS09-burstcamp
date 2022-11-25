@@ -7,11 +7,7 @@
 
 import Foundation
 
-struct FireStoreResult: Decodable {
-    let document: DocumentResult
-}
-
-struct DocumentResult: Decodable {
+struct UserDocumentResult: Decodable {
     let fields: UserDTO
 }
 

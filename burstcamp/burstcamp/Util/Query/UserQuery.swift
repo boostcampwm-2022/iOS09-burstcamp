@@ -17,12 +17,12 @@ enum UserQuery: Query {
         return createHttpBody(data: queryData)
     }
 
-    // uuid로 user select
+    // userUUID로 user select
     static func select(by userUUID: String) -> Data? {
         return """
         {
             "structuredQuery": {
-                "from": { "collectionId": "User" },
+                "from": { "collectionId": "\(FireStoreCollection.user.rawValue)" },
                 "where": {
                     "fieldFilter": {
                         "field": { "fieldPath": "userUUID" },
