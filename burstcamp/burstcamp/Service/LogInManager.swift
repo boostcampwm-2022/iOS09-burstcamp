@@ -59,7 +59,7 @@ final class LogInManager {
 
     func logIn(code: String) {
         var token: String = ""
-        var nickName: String = ""
+        var nickname: String = ""
 
         requestGithubAccessToken(code: code)
             .map { $0.accessToken }
@@ -69,8 +69,8 @@ final class LogInManager {
             }
             .map { $0.login }
             .flatMap { name -> AnyPublisher<GithubMembership, NetworkError> in
-                nickName = name
-                return self.getOrganizationMembership(nickName: nickName, token: token)
+                nickname = name
+                return self.getOrganizationMembership(nickname: nickname, token: token)
             }
             .receive(on: DispatchQueue.main)
             .sink { result in
@@ -158,10 +158,10 @@ final class LogInManager {
     }
 
     func getOrganizationMembership(
-        nickName: String,
+        nickname: String,
         token: String
     ) -> AnyPublisher<GithubMembership, NetworkError> {
-        let urlString = "https://api.github.com/orgs/boostcampwm-2022/memberships/\(nickName)"
+        let urlString = "https://api.github.com/orgs/boostcampwm-2022/memberships/\(nickname)"
 
         guard let url = URL(string: urlString)
         else {
