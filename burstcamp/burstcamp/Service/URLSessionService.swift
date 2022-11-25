@@ -10,43 +10,72 @@ import Foundation
 
 final class URLSessionService {
 
-    static func makeRequest(
-        url: URL,
+    private static func makeRequest(
+        urlString: String,
         httpMethod: HttpMethod,
-        httpBody: Data? = nil,
-        httpHeaders: [(key: String, value: String)]
-    ) -> URLRequest {
+        httpHeaders: [(key: String, value: String)]?,
+        queryItems: [URLQueryItem],
+        httpBody: Data?
+    ) throws -> URLRequest {
+        var urlComponent = URLComponents(string: urlString)
+        urlComponent?.queryItems = queryItems
+
+        guard let url = urlComponent?.url else { throw NetworkError.invalidURLError }
+
         var request = URLRequest(url: url)
-        httpHeaders.forEach { httpHeader in
+        request.httpMethod = httpMethod.rawValue
+        httpHeaders?.forEach { httpHeader in
             request.addValue(httpHeader.value, forHTTPHeaderField: httpHeader.key)
         }
-        request.httpMethod = httpMethod.rawValue
-        request.httpBody = httpBody
+        if let httpBody = httpBody {
+            request.httpBody = httpBody
+        }
 
         return request
     }
 
-    static func request(with request: URLRequest)
-    -> AnyPublisher<Data, NetworkError> {
+    static func request(
+        urlString: String,
+        httpMethod: HttpMethod,
+        httpHeaders: [(key: String, value: String)]? = nil,
+        queryItems: [URLQueryItem] = [],
+        httpBody: Data? = nil
+    ) -> AnyPublisher<Data, NetworkError> {
+
+        guard let request = try? makeRequest(
+            urlString: urlString,
+            httpMethod: httpMethod,
+            httpHeaders: httpHeaders,
+            queryItems: queryItems,
+            httpBody: httpBody
+        )
+        else {
+            return Fail(error: NetworkError.unknownError)
+                .eraseToAnyPublisher()
+        }
+
         return URLSession.shared
             .dataTaskPublisher(for: request)
             .tryMap { data, response -> Data in
-                if let httpResponse = response as? HTTPURLResponse {
-                    switch httpResponse.statusCode {
-                    case 200...299:
-                        print(httpResponse.statusCode)
-                        return data
-                    default:
-                        print(httpResponse.statusCode)
-                        throw NetworkError.error(
-                            statusCode: httpResponse.statusCode
-                        )
+                if let response = response as? HTTPURLResponse {
+                    switch response.statusCode {
+                    case 200...299: return data
+                    default: throw self.makeNetworkError(errorCode: response.statusCode)
                     }
+                }
+                return data
+            }
+            .mapError { error in
+                if let error = error as? NetworkError {
+                    return error
                 } else {
-                    throw NetworkError.unknown()
+                    return NetworkError.unknownError
                 }
             }
-            .mapError { NetworkError.unknown($0.localizedDescription) }
             .eraseToAnyPublisher()
+    }
+
+    private static func makeNetworkError(errorCode: Int) -> NetworkError {
+        return .init(rawValue: errorCode) ?? .unknownError
     }
 }

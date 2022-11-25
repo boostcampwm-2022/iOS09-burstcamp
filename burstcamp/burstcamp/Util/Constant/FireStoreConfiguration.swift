@@ -33,5 +33,5 @@ enum FireStoreField {
 }
 
 enum QueryParameter {
-    static let documentID = "?documentId="
+    static let documentID = "documentId"
 }

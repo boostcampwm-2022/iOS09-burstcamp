@@ -122,6 +122,10 @@
 		D8C38672292B88DE005A2563 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C38671292B88DE005A2563 /* UserDefaultsManager.swift */; };
 		D8C38674292B8D82005A2563 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C38673292B8D82005A2563 /* Appearance.swift */; };
 		D8C38676292B8DB6005A2563 /* DarkmodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C38675292B8DB6005A2563 /* DarkmodeManager.swift */; };
+		D8C3AA2329304F70008EE77C /* BlogDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3AA2229304F70008EE77C /* BlogDTO.swift */; };
+		D8C3AA2529304FB9008EE77C /* FireStoreResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3AA2429304FB9008EE77C /* FireStoreResult.swift */; };
+		D8C3AA27293059F7008EE77C /* BlogQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3AA26293059F7008EE77C /* BlogQuery.swift */; };
+		D8C3AA2929305C05008EE77C /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3AA2829305C05008EE77C /* HTTPHeader.swift */; };
 		D8E02D6B292C981C00C1E59B /* AuthCoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E02D6A292C981C00C1E59B /* AuthCoordinatorEvent.swift */; };
 /* End PBXBuildFile section */
 
@@ -245,6 +249,10 @@
 		D8C38671292B88DE005A2563 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		D8C38673292B8D82005A2563 /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		D8C38675292B8DB6005A2563 /* DarkmodeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkmodeManager.swift; sourceTree = "<group>"; };
+		D8C3AA2229304F70008EE77C /* BlogDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogDTO.swift; sourceTree = "<group>"; };
+		D8C3AA2429304FB9008EE77C /* FireStoreResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreResult.swift; sourceTree = "<group>"; };
+		D8C3AA26293059F7008EE77C /* BlogQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogQuery.swift; sourceTree = "<group>"; };
+		D8C3AA2829305C05008EE77C /* HTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
 		D8E02D6A292C981C00C1E59B /* AuthCoordinatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinatorEvent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -671,6 +679,7 @@
 				D88295EE292A43EB005B4273 /* NetworkError.swift */,
 				D88295FB292A4452005B4273 /* HTTPMethod.swift */,
 				D84C812D292E590300C984E8 /* MyPageEditValidationResult.swift */,
+				D8C3AA2829305C05008EE77C /* HTTPHeader.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -685,6 +694,8 @@
 				D8C38673292B8D82005A2563 /* Appearance.swift */,
 				D84452FB292DB7DE008E811B /* CellIndexPath.swift */,
 				D84C812F292F00D800C984E8 /* Blog.swift */,
+				D8C3AA2229304F70008EE77C /* BlogDTO.swift */,
+				D8C3AA2429304FB9008EE77C /* FireStoreResult.swift */,
 				141344DA292F82BE00187B86 /* Feed.swift */,
 			);
 			path = Model;
@@ -803,6 +814,7 @@
 				D88295F5292A4428005B4273 /* FireStoreValues.swift */,
 				D88295F9292A4448005B4273 /* Query.swift */,
 				D88295F1292A4419005B4273 /* UserQuery.swift */,
+				D8C3AA26293059F7008EE77C /* BlogQuery.swift */,
 			);
 			path = Query;
 			sourceTree = "<group>";
@@ -987,6 +999,7 @@
 			files = (
 				D84C8130292F00D800C984E8 /* Blog.swift in Sources */,
 				3B061FE5292A1F1E00BFA71D /* SignUpBlogViewController.swift in Sources */,
+				D8C3AA2529304FB9008EE77C /* FireStoreResult.swift in Sources */,
 				B5DAD681292E58BF00C4A126 /* DefaultMultilLineLabel.swift in Sources */,
 				B50A27DC29279F5D00DF3E1F /* Fonts+Generated.swift in Sources */,
 				3B061FDD2928E8E300BFA71D /* SignUpCamperIDViewController.swift in Sources */,
@@ -1006,8 +1019,11 @@
 				D84452FC292DB7DE008E811B /* CellIndexPath.swift in Sources */,
 				D88295EB292A43CD005B4273 /* FireStoreConfiguration.swift in Sources */,
 				D84452E7292C9A54008E811B /* TabBarCoordinatorEvent.swift in Sources */,
+				D8C3AA2329304F70008EE77C /* BlogDTO.swift in Sources */,
+				D8C3AA27293059F7008EE77C /* BlogQuery.swift in Sources */,
 				B50A27E429279F5D00DF3E1F /* APIKey.swift in Sources */,
 				B50A27ED29279F5D00DF3E1F /* NormalFeedCell.swift in Sources */,
+				D8C3AA2929305C05008EE77C /* HTTPHeader.swift in Sources */,
 				141344D6292F801100187B86 /* Date+FormatString.swift in Sources */,
 				D8494D462927C97E008157F1 /* MyPageView.swift in Sources */,
 				D8494D562927D6EB008157F1 /* DefaultBadgeView.swift in Sources */,

@@ -86,10 +86,9 @@ final class LogInManager {
     func requestGithubAccessToken(code: String) -> AnyPublisher<GithubToken, NetworkError> {
         let urlString = "https://github.com/login/oauth/access_token"
 
-        guard let githubAPIKey = githubAPIKey,
-              let url = URL(string: urlString)
+        guard let githubAPIKey = githubAPIKey
         else {
-            return Fail(error: NetworkError.urlError).eraseToAnyPublisher()
+            return Fail(error: NetworkError.unknownError).eraseToAnyPublisher()
         }
 
         let bodyInfos: [String: String] = [
@@ -100,49 +99,46 @@ final class LogInManager {
 
         guard let bodyData = try? JSONSerialization.data(withJSONObject: bodyInfos)
         else {
-            return Fail(error: NetworkError.encodeError).eraseToAnyPublisher()
+            return Fail(error: NetworkError.encodingError)
+                .eraseToAnyPublisher()
         }
 
         let httpHeaders = [
-            (key: "Content-Type", value: "application/json"),
-            (key: "Accept", value: "application/json")
+            HTTPHeader.contentTypeApplicationJSON.keyValue,
+            HTTPHeader.acceptApplicationJSON.keyValue
         ]
 
-        let request = URLSessionService.makeRequest(
-            url: url,
+        let request = URLSessionService.request(
+            urlString: urlString,
             httpMethod: .POST,
-            httpBody: bodyData,
-            httpHeaders: httpHeaders
+            httpHeaders: httpHeaders,
+            httpBody: bodyData
         )
 
-        return URLSessionService.request(with: request)
+        return request
             .decode(type: GithubToken.self, decoder: JSONDecoder())
-            .mapError { _ in NetworkError.decodeError }
+            .mapError { _ in NetworkError.responseDecoingError }
             .eraseToAnyPublisher()
     }
 
     func requestGithubUserInfo(token: String) -> AnyPublisher<GithubUser, NetworkError> {
         let urlString = "https:/api.github.com/user"
-        guard let url = URL(string: urlString)
-        else {
-            return Fail(error: NetworkError.urlError).eraseToAnyPublisher()
-        }
 
         let httpHeaders = [
-            (key: "Content-Type", value: "application/json"),
-            (key: "Accept", value: "application/vnd.github+json"),
-            (key: "Authorization", value: "Bearer \(token)")
+            HTTPHeader.contentTypeApplicationJSON.keyValue,
+            HTTPHeader.acceptApplicationVNDGithubJSON.keyValue,
+            HTTPHeader.authorizationBearer(token: token).keyValue
         ]
 
-        let request = URLSessionService.makeRequest(
-            url: url,
+        let request = URLSessionService.request(
+            urlString: urlString,
             httpMethod: .GET,
             httpHeaders: httpHeaders
         )
 
-        return URLSessionService.request(with: request)
+        return request
             .decode(type: GithubUser.self, decoder: JSONDecoder())
-            .mapError { _ in NetworkError.decodeError }
+            .mapError { _ in NetworkError.responseDecoingError }
             .eraseToAnyPublisher()
     }
 
@@ -152,26 +148,21 @@ final class LogInManager {
     ) -> AnyPublisher<GithubMembership, NetworkError> {
         let urlString = "https://api.github.com/orgs/boostcampwm-2022/memberships/\(nickName)"
 
-        guard let url = URL(string: urlString)
-        else {
-            return Fail(error: NetworkError.urlError).eraseToAnyPublisher()
-        }
-
         let httpHeaders = [
-            (key: "Content-Type", value: "application/json"),
-            (key: "Accept", value: "application/vnd.github+json"),
-            (key: "Authorization", value: "Bearer \(token)")
+            HTTPHeader.contentTypeApplicationJSON.keyValue,
+            HTTPHeader.acceptApplicationVNDGithubJSON.keyValue,
+            HTTPHeader.authorizationBearer(token: token).keyValue
         ]
 
-        let request = URLSessionService.makeRequest(
-            url: url,
+        let request = URLSessionService.request(
+            urlString: urlString,
             httpMethod: .GET,
             httpHeaders: httpHeaders
         )
 
-        return URLSessionService.request(with: request)
+        return request
             .decode(type: GithubMembership.self, decoder: JSONDecoder())
-            .mapError { _ in NetworkError.decodeError }
+            .mapError { _ in NetworkError.responseDecoingError }
             .eraseToAnyPublisher()
     }
 }

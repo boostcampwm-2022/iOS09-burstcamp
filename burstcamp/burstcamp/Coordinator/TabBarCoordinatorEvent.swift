@@ -15,5 +15,5 @@ enum TabBarCoordinatorEvent {
     // TODO: 탈퇴
     case moveToAuthFlow
 
-    case moveMyPageEditScreenToBackScreen(toastMessage: String = "")
+    case moveMyPageEditScreenToBackScreen(toastMessage: String)
 }
