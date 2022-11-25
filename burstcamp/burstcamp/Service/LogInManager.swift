@@ -117,7 +117,7 @@ final class LogInManager {
 
         return request
             .decode(type: GithubToken.self, decoder: JSONDecoder())
-            .mapError { _ in NetworkError.responseDeoingError }
+            .mapError { _ in NetworkError.responseDecoingError }
             .eraseToAnyPublisher()
     }
 
@@ -138,7 +138,7 @@ final class LogInManager {
 
         return request
             .decode(type: GithubUser.self, decoder: JSONDecoder())
-            .mapError { _ in NetworkError.responseDeoingError }
+            .mapError { _ in NetworkError.responseDecoingError }
             .eraseToAnyPublisher()
     }
 
@@ -162,7 +162,7 @@ final class LogInManager {
 
         return request
             .decode(type: GithubMembership.self, decoder: JSONDecoder())
-            .mapError { _ in NetworkError.responseDeoingError }
+            .mapError { _ in NetworkError.responseDecoingError }
             .eraseToAnyPublisher()
     }
 }

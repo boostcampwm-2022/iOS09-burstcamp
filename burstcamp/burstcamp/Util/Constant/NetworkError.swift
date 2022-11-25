@@ -11,7 +11,7 @@ enum NetworkError: Int, Error, CustomStringConvertible {
 
     var description: String { errorDescription }
 
-    case responseDeoingError
+    case responseDecoingError
     case queryEncodingError
     case decodingError
     case encodingError
@@ -31,7 +31,7 @@ enum NetworkError: Int, Error, CustomStringConvertible {
 
     var errorDescription : String {
         switch self {
-        case .responseDeoingError: return "RESPONSE_DECODING_ERROR"
+        case .responseDecoingError: return "RESPONSE_DECODING_ERROR"
         case .queryEncodingError: return "QUERY_ENCODING_ERROR"
         case .decodingError: return "DECODING_ERROR"
         case .encodingError: return "ENCODING_ERROR"
