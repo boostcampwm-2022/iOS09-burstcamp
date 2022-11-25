@@ -18,6 +18,7 @@
 		141344D6292F801100187B86 /* Date+FormatString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344D3292F801100187B86 /* Date+FormatString.swift */; };
 		141344D7292F801100187B86 /* TimeInterval+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344D4292F801100187B86 /* TimeInterval+.swift */; };
 		141344D9292F803800187B86 /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344D8292F803800187B86 /* UIControl+Combine.swift */; };
+		141344DB292F82BE00187B86 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344DA292F82BE00187B86 /* Feed.swift */; };
 		1422C62F292F08BC00337710 /* BCDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1422C62E292F08BC00337710 /* BCDateFormatter.swift */; };
 		143185E8292B46F9008CE459 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185E7292B46F9008CE459 /* HomeViewModel.swift */; };
 		143185EA292B4A8D008CE459 /* ScrapPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185E9292B4A8D008CE459 /* ScrapPageViewController.swift */; };
@@ -150,6 +151,7 @@
 		141344D3292F801100187B86 /* Date+FormatString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+FormatString.swift"; sourceTree = "<group>"; };
 		141344D4292F801100187B86 /* TimeInterval+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TimeInterval+.swift"; sourceTree = "<group>"; };
 		141344D8292F803800187B86 /* UIControl+Combine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Combine.swift"; sourceTree = "<group>"; };
+		141344DA292F82BE00187B86 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		1422C62E292F08BC00337710 /* BCDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCDateFormatter.swift; sourceTree = "<group>"; };
 		143185E7292B46F9008CE459 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		143185E9292B4A8D008CE459 /* ScrapPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageViewController.swift; sourceTree = "<group>"; };
@@ -694,6 +696,7 @@
 				D84C812F292F00D800C984E8 /* Blog.swift */,
 				D8C3AA2229304F70008EE77C /* BlogDTO.swift */,
 				D8C3AA2429304FB9008EE77C /* FireStoreResult.swift */,
+				141344DA292F82BE00187B86 /* Feed.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1054,6 +1057,7 @@
 				B5DAD67B292E4C6800C4A126 /* FeedDetailViewController.swift in Sources */,
 				D84452EC292CA55F008E811B /* MyPageEditView.swift in Sources */,
 				D8494D522927D086008157F1 /* MyPageProfileView.swift in Sources */,
+				141344DB292F82BE00187B86 /* Feed.swift in Sources */,
 				3B061FDF2928E90400BFA71D /* SignUpCamperIDView.swift in Sources */,
 				B50A27F629279F5D00DF3E1F /* AuthCoordinator.swift in Sources */,
 				D8494D542927D0DC008157F1 /* User.swift in Sources */,

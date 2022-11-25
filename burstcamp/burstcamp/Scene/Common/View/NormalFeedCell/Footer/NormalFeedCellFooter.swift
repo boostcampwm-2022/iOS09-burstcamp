@@ -18,13 +18,13 @@ class NormalFeedCellFooter: UIView {
     private lazy var countLabel = UILabel().then {
         $0.textColor = UIColor.systemGray2
         $0.font = UIFont.regular12
-        $0.text = "20"
+        $0.text = ""
     }
 
     private lazy var timeLabel = UILabel().then {
         $0.textColor = UIColor.systemGray2
         $0.font = UIFont.regular12
-        $0.text = "20분전"
+        $0.text = ""
     }
 
     override init(frame: CGRect) {
@@ -64,6 +64,16 @@ class NormalFeedCellFooter: UIView {
             $0.height.equalToSuperview()
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview()
+        }
+    }
+}
+
+extension NormalFeedCellFooter {
+    func updateView(feed: Feed) {
+        let timeString = BCDateFormatter.relativeTimeString(for: feed.pubDate)
+        DispatchQueue.main.async {
+            self.countLabel.text = "20"
+            self.timeLabel.text = timeString
         }
     }
 }
