@@ -16,6 +16,8 @@ final class LogInManager {
 
     private var cancelBag = Set<AnyCancellable>()
 
+    var logInPublisher = PassthroughSubject<AuthCoordinatorEvent, Never>()
+
     private var githubAPIKey: Github? {
         guard let serviceInfoURL = Bundle.main.url(
             forResource: "Service-Info",
@@ -28,7 +30,12 @@ final class LogInManager {
     }
 
     func isLoggedIn() -> Bool {
+///<<<<<<< Updated upstream
         return true
+///=======
+        // TODO: 로그인 되어있는지 확인
+        return false
+///>>>>>>> Stashed changes
     }
 
     func openGithubLoginView() {
@@ -65,20 +72,24 @@ final class LogInManager {
                 nickName = name
                 return self.getOrganizationMembership(nickName: nickName, token: token)
             }
+            .receive(on: DispatchQueue.main)
             .sink { result in
                 switch result {
                 case .finished:
                     print("finished")
                 case .failure:
-                    //TODO: 부캠 멤버가 아니라면 alert
+                    // TODO: 부캠 멤버가 아니라면 alert
                     print("failure")
                 }
-            } receiveValue: { gitMembership in
+            } receiveValue: { [weak self] gitMembership in
                 print(gitMembership.user.login)
 
-                //TODO: 멤버면서 이미 회원이면
+                // TODO: 멤버면서 이미 회원이면
+//                self?.logInPublisher.send(.moveToTabBarScreen)
 
-                //TODO: 멤버인데 회원 가입해야하면
+                // TODO: 멤버인데 회원 가입해야하면
+                // Signup으로 이동
+                self?.logInPublisher.send(.moveToDomainScreen)
             }
             .store(in: &cancelBag)
     }
