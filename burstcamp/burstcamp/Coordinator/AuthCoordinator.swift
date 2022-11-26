@@ -29,6 +29,18 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
 
     func start() {
         let logInViewController = LogInViewController(viewModel: LogInViewModel())
+        logInViewController.coordinatorPublisher
+            .sink { coordinatorEvent in
+                switch coordinatorEvent {
+                case .moveToDomainScreen:
+                    self.moveToDomainScreen()
+                case .moveToTabBarScreen:
+                    self.moveToTabBarFlow()
+                case .moveToIDScreen, .moveToBlogScreen:
+                    return
+                }
+            }
+            .store(in: &cancelBag)
         navigationController.viewControllers = [logInViewController]
     }
 

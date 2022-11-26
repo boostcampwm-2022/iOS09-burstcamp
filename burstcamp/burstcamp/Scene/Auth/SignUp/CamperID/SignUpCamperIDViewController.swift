@@ -91,7 +91,7 @@ final class SignUpCamperIDViewController: UIViewController {
     @objc func nextButtonTouchUpInside(_ sender: UIButton) {
         sender.alpha = 1.0
 
-        //TODO: 캠퍼ID 중복 확인
+        // TODO: 캠퍼ID 중복 확인
 
         coordinatorPublisher.send((.moveToBlogScreen, viewModel))
     }

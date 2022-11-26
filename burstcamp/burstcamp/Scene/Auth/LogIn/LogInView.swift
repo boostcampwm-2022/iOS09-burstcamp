@@ -14,15 +14,9 @@ final class LogInView: UIView {
     }
 
     private lazy var titleLabel: UILabel = UILabel().then {
-        $0.text = "BOSS"
+        $0.text = "burstcamp"
         $0.font = UIFont.extraBold40
         $0.textColor = UIColor.main
-    }
-
-    private lazy var fullNameLabel: UILabel = UILabel().then {
-        $0.text = "Boostcamp Other StorieS"
-        $0.font = UIFont.bold12
-        $0.textColor = .systemGray2
     }
 
     private lazy var identitySentenceLabel: UILabel = UILabel().then {
@@ -69,15 +63,9 @@ final class LogInView: UIView {
             $0.centerY.equalToSuperview().offset(Constant.spaceMinus72)
         }
 
-        addSubview(fullNameLabel)
-        fullNameLabel.snp.makeConstraints {
-            $0.top.equalTo(titleImage.snp.bottom).offset(Constant.space10)
-            $0.leading.equalToSuperview().offset(Constant.space16)
-        }
-
         addSubview(identitySentenceLabel)
         identitySentenceLabel.snp.makeConstraints {
-            $0.top.equalTo(fullNameLabel.snp.bottom).offset(Constant.space10)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(Constant.space10)
             $0.leading.equalToSuperview().offset(Constant.space16)
         }
 

@@ -93,7 +93,7 @@ final class SignUpBlogViewController: UIViewController {
     @objc private func nextButtonTouchUpInside(_ sender: UIButton) {
         sender.alpha = 1.0
 
-        //TODO: 블로그 주소 검증
+        // TODO: 블로그 주소 검증
 
         coordinatorPublisher.send(.moveToTabBarFlow)
     }

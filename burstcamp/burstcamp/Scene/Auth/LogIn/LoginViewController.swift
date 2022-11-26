@@ -18,6 +18,9 @@ final class LogInViewController: UIViewController {
         return view
     }
 
+    var coordinatorPublisher = PassthroughSubject<AuthCoordinatorEvent, Never>()
+    var cancelBag = Set<AnyCancellable>()
+
     private let viewModel: LogInViewModel
 
     init(viewModel: LogInViewModel) {
@@ -44,6 +47,19 @@ final class LogInViewController: UIViewController {
             action: #selector(loginButtonDidTap),
             for: .touchUpInside
         )
+
+        LogInManager.shared.logInPublisher
+            .sink { logInEvent in
+                switch logInEvent {
+                case .moveToDomainScreen:
+                    self.coordinatorPublisher.send(.moveToDomainScreen)
+                case .moveToTabBarScreen:
+                    self.coordinatorPublisher.send(.moveToTabBarScreen)
+                case .moveToBlogScreen, .moveToIDScreen:
+                    return
+                }
+            }
+            .store(in: &cancelBag)
     }
 
     @objc private func loginButtonDidTap() {
