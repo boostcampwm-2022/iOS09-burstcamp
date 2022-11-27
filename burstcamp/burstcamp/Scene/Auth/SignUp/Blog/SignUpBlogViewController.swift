@@ -100,7 +100,7 @@ final class SignUpBlogViewController: UIViewController {
             user: User(
                 userUUID: viewModel.userUUID,
                 nickname: viewModel.nickname,
-                profileImageURL: "",
+                profileImageURL: "https://github.com/\(viewModel.nickname).png",
                 domain: viewModel.domain,
                 camperID: viewModel.camperID,
                 blogUUID: "",
