@@ -21,4 +21,12 @@ struct UserDefaultsManager {
         else { return .light }
         return currentAppearance
     }
+
+    static func save(etag: String, urlString: String) {
+        UserDefaults.standard.set(etag, forKey: urlString)
+    }
+
+    static func etag(urlString: String) -> String? {
+        return UserDefaults.standard.string(forKey: urlString)
+    }
 }
