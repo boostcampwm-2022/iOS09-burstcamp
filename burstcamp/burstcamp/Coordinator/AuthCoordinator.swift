@@ -10,7 +10,7 @@ import UIKit
 
 protocol AuthCoordinatorProtocol: Coordinator {
     func moveToTabBarFlow()
-    func moveToDomainScreen()
+    func moveToDomainScreen(userUUID: String, nickname: String)
     func moveToIDScreen(viewModel: SignUpViewModel)
     func moveToBlogScreen(viewModel: SignUpViewModel)
     // to 홈 화면
@@ -32,8 +32,8 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
         logInViewController.coordinatorPublisher
             .sink { coordinatorEvent in
                 switch coordinatorEvent {
-                case .moveToDomainScreen:
-                    self.moveToDomainScreen()
+                case .moveToDomainScreen(let userUUID, let nickname):
+                    self.moveToDomainScreen(userUUID: userUUID, nickname: nickname)
                 case .moveToTabBarScreen:
                     self.moveToTabBarFlow()
                 case .moveToIDScreen, .moveToBlogScreen:
@@ -49,12 +49,15 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
         finish()
     }
 
-    func moveToDomainScreen() {
-        let sighUpDomainViewController = SignUpDomainViewController(viewModel: SignUpViewModel())
+    func moveToDomainScreen(userUUID: String, nickname: String) {
+        let sighUpDomainViewController = SignUpDomainViewController(viewModel: SignUpViewModel(userUUID: userUUID, nickname: nickname))
         sighUpDomainViewController.coordinatorPublisher
             .sink { coordinatorEvent, viewModel in
-                if coordinatorEvent == .moveToIDScreen {
+                switch coordinatorEvent {
+                case .moveToIDScreen:
                     self.moveToIDScreen(viewModel: viewModel)
+                default:
+                    return
                 }
             }
             .store(in: &cancelBag)
@@ -65,8 +68,11 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
         let signUpCamperIDViewController = SignUpCamperIDViewController(viewModel: viewModel)
         signUpCamperIDViewController.coordinatorPublisher
             .sink { coordinatorEvent, viewModel in
-                if coordinatorEvent == .moveToBlogScreen {
+                switch coordinatorEvent {
+                case .moveToBlogScreen:
                     self.moveToBlogScreen(viewModel: viewModel)
+                default:
+                    return
                 }
             }
             .store(in: &cancelBag)

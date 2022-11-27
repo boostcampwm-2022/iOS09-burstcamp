@@ -8,6 +8,8 @@
 import Combine
 import UIKit
 
+import FirebaseAuth
+
 final class LogInManager {
 
     static let shared = LogInManager()
@@ -30,8 +32,8 @@ final class LogInManager {
     }
 
     func isLoggedIn() -> Bool {
+        guard Auth.auth().currentUser != nil else { return false }
         return true
-        // TODO: 로그인 되어있는지 확인
     }
 
     func openGithubLoginView() {
@@ -56,6 +58,9 @@ final class LogInManager {
     func logIn(code: String) {
         var token: String = ""
         var nickname: String = ""
+        var userUUID: String {
+            return Auth.auth().currentUser?.uid ?? ""
+        }
 
         requestGithubAccessToken(code: code)
             .map { $0.accessToken }
@@ -68,24 +73,41 @@ final class LogInManager {
                 nickname = name
                 return self.getOrganizationMembership(nickname: nickname, token: token)
             }
+            .flatMap { _ -> AnyPublisher<User, NetworkError> in
+                return FireStoreService.fetchUser(by: userUUID)
+            }
             .receive(on: DispatchQueue.main)
             .sink { result in
                 switch result {
                 case .finished:
                     print("finished")
-                case .failure:
-                    // TODO: 부캠 멤버가 아니라면 alert
-                    print("failure")
+                case .failure(let error):
+
+                    // TODO: switch -> 함수 분리 필요
+                    switch error {
+                    case .responseDecoingError:
+                        /// 멤버 O, 회원가입 X
+                        self.logInPublisher.send(.moveToDomainScreen(userUUID, nickname))
+                    default:
+                        /// 멤버 X
+                        // TODO: alert
+                        print("default")
+                    }
                 }
-            } receiveValue: { [weak self] gitMembership in
-                print(gitMembership.user.login)
+            } receiveValue: { [weak self] user in
 
-                // TODO: 멤버면서 이미 회원이면
-//                self?.logInPublisher.send(.moveToTabBarScreen)
+                /// 멤버 O, 이미 회원가입
+                let credential = GitHubAuthProvider.credential(withToken: token)
 
-                // TODO: 멤버인데 회원 가입해야하면
-                // Signup으로 이동
-                self?.logInPublisher.send(.moveToDomainScreen)
+                Auth.auth().signIn(with: credential) { result, error in
+                    guard result != nil,
+                        error == nil
+                    else {
+                        return
+                    }
+
+                    self?.logInPublisher.send(.moveToTabBarScreen)
+                }
             }
             .store(in: &cancelBag)
     }
