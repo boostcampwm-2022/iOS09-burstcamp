@@ -31,12 +31,9 @@ final class SignUpCamperIDView: UIView {
         $0.font = UIFont.extraBold16
     }
 
-    lazy var idTextField: UITextField = UITextField().then {
-        $0.layer.borderWidth = 1
+    lazy var idTextField: UITextField = DefaultTextField(placeholder: "000").then {
         $0.keyboardType = .numberPad
         $0.becomeFirstResponder()
-        $0.placeholder = "000"
-        $0.addHorizontalPadding()
         $0.inputAccessoryView = toolBar
     }
 
