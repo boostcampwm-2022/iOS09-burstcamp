@@ -36,10 +36,7 @@ final class SignUpCamperIDView: UIView {
         $0.keyboardType = .numberPad
         $0.becomeFirstResponder()
         $0.placeholder = "000"
-        $0.leftView = UIView.paddingView(self)()
-        $0.rightView = UIView.paddingView(self)()
-        $0.leftViewMode = .always
-        $0.rightViewMode = .always
+        $0.addHorizontalPadding()
         $0.inputAccessoryView = toolBar
     }
 
