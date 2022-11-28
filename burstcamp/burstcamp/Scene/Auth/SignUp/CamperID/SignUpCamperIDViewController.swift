@@ -73,6 +73,18 @@ final class SignUpCamperIDViewController: UIViewController {
             action: #selector(nextButtonTouchUpInside(_:)),
             for: .touchUpInside
         )
+
+        viewModel.$isValidateCamperID
+            .sink { isValidateCamperID in
+                if isValidateCamperID {
+                    self.signUpCamperIDView.nextButton.isEnabled = true
+                    self.signUpCamperIDView.nextButton.alpha = 1.0
+                } else {
+                    self.signUpCamperIDView.nextButton.isEnabled = false
+                    self.signUpCamperIDView.nextButton.alpha = 0.3
+                }
+            }
+            .store(in: &cancelBag)
     }
 
     @objc private func idDidChange(_ sender: UITextField) {
@@ -90,9 +102,6 @@ final class SignUpCamperIDViewController: UIViewController {
 
     @objc func nextButtonTouchUpInside(_ sender: UIButton) {
         sender.alpha = 1.0
-
-        // TODO: 캠퍼ID 중복 확인
-
         coordinatorPublisher.send((.moveToBlogScreen, viewModel))
     }
 }

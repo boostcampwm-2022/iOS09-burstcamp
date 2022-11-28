@@ -10,7 +10,11 @@ import Foundation
 
 final class SignUpViewModel {
     @Published var domain: Domain = .iOS
-    var camperID: String = ""
+    @Published var isValidateCamperID: Bool = false
+    @Published var camperID: String = ""
+
+    private var cancelBag = Set<AnyCancellable>()
+
     var blogAddress: String = ""
     let userUUID: String
     let nickname: String
@@ -18,5 +22,13 @@ final class SignUpViewModel {
     init(userUUID: String, nickname: String) {
         self.userUUID = userUUID
         self.nickname = nickname
+        bind()
+    }
+
+    private func bind() {
+        $camperID.sink { camperID in
+            self.isValidateCamperID = camperID.count == 3 ? true : false
+        }
+        .store(in: &cancelBag)
     }
 }

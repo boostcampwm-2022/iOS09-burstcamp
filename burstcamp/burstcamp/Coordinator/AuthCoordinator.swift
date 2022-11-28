@@ -50,7 +50,9 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
     }
 
     func moveToDomainScreen(userUUID: String, nickname: String) {
-        let sighUpDomainViewController = SignUpDomainViewController(viewModel: SignUpViewModel(userUUID: userUUID, nickname: nickname))
+        let sighUpDomainViewController = SignUpDomainViewController(
+            viewModel: SignUpViewModel(userUUID: userUUID, nickname: nickname)
+        )
         sighUpDomainViewController.coordinatorPublisher
             .sink { coordinatorEvent, viewModel in
                 switch coordinatorEvent {

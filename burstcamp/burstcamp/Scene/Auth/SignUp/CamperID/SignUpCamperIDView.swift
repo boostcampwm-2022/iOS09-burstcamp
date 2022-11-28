@@ -7,6 +7,9 @@
 
 import UIKit
 
+import SnapKit
+import Then
+
 final class SignUpCamperIDView: UIView {
 
     lazy var domainLabel: UILabel = UILabel().then {
@@ -33,6 +36,10 @@ final class SignUpCamperIDView: UIView {
         $0.keyboardType = .numberPad
         $0.becomeFirstResponder()
         $0.placeholder = "000"
+        $0.leftView = UIView.paddingView(self)()
+        $0.rightView = UIView.paddingView(self)()
+        $0.leftViewMode = .always
+        $0.rightViewMode = .always
         $0.inputAccessoryView = toolBar
     }
 
