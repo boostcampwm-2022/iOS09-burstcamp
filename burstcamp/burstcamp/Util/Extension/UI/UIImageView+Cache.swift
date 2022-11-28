@@ -8,8 +8,6 @@
 import Combine
 import UIKit
 
-var cancelBag = Set<AnyCancellable>()
-
 extension UIImageView {
 
     func setImage(urlString: String, isDiskCaching: Bool = false) {
@@ -24,6 +22,6 @@ extension UIImageView {
             } receiveValue: { image in
                 self.image = image
             }
-            .store(in: &cancelBag)
+            .store(in: &ImageCacheManager.shared.cancelBag)
     }
 }

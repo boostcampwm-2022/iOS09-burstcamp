@@ -12,7 +12,7 @@ final class ImageCacheManager {
 
     static let shared = ImageCacheManager()
     private var cache = NSCache<NSString, UIImage>()
-    private var cancelBag = Set<AnyCancellable>()
+    var cancelBag = Set<AnyCancellable>()
 
     private init() {}
 
