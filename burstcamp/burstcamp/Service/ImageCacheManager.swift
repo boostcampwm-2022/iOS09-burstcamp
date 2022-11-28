@@ -19,7 +19,7 @@ final class ImageCacheManager {
     func image(
         urlString: String,
         isDiskCaching: Bool
-    ) -> AnyPublisher<UIImage, Never> {
+    ) -> AnyPublisher<UIImage?, Never> {
         // 1. memory cache
         if let image = memoryCachedImage(urlString: urlString) {
             let etag = UserDefaultsManager.etag(urlString: urlString)
@@ -88,7 +88,7 @@ final class ImageCacheManager {
     // MARK: Network request with Etag
 
     private func request(urlString: String, etag: String?, isDisk: Bool)
-    -> AnyPublisher<UIImage, ImageCacheError> {
+    -> AnyPublisher<UIImage?, ImageCacheError> {
         guard let url = URL(string: urlString)
         else { return Fail(error: ImageCacheError.invalidationImageURL).eraseToAnyPublisher() }
 
@@ -97,7 +97,7 @@ final class ImageCacheManager {
 
         return URLSession.shared
             .dataTaskPublisher(for: request)
-            .tryMap { data, response -> Data in
+            .tryMap { data, response -> UIImage? in
                 if let response = response as? HTTPURLResponse {
                     switch response.statusCode {
                     case 200...299:
@@ -108,9 +108,8 @@ final class ImageCacheManager {
                         throw self.makeImageCacheError(by: response.statusCode)
                     }
                 }
-                return data
+                return UIImage(data: data)
             }
-            .compactMap { UIImage(data: $0) }
             .map { image in
                 self.saveInMemoryAndDisk(image: image, urlString: urlString, isDisk: isDisk)
                 return image
@@ -119,7 +118,8 @@ final class ImageCacheManager {
             .eraseToAnyPublisher()
     }
 
-    private func saveInMemoryAndDisk(image: UIImage, urlString: String, isDisk: Bool) {
+    private func saveInMemoryAndDisk(image: UIImage?, urlString: String, isDisk: Bool) {
+        guard let image = image else { return }
         saveInMemory(image: image, urlString: urlString)
         if isDisk {
             saveInDisk(image: image, urlString: urlString)
