@@ -8,14 +8,26 @@
 import Foundation
 
 struct Feed {
-    let camperName: String
-    let camperDomain: String
-    let camperNumber: Int
-    let camperID: String
-    let blogUUID: String
-    let title: String
+    let feedUUID: String
+    let writerUUID: String
+    let feedTitle: Int
     let pubDate: Date
     let url: String
-    let thumbnail: String
+    let thumbnailURL: String
     let content: String
+    let scrapUserUUIDs: [String]
+}
+
+struct MyUser {
+    let userUUID: String
+    let nickname: String
+    let profileImageURL: String
+    let domain: Domain
+    let camperID: String
+    let ordinalNumber: Int
+    let blogURL: String
+    let blogTitle: String
+    let scrapFeedUUIDs: [String]
+    let signupDate: Date
+    let isPushOn: Bool
 }
