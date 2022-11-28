@@ -51,8 +51,8 @@ final class LogInViewController: UIViewController {
         LogInManager.shared.logInPublisher
             .sink { logInEvent in
                 switch logInEvent {
-                case .moveToDomainScreen:
-                    self.coordinatorPublisher.send(.moveToDomainScreen)
+                case .moveToDomainScreen(let userUUID, let nickname):
+                    self.coordinatorPublisher.send(.moveToDomainScreen(userUUID, nickname))
                 case .moveToTabBarScreen:
                     self.coordinatorPublisher.send(.moveToTabBarScreen)
                 case .moveToBlogScreen, .moveToIDScreen:

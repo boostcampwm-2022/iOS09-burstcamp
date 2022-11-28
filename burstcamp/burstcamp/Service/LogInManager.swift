@@ -8,16 +8,22 @@
 import Combine
 import UIKit
 
+import FirebaseAuth
+
 final class LogInManager {
-
+    
     static let shared = LogInManager()
-
+    
     private init () {}
-
+    
     private var cancelBag = Set<AnyCancellable>()
-
+    
     var logInPublisher = PassthroughSubject<AuthCoordinatorEvent, Never>()
-
+    
+    var userUUID: String {
+        return Auth.auth().currentUser?.uid ?? ""
+    }
+    
     private var githubAPIKey: Github? {
         guard let serviceInfoURL = Bundle.main.url(
             forResource: "Service-Info",
@@ -28,35 +34,35 @@ final class LogInManager {
         else { return nil }
         return apiKey.github
     }
-
+    
     func isLoggedIn() -> Bool {
+        guard Auth.auth().currentUser != nil else { return false }
         return true
-        // TODO: 로그인 되어있는지 확인
     }
-
+    
     func openGithubLoginView() {
         let urlString = "https://github.com/login/oauth/authorize"
-
+        
         guard var urlComponent = URLComponents(string: urlString),
               let clientID = githubAPIKey?.clientID
         else {
             return
         }
-
+        
         urlComponent.queryItems = [
             URLQueryItem(name: "client_id", value: clientID),
             URLQueryItem(name: "scope", value: "admin:org")
         ]
-
+        
         guard let url = urlComponent.url else { return }
-
+        
         UIApplication.shared.open(url)
     }
-
+    
     func logIn(code: String) {
         var token: String = ""
         var nickname: String = ""
-
+        
         requestGithubAccessToken(code: code)
             .map { $0.accessToken }
             .flatMap { accessToken -> AnyPublisher<GithubUser, NetworkError> in
@@ -68,26 +74,48 @@ final class LogInManager {
                 nickname = name
                 return self.getOrganizationMembership(nickname: nickname, token: token)
             }
+            .flatMap { _ -> AnyPublisher<User, NetworkError> in
+                return FireStoreService.fetchUser(by: self.userUUID)
+            }
             .receive(on: DispatchQueue.main)
             .sink { result in
                 switch result {
                 case .finished:
                     print("finished")
-                case .failure:
-                    // TODO: 부캠 멤버가 아니라면 alert
-                    print("failure")
+                case .failure(let error):
+                    self.switchError(error: error, nickname: nickname)
                 }
-            } receiveValue: { [weak self] gitMembership in
-                print(gitMembership.user.login)
-
-                // TODO: 멤버면서 이미 회원이면
-//                self?.logInPublisher.send(.moveToTabBarScreen)
-
-                // TODO: 멤버인데 회원 가입해야하면
-                // Signup으로 이동
-                self?.logInPublisher.send(.moveToDomainScreen)
+            } receiveValue: { user in
+                self.signInToFirebase(user: user, token: token)
             }
             .store(in: &cancelBag)
+    }
+    
+    func switchError(error: NetworkError, nickname: String) {
+        // TODO: switch -> 함수 분리 필요
+        switch error {
+        case .responseDecoingError:
+            /// 멤버 O, 회원가입 X
+            self.logInPublisher.send(.moveToDomainScreen(userUUID, nickname))
+        default:
+            /// 멤버 X
+            // TODO: alert
+            print("default")
+        }
+    }
+    
+    func signInToFirebase(user: User, token: String) {
+        let credential = GitHubAuthProvider.credential(withToken: token)
+        
+        Auth.auth().signIn(with: credential) { result, error in
+            guard result != nil,
+                  error == nil
+            else {
+                return
+            }
+            
+            self.logInPublisher.send(.moveToTabBarScreen)
+        }
     }
 
     func requestGithubAccessToken(code: String) -> AnyPublisher<GithubToken, NetworkError> {
