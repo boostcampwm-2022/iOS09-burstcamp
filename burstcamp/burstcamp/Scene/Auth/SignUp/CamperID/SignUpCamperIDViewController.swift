@@ -76,13 +76,9 @@ final class SignUpCamperIDViewController: UIViewController {
 
         viewModel.$isValidateCamperID
             .sink { isValidateCamperID in
-                if isValidateCamperID {
-                    self.signUpCamperIDView.nextButton.isEnabled = true
-                    self.signUpCamperIDView.nextButton.alpha = 1.0
-                } else {
-                    self.signUpCamperIDView.nextButton.isEnabled = false
-                    self.signUpCamperIDView.nextButton.alpha = 0.3
-                }
+                self.signUpCamperIDView.nextButton.isEnabled = isValidateCamperID
+                self.signUpCamperIDView.nextButton.alpha =
+                isValidateCamperID ? 1.0 : 0.3
             }
             .store(in: &cancelBag)
     }
