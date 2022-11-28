@@ -32,9 +32,46 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
         UNUserNotificationCenter.current().requestAuthorization(
-            options: authOptions) { _, _ in}
+            options: authOptions
+        ) { isPushOn, _ in
+            // TODO: update isPushOn
+            print("알림 허용했나요? ", isPushOn)
+        }
 
         application.registerForRemoteNotifications()
+    }
+
+    /// receive push noti when app is foreground
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (
+            UNNotificationPresentationOptions
+        ) -> Void
+    ) {
+        // TODO: get feedUUID
+//         let userInfo = notification.request.content.userInfo
+//        DispatchQueue.main.async {
+//            NotificationCenter.default.post(
+//                name: Push.notificationName,
+//                object: nil,
+//                userInfo: userInfo
+//            )
+//        }
+
+//        completionHandler([.banner, .badge, .sound])
+    }
+
+    /// receive push noti when app is background
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
+        // TODO: get feedUUID
+//         let userInfo = notification.request.content.feedUUID
+
+//        completionHandler([.banner, .badge, .sound])
     }
 }
 
