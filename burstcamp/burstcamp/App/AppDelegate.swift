@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+// TODO: HomeViewController로 옮기기
 // MARK: - UNUserNotificationCenterDelegate
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
@@ -49,17 +50,18 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             UNNotificationPresentationOptions
         ) -> Void
     ) {
-        // TODO: get feedUUID
-//         let userInfo = notification.request.content.userInfo
-//        DispatchQueue.main.async {
-//            NotificationCenter.default.post(
-//                name: Push.notificationName,
-//                object: nil,
-//                userInfo: userInfo
-//            )
-//        }
+        let userInfo = notification.request.content.userInfo
+        // TODO: userInfo -> feedUUID
+        print(userInfo)
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(
+                name: .Push,
+                object: nil,
+                userInfo: userInfo
+            )
+        }
 
-//        completionHandler([.banner, .badge, .sound])
+        completionHandler([.banner, .badge, .sound])
     }
 
     /// receive push noti when app is background
@@ -68,10 +70,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
-        // TODO: get feedUUID
-//         let userInfo = notification.request.content.feedUUID
-
-//        completionHandler([.banner, .badge, .sound])
+        let userInfo = response.notification.request.content.userInfo
+        // TODO: userInfo -> feedUUID
+        print(userInfo)
+        NotificationCenter.default.post(
+            name: .Push,
+            object: nil,
+            userInfo: userInfo
+        )
     }
 }
 
@@ -95,6 +101,9 @@ extension AppDelegate: MessagingDelegate {
         didReceiveRegistrationToken fcmToken: String?
     ) {
         print("Firebase registration token: \(String(describing: fcmToken))")
-        // TODO: update token
+        // TODO: change userUUID
+        if let fcmToken = fcmToken {
+            FirebaseFCMToken.save(fcmToken: fcmToken, to: "zP9Kqm1JwzXLoPfsrrWSOA4u7P33")
+        }
     }
 }
