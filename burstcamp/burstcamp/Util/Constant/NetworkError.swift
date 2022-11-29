@@ -29,7 +29,7 @@ enum NetworkError: Int, Error, CustomStringConvertible {
     case badGatewayError = 502
     case invalidServiceError = 503
 
-    var errorDescription : String {
+    var errorDescription: String {
         switch self {
         case .responseDecoingError: return "RESPONSE_DECODING_ERROR"
         case .queryEncodingError: return "QUERY_ENCODING_ERROR"
