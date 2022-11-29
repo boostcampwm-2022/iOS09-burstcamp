@@ -32,7 +32,7 @@ final class DefaultTextField: UITextField {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func addLeftPadding() {
+    func addHorizontalPadding() {
         let paddingView = UIView(frame: CGRect(
             x: Constant.zero,
             y: Constant.zero,

@@ -49,9 +49,13 @@ final class SignUpCamperIDView: UIView {
         )
     }
 
-    private lazy var barButtonItem: UIBarButtonItem = UIBarButtonItem(customView: nextButton)
+    private lazy var barButtonItem: UIBarButtonItem = UIBarButtonItem(customView: nextButton).then {
+        $0.isEnabled = false
+    }
 
-    lazy var nextButton: UIButton = DefaultButton(title: "다음")
+    lazy var nextButton = DefaultButton(title: "다음").then {
+        $0.alpha = 0.3
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)

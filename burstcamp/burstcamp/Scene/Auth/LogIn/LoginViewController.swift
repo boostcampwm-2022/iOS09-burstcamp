@@ -42,11 +42,11 @@ final class LogInViewController: UIViewController {
     }
 
     private func bind() {
-        logInView.githubLogInButton.addTarget(
-            self,
-            action: #selector(loginButtonDidTap),
-            for: .touchUpInside
-        )
+        logInView.githubLogInButton.tapPublisher
+            .sink {
+                self.viewModel.logInButtonDidTap()
+            }
+            .store(in: &cancelBag)
 
         LogInManager.shared.logInPublisher
             .sink { logInEvent in
@@ -60,9 +60,5 @@ final class LogInViewController: UIViewController {
                 }
             }
             .store(in: &cancelBag)
-    }
-
-    @objc private func loginButtonDidTap() {
-        viewModel.logInButtonDidTap()
     }
 }

@@ -9,26 +9,65 @@ import Combine
 import Foundation
 
 final class SignUpViewModel {
-    @Published var domain: Domain = .iOS
-    @Published var isValidateCamperID: Bool = false
-    @Published var camperID: String = ""
+    var domain: Domain = .iOS
+    var camperID: String = ""
+    var blogAddress: String = ""
+
+    let userUUID: String
+    let nickname: String
 
     private var cancelBag = Set<AnyCancellable>()
 
-    var blogAddress: String = ""
-    let userUUID: String
-    let nickname: String
+    struct InputDomain {
+        let domainButtonDidTap: PassthroughSubject<Domain, Never>
+    }
+
+    struct InputCamperID {
+        let camperIDTextFieldDidEdit: AnyPublisher<String, Never>
+    }
+
+    struct InputBlogAddress {
+        let blogAddressTextFieldDidEdit: AnyPublisher<String, Never>
+    }
+
+    struct OutputCamperID {
+        let validateCamperID: AnyPublisher<Bool, Never>
+    }
+
+    struct OutputBlogAddress {
+        let validateBlogAddress: AnyPublisher<Bool, Never>
+    }
 
     init(userUUID: String, nickname: String) {
         self.userUUID = userUUID
         self.nickname = nickname
-        bind()
     }
 
-    private func bind() {
-        $camperID.sink { camperID in
-            self.isValidateCamperID = camperID.count == 3 ? true : false
-        }
-        .store(in: &cancelBag)
+    func transformDomain(input: InputDomain) {
+        input.domainButtonDidTap
+            .sink { domain in
+                self.domain = domain
+            }
+            .store(in: &cancelBag)
+    }
+
+    func transformCamperID(input: InputCamperID) -> OutputCamperID {
+        let camperID = input.camperIDTextFieldDidEdit
+            .map { id in
+                self.camperID = id
+                return id.count == 3 ? true : false
+            }
+            .eraseToAnyPublisher()
+        return OutputCamperID(validateCamperID: camperID)
+    }
+
+    func transformBlogAddress(input: InputBlogAddress) -> OutputBlogAddress {
+        let blogAddress = input.blogAddressTextFieldDidEdit
+            .map { address in
+                return address.isEmpty ? false : true
+            }
+            .eraseToAnyPublisher()
+
+        return OutputBlogAddress(validateBlogAddress: blogAddress)
     }
 }

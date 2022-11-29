@@ -24,6 +24,8 @@ final class SignUpDomainViewController: UIViewController {
     }
 
     var coordinatorPublisher = PassthroughSubject<(AuthCoordinatorEvent, SignUpViewModel), Never>()
+    private var cancelBag = Set<AnyCancellable>()
+
     private let viewModel: SignUpViewModel
 
     init(viewModel: SignUpViewModel) {
@@ -45,50 +47,34 @@ final class SignUpDomainViewController: UIViewController {
     }
 
     private func bind() {
-        [signUpDomainView.webButton, signUpDomainView.aosButton, signUpDomainView.iosButton]
-            .forEach { button in
-                button.addTarget(
-                    self,
-                    action: #selector(domainButtonStartTouch(_:)),
-                    for: .touchDown
-                )
+        let domainSubject = PassthroughSubject<Domain, Never>()
 
-                button.addTarget(
-                    self,
-                    action: #selector(domainButtonDidTouch(_:)),
-                    for: .touchUpInside
-                )
-
-                button.addTarget(
-                    self,
-                    action: #selector(domainButtonTouchUpOutside(_:)),
-                    for: .touchUpOutside
-                )
-            }
-    }
-
-    @objc private func domainButtonStartTouch(_ sender: UIButton) {
-        guard let title = sender.currentTitle else { return }
-
-        let domains: [Domain] = [Domain.web, Domain.android, Domain.iOS]
-
-        zip(domainButtons, domains).forEach { button, domain in
-            if title == domain.rawValue {
-                button.backgroundColor = domain.color
-                viewModel.domain = domain
-            } else {
-                button.backgroundColor = .systemGray5
-            }
-        }
-    }
-
-    @objc private func domainButtonDidTouch(_ sender: UIButton) {
-        coordinatorPublisher.send((.moveToIDScreen, viewModel))
-    }
-
-    @objc private func domainButtonTouchUpOutside(_ sender: UIButton) {
         domainButtons.forEach { button in
-            button.backgroundColor = .systemGray5
+            guard let title = button.currentTitle,
+                  let domain = Domain(rawValue: title)
+            else {
+                return
+            }
+
+            button.tapPublisher
+                .sink { _ in
+                    domainSubject.send(domain)
+                    self.coordinatorPublisher.send((.moveToIDScreen, self.viewModel))
+                }
+                .store(in: &cancelBag)
+
+            button.touchDownPublisher
+                .sink { _ in
+                    self.domainButtons.forEach { $0.backgroundColor = .systemGray5 }
+                    button.backgroundColor = domain.color
+                }
+                .store(in: &cancelBag)
         }
+
+        let input = SignUpViewModel.InputDomain(
+            domainButtonDidTap: domainSubject
+        )
+
+        viewModel.transformDomain(input: input)
     }
 }
