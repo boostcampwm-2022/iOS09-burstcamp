@@ -10,18 +10,18 @@ import Foundation
 
 // TODO: 임시유저삭제
 let user = User(
-    userUUID: "1",
+    userUUID: "",
     nickname: "하늘이",
-    profileImageURL: "",
+    profileImageURL: "https://avatars.githubusercontent.com/u/39167842?v=4",
     domain: .iOS,
     camperID: "S057",
-    blogUUID: "",
-    signupDate: "",
+    ordinalNumber: 7,
+    blogURL: "https://luen.tistory.com",
+    blogTitle: "성이 하씨고 이름이 늘이",
     scrapFeedUUIDs: [],
+    signupDate: Date(),
     isPushOn: false
 )
-
-let blog = Blog(blogUUID: "123", userUUID: "1", url: "", rssURL: "", title: "")
 
 final class MyPageEditViewModel {
 
@@ -36,7 +36,7 @@ final class MyPageEditViewModel {
     }
 
     struct Output {
-        var currentUserInfo = CurrentValueSubject<(User, Blog), Never>((user, blog))
+        var currentUserInfo = CurrentValueSubject<User, Never>(user)
         var validationResult = PassthroughSubject<MyPageEditValidationResult, Never>()
     }
 

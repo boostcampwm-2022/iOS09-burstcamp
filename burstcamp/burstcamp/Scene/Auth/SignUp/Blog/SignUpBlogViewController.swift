@@ -75,25 +75,25 @@ final class SignUpBlogViewController: UIViewController {
 
         // TODO: 블로그 주소 검증
 
-        FireStoreService.save(
-            user: User(
-                userUUID: viewModel.userUUID,
-                nickname: viewModel.nickname,
-                profileImageURL: "https://github.com/\(viewModel.nickname).png",
-                domain: viewModel.domain,
-                camperID: viewModel.camperID,
-                blogUUID: "",
-                signupDate: "", // TODO: 노션DB에는 Date로, User모델에는 String으로. 확인 필요
-                scrapFeedUUIDs: [],
-                isPushOn: false
-            )
-        )
-        .receive(on: DispatchQueue.main)
-        .sink { result in
-            print(result)
-        } receiveValue: { data in
-            print(data)
-            self.coordinatorPublisher.send(.moveToTabBarFlow)
-        }.store(in: &cancelBag)
+//        FireStoreService.save(
+//            user: User(
+//                userUUID: viewModel.userUUID,
+//                nickname: viewModel.nickname,
+//                profileImageURL: "https://github.com/\(viewModel.nickname).png",
+//                domain: viewModel.domain,
+//                camperID: viewModel.camperID,
+//                blogUUID: "",
+//                signupDate: "", // TODO: 노션DB에는 Date로, User모델에는 String으로. 확인 필요
+//                scrapFeedUUIDs: [],
+//                isPushOn: false
+//            )
+//        )
+//        .receive(on: DispatchQueue.main)
+//        .sink { result in
+//            print(result)
+//        } receiveValue: { data in
+//            print(data)
+//            self.coordinatorPublisher.send(.moveToTabBarFlow)
+//        }.store(in: &cancelBag)
     }
 }

@@ -125,9 +125,9 @@ final class MyPageEditView: UIView {
         }
     }
 
-    func updateCurrentUserInfo(user: User, blog: Blog) {
+    func updateCurrentUserInfo(user: User) {
         nickNameTextField.text = user.nickname
-        blogLinkTextField.text = blog.url
+        blogLinkTextField.text = user.blogURL
         blogTitleImageLabel = DefaultImageLabel(
             icon: UIImage(systemName: "book.fill"),
             text: "말차맛 개발공부"

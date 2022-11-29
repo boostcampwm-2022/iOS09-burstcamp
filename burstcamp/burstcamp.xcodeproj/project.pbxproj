@@ -108,17 +108,11 @@
 		D84C812A292E518800C984E8 /* NickNameValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84C8129292E518800C984E8 /* NickNameValidation.swift */; };
 		D84C812C292E519100C984E8 /* BlogLinkValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84C812B292E519100C984E8 /* BlogLinkValidation.swift */; };
 		D84C812E292E590300C984E8 /* MyPageEditValidationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84C812D292E590300C984E8 /* MyPageEditValidationResult.swift */; };
-		D84C8130292F00D800C984E8 /* Blog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84C812F292F00D800C984E8 /* Blog.swift */; };
 		D84C8132292F0A1E00C984E8 /* UIViewController+ToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84C8131292F0A1E00C984E8 /* UIViewController+ToastMessage.swift */; };
 		D88295EB292A43CD005B4273 /* FireStoreConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295EA292A43CD005B4273 /* FireStoreConfiguration.swift */; };
-		D88295ED292A43E2005B4273 /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295EC292A43E2005B4273 /* UserDTO.swift */; };
 		D88295EF292A43EB005B4273 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295EE292A43EB005B4273 /* NetworkError.swift */; };
-		D88295F2292A4419005B4273 /* UserQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295F1292A4419005B4273 /* UserQuery.swift */; };
-		D88295F6292A4428005B4273 /* FireStoreValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295F5292A4428005B4273 /* FireStoreValues.swift */; };
-		D88295FA292A4448005B4273 /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295F9292A4448005B4273 /* Query.swift */; };
 		D88295FC292A4452005B4273 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295FB292A4452005B4273 /* HTTPMethod.swift */; };
 		D88295FE292A4459005B4273 /* URLSessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295FD292A4459005B4273 /* URLSessionService.swift */; };
-		D8829600292A44B9005B4273 /* FireStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295FF292A44B9005B4273 /* FireStoreService.swift */; };
 		D89AE4E42933AEE900446AB3 /* ImageCacheError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE4E32933AEE900446AB3 /* ImageCacheError.swift */; };
 		D89AE4E62933AEF900446AB3 /* UIImageView+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE4E52933AEF900446AB3 /* UIImageView+Cache.swift */; };
 		D89AE4E82933AF1E00446AB3 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE4E72933AF1E00446AB3 /* ImageCacheManager.swift */; };
@@ -126,14 +120,12 @@
 		D89AE4EF2935AC9C00446AB3 /* FirestoreFCMToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE4EE2935AC9C00446AB3 /* FirestoreFCMToken.swift */; };
 		D89AE4F12935AE7800446AB3 /* Encodable+dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE4F02935AE7800446AB3 /* Encodable+dictionary.swift */; };
 		D89AE4F32935AFE100446AB3 /* Notification+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE4F22935AFE100446AB3 /* Notification+.swift */; };
+		D89AE5012936221600446AB3 /* ScrapUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE5002936221600446AB3 /* ScrapUser.swift */; };
 		D8C3866A292B4AEF005A2563 /* OpenSourceLicenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C38669292B4AEF005A2563 /* OpenSourceLicenseViewController.swift */; };
 		D8C3866C292B4B0B005A2563 /* OpenSourceLicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3866B292B4B0B005A2563 /* OpenSourceLicenseView.swift */; };
 		D8C38672292B88DE005A2563 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C38671292B88DE005A2563 /* UserDefaultsManager.swift */; };
 		D8C38674292B8D82005A2563 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C38673292B8D82005A2563 /* Appearance.swift */; };
 		D8C38676292B8DB6005A2563 /* DarkmodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C38675292B8DB6005A2563 /* DarkmodeManager.swift */; };
-		D8C3AA2329304F70008EE77C /* BlogDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3AA2229304F70008EE77C /* BlogDTO.swift */; };
-		D8C3AA2529304FB9008EE77C /* FireStoreResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3AA2429304FB9008EE77C /* FireStoreResult.swift */; };
-		D8C3AA27293059F7008EE77C /* BlogQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3AA26293059F7008EE77C /* BlogQuery.swift */; };
 		D8C3AA2929305C05008EE77C /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3AA2829305C05008EE77C /* HTTPHeader.swift */; };
 		D8E02D6B292C981C00C1E59B /* AuthCoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E02D6A292C981C00C1E59B /* AuthCoordinatorEvent.swift */; };
 /* End PBXBuildFile section */
@@ -244,17 +236,11 @@
 		D84C8129292E518800C984E8 /* NickNameValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameValidation.swift; sourceTree = "<group>"; };
 		D84C812B292E519100C984E8 /* BlogLinkValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogLinkValidation.swift; sourceTree = "<group>"; };
 		D84C812D292E590300C984E8 /* MyPageEditValidationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditValidationResult.swift; sourceTree = "<group>"; };
-		D84C812F292F00D800C984E8 /* Blog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blog.swift; sourceTree = "<group>"; };
 		D84C8131292F0A1E00C984E8 /* UIViewController+ToastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ToastMessage.swift"; sourceTree = "<group>"; };
 		D88295EA292A43CD005B4273 /* FireStoreConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireStoreConfiguration.swift; sourceTree = "<group>"; };
-		D88295EC292A43E2005B4273 /* UserDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
 		D88295EE292A43EB005B4273 /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
-		D88295F1292A4419005B4273 /* UserQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserQuery.swift; sourceTree = "<group>"; };
-		D88295F5292A4428005B4273 /* FireStoreValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireStoreValues.swift; sourceTree = "<group>"; };
-		D88295F9292A4448005B4273 /* Query.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
 		D88295FB292A4452005B4273 /* HTTPMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		D88295FD292A4459005B4273 /* URLSessionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionService.swift; sourceTree = "<group>"; };
-		D88295FF292A44B9005B4273 /* FireStoreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireStoreService.swift; sourceTree = "<group>"; };
 		D89AE4E32933AEE900446AB3 /* ImageCacheError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheError.swift; sourceTree = "<group>"; };
 		D89AE4E52933AEF900446AB3 /* UIImageView+Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Cache.swift"; sourceTree = "<group>"; };
 		D89AE4E72933AF1E00446AB3 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
@@ -263,14 +249,12 @@
 		D89AE4EE2935AC9C00446AB3 /* FirestoreFCMToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreFCMToken.swift; sourceTree = "<group>"; };
 		D89AE4F02935AE7800446AB3 /* Encodable+dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+dictionary.swift"; sourceTree = "<group>"; };
 		D89AE4F22935AFE100446AB3 /* Notification+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+.swift"; sourceTree = "<group>"; };
+		D89AE5002936221600446AB3 /* ScrapUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapUser.swift; sourceTree = "<group>"; };
 		D8C38669292B4AEF005A2563 /* OpenSourceLicenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSourceLicenseViewController.swift; sourceTree = "<group>"; };
 		D8C3866B292B4B0B005A2563 /* OpenSourceLicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSourceLicenseView.swift; sourceTree = "<group>"; };
 		D8C38671292B88DE005A2563 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		D8C38673292B8D82005A2563 /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		D8C38675292B8DB6005A2563 /* DarkmodeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkmodeManager.swift; sourceTree = "<group>"; };
-		D8C3AA2229304F70008EE77C /* BlogDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogDTO.swift; sourceTree = "<group>"; };
-		D8C3AA2429304FB9008EE77C /* FireStoreResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreResult.swift; sourceTree = "<group>"; };
-		D8C3AA26293059F7008EE77C /* BlogQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogQuery.swift; sourceTree = "<group>"; };
 		D8C3AA2829305C05008EE77C /* HTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
 		D8E02D6A292C981C00C1E59B /* AuthCoordinatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinatorEvent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -494,7 +478,6 @@
 			isa = PBXGroup;
 			children = (
 				D84C8128292E513500C984E8 /* Validation */,
-				D88295F0292A4410005B4273 /* Query */,
 				B5BA27882927AFC200BDCE08 /* Constant */,
 				B50A278929279F5D00DF3E1F /* Extension */,
 				B50A279629279F5D00DF3E1F /* Protocol */,
@@ -686,7 +669,6 @@
 			isa = PBXGroup;
 			children = (
 				D88295FD292A4459005B4273 /* URLSessionService.swift */,
-				D88295FF292A44B9005B4273 /* FireStoreService.swift */,
 				B50A27A429279F5D00DF3E1F /* LogInManager.swift */,
 				D8C38671292B88DE005A2563 /* UserDefaultsManager.swift */,
 				D8C38675292B8DB6005A2563 /* DarkmodeManager.swift */,
@@ -715,14 +697,11 @@
 			children = (
 				B50A27A729279F5D00DF3E1F /* APIKey.swift */,
 				D8494D532927D0DC008157F1 /* User.swift */,
-				D88295EC292A43E2005B4273 /* UserDTO.swift */,
 				D8494D4D2927CE64008157F1 /* Domain.swift */,
 				D8C38673292B8D82005A2563 /* Appearance.swift */,
 				D84452FB292DB7DE008E811B /* CellIndexPath.swift */,
-				D84C812F292F00D800C984E8 /* Blog.swift */,
-				D8C3AA2229304F70008EE77C /* BlogDTO.swift */,
-				D8C3AA2429304FB9008EE77C /* FireStoreResult.swift */,
 				141344DA292F82BE00187B86 /* Feed.swift */,
+				D89AE5002936221600446AB3 /* ScrapUser.swift */,
 				D89AE4EC2935AA2100446AB3 /* FCMToken.swift */,
 			);
 			path = Model;
@@ -835,17 +814,6 @@
 				D84C812B292E519100C984E8 /* BlogLinkValidation.swift */,
 			);
 			path = Validation;
-			sourceTree = "<group>";
-		};
-		D88295F0292A4410005B4273 /* Query */ = {
-			isa = PBXGroup;
-			children = (
-				D88295F5292A4428005B4273 /* FireStoreValues.swift */,
-				D88295F9292A4448005B4273 /* Query.swift */,
-				D88295F1292A4419005B4273 /* UserQuery.swift */,
-				D8C3AA26293059F7008EE77C /* BlogQuery.swift */,
-			);
-			path = Query;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1026,9 +994,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D84C8130292F00D800C984E8 /* Blog.swift in Sources */,
 				3B061FE5292A1F1E00BFA71D /* SignUpBlogViewController.swift in Sources */,
-				D8C3AA2529304FB9008EE77C /* FireStoreResult.swift in Sources */,
 				B5DAD681292E58BF00C4A126 /* DefaultMultilLineLabel.swift in Sources */,
 				B50A27DC29279F5D00DF3E1F /* Fonts+Generated.swift in Sources */,
 				3B061FDD2928E8E300BFA71D /* SignUpCamperIDViewController.swift in Sources */,
@@ -1050,8 +1016,6 @@
 				D84452FC292DB7DE008E811B /* CellIndexPath.swift in Sources */,
 				D88295EB292A43CD005B4273 /* FireStoreConfiguration.swift in Sources */,
 				D84452E7292C9A54008E811B /* TabBarCoordinatorEvent.swift in Sources */,
-				D8C3AA2329304F70008EE77C /* BlogDTO.swift in Sources */,
-				D8C3AA27293059F7008EE77C /* BlogQuery.swift in Sources */,
 				B50A27E429279F5D00DF3E1F /* APIKey.swift in Sources */,
 				B50A27ED29279F5D00DF3E1F /* NormalFeedCell.swift in Sources */,
 				D8C3AA2929305C05008EE77C /* HTTPHeader.swift in Sources */,
@@ -1065,10 +1029,8 @@
 				D8C38674292B8D82005A2563 /* Appearance.swift in Sources */,
 				B50A27F729279F5D00DF3E1F /* TabBarCoordinator.swift in Sources */,
 				141344D9292F803800187B86 /* UIControl+Combine.swift in Sources */,
-				D88295F6292A4428005B4273 /* FireStoreValues.swift in Sources */,
 				143185EA292B4A8D008CE459 /* ScrapPageViewController.swift in Sources */,
 				B5DAD67A292E4C6800C4A126 /* FeedDetailView.swift in Sources */,
-				D8829600292A44B9005B4273 /* FireStoreService.swift in Sources */,
 				141344CC292F800300187B86 /* UIColor+ColorSet.swift in Sources */,
 				141344D5292F801100187B86 /* TypeConversion.swift in Sources */,
 				D89AE4E82933AF1E00446AB3 /* ImageCacheManager.swift in Sources */,
@@ -1116,23 +1078,21 @@
 				D8C3866A292B4AEF005A2563 /* OpenSourceLicenseViewController.swift in Sources */,
 				141344D1292F800300187B86 /* UILabel+LineHeight.swift in Sources */,
 				3B061FD82928CC5600BFA71D /* SignUpDomainViewController.swift in Sources */,
-				D88295ED292A43E2005B4273 /* UserDTO.swift in Sources */,
 				D8E02D6B292C981C00C1E59B /* AuthCoordinatorEvent.swift in Sources */,
 				B50A27DA29279F5D00DF3E1F /* ReusableView.swift in Sources */,
 				D84C812E292E590300C984E8 /* MyPageEditValidationResult.swift in Sources */,
 				D8494D4C2927CD6C008157F1 /* DefaultProfileImageView.swift in Sources */,
 				141344CB292F800300187B86 /* UIFont+FontSet.swift in Sources */,
 				B5DAD679292E4C6800C4A126 /* FeedDetailViewModel.swift in Sources */,
+				D89AE5012936221600446AB3 /* ScrapUser.swift in Sources */,
 				B50A27E329279F5D00DF3E1F /* LogInViewModel.swift in Sources */,
 				B50A27F029279F5D00DF3E1F /* MyPageViewController.swift in Sources */,
 				141344CD292F800300187B86 /* UI+ReusableView.swift in Sources */,
 				14927E202929CCA0001F2E97 /* RecommendFeedHeader.swift in Sources */,
-				D88295FA292A4448005B4273 /* Query.swift in Sources */,
 				1422C62F292F08BC00337710 /* BCDateFormatter.swift in Sources */,
 				B50A27F229279F5D00DF3E1F /* AppDelegate.swift in Sources */,
 				141344CF292F800300187B86 /* UIStackView+addArrangedSubviews.swift in Sources */,
 				143185EE292B4ABC008CE459 /* ScrapPageView.swift in Sources */,
-				D88295F2292A4419005B4273 /* UserQuery.swift in Sources */,
 				D8C38676292B8DB6005A2563 /* DarkmodeManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

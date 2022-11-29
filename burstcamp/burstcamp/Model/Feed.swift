@@ -7,15 +7,12 @@
 
 import Foundation
 
-struct Feed {
-    let camperName: String
-    let camperDomain: String
-    let camperNumber: Int
-    let camperID: String
-    let blogUUID: String
-    let title: String
+struct Feed: Codable {
+    let feedUUID: String
+    let writerUUID: String
+    let feedTitle: String
     let pubDate: Date
     let url: String
-    let thumbnail: String
+    let thumbnailURL: String
     let content: String
 }
