@@ -12,17 +12,7 @@ final class MyPageViewController: UIViewController {
     // MARK: - Properties
 
     // TODO: 임시 유저
-    private var user = User(
-        userUUID: "test",
-        nickname: "NEULiee",
-        profileImageURL: "",
-        domain: .iOS,
-        camperID: "S057",
-        blogUUID: "",
-        signupDate: "",
-        scrapFeedUUIDs: [],
-        isPushOn: false
-    )
+    private var user = User(userUUID: "", nickname: "", profileImageURL: "", domain: .iOS, camperID: "", ordinalNumber: 7, blogURL: "", blogTitle: "", scrapFeedUUIDs: [], signupDate: Date(), isPushOn: false)
 
     private var myPageView: MyPageView {
         guard let view = view as? MyPageView else {
