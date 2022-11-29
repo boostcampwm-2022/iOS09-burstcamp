@@ -105,8 +105,6 @@
 		D8494D522927D086008157F1 /* MyPageProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D512927D085008157F1 /* MyPageProfileView.swift */; };
 		D8494D542927D0DC008157F1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D532927D0DC008157F1 /* User.swift */; };
 		D8494D562927D6EB008157F1 /* DefaultBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D552927D6EB008157F1 /* DefaultBadgeView.swift */; };
-		D84C812A292E518800C984E8 /* NickNameValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84C8129292E518800C984E8 /* NickNameValidation.swift */; };
-		D84C812C292E519100C984E8 /* BlogLinkValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84C812B292E519100C984E8 /* BlogLinkValidation.swift */; };
 		D84C812E292E590300C984E8 /* MyPageEditValidationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84C812D292E590300C984E8 /* MyPageEditValidationResult.swift */; };
 		D84C8130292F00D800C984E8 /* Blog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84C812F292F00D800C984E8 /* Blog.swift */; };
 		D84C8132292F0A1E00C984E8 /* UIViewController+ToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84C8131292F0A1E00C984E8 /* UIViewController+ToastMessage.swift */; };
@@ -244,8 +242,6 @@
 		D8494D512927D085008157F1 /* MyPageProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageProfileView.swift; sourceTree = "<group>"; };
 		D8494D532927D0DC008157F1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D8494D552927D6EB008157F1 /* DefaultBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBadgeView.swift; sourceTree = "<group>"; };
-		D84C8129292E518800C984E8 /* NickNameValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameValidation.swift; sourceTree = "<group>"; };
-		D84C812B292E519100C984E8 /* BlogLinkValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogLinkValidation.swift; sourceTree = "<group>"; };
 		D84C812D292E590300C984E8 /* MyPageEditValidationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditValidationResult.swift; sourceTree = "<group>"; };
 		D84C812F292F00D800C984E8 /* Blog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blog.swift; sourceTree = "<group>"; };
 		D84C8131292F0A1E00C984E8 /* UIViewController+ToastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ToastMessage.swift"; sourceTree = "<group>"; };
@@ -839,8 +835,6 @@
 		D84C8128292E513500C984E8 /* Validation */ = {
 			isa = PBXGroup;
 			children = (
-				D84C8129292E518800C984E8 /* NickNameValidation.swift */,
-				D84C812B292E519100C984E8 /* BlogLinkValidation.swift */,
 				D89AE4F82935EC6E00446AB3 /* Validation.swift */,
 			);
 			path = Validation;
@@ -1072,7 +1066,6 @@
 				3B061FE7292A1F9600BFA71D /* SignUpBlogView.swift in Sources */,
 				D88295FE292A4459005B4273 /* URLSessionService.swift in Sources */,
 				D89AE4F12935AE7800446AB3 /* Encodable+dictionary.swift in Sources */,
-				D84C812A292E518800C984E8 /* NickNameValidation.swift in Sources */,
 				D8C38674292B8D82005A2563 /* Appearance.swift in Sources */,
 				B50A27F729279F5D00DF3E1F /* TabBarCoordinator.swift in Sources */,
 				141344D9292F803800187B86 /* UIControl+Combine.swift in Sources */,
@@ -1098,7 +1091,6 @@
 				143185EC292B4AB8008CE459 /* ScrapPageViewModel.swift in Sources */,
 				D89AE4ED2935AA2100446AB3 /* FCMToken.swift in Sources */,
 				D89AE4E42933AEE900446AB3 /* ImageCacheError.swift in Sources */,
-				D84C812C292E519100C984E8 /* BlogLinkValidation.swift in Sources */,
 				B50A27E929279F5D00DF3E1F /* NormalFeedCellFooter.swift in Sources */,
 				143185F8292B5C88008CE459 /* ContainCollectionView.swift in Sources */,
 				B5DAD67B292E4C6800C4A126 /* FeedDetailViewController.swift in Sources */,

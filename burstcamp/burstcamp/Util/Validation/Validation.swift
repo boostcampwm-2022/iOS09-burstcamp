@@ -17,7 +17,7 @@ struct Validation {
         return camperID.count == 3 ? true : false
     }
 
-    static func validateRegexp(blogLink: String) -> Bool {
+    static func validate(blogLink: String) -> Bool {
         let tistoryRegexp = #"^https://?[a-z0-9-]{4,32}.tistory.com$"#
         let velogRegexp = #"^https://velog.io/@?[A-Za-z0-9-_]{3,16}$"#
         if blogLink.range(of: tistoryRegexp, options: .regularExpression) != nil {
