@@ -19,8 +19,7 @@ final class HomeViewModel {
     }
 
     struct Input {
-        let viewDidAppear: AnyPublisher<Void, Never>
-        let viewRefresh: AnyPublisher<Void, Never>
+        let viewRefresh: AnyPublisher<Bool, Never>
     }
 
     enum FetchResult {
@@ -35,13 +34,7 @@ final class HomeViewModel {
     func transform(input: Input) -> Output {
         let output = Output()
 
-        input.viewDidAppear
-            .sink { [weak self] _ in
-                self?.fetchFeed(output: output)
-            }
-            .store(in: &cancelBag)
-
-        input.viewDidAppear
+        input.viewRefresh
             .sink { [weak self] _ in
                 self?.fetchFeed(output: output)
             }

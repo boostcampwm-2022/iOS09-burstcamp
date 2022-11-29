@@ -21,6 +21,7 @@ final class HomeViewController: UIViewController {
     }
 
     private var viewModel: HomeViewModel
+    private let input = PassthroughSubject<HomeViewModel.Input, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
     init(viewModel: HomeViewModel) {
@@ -65,11 +66,20 @@ final class HomeViewController: UIViewController {
     }
 
     private func bind() {
+        let input = HomeViewModel.Input(
+            viewRefresh: homeView.collectionView.refreshControl!.isRefreshPublisher
+        )
 
-        homeView.collectionView.refreshControl?.isRefreshPublisher
-            .sink { _ in
-                //TODO: - 네트워크 업데이트 이후 순차적으로 실행
-                self.homeView.endCollectionViewRefreshing()
+        let output = viewModel.transform(input: input)
+        output.fetchResult
+            .sink { fetchResult in
+                switch fetchResult {
+                case .fetchSuccess:
+                    self.homeView.endCollectionViewRefreshing()
+                    self.homeView.collectionView.reloadData()
+                case .fetchFail(let error):
+                    print(error)
+                }
             }
             .store(in: &cancelBag)
     }
