@@ -8,6 +8,8 @@
 import Foundation
 
 final class HomeViewModel {
+
+    let homeFireStore = HomeFireStore()
     var normalFeedData: [Feed] = []
 
     init() {
@@ -15,7 +17,7 @@ final class HomeViewModel {
     }
 
     private func fetchNormalFeed() {
-        FireStoreService.fetchFeed()
+        homeFireStore.fetchFeed()
     }
 }
 
