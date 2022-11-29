@@ -11,7 +11,7 @@ import Foundation
 import FirebaseFirestore
 
 protocol HomeFireStore {
-    func fetchFeed()
+    func fetchFeed() -> AnyPublisher<[Feed], Error>
 }
 
 final class HomeFireStoreService: HomeFireStore {
@@ -20,38 +20,39 @@ final class HomeFireStoreService: HomeFireStore {
     let feedPublisher = PassthroughSubject<[Feed], Error>()
     private var cancelBag = Set<AnyCancellable>()
 
-    func fetchFeed() {
-        var result = [Feed]()
-        let feeds = database
-            .collection("Feed")
-            .order(by: "pubDate", descending: true)
-            .limit(to: 20)
+    func fetchFeed() -> AnyPublisher<[Feed], Error> {
+        Future<[Feed], Error> { [weak self] promise in
+            guard let self = self else { return }
+            var result = [Feed]()
+            let feeds = self.database
+                .collection("Feed")
+                .order(by: "pubDate", descending: true)
+                .limit(to: 20)
 
-        feeds.getDocuments {  querySnapShot, error in
-            if let querySnapShot = querySnapShot {
-                for document in querySnapShot.documents {
-                    let data = document.data()
-                    let feedDTO = FeedDTO(data: data)
-                    self.fetchWriter(userUUID: feedDTO.writerUUID)
-                        .sink { completion in
-                            switch completion {
-                            case .failure(let error):
-                                self.feedPublisher.send(completion: .failure(error))
-                            case .finished:
-                                self.feedPublisher.send(result)
+            feeds.getDocuments {  querySnapShot, error in
+                if let querySnapShot = querySnapShot {
+                    for document in querySnapShot.documents {
+                        let data = document.data()
+                        let feedDTO = FeedDTO(data: data)
+                        self.fetchWriter(userUUID: feedDTO.writerUUID)
+                            .sink { completion in
+                                switch completion {
+                                case .finished:
+                                    break
+                                case .failure(let error):
+                                    print(error)
+                                }
+                            } receiveValue: { feedWriter in
+                                let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
+                                result.append(feed)
                             }
-                        } receiveValue: { feedWriter in
-                            let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
-                            result.append(feed)
-                        }
-                        .store(in: &self.cancelBag)
+                            .store(in: &self.cancelBag)
+                    }
                 }
-            } else if let error = error {
-                self.feedPublisher.send(completion: .failure(error))
-            } else {
-                self.feedPublisher.send(completion: .failure(FirebaseError.fetchFeedError))
             }
+            promise(.success(result))
         }
+        .eraseToAnyPublisher()
     }
 
     func fetchWriter(userUUID: String) -> AnyPublisher<FeedWriter, Error> {

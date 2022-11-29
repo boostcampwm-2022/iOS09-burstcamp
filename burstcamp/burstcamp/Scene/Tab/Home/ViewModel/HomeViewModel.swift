@@ -14,8 +14,8 @@ final class HomeViewModel {
     var normalFeedData: [Feed] = []
     var cancelBag = Set<AnyCancellable>()
 
-    init(homeFireStroe: HomeFireStore) {
-        self.homeFireStore = homeFireStroe
+    init(homeFireStore: HomeFireStore) {
+        self.homeFireStore = homeFireStore
     }
 
     struct Input {
@@ -32,27 +32,36 @@ final class HomeViewModel {
         var fetchResult = PassthroughSubject<FetchResult, Never>()
     }
 
-    func transform(input: Input, cancelBag: inout Set<AnyCancellable>) -> Output {
+    func transform(input: Input) -> Output {
         let output = Output()
 
         input.viewDidAppear
-            .sink { _ in
-                self.fetchNormalFeed()
-                output.fetchResult.send(.fetchSuccess)
+            .sink { [weak self] _ in
+                self?.fetchFeed(output: output)
             }
             .store(in: &cancelBag)
 
-        input.viewRefresh
-            .sink { _ in
-                self.fetchNormalFeed()
-                output.fetchResult.send(.fetchSuccess)
+        input.viewDidAppear
+            .sink { [weak self] _ in
+                self?.fetchFeed(output: output)
             }
             .store(in: &cancelBag)
 
         return output
     }
 
-    private func fetchNormalFeed() {
-        homeFireStore.fetchFeed()
+    private func fetchFeed(output: Output) {
+        self.homeFireStore.fetchFeed()
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    output.fetchResult.send(.fetchSuccess)
+                case .failure(let error):
+                    output.fetchResult.send(.fetchFail(error: error))
+                }
+            } receiveValue: { [weak self] feeds in
+                self?.normalFeedData = feeds
+            }
+            .store(in: &cancelBag)
     }
 }
