@@ -26,6 +26,7 @@
 		143185EE292B4ABC008CE459 /* ScrapPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185ED292B4ABC008CE459 /* ScrapPageView.swift */; };
 		143185F8292B5C88008CE459 /* ContainCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185F7292B5C88008CE459 /* ContainCollectionView.swift */; };
 		1432165329359A960034DE9F /* HomeFireStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1432165229359A960034DE9F /* HomeFireStore.swift */; };
+		143216562935C3490034DE9F /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143216552935C3490034DE9F /* FirebaseError.swift */; };
 		143D93A6292E484100C67C27 /* burstcampTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143D93A5292E484100C67C27 /* burstcampTests.swift */; };
 		143D93AD292E48C100C67C27 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 143D93AC292E48C100C67C27 /* FirebaseAuth */; };
 		143D93B1292E4B9500C67C27 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 143D93B0292E4B9500C67C27 /* FirebaseFirestore */; };
@@ -165,6 +166,7 @@
 		143185ED292B4ABC008CE459 /* ScrapPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageView.swift; sourceTree = "<group>"; };
 		143185F7292B5C88008CE459 /* ContainCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainCollectionView.swift; sourceTree = "<group>"; };
 		1432165229359A960034DE9F /* HomeFireStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFireStore.swift; sourceTree = "<group>"; };
+		143216552935C3490034DE9F /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
 		143D93A3292E484100C67C27 /* burstcampTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = burstcampTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		143D93A5292E484100C67C27 /* burstcampTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = burstcampTests.swift; sourceTree = "<group>"; };
 		1458C6942928FB1B00E00B80 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -380,6 +382,16 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		143216542935C3320034DE9F /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				D88295EE292A43EB005B4273 /* NetworkError.swift */,
+				D89AE4E32933AEE900446AB3 /* ImageCacheError.swift */,
+				143216552935C3490034DE9F /* FirebaseError.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
 		143D93A4292E484100C67C27 /* burstcampTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -484,6 +496,7 @@
 		B50A278829279F5D00DF3E1F /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				143216542935C3320034DE9F /* Error */,
 				D84C8128292E513500C984E8 /* Validation */,
 				D88295F0292A4410005B4273 /* Query */,
 				B5BA27882927AFC200BDCE08 /* Constant */,
@@ -691,11 +704,9 @@
 			children = (
 				D88295EA292A43CD005B4273 /* FireStoreConfiguration.swift */,
 				B50A278B29279F5D00DF3E1F /* Constant.swift */,
-				D88295EE292A43EB005B4273 /* NetworkError.swift */,
 				D88295FB292A4452005B4273 /* HTTPMethod.swift */,
 				D84C812D292E590300C984E8 /* MyPageEditValidationResult.swift */,
 				D8C3AA2829305C05008EE77C /* HTTPHeader.swift */,
-				D89AE4E32933AEE900446AB3 /* ImageCacheError.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -1074,6 +1085,7 @@
 				B50A27F429279F5D00DF3E1F /* SceneDelegate.swift in Sources */,
 				143185EC292B4AB8008CE459 /* ScrapPageViewModel.swift in Sources */,
 				D89AE4E42933AEE900446AB3 /* ImageCacheError.swift in Sources */,
+				143216562935C3490034DE9F /* FirebaseError.swift in Sources */,
 				D84C812C292E519100C984E8 /* BlogLinkValidation.swift in Sources */,
 				B50A27E929279F5D00DF3E1F /* NormalFeedCellFooter.swift in Sources */,
 				143185F8292B5C88008CE459 /* ContainCollectionView.swift in Sources */,

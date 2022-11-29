@@ -6,8 +6,51 @@
 //
 
 import Foundation
+import Firebase
 
 struct Feed {
+    let feedUUID: String
+    let writer: FeedWriter
+    let feedTitle: String
+    let pubDate: Date
+    let url: String
+    let thumbnailURL: String
+    let content: String
+    let scrapCount: Int
+
+    init(feedDTO: FeedDTO, feedWriter: FeedWriter) {
+        self.feedUUID = feedDTO.feedUUID
+        self.writer = feedWriter
+        self.feedTitle = feedDTO.feedTitle
+        self.pubDate = feedDTO.pubDate
+        self.url = feedDTO.url
+        self.thumbnailURL = feedDTO.thumbnailURL
+        self.content = feedDTO.content
+        self.scrapCount = 0
+    }
+}
+
+struct FeedWriter {
+    let nickname: String
+    let camperID: String
+    let ordinalNumber: Int
+    let domain: Domain
+
+    init(data: [String: Any]) {
+        let nickname = data["nickname"] as? String ?? ""
+        let camperID = data["camperID"] as? String ?? ""
+        let ordinalNumber = data["ordinalNumber"] as? Int ?? 0
+        let domainString = data["domain"] as? String ?? ""
+        let domain = Domain(rawValue: domainString) ?? Domain.iOS
+
+        self.nickname = nickname
+        self.camperID = camperID
+        self.ordinalNumber = ordinalNumber
+        self.domain = domain
+    }
+}
+
+struct FeedDTO {
     let feedUUID: String
     let writerUUID: String
     let feedTitle: String
@@ -15,7 +58,25 @@ struct Feed {
     let url: String
     let thumbnailURL: String
     let content: String
-    let scrapUserUUIDs: [String]
+
+    init(data: [String: Any]) {
+        let feedUUID = data["feedUUID"] as? String ?? ""
+        let writerUUID = data["writerUUID"] as? String ?? ""
+        let feedTitle = data["feedTitle"] as? String ?? ""
+        let timeStampDate = data["pubDate"] as? Timestamp ?? Timestamp()
+        let pubDate = timeStampDate.dateValue()
+        let url = data["url"] as? String ?? ""
+        let thumbnailURL = data["thumbnailURL"] as? String ?? ""
+        let content = data["content"] as? String ?? ""
+
+        self.feedUUID = feedUUID
+        self.writerUUID = writerUUID
+        self.feedTitle = feedTitle
+        self.pubDate = pubDate
+        self.url = url
+        self.thumbnailURL = thumbnailURL
+        self.content = content
+    }
 }
 
 struct MyUser {
