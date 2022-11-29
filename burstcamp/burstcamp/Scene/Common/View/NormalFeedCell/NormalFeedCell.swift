@@ -63,7 +63,8 @@ final class NormalFeedCell: UICollectionViewCell {
 
 extension NormalFeedCell {
     func updateFeedCell(feed: Feed) {
-        userInfoView.updateView(feed: feed)
+        let user = MyUser.mockUp()
+        userInfoView.updateView(user: user)
         mainView.updateView(feed: feed)
         footerView.updateView(feed: feed)
     }

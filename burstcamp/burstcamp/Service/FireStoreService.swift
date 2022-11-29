@@ -8,6 +8,8 @@
 import Combine
 import Foundation
 
+import FirebaseFirestore
+
 final class FireStoreService {
 
     // MARK: - User
@@ -59,5 +61,11 @@ final class FireStoreService {
             return userDTO.toUser()
         }
         .eraseToAnyPublisher()
+    }
+
+    static func fetchFeed() {
+        let db = Firestore.firestore()
+        let feeds = db.collection("Feed")
+        print(feeds)
     }
 }
