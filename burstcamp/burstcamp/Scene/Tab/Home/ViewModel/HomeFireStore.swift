@@ -10,7 +10,11 @@ import Foundation
 
 import FirebaseFirestore
 
-final class HomeFireStore {
+protocol HomeFireStore {
+    func fetchFeed()
+}
+
+final class HomeFireStoreService: HomeFireStore {
 
     private let database = Firestore.firestore()
     let feedPublisher = PassthroughSubject<[Feed], Error>()

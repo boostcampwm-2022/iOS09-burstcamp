@@ -10,10 +10,14 @@ import Foundation
 
 final class HomeViewModel {
 
-    let homeFireStore = HomeFireStore()
+    let homeFireStore: HomeFireStore
     var normalFeedData: [Feed] = []
     var cancelBag = Set<AnyCancellable>()
-    
+
+    init(homeFireStroe: HomeFireStore) {
+        self.homeFireStore = homeFireStroe
+    }
+
     struct Input {
         let viewDidAppear: AnyPublisher<Void, Never>
         let viewRefresh: AnyPublisher<Void, Never>
@@ -46,11 +50,6 @@ final class HomeViewModel {
             .store(in: &cancelBag)
 
         return output
-    }
-
-    init() {
-        fetchNormalFeed()
-        fetchNormalFeed()
     }
 
     private func fetchNormalFeed() {
