@@ -18,7 +18,7 @@ String.prototype.hashCode = function (seed = 0) {
  * @param {string} blogLink 블로그 주소 
  * @returns {string} 블로그 RSS주소 
  */
-async function convertURL(blogLink) {
+export async function convertURL(blogLink) {
 	if (blogLink.includes('tistory')) {
 		return `${blogLink}/rss`;
 	} else if (blogLink.includes('velog')) {
