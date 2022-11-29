@@ -22,4 +22,7 @@ extension UIColor {
     static let customPurple = Asset.purple.color
     static let customPink = Asset.pink.color
     static let customBrown = Asset.brown.color
+    static let brightYellow = Asset.brightYellow.color
+    static let brightGreen = Asset.brightGreen.color
+    static let brightOrange = Asset.brightOrange.color
 }
