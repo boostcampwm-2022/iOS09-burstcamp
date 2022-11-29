@@ -37,12 +37,10 @@ final class FeedDetailView: UIView {
         $0.textColor = .dynamicBlack
     }
 
-    // TODO: WebView에서 HTML content보여주기
-    private lazy var contentView = FeedContentWebView().then {
-        $0.navigationDelegate = self
-    }
+    private lazy var contentView = FeedContentWebView()
 
     private lazy var blogButton = DefaultButton(title: "블로그 바로가기")
+    lazy var blogButtonTapPublisher = blogButton.tapPublisher
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -80,14 +78,6 @@ final class FeedDetailView: UIView {
             $0.top.equalTo(feedInfoStackView.snp.bottom).offset(Constant.space24)
             $0.bottom.equalTo(blogButton.snp.top).offset(-Constant.space12)
         }
-    }
-}
-
-extension FeedDetailView: WKNavigationDelegate {
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        webView.evaluateJavaScript("document.readyState", completionHandler: { (_, _) in
-            webView.invalidateIntrinsicContentSize()
-        })
     }
 }
 
