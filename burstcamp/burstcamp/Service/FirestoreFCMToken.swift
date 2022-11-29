@@ -14,7 +14,7 @@ struct FirebaseFCMToken {
     private static let fcmTokenPath = Firestore.firestore().collection("FCMToken")
 
     static func save(fcmToken: String, to userUUID: String) {
-        let fcmToken = FCMToken(userUUID: userUUID, fcmToken: fcmToken)
+        let fcmToken = FCMToken(fcmToken: fcmToken)
         let path = fcmTokenPath.document(userUUID)
 
         guard let dictionary = fcmToken.asDictionary

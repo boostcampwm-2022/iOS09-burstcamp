@@ -8,6 +8,5 @@
 import Foundation
 
 struct FCMToken: Codable {
-    let userUUID: String
     let fcmToken: String
 }
