@@ -60,7 +60,7 @@ class NormalFeedCellMain: UIView {
 extension NormalFeedCellMain {
     func updateView(feed: Feed) {
         DispatchQueue.main.async {
-            self.titleLabel.text = feed.title
+//            self.titleLabel.text = feed.title
             self.thumbnailImageView.image = UIImage(systemName: "person")
         }
     }

@@ -60,35 +60,35 @@ final class LogInManager {
     }
 
     func logIn(code: String) {
-        var token: String = ""
-        var nickname: String = ""
-
-        requestGithubAccessToken(code: code)
-            .map { $0.accessToken }
-            .flatMap { accessToken -> AnyPublisher<GithubUser, NetworkError> in
-                token = accessToken
-                return self.requestGithubUserInfo(token: accessToken)
-            }
-            .map { $0.login }
-            .flatMap { name -> AnyPublisher<GithubMembership, NetworkError> in
-                nickname = name
-                return self.getOrganizationMembership(nickname: nickname, token: token)
-            }
-            .flatMap { _ -> AnyPublisher<User, NetworkError> in
-                return FireStoreService.fetchUser(by: self.userUUID)
-            }
-            .receive(on: DispatchQueue.main)
-            .sink { result in
-                switch result {
-                case .finished:
-                    print("finished")
-                case .failure(let error):
-                    self.switchError(error: error, nickname: nickname)
-                }
-            } receiveValue: { user in
-                self.signInToFirebase(user: user, token: token)
-            }
-            .store(in: &cancelBag)
+//        var token: String = ""
+//        var nickname: String = ""
+//
+//        requestGithubAccessToken(code: code)
+//            .map { $0.accessToken }
+//            .flatMap { accessToken -> AnyPublisher<GithubUser, NetworkError> in
+//                token = accessToken
+//                return self.requestGithubUserInfo(token: accessToken)
+//            }
+//            .map { $0.login }
+//            .flatMap { name -> AnyPublisher<GithubMembership, NetworkError> in
+//                nickname = name
+//                return self.getOrganizationMembership(nickname: nickname, token: token)
+//            }
+//            .flatMap { _ -> AnyPublisher<User, NetworkError> in
+//                return FireStoreService.fetchUser(by: self.userUUID)
+//            }
+//            .receive(on: DispatchQueue.main)
+//            .sink { result in
+//                switch result {
+//                case .finished:
+//                    print("finished")
+//                case .failure(let error):
+//                    self.switchError(error: error, nickname: nickname)
+//                }
+//            } receiveValue: { user in
+//                self.signInToFirebase(user: user, token: token)
+//            }
+//            .store(in: &cancelBag)
     }
 
     func switchError(error: NetworkError, nickname: String) {
