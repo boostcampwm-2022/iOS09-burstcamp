@@ -13,30 +13,47 @@ final class HomeViewModel {
     let homeFireStore = HomeFireStore()
     var normalFeedData: [Feed] = []
     var cancelBag = Set<AnyCancellable>()
+    
+    struct Input {
+        let viewDidAppear: AnyPublisher<Void, Never>
+        let viewRefresh: AnyPublisher<Void, Never>
+    }
+
+    enum FetchResult {
+        case fetchFail(error: Error)
+        case fetchSuccess
+    }
+
+    struct Output {
+        var fetchResult = PassthroughSubject<FetchResult, Never>()
+    }
+
+    func transform(input: Input, cancelBag: inout Set<AnyCancellable>) -> Output {
+        let output = Output()
+
+        input.viewDidAppear
+            .sink { _ in
+                self.fetchNormalFeed()
+                output.fetchResult.send(.fetchSuccess)
+            }
+            .store(in: &cancelBag)
+
+        input.viewRefresh
+            .sink { _ in
+                self.fetchNormalFeed()
+                output.fetchResult.send(.fetchSuccess)
+            }
+            .store(in: &cancelBag)
+
+        return output
+    }
 
     init() {
         fetchNormalFeed()
-        bind()
         fetchNormalFeed()
     }
 
     private func fetchNormalFeed() {
         homeFireStore.fetchFeed()
-    }
-
-    private func bind() {
-        homeFireStore.feedPublisher
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    print("데이터")
-                case .failure(let error):
-                    print(error)
-                }
-            } receiveValue: { feeds in
-                self.normalFeedData = feeds
-                print(self.normalFeedData)
-            }
-            .store(in: &cancelBag)
     }
 }

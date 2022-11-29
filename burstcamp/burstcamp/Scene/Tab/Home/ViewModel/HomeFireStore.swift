@@ -68,15 +68,4 @@ final class HomeFireStore {
                 }
         }.eraseToAnyPublisher()
     }
-//
-//    func scrapUserCount(feedUUID: String) async throws -> Int {
-//        let countQuery = database
-//            .collection("Feed")
-//            .document(feedUUID)
-//            .collection("ScrapUser")
-//            .count
-//
-//        let snapshot = try await countQuery.getAggregation(source: .server)
-//        return Int(truncating: snapshot.count)
-//    }
 }
