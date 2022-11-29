@@ -122,6 +122,10 @@
 		D89AE4E42933AEE900446AB3 /* ImageCacheError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE4E32933AEE900446AB3 /* ImageCacheError.swift */; };
 		D89AE4E62933AEF900446AB3 /* UIImageView+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE4E52933AEF900446AB3 /* UIImageView+Cache.swift */; };
 		D89AE4E82933AF1E00446AB3 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE4E72933AF1E00446AB3 /* ImageCacheManager.swift */; };
+		D89AE4ED2935AA2100446AB3 /* FCMToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE4EC2935AA2100446AB3 /* FCMToken.swift */; };
+		D89AE4EF2935AC9C00446AB3 /* FirestoreFCMToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE4EE2935AC9C00446AB3 /* FirestoreFCMToken.swift */; };
+		D89AE4F12935AE7800446AB3 /* Encodable+dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE4F02935AE7800446AB3 /* Encodable+dictionary.swift */; };
+		D89AE4F32935AFE100446AB3 /* Notification+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE4F22935AFE100446AB3 /* Notification+.swift */; };
 		D8C3866A292B4AEF005A2563 /* OpenSourceLicenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C38669292B4AEF005A2563 /* OpenSourceLicenseViewController.swift */; };
 		D8C3866C292B4B0B005A2563 /* OpenSourceLicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3866B292B4B0B005A2563 /* OpenSourceLicenseView.swift */; };
 		D8C38672292B88DE005A2563 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C38671292B88DE005A2563 /* UserDefaultsManager.swift */; };
@@ -254,6 +258,11 @@
 		D89AE4E32933AEE900446AB3 /* ImageCacheError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheError.swift; sourceTree = "<group>"; };
 		D89AE4E52933AEF900446AB3 /* UIImageView+Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Cache.swift"; sourceTree = "<group>"; };
 		D89AE4E72933AF1E00446AB3 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
+		D89AE4E92934C52E00446AB3 /* burstcamp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = burstcamp.entitlements; sourceTree = "<group>"; };
+		D89AE4EC2935AA2100446AB3 /* FCMToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMToken.swift; sourceTree = "<group>"; };
+		D89AE4EE2935AC9C00446AB3 /* FirestoreFCMToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreFCMToken.swift; sourceTree = "<group>"; };
+		D89AE4F02935AE7800446AB3 /* Encodable+dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+dictionary.swift"; sourceTree = "<group>"; };
+		D89AE4F22935AFE100446AB3 /* Notification+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+.swift"; sourceTree = "<group>"; };
 		D8C38669292B4AEF005A2563 /* OpenSourceLicenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSourceLicenseViewController.swift; sourceTree = "<group>"; };
 		D8C3866B292B4B0B005A2563 /* OpenSourceLicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSourceLicenseView.swift; sourceTree = "<group>"; };
 		D8C38671292B88DE005A2563 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
@@ -323,6 +332,8 @@
 				141344D3292F801100187B86 /* Date+FormatString.swift */,
 				141344D4292F801100187B86 /* TimeInterval+.swift */,
 				141344D2292F801100187B86 /* TypeConversion.swift */,
+				D89AE4F02935AE7800446AB3 /* Encodable+dictionary.swift */,
+				D89AE4F22935AFE100446AB3 /* Notification+.swift */,
 			);
 			path = Type;
 			sourceTree = "<group>";
@@ -467,6 +478,7 @@
 		B50A277329279F2600DF3E1F /* burstcamp */ = {
 			isa = PBXGroup;
 			children = (
+				D89AE4E92934C52E00446AB3 /* burstcamp.entitlements */,
 				B50A27BC29279F5D00DF3E1F /* App */,
 				B50A28002927A16F00DF3E1F /* Service */,
 				B50A27C229279F5D00DF3E1F /* Coordinator */,
@@ -679,6 +691,7 @@
 				D8C38671292B88DE005A2563 /* UserDefaultsManager.swift */,
 				D8C38675292B8DB6005A2563 /* DarkmodeManager.swift */,
 				D89AE4E72933AF1E00446AB3 /* ImageCacheManager.swift */,
+				D89AE4EE2935AC9C00446AB3 /* FirestoreFCMToken.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -710,6 +723,7 @@
 				D8C3AA2229304F70008EE77C /* BlogDTO.swift */,
 				D8C3AA2429304FB9008EE77C /* FireStoreResult.swift */,
 				141344DA292F82BE00187B86 /* Feed.swift */,
+				D89AE4EC2935AA2100446AB3 /* FCMToken.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1046,6 +1060,7 @@
 				D8494D562927D6EB008157F1 /* DefaultBadgeView.swift in Sources */,
 				3B061FE7292A1F9600BFA71D /* SignUpBlogView.swift in Sources */,
 				D88295FE292A4459005B4273 /* URLSessionService.swift in Sources */,
+				D89AE4F12935AE7800446AB3 /* Encodable+dictionary.swift in Sources */,
 				D84C812A292E518800C984E8 /* NickNameValidation.swift in Sources */,
 				D8C38674292B8D82005A2563 /* Appearance.swift in Sources */,
 				B50A27F729279F5D00DF3E1F /* TabBarCoordinator.swift in Sources */,
@@ -1064,11 +1079,13 @@
 				D8494D482927C9E8008157F1 /* MyPageViewModel.swift in Sources */,
 				141344D7292F801100187B86 /* TimeInterval+.swift in Sources */,
 				D8494D4A2927CBD4008157F1 /* DefaultButton.swift in Sources */,
+				D89AE4F32935AFE100446AB3 /* Notification+.swift in Sources */,
 				1458C6952928FB1B00E00B80 /* HomeView.swift in Sources */,
 				B50A27FE29279F5D00DF3E1F /* Coordinator.swift in Sources */,
 				143185E8292B46F9008CE459 /* HomeViewModel.swift in Sources */,
 				B50A27F429279F5D00DF3E1F /* SceneDelegate.swift in Sources */,
 				143185EC292B4AB8008CE459 /* ScrapPageViewModel.swift in Sources */,
+				D89AE4ED2935AA2100446AB3 /* FCMToken.swift in Sources */,
 				D89AE4E42933AEE900446AB3 /* ImageCacheError.swift in Sources */,
 				D84C812C292E519100C984E8 /* BlogLinkValidation.swift in Sources */,
 				B50A27E929279F5D00DF3E1F /* NormalFeedCellFooter.swift in Sources */,
@@ -1091,6 +1108,7 @@
 				D84452F8292CF4E0008E811B /* DefaultTextField.swift in Sources */,
 				D8C3866C292B4B0B005A2563 /* OpenSourceLicenseView.swift in Sources */,
 				B50A27DB29279F5D00DF3E1F /* Colors+Generated.swift in Sources */,
+				D89AE4EF2935AC9C00446AB3 /* FirestoreFCMToken.swift in Sources */,
 				D84452F6292CF4BC008E811B /* DefaultImageLabel.swift in Sources */,
 				D8C38672292B88DE005A2563 /* UserDefaultsManager.swift in Sources */,
 				D84452F4292CCA92008E811B /* SettingCell.swift in Sources */,
@@ -1296,9 +1314,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = burstcamp/burstcamp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 4QG3GC35LA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = burstcamp/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1327,9 +1346,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = burstcamp/burstcamp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 4QG3GC35LA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = burstcamp/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
