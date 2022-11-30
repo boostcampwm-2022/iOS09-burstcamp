@@ -21,7 +21,7 @@ final class HomeViewController: UIViewController {
     }
 
     private var viewModel: HomeViewModel
-    private let input = PassthroughSubject<HomeViewModel.Input, Never>()
+    private let input = PassthroughSubject<Void, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
     init(viewModel: HomeViewModel) {
@@ -41,8 +41,8 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         collectionViewDelegate()
-        fetchFeed()
         bind()
+        fetchFeed()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -67,8 +67,12 @@ final class HomeViewController: UIViewController {
     }
 
     private func bind() {
+        guard let refreshControl = homeView.collectionView.refreshControl
+        else { return }
+
         let input = HomeViewModel.Input(
-            viewRefresh: homeView.collectionView.refreshControl!.isRefreshPublisher
+            viewDidLoad: input.eraseToAnyPublisher(),
+            viewRefresh: refreshControl.isRefreshPublisher
         )
 
         let output = viewModel.transform(input: input)
@@ -87,6 +91,7 @@ final class HomeViewController: UIViewController {
     }
 
     private func fetchFeed() {
+        input.send(Void())
     }
 }
 

@@ -19,6 +19,7 @@ final class HomeViewModel {
     }
 
     struct Input {
+        let viewDidLoad: AnyPublisher<Void, Never>
         let viewRefresh: AnyPublisher<Bool, Never>
     }
 
@@ -34,6 +35,12 @@ final class HomeViewModel {
     func transform(input: Input) -> Output {
         let output = Output()
 
+        input.viewDidLoad
+            .sink { [weak self] _ in
+                self?.fetchFeed(output: output)
+            }
+            .store(in: &cancelBag)
+
         input.viewRefresh
             .sink { [weak self] _ in
                 self?.fetchFeed(output: output)
@@ -44,7 +51,7 @@ final class HomeViewModel {
     }
 
     func fetchFeed(output: Output) {
-        self.homeFireStore.fetchFeed()
+        homeFireStore.fetchFeed()
             .sink { completion in
                 switch completion {
                 case .finished:

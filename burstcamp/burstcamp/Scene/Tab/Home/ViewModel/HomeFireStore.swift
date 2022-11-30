@@ -15,22 +15,22 @@ protocol HomeFireStore {
 }
 
 final class HomeFireStoreService: HomeFireStore {
-    
+
     private let database = Firestore.firestore()
     private var cancelBag = Set<AnyCancellable>()
-    
+
     func fetchFeed() -> AnyPublisher<[Feed], Error> {
         Future<[Feed], Error> { [weak self] promise in
             guard let self = self else { return }
-            
+
             var result = [Feed]()
             var count = 1
-            
+
             let feeds = self.database
                 .collection("Feed")
                 .order(by: "pubDate", descending: false)
                 .limit(to: 20)
-            
+
             feeds.getDocuments { querySnapshot, _ in
                 guard let querySnapshot = querySnapshot else { return }
                 querySnapshot.documents.forEach { queryDocumentSnapshot in
@@ -59,7 +59,7 @@ final class HomeFireStoreService: HomeFireStore {
         }
         .eraseToAnyPublisher()
     }
-    
+
     func fetchWriter(userUUID: String) -> AnyPublisher<FeedWriter, Error> {
         Future<FeedWriter, Error> { [weak self] promise in
             self?.database
