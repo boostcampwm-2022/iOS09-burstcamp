@@ -57,13 +57,13 @@ final class MyPageEditViewModel {
 
         input.nickNameTextFieldDidEdit
             .sink { nickName in
-                self.nickNameValidation = NickNameValidation.validate(name: nickName)
+                self.nickNameValidation = Validation.validate(nickname: nickName)
             }
             .store(in: &cancelBag)
 
         input.blogLinkFieldDidEdit
             .sink { blogLink in
-                self.blogLinkValidation = BlogLinkValidation.validate(link: blogLink)
+                self.blogLinkValidation = Validation.validate(blogLink: blogLink)
             }
             .store(in: &cancelBag)
     }

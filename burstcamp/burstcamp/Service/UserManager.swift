@@ -11,9 +11,9 @@ import FirebaseAuth
 import FirebaseFirestore
 
 final class UserManager {
-    
+
     static let shared = UserManager()
-    
+
     // TODO: 임시 초기 데이터
     var user = User(
         userUUID: "",
@@ -29,11 +29,11 @@ final class UserManager {
         isPushOn: false
     )
     private let userPath = Firestore.firestore().collection(FireStoreCollection.user.path)
-    
+
     private init() {
         addUserListener()
     }
-    
+
     private func addUserListener() {
         guard let userUUID = Auth.auth().currentUser?.uid else { return }
         userPath.document(userUUID)

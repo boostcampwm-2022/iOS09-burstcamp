@@ -14,7 +14,7 @@ import FirebaseFirestore
 struct FirebaseUser {
     private static let userPath = Firestore.firestore().collection(FireStoreCollection.user.path)
     private static let userUUIDField = "userUUID"
-    
+
     static func save(user: User) -> AnyPublisher<User, FirestoreError> {
         let path = userPath.document(user.userUUID)
         guard let dictionary = user.asDictionary else {
@@ -31,7 +31,7 @@ struct FirebaseUser {
         }
         .eraseToAnyPublisher()
     }
-    
+
     static func fetch(userUUID: String) -> AnyPublisher<User, FirestoreError> {
         return Future<User, FirestoreError> { promise in
             userPath.document(userUUID)

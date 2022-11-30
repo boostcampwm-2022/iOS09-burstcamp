@@ -9,8 +9,8 @@ import Combine
 import Foundation
 
 struct Validation {
-    static func validate(name: String) -> Bool {
-        return name.isEmpty ? false : true
+    static func validate(nickname: String) -> Bool {
+        return nickname.isEmpty ? false : true
     }
 
     static func validate(camperID: String) -> Bool {
