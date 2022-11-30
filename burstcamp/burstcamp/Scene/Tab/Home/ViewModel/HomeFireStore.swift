@@ -24,10 +24,9 @@ final class HomeFireStoreService: HomeFireStore {
         Future<[Feed], Error> { [weak self] promise in
             guard let self = self else { return }
 
-            var result = [Feed]()
+            var result: [Feed] = []
 
             let feeds = self.getQuery(lastSnapShot: self.lastSnapShot)
-
             feeds.getDocuments { querySnapshot, _ in
                 guard let querySnapshot = querySnapshot else { return }
                 self.lastSnapShot = querySnapshot.documents.last

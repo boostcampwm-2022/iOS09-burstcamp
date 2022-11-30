@@ -21,7 +21,7 @@ final class HomeViewController: UIViewController {
     }
 
     private var viewModel: HomeViewModel
-    private let input = PassthroughSubject<Void, Never>()
+    private let viewDidLoadPublisher = PassthroughSubject<Void, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
     init(viewModel: HomeViewModel) {
@@ -71,17 +71,17 @@ final class HomeViewController: UIViewController {
         else { return }
 
         let input = HomeViewModel.Input(
-            viewDidLoad: input.eraseToAnyPublisher(),
+            viewDidLoad: viewDidLoadPublisher.eraseToAnyPublisher(),
             viewRefresh: refreshControl.isRefreshPublisher
         )
 
         let output = viewModel.transform(input: input)
         output.fetchResult
-            .sink { fetchResult in
+            .sink { [weak self] fetchResult in
                 switch fetchResult {
                 case .fetchSuccess:
-                    self.homeView.endCollectionViewRefreshing()
-                    self.homeView.collectionView.reloadData()
+                    self?.homeView.endCollectionViewRefreshing()
+                    self?.homeView.collectionView.reloadData()
                 case .fetchFail(let error):
                     print(error)
                 }
@@ -90,7 +90,7 @@ final class HomeViewController: UIViewController {
     }
 
     private func fetchFeed() {
-        input.send(Void())
+        viewDidLoadPublisher.send(Void())
     }
 }
 
