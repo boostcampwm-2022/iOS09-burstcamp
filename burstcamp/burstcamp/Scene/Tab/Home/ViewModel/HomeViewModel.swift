@@ -21,6 +21,7 @@ final class HomeViewModel {
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
         let viewRefresh: AnyPublisher<Bool, Never>
+        let pagination: AnyPublisher<Void, Never>
     }
 
     enum FetchResult {
@@ -47,13 +48,18 @@ final class HomeViewModel {
             }
             .store(in: &cancelBag)
 
+        input.pagination
+            .sink { [weak self] _ in
+                self?.fetchFeed(output: output, isPagination: true)
+            }
+            .store(in: &cancelBag)
+
         return output
     }
 
-    func fetchFeed(output: Output) {
+    func fetchFeed(output: Output, isPagination: Bool = false) {
         guard !homeFireStore.isFetching else { return }
-        print("fetch")
-        homeFireStore.fetchFeed()
+        homeFireStore.fetchFeed(isPagination: isPagination)
             .sink { completion in
                 switch completion {
                 case .finished:
@@ -62,7 +68,11 @@ final class HomeViewModel {
                     output.fetchResult.send(.fetchFail(error: error))
                 }
             } receiveValue: { [weak self] feeds in
-                self?.normalFeedData.append(contentsOf: feeds)
+                if isPagination {
+                    self?.normalFeedData.append(contentsOf: feeds)
+                } else {
+                    self?.normalFeedData = feeds
+                }
             }
             .store(in: &cancelBag)
     }

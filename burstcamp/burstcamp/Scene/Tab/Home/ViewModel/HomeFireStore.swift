@@ -12,7 +12,7 @@ import FirebaseFirestore
 
 protocol HomeFireStore {
     var isFetching: Bool { get set }
-    func fetchFeed() -> AnyPublisher<[Feed], Error>
+    func fetchFeed(isPagination: Bool) -> AnyPublisher<[Feed], Error>
 }
 
 final class HomeFireStoreService: HomeFireStore {
@@ -22,7 +22,7 @@ final class HomeFireStoreService: HomeFireStore {
     private var lastSnapShot: QueryDocumentSnapshot?
     var isFetching: Bool = false
 
-    func fetchFeed() -> AnyPublisher<[Feed], Error> {
+    func fetchFeed(isPagination: Bool) -> AnyPublisher<[Feed], Error> {
         isFetching = true
 
         return Future<[Feed], Error> { [weak self] promise in
@@ -30,7 +30,8 @@ final class HomeFireStoreService: HomeFireStore {
 
             var result: [Feed] = []
 
-            let feeds = self.makeQuery(lastSnapShot: self.lastSnapShot)
+            let feeds = self.makeQuery(lastSnapShot: self.lastSnapShot, isPagination: isPagination)
+
             feeds.getDocuments { querySnapshot, _ in
                 guard let querySnapshot = querySnapshot else { return }
                 self.lastSnapShot = querySnapshot.documents.last
@@ -63,8 +64,8 @@ final class HomeFireStoreService: HomeFireStore {
         .eraseToAnyPublisher()
     }
 
-    private func makeQuery(lastSnapShot: QueryDocumentSnapshot?) -> Query {
-        if let lastSnapShot = lastSnapShot {
+    private func makeQuery(lastSnapShot: QueryDocumentSnapshot?, isPagination: Bool) -> Query {
+        if let lastSnapShot = lastSnapShot, isPagination {
             return database
                 .collection("Feed")
                 .order(by: "pubDate", descending: true)

@@ -22,6 +22,7 @@ final class HomeViewController: UIViewController {
 
     private var viewModel: HomeViewModel
     private var cancelBag = Set<AnyCancellable>()
+    private let paginationPublisher = PassthroughSubject<Void, Never>()
 
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
@@ -72,7 +73,8 @@ final class HomeViewController: UIViewController {
 
         let input = HomeViewModel.Input(
             viewDidLoad: viewDidLoadJust,
-            viewRefresh: refreshControl.isRefreshPublisher
+            viewRefresh: refreshControl.isRefreshPublisher,
+            pagination: paginationPublisher.eraseToAnyPublisher()
         )
 
         let output = viewModel.transform(input: input)
@@ -87,6 +89,10 @@ final class HomeViewController: UIViewController {
                 }
             }
             .store(in: &cancelBag)
+    }
+
+    private func paginateFeed() {
+        paginationPublisher.send(Void())
     }
 }
 
@@ -173,7 +179,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.isOverTarget() {
-            print("새 네트워크 요청")
+            paginateFeed()
         }
     }
 }
