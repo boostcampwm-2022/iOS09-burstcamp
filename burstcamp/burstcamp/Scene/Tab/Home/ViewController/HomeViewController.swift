@@ -65,10 +65,26 @@ final class HomeViewController: UIViewController {
     }
 
     private func bind() {
-        homeView.collectionView.refreshControl?.isRefreshPublisher
-            .sink { _ in
-                //TODO: - 네트워크 업데이트 이후 순차적으로 실행
-                self.homeView.endCollectionViewRefreshing()
+        guard let refreshControl = homeView.collectionView.refreshControl
+        else { return }
+
+        let viewDidLoadJust = Just(Void()).eraseToAnyPublisher()
+
+        let input = HomeViewModel.Input(
+            viewDidLoad: viewDidLoadJust,
+            viewRefresh: refreshControl.isRefreshPublisher
+        )
+
+        let output = viewModel.transform(input: input)
+        output.fetchResult
+            .sink { [weak self] fetchResult in
+                switch fetchResult {
+                case .fetchSuccess:
+                    self?.homeView.endCollectionViewRefreshing()
+                    self?.homeView.collectionView.reloadData()
+                case .fetchFail(let error):
+                    print(error)
+                }
             }
             .store(in: &cancelBag)
     }
