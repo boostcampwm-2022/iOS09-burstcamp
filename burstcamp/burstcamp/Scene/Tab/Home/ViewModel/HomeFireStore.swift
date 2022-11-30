@@ -18,6 +18,7 @@ final class HomeFireStoreService: HomeFireStore {
 
     private let database = Firestore.firestore()
     private var cancelBag = Set<AnyCancellable>()
+    private var lastSnapShot: QueryDocumentSnapshot?
 
     func fetchFeed() -> AnyPublisher<[Feed], Error> {
         Future<[Feed], Error> { [weak self] promise in
@@ -28,11 +29,12 @@ final class HomeFireStoreService: HomeFireStore {
 
             let feeds = self.database
                 .collection("Feed")
-                .order(by: "pubDate", descending: false)
-                .limit(to: 20)
+                .order(by: "pubDate", descending: true)
+                .limit(to: 10)
 
             feeds.getDocuments { querySnapshot, _ in
                 guard let querySnapshot = querySnapshot else { return }
+
                 querySnapshot.documents.forEach { queryDocumentSnapshot in
                     let data = queryDocumentSnapshot.data()
                     let feedDTO = FeedDTO(data: data)
@@ -41,7 +43,10 @@ final class HomeFireStoreService: HomeFireStore {
                             switch completion {
                             case .finished:
                                 if count >= querySnapshot.documents.count {
-                                    promise(.success(result))
+                                    let sortedResult = result.sorted {
+                                        $0.pubDate > $1.pubDate
+                                    }
+                                    promise(.success(sortedResult))
                                 } else {
                                     count += 1
                                 }
@@ -58,8 +63,8 @@ final class HomeFireStoreService: HomeFireStore {
         }
         .eraseToAnyPublisher()
     }
-
-    func fetchWriter(userUUID: String) -> AnyPublisher<FeedWriter, Error> {
+    
+    private func fetchWriter(userUUID: String) -> AnyPublisher<FeedWriter, Error> {
         Future<FeedWriter, Error> { [weak self] promise in
             self?.database
                 .collection("User")
