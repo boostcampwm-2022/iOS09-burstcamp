@@ -15,8 +15,9 @@ final class SignUpBlogViewController: UIViewController {
         return view
     }
 
-    private var cancelBag = Set<AnyCancellable>()
     var coordinatorPublisher = PassthroughSubject<AppCoordinatorEvent, Never>()
+    private var cancelBag = Set<AnyCancellable>()
+
     private let viewModel: SignUpViewModel
 
     init(viewModel: SignUpViewModel) {
@@ -38,83 +39,61 @@ final class SignUpBlogViewController: UIViewController {
     }
 
     private func bind() {
-        signUpBlogView.blogTextField.addTarget(
-            self,
-            action: #selector(blogTextFieldChanged(_:)),
-            for: .editingChanged
-        )
+        signUpBlogView.nextButton.tapPublisher
+            .sink {
+                self.nextButtonDidTap()
+            }
+            .store(in: &cancelBag)
 
-        signUpBlogView.skipButton.addTarget(
-            self,
-            action: #selector(skipButtonDidTouch),
-            for: .touchUpInside
-        )
+        signUpBlogView.skipButton.tapPublisher
+            .sink {
+                self.skipButtonDidTap()
+            }
+            .store(in: &cancelBag)
 
-        signUpBlogView.nextButton.addTarget(
-            self,
-            action: #selector(nextButtonTouchDown(_:)),
-            for: .touchDown
-        )
+        let textPublisher = signUpBlogView.blogTextField.textPublisher
 
-        signUpBlogView.nextButton.addTarget(
-            self,
-            action: #selector(nextButtonTouchUpOutside(_:)),
-            for: .touchUpOutside
-        )
+        let input = SignUpViewModel.InputBlogAddress(blogAddressTextFieldDidEdit: textPublisher)
 
-        signUpBlogView.nextButton.addTarget(
-            self,
-            action: #selector(nextButtonTouchUpInside(_:)),
-            for: .touchUpInside
-        )
+        viewModel.transformBlogAddress(input: input)
+            .validateBlogAddress
+            .sink { validate in
+                self.signUpBlogView.nextButton.isEnabled = validate
+                self.signUpBlogView.nextButton.alpha = validate ? 1.0 : 0.3
+            }
+            .store(in: &cancelBag)
     }
 
-    @objc private func blogTextFieldChanged(_ sender: UITextField) {
-        guard let text = sender.text else { return }
-        viewModel.blogAddress = text
+    private func skipButtonDidTap() {
+        // TODO: Alert창
+
+        // TODO: 회원가입 성공시
+        self.coordinatorPublisher.send(.moveToTabBarFlow)
     }
 
-    @objc private func skipButtonDidTouch() {
-        coordinatorPublisher.send(.moveToTabBarFlow)
-    }
-
-    @objc private func idDidChange(_ sender: UITextField) {
-        guard let id = sender.text else { return }
-        viewModel.camperID = id
-    }
-
-    @objc private func nextButtonTouchDown(_ sender: UITextField) {
-        sender.alpha = 0.5
-    }
-
-    @objc private func nextButtonTouchUpOutside(_ sender: UITextField) {
-        sender.alpha = 0.5
-    }
-
-    @objc private func nextButtonTouchUpInside(_ sender: UIButton) {
-        sender.alpha = 1.0
+    private func nextButtonDidTap() {
 
         // TODO: 블로그 주소 검증
 
-        FireStoreService.save(
-            user: User(
-                userUUID: viewModel.userUUID,
-                nickname: viewModel.nickname,
-                profileImageURL: "https://github.com/\(viewModel.nickname).png",
-                domain: viewModel.domain,
-                camperID: viewModel.camperID,
-                blogUUID: "",
-                signupDate: "", // TODO: 노션DB에는 Date로, User모델에는 String으로. 확인 필요
-                scrapFeedUUIDs: [],
-                isPushOn: false
-            )
-        )
-        .receive(on: DispatchQueue.main)
-        .sink { result in
-            print(result)
-        } receiveValue: { data in
-            print(data)
-            self.coordinatorPublisher.send(.moveToTabBarFlow)
-        }.store(in: &cancelBag)
+//        FireStoreService.save(
+//            user: User(
+//                userUUID: viewModel.userUUID,
+//                nickname: viewModel.nickname,
+//                profileImageURL: "https://github.com/\(viewModel.nickname).png",
+//                domain: viewModel.domain,
+//                camperID: viewModel.camperID,
+//                blogUUID: "",
+//                signupDate: "", // TODO: 노션DB에는 Date로, User모델에는 String으로. 확인 필요
+//                scrapFeedUUIDs: [],
+//                isPushOn: false
+//            )
+//        )
+//        .receive(on: DispatchQueue.main)
+//        .sink { result in
+//            print(result)
+//        } receiveValue: { data in
+//            print(data)
+//            self.coordinatorPublisher.send(.moveToTabBarFlow)
+//        }.store(in: &cancelBag)
     }
 }

@@ -13,8 +13,10 @@ struct User: Codable {
     let profileImageURL: String
     let domain: Domain
     let camperID: String
-    let blogUUID: String
-    let signupDate: String
+    let ordinalNumber: Int
+    let blogURL: String
+    let blogTitle: String
     let scrapFeedUUIDs: [String]
+    let signupDate: Date
     let isPushOn: Bool
 }

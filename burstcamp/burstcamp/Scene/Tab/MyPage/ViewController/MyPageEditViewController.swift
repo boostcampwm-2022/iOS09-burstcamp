@@ -89,8 +89,8 @@ final class MyPageEditViewController: UIViewController {
 
         let output = viewModel.transform(input: input, cancelBag: &cancelBag)
         output.currentUserInfo
-            .sink { userInfo, blogInfo in
-                self.myPageEditView.updateCurrentUserInfo(user: userInfo, blog: blogInfo)
+            .sink { userInfo in
+                self.myPageEditView.updateCurrentUserInfo(user: userInfo)
             }
             .store(in: &cancelBag)
 

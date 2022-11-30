@@ -1,6 +1,7 @@
 import { Readability } from '@mozilla/readability'
 import { JSDOM } from 'jsdom'
 import fetch from 'node-fetch'
+import { convertURL } from '../util.js';
 
 /**
  * RSS URL 배열에 있는 내용들을 비동기적으로 json으로 파싱한다.
@@ -16,7 +17,7 @@ export async function fetchParsedRSSList(urls) {
  * @param {string} rssURL 블로그 RSS URL
  * @returns 
  */
-async function fetchParsedRSS(rssURL) {
+export async function fetchParsedRSS(rssURL) {
   const urlComponent = encodeURIComponent(rssURL);
 
   const requestURL = `https://api.rss2json.com/v1/api.json?rss_url=${urlComponent}`
@@ -31,6 +32,12 @@ async function fetchParsedRSS(rssURL) {
   const result = await fetch(requestURL, options)
 
   return result.json()
+}
+
+export async function getBlogTitle(blogURL) {
+  const rssURL = await convertURL(blogURL)
+	const rss = await fetchParsedRSS(rssURL)
+  return rss.feed.title
 }
 
 /**

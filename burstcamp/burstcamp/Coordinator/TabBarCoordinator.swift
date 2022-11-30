@@ -14,6 +14,7 @@ protocol TabBarCoordinatorProtocol: Coordinator {
     var currentPage: TabBarPage? { get }
 
     func selectPage(_ page: TabBarPage)
+
     func moveToMyPageEditScreen(myPageViewController: MyPageViewController)
     func moveToOpenSourceScreen()
     func moveToAuthFlow()
@@ -21,6 +22,8 @@ protocol TabBarCoordinatorProtocol: Coordinator {
         myPageViewController: MyPageViewController,
         toastMessage: String
     )
+
+    func moveToDetailScreen(feedUUID: String)
 }
 
 final class TabBarCoordinator: TabBarCoordinatorProtocol {
@@ -161,5 +164,15 @@ extension TabBarCoordinator {
     ) {
         navigationController.popViewController(animated: true)
         myPageViewController.toastMessagePublisher.send(toastMessage)
+    }
+}
+
+// MARK: - Push Notification
+
+extension TabBarCoordinator {
+
+    func moveToDetailScreen(feedUUID: String) {
+//        let detailViewController = FeedDetailViewController(feedUUID: feedUUID)
+//        navigationController.pushViewController(detailViewController, animated: true)
     }
 }

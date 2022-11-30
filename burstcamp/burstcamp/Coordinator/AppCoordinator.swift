@@ -8,21 +8,21 @@
 import Combine
 import UIKit
 
-final class AppCoordinator: Coordinator {
+protocol AppCoordinatorProtocol: Coordinator {
+    func showAuthFlow()
+    func showTabBarFlow()
+    func showTabBarFlowByPushNotifiaction(feedUUID: String)
+}
+
+final class AppCoordinator: AppCoordinatorProtocol {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     var cancelBag = Set<AnyCancellable>()
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-
-        if #available(iOS 15.0, *) {
-            let navigationBarAppearance = UINavigationBarAppearance()
-            navigationBarAppearance.configureWithDefaultBackground()
-            navigationBarAppearance.backgroundColor = .background
-            self.navigationController.navigationBar.standardAppearance = navigationBarAppearance
-            self.navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance
-        }
+        configureNavigationBar()
+        addObserver()
     }
 
     func start() {
@@ -61,5 +61,49 @@ final class AppCoordinator: Coordinator {
             .store(in: &cancelBag)
         childCoordinators.append(tabBarCoordinator)
         tabBarCoordinator.start()
+    }
+
+    func showTabBarFlowByPushNotifiaction(feedUUID: String) {
+        if let tabBarCoordinator = tabBarCoordinator() {
+            tabBarCoordinator.moveToDetailScreen(feedUUID: feedUUID)
+        } else {
+            showTabBarFlow()
+            if let tabBarCoordinator = tabBarCoordinator() {
+                tabBarCoordinator.moveToDetailScreen(feedUUID: feedUUID)
+            }
+        }
+    }
+
+    private func addObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(receivePushNotification(_:)),
+            name: .Push,
+            object: nil
+        )
+    }
+
+    @objc private func receivePushNotification(_ notification: Notification) {
+        guard let feedUUID = notification.userInfo?[NotificationKey.feedUUID] as? String
+        else { return }
+        showTabBarFlowByPushNotifiaction(feedUUID: feedUUID)
+    }
+
+    private func tabBarCoordinator() -> TabBarCoordinator? {
+        if let childCoordinator = childCoordinators.first(where: { $0 is TabBarCoordinator }),
+           let tabBarCoordinator = childCoordinator as? TabBarCoordinator {
+            return tabBarCoordinator
+        }
+        return nil
+    }
+
+    private func configureNavigationBar() {
+        if #available(iOS 15.0, *) {
+            let navigationBarAppearance = UINavigationBarAppearance()
+            navigationBarAppearance.configureWithDefaultBackground()
+            navigationBarAppearance.backgroundColor = .background
+            self.navigationController.navigationBar.standardAppearance = navigationBarAppearance
+            self.navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+        }
     }
 }

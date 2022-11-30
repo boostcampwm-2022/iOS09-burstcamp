@@ -7,6 +7,9 @@
 
 import UIKit
 
+import SnapKit
+import Then
+
 final class SignUpCamperIDView: UIView {
 
     lazy var domainLabel: UILabel = UILabel().then {
@@ -28,11 +31,9 @@ final class SignUpCamperIDView: UIView {
         $0.font = UIFont.extraBold16
     }
 
-    lazy var idTextField: UITextField = UITextField().then {
-        $0.layer.borderWidth = 1
+    lazy var idTextField: UITextField = DefaultTextField(placeholder: "000").then {
         $0.keyboardType = .numberPad
         $0.becomeFirstResponder()
-        $0.placeholder = "000"
         $0.inputAccessoryView = toolBar
     }
 
@@ -48,9 +49,13 @@ final class SignUpCamperIDView: UIView {
         )
     }
 
-    private lazy var barButtonItem: UIBarButtonItem = UIBarButtonItem(customView: nextButton)
+    private lazy var barButtonItem: UIBarButtonItem = UIBarButtonItem(customView: nextButton).then {
+        $0.isEnabled = false
+    }
 
-    lazy var nextButton: UIButton = DefaultButton(title: "다음")
+    lazy var nextButton = DefaultButton(title: "다음").then {
+        $0.alpha = 0.3
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)

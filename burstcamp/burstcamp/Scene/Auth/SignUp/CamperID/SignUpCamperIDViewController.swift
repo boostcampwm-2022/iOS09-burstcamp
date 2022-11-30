@@ -15,8 +15,9 @@ final class SignUpCamperIDViewController: UIViewController {
         return view
     }
 
-    private var cancelBag = Set<AnyCancellable>()
     var coordinatorPublisher = PassthroughSubject<(AuthCoordinatorEvent, SignUpViewModel), Never>()
+    private var cancelBag = Set<AnyCancellable>()
+
     private let viewModel: SignUpViewModel
     private let idTextFieldMaxCount = 3
 
@@ -36,6 +37,7 @@ final class SignUpCamperIDViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setDelegate()
+        configureUIByDomain()
         bind()
     }
 
@@ -43,57 +45,31 @@ final class SignUpCamperIDViewController: UIViewController {
         signUpCamperIDView.idTextField.delegate = self
     }
 
+    private func configureUIByDomain() {
+        signUpCamperIDView.domainLabel.text = viewModel.domain.rawValue
+        signUpCamperIDView.representingDomainLabel.text = viewModel.domain.representingDomain
+    }
+
     private func bind() {
-        viewModel.$domain.sink { domain in
-            self.signUpCamperIDView.domainLabel.text = domain.rawValue
-            self.signUpCamperIDView.representingDomainLabel.text = domain.representingDomain
-        }
-        .store(in: &cancelBag)
+        signUpCamperIDView.nextButton.tapPublisher
+            .sink {
+                self.coordinatorPublisher.send((.moveToBlogScreen, self.viewModel))
+            }
+            .store(in: &cancelBag)
 
-        signUpCamperIDView.idTextField.addTarget(
-            self,
-            action: #selector(idDidChange(_:)),
-            for: .editingChanged
+        let textPublisher = signUpCamperIDView.idTextField.textPublisher
+
+        let input = SignUpViewModel.InputCamperID(
+            camperIDTextFieldDidEdit: textPublisher
         )
 
-        signUpCamperIDView.nextButton.addTarget(
-            self,
-            action: #selector(nextButtonTouchDown(_:)),
-            for: .touchDown
-        )
-
-        signUpCamperIDView.nextButton.addTarget(
-            self,
-            action: #selector(nextButtonTouchUpOutside(_:)),
-            for: .touchUpOutside
-        )
-
-        signUpCamperIDView.nextButton.addTarget(
-            self,
-            action: #selector(nextButtonTouchUpInside(_:)),
-            for: .touchUpInside
-        )
-    }
-
-    @objc private func idDidChange(_ sender: UITextField) {
-        guard let id = sender.text else { return }
-        viewModel.camperID = id
-    }
-
-    @objc private func nextButtonTouchDown(_ sender: UITextField) {
-        sender.alpha = 0.5
-    }
-
-    @objc private func nextButtonTouchUpOutside(_ sender: UITextField) {
-        sender.alpha = 1.0
-    }
-
-    @objc func nextButtonTouchUpInside(_ sender: UIButton) {
-        sender.alpha = 1.0
-
-        // TODO: 캠퍼ID 중복 확인
-
-        coordinatorPublisher.send((.moveToBlogScreen, viewModel))
+        viewModel.transformCamperID(input: input)
+            .validateCamperID
+            .sink { validate in
+                self.signUpCamperIDView.nextButton.isEnabled = validate
+                self.signUpCamperIDView.nextButton.alpha = validate ? 1.0 : 0.3
+            }
+            .store(in: &cancelBag)
     }
 }
 

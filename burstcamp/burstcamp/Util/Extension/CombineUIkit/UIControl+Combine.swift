@@ -76,6 +76,12 @@ extension UIButton {
             .map { _ in }
             .eraseToAnyPublisher()
     }
+
+    var touchDownPublisher: AnyPublisher<Void, Never> {
+        controlPublisher(for: .touchDown)
+            .map { _ in }
+            .eraseToAnyPublisher()
+    }
 }
 
 extension UISwitch {

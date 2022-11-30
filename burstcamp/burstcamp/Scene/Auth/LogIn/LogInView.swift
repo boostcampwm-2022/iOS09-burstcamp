@@ -28,6 +28,7 @@ final class LogInView: UIView {
         $0.setTitle("Github으로 로그인", for: .normal)
         $0.titleLabel?.font = UIFont.extraBold14
         $0.backgroundColor = .dynamicBlack
+        $0.setTitleColor(.dynamicWhite, for: .normal)
         $0.layer.cornerRadius = CGFloat(Constant.CornerRadius.radius8)
     }
 
