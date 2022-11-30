@@ -51,6 +51,8 @@ final class HomeViewModel {
     }
 
     func fetchFeed(output: Output) {
+        guard !homeFireStore.isFetching else { return }
+        print("fetch")
         homeFireStore.fetchFeed()
             .sink { completion in
                 switch completion {

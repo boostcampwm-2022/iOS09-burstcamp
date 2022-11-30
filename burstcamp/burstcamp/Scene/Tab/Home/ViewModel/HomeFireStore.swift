@@ -11,6 +11,7 @@ import Foundation
 import FirebaseFirestore
 
 protocol HomeFireStore {
+    var isFetching: Bool { get set }
     func fetchFeed() -> AnyPublisher<[Feed], Error>
 }
 
@@ -19,9 +20,12 @@ final class HomeFireStoreService: HomeFireStore {
     private let database = Firestore.firestore()
     private var cancelBag = Set<AnyCancellable>()
     private var lastSnapShot: QueryDocumentSnapshot?
+    var isFetching: Bool = false
 
     func fetchFeed() -> AnyPublisher<[Feed], Error> {
-        Future<[Feed], Error> { [weak self] promise in
+        isFetching = true
+
+        return Future<[Feed], Error> { [weak self] promise in
             guard let self = self else { return }
 
             var result = [Feed]()
@@ -45,6 +49,7 @@ final class HomeFireStoreService: HomeFireStore {
                                         $0.pubDate > $1.pubDate
                                     }
                                     promise(.success(sortedResult))
+                                    self.isFetching = false
                                 } else {
                                     count += 1
                                 }
