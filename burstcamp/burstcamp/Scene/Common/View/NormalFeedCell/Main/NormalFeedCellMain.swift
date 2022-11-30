@@ -61,7 +61,7 @@ extension NormalFeedCellMain {
     func updateView(feed: Feed) {
         DispatchQueue.main.async {
             self.titleLabel.text = feed.feedTitle
-            self.thumbnailImageView.image = UIImage(systemName: "person")
         }
+        self.thumbnailImageView.setImage(urlString: feed.thumbnailURL)
     }
 }
