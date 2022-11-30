@@ -53,7 +53,8 @@ final class HomeView: UIView, ContainCollectionView {
         addSubview(collectionView)
         collectionView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide.snp.top)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
     }
 
@@ -99,7 +100,7 @@ final class HomeView: UIView, ContainCollectionView {
             section.contentInsets = NSDirectionalEdgeInsets(
                 top: .zero,
                 leading: .zero,
-                bottom: Constant.space48.cgFloat,
+                bottom: Constant.space24.cgFloat,
                 trailing: .zero
             )
             section.orthogonalScrollingBehavior = self.orthogonalMode(feedCellType: feedCellType)
@@ -179,8 +180,9 @@ final class HomeView: UIView, ContainCollectionView {
     -> [NSCollectionLayoutBoundarySupplementaryItem] {
         switch feedCellType {
         case .recommend:
-            let padding = Constant.Padding.horizontal.cgFloat
-            let headerHeight = 80 + padding * 2
+            let paddingHorizontal: CGFloat = 32
+            let paddingVertical: CGFloat = 24
+            let headerHeight = 80 + paddingVertical * 2
             let headerSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
                 heightDimension: .absolute(headerHeight)
@@ -191,10 +193,10 @@ final class HomeView: UIView, ContainCollectionView {
                 alignment: .top
             )
             header.contentInsets = NSDirectionalEdgeInsets(
-                top: padding,
-                leading: padding,
-                bottom: padding,
-                trailing: padding
+                top: 0,
+                leading: paddingHorizontal,
+                bottom: 0,
+                trailing: paddingHorizontal
             )
             return [header]
         case .normal:
