@@ -21,7 +21,6 @@ final class HomeViewController: UIViewController {
     }
 
     private var viewModel: HomeViewModel
-    private let viewDidLoadPublisher = PassthroughSubject<Void, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
     init(viewModel: HomeViewModel) {
@@ -42,7 +41,6 @@ final class HomeViewController: UIViewController {
         configureUI()
         collectionViewDelegate()
         bind()
-        fetchFeed()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -70,8 +68,10 @@ final class HomeViewController: UIViewController {
         guard let refreshControl = homeView.collectionView.refreshControl
         else { return }
 
+        let viewDidLoadJust = Just(Void()).eraseToAnyPublisher()
+
         let input = HomeViewModel.Input(
-            viewDidLoad: viewDidLoadPublisher.eraseToAnyPublisher(),
+            viewDidLoad: viewDidLoadJust,
             viewRefresh: refreshControl.isRefreshPublisher
         )
 
@@ -87,10 +87,6 @@ final class HomeViewController: UIViewController {
                 }
             }
             .store(in: &cancelBag)
-    }
-
-    private func fetchFeed() {
-        viewDidLoadPublisher.send(Void())
     }
 }
 

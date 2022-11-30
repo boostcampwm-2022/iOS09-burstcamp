@@ -26,7 +26,7 @@ final class HomeFireStoreService: HomeFireStore {
 
             var result: [Feed] = []
 
-            let feeds = self.getQuery(lastSnapShot: self.lastSnapShot)
+            let feeds = self.makeQuery(lastSnapShot: self.lastSnapShot)
             feeds.getDocuments { querySnapshot, _ in
                 guard let querySnapshot = querySnapshot else { return }
                 self.lastSnapShot = querySnapshot.documents.last
@@ -58,7 +58,7 @@ final class HomeFireStoreService: HomeFireStore {
         .eraseToAnyPublisher()
     }
 
-    private func getQuery(lastSnapShot: QueryDocumentSnapshot?) -> Query {
+    private func makeQuery(lastSnapShot: QueryDocumentSnapshot?) -> Query {
         if let lastSnapShot = lastSnapShot {
             return database
                 .collection("Feed")
