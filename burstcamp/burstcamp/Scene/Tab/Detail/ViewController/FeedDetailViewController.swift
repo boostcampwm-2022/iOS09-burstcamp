@@ -79,6 +79,13 @@ final class FeedDetailViewController: UIViewController {
 
         let output = viewModel.transform(input: input)
 
+        output.feedDidUpdate
+            .receive(on: DispatchQueue.main)
+            .sink { feed in
+                self.feedDetailView.configure(with: feed)
+            }
+            .store(in: &cancelBag)
+
         output.openBlog
             .sink { url in
                 UIApplication.shared.open(url)

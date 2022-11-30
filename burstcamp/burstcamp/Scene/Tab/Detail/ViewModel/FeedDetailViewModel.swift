@@ -11,14 +11,17 @@ import Foundation
 import FirebaseFirestore
 
 final class FeedDetailViewModel {
-    private var feed: Feed?
+    private var feed = CurrentValueSubject<Feed?, Never>(nil)
 
-    init(feed: Feed?) {
-        self.feed = feed
+    init() { }
+
+    convenience init(feed: Feed) {
+        self.init()
+        self.feed.send(feed)
     }
 
     convenience init(feedUUID: String) {
-        self.init(feed: nil)
+        self.init()
         self.fetchFeed(uuid: feedUUID)
     }
 
@@ -29,22 +32,28 @@ final class FeedDetailViewModel {
     }
 
     struct Output {
+        let feedDidUpdate: AnyPublisher<Feed, Never>
         let openBlog: AnyPublisher<URL, Never>
         let scrapButtonToggle: AnyPublisher<Void, Never>
         let openActivityView: AnyPublisher<String, Never>
     }
 
     func transform(input: Input) -> Output {
+        let feedDidUpdate = feed
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
+
         let openBlog = input.blogButtonDidTap
-            .compactMap { self.feed?.url }
+            .compactMap { self.feed.value?.url }
             .compactMap { URL(string: $0) }
             .eraseToAnyPublisher()
 
         let openActivityView = input.shareButtonDidTap
-            .compactMap { self.feed?.url }
+            .compactMap { self.feed.value?.url }
             .eraseToAnyPublisher()
 
         return Output(
+            feedDidUpdate: feedDidUpdate,
             openBlog: openBlog,
             scrapButtonToggle: input.scrapButtonDidTap,
             openActivityView: openActivityView
@@ -53,17 +62,14 @@ final class FeedDetailViewModel {
 
     private func fetchFeed(uuid: String) {
         Task {
-            var feedDict = await requestFeed(uuid: uuid)
+            let feedDict = await requestFeed(uuid: uuid)
+            let feedDTO = FeedDTO(data: feedDict)
+            print(feedDTO)
+            let feedWriterDict = await requestFeedWriter(uuid: feedDTO.writerUUID)
+            let feedWriter = FeedWriter(data: feedWriterDict)
+            let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
 
-            guard let pubDate = feedDict["pubDate"] as? Timestamp else {
-                fatalError("캐스팅 에러")
-            }
-            let interval = Double(pubDate.seconds) as TimeInterval
-            feedDict["pubDate"] = Date(timeIntervalSince1970: interval).
-            guard let feed = try? Feed(feedDict) else {
-                fatalError("디코딩 에러")
-            }
-            self.feed = feed
+            self.feed.send(feed)
         }
     }
 
@@ -78,6 +84,22 @@ final class FeedDetailViewModel {
                         fatalError("해당 피드가 존재하지 않음.")
                     }
                     continuation.resume(returning: feedDoc.data())
+                }
+        })
+    }
+
+    private func requestFeedWriter(uuid: String) async -> [String: Any] {
+        await withCheckedContinuation({ continuation in
+            let db = Firestore.firestore()
+            db.collection("User")
+                .document(uuid)
+                .getDocument { (documentSnapShot, error) in
+                    guard let snapShot = documentSnapShot,
+                          let userData = snapShot.data()
+                    else {
+                        fatalError("해당 유저가 존재하지 않음.")
+                    }
+                    continuation.resume(returning: userData)
                 }
         })
     }

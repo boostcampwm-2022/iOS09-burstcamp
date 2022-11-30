@@ -57,6 +57,7 @@ class DefaultUserInfoView: UIStackView {
 }
 
 extension DefaultUserInfoView {
+    // TODO: User와 FeedWriter에 상위 프로토콜을 만들어 함수를 하나로
     func updateView(user: User) {
         DispatchQueue.main.async {
             self.nameLabel.text = user.nickname

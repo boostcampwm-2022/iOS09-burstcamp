@@ -89,4 +89,13 @@ extension FeedDetailView {
         pubDateLabel.text = "2022. 11. 20. 17:38"
         contentView.loadFormattedHTMLString(String.htmlReadability)
     }
+
+    func configure(with feed: Feed) {
+        userInfoStackView.updateView(feedWriter: feed.writer)
+        print(#function, feed.writer)
+        titleLabel.text = feed.feedTitle
+        blogTitleLabel.text = feed.writer.blogTitle
+        pubDateLabel.text = feed.pubDate.monthDateFormatString
+        contentView.loadFormattedHTMLString(feed.content)
+    }
 }
