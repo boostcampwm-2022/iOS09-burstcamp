@@ -57,10 +57,17 @@ class DefaultUserInfoView: UIStackView {
 }
 
 extension DefaultUserInfoView {
-    func updateView(user: MyUser) {
+    func updateView(user: User) {
         DispatchQueue.main.async {
             self.nameLabel.text = user.nickname
         }
         badgeStackView.updateView(user: user)
+    }
+
+    func updateView(feedWriter: FeedWriter) {
+        DispatchQueue.main.async {
+            self.nameLabel.text = feedWriter.nickname
+        }
+        badgeStackView.updateView(feedWriter: feedWriter)
     }
 }

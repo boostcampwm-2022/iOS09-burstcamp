@@ -36,7 +36,6 @@ final class HomeFireStoreService: HomeFireStore {
                 querySnapshot.documents.forEach { queryDocumentSnapshot in
                     let data = queryDocumentSnapshot.data()
                     let feedDTO = FeedDTO(data: data)
-                    var feed = Feed()
                     self.fetchWriter(userUUID: feedDTO.writerUUID)
                         .sink { completion in
                             switch completion {
@@ -50,7 +49,7 @@ final class HomeFireStoreService: HomeFireStore {
                                 promise(.failure(error))
                             }
                         } receiveValue: { feedWriter in
-                            feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
+                            let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
                             result.append(feed)
                         }
                         .store(in: &self.cancelBag)

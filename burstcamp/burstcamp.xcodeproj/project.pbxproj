@@ -35,6 +35,8 @@
 		1459C3BC2929150200FA885D /* FeedCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3BB2929150200FA885D /* FeedCellType.swift */; };
 		14927E1E2929C71C001F2E97 /* RecommendFeedUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14927E1D2929C71C001F2E97 /* RecommendFeedUserView.swift */; };
 		14927E202929CCA0001F2E97 /* RecommendFeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */; };
+		14A93D402936EFF900790034 /* FeedDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D3F2936EFF900790034 /* FeedDTO.swift */; };
+		14A93D422936F00F00790034 /* FeedWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D412936F00F00790034 /* FeedWriter.swift */; };
 		3B061FD82928CC5600BFA71D /* SignUpDomainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FD72928CC5600BFA71D /* SignUpDomainViewController.swift */; };
 		3B061FDA2928CF7E00BFA71D /* SighUpDomainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FD92928CF7E00BFA71D /* SighUpDomainView.swift */; };
 		3B061FDD2928E8E300BFA71D /* SignUpCamperIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FDC2928E8E300BFA71D /* SignUpCamperIDViewController.swift */; };
@@ -170,6 +172,8 @@
 		1459C3BB2929150200FA885D /* FeedCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellType.swift; sourceTree = "<group>"; };
 		14927E1D2929C71C001F2E97 /* RecommendFeedUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedUserView.swift; sourceTree = "<group>"; };
 		14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedHeader.swift; sourceTree = "<group>"; };
+		14A93D3F2936EFF900790034 /* FeedDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDTO.swift; sourceTree = "<group>"; };
+		14A93D412936F00F00790034 /* FeedWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedWriter.swift; sourceTree = "<group>"; };
 		3B061FD72928CC5600BFA71D /* SignUpDomainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDomainViewController.swift; sourceTree = "<group>"; };
 		3B061FD92928CF7E00BFA71D /* SighUpDomainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SighUpDomainView.swift; sourceTree = "<group>"; };
 		3B061FDC2928E8E300BFA71D /* SignUpCamperIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCamperIDViewController.swift; sourceTree = "<group>"; };
@@ -410,6 +414,16 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		14A93D3E2936EFEE00790034 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				141344DA292F82BE00187B86 /* Feed.swift */,
+				14A93D3F2936EFF900790034 /* FeedDTO.swift */,
+				14A93D412936F00F00790034 /* FeedWriter.swift */,
+			);
+			path = Feed;
 			sourceTree = "<group>";
 		};
 		3B061FD62928CC4300BFA71D /* Domain */ = {
@@ -709,12 +723,12 @@
 		B5BA27892927B07300BDCE08 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				14A93D3E2936EFEE00790034 /* Feed */,
 				B50A27A729279F5D00DF3E1F /* APIKey.swift */,
 				D8494D532927D0DC008157F1 /* User.swift */,
 				D8494D4D2927CE64008157F1 /* Domain.swift */,
 				D8C38673292B8D82005A2563 /* Appearance.swift */,
 				D84452FB292DB7DE008E811B /* CellIndexPath.swift */,
-				141344DA292F82BE00187B86 /* Feed.swift */,
 				D89AE5002936221600446AB3 /* ScrapUser.swift */,
 				D89AE4EC2935AA2100446AB3 /* FCMToken.swift */,
 			);
@@ -1024,6 +1038,7 @@
 				D8494D502927CEAA008157F1 /* DefaultBadgeLabel.swift in Sources */,
 				B5E0D94A292F631C001727F5 /* MockHTMLString.swift in Sources */,
 				14927E1E2929C71C001F2E97 /* RecommendFeedUserView.swift in Sources */,
+				14A93D402936EFF900790034 /* FeedDTO.swift in Sources */,
 				D84C8132292F0A1E00C984E8 /* UIViewController+ToastMessage.swift in Sources */,
 				D88295EF292A43EB005B4273 /* NetworkError.swift in Sources */,
 				D84452F0292CA57D008E811B /* MyPageEditViewController.swift in Sources */,
@@ -1083,6 +1098,7 @@
 				B50A27F529279F5D00DF3E1F /* AppCoordinator.swift in Sources */,
 				B50A27F929279F5D00DF3E1F /* TabBarPage.swift in Sources */,
 				3B061FE2292926DA00BFA71D /* SignUpViewModel.swift in Sources */,
+				14A93D422936F00F00790034 /* FeedWriter.swift in Sources */,
 				D84452F8292CF4E0008E811B /* DefaultTextField.swift in Sources */,
 				D8C3866C292B4B0B005A2563 /* OpenSourceLicenseView.swift in Sources */,
 				B50A27DB29279F5D00DF3E1F /* Colors+Generated.swift in Sources */,
