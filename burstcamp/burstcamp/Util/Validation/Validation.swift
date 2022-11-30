@@ -18,11 +18,15 @@ struct Validation {
     }
 
     static func validate(blogLink: String) -> Bool {
-        let tistoryRegexp = #"^https://?[a-z0-9-]{4,32}.tistory.com$"#
-        let velogRegexp = #"^https://velog.io/@?[A-Za-z0-9-_]{3,16}$"#
-        if blogLink.range(of: tistoryRegexp, options: .regularExpression) != nil {
+        if blogLink.range(
+            of: URLRegularExpression.tistory,
+            options: .regularExpression
+        ) != nil {
             return true
-        } else if blogLink.range(of: velogRegexp, options: .regularExpression) != nil {
+        } else if blogLink.range(
+            of: URLRegularExpression.velog,
+            options: .regularExpression
+        ) != nil {
             return true
         }
         return false
