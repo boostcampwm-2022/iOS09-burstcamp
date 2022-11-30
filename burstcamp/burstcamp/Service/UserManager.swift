@@ -42,9 +42,9 @@ final class UserManager {
                     print("user 업데이트 실패 \(error.localizedDescription)")
                     return
                 }
-                guard let dict = snapshot?.data() else { return }
-                print(dict)
-                self?.user = User(dict: dict)
+                guard let dictionary = snapshot?.data() else { return }
+                print(dictionary)
+                self?.user = User(dictionary: dictionary)
             }
     }
 }

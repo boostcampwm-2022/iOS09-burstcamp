@@ -45,18 +45,18 @@ struct User: Codable {
         self.isPushOn = isPushOn
     }
     
-    init(dict: [String: Any]) {
-        self.userUUID = dict["userUUID"] as? String ?? ""
-        self.nickname = dict["nickname"] as? String ?? ""
-        self.profileImageURL = dict["profileImageURL"] as? String ?? ""
-        let domainString = dict["domain"] as? String ?? "iOS"
+    init(dictionary: [String: Any]) {
+        self.userUUID = dictionary["userUUID"] as? String ?? ""
+        self.nickname = dictionary["nickname"] as? String ?? ""
+        self.profileImageURL = dictionary["profileImageURL"] as? String ?? ""
+        let domainString = dictionary["domain"] as? String ?? "iOS"
         self.domain = Domain(rawValue: domainString) ?? .iOS
-        self.camperID = dict["camperID"] as? String ?? ""
-        self.ordinalNumber = dict["ordinalNumber"] as? Int ?? 7
-        self.blogURL = dict["blogURL"] as? String ?? ""
-        self.blogTitle = dict["blogTitle"] as? String ?? ""
-        self.scrapFeedUUIDs = dict["scrapFeedUUIDs"] as? [String] ?? []
-        self.signupDate = dict["signupDate"] as? Date ?? Date() // TODO: Timestamp
-        self.isPushOn = dict["isPushOn"] as? Bool ?? false
+        self.camperID = dictionary["camperID"] as? String ?? ""
+        self.ordinalNumber = dictionary["ordinalNumber"] as? Int ?? 7
+        self.blogURL = dictionary["blogURL"] as? String ?? ""
+        self.blogTitle = dictionary["blogTitle"] as? String ?? ""
+        self.scrapFeedUUIDs = dictionary["scrapFeedUUIDs"] as? [String] ?? []
+        self.signupDate = dictionary["signupDate"] as? Date ?? Date() // TODO: Timestamp
+        self.isPushOn = dictionary["isPushOn"] as? Bool ?? false
     }
 }

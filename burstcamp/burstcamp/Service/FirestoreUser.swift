@@ -42,8 +42,8 @@ struct FirebaseUser {
                     }
                     if let document = document,
                        document.exists,
-                       let dict = document.data() {
-                        let user = User(dict: dict)
+                       let dictionary = document.data() {
+                        let user = User(dictionary: dictionary)
                         promise(.success(user))
                     } else {
                         promise(.failure(FirestoreError.noDataError))
