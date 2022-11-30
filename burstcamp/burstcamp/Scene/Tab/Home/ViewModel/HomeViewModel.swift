@@ -60,7 +60,7 @@ final class HomeViewModel {
                     output.fetchResult.send(.fetchFail(error: error))
                 }
             } receiveValue: { [weak self] feeds in
-                self?.normalFeedData = feeds
+                self?.normalFeedData.append(contentsOf: feeds)
             }
             .store(in: &cancelBag)
     }
