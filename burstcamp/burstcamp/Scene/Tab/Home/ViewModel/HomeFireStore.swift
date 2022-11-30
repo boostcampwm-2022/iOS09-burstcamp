@@ -25,7 +25,6 @@ final class HomeFireStoreService: HomeFireStore {
             guard let self = self else { return }
 
             var result = [Feed]()
-            var count = 1
 
             let feeds = self.getQuery(lastSnapShot: self.lastSnapShot)
 
@@ -40,13 +39,11 @@ final class HomeFireStoreService: HomeFireStore {
                         .sink { completion in
                             switch completion {
                             case .finished:
-                                if count >= querySnapshot.documents.count {
+                                if result.count >= querySnapshot.documents.count {
                                     let sortedResult = result.sorted {
                                         $0.pubDate > $1.pubDate
                                     }
                                     promise(.success(sortedResult))
-                                } else {
-                                    count += 1
                                 }
                             case .failure(let error):
                                 promise(.failure(error))
