@@ -174,4 +174,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let viewController = FeedDetailViewController(viewModel: viewModel)
         navigationController?.pushViewController(viewController, animated: true)
     }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.isOverTarget() {
+            print("새 네트워크 요청")
+        }
+    }
 }
