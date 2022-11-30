@@ -67,7 +67,7 @@ final class HomeFireStoreService: HomeFireStore {
             return database
                 .collection("Feed")
                 .order(by: "pubDate", descending: true)
-                .start(atDocument: lastSnapShot)
+                .start(afterDocument: lastSnapShot)
         } else {
             return database
                 .collection("Feed")
