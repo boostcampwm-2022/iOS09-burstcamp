@@ -27,13 +27,11 @@ final class HomeFireStoreService: HomeFireStore {
             var result = [Feed]()
             var count = 1
 
-            let feeds = self.database
-                .collection("Feed")
-                .order(by: "pubDate", descending: true)
-                .limit(to: 10)
+            let feeds = self.getQuery(lastSnapShot: self.lastSnapShot)
 
             feeds.getDocuments { querySnapshot, _ in
                 guard let querySnapshot = querySnapshot else { return }
+                self.lastSnapShot = querySnapshot.documents.last
 
                 querySnapshot.documents.forEach { queryDocumentSnapshot in
                     let data = queryDocumentSnapshot.data()
@@ -63,7 +61,21 @@ final class HomeFireStoreService: HomeFireStore {
         }
         .eraseToAnyPublisher()
     }
-    
+
+    private func getQuery(lastSnapShot: QueryDocumentSnapshot?) -> Query {
+        if let lastSnapShot = lastSnapShot {
+            return database
+                .collection("Feed")
+                .order(by: "pubDate", descending: true)
+                .start(atDocument: lastSnapShot)
+        } else {
+            return database
+                .collection("Feed")
+                .order(by: "pubDate", descending: true)
+                .limit(to: 10)
+        }
+    }
+
     private func fetchWriter(userUUID: String) -> AnyPublisher<FeedWriter, Error> {
         Future<FeedWriter, Error> { [weak self] promise in
             self?.database
