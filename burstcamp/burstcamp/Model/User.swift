@@ -44,7 +44,7 @@ struct User: Codable {
         self.signupDate = signupDate
         self.isPushOn = isPushOn
     }
-    
+
     init(dictionary: [String: Any]) {
         self.userUUID = dictionary["userUUID"] as? String ?? ""
         self.nickname = dictionary["nickname"] as? String ?? ""
