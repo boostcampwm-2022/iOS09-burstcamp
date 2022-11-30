@@ -80,6 +80,7 @@
 		B52A7F272927A88F00E271D2 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = B52A7F262927A88F00E271D2 /* Then */; };
 		B52A7F2A2927A89C00E271D2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B52A7F292927A89C00E271D2 /* SnapKit */; };
 		B597F9552935B94B0022D3E6 /* DefaultToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */; };
+		B597F9572935F4DC0022D3E6 /* Decodable+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597F9562935F4DC0022D3E6 /* Decodable+Dictionary.swift */; };
 		B5BA277D2927AEC600BDCE08 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B5BA277C2927AEC600BDCE08 /* FirebaseAuth */; };
 		B5BA277F2927AEC600BDCE08 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B5BA277E2927AEC600BDCE08 /* FirebaseFirestore */; };
 		B5BA27812927AEC600BDCE08 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = B5BA27802927AEC600BDCE08 /* FirebaseFunctions */; };
@@ -223,6 +224,7 @@
 		B52A7F1A2927A4E300E271D2 /* .swiftlint.auto.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.auto.yml; sourceTree = "<group>"; };
 		B52A7F232927A68F00E271D2 /* Service-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Service-Info.plist"; sourceTree = "<group>"; };
 		B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultToggleButton.swift; sourceTree = "<group>"; };
+		B597F9562935F4DC0022D3E6 /* Decodable+Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decodable+Dictionary.swift"; sourceTree = "<group>"; };
 		B5BA27862927AEF600BDCE08 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B5DAD674292E4C6800C4A126 /* FeedDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailViewModel.swift; sourceTree = "<group>"; };
 		B5DAD676292E4C6800C4A126 /* FeedDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailView.swift; sourceTree = "<group>"; };

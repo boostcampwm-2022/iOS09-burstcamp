@@ -81,7 +81,6 @@ final class FeedDetailViewController: UIViewController {
 
         output.openBlog
             .sink { url in
-                guard let url else { fatalError() }
                 UIApplication.shared.open(url)
             }
             .store(in: &cancelBag)
