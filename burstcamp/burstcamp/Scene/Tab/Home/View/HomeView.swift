@@ -53,7 +53,8 @@ final class HomeView: UIView, ContainCollectionView {
         addSubview(collectionView)
         collectionView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide.snp.top)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
     }
 
@@ -99,7 +100,7 @@ final class HomeView: UIView, ContainCollectionView {
             section.contentInsets = NSDirectionalEdgeInsets(
                 top: .zero,
                 leading: .zero,
-                bottom: Constant.space48.cgFloat,
+                bottom: Constant.space24.cgFloat,
                 trailing: .zero
             )
             section.orthogonalScrollingBehavior = self.orthogonalMode(feedCellType: feedCellType)
