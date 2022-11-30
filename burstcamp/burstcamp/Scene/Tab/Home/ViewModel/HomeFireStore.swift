@@ -15,46 +15,51 @@ protocol HomeFireStore {
 }
 
 final class HomeFireStoreService: HomeFireStore {
-
+    
     private let database = Firestore.firestore()
-    let feedPublisher = PassthroughSubject<[Feed], Error>()
     private var cancelBag = Set<AnyCancellable>()
-
+    
     func fetchFeed() -> AnyPublisher<[Feed], Error> {
         Future<[Feed], Error> { [weak self] promise in
             guard let self = self else { return }
+            
             var result = [Feed]()
+            var count = 1
+            
             let feeds = self.database
                 .collection("Feed")
-                .order(by: "pubDate", descending: true)
+                .order(by: "pubDate", descending: false)
                 .limit(to: 20)
-
-            feeds.getDocuments {  querySnapShot, error in
-                if let querySnapShot = querySnapShot {
-                    for document in querySnapShot.documents {
-                        let data = document.data()
-                        let feedDTO = FeedDTO(data: data)
-                        self.fetchWriter(userUUID: feedDTO.writerUUID)
-                            .sink { completion in
-                                switch completion {
-                                case .finished:
-                                    break
-                                case .failure(let error):
-                                    print(error)
+            
+            feeds.getDocuments { querySnapshot, _ in
+                guard let querySnapshot = querySnapshot else { return }
+                querySnapshot.documents.forEach { queryDocumentSnapshot in
+                    let data = queryDocumentSnapshot.data()
+                    let feedDTO = FeedDTO(data: data)
+                    var feed = Feed()
+                    self.fetchWriter(userUUID: feedDTO.writerUUID)
+                        .sink { completion in
+                            switch completion {
+                            case .finished:
+                                if count >= querySnapshot.documents.count {
+                                    promise(.success(result))
+                                } else {
+                                    count += 1
                                 }
-                            } receiveValue: { feedWriter in
-                                let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
-                                result.append(feed)
+                            case .failure(let error):
+                                promise(.failure(error))
                             }
-                            .store(in: &self.cancelBag)
-                    }
+                        } receiveValue: { feedWriter in
+                            feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
+                            result.append(feed)
+                        }
+                        .store(in: &self.cancelBag)
                 }
             }
-            promise(.success(result))
         }
         .eraseToAnyPublisher()
     }
-
+    
     func fetchWriter(userUUID: String) -> AnyPublisher<FeedWriter, Error> {
         Future<FeedWriter, Error> { [weak self] promise in
             self?.database
@@ -71,6 +76,7 @@ final class HomeFireStoreService: HomeFireStore {
                         promise(.failure(FirebaseError.fetchUserError))
                     }
                 }
-        }.eraseToAnyPublisher()
+        }
+        .eraseToAnyPublisher()
     }
 }

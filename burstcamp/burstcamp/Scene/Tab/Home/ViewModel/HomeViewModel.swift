@@ -43,7 +43,7 @@ final class HomeViewModel {
         return output
     }
 
-    private func fetchFeed(output: Output) {
+    func fetchFeed(output: Output) {
         self.homeFireStore.fetchFeed()
             .sink { completion in
                 switch completion {

@@ -41,6 +41,7 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         collectionViewDelegate()
+        fetchFeed()
         bind()
     }
 
@@ -77,11 +78,15 @@ final class HomeViewController: UIViewController {
                 case .fetchSuccess:
                     self.homeView.endCollectionViewRefreshing()
                     self.homeView.collectionView.reloadData()
+                    print(self.viewModel.normalFeedData.count)
                 case .fetchFail(let error):
                     print(error)
                 }
             }
             .store(in: &cancelBag)
+    }
+
+    private func fetchFeed() {
     }
 }
 

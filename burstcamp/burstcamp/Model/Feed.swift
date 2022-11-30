@@ -28,6 +28,17 @@ struct Feed {
         self.content = feedDTO.content
         self.scrapCount = 0
     }
+
+    init() {
+        feedUUID = ""
+        writer = FeedWriter()
+        feedTitle = ""
+        pubDate = Date()
+        url = ""
+        thumbnailURL = ""
+        content = ""
+        scrapCount = 0
+    }
 }
 
 struct FeedWriter {
@@ -47,6 +58,13 @@ struct FeedWriter {
         self.camperID = camperID
         self.ordinalNumber = ordinalNumber
         self.domain = domain
+    }
+
+    init() {
+        nickname = ""
+        camperID = ""
+        ordinalNumber = 7
+        domain = .iOS
     }
 }
 
