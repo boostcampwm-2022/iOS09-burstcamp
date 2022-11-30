@@ -28,11 +28,9 @@ final class HomeFireStoreService: HomeFireStore {
         return Future<[Feed], Error> { [weak self] promise in
             guard let self = self else { return }
 
-            var result = [Feed]()
-            var count = 1
+            var result: [Feed] = []
 
-            let feeds = self.getQuery(lastSnapShot: self.lastSnapShot)
-
+            let feeds = self.makeQuery(lastSnapShot: self.lastSnapShot)
             feeds.getDocuments { querySnapshot, _ in
                 guard let querySnapshot = querySnapshot else { return }
                 self.lastSnapShot = querySnapshot.documents.last
@@ -44,14 +42,12 @@ final class HomeFireStoreService: HomeFireStore {
                         .sink { completion in
                             switch completion {
                             case .finished:
-                                if count >= querySnapshot.documents.count {
+                                if result.count >= querySnapshot.documents.count {
                                     let sortedResult = result.sorted {
                                         $0.pubDate > $1.pubDate
                                     }
                                     promise(.success(sortedResult))
                                     self.isFetching = false
-                                } else {
-                                    count += 1
                                 }
                             case .failure(let error):
                                 promise(.failure(error))
@@ -67,7 +63,7 @@ final class HomeFireStoreService: HomeFireStore {
         .eraseToAnyPublisher()
     }
 
-    private func getQuery(lastSnapShot: QueryDocumentSnapshot?) -> Query {
+    private func makeQuery(lastSnapShot: QueryDocumentSnapshot?) -> Query {
         if let lastSnapShot = lastSnapShot {
             return database
                 .collection("Feed")
