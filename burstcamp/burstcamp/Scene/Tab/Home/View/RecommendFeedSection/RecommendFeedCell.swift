@@ -58,7 +58,7 @@ final class RecommendFeedCell: UICollectionViewCell {
 }
 
 extension RecommendFeedCell {
-    func updateView(feed: Feed) {
+    func updateView(with feed: Feed) {
         titleLabel.text = feed.feedTitle
         userView.updateView(feedWriter: feed.writer)
         backgroundColor = feed.writer.domain.color

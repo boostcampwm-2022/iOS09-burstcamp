@@ -132,7 +132,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             let index = indexPath.row % 3
             let feed = viewModel.recommendFeedData[index]
-            cell.updateView(feed: feed)
+            cell.updateView(with: feed)
             return cell
         case .normal:
             guard let cell = collectionView.dequeueReusableCell(
@@ -144,7 +144,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             let index = indexPath.row
             let feed = viewModel.normalFeedData[index]
-            cell.updateFeedCell(feed: feed)
+            cell.updateFeedCell(with: feed)
             return cell
         case .none:
             return UICollectionViewCell()
