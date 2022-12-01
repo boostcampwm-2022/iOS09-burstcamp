@@ -12,9 +12,6 @@ final class MyPageViewController: UIViewController {
 
     // MARK: - Properties
 
-    // TODO: 임시 유저
-    private var user = User(userUUID: "", nickname: "", profileImageURL: "", domain: .iOS, camperID: "", ordinalNumber: 7, blogURL: "", blogTitle: "", scrapFeedUUIDs: [], signupDate: Date(), isPushOn: false)
-
     private var myPageView: MyPageView {
         guard let view = view as? MyPageView else {
             return MyPageView()
@@ -69,13 +66,20 @@ final class MyPageViewController: UIViewController {
 
     private func bind() {
         let input = MyPageViewModel.Input(
-            darkModeValueChanged: myPageView.darkModeSwitch.controlPublisher(for: .valueChanged)
-                .compactMap { $0 as? UISwitch }
-                .compactMap { Appearance.appearance(isOn: $0.isOn) }
+            notificationIsOn: myPageView.notificationSwitch.statePublisher,
+            darkModeValueChanged: myPageView.darkModeSwitch.statePublisher
+                .compactMap { Appearance.appearance(isOn: $0) }
                 .eraseToAnyPublisher()
         )
 
         let output = viewModel.transform(input: input, cancelBag: &cancelBag)
+
+        output.userInitialValue
+            .sink { user in
+                self.myPageView.updateView(user: user)
+            }
+            .store(in: &cancelBag)
+
         output.darkModeInitialValue
             .sink { appearance in
                 self.myPageView.setDarkModeSwitch(appearance: appearance)

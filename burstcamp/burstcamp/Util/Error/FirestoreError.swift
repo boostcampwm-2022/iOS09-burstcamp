@@ -11,4 +11,5 @@ enum FirestoreError: Error {
     case failAsDictionary
     case setDataError
     case noDataError
+    case updateError
 }

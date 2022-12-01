@@ -10,7 +10,7 @@ import UIKit
 final class LogInView: UIView {
 
     private lazy var titleImage: UIImageView = UIImageView().then {
-        $0.image = UIImage(systemName: "pencil.circle")
+        $0.image = UIImage(named: "AppIcon")
     }
 
     private lazy var titleLabel: UILabel = UILabel().then {

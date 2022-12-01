@@ -15,20 +15,12 @@ final class SignUpDomainViewController: UIViewController {
         return view
     }
 
-    private var domainButtons: [UIButton] {
-        return [
-            signUpDomainView.webButton,
-            signUpDomainView.aosButton,
-            signUpDomainView.iosButton
-        ]
-    }
-
-    var coordinatorPublisher = PassthroughSubject<(AuthCoordinatorEvent, SignUpViewModel), Never>()
+    var coordinatorPublisher = PassthroughSubject<AuthCoordinatorEvent, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
-    private let viewModel: SignUpViewModel
+    private let viewModel: SignUpDomainViewModel
 
-    init(viewModel: SignUpViewModel) {
+    init(viewModel: SignUpDomainViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -47,34 +39,48 @@ final class SignUpDomainViewController: UIViewController {
     }
 
     private func bind() {
-        let domainSubject = PassthroughSubject<Domain, Never>()
-
-        domainButtons.forEach { button in
-            guard let title = button.currentTitle,
-                  let domain = Domain(rawValue: title)
-            else {
-                return
-            }
-
-            button.tapPublisher
-                .sink { _ in
-                    domainSubject.send(domain)
-                    self.coordinatorPublisher.send((.moveToIDScreen, self.viewModel))
-                }
-                .store(in: &cancelBag)
-
-            button.touchDownPublisher
-                .sink { _ in
-                    self.domainButtons.forEach { $0.backgroundColor = .systemGray5 }
-                    button.backgroundColor = domain.color
-                }
-                .store(in: &cancelBag)
-        }
-
-        let input = SignUpViewModel.InputDomain(
-            domainButtonDidTap: domainSubject
+        let input = SignUpDomainViewModel.Input(
+            webButtonDidTap: signUpDomainView.webButton.tapPublisher,
+            aosButtonDidTap: signUpDomainView.aosButton.tapPublisher,
+            iosButtonDidTap: signUpDomainView.iosButton.tapPublisher
         )
 
-        viewModel.transformDomain(input: input)
+        let output = viewModel.transform(input: input)
+
+        output.webSelected
+            .sink { domain in
+                self.changeUI(domain: domain)
+                self.coordinatorPublisher.send(.moveToIDScreen)
+            }
+            .store(in: &cancelBag)
+
+        output.aosSelected
+            .sink { domain in
+                self.changeUI(domain: domain)
+                self.coordinatorPublisher.send(.moveToIDScreen)
+            }
+            .store(in: &cancelBag)
+
+        output.iosSelected
+            .sink { domain in
+                self.changeUI(domain: domain)
+                self.coordinatorPublisher.send(.moveToIDScreen)
+            }
+            .store(in: &cancelBag)
+    }
+
+    private func changeUI(domain: Domain) {
+        [
+            signUpDomainView.webButton,
+            signUpDomainView.aosButton,
+            signUpDomainView.iosButton
+        ]
+            .forEach { button in
+                if button.currentTitle == domain.rawValue {
+                    button.backgroundColor = domain.color
+                } else {
+                    button.backgroundColor = .systemGray5
+                }
+            }
     }
 }
