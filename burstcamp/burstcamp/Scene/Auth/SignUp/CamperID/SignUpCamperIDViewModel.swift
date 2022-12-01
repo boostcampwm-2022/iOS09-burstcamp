@@ -20,8 +20,8 @@ final class SignUpCamperIDViewModel {
     struct Output {
         let validateCamperID: AnyPublisher<Bool, Never>
         let moveToBlogView: AnyPublisher<Void, Never>
-        let domainText: Just<String?>
-        let representingDomainText: Just<String?>
+        let bindDomainText: Just<String>
+        let bindRepresentingDomainText: Just<String>
     }
 
     func transform(input: Input) -> Output {
@@ -42,8 +42,8 @@ final class SignUpCamperIDViewModel {
         return Output(
             validateCamperID: validateCamperID,
             moveToBlogView: moveToBlogView,
-            domainText: domainText,
-            representingDomainText: representingDomainText
+            bindDomainText: domainText,
+            bindRepresentingDomainText: representingDomainText
         )
     }
 }
