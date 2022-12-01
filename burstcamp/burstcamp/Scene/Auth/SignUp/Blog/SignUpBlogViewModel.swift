@@ -40,14 +40,14 @@ final class SignUpBlogViewModel {
             .mapError { _ in FirestoreError.noDataError }
             .flatMap { title in
                 let user = self.createUser(blogURL: self.blogAddress, blogTitle: title)
-                return FirebaseUser.save(user: user).eraseToAnyPublisher()
+                return FirestoreUser.save(user: user).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
 
         let signUpWithSkipButton = input.skipConfirmDidTap
             .flatMap { _ in
                 let user = self.createUser(blogURL: "", blogTitle: "")
-                return FirebaseUser.save(user: user).eraseToAnyPublisher()
+                return FirestoreUser.save(user: user).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
 

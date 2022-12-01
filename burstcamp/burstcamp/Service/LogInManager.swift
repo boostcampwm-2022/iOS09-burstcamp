@@ -86,7 +86,7 @@ final class LogInManager {
     }
 
     func isSignedUp(token: String, nickname: String) {
-        FirebaseUser.fetch(userUUID: self.userUUID)
+        FirestoreUser.fetch(userUUID: self.userUUID)
             .sink { result in
                 switch result {
                 case .finished:
