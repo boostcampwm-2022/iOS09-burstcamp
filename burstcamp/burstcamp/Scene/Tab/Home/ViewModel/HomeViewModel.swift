@@ -41,13 +41,14 @@ final class HomeViewModel {
 
         input.viewDidLoad
             .sink { [weak self] _ in
-                self?.fetchRecommendFeed()
+                self?.fetchRecommendFeed(output: output)
                 self?.fetchFeed(output: output)
             }
             .store(in: &cancelBag)
 
         input.viewRefresh
             .sink { [weak self] _ in
+                self?.fetchRecommendFeed(output: output)
                 self?.fetchFeed(output: output)
             }
             .store(in: &cancelBag)
@@ -80,11 +81,12 @@ final class HomeViewModel {
             .store(in: &cancelBag)
     }
 
-    func fetchRecommendFeed() {
+    func fetchRecommendFeed(output: Output) {
         Task {
             let recommendFeed = try await fetchRecommendFeedArray()
             self.recommendFeedData = recommendFeed
             print(recommendFeed)
+            output.fetchResult.send(.fetchSuccess)
         }
     }
 
@@ -108,6 +110,7 @@ final class HomeViewModel {
             for try await feed in taskGroup {
                 recommendFeeds.append(feed)
             }
+
             return recommendFeeds
         })
     }
