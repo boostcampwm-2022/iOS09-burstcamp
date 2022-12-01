@@ -44,7 +44,8 @@ async function updateFeedDBFromSingleBlog(parsedRSS) {
 async function createFeedDataIfNeeded(docRef, blogUUID, feed) {
 	const content = await fetchContent(feed.link)
 	docRef.set({
-		// writerUUID: writerUUID,
+		// TODO: User db에서 UUID를 찾아 대입해주기
+		writerUUID: "test",
 		blogUUID: blogUUID,
 		title: feed.title,
 		url: feed.link,
