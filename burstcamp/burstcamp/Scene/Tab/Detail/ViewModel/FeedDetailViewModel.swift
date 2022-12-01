@@ -122,12 +122,10 @@ final class FeedDetailViewModel {
     }
 
     private func requestDeleteFeedScrapUser(uuid: String) async throws {
+        let path = ["feed", uuid, "scrapUserUUIDs", "userUUID"].joined(separator: "/")
         try await withCheckedThrowingContinuation { continuation in
             Firestore.firestore()
-                .collection("feed")
-                .document(uuid)
-                .collection("scrapUserUUIDs")
-                .document("userUUID")
+                .document(path)
                 .delete { error in
                     if let error = error {
                         continuation.resume(throwing: error)
@@ -139,12 +137,10 @@ final class FeedDetailViewModel {
     }
 
     private func requestAppendFeedScrapUser(uuid: String) async throws {
+        let path = ["feed", uuid, "scrapUserUUIDs", "userUUID"].joined(separator: "/")
         try await withCheckedThrowingContinuation { continuation in
             Firestore.firestore()
-                .collection("feed")
-                .document(uuid)
-                .collection("scrapUserUUIDs")
-                .document("userUUID") // TODO: userUUID 삽입
+                .document(path)
                 .setData([
                     "userUUID": "userUUID",
                     "scrapDate": Timestamp(date: Date())

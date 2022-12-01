@@ -19,7 +19,6 @@ export async function updateFeedDB() {
  * @param {JSON} parsedRSS 
  */
 async function updateFeedDBFromSingleBlog(parsedRSS) {
-	const blogUUID = parsedRSS.feed.link.hashCode();
 	await parsedRSS.items.forEach(async (item) => {
 		const feedUUID = item.link.hashCode()
 		const docRef = db.collection('feed').doc(feedUUID);
@@ -29,7 +28,7 @@ async function updateFeedDBFromSingleBlog(parsedRSS) {
 					logger.log(item.link, 'is already exist');
 					return;
 				}
-				createFeedDataIfNeeded(docRef, blogUUID, item);
+				createFeedDataIfNeeded(docRef, feedUUID, item);
 				logger.log(item.link, 'is created');
 			});
 	});
@@ -38,15 +37,15 @@ async function updateFeedDBFromSingleBlog(parsedRSS) {
 /**
  * DB에 한 포스트에 대한 정보를 저장한다.
  * @param {FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>} docRef feedData가 담길 Firestore의 doc 레퍼런스
- * @param {string} blogUUID blogURL을 hashing한 값
+ * @param {string} feedUUID feedURL을 hashing한 값
  * @param {JSON} feed RSS를 JSON으로 파싱한 정보
  */
-async function createFeedDataIfNeeded(docRef, blogUUID, feed) {
+async function createFeedDataIfNeeded(docRef, feedUUID, feed) {
 	const content = await fetchContent(feed.link)
 	docRef.set({
 		// TODO: User db에서 UUID를 찾아 대입해주기
+		feedUUID: feedUUID,
 		writerUUID: "test",
-		blogUUID: blogUUID,
 		title: feed.title,
 		url: feed.link,
 		thumbnail: feed.thumbnail,
