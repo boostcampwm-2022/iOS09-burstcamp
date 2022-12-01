@@ -99,7 +99,7 @@ final class FeedDetailViewModel {
             do {
                 switch state {
                 case true: try await requestDeleteFeedScrapUser(uuid: uuid)
-                case false: try await requestCreateFeedScrapUser(uuid: uuid)
+                case false: try await requestAppendFeedScrapUser(uuid: uuid)
                 }
                 self.dbUpdateSucceed.send(true)
             } catch {
@@ -138,7 +138,7 @@ final class FeedDetailViewModel {
         } as Void
     }
 
-    private func requestCreateFeedScrapUser(uuid: String) async throws {
+    private func requestAppendFeedScrapUser(uuid: String) async throws {
         try await withCheckedThrowingContinuation { continuation in
             Firestore.firestore()
                 .collection("feed")
