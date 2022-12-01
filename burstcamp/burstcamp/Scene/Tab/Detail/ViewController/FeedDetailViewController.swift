@@ -87,12 +87,14 @@ final class FeedDetailViewController: UIViewController {
             .store(in: &cancelBag)
 
         output.openBlog
+            .receive(on: DispatchQueue.main)
             .sink { url in
                 UIApplication.shared.open(url)
             }
             .store(in: &cancelBag)
 
         output.openActivityView
+            .receive(on: DispatchQueue.main)
             .sink { feedURL in
                 let shareViewController = UIActivityViewController(
                     activityItems: [feedURL],
@@ -111,18 +113,9 @@ final class FeedDetailViewController: UIViewController {
             }
             .store(in: &cancelBag)
 
-        output.scrapButtonEnable
+        output.scrapButtonIsEnabled
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-                self.scrapButton.isEnabled = true
-            }
-            .store(in: &cancelBag)
-
-        output.scrapButtonDisable
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                self.scrapButton.isEnabled = false
-            }
+            .assign(to: \.isEnabled, on: scrapButton)
             .store(in: &cancelBag)
     }
 }
