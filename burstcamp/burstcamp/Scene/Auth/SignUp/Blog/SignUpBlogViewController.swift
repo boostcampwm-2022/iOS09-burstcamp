@@ -18,9 +18,9 @@ final class SignUpBlogViewController: UIViewController {
     var coordinatorPublisher = PassthroughSubject<AppCoordinatorEvent, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
-    private let viewModel: SignUpViewModel
+    private let viewModel: SignUpBlogViewModel
 
-    init(viewModel: SignUpViewModel) {
+    init(viewModel: SignUpBlogViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -58,22 +58,22 @@ final class SignUpBlogViewController: UIViewController {
         let textPublisher = signUpBlogView.blogTextField.textPublisher
         let nextButtonPublisher = signUpBlogView.nextButton.tapPublisher
 
-        let input = SignUpViewModel.InputBlogAddress(
+        let input = SignUpBlogViewModel.Input(
             blogAddressTextFieldDidEdit: textPublisher,
             nextButtonDidTap: nextButtonPublisher,
             skipConfirmDidTap: skipConfirmSubject
         )
 
-        viewModel.transformBlogAddress(input: input)
-            .validateBlogAddress
+        let output = viewModel.transform(input: input)
+
+        output.validateBlogAddress
             .sink { validate in
                 self.signUpBlogView.nextButton.isEnabled = validate
                 self.signUpBlogView.nextButton.alpha = validate ? 1.0 : 0.3
             }
             .store(in: &cancelBag)
 
-        viewModel.transformBlogAddress(input: input)
-            .nextButton
+        output.nextButton
             .sink(receiveCompletion: { result in
                 if case .failure = result {
                     self.showAlert(title: "경고", message: "회원가입에 실패했습니다")
@@ -84,8 +84,7 @@ final class SignUpBlogViewController: UIViewController {
             })
             .store(in: &cancelBag)
 
-        viewModel.transformBlogAddress(input: input)
-            .skipButton
+        output.skipButton
             .sink(receiveCompletion: { result in
                 if case .failure = result {
                     self.showAlert(title: "경고", message: "회원가입에 실패했습니다")

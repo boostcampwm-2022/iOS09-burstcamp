@@ -42,16 +42,23 @@ final class LogInViewController: UIViewController {
     }
 
     private func bind() {
-        let logInButtonPublisher = logInView.githubLogInButton.tapPublisher
+        let input = LogInViewModel.Input(
+            logInButtonDidTap: logInView.githubLogInButton.tapPublisher
+        )
 
-        let input = LogInViewModel.Input(logInButton: logInButtonPublisher)
+        let output = viewModel.transform(input: input)
 
-        viewModel.transform(input: input)
-            .logInPublisher
+        output.openLogInView
+            .sink {
+                LogInManager.shared.openGithubLoginView()
+            }
+            .store(in: &cancelBag)
+
+        output.moveToOtherView
             .sink { logInEvent in
                 switch logInEvent {
-                case .moveToDomainScreen(let userUUID, let nickname):
-                    self.coordinatorPublisher.send(.moveToDomainScreen(userUUID, nickname))
+                case .moveToDomainScreen:
+                    self.coordinatorPublisher.send(.moveToDomainScreen)
                 case .moveToTabBarScreen:
                     self.coordinatorPublisher.send(.moveToTabBarScreen)
                 case .notCamper:

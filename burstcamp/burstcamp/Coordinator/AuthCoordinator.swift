@@ -10,10 +10,9 @@ import UIKit
 
 protocol AuthCoordinatorProtocol: Coordinator {
     func moveToTabBarFlow()
-    func moveToDomainScreen(userUUID: String, nickname: String)
-    func moveToIDScreen(viewModel: SignUpViewModel)
-    func moveToBlogScreen(viewModel: SignUpViewModel)
-    // to 홈 화면
+    func moveToDomainScreen()
+    func moveToIDScreen()
+    func moveToBlogScreen()
 }
 
 final class AuthCoordinator: AuthCoordinatorProtocol {
@@ -32,8 +31,8 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
         logInViewController.coordinatorPublisher
             .sink { coordinatorEvent in
                 switch coordinatorEvent {
-                case .moveToDomainScreen(let userUUID, let nickname):
-                    self.moveToDomainScreen(userUUID: userUUID, nickname: nickname)
+                case .moveToDomainScreen:
+                    self.moveToDomainScreen()
                 case .moveToTabBarScreen:
                     self.moveToTabBarFlow()
                 case .moveToIDScreen, .moveToBlogScreen, .notCamper:
@@ -49,15 +48,14 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
         finish()
     }
 
-    func moveToDomainScreen(userUUID: String, nickname: String) {
-        let sighUpDomainViewController = SignUpDomainViewController(
-            viewModel: SignUpViewModel(userUUID: userUUID, nickname: nickname)
-        )
+    func moveToDomainScreen() {
+        let viewModel = SignUpDomainViewModel()
+        let sighUpDomainViewController = SignUpDomainViewController(viewModel: viewModel)
         sighUpDomainViewController.coordinatorPublisher
-            .sink { coordinatorEvent, viewModel in
+            .sink { coordinatorEvent in
                 switch coordinatorEvent {
                 case .moveToIDScreen:
-                    self.moveToIDScreen(viewModel: viewModel)
+                    self.moveToIDScreen()
                 default:
                     return
                 }
@@ -66,13 +64,14 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
         navigationController.pushViewController(sighUpDomainViewController, animated: true)
     }
 
-    func moveToIDScreen(viewModel: SignUpViewModel) {
+    func moveToIDScreen() {
+        let viewModel = SignUpCamperIDViewModel()
         let signUpCamperIDViewController = SignUpCamperIDViewController(viewModel: viewModel)
         signUpCamperIDViewController.coordinatorPublisher
-            .sink { coordinatorEvent, viewModel in
+            .sink { coordinatorEvent in
                 switch coordinatorEvent {
                 case .moveToBlogScreen:
-                    self.moveToBlogScreen(viewModel: viewModel)
+                    self.moveToBlogScreen()
                 default:
                     return
                 }
@@ -81,7 +80,8 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
         navigationController.pushViewController(signUpCamperIDViewController, animated: false)
     }
 
-    func moveToBlogScreen(viewModel: SignUpViewModel) {
+    func moveToBlogScreen() {
+        let viewModel = SignUpBlogViewModel()
         let signUpBlogViewController = SignUpBlogViewController(viewModel: viewModel)
         signUpBlogViewController.coordinatorPublisher
             .sink { coordinatorEvent in

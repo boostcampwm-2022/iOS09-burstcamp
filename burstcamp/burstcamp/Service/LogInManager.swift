@@ -91,8 +91,10 @@ final class LogInManager {
                 switch result {
                 case .finished:
                     return
-                case .failure(let error):
-                    self.logInPublisher.send(.moveToDomainScreen(self.userUUID, nickname))
+                case .failure:
+                    UserManager.shared.userUUID = self.userUUID
+                    UserManager.shared.nickname = nickname
+                    self.logInPublisher.send(.moveToDomainScreen)
                 }
             } receiveValue: { user in
                 self.signInToFirebase(user: user, token: token)

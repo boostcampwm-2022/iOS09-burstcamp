@@ -13,22 +13,22 @@ final class LogInViewModel {
     private var cancelBag = Set<AnyCancellable>()
 
     struct Input {
-        let logInButton: AnyPublisher<Void, Never>
+        let logInButtonDidTap: AnyPublisher<Void, Never>
     }
 
     struct Output {
-        let logInPublisher: AnyPublisher<AuthCoordinatorEvent, Never>
+        let openLogInView: AnyPublisher<Void, Never>
+        let moveToOtherView: AnyPublisher<AuthCoordinatorEvent, Never>
     }
 
     func transform(input: Input) -> Output {
-        input.logInButton
-            .sink {
-                LogInManager.shared.openGithubLoginView()
-            }
-            .store(in: &cancelBag)
+        let openLogInView = input.logInButtonDidTap
 
-        let logInPublisher = LogInManager.shared.logInPublisher.eraseToAnyPublisher()
+        let moveToOtherView = LogInManager.shared.logInPublisher.eraseToAnyPublisher()
 
-        return Output(logInPublisher: logInPublisher)
+        return Output(
+            openLogInView: openLogInView,
+            moveToOtherView: moveToOtherView
+        )
     }
 }

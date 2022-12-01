@@ -8,7 +8,7 @@
 import Foundation
 
 enum AuthCoordinatorEvent {
-    case moveToDomainScreen(String, String)
+    case moveToDomainScreen
     case moveToIDScreen
     case moveToBlogScreen
     case moveToTabBarScreen

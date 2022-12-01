@@ -6,69 +6,31 @@
 //
 
 import Combine
-import UIKit
+import Foundation
 
-final class SignUpViewModel {
-    var domain: Domain = .iOS
-    var camperID: String = ""
+final class SignUpBlogViewModel {
+
     var blogAddress: String = ""
-
-    let userUUID: String
-    let nickname: String
 
     private var cancelBag = Set<AnyCancellable>()
 
-    struct InputDomain {
-        let domainButtonDidTap: PassthroughSubject<Domain, Never>
-    }
-
-    struct InputCamperID {
-        let camperIDTextFieldDidEdit: AnyPublisher<String, Never>
-    }
-
-    struct InputBlogAddress {
+    struct Input {
         let blogAddressTextFieldDidEdit: AnyPublisher<String, Never>
         let nextButtonDidTap: AnyPublisher<Void, Never>
         let skipConfirmDidTap: PassthroughSubject<Bool, Never>
     }
 
-    struct OutputCamperID {
-        let validateCamperID: AnyPublisher<Bool, Never>
-    }
-
-    struct OutputBlogAddress {
+    struct Output {
         let validateBlogAddress: AnyPublisher<Bool, Never>
         let nextButton: AnyPublisher<User, FirestoreError>
         let skipButton: AnyPublisher<User, FirestoreError>
     }
 
-    init(userUUID: String, nickname: String) {
-        self.userUUID = userUUID
-        self.nickname = nickname
-    }
-
-    func transformDomain(input: InputDomain) {
-        input.domainButtonDidTap
-            .sink { domain in
-                self.domain = domain
-            }
-            .store(in: &cancelBag)
-    }
-
-    func transformCamperID(input: InputCamperID) -> OutputCamperID {
-        let camperID = input.camperIDTextFieldDidEdit
-            .map { id in
-                self.camperID = id
-                return id.count == 3 ? true : false
-            }
-            .eraseToAnyPublisher()
-        return OutputCamperID(validateCamperID: camperID)
-    }
-
-    func transformBlogAddress(input: InputBlogAddress) -> OutputBlogAddress {
+    func transform(input: Input) -> Output {
         let blogAddressPublisher = input.blogAddressTextFieldDidEdit
             .map { address in
                 self.blogAddress = address
+                UserManager.shared.blogURL = address
                 return Validation.validate(blogLink: address) ? true : false
             }
             .eraseToAnyPublisher()
@@ -91,7 +53,7 @@ final class SignUpViewModel {
             }
             .eraseToAnyPublisher()
 
-        return OutputBlogAddress(
+        return Output(
             validateBlogAddress: blogAddressPublisher,
             nextButton: nextButtonPublisher,
             skipButton: skipButtonPublisher
@@ -100,11 +62,11 @@ final class SignUpViewModel {
 
     private func createUser(blogURL: String, blogTitle: String) -> User {
         return User(
-            userUUID: userUUID,
-            nickname: nickname,
-            profileImageURL: "https://github.com/\(nickname).png",
-            domain: domain,
-            camperID: camperID,
+            userUUID: UserManager.shared.userUUID,
+            nickname: UserManager.shared.nickname,
+            profileImageURL: "https://github.com/\(UserManager.shared.nickname).png",
+            domain: UserManager.shared.domain,
+            camperID: UserManager.shared.camperID,
             ordinalNumber: 7,
             blogURL: blogURL,
             blogTitle: blogTitle,

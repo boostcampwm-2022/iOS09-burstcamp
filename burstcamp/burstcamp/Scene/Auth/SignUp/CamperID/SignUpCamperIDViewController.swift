@@ -15,13 +15,13 @@ final class SignUpCamperIDViewController: UIViewController {
         return view
     }
 
-    var coordinatorPublisher = PassthroughSubject<(AuthCoordinatorEvent, SignUpViewModel), Never>()
+    var coordinatorPublisher = PassthroughSubject<AuthCoordinatorEvent, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
-    private let viewModel: SignUpViewModel
+    private let viewModel: SignUpCamperIDViewModel
     private let idTextFieldMaxCount = 3
 
-    init(viewModel: SignUpViewModel) {
+    init(viewModel: SignUpCamperIDViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -37,7 +37,6 @@ final class SignUpCamperIDViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setDelegate()
-        configureUIByDomain()
         bind()
     }
 
@@ -45,29 +44,36 @@ final class SignUpCamperIDViewController: UIViewController {
         signUpCamperIDView.idTextField.delegate = self
     }
 
-    private func configureUIByDomain() {
-        signUpCamperIDView.domainLabel.text = viewModel.domain.rawValue
-        signUpCamperIDView.representingDomainLabel.text = viewModel.domain.representingDomain
-    }
-
     private func bind() {
-        signUpCamperIDView.nextButton.tapPublisher
-            .sink {
-                self.coordinatorPublisher.send((.moveToBlogScreen, self.viewModel))
-            }
-            .store(in: &cancelBag)
-
-        let textPublisher = signUpCamperIDView.idTextField.textPublisher
-
-        let input = SignUpViewModel.InputCamperID(
-            camperIDTextFieldDidEdit: textPublisher
+        let input = SignUpCamperIDViewModel.Input(
+            camperIDTextFieldDidEdit: signUpCamperIDView.idTextField.textPublisher,
+            nextButtonDidTap: signUpCamperIDView.nextButton.tapPublisher
         )
 
-        viewModel.transformCamperID(input: input)
-            .validateCamperID
+        let output = viewModel.transform(input: input)
+
+        output.validateCamperID
             .sink { validate in
                 self.signUpCamperIDView.nextButton.isEnabled = validate
                 self.signUpCamperIDView.nextButton.alpha = validate ? 1.0 : 0.3
+            }
+            .store(in: &cancelBag)
+
+        output.moveToBlogView
+            .sink { _ in
+                self.coordinatorPublisher.send(.moveToBlogScreen)
+            }
+            .store(in: &cancelBag)
+
+        output.domainText
+            .sink { domain in
+                self.signUpCamperIDView.domainLabel.text = domain
+            }
+            .store(in: &cancelBag)
+
+        output.representingDomainText
+            .sink { representingDomain in
+                self.signUpCamperIDView.representingDomainLabel.text = representingDomain
             }
             .store(in: &cancelBag)
     }
