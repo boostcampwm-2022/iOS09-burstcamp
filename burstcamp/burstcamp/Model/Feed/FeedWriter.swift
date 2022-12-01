@@ -13,6 +13,7 @@ struct FeedWriter {
     let ordinalNumber: Int
     let domain: Domain
     let profileImageURL: String
+    let blogTitle: String
 
     init(
         nickname: String,
@@ -35,11 +36,13 @@ struct FeedWriter {
         let domainString = data["domain"] as? String ?? ""
         let domain = Domain(rawValue: domainString) ?? Domain.iOS
         let profileImageURL = data["profileImageURL"] as? String ?? ""
+        let blogTitle = data["blogTitle"] as? String ?? ""
 
         self.nickname = nickname
         self.camperID = camperID
         self.ordinalNumber = ordinalNumber
         self.domain = domain
         self.profileImageURL = profileImageURL
+        self.blogTitle = blogTitle
     }
 }

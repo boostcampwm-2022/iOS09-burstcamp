@@ -37,12 +37,10 @@ final class FeedDetailView: UIView {
         $0.textColor = .dynamicBlack
     }
 
-    // TODO: WebView에서 HTML content보여주기
-    private lazy var contentView = FeedContentWebView().then {
-        $0.navigationDelegate = self
-    }
+    private lazy var contentView = FeedContentWebView()
 
     private lazy var blogButton = DefaultButton(title: "블로그 바로가기")
+    lazy var blogButtonTapPublisher = blogButton.tapPublisher
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -83,14 +81,6 @@ final class FeedDetailView: UIView {
     }
 }
 
-extension FeedDetailView: WKNavigationDelegate {
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        webView.evaluateJavaScript("document.readyState", completionHandler: { (_, _) in
-            webView.invalidateIntrinsicContentSize()
-        })
-    }
-}
-
 extension FeedDetailView {
 
     private func fetchMockData() {
@@ -98,5 +88,13 @@ extension FeedDetailView {
         blogTitleLabel.text = "Zedd"
         pubDateLabel.text = "2022. 11. 20. 17:38"
         contentView.loadFormattedHTMLString(String.htmlReadability)
+    }
+
+    func configure(with feed: Feed) {
+        userInfoStackView.updateView(feedWriter: feed.writer)
+        titleLabel.text = feed.feedTitle
+        blogTitleLabel.text = feed.writer.blogTitle
+        pubDateLabel.text = feed.pubDate.monthDateFormatString
+        contentView.loadFormattedHTMLString(feed.content)
     }
 }

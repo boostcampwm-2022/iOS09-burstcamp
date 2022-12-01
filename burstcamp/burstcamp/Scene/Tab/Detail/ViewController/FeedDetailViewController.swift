@@ -5,7 +5,10 @@
 //  Created by SEUNGMIN OH on 2022/11/22.
 //
 
+import Combine
 import UIKit
+
+import Then
 
 final class FeedDetailViewController: UIViewController {
 
@@ -16,7 +19,29 @@ final class FeedDetailViewController: UIViewController {
         return view
     }
 
-    private var viewModel: FeedDetailViewModel
+    private lazy var barButtonStackView = UIStackView().then {
+        $0.addArrangedSubViews([scrapButton, shareButton])
+        $0.spacing = Constant.space24.cgFloat
+    }
+    private lazy var barButtonStackViewItem = UIBarButtonItem(customView: barButtonStackView)
+
+    private let scrapButton = ToggleButton(
+        image: UIImage(systemName: "bookmark.fill"),
+        onColor: .main,
+        offColor: .systemGray4
+    )
+    private lazy var scrapBarButtonItem = UIBarButtonItem(customView: scrapButton)
+
+    private let shareButton = UIButton().then {
+        $0.setImage(
+            UIImage(systemName: "square.and.arrow.up"),
+            for: .normal
+        )
+    }
+    private lazy var shareBarButtonItem = UIBarButtonItem(customView: shareButton)
+
+    private let viewModel: FeedDetailViewModel
+    private var cancelBag: Set<AnyCancellable> = []
 
     init(viewModel: FeedDetailViewModel) {
         self.viewModel = viewModel
@@ -33,13 +58,58 @@ final class FeedDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        bind()
+        configureNavigationBar()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        configureNavigationBar()
     }
 
     private func configureNavigationBar() {
+        navigationItem.rightBarButtonItems = [barButtonStackViewItem]
+    }
+
+    private func bind() {
+        let input = FeedDetailViewModel.Input(
+            blogButtonDidTap: feedDetailView.blogButtonTapPublisher,
+            scrapButtonDidTap: scrapButton.tapPublisher,
+            shareButtonDidTap: shareButton.tapPublisher
+        )
+
+        let output = viewModel.transform(input: input)
+
+        output.feedDidUpdate
+            .receive(on: DispatchQueue.main)
+            .sink { feed in
+                self.feedDetailView.configure(with: feed)
+            }
+            .store(in: &cancelBag)
+
+        output.openBlog
+            .sink { url in
+                UIApplication.shared.open(url)
+            }
+            .store(in: &cancelBag)
+
+        output.scrapButtonToggle
+            .sink { _ in
+                guard let scrapButton = self.scrapBarButtonItem.customView as? ToggleButton
+                else { return }
+                scrapButton.toggle()
+            }
+            .store(in: &cancelBag)
+
+        output.openActivityView
+            .sink { feedURL in
+                let shareViewController = UIActivityViewController(
+                    activityItems: [feedURL],
+                    applicationActivities: nil
+                )
+                shareViewController.popoverPresentationController?.sourceView = self.feedDetailView
+
+                self.present(shareViewController, animated: true)
+            }
+            .store(in: &cancelBag)
     }
 }
