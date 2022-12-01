@@ -16,6 +16,8 @@ final class UserManager {
 
     // TODO: 임시 초기 데이터
 
+    var user = User(dictionary: [:])
+
     var userUUID: String = ""
     var nickname: String = ""
     var profileImageURL: String = ""
