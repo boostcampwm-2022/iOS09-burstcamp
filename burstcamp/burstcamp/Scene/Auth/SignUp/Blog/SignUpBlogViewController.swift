@@ -18,9 +18,9 @@ final class SignUpBlogViewController: UIViewController {
     var coordinatorPublisher = PassthroughSubject<AppCoordinatorEvent, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
-    private let viewModel: SignUpViewModel
+    private let viewModel: SignUpBlogViewModel
 
-    init(viewModel: SignUpViewModel) {
+    init(viewModel: SignUpBlogViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -39,61 +39,58 @@ final class SignUpBlogViewController: UIViewController {
     }
 
     private func bind() {
-        signUpBlogView.nextButton.tapPublisher
-            .sink {
-                self.nextButtonDidTap()
-            }
-            .store(in: &cancelBag)
+        let skipConfirmSubject = PassthroughSubject<Bool, Never>()
 
         signUpBlogView.skipButton.tapPublisher
-            .sink {
-                self.skipButtonDidTap()
+            .sink { _ in
+                let confirmAction = UIAlertAction(title: "네", style: .default) { _ in
+                    skipConfirmSubject.send(true)
+                }
+                let cancelAction = UIAlertAction(title: "아니오", style: .destructive)
+                self.showAlert(
+                    title: "경고",
+                    message: "블로그가 없으신가요?",
+                    alertActions: [confirmAction, cancelAction]
+                )
             }
             .store(in: &cancelBag)
 
         let textPublisher = signUpBlogView.blogTextField.textPublisher
+        let nextButtonPublisher = signUpBlogView.nextButton.tapPublisher
 
-        let input = SignUpViewModel.InputBlogAddress(blogAddressTextFieldDidEdit: textPublisher)
+        let input = SignUpBlogViewModel.Input(
+            blogAddressTextFieldDidEdit: textPublisher,
+            nextButtonDidTap: nextButtonPublisher,
+            skipConfirmDidTap: skipConfirmSubject
+        )
 
-        viewModel.transformBlogAddress(input: input)
-            .validateBlogAddress
+        let output = viewModel.transform(input: input)
+
+        output.validateBlogAddress
             .sink { validate in
                 self.signUpBlogView.nextButton.isEnabled = validate
                 self.signUpBlogView.nextButton.alpha = validate ? 1.0 : 0.3
             }
             .store(in: &cancelBag)
-    }
 
-    private func skipButtonDidTap() {
-        // TODO: Alert창
+        output.signUpWithNextButton
+            .sink(receiveCompletion: { result in
+                if case .failure = result {
+                    self.showAlert(title: "경고", message: "회원가입에 실패했습니다")
+                }
+            }, receiveValue: { _ in
+                self.coordinatorPublisher.send(.moveToTabBarFlow)
+            })
+            .store(in: &cancelBag)
 
-        // TODO: 회원가입 성공시
-        self.coordinatorPublisher.send(.moveToTabBarFlow)
-    }
-
-    private func nextButtonDidTap() {
-
-        // TODO: 블로그 주소 검증
-
-//        FireStoreService.save(
-//            user: User(
-//                userUUID: viewModel.userUUID,
-//                nickname: viewModel.nickname,
-//                profileImageURL: "https://github.com/\(viewModel.nickname).png",
-//                domain: viewModel.domain,
-//                camperID: viewModel.camperID,
-//                blogUUID: "",
-//                signupDate: "", // TODO: 노션DB에는 Date로, User모델에는 String으로. 확인 필요
-//                scrapFeedUUIDs: [],
-//                isPushOn: false
-//            )
-//        )
-//        .receive(on: DispatchQueue.main)
-//        .sink { result in
-//            print(result)
-//        } receiveValue: { data in
-//            print(data)
-//            self.coordinatorPublisher.send(.moveToTabBarFlow)
-//        }.store(in: &cancelBag)
+        output.signUpWithSkipButton
+            .sink(receiveCompletion: { result in
+                if case .failure = result {
+                    self.showAlert(title: "경고", message: "회원가입에 실패했습니다")
+                }
+            }, receiveValue: { _ in
+                self.coordinatorPublisher.send(.moveToTabBarFlow)
+            })
+            .store(in: &cancelBag)
     }
 }
