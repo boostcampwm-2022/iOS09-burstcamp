@@ -73,7 +73,7 @@ final class FeedDetailViewController: UIViewController {
     private func bind() {
         let input = FeedDetailViewModel.Input(
             blogButtonDidTap: feedDetailView.blogButtonTapPublisher,
-            scrapButtonDidTap: scrapButton.tapPublisher,
+            scrapButtonDidTap: scrapButton.statePublisher,
             shareButtonDidTap: shareButton.tapPublisher
         )
 
@@ -87,20 +87,14 @@ final class FeedDetailViewController: UIViewController {
             .store(in: &cancelBag)
 
         output.openBlog
+            .receive(on: DispatchQueue.main)
             .sink { url in
                 UIApplication.shared.open(url)
             }
             .store(in: &cancelBag)
 
-        output.scrapButtonToggle
-            .sink { _ in
-                guard let scrapButton = self.scrapBarButtonItem.customView as? ToggleButton
-                else { return }
-                scrapButton.toggle()
-            }
-            .store(in: &cancelBag)
-
         output.openActivityView
+            .receive(on: DispatchQueue.main)
             .sink { feedURL in
                 let shareViewController = UIActivityViewController(
                     activityItems: [feedURL],
@@ -110,6 +104,18 @@ final class FeedDetailViewController: UIViewController {
 
                 self.present(shareViewController, animated: true)
             }
+            .store(in: &cancelBag)
+
+        output.scrapButtonToggle
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                self.scrapButton.toggle()
+            }
+            .store(in: &cancelBag)
+
+        output.scrapButtonIsEnabled
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.isEnabled, on: scrapButton)
             .store(in: &cancelBag)
     }
 }

@@ -5,6 +5,7 @@
 //  Created by SEUNGMIN OH on 2022/11/29.
 //
 
+import Combine
 import UIKit
 
 final class ToggleButton: UIButton {
@@ -62,5 +63,14 @@ final class ToggleButton: UIButton {
     func toggle() {
         isOn.toggle()
         configure()
+    }
+}
+
+extension ToggleButton {
+    var statePublisher: AnyPublisher<Bool, Never> {
+        controlPublisher(for: .touchUpInside)
+            .compactMap { $0 as? ToggleButton }
+            .map { $0.isOn }
+            .eraseToAnyPublisher()
     }
 }
