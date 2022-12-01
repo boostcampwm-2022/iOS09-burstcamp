@@ -10,7 +10,7 @@ import Foundation
 struct Feed {
     let feedUUID: String
     let writer: FeedWriter
-    let feedTitle: String
+    let title: String
     let pubDate: Date
     let url: String
     let thumbnailURL: String
@@ -20,7 +20,7 @@ struct Feed {
     init(feedDTO: FeedDTO, feedWriter: FeedWriter) {
         self.feedUUID = feedDTO.feedUUID
         self.writer = feedWriter
-        self.feedTitle = feedDTO.feedTitle
+        self.title = feedDTO.title
         self.pubDate = feedDTO.pubDate
         self.url = feedDTO.url
         self.thumbnailURL = feedDTO.thumbnailURL

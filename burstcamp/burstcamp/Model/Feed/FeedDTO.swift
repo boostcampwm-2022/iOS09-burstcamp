@@ -12,7 +12,7 @@ import Firebase
 struct FeedDTO {
     let feedUUID: String
     let writerUUID: String
-    let feedTitle: String
+    let title: String
     let pubDate: Date
     let url: String
     let thumbnailURL: String
@@ -21,7 +21,7 @@ struct FeedDTO {
     init(data: [String: Any]) {
         let feedUUID = data["feedUUID"] as? String ?? ""
         let writerUUID = data["writerUUID"] as? String ?? ""
-        let feedTitle = data["feedTitle"] as? String ?? ""
+        let title = data["title"] as? String ?? ""
         let timeStampDate = data["pubDate"] as? Timestamp ?? Timestamp()
         let pubDate = timeStampDate.dateValue()
         let url = data["url"] as? String ?? ""
@@ -30,7 +30,7 @@ struct FeedDTO {
 
         self.feedUUID = feedUUID
         self.writerUUID = writerUUID
-        self.feedTitle = feedTitle
+        self.title = title
         self.pubDate = pubDate
         self.url = url
         self.thumbnailURL = thumbnailURL
