@@ -11,6 +11,7 @@ import Foundation
 import FirebaseFirestore
 
 final class FeedDetailViewModel {
+    
     private var feed = CurrentValueSubject<Feed?, Never>(nil)
 
     init() { }
@@ -62,10 +63,10 @@ final class FeedDetailViewModel {
 
     private func fetchFeed(uuid: String) {
         Task {
-            let feedDict = await requestFeed(uuid: uuid)
+            // TODO: 오류 처리
+            let feedDict = try await requestFeed(uuid: uuid)
             let feedDTO = FeedDTO(data: feedDict)
-            print(feedDTO)
-            let feedWriterDict = await requestFeedWriter(uuid: feedDTO.writerUUID)
+            let feedWriterDict = try await requestFeedWriter(uuid: feedDTO.writerUUID)
             let feedWriter = FeedWriter(data: feedWriterDict)
             let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
 
@@ -73,31 +74,42 @@ final class FeedDetailViewModel {
         }
     }
 
-    private func requestFeed(uuid: String) async -> [String: Any] {
-        await withCheckedContinuation({ continuation in
-            let db = Firestore.firestore()
-            db.collection("feed").whereField("feedUUID", isEqualTo: uuid)
-                .getDocuments() { (querySnapshot, err) in
-                    guard let snapShot = querySnapshot,
-                          let feedDoc = snapShot.documents.first
-                    else {
-                        fatalError("해당 피드가 존재하지 않음.")
+    private func requestFeed(uuid: String) async throws -> [String: Any] {
+        try await withCheckedThrowingContinuation({ continuation in
+            Firestore.firestore()
+                .collection("feed")
+                .document(uuid)
+                .getDocument { documentSnapshot, error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                        return
                     }
-                    continuation.resume(returning: feedDoc.data())
+                    guard let snapShot = documentSnapshot,
+                          let feedData = snapShot.data()
+                    else {
+                        continuation.resume(throwing: FirebaseError.fetchFeedError)
+                        return
+                    }
+                    continuation.resume(returning: feedData)
                 }
         })
     }
 
-    private func requestFeedWriter(uuid: String) async -> [String: Any] {
-        await withCheckedContinuation({ continuation in
-            let db = Firestore.firestore()
-            db.collection("User")
+    private func requestFeedWriter(uuid: String) async throws -> [String: Any] {
+        try await withCheckedThrowingContinuation({ continuation in
+            Firestore.firestore()
+                .collection("User")
                 .document(uuid)
-                .getDocument { (documentSnapShot, error) in
+                .getDocument { documentSnapShot, error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
                     guard let snapShot = documentSnapShot,
                           let userData = snapShot.data()
                     else {
-                        fatalError("해당 유저가 존재하지 않음.")
+                        continuation.resume(throwing: FirebaseError.fetchUserError)
+                        return
                     }
                     continuation.resume(returning: userData)
                 }
