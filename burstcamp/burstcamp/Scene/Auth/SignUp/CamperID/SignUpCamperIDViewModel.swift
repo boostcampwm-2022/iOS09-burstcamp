@@ -12,8 +12,6 @@ final class SignUpCamperIDViewModel {
 
     var camperID: String = ""
 
-    private var cancelBag = Set<AnyCancellable>()
-
     struct Input {
         let camperIDTextFieldDidEdit: AnyPublisher<String, Never>
         let nextButtonDidTap: AnyPublisher<Void, Never>

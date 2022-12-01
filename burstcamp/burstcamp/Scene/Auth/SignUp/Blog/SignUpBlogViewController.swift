@@ -73,24 +73,22 @@ final class SignUpBlogViewController: UIViewController {
             }
             .store(in: &cancelBag)
 
-        output.nextButton
+        output.signUpWithNextButton
             .sink(receiveCompletion: { result in
                 if case .failure = result {
                     self.showAlert(title: "경고", message: "회원가입에 실패했습니다")
                 }
             }, receiveValue: { _ in
-                // TODO: 싱글톤에 저장
                 self.coordinatorPublisher.send(.moveToTabBarFlow)
             })
             .store(in: &cancelBag)
 
-        output.skipButton
+        output.signUpWithSkipButton
             .sink(receiveCompletion: { result in
                 if case .failure = result {
                     self.showAlert(title: "경고", message: "회원가입에 실패했습니다")
                 }
             }, receiveValue: { _ in
-                // TODO: 싱글톤에 저장
                 self.coordinatorPublisher.send(.moveToTabBarFlow)
             })
             .store(in: &cancelBag)

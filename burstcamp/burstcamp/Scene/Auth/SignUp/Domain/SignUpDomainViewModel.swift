@@ -12,8 +12,6 @@ final class SignUpDomainViewModel {
 
     var domain: Domain = .iOS
 
-    private var cancelBag = Set<AnyCancellable>()
-
     struct Input {
         let webButtonDidTap: AnyPublisher<Void, Never>
         let aosButtonDidTap: AnyPublisher<Void, Never>
@@ -30,6 +28,7 @@ final class SignUpDomainViewModel {
         let webSelected = input.webButtonDidTap
             .map { _ -> Domain in
                 self.domain = .web
+                UserManager.shared.domain = .web
                 return .web
             }
             .eraseToAnyPublisher()
@@ -37,6 +36,7 @@ final class SignUpDomainViewModel {
         let aosSelected = input.aosButtonDidTap
             .map { _ -> Domain in
                 self.domain = .android
+                UserManager.shared.domain = .android
                 return .android
             }
             .eraseToAnyPublisher()
@@ -44,6 +44,7 @@ final class SignUpDomainViewModel {
         let iosSelected = input.iosButtonDidTap
             .map { _ -> Domain in
                 self.domain = .iOS
+                UserManager.shared.domain = .iOS
                 return .iOS
             }
             .eraseToAnyPublisher()

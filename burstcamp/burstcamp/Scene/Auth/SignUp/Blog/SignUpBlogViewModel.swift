@@ -12,8 +12,6 @@ final class SignUpBlogViewModel {
 
     var blogAddress: String = ""
 
-    private var cancelBag = Set<AnyCancellable>()
-
     struct Input {
         let blogAddressTextFieldDidEdit: AnyPublisher<String, Never>
         let nextButtonDidTap: AnyPublisher<Void, Never>
@@ -22,12 +20,12 @@ final class SignUpBlogViewModel {
 
     struct Output {
         let validateBlogAddress: AnyPublisher<Bool, Never>
-        let nextButton: AnyPublisher<User, FirestoreError>
-        let skipButton: AnyPublisher<User, FirestoreError>
+        let signUpWithNextButton: AnyPublisher<User, FirestoreError>
+        let signUpWithSkipButton: AnyPublisher<User, FirestoreError>
     }
 
     func transform(input: Input) -> Output {
-        let blogAddressPublisher = input.blogAddressTextFieldDidEdit
+        let validateBlogAddress = input.blogAddressTextFieldDidEdit
             .map { address in
                 self.blogAddress = address
                 UserManager.shared.blogURL = address
@@ -35,7 +33,7 @@ final class SignUpBlogViewModel {
             }
             .eraseToAnyPublisher()
 
-        let nextButtonPublisher = input.nextButtonDidTap
+        let signUpWithNextButton = input.nextButtonDidTap
             .flatMap { _ in
                 return FireFunctionsManager.blogTitle(link: self.blogAddress).eraseToAnyPublisher()
             }
@@ -46,7 +44,7 @@ final class SignUpBlogViewModel {
             }
             .eraseToAnyPublisher()
 
-        let skipButtonPublisher = input.skipConfirmDidTap
+        let signUpWithSkipButton = input.skipConfirmDidTap
             .flatMap { _ in
                 let user = self.createUser(blogURL: "", blogTitle: "")
                 return FirebaseUser.save(user: user).eraseToAnyPublisher()
@@ -54,9 +52,9 @@ final class SignUpBlogViewModel {
             .eraseToAnyPublisher()
 
         return Output(
-            validateBlogAddress: blogAddressPublisher,
-            nextButton: nextButtonPublisher,
-            skipButton: skipButtonPublisher
+            validateBlogAddress: validateBlogAddress,
+            signUpWithNextButton: signUpWithNextButton,
+            signUpWithSkipButton: signUpWithSkipButton
         )
     }
 

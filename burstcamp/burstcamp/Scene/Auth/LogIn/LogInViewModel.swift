@@ -10,8 +10,6 @@ import Foundation
 
 final class LogInViewModel {
 
-    private var cancelBag = Set<AnyCancellable>()
-
     struct Input {
         let logInButtonDidTap: AnyPublisher<Void, Never>
     }
