@@ -78,14 +78,14 @@ final class HomeViewController: UIViewController {
         )
 
         let output = viewModel.transform(input: input)
+        
         output.fetchResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] fetchResult in
                 switch fetchResult {
                 case .fetchSuccess:
-                    DispatchQueue.main.async {
-                        self?.homeView.endCollectionViewRefreshing()
-                        self?.homeView.collectionView.reloadData()
-                    }
+                    self?.homeView.endCollectionViewRefreshing()
+                    self?.homeView.collectionView.reloadData()
                 case .fetchFail(let error):
                     print(error)
                 }

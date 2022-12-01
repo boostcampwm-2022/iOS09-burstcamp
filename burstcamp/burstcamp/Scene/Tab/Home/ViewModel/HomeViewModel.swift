@@ -61,17 +61,21 @@ final class HomeViewModel {
 
     func fetchAllFeed(output: Output) {
         Task {
-            guard !isFetching else { return }
-            isFetching = true
-            canFetchMoreFeed = true
+            do {
+                guard !isFetching else { return }
+                isFetching = true
+                canFetchMoreFeed = true
 
-            async let recommendFeeds = fetchRecommendFeedArray()
-            async let normalFeeds = fetchNormalFeedArray(lastSnapShot: self.lastSnapShot)
-            self.recommendFeedData = try await recommendFeeds
-            self.normalFeedData = try await normalFeeds
-            output.fetchResult.send(.fetchSuccess)
+                async let recommendFeeds = fetchRecommendFeedArray()
+                async let normalFeeds = fetchNormalFeedArray(lastSnapShot: self.lastSnapShot)
+                self.recommendFeedData = try await recommendFeeds
+                self.normalFeedData = try await normalFeeds
+                output.fetchResult.send(.fetchSuccess)
 
-            isFetching = false
+                isFetching = false
+            } catch {
+                isFetching = false
+            }
         }
     }
 
