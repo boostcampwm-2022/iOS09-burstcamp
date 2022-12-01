@@ -73,7 +73,6 @@ final class FeedDetailViewModel {
             .eraseToAnyPublisher()
 
         let dbUpdateResult = self.dbUpdateSucceed
-            .print("dbUpdate")
             .eraseToAnyPublisher()
             .share()
 
@@ -85,7 +84,6 @@ final class FeedDetailViewModel {
         let scrapButtonToggle = dbUpdateResult
             .filter { $0 == true }
             .map { _ in Void() }
-            .print("toggle")
             .eraseToAnyPublisher()
 
         return Output(
@@ -134,7 +132,7 @@ final class FeedDetailViewModel {
                 .document(uuid)
                 .collection("scrapUserUUIDs")
                 .document("userUUID")
-                .delete() { error in
+                .delete { error in
                     if let error = error {
                         continuation.resume(throwing: error)
                         return
