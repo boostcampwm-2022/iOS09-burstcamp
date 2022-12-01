@@ -93,7 +93,7 @@ final class HomeView: UIView, ContainCollectionView {
             section.contentInsets = NSDirectionalEdgeInsets(
                 top: .zero,
                 leading: .zero,
-                bottom: Constant.space48.cgFloat,
+                bottom: Constant.space32.cgFloat,
                 trailing: .zero
             )
             section.orthogonalScrollingBehavior = self.orthogonalMode(feedCellType: feedCellType)

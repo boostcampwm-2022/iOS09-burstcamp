@@ -25,7 +25,7 @@ final class HomeFireStoreService: HomeFireStore {
     func fetchFeed(isPagination: Bool) -> AnyPublisher<[Feed], Error> {
         return Future<[Feed], Error> { [weak self] promise in
             guard let self = self else { return }
-            
+
             guard !self.isFetching else { return }
             self.isFetching = true
 
@@ -82,6 +82,7 @@ final class HomeFireStoreService: HomeFireStore {
             return database
                 .collection("Feed")
                 .order(by: "pubDate", descending: true)
+                .limit(to: 5)
                 .start(afterDocument: lastSnapShot)
         } else {
             return database
