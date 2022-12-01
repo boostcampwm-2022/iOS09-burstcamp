@@ -192,8 +192,9 @@ final class HomeView: UIView, ContainCollectionView {
     -> [NSCollectionLayoutBoundarySupplementaryItem] {
         switch feedCellType {
         case .recommend:
-            let padding = Constant.Padding.horizontal.cgFloat
-            let headerHeight = 80 + padding * 2
+            let horizontalPadding = Constant.space32.cgFloat
+            let verticalPadding = Constant.space16.cgFloat
+            let headerHeight = 80 + verticalPadding * 2
             let headerSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
                 heightDimension: .absolute(headerHeight)
@@ -204,10 +205,10 @@ final class HomeView: UIView, ContainCollectionView {
                 alignment: .top
             )
             header.contentInsets = NSDirectionalEdgeInsets(
-                top: padding,
-                leading: padding,
-                bottom: padding,
-                trailing: padding
+                top: 0,
+                leading: horizontalPadding,
+                bottom: 0,
+                trailing: horizontalPadding
             )
             return [header]
         case .normal:

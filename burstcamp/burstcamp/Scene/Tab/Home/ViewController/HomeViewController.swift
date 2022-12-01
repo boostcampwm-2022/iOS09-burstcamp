@@ -78,7 +78,7 @@ final class HomeViewController: UIViewController {
         )
 
         let output = viewModel.transform(input: input)
-        
+
         output.fetchResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] fetchResult in
