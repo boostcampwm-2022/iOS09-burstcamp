@@ -53,4 +53,14 @@ extension UIViewController {
             toastMessageLabel.removeFromSuperview()
         }
     }
+    
+    func showBasicAlert(title: String, message: String) {
+        let sheet = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+
+        self.present(sheet, animated: true)
+    }
 }

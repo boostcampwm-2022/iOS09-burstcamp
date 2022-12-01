@@ -41,16 +41,6 @@ final class LogInViewController: UIViewController {
         bind()
     }
 
-    private func alertNotCamper() {
-        let sheet = UIAlertController(
-            title: "경고",
-            message: "캠퍼만 가입 가능합니다",
-            preferredStyle: .alert
-        )
-
-        present(sheet, animated: true)
-    }
-
     private func bind() {
         logInView.githubLogInButton.tapPublisher
             .sink {
@@ -66,7 +56,7 @@ final class LogInViewController: UIViewController {
                 case .moveToTabBarScreen:
                     self.coordinatorPublisher.send(.moveToTabBarScreen)
                 case .notCamper:
-                    self.alertNotCamper()
+                    showBasicAlert(title: "경고", message: "캠퍼만 가입 가능합니다")
                 case .moveToBlogScreen, .moveToIDScreen:
                     return
                 }

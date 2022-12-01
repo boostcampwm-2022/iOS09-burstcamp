@@ -104,9 +104,7 @@ final class SignUpBlogViewController: UIViewController {
 
     private func nextButtonDidTap() {
         let saveUser = FireFunctionsManager.blogTitle(link: viewModel.blogAddress)
-            .mapError { _ in
-                return FirestoreError.noDataError
-            }
+            .mapError { _ in FirestoreError.noDataError }
             .flatMap { title in
                 let user = self.makeUser(blogURL: self.viewModel.blogAddress, blogTitle: title)
                 return FirebaseUser.save(user: user).eraseToAnyPublisher()
@@ -123,7 +121,7 @@ final class SignUpBlogViewController: UIViewController {
             case .finished:
                 return
             case .failure(let error):
-                print(error)
+                self.showBasicAlert(title: "경고", message: "회원가입에 실패했습니다")
             }
         }, receiveValue: { _ in
             // TODO: 싱글톤에 저장
