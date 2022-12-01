@@ -15,7 +15,7 @@ final class MyPageProfileView: UIView {
         imageSize: Constant.Image.profileMedium
     )
 
-    private lazy var nickNameLabel = UILabel().then {
+    private lazy var nicknameLabel = UILabel().then {
         $0.textColor = .dynamicBlack
         $0.font = .extraBold16
     }
@@ -50,7 +50,7 @@ final class MyPageProfileView: UIView {
         }
 
         let profileInfoStackView = profileInfoStackView(
-            views: [nickNameLabel, badgeView, blogTitleLabel])
+            views: [nicknameLabel, badgeView, blogTitleLabel])
         addSubview(profileInfoStackView)
         profileInfoStackView.snp.makeConstraints { make in
             make.leading.equalTo(profileImageView.snp.trailing).offset(Constant.space16)
@@ -70,7 +70,7 @@ final class MyPageProfileView: UIView {
         print(#function)
         print(user)
         print(user.nickname)
-        nickNameLabel.text = user.nickname
+        nicknameLabel.text = user.nickname
         badgeView.updateView(user: user)
         blogTitleLabel = DefaultImageLabel(
             icon: UIImage(systemName: "book.fill"),
