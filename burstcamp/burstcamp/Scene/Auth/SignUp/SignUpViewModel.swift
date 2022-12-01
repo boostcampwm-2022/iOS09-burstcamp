@@ -6,7 +6,7 @@
 //
 
 import Combine
-import Foundation
+import UIKit
 
 final class SignUpViewModel {
     var domain: Domain = .iOS
@@ -28,6 +28,8 @@ final class SignUpViewModel {
 
     struct InputBlogAddress {
         let blogAddressTextFieldDidEdit: AnyPublisher<String, Never>
+        let nextButtonDidTap: AnyPublisher<Void, Never>
+        let skipConfirmDidTap: PassthroughSubject<Bool, Never>
     }
 
     struct OutputCamperID {
@@ -36,6 +38,8 @@ final class SignUpViewModel {
 
     struct OutputBlogAddress {
         let validateBlogAddress: AnyPublisher<Bool, Never>
+        let nextButton: AnyPublisher<User, FirestoreError>
+        let skipButton: AnyPublisher<User, FirestoreError>
     }
 
     init(userUUID: String, nickname: String) {
@@ -62,13 +66,51 @@ final class SignUpViewModel {
     }
 
     func transformBlogAddress(input: InputBlogAddress) -> OutputBlogAddress {
-        let blogAddress = input.blogAddressTextFieldDidEdit
+        let blogAddressPublisher = input.blogAddressTextFieldDidEdit
             .map { address in
                 self.blogAddress = address
                 return Validation.validate(blogLink: address) ? true : false
             }
             .eraseToAnyPublisher()
 
-        return OutputBlogAddress(validateBlogAddress: blogAddress)
+        let nextButtonPublisher = input.nextButtonDidTap
+            .flatMap { _ in
+                return FireFunctionsManager.blogTitle(link: self.blogAddress).eraseToAnyPublisher()
+            }
+            .mapError { _ in FirestoreError.noDataError }
+            .flatMap { title in
+                let user = self.createUser(blogURL: self.blogAddress, blogTitle: title)
+                return FirebaseUser.save(user: user).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+
+        let skipButtonPublisher = input.skipConfirmDidTap
+            .flatMap { _ in
+                let user = self.createUser(blogURL: "", blogTitle: "")
+                return FirebaseUser.save(user: user).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+
+        return OutputBlogAddress(
+            validateBlogAddress: blogAddressPublisher,
+            nextButton: nextButtonPublisher,
+            skipButton: skipButtonPublisher
+        )
+    }
+
+    private func createUser(blogURL: String, blogTitle: String) -> User {
+        return User(
+            userUUID: userUUID,
+            nickname: nickname,
+            profileImageURL: "https://github.com/\(nickname).png",
+            domain: domain,
+            camperID: camperID,
+            ordinalNumber: 7,
+            blogURL: blogURL,
+            blogTitle: blogTitle,
+            scrapFeedUUIDs: [],
+            signupDate: Date(),
+            isPushOn: false
+        )
     }
 }

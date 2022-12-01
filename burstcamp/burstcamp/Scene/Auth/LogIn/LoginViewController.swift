@@ -19,7 +19,7 @@ final class LogInViewController: UIViewController {
     }
 
     var coordinatorPublisher = PassthroughSubject<AuthCoordinatorEvent, Never>()
-    var cancelBag = Set<AnyCancellable>()
+    private var cancelBag = Set<AnyCancellable>()
 
     private let viewModel: LogInViewModel
 
@@ -42,13 +42,12 @@ final class LogInViewController: UIViewController {
     }
 
     private func bind() {
-        logInView.githubLogInButton.tapPublisher
-            .sink {
-                self.viewModel.logInButtonDidTap()
-            }
-            .store(in: &cancelBag)
+        let logInButtonPublisher = logInView.githubLogInButton.tapPublisher
 
-        LogInManager.shared.logInPublisher
+        let input = LogInViewModel.Input(logInButton: logInButtonPublisher)
+
+        viewModel.transform(input: input)
+            .logInPublisher
             .sink { logInEvent in
                 switch logInEvent {
                 case .moveToDomainScreen(let userUUID, let nickname):
@@ -56,7 +55,7 @@ final class LogInViewController: UIViewController {
                 case .moveToTabBarScreen:
                     self.coordinatorPublisher.send(.moveToTabBarScreen)
                 case .notCamper:
-                    showBasicAlert(title: "경고", message: "캠퍼만 가입 가능합니다")
+                    self.showAlert(title: "경고", message: "캠퍼만 가입 가능합니다")
                 case .moveToBlogScreen, .moveToIDScreen:
                     return
                 }
