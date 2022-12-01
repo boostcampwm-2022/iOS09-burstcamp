@@ -101,11 +101,10 @@ final class FeedDetailViewModel {
                 case true: try await requestDeleteFeedScrapUser(uuid: uuid)
                 case false: try await requestCreateFeedScrapUser(uuid: uuid)
                 }
+                self.dbUpdateSucceed.send(true)
             } catch {
                 self.dbUpdateSucceed.send(false)
-                return
             }
-            self.dbUpdateSucceed.send(true)
         }
     }
 
