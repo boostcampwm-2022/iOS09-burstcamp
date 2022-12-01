@@ -11,9 +11,10 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 
-struct FirebaseUser {
+struct FirestoreUser {
     private static let userPath = Firestore.firestore().collection(FireStoreCollection.user.path)
     private static let userUUIDField = "userUUID"
+    private static let isPushOnField = "isPushOn"
 
     static func save(user: User) -> AnyPublisher<User, FirestoreError> {
         let path = userPath.document(user.userUUID)
@@ -51,5 +52,10 @@ struct FirebaseUser {
                 }
         }
         .eraseToAnyPublisher()
+    }
+
+    static func update(userUUID: String, isPushOn: Bool) {
+        userPath.document(userUUID)
+            .updateData([isPushOnField: isPushOn])
     }
 }

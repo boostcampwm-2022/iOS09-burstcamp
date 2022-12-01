@@ -106,6 +106,10 @@ final class MyPageView: UIView, ContainCollectionView {
         collectionView.delegate = viewController
     }
 
+    func updateView(user: User) {
+        myPageProfileView.updateView(user: user)
+    }
+
     func setDarkModeSwitch(appearance: Appearance) {
         darkModeSwitch.isOn = appearance.switchMode
     }

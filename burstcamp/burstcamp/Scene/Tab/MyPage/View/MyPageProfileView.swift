@@ -16,17 +16,15 @@ final class MyPageProfileView: UIView {
     )
 
     private lazy var nickNameLabel = UILabel().then {
-        $0.text = "하늘이"
         $0.textColor = .dynamicBlack
         $0.font = .extraBold16
     }
 
     private lazy var badgeView = DefaultBadgeView()
 
-    // TODO: set Blog Title
     private lazy var blogTitleLabel = DefaultImageLabel(
         icon: UIImage(systemName: "book.fill"),
-        text: "말차맛 개발블로그"
+        text: "블로그를 등록해주세요."
     )
 
     // MARK: - Initializer
@@ -64,6 +62,19 @@ final class MyPageProfileView: UIView {
         return UIStackView(
             views: views,
             spacing: Constant.space6
+        )
+    }
+
+    func updateView(user: User) {
+        profileImageView.setImage(urlString: user.profileImageURL)
+        print(#function)
+        print(user)
+        print(user.nickname)
+        nickNameLabel.text = user.nickname
+        badgeView.updateView(user: user)
+        blogTitleLabel = DefaultImageLabel(
+            icon: UIImage(systemName: "book.fill"),
+            text: user.blogTitle
         )
     }
 }
