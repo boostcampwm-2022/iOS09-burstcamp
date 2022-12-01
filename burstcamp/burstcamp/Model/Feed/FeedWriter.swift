@@ -14,6 +14,20 @@ struct FeedWriter {
     let domain: Domain
     let profileImageURL: String
 
+    init(
+        nickname: String,
+        camperID: String,
+        ordinalNumber: Int,
+        domain: Domain,
+        profileImageURL: String
+    ) {
+        self.nickname = nickname
+        self.camperID = camperID
+        self.ordinalNumber = ordinalNumber
+        self.domain = domain
+        self.profileImageURL = profileImageURL
+    }
+
     init(data: [String: Any]) {
         let nickname = data["nickname"] as? String ?? ""
         let camperID = data["camperID"] as? String ?? ""

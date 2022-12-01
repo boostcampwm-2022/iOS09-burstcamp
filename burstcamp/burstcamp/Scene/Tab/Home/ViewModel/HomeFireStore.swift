@@ -39,7 +39,7 @@ final class HomeFireStoreService: HomeFireStore {
                 querySnapshot.documents.forEach { queryDocumentSnapshot in
                     let data = queryDocumentSnapshot.data()
                     let feedDTO = FeedDTO(data: data)
-                    self.fetchWriter(userUUID: feedDTO.writerUUID)
+                    FirebaseUser.fetch(userUUID: feedDTO.writerUUID)
                         .sink { completion in
                             switch completion {
                             case .finished:
@@ -53,7 +53,8 @@ final class HomeFireStoreService: HomeFireStore {
                             case .failure(let error):
                                 promise(.failure(error))
                             }
-                        } receiveValue: { feedWriter in
+                        } receiveValue: { user in
+                            let feedWriter = user.toFeedWriter
                             let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
                             result.append(feed)
                         }
@@ -76,25 +77,5 @@ final class HomeFireStoreService: HomeFireStore {
                 .order(by: "pubDate", descending: true)
                 .limit(to: 10)
         }
-    }
-
-    private func fetchWriter(userUUID: String) -> AnyPublisher<FeedWriter, Error> {
-        Future<FeedWriter, Error> { [weak self] promise in
-            self?.database
-                .collection("User")
-                .document(userUUID)
-                .getDocument { documentSnapShot, error in
-                    if let documentSnapShot = documentSnapShot,
-                       let userData = documentSnapShot.data() {
-                        let feedWriter = FeedWriter(data: userData)
-                        promise(.success(feedWriter))
-                    } else if let error = error {
-                        promise(.failure(error))
-                    } else {
-                        promise(.failure(FirebaseError.fetchUserError))
-                    }
-                }
-        }
-        .eraseToAnyPublisher()
     }
 }

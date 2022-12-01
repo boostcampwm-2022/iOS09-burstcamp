@@ -59,4 +59,14 @@ struct User: Codable {
         self.signupDate = dictionary["signupDate"] as? Date ?? Date() // TODO: Timestamp
         self.isPushOn = dictionary["isPushOn"] as? Bool ?? false
     }
+
+    var toFeedWriter: FeedWriter {
+        return FeedWriter(
+            nickname: self.nickname,
+            camperID: self.camperID,
+            ordinalNumber: self.ordinalNumber,
+            domain: self.domain,
+            profileImageURL: self.profileImageURL
+        )
+    }
 }
