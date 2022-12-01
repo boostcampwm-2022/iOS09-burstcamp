@@ -26,7 +26,6 @@
 		143185EC292B4AB8008CE459 /* ScrapPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185EB292B4AB8008CE459 /* ScrapPageViewModel.swift */; };
 		143185EE292B4ABC008CE459 /* ScrapPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185ED292B4ABC008CE459 /* ScrapPageView.swift */; };
 		143185F8292B5C88008CE459 /* ContainCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185F7292B5C88008CE459 /* ContainCollectionView.swift */; };
-		1432165329359A960034DE9F /* HomeFireStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1432165229359A960034DE9F /* HomeFireStore.swift */; };
 		143216562935C3490034DE9F /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143216552935C3490034DE9F /* FirebaseError.swift */; };
 		143D93A6292E484100C67C27 /* burstcampTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143D93A5292E484100C67C27 /* burstcampTests.swift */; };
 		143D93AD292E48C100C67C27 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 143D93AC292E48C100C67C27 /* FirebaseAuth */; };
@@ -81,7 +80,6 @@
 		B52A7F272927A88F00E271D2 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = B52A7F262927A88F00E271D2 /* Then */; };
 		B52A7F2A2927A89C00E271D2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B52A7F292927A89C00E271D2 /* SnapKit */; };
 		B597F9552935B94B0022D3E6 /* DefaultToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */; };
-		B597F9572935F4DC0022D3E6 /* Decodable+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597F9562935F4DC0022D3E6 /* Decodable+Dictionary.swift */; };
 		B5BA277D2927AEC600BDCE08 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B5BA277C2927AEC600BDCE08 /* FirebaseAuth */; };
 		B5BA277F2927AEC600BDCE08 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B5BA277E2927AEC600BDCE08 /* FirebaseFirestore */; };
 		B5BA27812927AEC600BDCE08 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = B5BA27802927AEC600BDCE08 /* FirebaseFunctions */; };
@@ -172,7 +170,6 @@
 		143185EB292B4AB8008CE459 /* ScrapPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageViewModel.swift; sourceTree = "<group>"; };
 		143185ED292B4ABC008CE459 /* ScrapPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageView.swift; sourceTree = "<group>"; };
 		143185F7292B5C88008CE459 /* ContainCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainCollectionView.swift; sourceTree = "<group>"; };
-		1432165229359A960034DE9F /* HomeFireStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFireStore.swift; sourceTree = "<group>"; };
 		143216552935C3490034DE9F /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
 		143D93A3292E484100C67C27 /* burstcampTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = burstcampTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		143D93A5292E484100C67C27 /* burstcampTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = burstcampTests.swift; sourceTree = "<group>"; };
@@ -226,7 +223,6 @@
 		B52A7F1A2927A4E300E271D2 /* .swiftlint.auto.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.auto.yml; sourceTree = "<group>"; };
 		B52A7F232927A68F00E271D2 /* Service-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Service-Info.plist"; sourceTree = "<group>"; };
 		B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultToggleButton.swift; sourceTree = "<group>"; };
-		B597F9562935F4DC0022D3E6 /* Decodable+Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decodable+Dictionary.swift"; sourceTree = "<group>"; };
 		B5BA27862927AEF600BDCE08 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B5DAD674292E4C6800C4A126 /* FeedDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailViewModel.swift; sourceTree = "<group>"; };
 		B5DAD676292E4C6800C4A126 /* FeedDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailView.swift; sourceTree = "<group>"; };
@@ -369,7 +365,6 @@
 			isa = PBXGroup;
 			children = (
 				143185E7292B46F9008CE459 /* HomeViewModel.swift */,
-				1432165229359A960034DE9F /* HomeFireStore.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1069,7 +1064,6 @@
 				D84452F0292CA57D008E811B /* MyPageEditViewController.swift in Sources */,
 				D84452FC292DB7DE008E811B /* CellIndexPath.swift in Sources */,
 				D88295EB292A43CD005B4273 /* FireStoreConfiguration.swift in Sources */,
-				1432165329359A960034DE9F /* HomeFireStore.swift in Sources */,
 				D84452E7292C9A54008E811B /* TabBarCoordinatorEvent.swift in Sources */,
 				B50A27E429279F5D00DF3E1F /* APIKey.swift in Sources */,
 				B50A27ED29279F5D00DF3E1F /* NormalFeedCell.swift in Sources */,
@@ -1106,7 +1100,6 @@
 				D89AE4ED2935AA2100446AB3 /* FCMToken.swift in Sources */,
 				D89AE4E42933AEE900446AB3 /* ImageCacheError.swift in Sources */,
 				143216562935C3490034DE9F /* FirebaseError.swift in Sources */,
-				D84C812C292E519100C984E8 /* BlogLinkValidation.swift in Sources */,
 				B50A27E929279F5D00DF3E1F /* NormalFeedCellFooter.swift in Sources */,
 				143185F8292B5C88008CE459 /* ContainCollectionView.swift in Sources */,
 				B5DAD67B292E4C6800C4A126 /* FeedDetailViewController.swift in Sources */,

@@ -12,14 +12,13 @@ import FirebaseFirestore
 
 final class HomeViewModel {
 
-    let homeFireStore: HomeFireStore
     var recommendFeedData: [Feed] = []
     var normalFeedData: [Feed] = []
     var cancelBag = Set<AnyCancellable>()
 
-    init(homeFireStore: HomeFireStore) {
-        self.homeFireStore = homeFireStore
-    }
+    private var lastSnapShot: QueryDocumentSnapshot?
+    var isFetching: Bool = false
+    var canFetchMoreFeed: Bool = true
 
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
@@ -41,52 +40,140 @@ final class HomeViewModel {
 
         input.viewDidLoad
             .sink { [weak self] _ in
-                self?.fetchRecommendFeed(output: output)
-                self?.fetchFeed(output: output)
+                self?.fetchAllFeed(output: output)
             }
             .store(in: &cancelBag)
 
         input.viewRefresh
             .sink { [weak self] _ in
-                self?.fetchRecommendFeed(output: output)
-                self?.fetchFeed(output: output)
+                self?.fetchAllFeed(output: output)
             }
             .store(in: &cancelBag)
 
         input.pagination
             .sink { [weak self] _ in
-                self?.fetchFeed(output: output, isPagination: true)
+                self?.paginateFeed(output: output)
             }
             .store(in: &cancelBag)
 
         return output
     }
 
-    func fetchFeed(output: Output, isPagination: Bool = false) {
-        homeFireStore.fetchFeed(isPagination: isPagination)
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    output.fetchResult.send(.fetchSuccess)
-                case .failure(let error):
-                    output.fetchResult.send(.fetchFail(error: error))
-                }
-            } receiveValue: { [weak self] feeds in
-                if isPagination {
-                    self?.normalFeedData.append(contentsOf: feeds)
-                } else {
-                    self?.normalFeedData = feeds
-                }
-            }
-            .store(in: &cancelBag)
+    func fetchAllFeed(output: Output) {
+        Task {
+            guard !isFetching else { return }
+            isFetching = true
+            canFetchMoreFeed = true
+
+            async let recommendFeeds = fetchRecommendFeedArray()
+            async let normalFeeds = fetchNormalFeedArray(lastSnapShot: self.lastSnapShot)
+            self.recommendFeedData = try await recommendFeeds
+            self.normalFeedData = try await normalFeeds
+            output.fetchResult.send(.fetchSuccess)
+
+            isFetching = false
+        }
     }
 
-    func fetchRecommendFeed(output: Output) {
+    func paginateFeed(output: Output) {
         Task {
-            let recommendFeed = try await fetchRecommendFeedArray()
-            self.recommendFeedData = recommendFeed
-            print(recommendFeed)
-            output.fetchResult.send(.fetchSuccess)
+            do {
+                guard !isFetching, canFetchMoreFeed else { return }
+                isFetching = true
+
+                let normalFeeds = try await fetchNormalFeedArray(
+                    lastSnapShot: self.lastSnapShot,
+                    isPagination: true
+                )
+                self.normalFeedData.append(contentsOf: normalFeeds)
+                output.fetchResult.send(.fetchSuccess)
+
+                isFetching = false
+            } catch {
+                canFetchMoreFeed = false
+                isFetching = false
+            }
+        }
+    }
+
+    func fetchNormalFeedArray(
+        lastSnapShot: QueryDocumentSnapshot?,
+        isPagination: Bool = false
+    ) async throws -> [Feed] {
+        try await withThrowingTaskGroup(of: Feed.self, body: { taskGroup in
+            var normalFeeds: [Feed] = []
+            let feedDTODictionary = try await self.requestNormalFeeds(
+                lastSnapShot: lastSnapShot,
+                isPagination: isPagination
+            )
+
+            for feedDTO in feedDTODictionary {
+                taskGroup.addTask {
+                    let feedDTO = FeedDTO(data: feedDTO)
+                    let feedWriterDictionary = try await self.requestFeedWriter(
+                        uuid: feedDTO.writerUUID
+                    )
+                    let feedWriter = FeedWriter(data: feedWriterDictionary)
+                    let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
+                    return feed
+                }
+            }
+
+            for try await feed in taskGroup {
+                normalFeeds.append(feed)
+            }
+
+            let result = normalFeeds.sorted { $0.pubDate > $1.pubDate }
+
+            return result
+        })
+    }
+
+    private func requestNormalFeeds(
+        lastSnapShot: QueryDocumentSnapshot?,
+        isPagination: Bool
+    ) async throws -> [[String: Any]] {
+        try await withCheckedThrowingContinuation({ continuation in
+            let feedQuery = createQuery(lastSnapShot: lastSnapShot, isPagination: isPagination)
+
+            feedQuery
+                .getDocuments { querySnapShot, error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    guard let querySnapShot = querySnapShot else {
+                        continuation.resume(throwing: FirebaseError.fetchFeedError)
+                        return
+                    }
+                    self.lastSnapShot = querySnapShot.documents.last
+
+                    if self.lastSnapShot == nil { // 응답한 Feed가 없는 경우
+                        continuation.resume(throwing: FirebaseError.lastFetchError)
+                        return
+                    }
+
+                    let normalFeeds = querySnapShot.documents.map { queryDocumentSnapshot in
+                        let normalFeed = queryDocumentSnapshot.data()
+                        return normalFeed
+                    }
+                    continuation.resume(returning: normalFeeds)
+                }
+        })
+    }
+
+    private func createQuery(lastSnapShot: QueryDocumentSnapshot?, isPagination: Bool) -> Query {
+        if let lastSnapShot = lastSnapShot, isPagination {
+            return Firestore.firestore()
+                .collection("Feed")
+                .order(by: "pubDate", descending: true)
+                .limit(to: 5)
+                .start(afterDocument: lastSnapShot)
+        } else {
+            return Firestore.firestore()
+                .collection("Feed")
+                .order(by: "pubDate", descending: true)
+                .limit(to: 5)
         }
     }
 

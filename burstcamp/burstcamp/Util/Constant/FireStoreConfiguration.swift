@@ -12,6 +12,7 @@ enum FireStoreCollection: String {
     case feed = "Feed"
     case fcmToken = "FCMToken"
     case scrapUser = "ScrapUser"
+    case recommendFeed = "RecommendFeed"
 
     var path: String {
         return self.rawValue
