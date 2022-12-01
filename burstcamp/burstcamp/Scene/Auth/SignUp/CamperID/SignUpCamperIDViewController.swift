@@ -66,15 +66,11 @@ final class SignUpCamperIDViewController: UIViewController {
             .store(in: &cancelBag)
 
         output.domainText
-            .sink { domain in
-                self.signUpCamperIDView.domainLabel.text = domain
-            }
+            .assign(to: \.text, on: signUpCamperIDView.domainLabel)
             .store(in: &cancelBag)
 
         output.representingDomainText
-            .sink { representingDomain in
-                self.signUpCamperIDView.representingDomainLabel.text = representingDomain
-            }
+            .assign(to: \.text, on: signUpCamperIDView.representingDomainLabel)
             .store(in: &cancelBag)
     }
 }

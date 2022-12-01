@@ -20,8 +20,8 @@ final class SignUpCamperIDViewModel {
     struct Output {
         let validateCamperID: AnyPublisher<Bool, Never>
         let moveToBlogView: AnyPublisher<Void, Never>
-        let domainText: Just<String>
-        let representingDomainText: Just<String>
+        let domainText: Just<String?>
+        let representingDomainText: Just<String?>
     }
 
     func transform(input: Input) -> Output {
