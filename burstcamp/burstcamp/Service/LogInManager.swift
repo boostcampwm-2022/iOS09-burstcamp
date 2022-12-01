@@ -76,10 +76,7 @@ final class LogInManager {
             }
             .receive(on: DispatchQueue.main)
             .sink { result in
-                switch result {
-                case .finished:
-                    print("finished")
-                case .failure:
+                if case .failure = result {
                     self.logInPublisher.send(.notCamper)
                 }
             } receiveValue: { user in
