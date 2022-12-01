@@ -401,6 +401,7 @@
 				D88295EE292A43EB005B4273 /* NetworkError.swift */,
 				D89AE4E32933AEE900446AB3 /* ImageCacheError.swift */,
 				143216552935C3490034DE9F /* FirebaseError.swift */,
+				D8576F2F293779C4002885FE /* FirestoreError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -734,7 +735,6 @@
 				D88295FB292A4452005B4273 /* HTTPMethod.swift */,
 				D84C812D292E590300C984E8 /* MyPageEditValidationResult.swift */,
 				D8C3AA2829305C05008EE77C /* HTTPHeader.swift */,
-				D8576F2F293779C4002885FE /* FirestoreError.swift */,
 				D8576F3529378F50002885FE /* URLRegularExpression.swift */,
 			);
 			path = Constant;
@@ -1103,7 +1103,6 @@
 				D89AE4ED2935AA2100446AB3 /* FCMToken.swift in Sources */,
 				D89AE4E42933AEE900446AB3 /* ImageCacheError.swift in Sources */,
 				143216562935C3490034DE9F /* FirebaseError.swift in Sources */,
-				D84C812C292E519100C984E8 /* BlogLinkValidation.swift in Sources */,
 				B50A27E929279F5D00DF3E1F /* NormalFeedCellFooter.swift in Sources */,
 				143185F8292B5C88008CE459 /* ContainCollectionView.swift in Sources */,
 				B5DAD67B292E4C6800C4A126 /* FeedDetailViewController.swift in Sources */,
