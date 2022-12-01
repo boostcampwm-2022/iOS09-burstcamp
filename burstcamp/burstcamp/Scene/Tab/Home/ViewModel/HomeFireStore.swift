@@ -25,6 +25,7 @@ final class HomeFireStoreService: HomeFireStore {
     func fetchFeed(isPagination: Bool) -> AnyPublisher<[Feed], Error> {
         return Future<[Feed], Error> { [weak self] promise in
             guard let self = self else { return }
+            
             guard !self.isFetching else { return }
             self.isFetching = true
 
@@ -35,14 +36,13 @@ final class HomeFireStoreService: HomeFireStore {
             }
 
             var result: [Feed] = []
-
             let feeds = self.makeQuery(lastSnapShot: self.lastSnapShot, isPagination: isPagination)
 
             feeds.getDocuments { querySnapshot, _ in
                 guard let querySnapshot = querySnapshot else { return }
                 self.lastSnapShot = querySnapshot.documents.last
 
-                if self.lastSnapShot == nil {
+                if self.lastSnapShot == nil { // 응답한 Feed가 없는 경우
                     self.canFetchMoreFeed = false
                     self.isFetching = false
                     promise(.failure(FirebaseError.lastFetchError))
