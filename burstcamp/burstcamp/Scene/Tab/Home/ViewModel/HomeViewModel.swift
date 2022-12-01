@@ -8,9 +8,12 @@
 import Combine
 import Foundation
 
+import FirebaseFirestore
+
 final class HomeViewModel {
 
     let homeFireStore: HomeFireStore
+    var recommendFeedData: [Feed] = []
     var normalFeedData: [Feed] = []
     var cancelBag = Set<AnyCancellable>()
 
@@ -38,6 +41,7 @@ final class HomeViewModel {
 
         input.viewDidLoad
             .sink { [weak self] _ in
+                self?.fetchRecommendFeed()
                 self?.fetchFeed(output: output)
             }
             .store(in: &cancelBag)
@@ -74,5 +78,80 @@ final class HomeViewModel {
                 }
             }
             .store(in: &cancelBag)
+    }
+
+    func fetchRecommendFeed() {
+        Task {
+            let recommendFeed = try await fetchRecommendFeedArray()
+            self.recommendFeedData = recommendFeed
+            print(recommendFeed)
+        }
+    }
+
+    func fetchRecommendFeedArray() async throws -> [Feed] {
+        try await withThrowingTaskGroup(of: Feed.self, body: { taskGroup in
+            var recommendFeeds: [Feed] = []
+            let feedDTODictionary = try await self.requestRecommendFeeds()
+
+            for feedDTO in feedDTODictionary {
+                taskGroup.addTask {
+                    let feedDTO = FeedDTO(data: feedDTO)
+                    let feedWriterDictionary = try await self.requestFeedWriter(
+                        uuid: feedDTO.writerUUID
+                    )
+                    let feedWriter = FeedWriter(data: feedWriterDictionary)
+                    let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
+                    return feed
+                }
+            }
+
+            for try await feed in taskGroup {
+                recommendFeeds.append(feed)
+            }
+            return recommendFeeds
+        })
+    }
+
+    private func requestRecommendFeeds() async throws -> [[String: Any]] {
+        try await withCheckedThrowingContinuation({ continuation in
+            Firestore.firestore()
+                .collection("RecommendFeed")
+                .getDocuments { querySnapShot, error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    guard let querySnapShot = querySnapShot else {
+                        continuation.resume(throwing: FirebaseError.fetchFeedError)
+                        return
+                    }
+                    let recommendFeeds = querySnapShot.documents.map { queryDocumentSnapshot in
+                        let recommendFeed = queryDocumentSnapshot.data()
+                        return recommendFeed
+                    }
+                    continuation.resume(returning: recommendFeeds)
+                }
+        })
+    }
+
+    private func requestFeedWriter(uuid: String) async throws -> [String: Any] {
+        try await withCheckedThrowingContinuation({ continuation in
+            Firestore.firestore()
+                .collection("User")
+                .document(uuid)
+                .getDocument { documentSnapShot, error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    guard let snapShot = documentSnapShot,
+                          let userData = snapShot.data()
+                    else {
+                        continuation.resume(throwing: FirebaseError.fetchUserError)
+                        return
+                    }
+                    continuation.resume(returning: userData)
+                }
+        })
     }
 }

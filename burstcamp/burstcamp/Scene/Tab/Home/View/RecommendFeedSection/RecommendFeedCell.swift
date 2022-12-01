@@ -22,10 +22,7 @@ final class RecommendFeedCell: UICollectionViewCell {
         $0.textAlignment = .left
         $0.textColor = UIColor.black
         $0.font = UIFont.extraBold16
-        $0.text = """
-        [Swift 5.7+][Concurrency] AsyncStream, AsyncThrowingStream 알아보기 - Continuation vs unfoldin
-        g [Swift 5.7+][Concurrency
-        """
+        $0.text = ""
         $0.numberOfLines = 3
     }
 
@@ -57,5 +54,12 @@ final class RecommendFeedCell: UICollectionViewCell {
             $0.centerY.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(20)
         }
+    }
+}
+
+extension RecommendFeedCell {
+    func updateView(feed: Feed) {
+        titleLabel.text = feed.feedTitle
+        userView.updateView(feedWriter: feed.writer)
     }
 }
