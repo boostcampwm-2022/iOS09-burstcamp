@@ -17,8 +17,8 @@ final class HomeViewModel {
     var cancelBag = Set<AnyCancellable>()
 
     private var lastSnapShot: QueryDocumentSnapshot?
-    var isFetching: Bool = false
-    var canFetchMoreFeed: Bool = true
+    private var isFetching: Bool = false
+    private var canFetchMoreFeed: Bool = true
 
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
@@ -59,7 +59,7 @@ final class HomeViewModel {
         return output
     }
 
-    func fetchAllFeed(output: Output) {
+    private func fetchAllFeed(output: Output) {
         Task {
             do {
                 guard !isFetching else { return }
@@ -79,7 +79,7 @@ final class HomeViewModel {
         }
     }
 
-    func paginateFeed(output: Output) {
+    private func paginateFeed(output: Output) {
         Task {
             do {
                 guard !isFetching, canFetchMoreFeed else { return }
@@ -100,7 +100,7 @@ final class HomeViewModel {
         }
     }
 
-    func fetchNormalFeedArray(
+    private func fetchNormalFeedArray(
         lastSnapShot: QueryDocumentSnapshot?,
         isPagination: Bool = false
     ) async throws -> [Feed] {
@@ -181,7 +181,7 @@ final class HomeViewModel {
         }
     }
 
-    func fetchRecommendFeedArray() async throws -> [Feed] {
+    private func fetchRecommendFeedArray() async throws -> [Feed] {
         try await withThrowingTaskGroup(of: Feed.self, body: { taskGroup in
             var recommendFeeds: [Feed] = []
             let feedDTODictionary = try await self.requestRecommendFeeds()
