@@ -60,48 +60,47 @@ final class LogInManager {
     }
 
     func logIn(code: String) {
-//        var token: String = ""
-//        var nickname: String = ""
-//
-//        requestGithubAccessToken(code: code)
-//            .map { $0.accessToken }
-//            .flatMap { accessToken -> AnyPublisher<GithubUser, NetworkError> in
-//                token = accessToken
-//                return self.requestGithubUserInfo(token: accessToken)
-//            }
-//            .map { $0.login }
-//            .flatMap { name -> AnyPublisher<GithubMembership, NetworkError> in
-//                nickname = name
-//                return self.getOrganizationMembership(nickname: nickname, token: token)
-//            }
-//            .flatMap { _ -> AnyPublisher<User, NetworkError> in
-//                return FireStoreService.fetchUser(by: self.userUUID)
-//            }
-//            .receive(on: DispatchQueue.main)
-//            .sink { result in
-//                switch result {
-//                case .finished:
-//                    print("finished")
-//                case .failure(let error):
-//                    self.switchError(error: error, nickname: nickname)
-//                }
-//            } receiveValue: { user in
-//                self.signInToFirebase(user: user, token: token)
-//            }
-//            .store(in: &cancelBag)
+        var token: String = ""
+        var nickname: String = ""
+
+        requestGithubAccessToken(code: code)
+            .map { $0.accessToken }
+            .flatMap { accessToken -> AnyPublisher<GithubUser, NetworkError> in
+                token = accessToken
+                return self.requestGithubUserInfo(token: accessToken)
+            }
+            .map { $0.login }
+            .flatMap { name -> AnyPublisher<GithubMembership, NetworkError> in
+                nickname = name
+                return self.getOrganizationMembership(nickname: nickname, token: token)
+            }
+            .receive(on: DispatchQueue.main)
+            .sink { result in
+                switch result {
+                case .finished:
+                    print("finished")
+                case .failure:
+                    self.logInPublisher.send(.notCamper)
+                }
+            } receiveValue: { user in
+                self.isSignedUp(token: token, nickname: nickname)
+            }
+            .store(in: &cancelBag)
     }
 
-    func switchError(error: NetworkError, nickname: String) {
-        // TODO: switch -> 함수 분리 필요
-        switch error {
-        case .responseDecoingError:
-            /// 멤버 O, 회원가입 X
-            self.logInPublisher.send(.moveToDomainScreen(userUUID, nickname))
-        default:
-            /// 멤버 X
-            // TODO: alert
-            print("default")
-        }
+    func isSignedUp(token: String, nickname: String) {
+        FirebaseUser.fetch(userUUID: self.userUUID)
+            .sink { result in
+                switch result {
+                case .finished:
+                    return
+                case .failure(let error):
+                    self.logInPublisher.send(.moveToDomainScreen(self.userUUID, nickname))
+                }
+            } receiveValue: { user in
+                self.signInToFirebase(user: user, token: token)
+            }
+            .store(in: &cancelBag)
     }
 
     func signInToFirebase(user: User, token: String) {

@@ -64,7 +64,8 @@ final class SignUpViewModel {
     func transformBlogAddress(input: InputBlogAddress) -> OutputBlogAddress {
         let blogAddress = input.blogAddressTextFieldDidEdit
             .map { address in
-                return address.isEmpty ? false : true
+                self.blogAddress = address
+                return Validation.validate(blogLink: address) ? true : false
             }
             .eraseToAnyPublisher()
 

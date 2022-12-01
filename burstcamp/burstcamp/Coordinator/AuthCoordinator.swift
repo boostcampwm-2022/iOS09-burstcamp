@@ -36,7 +36,7 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
                     self.moveToDomainScreen(userUUID: userUUID, nickname: nickname)
                 case .moveToTabBarScreen:
                     self.moveToTabBarFlow()
-                case .moveToIDScreen, .moveToBlogScreen:
+                case .moveToIDScreen, .moveToBlogScreen, .notCamper:
                     return
                 }
             }
