@@ -73,7 +73,7 @@ final class FeedDetailViewController: UIViewController {
     private func bind() {
         let input = FeedDetailViewModel.Input(
             blogButtonDidTap: feedDetailView.blogButtonTapPublisher,
-            scrapButtonDidTap: scrapButton.tapPublisher,
+            scrapButtonDidTap: scrapButton.statePublisher,
             shareButtonDidTap: shareButton.tapPublisher
         )
 
@@ -107,9 +107,7 @@ final class FeedDetailViewController: UIViewController {
         output.scrapButtonToggle
             .receive(on: DispatchQueue.main)
             .sink { _ in
-                guard let scrapButton = self.scrapBarButtonItem.customView as? ToggleButton
-                else { return }
-                scrapButton.toggle()
+                self.scrapButton.toggle()
             }
             .store(in: &cancelBag)
 

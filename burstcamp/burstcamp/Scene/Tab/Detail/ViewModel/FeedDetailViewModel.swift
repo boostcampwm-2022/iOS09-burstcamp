@@ -15,7 +15,7 @@ final class FeedDetailViewModel {
     private var cancelBag = Set<AnyCancellable>()
 
     private var feed = CurrentValueSubject<Feed?, Never>(nil)
-    private var dbUpdateResult = CurrentValueSubject<Bool?, Never>(nil)
+    private var dbUpdateSucceed = CurrentValueSubject<Bool?, Never>(nil)
 
     init() { }
 
@@ -31,7 +31,7 @@ final class FeedDetailViewModel {
 
     struct Input {
         let blogButtonDidTap: AnyPublisher<Void, Never>
-        let scrapButtonDidTap: AnyPublisher<Void, Never>
+        let scrapButtonDidTap: AnyPublisher<Bool, Never>
         let shareButtonDidTap: AnyPublisher<Void, Never>
     }
 
@@ -58,33 +58,34 @@ final class FeedDetailViewModel {
             .compactMap { self.feed.value?.url }
             .eraseToAnyPublisher()
 
-        let sharedScrapButtonDidTap = input.scrapButtonDidTap.share()
+        let sharedScrapButtonDidTap = input.scrapButtonDidTap
+            .share()
 
         sharedScrapButtonDidTap
-            .sink { _ in
+            .sink { state in
                 guard let uuid = self.feed.value?.feedUUID else { return }
-                self.updateFeed(uuid: uuid)
+                self.updateFeed(uuid: uuid, state: state)
             }
             .store(in: &cancelBag)
 
         let scrapButtonDisabled = sharedScrapButtonDidTap
+            .map { _ in Void() }
             .eraseToAnyPublisher()
 
-        let dbUpdateResult = sharedScrapButtonDidTap
-            .combineLatest(self.dbUpdateResult.eraseToAnyPublisher())
+        let dbUpdateResult = self.dbUpdateSucceed
+            .print("dbUpdate")
+            .eraseToAnyPublisher()
             .share()
 
         let scrapButtonEnabled = dbUpdateResult
+            .filter { $0 != nil }
             .map { _ in Void() }
             .eraseToAnyPublisher()
 
-        let dbUpdateSucceed = dbUpdateResult
-            .filter { tap, result in
-                result == true
-            }
-
-        let scrapButtonToggle = dbUpdateSucceed
+        let scrapButtonToggle = dbUpdateResult
+            .filter { $0 == true }
             .map { _ in Void() }
+            .print("toggle")
             .eraseToAnyPublisher()
 
         return Output(
@@ -97,15 +98,18 @@ final class FeedDetailViewModel {
         )
     }
 
-    private func updateFeed(uuid: String) {
+    private func updateFeed(uuid: String, state: Bool) {
         Task {
-            guard (try? await requestUpdateFeed(uuid: uuid)) != nil else {
-                self.dbUpdateResult.send(false)
-                print("업데이트 실패")
+            do {
+                switch state {
+                case true: try await requestDeleteFeedScrapUser(uuid: uuid)
+                case false: try await requestCreateFeedScrapUser(uuid: uuid)
+                }
+            } catch {
+                self.dbUpdateSucceed.send(false)
                 return
             }
-            print("업데이트 성공")
-            self.dbUpdateResult.send(true)
+            self.dbUpdateSucceed.send(true)
         }
     }
 
@@ -123,7 +127,24 @@ final class FeedDetailViewModel {
         }
     }
 
-    private func requestUpdateFeed(uuid: String) async throws {
+    private func requestDeleteFeedScrapUser(uuid: String) async throws {
+        try await withCheckedThrowingContinuation({ continuation in
+            Firestore.firestore()
+                .collection("feed")
+                .document(uuid)
+                .collection("scrapUserUUIDs")
+                .document("userUUID")
+                .delete() { error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    continuation.resume()
+                }
+        }) as Void
+    }
+
+    private func requestCreateFeedScrapUser(uuid: String) async throws {
         try await withCheckedThrowingContinuation({ continuation in
             Firestore.firestore()
                 .collection("feed")
