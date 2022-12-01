@@ -12,20 +12,18 @@ final class RecommendFeedUserView: UIStackView {
     private lazy var profileImageView = UIImageView().then {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = Constant.Image.profileSmall.cgFloat / 2
-        $0.image = UIImage(systemName: "square.fill")
+        $0.image = UIImage(named: "AppIcon")
         $0.contentMode = .scaleAspectFill
     }
 
-    private lazy var nameLabel = UILabel().then {
+    private lazy var nicknameLabel = UILabel().then {
         $0.textColor = .systemGray2
         $0.font = .bold12
-        $0.text = "하늘이"
     }
 
-    private lazy var blogNameLabel = UILabel().then {
+    private lazy var blogTitleLabel = UILabel().then {
         $0.textColor = .systemGray2
         $0.font = .regular8
-        $0.text = "성이 하씨고 이름이 늘이, 성이 하씨고 이름이 늘이, 성이 하씨고 이름이 늘이"
     }
 
     override init(frame: CGRect) {
@@ -38,7 +36,7 @@ final class RecommendFeedUserView: UIStackView {
     }
 
     private func configureUI() {
-        addArrangedSubViews([profileImageView, nameLabel, blogNameLabel])
+        addArrangedSubViews([profileImageView, nicknameLabel, blogTitleLabel])
         configureStackView()
         configureProfileImageView()
     }
@@ -55,5 +53,13 @@ final class RecommendFeedUserView: UIStackView {
         profileImageView.snp.makeConstraints {
             $0.width.height.equalTo(Constant.Image.profileSmall)
         }
+    }
+}
+
+extension RecommendFeedUserView {
+    func updateView(feedWriter: FeedWriter) {
+        profileImageView.setImage(urlString: feedWriter.profileImageURL)
+        nicknameLabel.text = feedWriter.nickname
+        blogTitleLabel.text = feedWriter.blogTitle
     }
 }
