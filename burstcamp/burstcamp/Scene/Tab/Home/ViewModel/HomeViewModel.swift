@@ -58,7 +58,6 @@ final class HomeViewModel {
     }
 
     func fetchFeed(output: Output, isPagination: Bool = false) {
-        guard !homeFireStore.isFetching else { return }
         homeFireStore.fetchFeed(isPagination: isPagination)
             .sink { completion in
                 switch completion {

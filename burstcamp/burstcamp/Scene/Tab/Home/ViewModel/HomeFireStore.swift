@@ -12,6 +12,7 @@ import FirebaseFirestore
 
 protocol HomeFireStore {
     var isFetching: Bool { get set }
+    var canFetchMoreFeed: Bool { get set }
     func fetchFeed(isPagination: Bool) -> AnyPublisher<[Feed], Error>
 }
 
@@ -21,12 +22,19 @@ final class HomeFireStoreService: HomeFireStore {
     private var cancelBag = Set<AnyCancellable>()
     private var lastSnapShot: QueryDocumentSnapshot?
     var isFetching: Bool = false
+    var canFetchMoreFeed: Bool = true
 
     func fetchFeed(isPagination: Bool) -> AnyPublisher<[Feed], Error> {
-        isFetching = true
-
         return Future<[Feed], Error> { [weak self] promise in
             guard let self = self else { return }
+            guard !self.isFetching else { return }
+            self.isFetching = true
+
+            if !self.canFetchMoreFeed && isPagination {
+                promise(.failure(FirebaseError.lastFetchError))
+            } else {
+                self.canFetchMoreFeed = true
+            }
 
             var result: [Feed] = []
 
@@ -35,6 +43,12 @@ final class HomeFireStoreService: HomeFireStore {
             feeds.getDocuments { querySnapshot, _ in
                 guard let querySnapshot = querySnapshot else { return }
                 self.lastSnapShot = querySnapshot.documents.last
+
+                if self.lastSnapShot == nil {
+                    self.canFetchMoreFeed = false
+                    self.isFetching = false
+                    promise(.failure(FirebaseError.lastFetchError))
+                }
 
                 querySnapshot.documents.forEach { queryDocumentSnapshot in
                     let data = queryDocumentSnapshot.data()
@@ -75,7 +89,7 @@ final class HomeFireStoreService: HomeFireStore {
             return database
                 .collection("Feed")
                 .order(by: "pubDate", descending: true)
-                .limit(to: 10)
+                .limit(to: 5)
         }
     }
 }
