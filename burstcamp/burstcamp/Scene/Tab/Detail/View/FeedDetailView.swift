@@ -45,7 +45,6 @@ final class FeedDetailView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
-        fetchMockData()
     }
 
     required init?(coder: NSCoder) {

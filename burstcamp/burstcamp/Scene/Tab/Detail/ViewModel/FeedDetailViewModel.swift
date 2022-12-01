@@ -11,8 +11,11 @@ import Foundation
 import FirebaseFirestore
 
 final class FeedDetailViewModel {
-    
+
+    private var cancelBag = Set<AnyCancellable>()
+
     private var feed = CurrentValueSubject<Feed?, Never>(nil)
+    private var dbUpdateResult = CurrentValueSubject<Bool?, Never>(nil)
 
     init() { }
 
@@ -35,8 +38,10 @@ final class FeedDetailViewModel {
     struct Output {
         let feedDidUpdate: AnyPublisher<Feed, Never>
         let openBlog: AnyPublisher<URL, Never>
-        let scrapButtonToggle: AnyPublisher<Void, Never>
         let openActivityView: AnyPublisher<String, Never>
+        let scrapButtonToggle: AnyPublisher<Void, Never>
+        let scrapButtonDisable: AnyPublisher<Void, Never>
+        let scrapButtonEnable: AnyPublisher<Void, Never>
     }
 
     func transform(input: Input) -> Output {
@@ -53,20 +58,64 @@ final class FeedDetailViewModel {
             .compactMap { self.feed.value?.url }
             .eraseToAnyPublisher()
 
+        let sharedScrapButtonDidTap = input.scrapButtonDidTap.share()
+
+        sharedScrapButtonDidTap
+            .sink { _ in
+                guard let uuid = self.feed.value?.feedUUID else { return }
+                self.updateFeed(uuid: uuid)
+            }
+            .store(in: &cancelBag)
+
+        let scrapButtonDisabled = sharedScrapButtonDidTap
+            .eraseToAnyPublisher()
+
+        let dbUpdateResult = sharedScrapButtonDidTap
+            .combineLatest(self.dbUpdateResult.eraseToAnyPublisher())
+            .share()
+
+        let scrapButtonEnabled = dbUpdateResult
+            .map { _ in Void() }
+            .eraseToAnyPublisher()
+
+        let dbUpdateSucceed = dbUpdateResult
+            .filter { tap, result in
+                result == true
+            }
+
+        let scrapButtonToggle = dbUpdateSucceed
+            .map { _ in Void() }
+            .eraseToAnyPublisher()
+
         return Output(
             feedDidUpdate: feedDidUpdate,
             openBlog: openBlog,
-            scrapButtonToggle: input.scrapButtonDidTap,
-            openActivityView: openActivityView
+            openActivityView: openActivityView,
+            scrapButtonToggle: scrapButtonToggle,
+            scrapButtonDisable: scrapButtonDisabled,
+            scrapButtonEnable: scrapButtonEnabled
         )
+    }
+
+    private func updateFeed(uuid: String) {
+        Task {
+            guard (try? await requestUpdateFeed(uuid: uuid)) != nil else {
+                self.dbUpdateResult.send(false)
+                print("업데이트 실패")
+                return
+            }
+            print("업데이트 성공")
+            self.dbUpdateResult.send(true)
+        }
     }
 
     private func fetchFeed(uuid: String) {
         Task {
             // TODO: 오류 처리
-            let feedDict = try await requestFeed(uuid: uuid)
+            let feedDict = try await requestGetFeed(uuid: uuid)
+            print(feedDict.keys)
             let feedDTO = FeedDTO(data: feedDict)
-            let feedWriterDict = try await requestFeedWriter(uuid: feedDTO.writerUUID)
+            let feedWriterDict = try await requestGetFeedWriter(uuid: feedDTO.writerUUID)
             let feedWriter = FeedWriter(data: feedWriterDict)
             let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
 
@@ -74,7 +123,27 @@ final class FeedDetailViewModel {
         }
     }
 
-    private func requestFeed(uuid: String) async throws -> [String: Any] {
+    private func requestUpdateFeed(uuid: String) async throws {
+        try await withCheckedThrowingContinuation({ continuation in
+            Firestore.firestore()
+                .collection("feed")
+                .document(uuid)
+                .collection("scrapUserUUIDs")
+                .document("userUUID")
+                .setData([
+                    "userUUID": "userUUID",
+                    "scrapDate": Timestamp(date: Date())
+                ]) { error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    continuation.resume()
+                }
+        }) as Void
+    }
+
+    private func requestGetFeed(uuid: String) async throws -> [String: Any] {
         try await withCheckedThrowingContinuation({ continuation in
             Firestore.firestore()
                 .collection("feed")
@@ -95,7 +164,7 @@ final class FeedDetailViewModel {
         })
     }
 
-    private func requestFeedWriter(uuid: String) async throws -> [String: Any] {
+    private func requestGetFeedWriter(uuid: String) async throws -> [String: Any] {
         try await withCheckedThrowingContinuation({ continuation in
             Firestore.firestore()
                 .collection("User")

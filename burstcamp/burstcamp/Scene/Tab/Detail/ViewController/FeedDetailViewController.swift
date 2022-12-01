@@ -92,14 +92,6 @@ final class FeedDetailViewController: UIViewController {
             }
             .store(in: &cancelBag)
 
-        output.scrapButtonToggle
-            .sink { _ in
-                guard let scrapButton = self.scrapBarButtonItem.customView as? ToggleButton
-                else { return }
-                scrapButton.toggle()
-            }
-            .store(in: &cancelBag)
-
         output.openActivityView
             .sink { feedURL in
                 let shareViewController = UIActivityViewController(
@@ -109,6 +101,29 @@ final class FeedDetailViewController: UIViewController {
                 shareViewController.popoverPresentationController?.sourceView = self.feedDetailView
 
                 self.present(shareViewController, animated: true)
+            }
+            .store(in: &cancelBag)
+
+        output.scrapButtonToggle
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                guard let scrapButton = self.scrapBarButtonItem.customView as? ToggleButton
+                else { return }
+                scrapButton.toggle()
+            }
+            .store(in: &cancelBag)
+
+        output.scrapButtonEnable
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                self.scrapButton.isEnabled = true
+            }
+            .store(in: &cancelBag)
+
+        output.scrapButtonDisable
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                self.scrapButton.isEnabled = false
             }
             .store(in: &cancelBag)
     }
