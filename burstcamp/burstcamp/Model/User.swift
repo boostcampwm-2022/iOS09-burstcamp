@@ -66,7 +66,8 @@ struct User: Codable {
             camperID: self.camperID,
             ordinalNumber: self.ordinalNumber,
             domain: self.domain,
-            profileImageURL: self.profileImageURL
+            profileImageURL: self.profileImageURL,
+            blogTitle: self.blogTitle
         )
     }
 }

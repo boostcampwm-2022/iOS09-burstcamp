@@ -62,6 +62,7 @@ extension DefaultUserInfoView {
         DispatchQueue.main.async {
             self.nameLabel.text = user.nickname
         }
+        profileImageView.setImage(urlString: user.profileImageURL)
         badgeStackView.updateView(user: user)
     }
 
@@ -69,6 +70,7 @@ extension DefaultUserInfoView {
         DispatchQueue.main.async {
             self.nameLabel.text = feedWriter.nickname
         }
+        profileImageView.setImage(urlString: feedWriter.profileImageURL)
         badgeStackView.updateView(feedWriter: feedWriter)
     }
 }

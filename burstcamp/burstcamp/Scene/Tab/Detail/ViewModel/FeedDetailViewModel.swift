@@ -11,7 +11,7 @@ import Foundation
 import FirebaseFirestore
 
 final class FeedDetailViewModel {
-    
+
     private var feed = CurrentValueSubject<Feed?, Never>(nil)
 
     init() { }

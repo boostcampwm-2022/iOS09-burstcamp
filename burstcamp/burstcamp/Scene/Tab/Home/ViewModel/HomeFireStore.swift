@@ -11,8 +11,6 @@ import Foundation
 import FirebaseFirestore
 
 protocol HomeFireStore {
-    var isFetching: Bool { get set }
-    var canFetchMoreFeed: Bool { get set }
     func fetchFeed(isPagination: Bool) -> AnyPublisher<[Feed], Error>
 }
 

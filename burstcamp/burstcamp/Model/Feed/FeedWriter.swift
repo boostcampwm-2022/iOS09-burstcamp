@@ -20,13 +20,15 @@ struct FeedWriter {
         camperID: String,
         ordinalNumber: Int,
         domain: Domain,
-        profileImageURL: String
+        profileImageURL: String,
+        blogTitle: String
     ) {
         self.nickname = nickname
         self.camperID = camperID
         self.ordinalNumber = ordinalNumber
         self.domain = domain
         self.profileImageURL = profileImageURL
+        self.blogTitle = blogTitle
     }
 
     init(data: [String: Any]) {
