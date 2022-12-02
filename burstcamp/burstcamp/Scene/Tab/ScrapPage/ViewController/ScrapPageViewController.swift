@@ -78,7 +78,12 @@ extension ScrapPageViewController: UICollectionViewDelegateFlowLayout, UICollect
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return 10
+        if viewModel.scarpFeedData.isEmpty {
+            collectionView.configureEmptyView()
+        } else {
+            collectionView.resetEmptyView()
+        }
+        return viewModel.scarpFeedData.count
     }
 
     func collectionView(

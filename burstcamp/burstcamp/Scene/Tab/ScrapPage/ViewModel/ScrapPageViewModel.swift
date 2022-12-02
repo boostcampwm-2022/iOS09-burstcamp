@@ -8,4 +8,6 @@
 import Foundation
 
 final class ScrapPageViewModel {
+
+    var scarpFeedData: [Feed] = []
 }
