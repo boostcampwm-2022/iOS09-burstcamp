@@ -13,6 +13,10 @@ import FirebaseFirestore
 struct FirestoreUser {
     private static let userPath = Firestore.firestore().collection(FireStoreCollection.user.path)
     private static let userUUIDField = "userUUID"
+    private static let profileImageURLField = "profileImageURL"
+    private static let nicknameField = "nickname"
+    private static let blogURLField = "blogURL"
+    private static let blogTitleField = "blogTitle"
     private static let isPushOnField = "isPushOn"
 
     static func save(user: User) -> AnyPublisher<User, FirestoreError> {
@@ -56,5 +60,26 @@ struct FirestoreUser {
     static func update(userUUID: String, isPushOn: Bool) {
         userPath.document(userUUID)
             .updateData([isPushOnField: isPushOn])
+    }
+
+    static func update(
+        userUUID: String,
+        nickname: String,
+        profileImageURL: String,
+        blogURL: String,
+        blogTitle: String
+    ) {
+        userPath.document(userUUID)
+            .updateData([
+                nicknameField: nickname,
+                profileImageURLField: profileImageURL,
+                blogURLField: blogURL,
+                blogTitleField: blogTitle
+            ])
+    }
+
+    static func delete(user: User) {
+        userPath.document(user.userUUID)
+            .delete()
     }
 }

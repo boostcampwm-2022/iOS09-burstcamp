@@ -28,6 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func startApp(windowScene: UIWindowScene) {
+        UserManager.shared.user
         let navigationController = UINavigationController()
         window = UIWindow(windowScene: windowScene)
         setInitialDarkMode()
