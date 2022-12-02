@@ -19,8 +19,7 @@ struct FireFunctionsManager {
             functions
                 .httpsCallable("fetchBlogTitle")
                 .call(["blogURL": link]) { result, error in
-                    if let error = error {
-                        print(error.localizedDescription)
+                    if error != nil {
                         promise(.failure(NetworkError.unknownError))
                     }
                     if let data = result?.data as? [String: Any],
