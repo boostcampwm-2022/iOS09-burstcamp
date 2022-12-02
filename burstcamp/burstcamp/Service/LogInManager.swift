@@ -24,6 +24,8 @@ final class LogInManager {
         return Auth.auth().currentUser?.uid ?? ""
     }
 
+    var token: String = ""
+
     private var githubAPIKey: Github? {
         guard let serviceInfoURL = Bundle.main.url(
             forResource: "Service-Info",
@@ -60,32 +62,38 @@ final class LogInManager {
     }
 
     func logIn(code: String) {
-        var token: String = ""
+//        var token: String = ""
         var nickname: String = ""
 
         requestGithubAccessToken(code: code)
             .map { $0.accessToken }
             .flatMap { accessToken -> AnyPublisher<GithubUser, NetworkError> in
-                token = accessToken
+                self.token = accessToken
                 return self.requestGithubUserInfo(token: accessToken)
             }
             .map { $0.login }
             .flatMap { name -> AnyPublisher<GithubMembership, NetworkError> in
                 nickname = name
-                return self.getOrganizationMembership(nickname: nickname, token: token)
+                return self.getOrganizationMembership(nickname: nickname, token: self.token)
             }
             .receive(on: DispatchQueue.main)
             .sink { result in
                 if case .failure = result {
                     self.logInPublisher.send(.notCamper)
                 }
-            } receiveValue: { user in
-                self.isSignedUp(token: token, nickname: nickname)
+            } receiveValue: { _ in
+                self.isSignedUp(token: self.token, nickname: nickname)
             }
             .store(in: &cancelBag)
     }
 
     func isSignedUp(token: String, nickname: String) {
+        if self.userUUID.isEmpty {
+            UserManager.shared.userUUID = self.userUUID
+            UserManager.shared.nickname = nickname
+            self.logInPublisher.send(.moveToDomainScreen)
+        }
+
         FirestoreUser.fetch(userUUID: self.userUUID)
             .sink { result in
                 switch result {
@@ -96,13 +104,13 @@ final class LogInManager {
                     UserManager.shared.nickname = nickname
                     self.logInPublisher.send(.moveToDomainScreen)
                 }
-            } receiveValue: { user in
-                self.signInToFirebase(user: user, token: token)
+            } receiveValue: { _ in
+                self.signInToFirebase(token: token)
             }
             .store(in: &cancelBag)
     }
 
-    func signInToFirebase(user: User, token: String) {
+    func signInToFirebase(token: String) {
         let credential = GitHubAuthProvider.credential(withToken: token)
 
         Auth.auth().signIn(with: credential) { result, error in

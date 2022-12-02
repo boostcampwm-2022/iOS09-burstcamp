@@ -20,8 +20,8 @@ final class SignUpBlogViewModel {
 
     struct Output {
         let validateBlogAddress: AnyPublisher<Bool, Never>
-        let signUpWithNextButton: AnyPublisher<User, FirestoreError>
-        let signUpWithSkipButton: AnyPublisher<User, FirestoreError>
+        let signUpWithNextButton: AnyPublisher<Bool, FirestoreError>
+        let signUpWithSkipButton: AnyPublisher<Bool, FirestoreError>
     }
 
     func transform(input: Input) -> Output {
@@ -37,17 +37,25 @@ final class SignUpBlogViewModel {
             .flatMap { _ in
                 return FireFunctionsManager.blogTitle(link: self.blogAddress).eraseToAnyPublisher()
             }
-            .mapError { _ in FirestoreError.noDataError }
+            .mapError { _ in FirestoreError.setDataError }
             .flatMap { title in
                 let user = self.createUser(blogURL: self.blogAddress, blogTitle: title)
                 return FirestoreUser.save(user: user).eraseToAnyPublisher()
             }
+            .map { _ -> Bool in
+                LogInManager.shared.signInToFirebase(token: LogInManager.shared.token)
+                return true
+            }
             .eraseToAnyPublisher()
 
         let signUpWithSkipButton = input.skipConfirmDidTap
-            .flatMap { _ in
+            .flatMap { _ -> AnyPublisher<User, FirestoreError> in
                 let user = self.createUser(blogURL: "", blogTitle: "")
                 return FirestoreUser.save(user: user).eraseToAnyPublisher()
+            }
+            .map { _  -> Bool in
+                LogInManager.shared.signInToFirebase(token: LogInManager.shared.token)
+                return true
             }
             .eraseToAnyPublisher()
 

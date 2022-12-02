@@ -61,8 +61,13 @@ extension UIViewController {
             preferredStyle: .alert
         )
 
-        alertActions.forEach { alertAction in
-            sheet.addAction(alertAction)
+        if alertActions.isEmpty {
+            let confirmAction = UIAlertAction(title: "확인", style: .default)
+            sheet.addAction(confirmAction)
+        } else {
+            alertActions.forEach { alertAction in
+                sheet.addAction(alertAction)
+            }
         }
 
         present(sheet, animated: true)
