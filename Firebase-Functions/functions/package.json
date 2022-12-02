@@ -16,6 +16,7 @@
   "main": "index.js",
   "dependencies": {
     "@mozilla/readability": "^0.4.2",
+    "crypto-js": "^4.1.1",
     "firebase-admin": "^11.3.0",
     "firebase-functions": "^4.1.0",
     "jsdom": "^20.0.3",
