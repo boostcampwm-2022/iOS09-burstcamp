@@ -28,7 +28,7 @@ final class MyPageEditViewController: UIViewController {
     private var cancelBag = Set<AnyCancellable>()
 
     var coordinatorPublisher = PassthroughSubject<TabBarCoordinatorEvent, Never>()
-    var profileImageViewDidEdit = PassthroughSubject<String, Never>()
+    var imagePickerPublisher = PassthroughSubject<UIImage?, Never>()
 
     private lazy var phpickerConfiguration: PHPickerConfiguration = {
         var configuration = PHPickerConfiguration()
@@ -81,13 +81,13 @@ final class MyPageEditViewController: UIViewController {
     private func bind() {
 
         let input = MyPageEditViewModel.Input(
-            profileImageViewDidEdit: profileImageViewDidEdit,
-            nickNameTextFieldDidEdit: myPageEditView.nickNameTextField.textPublisher,
-            blogLinkFieldDidEdit: myPageEditView.blogLinkTextField.textPublisher,
-            finishEditButtonDidTap: myPageEditView.finishEditButton.tapPublisher
+            imagePickerPublisher: imagePickerPublisher,
+            nickNameTextFieldDidEdit: myPageEditView.nickNameTextFieldTextPublisher,
+            blogLinkFieldDidEdit: myPageEditView.blogLinkTextFieldTextPublisher,
+            finishEditButtonDidTap: myPageEditView.finishEditButtonTapPublisher
         )
 
-        let output = viewModel.transform(input: input, cancelBag: &cancelBag)
+        let output = viewModel.transform(input: input)
         output.currentUserInfo
             .sink { userInfo in
                 self.myPageEditView.updateCurrentUserInfo(user: userInfo)
@@ -108,7 +108,7 @@ final class MyPageEditViewController: UIViewController {
             }
             .store(in: &cancelBag)
 
-        myPageEditView.cameraButton.tapPublisher
+        myPageEditView.cameraButtonTapPublisher
             .sink { [weak self] _ in
                 guard let self = self else { return }
                 self.present(self.phpickerViewController, animated: true)
@@ -125,9 +125,11 @@ extension MyPageEditViewController: PHPickerViewControllerDelegate {
         picker.dismiss(animated: true)
         if let itemProvider = results.first?.itemProvider,
            itemProvider.canLoadObject(ofClass: UIImage.self) {
-            itemProvider.loadObject(ofClass: UIImage.self) { image, error in
+            itemProvider.loadObject(ofClass: UIImage.self) { image, _ in
                 DispatchQueue.main.async {
-                    self.myPageEditView.profileImageView.image = image as? UIImage
+                    let image = image as? UIImage
+                    self.myPageEditView.profileImageView.image = image
+                    self.imagePickerPublisher.send(image)
                 }
             }
         }

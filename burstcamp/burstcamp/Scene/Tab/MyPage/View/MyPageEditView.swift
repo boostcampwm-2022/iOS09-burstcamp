@@ -24,7 +24,7 @@ final class MyPageEditView: UIView {
     )?
         .withTintColor(.dynamicWhite, renderingMode: .alwaysOriginal)
 
-    lazy var cameraButton = UIButton().then {
+    private lazy var cameraButton = UIButton().then {
         $0.setImage(cameraIcon, for: .normal)
         $0.backgroundColor = .main
         $0.layer.borderWidth = 1
@@ -34,17 +34,17 @@ final class MyPageEditView: UIView {
         $0.contentHorizontalAlignment = .center
     }
 
-    private lazy var nickNameLabel = UILabel().then {
+    private let nickNameLabel = UILabel().then {
         $0.text = "닉네임"
         $0.textColor = .dynamicBlack
         $0.font = .bold14
     }
 
-    let nickNameTextField = DefaultTextField(
+    private let nickNameTextField = DefaultTextField(
         placeholder: "닉네임을 입력해주세요."
     )
 
-    private lazy var blogLinkLabel = UILabel().then {
+    private let blogLinkLabel = UILabel().then {
         $0.text = "블로그 주소"
         $0.textColor = .dynamicBlack
         $0.font = .bold14
@@ -55,7 +55,7 @@ final class MyPageEditView: UIView {
         spacing: Constant.space8
     )
 
-    let blogLinkTextField = DefaultTextField(
+    private let blogLinkTextField = DefaultTextField(
         placeholder: "블로그 주소를 입력해주세요."
     )
 
@@ -74,7 +74,12 @@ final class MyPageEditView: UIView {
         spacing: Constant.space48
     )
 
-    lazy var finishEditButton = DefaultButton(title: "수정완료")
+    private let finishEditButton = DefaultButton(title: "수정완료")
+
+    lazy var cameraButtonTapPublisher = cameraButton.tapPublisher
+    lazy var nickNameTextFieldTextPublisher = nickNameTextField.textPublisher
+    lazy var blogLinkTextFieldTextPublisher = blogLinkTextField.textPublisher
+    lazy var finishEditButtonTapPublisher = finishEditButton.tapPublisher
 
     // MARK: - Initializer
 
@@ -126,11 +131,12 @@ final class MyPageEditView: UIView {
     }
 
     func updateCurrentUserInfo(user: User) {
+        profileImageView.setImage(urlString: user.profileImageURL)
         nickNameTextField.text = user.nickname
         blogLinkTextField.text = user.blogURL
         blogTitleImageLabel = DefaultImageLabel(
             icon: UIImage(systemName: "book.fill"),
-            text: "말차맛 개발공부"
+            text: user.blogTitle
         )
     }
 }
