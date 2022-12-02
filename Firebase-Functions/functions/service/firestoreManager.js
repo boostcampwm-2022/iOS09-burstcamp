@@ -1,13 +1,14 @@
 import { initializeApp, getApps } from 'firebase-admin/app';
-import { getFirestore, QuerySnapshot, Timestamp } from 'firebase-admin/firestore';
+import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { fetchContent, fetchParsedRSSList } from './feedAPI.js';
 import { logger } from 'firebase-functions';
 import { convertURL } from '../util.js';
 
-if ( !getApps().length ) initializeApp()
+if (!getApps().length) initializeApp()
 const db = getFirestore()
 const userRef = db.collection('user')
 const feedRef = db.collection('feed')
+const recommendFeedRef = db.collection('recommendFeed')
 
 export async function updateFeedDB() {
 	const userSnapshot = await userRef.get()
@@ -18,6 +19,18 @@ export async function updateFeedDB() {
 	})
 	const parsedRSSList = await fetchParsedRSSList(rssURLList)
 	parsedRSSList.forEach(parsedRSS => updateFeedDBFromSingleBlog(parsedRSS))
+}
+
+export async function updateRecommendFeedDB() {
+	await feedRef
+		.orderBy('pubDate', 'desc')
+		.limit(3)
+		.get()
+		.then((querySnapshot) => {
+			querySnapshot.docs.forEach(async (doc) => {
+				await recommendFeedRef.add(doc.data())
+			})
+		})
 }
 
 /**
