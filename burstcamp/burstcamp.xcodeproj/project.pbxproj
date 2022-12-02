@@ -133,6 +133,8 @@
 		D89AE4FB2935F1BE00446AB3 /* ValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE4FA2935F1BD00446AB3 /* ValidationTest.swift */; };
 		D89AE4FD2935F5AE00446AB3 /* FireFunctionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE4FC2935F5AE00446AB3 /* FireFunctionsManager.swift */; };
 		D89AE5012936221600446AB3 /* ScrapUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE5002936221600446AB3 /* ScrapUser.swift */; };
+		D89E48AF2939D99300744A56 /* FireStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89E48AE2939D99300744A56 /* FireStorageService.swift */; };
+		D89E48B12939D9AC00744A56 /* FireStorageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89E48B02939D9AC00744A56 /* FireStorageError.swift */; };
 		D8C3866A292B4AEF005A2563 /* OpenSourceLicenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C38669292B4AEF005A2563 /* OpenSourceLicenseViewController.swift */; };
 		D8C3866C292B4B0B005A2563 /* OpenSourceLicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3866B292B4B0B005A2563 /* OpenSourceLicenseView.swift */; };
 		D8C38672292B88DE005A2563 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C38671292B88DE005A2563 /* UserDefaultsManager.swift */; };
@@ -140,6 +142,7 @@
 		D8C38676292B8DB6005A2563 /* DarkmodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C38675292B8DB6005A2563 /* DarkmodeManager.swift */; };
 		D8C3AA2929305C05008EE77C /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3AA2829305C05008EE77C /* HTTPHeader.swift */; };
 		D8E02D6B292C981C00C1E59B /* AuthCoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E02D6A292C981C00C1E59B /* AuthCoordinatorEvent.swift */; };
+		D8E979CA293A6D430092EBF6 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E979C9293A6D430092EBF6 /* Alert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -274,6 +277,8 @@
 		D89AE4FA2935F1BD00446AB3 /* ValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationTest.swift; sourceTree = "<group>"; };
 		D89AE4FC2935F5AE00446AB3 /* FireFunctionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireFunctionsManager.swift; sourceTree = "<group>"; };
 		D89AE5002936221600446AB3 /* ScrapUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapUser.swift; sourceTree = "<group>"; };
+		D89E48AE2939D99300744A56 /* FireStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStorageService.swift; sourceTree = "<group>"; };
+		D89E48B02939D9AC00744A56 /* FireStorageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStorageError.swift; sourceTree = "<group>"; };
 		D8C38669292B4AEF005A2563 /* OpenSourceLicenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSourceLicenseViewController.swift; sourceTree = "<group>"; };
 		D8C3866B292B4B0B005A2563 /* OpenSourceLicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSourceLicenseView.swift; sourceTree = "<group>"; };
 		D8C38671292B88DE005A2563 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
@@ -281,6 +286,7 @@
 		D8C38675292B8DB6005A2563 /* DarkmodeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkmodeManager.swift; sourceTree = "<group>"; };
 		D8C3AA2829305C05008EE77C /* HTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
 		D8E02D6A292C981C00C1E59B /* AuthCoordinatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinatorEvent.swift; sourceTree = "<group>"; };
+		D8E979C9293A6D430092EBF6 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -404,6 +410,7 @@
 				D89AE4E32933AEE900446AB3 /* ImageCacheError.swift */,
 				143216552935C3490034DE9F /* FirebaseError.swift */,
 				D8576F2F293779C4002885FE /* FirestoreError.swift */,
+				D89E48B02939D9AC00744A56 /* FireStorageError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -727,6 +734,7 @@
 				D8576F31293779D4002885FE /* UserManager.swift */,
 				D8576F33293779E2002885FE /* FirestoreUser.swift */,
 				D89AE4FC2935F5AE00446AB3 /* FireFunctionsManager.swift */,
+				D89E48AE2939D99300744A56 /* FireStorageService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -740,6 +748,7 @@
 				D84C812D292E590300C984E8 /* MyPageEditValidationResult.swift */,
 				D8C3AA2829305C05008EE77C /* HTTPHeader.swift */,
 				D8576F3529378F50002885FE /* URLRegularExpression.swift */,
+				D8E979C9293A6D430092EBF6 /* Alert.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -1070,6 +1079,8 @@
 				D84452F0292CA57D008E811B /* MyPageEditViewController.swift in Sources */,
 				D84452FC292DB7DE008E811B /* CellIndexPath.swift in Sources */,
 				D88295EB292A43CD005B4273 /* FireStoreConfiguration.swift in Sources */,
+				1432165329359A960034DE9F /* HomeFireStore.swift in Sources */,
+				D8E979CA293A6D430092EBF6 /* Alert.swift in Sources */,
 				D84452E7292C9A54008E811B /* TabBarCoordinatorEvent.swift in Sources */,
 				B50A27E429279F5D00DF3E1F /* APIKey.swift in Sources */,
 				B50A27ED29279F5D00DF3E1F /* NormalFeedCell.swift in Sources */,
@@ -1077,6 +1088,7 @@
 				141344D6292F801100187B86 /* Date+FormatString.swift in Sources */,
 				D89AE4FD2935F5AE00446AB3 /* FireFunctionsManager.swift in Sources */,
 				D8494D462927C97E008157F1 /* MyPageView.swift in Sources */,
+				D89E48AF2939D99300744A56 /* FireStorageService.swift in Sources */,
 				D8494D562927D6EB008157F1 /* DefaultBadgeView.swift in Sources */,
 				3B061FE7292A1F9600BFA71D /* SignUpBlogView.swift in Sources */,
 				D88295FE292A4459005B4273 /* URLSessionService.swift in Sources */,
@@ -1111,6 +1123,7 @@
 				143185F8292B5C88008CE459 /* ContainCollectionView.swift in Sources */,
 				B5DAD67B292E4C6800C4A126 /* FeedDetailViewController.swift in Sources */,
 				D84452EC292CA55F008E811B /* MyPageEditView.swift in Sources */,
+				D89E48B12939D9AC00744A56 /* FireStorageError.swift in Sources */,
 				D8494D522927D086008157F1 /* MyPageProfileView.swift in Sources */,
 				141344DB292F82BE00187B86 /* Feed.swift in Sources */,
 				3B061FDF2928E90400BFA71D /* SignUpCamperIDView.swift in Sources */,
