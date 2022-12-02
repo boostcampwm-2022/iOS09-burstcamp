@@ -92,6 +92,7 @@ final class LogInManager {
             UserManager.shared.userUUID = self.userUUID
             UserManager.shared.nickname = nickname
             self.logInPublisher.send(.moveToDomainScreen)
+            return
         }
 
         FirestoreUser.fetch(userUUID: self.userUUID)
