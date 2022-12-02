@@ -53,8 +53,7 @@ final class HomeView: UIView, ContainCollectionView {
         addSubview(collectionView)
         collectionView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide.snp.top)
-            $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
 
@@ -75,16 +74,10 @@ final class HomeView: UIView, ContainCollectionView {
                 heightDimension: .fractionalHeight(1.0)
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            let itemInset = Constant.Cell.recommendMargin.cgFloat
-            item.contentInsets = NSDirectionalEdgeInsets(
-                top: itemInset,
-                leading: itemInset,
-                bottom: itemInset,
-                trailing: itemInset
-            )
+            item.contentInsets = self.setItemInset(feedCellType: feedCellType)
 
-            let groupWidth = self.groupWidth(feedCellType: feedCellType)
-            let groupHeight = self.groupHeight(feedCellType: feedCellType)
+            let groupWidth = self.setGroupWidth(feedCellType: feedCellType)
+            let groupHeight = self.setGroupHeight(feedCellType: feedCellType)
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: groupWidth,
                 heightDimension: groupHeight
@@ -100,16 +93,14 @@ final class HomeView: UIView, ContainCollectionView {
             section.contentInsets = NSDirectionalEdgeInsets(
                 top: .zero,
                 leading: .zero,
-                bottom: Constant.space24.cgFloat,
+                bottom: Constant.space32.cgFloat,
                 trailing: .zero
             )
             section.orthogonalScrollingBehavior = self.orthogonalMode(feedCellType: feedCellType)
             section.boundarySupplementaryItems = self.sectionHeader(feedCellType: feedCellType)
             section.visibleItemsInvalidationHandler = { [weak self] item, offset, environment in
                 guard let self = self else { return }
-                self.carousel(
-                    item: item, offset: offset, environment: environment, itemInset: itemInset
-                )
+                self.carousel(item: item, offset: offset, environment: environment)
             }
             return section
         }
@@ -120,13 +111,13 @@ final class HomeView: UIView, ContainCollectionView {
     private func carousel(
         item: [NSCollectionLayoutVisibleItem],
         offset: CGPoint,
-        environment: NSCollectionLayoutEnvironment,
-        itemInset: CGFloat
+        environment: NSCollectionLayoutEnvironment
     ) {
         guard let itemSize = item.first?.frame.width,
               let section = item.first?.indexPath.section,
               section == 0
         else { return }
+        let itemInset = Constant.Cell.recommendMargin.cgFloat
         let contentSize = itemSize + itemInset * 2
         let screenWidth = environment.container.contentSize.width
         let startOffsetX = -((screenWidth - contentSize) / 2)
@@ -150,7 +141,28 @@ final class HomeView: UIView, ContainCollectionView {
         }
     }
 
-    private func groupWidth(feedCellType: FeedCellType) -> NSCollectionLayoutDimension {
+    private func setItemInset(feedCellType: FeedCellType) -> NSDirectionalEdgeInsets {
+        switch feedCellType {
+        case .recommend:
+            let itemInset = Constant.Cell.recommendMargin.cgFloat
+            return NSDirectionalEdgeInsets(
+                top: itemInset,
+                leading: itemInset,
+                bottom: itemInset,
+                trailing: itemInset
+            )
+        case .normal:
+            let itemInset = Constant.Padding.horizontal.cgFloat
+            return NSDirectionalEdgeInsets(
+                top: 0,
+                leading: itemInset,
+                bottom: 0,
+                trailing: itemInset
+            )
+        }
+    }
+
+    private func setGroupWidth(feedCellType: FeedCellType) -> NSCollectionLayoutDimension {
         switch feedCellType {
         case .recommend:
             return NSCollectionLayoutDimension.fractionalWidth(0.85)
@@ -159,7 +171,7 @@ final class HomeView: UIView, ContainCollectionView {
         }
     }
 
-    private func groupHeight(feedCellType: FeedCellType) -> NSCollectionLayoutDimension {
+    private func setGroupHeight(feedCellType: FeedCellType) -> NSCollectionLayoutDimension {
         switch feedCellType {
         case .recommend:
             return NSCollectionLayoutDimension.fractionalWidth(0.5)
@@ -180,9 +192,9 @@ final class HomeView: UIView, ContainCollectionView {
     -> [NSCollectionLayoutBoundarySupplementaryItem] {
         switch feedCellType {
         case .recommend:
-            let paddingHorizontal: CGFloat = 32
-            let paddingVertical: CGFloat = 24
-            let headerHeight = 80 + paddingVertical * 2
+            let horizontalPadding = Constant.space32.cgFloat
+            let verticalPadding = Constant.space16.cgFloat
+            let headerHeight = 80 + verticalPadding * 2
             let headerSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
                 heightDimension: .absolute(headerHeight)
@@ -194,9 +206,9 @@ final class HomeView: UIView, ContainCollectionView {
             )
             header.contentInsets = NSDirectionalEdgeInsets(
                 top: 0,
-                leading: paddingHorizontal,
+                leading: horizontalPadding,
                 bottom: 0,
-                trailing: paddingHorizontal
+                trailing: horizontalPadding
             )
             return [header]
         case .normal:

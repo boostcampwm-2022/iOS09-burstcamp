@@ -14,7 +14,7 @@ class DefaultUserInfoView: UIStackView {
     private lazy var profileImageView = UIImageView().then {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = Constant.Image.profileSmall.cgFloat / 2
-        $0.image = UIImage(systemName: "square.fill")
+        $0.image = UIImage(named: "AppIcon")
         $0.contentMode = .scaleAspectFill
     }
 
@@ -62,6 +62,7 @@ extension DefaultUserInfoView {
         DispatchQueue.main.async {
             self.nameLabel.text = user.nickname
         }
+        profileImageView.setImage(urlString: user.profileImageURL)
         badgeStackView.updateView(user: user)
     }
 
@@ -69,6 +70,7 @@ extension DefaultUserInfoView {
         DispatchQueue.main.async {
             self.nameLabel.text = feedWriter.nickname
         }
+        profileImageView.setImage(urlString: feedWriter.profileImageURL)
         badgeStackView.updateView(feedWriter: feedWriter)
     }
 }

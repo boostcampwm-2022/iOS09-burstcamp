@@ -81,8 +81,7 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
         var controller: UIViewController
         switch page {
         case .home:
-            let homeFireStore = HomeFireStoreService()
-            let homeViewModel = HomeViewModel(homeFireStore: homeFireStore)
+            let homeViewModel = HomeViewModel()
             controller = HomeViewController(viewModel: homeViewModel)
         case .bookmark:
             let scrapPageViewModel = ScrapPageViewModel()

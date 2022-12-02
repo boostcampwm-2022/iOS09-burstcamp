@@ -22,6 +22,7 @@ final class HomeViewController: UIViewController {
 
     private var viewModel: HomeViewModel
     private var cancelBag = Set<AnyCancellable>()
+    private let paginationPublisher = PassthroughSubject<Void, Never>()
 
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
@@ -72,11 +73,14 @@ final class HomeViewController: UIViewController {
 
         let input = HomeViewModel.Input(
             viewDidLoad: viewDidLoadJust,
-            viewRefresh: refreshControl.isRefreshPublisher
+            viewRefresh: refreshControl.isRefreshPublisher,
+            pagination: paginationPublisher.eraseToAnyPublisher()
         )
 
         let output = viewModel.transform(input: input)
+
         output.fetchResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] fetchResult in
                 switch fetchResult {
                 case .fetchSuccess:
@@ -87,6 +91,10 @@ final class HomeViewController: UIViewController {
                 }
             }
             .store(in: &cancelBag)
+    }
+
+    private func paginateFeed() {
+        paginationPublisher.send(Void())
     }
 }
 
@@ -99,10 +107,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        // TODO: ViewModel의 data count로 바꿔줘야함
         let feedCellType = FeedCellType(index: section)
         switch feedCellType {
-        case .recommend: return Constant.recommendFeed * 3
+        case .recommend: return viewModel.recommendFeedData.count * 3
         case .normal: return viewModel.normalFeedData.count
         case .none: return 0
         }
@@ -123,9 +130,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             else {
                 return UICollectionViewCell()
             }
-            // TODO : 유저 도메인에 따른 컬러 설정
-            let colors = [UIColor.customOrange, UIColor.customGreen, UIColor.customYellow]
-            cell.backgroundColor = colors[indexPath.row % Constant.recommendFeed]
+            let index = indexPath.row % 3
+            let feed = viewModel.recommendFeedData[index]
+            cell.updateView(with: feed)
             return cell
         case .normal:
             guard let cell = collectionView.dequeueReusableCell(
@@ -137,7 +144,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             let index = indexPath.row
             let feed = viewModel.normalFeedData[index]
-            cell.updateFeedCell(feed: feed)
+            cell.updateFeedCell(with: feed)
             return cell
         case .none:
             return UICollectionViewCell()
@@ -170,5 +177,11 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         //        let viewModel = FeedDetailViewModel(feed: Feed(camperName: "", camperDomain: "", camperNumber: 7, camperID: "", blogUUID: "", title: "", pubDate: Date(), url: "https://luen.tistory.com/204", thumbnail: "", content: ""))
         let viewController = FeedDetailViewController(viewModel: viewModel)
         navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.isOverTarget() {
+            paginateFeed()
+        }
     }
 }
