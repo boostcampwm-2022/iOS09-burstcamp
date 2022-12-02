@@ -72,8 +72,8 @@ final class LogInManager {
                 return self.requestGithubUserInfo(token: accessToken)
             }
             .map { $0.login }
-            .flatMap { name -> AnyPublisher<GithubMembership, NetworkError> in
-                nickname = name
+            .flatMap { nickname -> AnyPublisher<GithubMembership, NetworkError> in
+                UserManager.shared.nickname = nickname
                 return self.getOrganizationMembership(nickname: nickname, token: self.token)
             }
             .receive(on: DispatchQueue.main)
@@ -90,7 +90,6 @@ final class LogInManager {
     func isSignedUp(token: String, nickname: String) {
         if self.userUUID.isEmpty {
             UserManager.shared.userUUID = self.userUUID
-            UserManager.shared.nickname = nickname
             self.logInPublisher.send(.moveToDomainScreen)
             return
         }
@@ -102,7 +101,6 @@ final class LogInManager {
                     return
                 case .failure:
                     UserManager.shared.userUUID = self.userUUID
-                    UserManager.shared.nickname = nickname
                     self.logInPublisher.send(.moveToDomainScreen)
                 }
             } receiveValue: { _ in
