@@ -178,7 +178,7 @@ final class FeedDetailViewModel {
     private func requestGetFeedWriter(uuid: String) async throws -> [String: Any] {
         try await withCheckedThrowingContinuation { continuation in
             Firestore.firestore()
-                .collection("User")
+                .collection("user")
                 .document(uuid)
                 .getDocument { documentSnapShot, error in
                     if let error = error {
