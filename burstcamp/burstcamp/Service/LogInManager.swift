@@ -25,6 +25,11 @@ final class LogInManager {
     }
 
     var token: String = ""
+    var nickname: String = ""
+
+    var domain: Domain = .iOS
+    var camperID: String = ""
+    var blodURL: String = ""
 
     private var githubAPIKey: Github? {
         guard let serviceInfoURL = Bundle.main.url(
@@ -62,18 +67,16 @@ final class LogInManager {
     }
 
     func logIn(code: String) {
-//        var token: String = ""
-        var nickname: String = ""
-
         requestGithubAccessToken(code: code)
             .map { $0.accessToken }
             .flatMap { accessToken -> AnyPublisher<GithubUser, NetworkError> in
                 self.token = accessToken
+                self.signInToFirebase(token: accessToken)
                 return self.requestGithubUserInfo(token: accessToken)
             }
             .map { $0.login }
             .flatMap { nickname -> AnyPublisher<GithubMembership, NetworkError> in
-                UserManager.shared.nickname = nickname
+                self.nickname = nickname
                 return self.getOrganizationMembership(nickname: nickname, token: self.token)
             }
             .receive(on: DispatchQueue.main)
@@ -82,14 +85,20 @@ final class LogInManager {
                     self.logInPublisher.send(.notCamper)
                 }
             } receiveValue: { _ in
-                self.isSignedUp(token: self.token, nickname: nickname)
+                self.isSignedUp(token: self.token, nickname: self.nickname)
             }
             .store(in: &cancelBag)
     }
 
+    func signOut() -> Bool {
+        guard (try? Auth.auth().signOut()) != nil
+                // TODO: firebaseDB에서 삭제
+        else { return false }
+        return true
+    }
+
     func isSignedUp(token: String, nickname: String) {
         if self.userUUID.isEmpty {
-            UserManager.shared.userUUID = self.userUUID
             self.logInPublisher.send(.moveToDomainScreen)
             return
         }
@@ -100,11 +109,10 @@ final class LogInManager {
                 case .finished:
                     return
                 case .failure:
-                    UserManager.shared.userUUID = self.userUUID
                     self.logInPublisher.send(.moveToDomainScreen)
                 }
             } receiveValue: { _ in
-                self.signInToFirebase(token: token)
+                self.logInPublisher.send(.moveToTabBarScreen)
             }
             .store(in: &cancelBag)
     }
@@ -118,8 +126,6 @@ final class LogInManager {
             else {
                 return
             }
-
-            self.logInPublisher.send(.moveToTabBarScreen)
         }
     }
 

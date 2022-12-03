@@ -28,16 +28,16 @@ final class SignUpCamperIDViewModel {
         let validateCamperID = input.camperIDTextFieldDidEdit
             .map { id in
                 self.camperID = id
-                UserManager.shared.camperID = id
-                return id.count == 3 ? true : false
+                LogInManager.shared.camperID = "\(LogInManager.shared.domain.rawValue)" + id
+                return id.count == 3 && id.allSatisfy { $0.isNumber } ? true : false
             }
             .eraseToAnyPublisher()
 
         let moveToBlogView = input.nextButtonDidTap
 
-        let domainText = Just(UserManager.shared.domain.rawValue)
+        let domainText = Just(LogInManager.shared.domain.rawValue)
 
-        let representingDomainText = Just(UserManager.shared.domain.representingDomain)
+        let representingDomainText = Just(LogInManager.shared.domain.representingDomain)
 
         return Output(
             validateCamperID: validateCamperID,

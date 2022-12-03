@@ -10,8 +10,6 @@ import Foundation
 
 final class SignUpDomainViewModel {
 
-    var domain: Domain = .iOS
-
     struct Input {
         let webButtonTouchDown: AnyPublisher<Void, Never>
         let aosButtonTouchDown: AnyPublisher<Void, Never>
@@ -33,45 +31,39 @@ final class SignUpDomainViewModel {
     func transform(input: Input) -> Output {
         let webButtonChangeColor = input.webButtonTouchDown
             .map { _ -> Domain in
-                self.domain = .web
                 return .web
             }
             .eraseToAnyPublisher()
 
         let aosButtonChangeColor = input.aosButtonTouchDown
             .map { _ -> Domain in
-                self.domain = .android
                 return .android
             }
             .eraseToAnyPublisher()
 
         let iosButtonChangeColor = input.iosButtonTouchDown
             .map { _ -> Domain in
-                self.domain = .iOS
                 return .iOS
             }
             .eraseToAnyPublisher()
 
         let webSelected = input.webButtonDidTap
             .map { _ -> Domain in
-                self.domain = .web
-                UserManager.shared.domain = .web
+                LogInManager.shared.domain = .web
                 return .web
             }
             .eraseToAnyPublisher()
 
         let aosSelected = input.aosButtonDidTap
             .map { _ -> Domain in
-                self.domain = .android
-                UserManager.shared.domain = .android
+                LogInManager.shared.domain = .android
                 return .android
             }
             .eraseToAnyPublisher()
 
         let iosSelected = input.iosButtonDidTap
             .map { _ -> Domain in
-                self.domain = .iOS
-                UserManager.shared.domain = .iOS
+                LogInManager.shared.domain = .iOS
                 return .iOS
             }
             .eraseToAnyPublisher()
