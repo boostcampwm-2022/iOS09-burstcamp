@@ -21,7 +21,7 @@ final class LogInManager {
     var logInPublisher = PassthroughSubject<AuthCoordinatorEvent, Never>()
 
     var userUUID: String {
-        return Auth.auth().currentUser?.uid ?? "1432"
+        return Auth.auth().currentUser?.uid ?? ""
     }
 
     private var githubAPIKey: Github? {
