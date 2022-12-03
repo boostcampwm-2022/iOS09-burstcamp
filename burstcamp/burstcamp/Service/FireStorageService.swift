@@ -33,8 +33,12 @@ final class FireStorageService {
                     if error != nil {
                         promise(.failure(.failDownloadURL))
                     }
-                    let imageURL = url?.absoluteString ?? ""
-                    promise(.success(imageURL))
+                    if let url = url {
+                        let imageURL = url.absoluteString
+                        promise(.success(imageURL))
+                    } else {
+                        promise(.failure(.failDownloadURL))
+                    }
                 }
             }
         }

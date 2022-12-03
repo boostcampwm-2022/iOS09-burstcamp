@@ -89,7 +89,7 @@ final class MyPageEditViewModel {
             return Just(UserManager.shared.user.profileImageURL).eraseToAnyPublisher()
         }
         return FireStorageService.save(image: profileImage)
-            .catch { _ in Just("") }
+            .catch { _ in Just(UserManager.shared.user.profileImageURL) }
             .eraseToAnyPublisher()
     }
 
