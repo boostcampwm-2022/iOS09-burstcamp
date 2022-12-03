@@ -28,7 +28,7 @@ final class SignUpCamperIDViewModel {
         let validateCamperID = input.camperIDTextFieldDidEdit
             .map { id in
                 self.camperID = id
-                LogInManager.shared.camperID = "\(LogInManager.shared.domain.rawValue)" + id
+                LogInManager.shared.camperID = "\(LogInManager.shared.domain.representing)" + id
                 return id.count == 3 && id.allSatisfy { $0.isNumber } ? true : false
             }
             .eraseToAnyPublisher()
@@ -37,7 +37,7 @@ final class SignUpCamperIDViewModel {
 
         let domainText = Just(LogInManager.shared.domain.rawValue)
 
-        let representingDomainText = Just(LogInManager.shared.domain.representingDomain)
+        let representingDomainText = Just(LogInManager.shared.domain.representing)
 
         return Output(
             validateCamperID: validateCamperID,

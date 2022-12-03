@@ -20,7 +20,7 @@ enum Domain: String, Codable {
         }
     }
 
-    var representingDomain: String {
+    var representing: String {
         switch self {
         case .iOS: return "S"
         case .android: return "K"
