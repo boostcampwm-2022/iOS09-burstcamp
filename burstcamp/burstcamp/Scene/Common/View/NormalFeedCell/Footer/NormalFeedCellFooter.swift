@@ -9,11 +9,11 @@ import UIKit
 
 class NormalFeedCellFooter: UIView {
 
-    private lazy var scriptButton = UIButton().then {
-        let image = UIImage(systemName: "bookmark")
-        $0.setImage(image, for: .normal)
-        $0.tintColor = UIColor.main
-    }
+    lazy var scrapButton = ToggleButton(
+        image: UIImage(systemName: "bookmark.fill"),
+        onColor: .main,
+        offColor: .systemGray4
+    )
 
     private lazy var countLabel = UILabel().then {
         $0.textColor = UIColor.systemGray2
@@ -37,14 +37,14 @@ class NormalFeedCellFooter: UIView {
     }
 
     private func configureUI() {
-        addSubViews([scriptButton, countLabel, timeLabel])
+        addSubViews([scrapButton, countLabel, timeLabel])
         configureScriptButton()
         configureCountLabel()
         configureTimeLabel()
     }
 
     private func configureScriptButton() {
-        scriptButton.snp.makeConstraints {
+        scrapButton.snp.makeConstraints {
             $0.width.height.equalTo(Constant.Button.script)
             $0.leading.equalToSuperview()
             $0.centerY.equalToSuperview()
@@ -55,7 +55,7 @@ class NormalFeedCellFooter: UIView {
         countLabel.snp.makeConstraints {
             $0.height.equalToSuperview()
             $0.centerY.equalToSuperview()
-            $0.leading.equalTo(scriptButton.snp.trailing).offset(Constant.space2)
+            $0.leading.equalTo(scrapButton.snp.trailing).offset(Constant.space2)
         }
     }
 

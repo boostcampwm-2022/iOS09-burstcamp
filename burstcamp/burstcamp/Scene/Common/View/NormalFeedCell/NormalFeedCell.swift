@@ -5,6 +5,7 @@
 //  Created by youtak on 2022/11/16.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -13,15 +14,25 @@ final class NormalFeedCell: UICollectionViewCell {
 
     private lazy var userInfoView = DefaultUserInfoView()
     private lazy var mainView = NormalFeedCellMain()
-    private lazy var footerView = NormalFeedCellFooter()
+    lazy var footerView = NormalFeedCellFooter()
+
+    var indexPath: IndexPath?
+    let stateIndexPublisher = PassthroughSubject<StateIndexPath, Never>()
+    var cancelBag = Set<AnyCancellable>()
 
     override init(frame: CGRect) {
         super.init(frame: .zero)
         configureUI()
+        bind()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cancelBag.removeAll()
     }
 
     private func configureUI() {
@@ -58,6 +69,17 @@ final class NormalFeedCell: UICollectionViewCell {
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(Constant.Cell.normalFooterHeight)
         }
+    }
+
+    private func bind() {
+        footerView
+            .scrapButton
+            .statePublisher
+            .sink { state in
+                let stateIndexPath = StateIndexPath(state: state, indexPath: self.indexPath)
+                self.stateIndexPublisher.send(stateIndexPath)
+            }
+            .store(in: &cancelBag)
     }
 }
 
