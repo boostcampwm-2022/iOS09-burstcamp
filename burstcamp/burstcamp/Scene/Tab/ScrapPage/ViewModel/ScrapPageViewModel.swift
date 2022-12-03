@@ -73,18 +73,31 @@ final class ScrapPageViewModel {
     private func fetchFeed(output: Output) {
         initScrapFeedUUID()
         Task { [weak self] in
-            for _ in 0..<requestFeedNumber {
-                let feedUUID = willRequestFeedID.popLast()
-                guard let feedUUID = feedUUID else { return }
-                let feed = try await requestFeed(uuid: feedUUID)
-                print(feed)
-                self?.scarpFeedData.append(feed)
-            }
+            let scrapFeeds = try await fetchFeedArray()
+            self?.scarpFeedData = scrapFeeds
             output.fetchResult.send(.fetchSuccess)
         }
     }
 
-    private func fetchWriter() {
+    private func fetchFeedArray() async throws -> [Feed] {
+        try await withThrowingTaskGroup(of: Feed.self, body: { taskGroup in
+            var scrapFeeds: [Feed] = []
+
+            for _ in 0..<requestFeedNumber {
+                let feedUUID = willRequestFeedID.popLast()
+                guard let feedUUID = feedUUID else { break }
+                taskGroup.addTask {
+                    let feed = try await self.requestFeed(uuid: feedUUID)
+                    return feed
+                }
+            }
+
+            for try await feed in taskGroup {
+                scrapFeeds.append(feed)
+            }
+
+            return scrapFeeds
+        })
     }
 
     private func paginateFeed(output: Output) {
