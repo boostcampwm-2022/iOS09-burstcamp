@@ -10,6 +10,8 @@ import Foundation
 
 import FirebaseFirestore
 
+typealias FeedWithOrder = (order: Int, feed: Feed)
+
 final class ScrapPageViewModel {
 
     var scarpFeedData: [Feed] = []
@@ -70,6 +72,17 @@ final class ScrapPageViewModel {
         willRequestFeedID = getUserScarpUUID()
     }
 
+    private func getLatestFeedUUID() -> [String] {
+        var result: [String] = []
+        for _ in 0..<requestFeedNumber {
+            let feedUUID = willRequestFeedID.popLast()
+            if let feedUUID = feedUUID {
+                result.append(feedUUID)
+            }
+        }
+        return result
+    }
+
     private func fetchFeed(output: Output) {
         initScrapFeedUUID()
         Task { [weak self] in
@@ -80,15 +93,14 @@ final class ScrapPageViewModel {
     }
 
     private func fetchFeedArray() async throws -> [Feed] {
-        try await withThrowingTaskGroup(of: Feed.self, body: { taskGroup in
-            var scrapFeeds: [Feed] = []
+        try await withThrowingTaskGroup(of: FeedWithOrder.self, body: { taskGroup in
+            let requestFeedUUIDs = getLatestFeedUUID()
+            var scrapFeeds: [FeedWithOrder] = []
 
-            for _ in 0..<requestFeedNumber {
-                let feedUUID = willRequestFeedID.popLast()
-                guard let feedUUID = feedUUID else { break }
+            requestFeedUUIDs.enumerated().forEach { index, feedUUID in
                 taskGroup.addTask {
                     let feed = try await self.requestFeed(uuid: feedUUID)
-                    return feed
+                    return FeedWithOrder(order: index, feed: feed)
                 }
             }
 
@@ -96,7 +108,11 @@ final class ScrapPageViewModel {
                 scrapFeeds.append(feed)
             }
 
-            return scrapFeeds
+            let result = scrapFeeds
+                .sorted { $0.order < $1.order }
+                .map { $0.feed }
+
+            return result
         })
     }
 
