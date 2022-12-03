@@ -9,6 +9,16 @@ import UIKit
 
 final class DefaultImageLabel: UILabel {
 
+    private let defaultIconBounds = CGRect(
+        x: Constant.zero,
+        y: Constant.spaceMinus2,
+        width: Constant.space16,
+        height: Constant.space12
+    )
+
+    private let defaultColor = UIColor.systemGray2
+    private let defaultFont = UIFont.regular12
+
     init(
         icon: UIImage?,
         text: String,
@@ -24,12 +34,13 @@ final class DefaultImageLabel: UILabel {
         textColor: UIColor = .systemGray2
     ) {
         super.init(frame: frame)
-        attributedText = attributeString(icon: icon,
-                                         iconColor: iconColor,
-                                         iconBounds: iconBounds,
-                                         text: text,
-                                         font: font,
-                                         textColor: textColor
+        attributedText = attributeString(
+            icon: icon,
+            iconColor: iconColor,
+            iconBounds: iconBounds,
+            text: text,
+            font: font,
+            textColor: textColor
         )
     }
 
@@ -98,5 +109,16 @@ final class DefaultImageLabel: UILabel {
             range: NSRange(location: 0, length: text.count)
         )
         return textAttributeString
+    }
+
+    func updateBlogImageLabel(user: User) {
+        let attributeString = attributeString(
+            icon: UIImage(systemName: "book.fill"),
+            iconColor: defaultColor,
+            iconBounds: defaultIconBounds,
+            text: user.blogTitle,
+            textColor: defaultColor
+        )
+        attributedText = attributeString
     }
 }

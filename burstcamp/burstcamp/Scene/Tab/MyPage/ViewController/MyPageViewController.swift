@@ -23,6 +23,7 @@ final class MyPageViewController: UIViewController {
 
     var coordinatorPublisher = PassthroughSubject<TabBarCoordinatorEvent, Never>()
     var toastMessagePublisher = PassthroughSubject<String, Never>()
+    var withDrawalPublisher = PassthroughSubject<Void, Never>()
 
     // MARK: - Initializer
 
@@ -66,15 +67,14 @@ final class MyPageViewController: UIViewController {
 
     private func bind() {
         let input = MyPageViewModel.Input(
-            notificationIsOn: myPageView.notificationSwitch.statePublisher,
-            darkModeValueChanged: myPageView.darkModeSwitch.statePublisher
-                .compactMap { Appearance.appearance(isOn: $0) }
-                .eraseToAnyPublisher()
+            notificationDidSwitch: myPageView.notificationSwitchStatePublisher,
+            darkModeDidSwitch: myPageView.darkModeSwitchStatePublisher,
+            withdrawDidTap: withDrawalPublisher
         )
 
         let output = viewModel.transform(input: input, cancelBag: &cancelBag)
 
-        output.userInitialValue
+        output.updateUserValue
             .sink { user in
                 self.myPageView.updateView(user: user)
             }
@@ -82,11 +82,23 @@ final class MyPageViewController: UIViewController {
 
         output.darkModeInitialValue
             .sink { appearance in
-                self.myPageView.setDarkModeSwitch(appearance: appearance)
+                self.myPageView.updateDarkModeSwitch(appearance: appearance)
             }
             .store(in: &cancelBag)
 
-        myPageView.myInfoEditButton.tapPublisher
+        output.appVersionValue
+            .sink { appVersion in
+                self.myPageView.updateAppVersionLabel(appVersion: appVersion)
+            }
+            .store(in: &cancelBag)
+
+        output.moveToLoginFlow
+            .sink { _ in
+                self.moveToAuthFlow()
+            }
+            .store(in: &cancelBag)
+
+        myPageView.myInfoEditButtonTapPublisher
             .sink { _ in self.moveToMyPageEditScreen() }
             .store(in: &cancelBag)
 
@@ -100,6 +112,23 @@ final class MyPageViewController: UIViewController {
     private func setCollectionViewDelegate() {
         myPageView.setCollectionViewDelegate(viewController: self)
     }
+
+    private func showConfirmWithdrawalAlert() {
+        let okAction = UIAlertAction(
+            title: Alert.yes,
+            style: .default) { _ in
+                self.withDrawalPublisher.send()
+            }
+        let cancelAction = UIAlertAction(
+            title: Alert.no,
+            style: .cancel
+        )
+        showAlert(
+            title: Alert.withdrawalTitleMessage,
+            message: Alert.withdrawalMessage,
+            alertActions: [okAction, cancelAction]
+        )
+    }
 }
 
 // MARK: - UICollectionViewDelegate
@@ -111,11 +140,9 @@ extension MyPageViewController: UICollectionViewDelegate {
         didSelectItemAt indexPath: IndexPath
     ) {
         let cellIndexPath = CellIndexPath(indexPath: (indexPath.section, indexPath.row))
-        // TODO: 기능 추가
         switch cellIndexPath {
         case SettingCell.withDrawal.cellIndexPath:
-            // TODO: 탈퇴 alert
-            moveToAuthFlow()
+            showConfirmWithdrawalAlert()
         case SettingCell.openSource.cellIndexPath:
             moveToOpenSourceScreen()
         default: break

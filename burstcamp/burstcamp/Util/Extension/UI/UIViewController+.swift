@@ -40,7 +40,7 @@ extension UIViewController {
         )
         toastMessageLabel.textAlignment = .center
         toastMessageLabel.alpha = 1.0
-        toastMessageLabel.backgroundColor = .main
+        toastMessageLabel.backgroundColor = .systemGray2
         toastMessageLabel.layer.cornerRadius = Constant.CornerRadius.radius8.cgFloat
         toastMessageLabel.clipsToBounds = true
 

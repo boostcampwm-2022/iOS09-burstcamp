@@ -11,18 +11,18 @@ final class MyPageProfileView: UIView {
 
     // MARK: - Properties
 
-    private lazy var profileImageView = DefaultProfileImageView(
+    private let profileImageView = DefaultProfileImageView(
         imageSize: Constant.Image.profileMedium
     )
 
-    private lazy var nicknameLabel = UILabel().then {
+    private let nicknameLabel = UILabel().then {
         $0.textColor = .dynamicBlack
         $0.font = .extraBold16
     }
 
-    private lazy var badgeView = DefaultBadgeView()
+    private let badgeView = DefaultBadgeView()
 
-    private lazy var blogTitleLabel = DefaultImageLabel(
+    private let blogTitleLabel = DefaultImageLabel(
         icon: UIImage(systemName: "book.fill"),
         text: "블로그를 등록해주세요."
     )
@@ -66,15 +66,10 @@ final class MyPageProfileView: UIView {
     }
 
     func updateView(user: User) {
+        print("얼마나 마이페이지가 업데이트 되나?", #function)
         profileImageView.setImage(urlString: user.profileImageURL)
-        print(#function)
-        print(user)
-        print(user.nickname)
         nicknameLabel.text = user.nickname
         badgeView.updateView(user: user)
-        blogTitleLabel = DefaultImageLabel(
-            icon: UIImage(systemName: "book.fill"),
-            text: user.blogTitle
-        )
+        blogTitleLabel.updateBlogImageLabel(user: user)
     }
 }

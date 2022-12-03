@@ -24,7 +24,7 @@ final class DefaultTextField: UITextField {
         layer.borderColor = UIColor.systemGray5.cgColor
         layer.cornerRadius = Constant.CornerRadius.radius8.cgFloat
         font = .regular16
-        clearButtonMode = .whileEditing
+        clearButtonMode = .always
         addHorizontalPadding()
     }
 
@@ -40,8 +40,6 @@ final class DefaultTextField: UITextField {
             height: Int(frame.height)
         ))
         leftView = paddingView
-        rightView = paddingView
         leftViewMode = .always
-        rightViewMode = .always
     }
 }

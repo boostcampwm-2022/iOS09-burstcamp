@@ -7,76 +7,65 @@
 
 import Combine
 import Foundation
-
-// TODO: 임시유저삭제
-let user = User(
-    userUUID: "",
-    nickname: "하늘이",
-    profileImageURL: "https://avatars.githubusercontent.com/u/39167842?v=4",
-    domain: .iOS,
-    camperID: "S057",
-    ordinalNumber: 7,
-    blogURL: "https://luen.tistory.com",
-    blogTitle: "성이 하씨고 이름이 늘이",
-    scrapFeedUUIDs: [],
-    signupDate: Date(),
-    isPushOn: false
-)
+import UIKit.UIImage
 
 final class MyPageEditViewModel {
 
-    private var nickNameValidation = true
-    private var blogLinkValidation = true
+    private var profileImage: UIImage?
+    private var nickname = UserManager.shared.user.nickname
+    private var blogURL = UserManager.shared.user.blogURL
+    private var cancelBag = Set<AnyCancellable>()
 
     struct Input {
-        let profileImageViewDidEdit: PassthroughSubject<String, Never>
+        let imagePickerPublisher: PassthroughSubject<UIImage?, Never>
         let nickNameTextFieldDidEdit: AnyPublisher<String, Never>
         let blogLinkFieldDidEdit: AnyPublisher<String, Never>
         let finishEditButtonDidTap: AnyPublisher<Void, Never>
     }
 
     struct Output {
-        var currentUserInfo = CurrentValueSubject<User, Never>(user)
+        var currentUserInfo = CurrentValueSubject<User, Never>(
+            UserManager.shared.user
+        )
         var validationResult = PassthroughSubject<MyPageEditValidationResult, Never>()
     }
 
-    func transform(input: Input, cancelBag: inout Set<AnyCancellable>) -> Output {
-        configureInput(input: input, cancelBag: &cancelBag)
-        return createOutput(from: input, cancelBag: &cancelBag)
+    func transform(input: Input) -> Output {
+        configureInput(input: input)
+        return createOutput(from: input)
     }
 
-    private func configureInput(input: Input, cancelBag: inout Set<AnyCancellable>) {
+    private func configureInput(input: Input) {
 
-        // TODO: profileImageViewDidEdit 유저 프로필 url DB, Storage 업데이트
-        // input.profileImageViewDidEdit
-
-//        input.profileImageViewDidEdit
-//            .sink { profileImageURL in
-//            }
-//            .store(in: &cancelBag)
+        input.imagePickerPublisher
+            .sink { profileImage in
+                self.profileImage = profileImage
+            }
+            .store(in: &cancelBag)
 
         input.nickNameTextFieldDidEdit
-            .sink { nickName in
-                self.nickNameValidation = Validation.validate(nickname: nickName)
+            .sink { nickname in
+                self.nickname = nickname
             }
             .store(in: &cancelBag)
 
         input.blogLinkFieldDidEdit
-            .sink { blogLink in
-                self.blogLinkValidation = Validation.validate(blogLink: blogLink)
+            .sink { blogURL in
+                self.blogURL = blogURL
             }
             .store(in: &cancelBag)
     }
 
-    private func createOutput(
-        from input: Input,
-        cancelBag: inout Set<AnyCancellable>
-    ) -> Output {
+    private func createOutput(from input: Input) -> Output {
         let output = Output()
 
         input.finishEditButtonDidTap
             .sink { _ in
-                output.validationResult.send(self.validate())
+                let validationResult = self.validate()
+                output.validationResult.send(validationResult)
+                if case .validationOK = validationResult {
+                    self.saveUser()
+                }
             }
             .store(in: &cancelBag)
 
@@ -84,12 +73,40 @@ final class MyPageEditViewModel {
     }
 
     private func validate() -> MyPageEditValidationResult {
-        if nickNameValidation && blogLinkValidation {
+        let nicknameValidation = Validation.validate(nickname: nickname)
+        let blogLinkValidation = Validation.validate(blogLink: blogURL)
+        if nicknameValidation && blogLinkValidation {
             return .validationOK
-        } else if nickNameValidation {
+        } else if nicknameValidation {
             return .blogLinkError
         } else {
-            return .nickNameError
+            return .nicknameError
         }
+    }
+
+    private func profilemageURL() -> AnyPublisher<String, Never> {
+        guard let profileImage = profileImage else {
+            return Just(UserManager.shared.user.profileImageURL).eraseToAnyPublisher()
+        }
+        return FireStorageService.save(image: profileImage)
+            .catch { _ in Just(UserManager.shared.user.profileImageURL) }
+            .eraseToAnyPublisher()
+    }
+
+    private func saveUser() {
+        FireFunctionsManager
+            .blogTitle(link: blogURL)
+            .catch { _ in Just("") }
+            .combineLatest(profilemageURL())
+            .sink { blogTitle, profileImageURL in
+                FirestoreUser.update(
+                    userUUID: UserManager.shared.user.userUUID,
+                    nickname: self.nickname,
+                    profileImageURL: profileImageURL,
+                    blogURL: self.blogURL,
+                    blogTitle: blogTitle
+                )
+            }
+            .store(in: &cancelBag)
     }
 }

@@ -14,9 +14,9 @@ final class MyPageView: UIView, ContainCollectionView {
     private typealias DataSource = UICollectionViewDiffableDataSource<SettingSection, SettingCell>
     private typealias Snapshot = NSDiffableDataSourceSnapshot<SettingSection, SettingCell>
 
-    private lazy var myPageProfileView = MyPageProfileView()
+    private let myPageProfileView = MyPageProfileView()
 
-    let myInfoEditButton = DefaultButton(
+    private let myInfoEditButton = DefaultButton(
         title: "내 정보 수정하기",
         font: .bold14
     )
@@ -27,15 +27,24 @@ final class MyPageView: UIView, ContainCollectionView {
     )
     private var settingDataSource: DataSource!
 
-    lazy var darkModeSwitch = UISwitch().then {
+    private let darkModeSwitch = UISwitch().then {
         $0.onTintColor = .main
         $0.tintColor = .main
     }
 
-    lazy var notificationSwitch = UISwitch().then {
+    private let notificationSwitch = UISwitch().then {
         $0.onTintColor = .main
         $0.tintColor = .main
     }
+
+    private let appVersionLabel = UILabel().then {
+        $0.font = .regular16
+        $0.textColor = .systemGray2
+    }
+
+    lazy var myInfoEditButtonTapPublisher = myInfoEditButton.tapPublisher
+    lazy var darkModeSwitchStatePublisher = darkModeSwitch.statePublisher
+    lazy var notificationSwitchStatePublisher = notificationSwitch.statePublisher
 
     // MARK: - Initializer
 
@@ -108,10 +117,15 @@ final class MyPageView: UIView, ContainCollectionView {
 
     func updateView(user: User) {
         myPageProfileView.updateView(user: user)
+        notificationSwitch.setOn(user.isPushOn, animated: true)
     }
 
-    func setDarkModeSwitch(appearance: Appearance) {
-        darkModeSwitch.isOn = appearance.switchMode
+    func updateDarkModeSwitch(appearance: Appearance) {
+        darkModeSwitch.setOn(appearance.switchMode, animated: true)
+    }
+
+    func updateAppVersionLabel(appVersion: String) {
+        appVersionLabel.text = appVersion
     }
 }
 
@@ -188,14 +202,9 @@ extension MyPageView {
             cell.accessories = [.outlineDisclosure(
                 displayed: .always,
                 options: .init(tintColor: .systemGray2)
-                // TODO: Handler
-                // actionHandler:
             )]
         case .appVersion:
-            guard let appVersion = Bundle.main
-                .infoDictionary?["CFBundleShortVersionString"] as? String
-            else { break }
-            cell.accessories = [.label(text: appVersion)]
+            cell.accessories = [.customView(configuration: labelAccessoryConfiguration())]
         default: break
         }
     }
@@ -222,13 +231,19 @@ extension MyPageView {
             switchButton = darkModeSwitch
         case .notification:
             switchButton = notificationSwitch
-            // TODO: 알림
-            switchButton.isOn = false
         default: break
         }
 
         return UICellAccessory.CustomViewConfiguration(
             customView: switchButton,
+            placement: .trailing()
+        )
+    }
+
+    private func labelAccessoryConfiguration()
+    -> UICellAccessory.CustomViewConfiguration {
+        return UICellAccessory.CustomViewConfiguration(
+            customView: appVersionLabel,
             placement: .trailing()
         )
     }
