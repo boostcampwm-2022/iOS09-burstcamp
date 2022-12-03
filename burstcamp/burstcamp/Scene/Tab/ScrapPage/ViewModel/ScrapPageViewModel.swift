@@ -42,13 +42,13 @@ final class ScrapPageViewModel {
 
         input.viewDidLoad
             .sink { [weak self] _ in
-                self?.fetchFeed(output: output)
+                self?.fetchScrapFeed(output: output)
             }
             .store(in: &cancelBag)
 
         input.viewRefresh
             .sink { [weak self] _ in
-                self?.fetchFeed(output: output)
+                self?.fetchScrapFeed(output: output)
             }
             .store(in: &cancelBag)
 
@@ -83,7 +83,7 @@ final class ScrapPageViewModel {
         return result
     }
 
-    private func fetchFeed(output: Output) {
+    private func fetchScrapFeed(output: Output) {
         initScrapFeedUUID()
         Task {
             do {
@@ -91,7 +91,7 @@ final class ScrapPageViewModel {
                 isFetching = true
                 canFetchMoreFeed = true
 
-                let scrapFeeds = try await fetchFeedArray()
+                let scrapFeeds = try await fetchFeeds()
                 scarpFeedData = scrapFeeds
                 output.fetchResult.send(.fetchSuccess)
 
@@ -113,7 +113,7 @@ final class ScrapPageViewModel {
                 isFetching = true
                 canFetchMoreFeed = true
 
-                let scrapFeeds = try await fetchFeedArray()
+                let scrapFeeds = try await fetchFeeds()
                 scarpFeedData.append(contentsOf: scrapFeeds)
                 output.fetchResult.send(.fetchSuccess)
 
@@ -124,14 +124,14 @@ final class ScrapPageViewModel {
         }
     }
 
-    private func fetchFeedArray() async throws -> [Feed] {
+    private func fetchFeeds() async throws -> [Feed] {
         try await withThrowingTaskGroup(of: FeedWithOrder.self, body: { taskGroup in
             let requestFeedUUIDs = getLatestFeedUUID()
             var scrapFeeds: [FeedWithOrder] = []
 
             requestFeedUUIDs.enumerated().forEach { index, feedUUID in
                 taskGroup.addTask {
-                    let feed = try await self.requestFeed(uuid: feedUUID)
+                    let feed = try await self.fetchFeed(uuid: feedUUID)
                     return FeedWithOrder(order: index, feed: feed)
                 }
             }
@@ -148,14 +148,14 @@ final class ScrapPageViewModel {
         })
     }
 
-    private func requestFeed(uuid: String) async throws -> Feed {
-        let feedDTO = try await requestFeedDTO(uuid: uuid)
-        let feedWriter = try await requestFeedWriter(uuid: feedDTO.writerUUID)
+    private func fetchFeed(uuid: String) async throws -> Feed {
+        let feedDTO = try await fetchFeedDTO(uuid: uuid)
+        let feedWriter = try await fetchFeedWriter(uuid: feedDTO.writerUUID)
         let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
         return feed
     }
 
-    private func requestFeedDTO(uuid: String) async throws -> FeedDTO {
+    private func fetchFeedDTO(uuid: String) async throws -> FeedDTO {
         try await withCheckedThrowingContinuation({ continuation in
             Firestore.firestore()
                 .collection("Feed")
@@ -177,7 +177,7 @@ final class ScrapPageViewModel {
         })
     }
 
-    private func requestFeedWriter(uuid: String) async throws -> FeedWriter {
+    private func fetchFeedWriter(uuid: String) async throws -> FeedWriter {
         try await withCheckedThrowingContinuation({ continuation in
             Firestore.firestore()
                 .collection("User")
