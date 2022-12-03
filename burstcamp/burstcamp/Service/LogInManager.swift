@@ -92,12 +92,14 @@ final class LogInManager {
     }
 
     func signOut() {
-        guard (try? Auth.auth().signOut()) != nil else { return }
-
         Auth.auth().currentUser?.delete { error in
             if error != nil {
-                self.signInToFirebase(token: self.token)
+                return
             } else {
+                guard (try? Auth.auth().signOut()) != nil else {
+                    self.signInToFirebase(token: self.token)
+                    return
+                }
                 FirestoreUser.delete(user: UserManager.shared.user)
             }
         }
