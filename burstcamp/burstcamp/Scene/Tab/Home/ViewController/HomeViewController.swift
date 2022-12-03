@@ -173,8 +173,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
     // FeedDetail Test용
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let viewModel = FeedDetailViewModel(feedUUID: "3818882029078639")
-        //        let viewModel = FeedDetailViewModel(feed: Feed(camperName: "", camperDomain: "", camperNumber: 7, camperID: "", blogUUID: "", title: "", pubDate: Date(), url: "https://luen.tistory.com/204", thumbnail: "", content: ""))
+        let feed = viewModel.normalFeedData[indexPath.row]
+        let viewModel = FeedDetailViewModel(feed: feed)
         let viewController = FeedDetailViewController(viewModel: viewModel)
         navigationController?.pushViewController(viewController, animated: true)
     }

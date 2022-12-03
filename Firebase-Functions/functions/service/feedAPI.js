@@ -9,7 +9,7 @@ import { convertURL } from '../util.js';
  * @returns 
  */
 export async function fetchParsedRSSList(urls) {
-  return await Promise.all(urls.map(async (url) => await fetchParsedRSS(url)));
+  return await Promise.all(urls.map(async (url) => await fetchParsedRSS(url)))
 }
 
 /**
@@ -18,7 +18,7 @@ export async function fetchParsedRSSList(urls) {
  * @returns 
  */
 export async function fetchParsedRSS(rssURL) {
-  const urlComponent = encodeURIComponent(rssURL);
+  const urlComponent = encodeURIComponent(rssURL)
 
   const requestURL = `https://api.rss2json.com/v1/api.json?rss_url=${urlComponent}`
   const options = {
@@ -35,7 +35,7 @@ export async function fetchParsedRSS(rssURL) {
 }
 
 export async function getBlogTitle(blogURL) {
-  const rssURL = await convertURL(blogURL)
+  const rssURL = convertURL(blogURL)
 	const rss = await fetchParsedRSS(rssURL)
   return rss.feed.title
 }
@@ -75,8 +75,8 @@ function makeReadable(dom) {
 function makeCompatibleWithMobile(dom) {
   const codeTags = dom.querySelectorAll('code')
   codeTags.forEach(code => {
-    code.innerHTML = code.innerHTML.replace(/\n/g, "<br />");
-    code.innerHTML = code.innerHTML.replace(/    /g, "\&emsp\;");
+    code.innerHTML = code.innerHTML.replace(/\n/g, "<br />")
+    code.innerHTML = code.innerHTML.replace(/    /g, "\&emsp\;")
   })
   return dom
 }

@@ -91,7 +91,7 @@ extension FeedDetailView {
 
     func configure(with feed: Feed) {
         userInfoStackView.updateView(feedWriter: feed.writer)
-        titleLabel.text = feed.feedTitle
+        titleLabel.text = feed.title
         blogTitleLabel.text = feed.writer.blogTitle
         pubDateLabel.text = feed.pubDate.monthDateFormatString
         contentView.loadFormattedHTMLString(feed.content)
