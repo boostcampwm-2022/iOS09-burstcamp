@@ -25,7 +25,7 @@ final class SignUpBlogViewModel {
     func transform(input: Input) -> Output {
         let validateBlogAddress = input.blogAddressTextFieldDidEdit
             .map { address in
-                UserManager.shared.blogURL = address
+                LogInManager.shared.blodURL = address
                 return Validation.validate(blogLink: address) ? true : false
             }
             .eraseToAnyPublisher()
@@ -33,14 +33,14 @@ final class SignUpBlogViewModel {
         let signUpWithNextButton = input.nextButtonDidTap
             .flatMap { _ in
                 return FireFunctionsManager.blogTitle(
-                    link: UserManager.shared.blogURL
+                    link: LogInManager.shared.blodURL
                 )
                 .eraseToAnyPublisher()
             }
             .mapError { _ in FirestoreError.setDataError }
             .flatMap { title in
                 let user = self.createUser(
-                    blogURL: UserManager.shared.blogURL,
+                    blogURL: LogInManager.shared.blodURL,
                     blogTitle: title
                 )
                 return FirestoreUser.save(user: user).eraseToAnyPublisher()
