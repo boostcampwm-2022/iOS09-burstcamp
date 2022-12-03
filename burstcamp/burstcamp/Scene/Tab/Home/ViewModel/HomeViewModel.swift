@@ -106,7 +106,7 @@ final class HomeViewModel {
     ) async throws -> [Feed] {
         try await withThrowingTaskGroup(of: Feed.self, body: { taskGroup in
             var normalFeeds: [Feed] = []
-            let feedDTODictionary = try await self.fetchNormalFeeds(
+            let feedDTODictionary = try await self.fetchNormalFeedDTOs(
                 lastSnapShot: lastSnapShot,
                 isPagination: isPagination
             )
