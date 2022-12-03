@@ -18,7 +18,7 @@ final class ScrapPageViewModel {
     private var willRequestFeedID: [String] = []
     var cancelBag = Set<AnyCancellable>()
 
-    private let requestFeedNumber = 5
+    private let requestFeedNumber = 7
     private var isFetching: Bool = false
     private var canFetchMoreFeed: Bool = true
 
@@ -85,10 +85,42 @@ final class ScrapPageViewModel {
 
     private func fetchFeed(output: Output) {
         initScrapFeedUUID()
-        Task { [weak self] in
-            let scrapFeeds = try await fetchFeedArray()
-            self?.scarpFeedData = scrapFeeds
-            output.fetchResult.send(.fetchSuccess)
+        Task {
+            do {
+                guard !isFetching else { return }
+                isFetching = true
+                canFetchMoreFeed = true
+
+                let scrapFeeds = try await fetchFeedArray()
+                scarpFeedData = scrapFeeds
+                output.fetchResult.send(.fetchSuccess)
+
+                isFetching = false
+            } catch {
+            isFetching = false
+            }
+        }
+    }
+
+    private func paginateFeed(output: Output) {
+        Task {
+            do {
+                guard !isFetching, canFetchMoreFeed else { return }
+                guard !willRequestFeedID.isEmpty else {
+                    canFetchMoreFeed = false
+                    return
+                }
+                isFetching = true
+                canFetchMoreFeed = true
+
+                let scrapFeeds = try await fetchFeedArray()
+                scarpFeedData.append(contentsOf: scrapFeeds)
+                output.fetchResult.send(.fetchSuccess)
+
+                isFetching = false
+            } catch {
+            isFetching = false
+            }
         }
     }
 
@@ -114,9 +146,6 @@ final class ScrapPageViewModel {
 
             return result
         })
-    }
-
-    private func paginateFeed(output: Output) {
     }
 
     private func requestFeed(uuid: String) async throws -> Feed {
