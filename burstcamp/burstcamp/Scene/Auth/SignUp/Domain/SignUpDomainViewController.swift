@@ -40,6 +40,9 @@ final class SignUpDomainViewController: UIViewController {
 
     private func bind() {
         let input = SignUpDomainViewModel.Input(
+            webButtonTouchDown: signUpDomainView.webButton.touchDownPublisher,
+            aosButtonTouchDown: signUpDomainView.aosButton.touchDownPublisher,
+            iosButtonTouchDown: signUpDomainView.iosButton.touchDownPublisher,
             webButtonDidTap: signUpDomainView.webButton.tapPublisher,
             aosButtonDidTap: signUpDomainView.aosButton.tapPublisher,
             iosButtonDidTap: signUpDomainView.iosButton.tapPublisher
@@ -47,23 +50,38 @@ final class SignUpDomainViewController: UIViewController {
 
         let output = viewModel.transform(input: input)
 
-        output.webSelected
+        output.webButtonChangeColor
             .sink { domain in
                 self.changeUI(domain: domain)
+            }
+            .store(in: &cancelBag)
+
+        output.aosButtonChangeColor
+            .sink { domain in
+                self.changeUI(domain: domain)
+            }
+            .store(in: &cancelBag)
+
+        output.iosButtonChangeColor
+            .sink { domain in
+                self.changeUI(domain: domain)
+            }
+            .store(in: &cancelBag)
+
+        output.webSelected
+            .sink { _ in
                 self.coordinatorPublisher.send(.moveToIDScreen)
             }
             .store(in: &cancelBag)
 
         output.aosSelected
-            .sink { domain in
-                self.changeUI(domain: domain)
+            .sink { _ in
                 self.coordinatorPublisher.send(.moveToIDScreen)
             }
             .store(in: &cancelBag)
 
         output.iosSelected
-            .sink { domain in
-                self.changeUI(domain: domain)
+            .sink { _ in
                 self.coordinatorPublisher.send(.moveToIDScreen)
             }
             .store(in: &cancelBag)

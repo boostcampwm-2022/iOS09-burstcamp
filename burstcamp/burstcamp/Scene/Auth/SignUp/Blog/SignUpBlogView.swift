@@ -20,14 +20,15 @@ final class SignUpBlogView: UIView {
     private lazy var subLabel: UILabel = UILabel().then {
         $0.text = "주소는 추후에 추가/수정할 수 있어요\n현재는 Tistory, Velog만 지원 중 이에요"
         $0.font = UIFont.regular12
+        $0.numberOfLines = 2
         $0.textColor = .systemGray2
     }
 
-    lazy var blogTextField: UITextField = UITextField().then {
-        $0.layer.borderWidth = 1
+    lazy var blogTextField: UITextField = DefaultTextField(
+        placeholder: "https://luen.tistory.com"
+    ).then {
         $0.keyboardType = .URL
         $0.becomeFirstResponder()
-        $0.placeholder = "https://luen.tistory.com"
         $0.inputAccessoryView = toolBar
     }
 

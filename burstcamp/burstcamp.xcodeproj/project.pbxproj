@@ -605,8 +605,8 @@
 		B50A27A329279F5D00DF3E1F /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				3B061FE0292926C800BFA71D /* SignUp */,
 				B50A27A529279F5D00DF3E1F /* LogIn */,
+				3B061FE0292926C800BFA71D /* SignUp */,
 			);
 			path = Auth;
 			sourceTree = "<group>";

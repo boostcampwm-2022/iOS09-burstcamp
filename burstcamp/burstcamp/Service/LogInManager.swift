@@ -24,6 +24,13 @@ final class LogInManager {
         return Auth.auth().currentUser?.uid ?? ""
     }
 
+    var token: String = ""
+    var nickname: String = ""
+
+    var domain: Domain = .iOS
+    var camperID: String = ""
+    var blodURL: String = ""
+
     private var githubAPIKey: Github? {
         guard let serviceInfoURL = Bundle.main.url(
             forResource: "Service-Info",
@@ -60,49 +67,57 @@ final class LogInManager {
     }
 
     func logIn(code: String) {
-        var token: String = ""
-        var nickname: String = ""
-
         requestGithubAccessToken(code: code)
             .map { $0.accessToken }
             .flatMap { accessToken -> AnyPublisher<GithubUser, NetworkError> in
-                token = accessToken
+                self.token = accessToken
+                self.signInToFirebase(token: accessToken)
                 return self.requestGithubUserInfo(token: accessToken)
             }
             .map { $0.login }
-            .flatMap { name -> AnyPublisher<GithubMembership, NetworkError> in
-                nickname = name
-                return self.getOrganizationMembership(nickname: nickname, token: token)
+            .flatMap { nickname -> AnyPublisher<GithubMembership, NetworkError> in
+                self.nickname = nickname
+                return self.getOrganizationMembership(nickname: nickname, token: self.token)
             }
             .receive(on: DispatchQueue.main)
             .sink { result in
                 if case .failure = result {
                     self.logInPublisher.send(.notCamper)
                 }
-            } receiveValue: { user in
-                self.isSignedUp(token: token, nickname: nickname)
+            } receiveValue: { _ in
+                self.isSignedUp(token: self.token, nickname: self.nickname)
             }
             .store(in: &cancelBag)
     }
 
+    func signOut() -> Bool {
+        guard (try? Auth.auth().signOut()) != nil
+                // TODO: firebaseDB에서 삭제
+        else { return false }
+        return true
+    }
+
     func isSignedUp(token: String, nickname: String) {
+        if self.userUUID.isEmpty {
+            self.logInPublisher.send(.moveToDomainScreen)
+            return
+        }
+
         FirestoreUser.fetch(userUUID: self.userUUID)
             .sink { result in
                 switch result {
                 case .finished:
                     return
                 case .failure:
-                    UserManager.shared.userUUID = self.userUUID
-                    UserManager.shared.nickname = nickname
                     self.logInPublisher.send(.moveToDomainScreen)
                 }
-            } receiveValue: { user in
-                self.signInToFirebase(user: user, token: token)
+            } receiveValue: { _ in
+                self.logInPublisher.send(.moveToTabBarScreen)
             }
             .store(in: &cancelBag)
     }
 
-    func signInToFirebase(user: User, token: String) {
+    func signInToFirebase(token: String) {
         let credential = GitHubAuthProvider.credential(withToken: token)
 
         Auth.auth().signIn(with: credential) { result, error in
@@ -111,8 +126,6 @@ final class LogInManager {
             else {
                 return
             }
-
-            self.logInPublisher.send(.moveToTabBarScreen)
         }
     }
 

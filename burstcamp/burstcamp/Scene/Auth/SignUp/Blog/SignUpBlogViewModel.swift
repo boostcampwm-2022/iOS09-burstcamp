@@ -10,8 +10,6 @@ import Foundation
 
 final class SignUpBlogViewModel {
 
-    var blogAddress: String = ""
-
     struct Input {
         let blogAddressTextFieldDidEdit: AnyPublisher<String, Never>
         let nextButtonDidTap: AnyPublisher<Void, Never>
@@ -27,7 +25,6 @@ final class SignUpBlogViewModel {
     func transform(input: Input) -> Output {
         let validateBlogAddress = input.blogAddressTextFieldDidEdit
             .map { address in
-                self.blogAddress = address
                 UserManager.shared.blogURL = address
                 return Validation.validate(blogLink: address) ? true : false
             }
@@ -35,17 +32,23 @@ final class SignUpBlogViewModel {
 
         let signUpWithNextButton = input.nextButtonDidTap
             .flatMap { _ in
-                return FireFunctionsManager.blogTitle(link: self.blogAddress).eraseToAnyPublisher()
+                return FireFunctionsManager.blogTitle(
+                    link: UserManager.shared.blogURL
+                )
+                .eraseToAnyPublisher()
             }
-            .mapError { _ in FirestoreError.noDataError }
+            .mapError { _ in FirestoreError.setDataError }
             .flatMap { title in
-                let user = self.createUser(blogURL: self.blogAddress, blogTitle: title)
+                let user = self.createUser(
+                    blogURL: UserManager.shared.blogURL,
+                    blogTitle: title
+                )
                 return FirestoreUser.save(user: user).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
 
         let signUpWithSkipButton = input.skipConfirmDidTap
-            .flatMap { _ in
+            .flatMap { _ -> AnyPublisher<User, FirestoreError> in
                 let user = self.createUser(blogURL: "", blogTitle: "")
                 return FirestoreUser.save(user: user).eraseToAnyPublisher()
             }
@@ -60,11 +63,11 @@ final class SignUpBlogViewModel {
 
     private func createUser(blogURL: String, blogTitle: String) -> User {
         return User(
-            userUUID: UserManager.shared.userUUID,
-            nickname: UserManager.shared.nickname,
-            profileImageURL: "https://github.com/\(UserManager.shared.nickname).png",
-            domain: UserManager.shared.domain,
-            camperID: UserManager.shared.camperID,
+            userUUID: LogInManager.shared.userUUID,
+            nickname: LogInManager.shared.nickname,
+            profileImageURL: "https://github.com/\(LogInManager.shared.nickname).png",
+            domain: LogInManager.shared.domain,
+            camperID: LogInManager.shared.camperID,
             ordinalNumber: 7,
             blogURL: blogURL,
             blogTitle: blogTitle,
