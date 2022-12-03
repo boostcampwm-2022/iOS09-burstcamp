@@ -18,7 +18,7 @@ final class ScrapPageViewModel {
     private var willRequestFeedID: [String] = []
     var cancelBag = Set<AnyCancellable>()
 
-    private let requestFeedNumber = 7
+    private let requestFeedCount = 7
     private var isFetching: Bool = false
     private var canFetchMoreFeed: Bool = true
 
