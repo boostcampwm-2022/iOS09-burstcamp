@@ -21,7 +21,7 @@ final class FireStorageService {
                 .eraseToAnyPublisher()
         }
 
-        let filename = UserManager.shared.userUUID
+        let filename = UserManager.shared.user.userUUID
         let ref = storagePath.reference(withPath: "/images/\(filename)")
 
         return Future<String, FireStorageError> { promise in

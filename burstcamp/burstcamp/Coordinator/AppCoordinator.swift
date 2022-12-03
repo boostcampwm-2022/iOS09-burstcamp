@@ -47,6 +47,7 @@ final class AppCoordinator: AppCoordinatorProtocol {
     }
 
     func showTabBarFlow() {
+        UserManager.shared.start()
         let tabBarCoordinator = TabBarCoordinator(navigationController: navigationController)
         tabBarCoordinator.coordinatorPublisher
             .sink { coordinatorEvent in

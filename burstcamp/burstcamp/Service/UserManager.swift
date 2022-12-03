@@ -15,26 +15,21 @@ final class UserManager {
 
     static let shared = UserManager()
 
-    var userUpdatePublisher = PassthroughSubject<User, Never>()
-    var user = User(dictionary: [:])
-
-    // TODO: 삭제 예정
-    var userUUID: String = ""
-    var nickname: String = ""
-    var profileImageURL: String = ""
-    var domain: Domain = .iOS
-    var camperID: String = ""
-    var ordinalNumber: Int = 7
-    var blogURL: String = ""
-    var blogTitle: String = ""
-    var scrapFeedUUIDs: [String] = []
-    var signupDate: Date = Date()
-    var isPushOn: Bool = false
-
+    private(set) var user = User(dictionary: [:])
     private let userPath = Firestore.firestore().collection(FireStoreCollection.user.path)
+    let userUpdatePublisher = PassthroughSubject<User, Never>()
 
-    private init() {
+    private init() {}
+
+    func start() {
+        userByKeyChain()
         addUserListener()
+    }
+
+    private func userByKeyChain() {
+        if let user = KeyChainManager.readUser() {
+            self.user = user
+        }
     }
 
     private func addUserListener() {
