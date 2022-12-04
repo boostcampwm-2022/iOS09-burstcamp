@@ -122,10 +122,9 @@ final class FeedDetailViewModel {
     }
 
     private func requestDeleteFeedScrapUser(uuid: String) async throws {
-        let path = ["feed", uuid, "scrapUserUUIDs", "userUUID"].joined(separator: "/")
         try await withCheckedThrowingContinuation { continuation in
-            Firestore.firestore()
-                .document(path)
+            FirestoreCollection.scrapUser(feedUUID: feedUUID).reference
+                .document(UserManager.shared.user.userUUID)
                 .delete { error in
                     if let error = error {
                         continuation.resume(throwing: error)
@@ -137,12 +136,12 @@ final class FeedDetailViewModel {
     }
 
     private func requestAppendFeedScrapUser(uuid: String) async throws {
-        let path = ["feed", uuid, "scrapUserUUIDs", "userUUID"].joined(separator: "/")
+        let userUUID = UserManager.shared.user.userUUID
         try await withCheckedThrowingContinuation { continuation in
-            Firestore.firestore()
-                .document(path)
+            FirestoreCollection.scrapUser(feedUUID: feedUUID).reference
+                .document(userUUID)
                 .setData([
-                    "userUUID": "userUUID",
+                    "userUUID": userUUID,
                     "scrapDate": Timestamp(date: Date())
                 ]) { error in
                     if let error = error {
@@ -156,8 +155,7 @@ final class FeedDetailViewModel {
 
     private func requestGetFeed(uuid: String) async throws -> [String: Any] {
         try await withCheckedThrowingContinuation { continuation in
-            Firestore.firestore()
-                .collection("feed")
+            FirestoreCollection.feed.reference
                 .document(uuid)
                 .getDocument { documentSnapshot, error in
                     if let error = error {
@@ -177,8 +175,7 @@ final class FeedDetailViewModel {
 
     private func requestGetFeedWriter(uuid: String) async throws -> [String: Any] {
         try await withCheckedThrowingContinuation { continuation in
-            Firestore.firestore()
-                .collection("user")
+            FirestoreCollection.user.reference
                 .document(uuid)
                 .getDocument { documentSnapShot, error in
                     if let error = error {

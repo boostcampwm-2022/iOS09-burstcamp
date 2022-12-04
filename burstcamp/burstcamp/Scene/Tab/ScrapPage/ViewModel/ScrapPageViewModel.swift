@@ -157,8 +157,7 @@ final class ScrapPageViewModel {
 
     private func fetchFeedDTO(uuid: String) async throws -> FeedDTO {
         try await withCheckedThrowingContinuation({ continuation in
-            Firestore.firestore()
-                .collection("Feed")
+            FirestoreCollection.feed.reference
                 .document(uuid)
                 .getDocument { documentSnapShot, error in
                     if let error = error {
@@ -179,8 +178,7 @@ final class ScrapPageViewModel {
 
     private func fetchFeedWriter(uuid: String) async throws -> FeedWriter {
         try await withCheckedThrowingContinuation({ continuation in
-            Firestore.firestore()
-                .collection("User")
+            FirestoreCollection.user.reference
                 .document(uuid)
                 .getDocument { documentSnapShot, error in
                     if let error = error {

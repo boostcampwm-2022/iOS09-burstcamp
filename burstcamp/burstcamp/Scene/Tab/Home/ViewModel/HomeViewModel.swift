@@ -168,14 +168,12 @@ final class HomeViewModel {
 
     private func createQuery(lastSnapShot: QueryDocumentSnapshot?, isPagination: Bool) -> Query {
         if let lastSnapShot = lastSnapShot, isPagination {
-            return Firestore.firestore()
-                .collection("Feed")
+            return FirestoreCollection.feed.reference
                 .order(by: "pubDate", descending: true)
                 .limit(to: 5)
                 .start(afterDocument: lastSnapShot)
         } else {
-            return Firestore.firestore()
-                .collection("Feed")
+            return FirestoreCollection.feed.reference
                 .order(by: "pubDate", descending: true)
                 .limit(to: 5)
         }
@@ -208,8 +206,7 @@ final class HomeViewModel {
 
     private func fetchRecommendFeedDTOs() async throws -> [[String: Any]] {
         try await withCheckedThrowingContinuation({ continuation in
-            Firestore.firestore()
-                .collection("RecommendFeed")
+            FirestoreCollection.recommendFeed.reference
                 .getDocuments { querySnapShot, error in
                     if let error = error {
                         continuation.resume(throwing: error)
@@ -230,8 +227,7 @@ final class HomeViewModel {
 
     private func fetchFeedWriter(uuid: String) async throws -> [String: Any] {
         try await withCheckedThrowingContinuation({ continuation in
-            Firestore.firestore()
-                .collection("User")
+            FirestoreCollection.user.reference
                 .document(uuid)
                 .getDocument { documentSnapShot, error in
                     if let error = error {
