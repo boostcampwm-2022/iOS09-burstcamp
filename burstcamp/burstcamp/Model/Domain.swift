@@ -19,7 +19,7 @@ enum Domain: String, Codable {
         case .web: return UIColor.customYellow
         }
     }
-    
+
     var brightColor: UIColor {
         switch self {
         case .iOS: return UIColor.brightOrange

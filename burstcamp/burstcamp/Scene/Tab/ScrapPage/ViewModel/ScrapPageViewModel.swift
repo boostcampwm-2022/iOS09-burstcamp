@@ -74,7 +74,7 @@ final class ScrapPageViewModel {
 
     private func getLatestFeedUUID() -> [String] {
         var result: [String] = []
-        for _ in 0..<requestFeedNumber {
+        for _ in 0..<requestFeedCount {
             let feedUUID = willRequestFeedID.popLast()
             if let feedUUID = feedUUID {
                 result.append(feedUUID)
