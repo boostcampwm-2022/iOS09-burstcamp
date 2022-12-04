@@ -23,20 +23,26 @@ final class NormalFeedCellViewModel {
     }
 
     struct Input {
-        let cellStateIndexPath: AnyPublisher<Bool, Never>
+        let cellScrapState: AnyPublisher<Bool, Never>
     }
 
     struct Output {
+        let cellScrapButtonInitialState: Just<Bool>
         let cellScrapButtonToggle: AnyPublisher<Void, Never>
         let cellScrapButtonIsEnabled: AnyPublisher<Bool, Never>
     }
 
     func transform(input: Input) -> Output {
-        input.cellStateIndexPath
-            .sink { state in
+        let user = UserManager.shared.user
+        let isScraped = user.scrapFeedUUIDs.contains(feedData.feedUUID)
+
+        input.cellScrapState
+            .sink { [weak self] state in
+                guard let self = self else { return }
                 let feedUUID = self.feedData.feedUUID
-                let userUUID = UserManager.shared.user.userUUID
+                let userUUID = user.userUUID
                 self.updateFeed(userUUID: userUUID, feedUUID: feedUUID, state: state)
+                print(self.feedData)
                 self.scrapButtonIsEnabled.send(false)
             }
             .store(in: &cancelBag)
@@ -47,7 +53,8 @@ final class NormalFeedCellViewModel {
 
         dbUpdateResult
             .filter { $0 != nil }
-            .sink { _ in
+            .sink { [weak self] _ in
+                guard let self = self else { return }
                 self.scrapButtonIsEnabled.send(true)
             }
             .store(in: &cancelBag)
@@ -58,6 +65,7 @@ final class NormalFeedCellViewModel {
             .eraseToAnyPublisher()
 
         return Output(
+            cellScrapButtonInitialState: Just<Bool>(isScraped),
             cellScrapButtonToggle: scrapButtonToggle,
             cellScrapButtonIsEnabled: scrapButtonIsEnabled.eraseToAnyPublisher()
         )
@@ -142,7 +150,7 @@ extension NormalFeedCellViewModel {
         update: FeedUpdate
     ) async throws {
         let path = ["User", userUUID].joined(separator: "/")
-        let updateData = getUpdateData(update: update)
+        let updateData = getUpdateData(update: update, feedUUID: feedUUID)
         try await withCheckedThrowingContinuation { continuation in
             Firestore.firestore()
                 .document(path)
@@ -156,12 +164,12 @@ extension NormalFeedCellViewModel {
         } as Void
     }
 
-    private func getUpdateData(update: FeedUpdate) -> [AnyHashable: Any] {
+    private func getUpdateData(update: FeedUpdate, feedUUID: String) -> [AnyHashable: Any] {
         switch update {
         case .append:
-            return ["scrapFeedUUIDs": FieldValue.arrayUnion(["feedUUID"])]
+            return ["scrapFeedUUIDs": FieldValue.arrayUnion([feedUUID])]
         case .remove:
-            return ["scrapFeedUUIDs": FieldValue.arrayRemove(["feedUUID"])]
+            return ["scrapFeedUUIDs": FieldValue.arrayRemove([feedUUID])]
         }
     }
 }

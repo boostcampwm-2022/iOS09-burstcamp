@@ -16,9 +16,9 @@ final class NormalFeedCell: UICollectionViewCell {
     private lazy var mainView = NormalFeedCellMain()
     lazy var footerView = NormalFeedCellFooter()
 
-    var viewModel: NormalFeedCellViewModel!
+    private var viewModel: NormalFeedCellViewModel!
 
-    var cancelBag = Set<AnyCancellable>()
+    private var cancelBag = Set<AnyCancellable>()
 
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -70,15 +70,29 @@ final class NormalFeedCell: UICollectionViewCell {
         }
     }
 
-    func bind() {
+    func configure(with viewModel: NormalFeedCellViewModel) {
+        self.viewModel = viewModel
+        bind()
+    }
+
+    private func bind() {
 
         let scrapButton = footerView.scrapButton
 
         let input = NormalFeedCellViewModel.Input(
-            cellStateIndexPath: scrapButton.statePublisher
+            cellScrapState: scrapButton.statePublisher
         )
 
         let output = viewModel.transform(input: input)
+
+        output.cellScrapButtonInitialState
+            .receive(on: DispatchQueue.main)
+            .sink { isScraped in
+                if isScraped {
+                    scrapButton.toggleOn()
+                }
+            }
+            .store(in: &cancelBag)
 
         output.cellScrapButtonToggle
             .receive(on: DispatchQueue.main)

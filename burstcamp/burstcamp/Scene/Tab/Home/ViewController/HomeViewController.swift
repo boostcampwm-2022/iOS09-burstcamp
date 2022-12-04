@@ -144,9 +144,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             let index = indexPath.row
             let feed = viewModel.normalFeedData[index]
-            let cellViewModel = viewModel.viewModelForCell(at: index)
-            cell.viewModel = cellViewModel
-            cell.bind()
+            cell.configure(with: viewModel.viewModelForCell(at: index))
             cell.updateFeedCell(with: feed)
 
             return cell
