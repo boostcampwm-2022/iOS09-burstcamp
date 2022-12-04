@@ -107,3 +107,12 @@ extension AppDelegate: MessagingDelegate {
         }
     }
 }
+
+// MARK: - save user in keychain
+
+extension AppDelegate {
+    func applicationWillTerminate(_ application: UIApplication) {
+        KeyChainManager.deleteUser()
+        KeyChainManager.save(user: UserManager.shared.user)
+    }
+}

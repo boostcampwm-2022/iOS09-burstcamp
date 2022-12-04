@@ -95,6 +95,7 @@
 		B5DAD681292E58BF00C4A126 /* DefaultMultilLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD680292E58BF00C4A126 /* DefaultMultilLineLabel.swift */; };
 		B5E0D94A292F631C001727F5 /* MockHTMLString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E0D949292F631C001727F5 /* MockHTMLString.swift */; };
 		B5E0D94C292F750D001727F5 /* FeedContentWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E0D94B292F750D001727F5 /* FeedContentWebView.swift */; };
+		D8095C69293B718C00964537 /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8095C68293B718C00964537 /* KeyChainManager.swift */; };
 		D84452E7292C9A54008E811B /* TabBarCoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452E6292C9A54008E811B /* TabBarCoordinatorEvent.swift */; };
 		D84452EC292CA55F008E811B /* MyPageEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452EB292CA55F008E811B /* MyPageEditView.swift */; };
 		D84452EE292CA569008E811B /* MyPageEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452ED292CA569008E811B /* MyPageEditViewModel.swift */; };
@@ -239,6 +240,7 @@
 		B5DAD680292E58BF00C4A126 /* DefaultMultilLineLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMultilLineLabel.swift; sourceTree = "<group>"; };
 		B5E0D949292F631C001727F5 /* MockHTMLString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHTMLString.swift; sourceTree = "<group>"; };
 		B5E0D94B292F750D001727F5 /* FeedContentWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedContentWebView.swift; sourceTree = "<group>"; };
+		D8095C68293B718C00964537 /* KeyChainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
 		D84452E6292C9A54008E811B /* TabBarCoordinatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinatorEvent.swift; sourceTree = "<group>"; };
 		D84452EB292CA55F008E811B /* MyPageEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditView.swift; sourceTree = "<group>"; };
 		D84452ED292CA569008E811B /* MyPageEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewModel.swift; sourceTree = "<group>"; };
@@ -738,6 +740,7 @@
 				D8576F33293779E2002885FE /* FirestoreUser.swift */,
 				D89AE4FC2935F5AE00446AB3 /* FireFunctionsManager.swift */,
 				D89E48AE2939D99300744A56 /* FireStorageService.swift */,
+				D8095C68293B718C00964537 /* KeyChainManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1082,7 +1085,6 @@
 				D84452F0292CA57D008E811B /* MyPageEditViewController.swift in Sources */,
 				D84452FC292DB7DE008E811B /* CellIndexPath.swift in Sources */,
 				D88295EB292A43CD005B4273 /* FireStoreConfiguration.swift in Sources */,
-				1432165329359A960034DE9F /* HomeFireStore.swift in Sources */,
 				D8E979CA293A6D430092EBF6 /* Alert.swift in Sources */,
 				D84452E7292C9A54008E811B /* TabBarCoordinatorEvent.swift in Sources */,
 				B50A27E429279F5D00DF3E1F /* APIKey.swift in Sources */,
@@ -1118,6 +1120,7 @@
 				B50A27FE29279F5D00DF3E1F /* Coordinator.swift in Sources */,
 				D8576F34293779E2002885FE /* FirestoreUser.swift in Sources */,
 				143185E8292B46F9008CE459 /* HomeViewModel.swift in Sources */,
+				D8095C69293B718C00964537 /* KeyChainManager.swift in Sources */,
 				B50A27F429279F5D00DF3E1F /* SceneDelegate.swift in Sources */,
 				143185EC292B4AB8008CE459 /* ScrapPageViewModel.swift in Sources */,
 				D89AE4ED2935AA2100446AB3 /* FCMToken.swift in Sources */,
