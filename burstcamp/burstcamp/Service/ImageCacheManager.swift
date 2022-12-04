@@ -39,7 +39,7 @@ final class ImageCacheManager {
         // 3. network request
         return request(urlString: urlString, etag: nil, isDisk: isDiskCaching)
             .catch { _ in
-                Just(UIImage(systemName: "figure.play")!)
+                Just(UIImage(named: "AppIcon")!)
             }
             .eraseToAnyPublisher()
     }
