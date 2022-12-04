@@ -72,7 +72,7 @@ extension NormalFeedCellFooter {
     func updateView(feed: Feed) {
         let timeString = BCDateFormatter.relativeTimeString(for: feed.pubDate)
         DispatchQueue.main.async {
-            self.countLabel.text = "20"
+            self.countLabel.text = feed.scrapCount.description
             self.timeLabel.text = timeString
         }
     }

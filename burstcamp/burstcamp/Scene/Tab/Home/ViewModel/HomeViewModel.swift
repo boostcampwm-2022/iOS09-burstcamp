@@ -166,7 +166,8 @@ final class HomeViewModel {
                         uuid: feedDTO.writerUUID
                     )
                     let feedWriter = FeedWriter(data: feedWriterDictionary)
-                    let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
+                    let scrapCount = try await self.countFeedScrapCount(uuid: feedDTO.feedUUID)
+                    let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter,scrapCount: scrapCount)
                     return feed
                 }
             }
@@ -312,7 +313,7 @@ final class HomeViewModel {
     }
 
     private func requestDeleteFeedScrapUser(uuid: String) async throws {
-        let path = ["feed", uuid, "scrapUserUUIDs", "userUUID"].joined(separator: "/")
+        let path = ["Feed", uuid, "scrapUserUUIDs", "userUUID"].joined(separator: "/")
         try await withCheckedThrowingContinuation { continuation in
             Firestore.firestore()
                 .document(path)
@@ -327,7 +328,7 @@ final class HomeViewModel {
     }
 
     private func requestAppendFeedScrapUser(uuid: String) async throws {
-        let path = ["feed", uuid, "scrapUserUUIDs", "userUUID"].joined(separator: "/")
+        let path = ["Feed", uuid, "scrapUserUUIDs", "userUUID"].joined(separator: "/")
         try await withCheckedThrowingContinuation { continuation in
             Firestore.firestore()
                 .document(path)
@@ -342,5 +343,12 @@ final class HomeViewModel {
                     continuation.resume()
                 }
         } as Void
+    }
+
+    private func countFeedScrapCount(uuid: String) async throws -> Int {
+        let path = ["Feed", uuid, "scrapUserUUIDs"].joined(separator: "/")
+        let countQuery = Firestore.firestore().collection(path).count
+        let collectionCount = try await countQuery.getAggregation(source: .server)
+        return Int(truncating: collectionCount.count)
     }
 }

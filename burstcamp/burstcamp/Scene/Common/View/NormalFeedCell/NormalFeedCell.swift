@@ -32,7 +32,7 @@ final class NormalFeedCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        cancelBag.removeAll()
+        cancelBag = Set<AnyCancellable>()
     }
 
     private func configureUI() {

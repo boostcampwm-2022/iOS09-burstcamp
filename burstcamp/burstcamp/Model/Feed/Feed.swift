@@ -13,11 +13,11 @@ struct Feed {
     let title: String
     let pubDate: Date
     let url: String
-    let thumbnailURL: String
+   let thumbnailURL: String
     let content: String
-    let scrapCount: Int
+    var scrapCount: Int
 
-    init(feedDTO: FeedDTO, feedWriter: FeedWriter) {
+    init(feedDTO: FeedDTO, feedWriter: FeedWriter, scrapCount: Int = 0) {
         self.feedUUID = feedDTO.feedUUID
         self.writer = feedWriter
         self.title = feedDTO.title
@@ -25,6 +25,6 @@ struct Feed {
         self.url = feedDTO.url
         self.thumbnailURL = feedDTO.thumbnailURL
         self.content = feedDTO.content
-        self.scrapCount = 0
+        self.scrapCount = scrapCount
     }
 }
