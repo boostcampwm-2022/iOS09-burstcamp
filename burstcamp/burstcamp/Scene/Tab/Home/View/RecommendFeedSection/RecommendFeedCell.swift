@@ -61,6 +61,6 @@ extension RecommendFeedCell {
     func updateView(with feed: Feed) {
         titleLabel.text = feed.title
         userView.updateView(feedWriter: feed.writer)
-        backgroundColor = feed.writer.domain.color
+        backgroundColor = feed.writer.domain.brightColor
     }
 }
