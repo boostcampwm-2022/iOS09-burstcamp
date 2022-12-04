@@ -27,4 +27,14 @@ struct Feed {
         self.content = feedDTO.content
         self.scrapCount = scrapCount
     }
+
+    mutating func scrapCountUp() {
+        scrapCount += 1
+    }
+
+    mutating func scrapCountDown() {
+        if scrapCount > 0 {
+            scrapCount -= 1
+        }
+    }
 }

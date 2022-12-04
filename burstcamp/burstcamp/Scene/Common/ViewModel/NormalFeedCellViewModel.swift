@@ -34,8 +34,9 @@ final class NormalFeedCellViewModel {
     func transform(input: Input) -> Output {
         input.cellStateIndexPath
             .sink { state in
-                let uuid = self.feedData.feedUUID
-                self.updateFeed(uuid: uuid, state: state)
+                let feedUUID = self.feedData.feedUUID
+                let userUUID = UserManager.shared.user.userUUID
+                self.updateFeed(userUUID: userUUID, feedUUID: feedUUID, state: state)
                 self.scrapButtonIsEnabled.send(false)
             }
             .store(in: &cancelBag)
@@ -64,12 +65,30 @@ final class NormalFeedCellViewModel {
 }
 
 extension NormalFeedCellViewModel {
-    private func updateFeed(uuid: String, state: Bool) {
+    private func updateFeed(userUUID: String, feedUUID: String, state: Bool) {
         Task {
             do {
                 switch state {
-                case true: try await requestDeleteFeedScrapUser(uuid: uuid)
-                case false: try await requestAppendFeedScrapUser(uuid: uuid)
+                case true:
+                    try await requestDeleteFeedScrapUser(
+                        feedUUID: feedUUID,
+                        userUUID: userUUID
+                    )
+                    try await updateUserScrapFeedUUIDs(
+                        userUUID: userUUID,
+                        feedUUID: feedUUID,
+                        update: .remove
+                    )
+                case false:
+                    try await requestAppendFeedScrapUser(
+                        feedUUID: feedUUID,
+                        userUUID: userUUID
+                    )
+                    try await updateUserScrapFeedUUIDs(
+                        userUUID: userUUID,
+                        feedUUID: feedUUID,
+                        update: .append
+                    )
                 }
                 self.dbUpdateSucceed.send(true)
             } catch {
@@ -78,8 +97,11 @@ extension NormalFeedCellViewModel {
         }
     }
 
-    private func requestDeleteFeedScrapUser(uuid: String) async throws {
-        let path = ["Feed", uuid, "scrapUserUUIDs", "userUUID"].joined(separator: "/")
+    private func requestDeleteFeedScrapUser(
+        feedUUID: String,
+        userUUID: String
+    ) async throws {
+        let path = ["Feed", feedUUID, "scrapUserUUIDs", userUUID].joined(separator: "/")
         try await withCheckedThrowingContinuation { continuation in
             Firestore.firestore()
                 .document(path)
@@ -93,13 +115,16 @@ extension NormalFeedCellViewModel {
         } as Void
     }
 
-    private func requestAppendFeedScrapUser(uuid: String) async throws {
-        let path = ["Feed", uuid, "scrapUserUUIDs", "userUUID"].joined(separator: "/")
+    private func requestAppendFeedScrapUser(
+        feedUUID: String,
+        userUUID: String
+    ) async throws {
+        let path = ["Feed", feedUUID, "scrapUserUUIDs", userUUID].joined(separator: "/")
         try await withCheckedThrowingContinuation { continuation in
             Firestore.firestore()
                 .document(path)
                 .setData([
-                    "userUUID": "userUUID",
+                    "userUUID": userUUID,
                     "scrapDate": Timestamp(date: Date())
                 ]) { error in
                     if let error = error {
@@ -110,4 +135,38 @@ extension NormalFeedCellViewModel {
                 }
         } as Void
     }
+
+    private func updateUserScrapFeedUUIDs(
+        userUUID: String,
+        feedUUID: String,
+        update: FeedUpdate
+    ) async throws {
+        let path = ["User", userUUID].joined(separator: "/")
+        let updateData = getUpdateData(update: update)
+        try await withCheckedThrowingContinuation { continuation in
+            Firestore.firestore()
+                .document(path)
+                .updateData(updateData) { error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    continuation.resume()
+                }
+        } as Void
+    }
+
+    private func getUpdateData(update: FeedUpdate) -> [AnyHashable: Any] {
+        switch update {
+        case .append:
+            return ["scrapFeedUUIDs": FieldValue.arrayUnion(["feedUUID"])]
+        case .remove:
+            return ["scrapFeedUUIDs": FieldValue.arrayRemove(["feedUUID"])]
+        }
+    }
+}
+
+enum FeedUpdate {
+    case append
+    case remove
 }
