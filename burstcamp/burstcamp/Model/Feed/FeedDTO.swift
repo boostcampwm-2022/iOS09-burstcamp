@@ -25,7 +25,7 @@ struct FeedDTO {
         let timeStampDate = data["pubDate"] as? Timestamp ?? Timestamp()
         let pubDate = timeStampDate.dateValue()
         let url = data["url"] as? String ?? ""
-        let thumbnailURL = data["thumbnailURL"] as? String ?? ""
+        let thumbnailURL = data["thumbnail"] as? String ?? ""
         let content = data["content"] as? String ?? ""
 
         self.feedUUID = feedUUID

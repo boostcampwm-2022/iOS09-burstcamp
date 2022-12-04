@@ -13,7 +13,7 @@ struct Feed {
     let title: String
     let pubDate: Date
     let url: String
-   let thumbnailURL: String
+    let thumbnailURL: String
     let content: String
     var scrapCount: Int
 
