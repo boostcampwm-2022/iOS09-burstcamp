@@ -41,7 +41,8 @@ final class MyPageEditView: UIView {
     }
 
     private let nickNameTextField = DefaultTextField(
-        placeholder: "닉네임을 입력해주세요."
+        placeholder: "닉네임을 입력해주세요.",
+        clearButton: true
     )
 
     private let blogLinkLabel = UILabel().then {
@@ -56,7 +57,8 @@ final class MyPageEditView: UIView {
     )
 
     private let blogLinkTextField = DefaultTextField(
-        placeholder: "블로그 주소를 입력해주세요."
+        placeholder: "블로그 주소를 입력해주세요.",
+        clearButton: true
     )
 
     private var blogTitleImageLabel = DefaultImageLabel(

@@ -70,8 +70,8 @@ final class HomeViewModel {
                 isFetching = true
                 canFetchMoreFeed = true
 
-                async let recommendFeeds = fetchRecommendFeedArray()
-                async let normalFeeds = fetchNormalFeedArray(lastSnapShot: self.lastSnapShot)
+                async let recommendFeeds = fetchRecommendFeeds()
+                async let normalFeeds = fetchNormalFeeds(lastSnapShot: self.lastSnapShot)
                 self.recommendFeedData = try await recommendFeeds
                 self.normalFeedData = try await normalFeeds
                 output.fetchResult.send(.fetchSuccess)
@@ -89,7 +89,7 @@ final class HomeViewModel {
                 guard !isFetching, canFetchMoreFeed else { return }
                 isFetching = true
 
-                let normalFeeds = try await fetchNormalFeedArray(
+                let normalFeeds = try await fetchNormalFeeds(
                     lastSnapShot: self.lastSnapShot,
                     isPagination: true
                 )
@@ -104,13 +104,13 @@ final class HomeViewModel {
         }
     }
 
-    private func fetchNormalFeedArray(
+    private func fetchNormalFeeds(
         lastSnapShot: QueryDocumentSnapshot?,
         isPagination: Bool = false
     ) async throws -> [Feed] {
         try await withThrowingTaskGroup(of: Feed.self, body: { taskGroup in
             var normalFeeds: [Feed] = []
-            let feedDTODictionary = try await self.requestNormalFeeds(
+            let feedDTODictionary = try await self.fetchNormalFeedDTOs(
                 lastSnapShot: lastSnapShot,
                 isPagination: isPagination
             )
@@ -118,7 +118,7 @@ final class HomeViewModel {
             for feedDTO in feedDTODictionary {
                 taskGroup.addTask {
                     let feedDTO = FeedDTO(data: feedDTO)
-                    let feedWriterDictionary = try await self.requestFeedWriter(
+                    let feedWriterDictionary = try await self.fetchFeedWriter(
                         uuid: feedDTO.writerUUID
                     )
                     let feedWriter = FeedWriter(data: feedWriterDictionary)
@@ -142,7 +142,7 @@ final class HomeViewModel {
         })
     }
 
-    private func requestNormalFeeds(
+    private func fetchNormalFeedDTOs(
         lastSnapShot: QueryDocumentSnapshot?,
         isPagination: Bool
     ) async throws -> [[String: Any]] {
@@ -190,15 +190,15 @@ final class HomeViewModel {
         }
     }
 
-    private func fetchRecommendFeedArray() async throws -> [Feed] {
+    private func fetchRecommendFeeds() async throws -> [Feed] {
         try await withThrowingTaskGroup(of: Feed.self, body: { taskGroup in
             var recommendFeeds: [Feed] = []
-            let feedDTODictionary = try await self.requestRecommendFeeds()
+            let feedDTODictionary = try await self.fetchRecommendFeedDTOs()
 
             for feedDTO in feedDTODictionary {
                 taskGroup.addTask {
                     let feedDTO = FeedDTO(data: feedDTO)
-                    let feedWriterDictionary = try await self.requestFeedWriter(
+                    let feedWriterDictionary = try await self.fetchFeedWriter(
                         uuid: feedDTO.writerUUID
                     )
                     let feedWriter = FeedWriter(data: feedWriterDictionary)
@@ -215,7 +215,7 @@ final class HomeViewModel {
         })
     }
 
-    private func requestRecommendFeeds() async throws -> [[String: Any]] {
+    private func fetchRecommendFeedDTOs() async throws -> [[String: Any]] {
         try await withCheckedThrowingContinuation({ continuation in
             Firestore.firestore()
                 .collection("RecommendFeed")
@@ -237,7 +237,7 @@ final class HomeViewModel {
         })
     }
 
-    private func requestFeedWriter(uuid: String) async throws -> [String: Any] {
+    private func fetchFeedWriter(uuid: String) async throws -> [String: Any] {
         try await withCheckedThrowingContinuation({ continuation in
             Firestore.firestore()
                 .collection("user")

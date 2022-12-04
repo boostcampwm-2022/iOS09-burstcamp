@@ -38,6 +38,7 @@
 		14927E202929CCA0001F2E97 /* RecommendFeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */; };
 		14A93D402936EFF900790034 /* FeedDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D3F2936EFF900790034 /* FeedDTO.swift */; };
 		14A93D422936F00F00790034 /* FeedWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D412936F00F00790034 /* FeedWriter.swift */; };
+		14F94BE62939E16D0058A79A /* UICollectionView+emptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */; };
 		3B061FD82928CC5600BFA71D /* SignUpDomainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FD72928CC5600BFA71D /* SignUpDomainViewController.swift */; };
 		3B061FDA2928CF7E00BFA71D /* SighUpDomainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FD92928CF7E00BFA71D /* SighUpDomainView.swift */; };
 		3B061FDD2928E8E300BFA71D /* SignUpCamperIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FDC2928E8E300BFA71D /* SignUpCamperIDViewController.swift */; };
@@ -95,6 +96,7 @@
 		B5DAD681292E58BF00C4A126 /* DefaultMultilLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD680292E58BF00C4A126 /* DefaultMultilLineLabel.swift */; };
 		B5E0D94A292F631C001727F5 /* MockHTMLString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E0D949292F631C001727F5 /* MockHTMLString.swift */; };
 		B5E0D94C292F750D001727F5 /* FeedContentWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E0D94B292F750D001727F5 /* FeedContentWebView.swift */; };
+		D8095C69293B718C00964537 /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8095C68293B718C00964537 /* KeyChainManager.swift */; };
 		D84452E7292C9A54008E811B /* TabBarCoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452E6292C9A54008E811B /* TabBarCoordinatorEvent.swift */; };
 		D84452EC292CA55F008E811B /* MyPageEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452EB292CA55F008E811B /* MyPageEditView.swift */; };
 		D84452EE292CA569008E811B /* MyPageEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452ED292CA569008E811B /* MyPageEditViewModel.swift */; };
@@ -187,6 +189,7 @@
 		14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedHeader.swift; sourceTree = "<group>"; };
 		14A93D3F2936EFF900790034 /* FeedDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDTO.swift; sourceTree = "<group>"; };
 		14A93D412936F00F00790034 /* FeedWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedWriter.swift; sourceTree = "<group>"; };
+		14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+emptyView.swift"; sourceTree = "<group>"; };
 		3B061FD72928CC5600BFA71D /* SignUpDomainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDomainViewController.swift; sourceTree = "<group>"; };
 		3B061FD92928CF7E00BFA71D /* SighUpDomainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SighUpDomainView.swift; sourceTree = "<group>"; };
 		3B061FDC2928E8E300BFA71D /* SignUpCamperIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCamperIDViewController.swift; sourceTree = "<group>"; };
@@ -239,6 +242,7 @@
 		B5DAD680292E58BF00C4A126 /* DefaultMultilLineLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMultilLineLabel.swift; sourceTree = "<group>"; };
 		B5E0D949292F631C001727F5 /* MockHTMLString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHTMLString.swift; sourceTree = "<group>"; };
 		B5E0D94B292F750D001727F5 /* FeedContentWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedContentWebView.swift; sourceTree = "<group>"; };
+		D8095C68293B718C00964537 /* KeyChainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
 		D84452E6292C9A54008E811B /* TabBarCoordinatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinatorEvent.swift; sourceTree = "<group>"; };
 		D84452EB292CA55F008E811B /* MyPageEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditView.swift; sourceTree = "<group>"; };
 		D84452ED292CA569008E811B /* MyPageEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewModel.swift; sourceTree = "<group>"; };
@@ -339,6 +343,7 @@
 				D89AE4E52933AEF900446AB3 /* UIImageView+Cache.swift */,
 				D84C8131292F0A1E00C984E8 /* UIViewController+.swift */,
 				1418960129377593005A42D4 /* UIScrollView+.swift */,
+				14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -737,6 +742,7 @@
 				D8576F33293779E2002885FE /* FirestoreUser.swift */,
 				D89AE4FC2935F5AE00446AB3 /* FireFunctionsManager.swift */,
 				D89E48AE2939D99300744A56 /* FireStorageService.swift */,
+				D8095C68293B718C00964537 /* KeyChainManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1086,6 +1092,7 @@
 				D84452E7292C9A54008E811B /* TabBarCoordinatorEvent.swift in Sources */,
 				B50A27E429279F5D00DF3E1F /* APIKey.swift in Sources */,
 				B50A27ED29279F5D00DF3E1F /* NormalFeedCell.swift in Sources */,
+				14F94BE62939E16D0058A79A /* UICollectionView+emptyView.swift in Sources */,
 				D8C3AA2929305C05008EE77C /* HTTPHeader.swift in Sources */,
 				141344D6292F801100187B86 /* Date+FormatString.swift in Sources */,
 				D89AE4FD2935F5AE00446AB3 /* FireFunctionsManager.swift in Sources */,
@@ -1116,6 +1123,7 @@
 				B50A27FE29279F5D00DF3E1F /* Coordinator.swift in Sources */,
 				D8576F34293779E2002885FE /* FirestoreUser.swift in Sources */,
 				143185E8292B46F9008CE459 /* HomeViewModel.swift in Sources */,
+				D8095C69293B718C00964537 /* KeyChainManager.swift in Sources */,
 				B50A27F429279F5D00DF3E1F /* SceneDelegate.swift in Sources */,
 				143185EC292B4AB8008CE459 /* ScrapPageViewModel.swift in Sources */,
 				D89AE4ED2935AA2100446AB3 /* FCMToken.swift in Sources */,

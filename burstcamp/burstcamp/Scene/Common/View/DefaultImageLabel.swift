@@ -112,11 +112,12 @@ final class DefaultImageLabel: UILabel {
     }
 
     func updateBlogImageLabel(user: User) {
+        let text = user.blogTitle.isEmpty ? "블로그를 등록해주세요." : user.blogTitle
         let attributeString = attributeString(
             icon: UIImage(systemName: "book.fill"),
             iconColor: defaultColor,
             iconBounds: defaultIconBounds,
-            text: user.blogTitle,
+            text: text,
             textColor: defaultColor
         )
         attributedText = attributeString

@@ -8,6 +8,8 @@
 import Combine
 import UIKit
 
+import FirebaseAuth
+
 final class MyPageViewController: UIViewController {
 
     // MARK: - Properties
@@ -98,6 +100,13 @@ final class MyPageViewController: UIViewController {
             }
             .store(in: &cancelBag)
 
+        myPageView.notificationSwitchStatePublisher
+            .sink { isOn in
+                let text = isOn ? "알림이 켜졌어요." : "알림이 꺼졌어요."
+                self.showToastMessage(text: text, icon: UIImage(systemName: "bell.fill"))
+            }
+            .store(in: &cancelBag)
+
         myPageView.myInfoEditButtonTapPublisher
             .sink { _ in self.moveToMyPageEditScreen() }
             .store(in: &cancelBag)
@@ -165,6 +174,7 @@ extension MyPageViewController {
 
     private func moveToAuthFlow() {
         // TODO: 탈퇴 로직 추가
+        try? Auth.auth().signOut()
         coordinatorPublisher.send(.moveToAuthFlow)
     }
 }

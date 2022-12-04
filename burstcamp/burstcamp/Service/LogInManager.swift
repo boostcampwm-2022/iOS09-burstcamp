@@ -82,6 +82,7 @@ final class LogInManager {
             .receive(on: DispatchQueue.main)
             .sink { result in
                 if case .failure = result {
+                    print("LogInManager : notCamper login함수내")
                     self.logInPublisher.send(.notCamper)
                 }
             } receiveValue: { _ in
@@ -90,15 +91,23 @@ final class LogInManager {
             .store(in: &cancelBag)
     }
 
-    func signOut() -> Bool {
-        guard (try? Auth.auth().signOut()) != nil
-                // TODO: firebaseDB에서 삭제
-        else { return false }
-        return true
+    func signOut() {
+        Auth.auth().currentUser?.delete { error in
+            if error != nil {
+                return
+            } else {
+                guard (try? Auth.auth().signOut()) != nil else {
+                    self.signInToFirebase(token: self.token)
+                    return
+                }
+                FirestoreUser.delete(user: UserManager.shared.user)
+            }
+        }
     }
 
     func isSignedUp(token: String, nickname: String) {
         if self.userUUID.isEmpty {
+            print("LogInManager : moveToDomainScreen isSignedUp함수내")
             self.logInPublisher.send(.moveToDomainScreen)
             return
         }
@@ -109,9 +118,11 @@ final class LogInManager {
                 case .finished:
                     return
                 case .failure:
+                    print("LogInManager : moveToDomainScreen isSignedUp함수내 case failure")
                     self.logInPublisher.send(.moveToDomainScreen)
                 }
             } receiveValue: { _ in
+                print("LogInManager : moveToTabBarScreen isSignedUp함수내")
                 self.logInPublisher.send(.moveToTabBarScreen)
             }
             .store(in: &cancelBag)
