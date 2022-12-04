@@ -19,8 +19,9 @@ final class ScrapPageViewController: UIViewController {
         return view
     }
 
-    private var cancelBag = Set<AnyCancellable>()
     private var viewModel: ScrapPageViewModel
+    private var cancelBag = Set<AnyCancellable>()
+    private let paginationPublisher = PassthroughSubject<Void, Never>()
 
     // MARK: - Initializer
 
@@ -55,10 +56,29 @@ final class ScrapPageViewController: UIViewController {
     }
 
     private func bind() {
-        scrapPageView.collectionView.refreshControl?.isRefreshPublisher
-            .sink { _ in
-                //TODO: - 네트워크 업데이트 이후 순차적으로 실행
-                self.scrapPageView.endCollectionViewRefreshing()
+        guard let refreshControl = scrapPageView.collectionView.refreshControl
+        else { return }
+
+        let viewDidLoadJust = Just(Void()).eraseToAnyPublisher()
+
+        let input = ScrapPageViewModel.Input(
+            viewDidLoad: viewDidLoadJust,
+            viewRefresh: refreshControl.isRefreshPublisher,
+            pagination: paginationPublisher.eraseToAnyPublisher()
+        )
+
+        let output = viewModel.transform(input: input)
+
+        output.fetchResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] fetchResult in
+                switch fetchResult {
+                case .fetchSuccess:
+                    self?.scrapPageView.endCollectionViewRefreshing()
+                    self?.scrapPageView.collectionView.reloadData()
+                case .fetchFail(let error):
+                    print(error)
+                }
             }
             .store(in: &cancelBag)
     }
@@ -71,6 +91,10 @@ final class ScrapPageViewController: UIViewController {
         navigationController?.navigationBar.topItem?.title = "모아보기"
         navigationController?.isNavigationBarHidden = false
     }
+
+    private func paginateFeed() {
+        paginationPublisher.send(Void())
+    }
 }
 
 extension ScrapPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
@@ -78,7 +102,12 @@ extension ScrapPageViewController: UICollectionViewDelegateFlowLayout, UICollect
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return 10
+        if viewModel.scarpFeedData.isEmpty {
+            collectionView.configureEmptyView()
+        } else {
+            collectionView.resetEmptyView()
+        }
+        return viewModel.scarpFeedData.count
     }
 
     func collectionView(
@@ -92,7 +121,9 @@ extension ScrapPageViewController: UICollectionViewDelegateFlowLayout, UICollect
         else {
             return UICollectionViewCell()
         }
-
+        let index = indexPath.row
+        let feed = viewModel.scarpFeedData[index]
+        cell.updateFeedCell(with: feed)
         return cell
     }
 
@@ -103,5 +134,11 @@ extension ScrapPageViewController: UICollectionViewDelegateFlowLayout, UICollect
     ) -> CGSize {
         let width = view.frame.width - Constant.Padding.horizontal.cgFloat * 2
         return CGSize(width: width, height: 150)
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.isOverTarget() {
+            paginateFeed()
+        }
     }
 }

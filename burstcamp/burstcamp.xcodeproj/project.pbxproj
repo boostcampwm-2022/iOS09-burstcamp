@@ -37,6 +37,7 @@
 		14927E202929CCA0001F2E97 /* RecommendFeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */; };
 		14A93D402936EFF900790034 /* FeedDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D3F2936EFF900790034 /* FeedDTO.swift */; };
 		14A93D422936F00F00790034 /* FeedWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D412936F00F00790034 /* FeedWriter.swift */; };
+		14F94BE62939E16D0058A79A /* UICollectionView+emptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */; };
 		3B061FD82928CC5600BFA71D /* SignUpDomainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FD72928CC5600BFA71D /* SignUpDomainViewController.swift */; };
 		3B061FDA2928CF7E00BFA71D /* SighUpDomainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FD92928CF7E00BFA71D /* SighUpDomainView.swift */; };
 		3B061FDD2928E8E300BFA71D /* SignUpCamperIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FDC2928E8E300BFA71D /* SignUpCamperIDViewController.swift */; };
@@ -185,6 +186,7 @@
 		14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedHeader.swift; sourceTree = "<group>"; };
 		14A93D3F2936EFF900790034 /* FeedDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDTO.swift; sourceTree = "<group>"; };
 		14A93D412936F00F00790034 /* FeedWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedWriter.swift; sourceTree = "<group>"; };
+		14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+emptyView.swift"; sourceTree = "<group>"; };
 		3B061FD72928CC5600BFA71D /* SignUpDomainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDomainViewController.swift; sourceTree = "<group>"; };
 		3B061FD92928CF7E00BFA71D /* SighUpDomainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SighUpDomainView.swift; sourceTree = "<group>"; };
 		3B061FDC2928E8E300BFA71D /* SignUpCamperIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCamperIDViewController.swift; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 				D89AE4E52933AEF900446AB3 /* UIImageView+Cache.swift */,
 				D84C8131292F0A1E00C984E8 /* UIViewController+.swift */,
 				1418960129377593005A42D4 /* UIScrollView+.swift */,
+				14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1084,6 +1087,7 @@
 				D84452E7292C9A54008E811B /* TabBarCoordinatorEvent.swift in Sources */,
 				B50A27E429279F5D00DF3E1F /* APIKey.swift in Sources */,
 				B50A27ED29279F5D00DF3E1F /* NormalFeedCell.swift in Sources */,
+				14F94BE62939E16D0058A79A /* UICollectionView+emptyView.swift in Sources */,
 				D8C3AA2929305C05008EE77C /* HTTPHeader.swift in Sources */,
 				141344D6292F801100187B86 /* Date+FormatString.swift in Sources */,
 				D89AE4FD2935F5AE00446AB3 /* FireFunctionsManager.swift in Sources */,

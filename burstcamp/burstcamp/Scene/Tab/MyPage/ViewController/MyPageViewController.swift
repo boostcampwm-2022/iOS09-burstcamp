@@ -8,6 +8,8 @@
 import Combine
 import UIKit
 
+import FirebaseAuth
+
 final class MyPageViewController: UIViewController {
 
     // MARK: - Properties
@@ -172,6 +174,7 @@ extension MyPageViewController {
 
     private func moveToAuthFlow() {
         // TODO: 탈퇴 로직 추가
+        try? Auth.auth().signOut()
         coordinatorPublisher.send(.moveToAuthFlow)
     }
 }
