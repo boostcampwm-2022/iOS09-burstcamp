@@ -27,10 +27,12 @@ extension UIViewController {
         )
     }
 
-    func showToastMessage(text: String) {
-
+    func showToastMessage(
+        text: String,
+        icon: UIImage? = UIImage(systemName: "eyes.inverse")
+    ) {
         let toastMessageLabel = DefaultImageLabel(
-            icon: UIImage(systemName: "eyes.inverse"),
+            icon: icon,
             text: " \(text)",
             frame: toastFrame,
             iconBounds: toastIconBounds,
