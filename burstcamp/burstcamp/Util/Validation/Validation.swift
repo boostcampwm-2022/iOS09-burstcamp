@@ -31,4 +31,20 @@ struct Validation {
         }
         return false
     }
+
+    static func validateIsEmpty(blogLink: String) -> Bool {
+        if blogLink.isEmpty { return true }
+        if blogLink.range(
+            of: URLRegularExpression.tistory,
+            options: .regularExpression
+        ) != nil {
+            return true
+        } else if blogLink.range(
+            of: URLRegularExpression.velog,
+            options: .regularExpression
+        ) != nil {
+            return true
+        }
+        return false
+    }
 }

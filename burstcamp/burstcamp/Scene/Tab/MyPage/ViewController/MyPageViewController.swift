@@ -98,6 +98,13 @@ final class MyPageViewController: UIViewController {
             }
             .store(in: &cancelBag)
 
+        myPageView.notificationSwitchStatePublisher
+            .sink { isOn in
+                let text = isOn ? "알림이 켜졌어요." : "알림이 꺼졌어요."
+                self.showToastMessage(text: text, icon: UIImage(systemName: "bell.fill"))
+            }
+            .store(in: &cancelBag)
+
         myPageView.myInfoEditButtonTapPublisher
             .sink { _ in self.moveToMyPageEditScreen() }
             .store(in: &cancelBag)

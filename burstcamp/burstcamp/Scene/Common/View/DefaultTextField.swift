@@ -16,7 +16,8 @@ final class DefaultTextField: UITextField {
     }
 
     init(
-        placeholder: String
+        placeholder: String,
+        clearButton: Bool = false
     ) {
         super.init(frame: .zero)
         self.placeholder = placeholder
@@ -24,22 +25,34 @@ final class DefaultTextField: UITextField {
         layer.borderColor = UIColor.systemGray5.cgColor
         layer.cornerRadius = Constant.CornerRadius.radius8.cgFloat
         font = .regular16
-        clearButtonMode = .always
-        addHorizontalPadding()
+        addLeftPadding()
+        if clearButton {
+            clearButtonMode = .always
+        } else {
+            addRightPadding()
+        }
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func addHorizontalPadding() {
-        let paddingView = UIView(frame: CGRect(
+    private func addLeftPadding() {
+        leftView = paddingView()
+        leftViewMode = .always
+    }
+
+    private func addRightPadding() {
+        rightView = paddingView()
+        rightViewMode = .always
+    }
+
+    private func paddingView() -> UIView {
+        return UIView(frame: CGRect(
             x: Constant.zero,
             y: Constant.zero,
             width: Constant.space16,
             height: Int(frame.height)
         ))
-        leftView = paddingView
-        leftViewMode = .always
     }
 }
