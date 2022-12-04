@@ -73,11 +73,23 @@ final class ToggleButton: UIButton {
     }
 }
 
+// MARK: Interface
+
 extension ToggleButton {
     var statePublisher: AnyPublisher<Bool, Never> {
         controlPublisher(for: .touchUpInside)
             .compactMap { $0 as? ToggleButton }
             .map { $0.isOn }
             .eraseToAnyPublisher()
+    }
+
+    func toggle() {
+        isOn.toggle()
+        configure()
+    }
+
+    func updateView(with state: Bool) {
+        isOn = state
+        configure()
     }
 }

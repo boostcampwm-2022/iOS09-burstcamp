@@ -20,17 +20,17 @@ final class FeedDetailViewController: UIViewController {
     }
 
     private lazy var barButtonStackView = UIStackView().then {
-        $0.addArrangedSubViews([scrapButton, shareButton])
+        $0.addArrangedSubViews([scrapToggleButton, shareButton])
         $0.spacing = Constant.space24.cgFloat
     }
     private lazy var barButtonStackViewItem = UIBarButtonItem(customView: barButtonStackView)
 
-    private let scrapButton = ToggleButton(
+    private let scrapToggleButton = ToggleButton(
         image: UIImage(systemName: "bookmark.fill"),
         onColor: .main,
         offColor: .systemGray4
     )
-    private lazy var scrapBarButtonItem = UIBarButtonItem(customView: scrapButton)
+    private lazy var scrapBarButtonItem = UIBarButtonItem(customView: scrapToggleButton)
 
     private let shareButton = UIButton().then {
         $0.setImage(
@@ -72,8 +72,9 @@ final class FeedDetailViewController: UIViewController {
 
     private func bind() {
         let input = FeedDetailViewModel.Input(
+            viewDidLoad: Just(Void()).eraseToAnyPublisher(),
             blogButtonDidTap: feedDetailView.blogButtonTapPublisher,
-            scrapButtonDidTap: scrapButton.statePublisher,
+            scrapToggleButtonDidTap: scrapToggleButton.statePublisher,
             shareButtonDidTap: shareButton.tapPublisher
         )
 
@@ -106,16 +107,16 @@ final class FeedDetailViewController: UIViewController {
             }
             .store(in: &cancelBag)
 
-        output.scrapButtonToggle
+        output.scrapToggleButtonState
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-                self.scrapButton.toggle()
+            .sink { state in
+                self.scrapToggleButton.updateView(with: state)
             }
             .store(in: &cancelBag)
 
-        output.scrapButtonIsEnabled
+        output.scrapToggleButtonIsEnabled
             .receive(on: DispatchQueue.main)
-            .assign(to: \.isEnabled, on: scrapButton)
+            .assign(to: \.isEnabled, on: scrapToggleButton)
             .store(in: &cancelBag)
     }
 }
