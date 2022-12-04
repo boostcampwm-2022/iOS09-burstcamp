@@ -4,8 +4,6 @@ env:
   PROJECT: 'burstcamp'
 
 on:
-  push:
-    branches: [ feature/*, refactor/*, fix/* ]
   pull_request:
     branches: [ main, develop ]
 
