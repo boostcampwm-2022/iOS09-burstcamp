@@ -16,14 +16,13 @@ final class NormalFeedCell: UICollectionViewCell {
     private lazy var mainView = NormalFeedCellMain()
     lazy var footerView = NormalFeedCellFooter()
 
-    var indexPath: IndexPath?
-    let stateIndexPublisher = PassthroughSubject<StateIndexPath, Never>()
+    var viewModel: NormalFeedCellViewModel!
+
     var cancelBag = Set<AnyCancellable>()
 
     override init(frame: CGRect) {
         super.init(frame: .zero)
         configureUI()
-        bind()
     }
 
     required init?(coder: NSCoder) {
@@ -71,14 +70,26 @@ final class NormalFeedCell: UICollectionViewCell {
         }
     }
 
-    private func bind() {
-        footerView
-            .scrapButton
-            .statePublisher
-            .sink { state in
-                let stateIndexPath = StateIndexPath(state: state, indexPath: self.indexPath)
-                self.stateIndexPublisher.send(stateIndexPath)
+    func bind() {
+
+        let scrapButton = footerView.scrapButton
+
+        let input = NormalFeedCellViewModel.Input(
+            cellStateIndexPath: scrapButton.statePublisher
+        )
+
+        let output = viewModel.transform(input: input)
+
+        output.cellScrapButtonToggle
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                scrapButton.toggle()
             }
+            .store(in: &cancelBag)
+
+        output.cellScrapButtonIsEnabled
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.isEnabled, on: scrapButton)
             .store(in: &cancelBag)
     }
 }

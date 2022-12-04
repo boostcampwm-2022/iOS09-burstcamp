@@ -93,28 +93,6 @@ final class HomeViewController: UIViewController {
             .store(in: &cancelBag)
     }
 
-    private func bind(cell: NormalFeedCell) {
-
-        let cellInput = HomeViewModel.CellInput(
-            cellStateIndexPath: cell.stateIndexPublisher.eraseToAnyPublisher()
-        )
-
-        let output = viewModel.transformCell(input: cellInput)
-        let scrapButton = cell.footerView.scrapButton
-
-        output.cellScrapButtonToggle
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                scrapButton.toggle()
-            }
-            .store(in: &cell.cancelBag)
-
-        output.cellScrapButtonIsEnabled
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.isEnabled, on: scrapButton)
-            .store(in: &cell.cancelBag)
-    }
-
     private func paginateFeed() {
         paginationPublisher.send(Void())
     }
@@ -166,10 +144,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             let index = indexPath.row
             let feed = viewModel.normalFeedData[index]
-
-            cell.indexPath = indexPath
+            let cellViewModel = viewModel.viewModelForCell(at: index)
+            cell.viewModel = cellViewModel
+            cell.bind()
             cell.updateFeedCell(with: feed)
-            bind(cell: cell)
 
             return cell
         case .none:

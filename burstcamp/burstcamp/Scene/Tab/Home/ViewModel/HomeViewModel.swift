@@ -16,9 +16,6 @@ final class HomeViewModel {
     var normalFeedData: [Feed] = []
     var cancelBag = Set<AnyCancellable>()
 
-    private var dbUpdateSucceed = CurrentValueSubject<Bool?, Never>(nil)
-    private var scrapButtonIsEnabled = CurrentValueSubject<Bool, Never>(true)
-
     private var lastSnapShot: QueryDocumentSnapshot?
     private var isFetching: Bool = false
     private var canFetchMoreFeed: Bool = true
@@ -36,15 +33,6 @@ final class HomeViewModel {
 
     struct Output {
         var fetchResult = PassthroughSubject<FetchResult, Never>()
-    }
-
-    struct CellInput {
-        let cellStateIndexPath: AnyPublisher<StateIndexPath, Never>
-    }
-
-    struct CellOutput {
-        let cellScrapButtonToggle: AnyPublisher<Void, Never>
-        let cellScrapButtonIsEnabled: AnyPublisher<Bool, Never>
     }
 
     func transform(input: Input) -> Output {
@@ -71,40 +59,8 @@ final class HomeViewModel {
         return output
     }
 
-    func transformCell(input: CellInput) -> CellOutput {
-
-        input.cellStateIndexPath
-            .sink { stateIndexPath in
-                let state = stateIndexPath.state
-                let index = stateIndexPath.indexPath?.row
-                guard let index = index else { return }
-                let uuid = self.normalFeedData[index].feedUUID
-
-                self.updateFeed(uuid: uuid, state: state)
-                self.scrapButtonIsEnabled.send(false)
-            }
-            .store(in: &cancelBag)
-
-        let dbUpdateResult = self.dbUpdateSucceed
-            .eraseToAnyPublisher()
-            .share()
-
-        dbUpdateResult
-            .filter { $0 != nil }
-            .sink { _ in
-                self.scrapButtonIsEnabled.send(true)
-            }
-            .store(in: &cancelBag)
-
-        let scrapButtonToggle = dbUpdateResult
-            .filter { $0 == true }
-            .map { _ in Void() }
-            .eraseToAnyPublisher()
-
-        return CellOutput(
-            cellScrapButtonToggle: scrapButtonToggle,
-            cellScrapButtonIsEnabled: scrapButtonIsEnabled.eraseToAnyPublisher()
-        )
+    func viewModelForCell(at index: Int) -> NormalFeedCellViewModel {
+        return NormalFeedCellViewModel(feed: normalFeedData[index])
     }
 
     private func fetchAllFeed(output: Output) {
@@ -167,7 +123,11 @@ final class HomeViewModel {
                     )
                     let feedWriter = FeedWriter(data: feedWriterDictionary)
                     let scrapCount = try await self.countFeedScrapCount(uuid: feedDTO.feedUUID)
-                    let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter,scrapCount: scrapCount)
+                    let feed = Feed(
+                        feedDTO: feedDTO,
+                        feedWriter: feedWriter,
+                        scrapCount: scrapCount
+                    )
                     return feed
                 }
             }
@@ -296,53 +256,6 @@ final class HomeViewModel {
                     continuation.resume(returning: userData)
                 }
         })
-    }
-
-    private func updateFeed(uuid: String, state: Bool) {
-        Task {
-            do {
-                switch state {
-                case true: try await requestDeleteFeedScrapUser(uuid: uuid)
-                case false: try await requestAppendFeedScrapUser(uuid: uuid)
-                }
-                self.dbUpdateSucceed.send(true)
-            } catch {
-                self.dbUpdateSucceed.send(false)
-            }
-        }
-    }
-
-    private func requestDeleteFeedScrapUser(uuid: String) async throws {
-        let path = ["Feed", uuid, "scrapUserUUIDs", "userUUID"].joined(separator: "/")
-        try await withCheckedThrowingContinuation { continuation in
-            Firestore.firestore()
-                .document(path)
-                .delete { error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    continuation.resume()
-                }
-        } as Void
-    }
-
-    private func requestAppendFeedScrapUser(uuid: String) async throws {
-        let path = ["Feed", uuid, "scrapUserUUIDs", "userUUID"].joined(separator: "/")
-        try await withCheckedThrowingContinuation { continuation in
-            Firestore.firestore()
-                .document(path)
-                .setData([
-                    "userUUID": "userUUID",
-                    "scrapDate": Timestamp(date: Date())
-                ]) { error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    continuation.resume()
-                }
-        } as Void
     }
 
     private func countFeedScrapCount(uuid: String) async throws -> Int {
