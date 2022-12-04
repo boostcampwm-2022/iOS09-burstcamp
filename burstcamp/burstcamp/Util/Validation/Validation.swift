@@ -32,7 +32,7 @@ struct Validation {
         return false
     }
 
-    static func validateIsEmptyOK(blogLink: String) -> Bool {
+    static func validateIsEmpty(blogLink: String) -> Bool {
         if blogLink.isEmpty { return true }
         if blogLink.range(
             of: URLRegularExpression.tistory,
