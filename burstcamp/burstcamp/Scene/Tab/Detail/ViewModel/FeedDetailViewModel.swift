@@ -14,9 +14,9 @@ final class FeedDetailViewModel {
 
     private var cancelBag = Set<AnyCancellable>()
 
-    private var feed = CurrentValueSubject<Feed?, Never>(nil)
-    private var dbUpdateSucceed = CurrentValueSubject<Bool?, Never>(nil)
-    private var scrapButtonIsEnabled = CurrentValueSubject<Bool, Never>(true)
+    private let feed = CurrentValueSubject<Feed?, Never>(nil)
+    private let dbUpdateResult = PassthroughSubject<Bool, Never>()
+    private let scrapToggleButtonIsEnabled = PassthroughSubject<Bool, Never>()
 
     init() { }
 
@@ -31,8 +31,9 @@ final class FeedDetailViewModel {
     }
 
     struct Input {
+        let viewDidLoad: AnyPublisher<Void, Never>
         let blogButtonDidTap: AnyPublisher<Void, Never>
-        let scrapButtonDidTap: AnyPublisher<Bool, Never>
+        let scrapToggleButtonDidTap: AnyPublisher<Bool, Never>
         let shareButtonDidTap: AnyPublisher<Void, Never>
     }
 
@@ -40,13 +41,14 @@ final class FeedDetailViewModel {
         let feedDidUpdate: AnyPublisher<Feed, Never>
         let openBlog: AnyPublisher<URL, Never>
         let openActivityView: AnyPublisher<String, Never>
-        let scrapButtonToggle: AnyPublisher<Void, Never>
-        let scrapButtonIsEnabled: AnyPublisher<Bool, Never>
+        let scrapToggleButtonState: AnyPublisher<Bool, Never>
+        let scrapToggleButtonIsEnabled: AnyPublisher<Bool, Never>
     }
 
     func transform(input: Input) -> Output {
         let feedDidUpdate = feed
             .compactMap { $0 }
+            .share()
             .eraseToAnyPublisher()
 
         let openBlog = input.blogButtonDidTap
@@ -58,52 +60,61 @@ final class FeedDetailViewModel {
             .compactMap { self.feed.value?.url }
             .eraseToAnyPublisher()
 
-        let sharedScrapButtonDidTap = input.scrapButtonDidTap
-            .share()
-
-        sharedScrapButtonDidTap
+        input.scrapToggleButtonDidTap
+            .throttle(
+                for: .milliseconds(500),
+                scheduler: DispatchQueue.main,
+                latest: false
+            )
             .sink { state in
-                guard let uuid = self.feed.value?.feedUUID else { return }
-                self.updateFeed(uuid: uuid, state: state)
-                self.scrapButtonIsEnabled.send(false)
+                guard let feedUUID = self.feed.value?.feedUUID else { return }
+                self.updateFeed(feedUUID: feedUUID, state: state)
+                self.scrapToggleButtonIsEnabled.send(false)
             }
             .store(in: &cancelBag)
 
-        let dbUpdateResult = self.dbUpdateSucceed
-            .eraseToAnyPublisher()
+        let sharedDBUpdateResult = dbUpdateResult
+            .map { _ in Void() }
             .share()
 
-        dbUpdateResult
-            .filter { $0 != nil }
+        sharedDBUpdateResult
             .sink { _ in
-                self.scrapButtonIsEnabled.send(true)
+                self.scrapToggleButtonIsEnabled.send(true)
             }
             .store(in: &cancelBag)
 
-        let scrapButtonToggle = dbUpdateResult
-            .filter { $0 == true }
-            .map { _ in Void() }
+        let scrapToggleButtonState = input.viewDidLoad
+            .merge(with: sharedDBUpdateResult)
+            .map { _ in
+                guard let feedUUID = self.feed.value?.feedUUID else { return false }
+                return UserManager.shared.user.scrapFeedUUIDs.contains(feedUUID)
+            }
             .eraseToAnyPublisher()
 
         return Output(
             feedDidUpdate: feedDidUpdate,
             openBlog: openBlog,
             openActivityView: openActivityView,
-            scrapButtonToggle: scrapButtonToggle,
-            scrapButtonIsEnabled: scrapButtonIsEnabled.eraseToAnyPublisher()
+            scrapToggleButtonState: scrapToggleButtonState,
+            scrapToggleButtonIsEnabled: scrapToggleButtonIsEnabled.eraseToAnyPublisher()
         )
     }
 
-    private func updateFeed(uuid: String, state: Bool) {
+    private func updateFeed(feedUUID: String, state: Bool) {
         Task {
             do {
                 switch state {
-                case true: try await requestDeleteFeedScrapUser(uuid: uuid)
-                case false: try await requestAppendFeedScrapUser(uuid: uuid)
+                case true:
+                    try await requestDeleteScrapUser(at: feedUUID)
+                    UserManager.shared.user.scrapFeedUUIDs.removeAll(where: { $0 == feedUUID })
+                case false:
+                    try await requestAppendScrapUser(at: feedUUID)
+                    UserManager.shared.user.scrapFeedUUIDs.append(feedUUID)
                 }
-                self.dbUpdateSucceed.send(true)
+                self.dbUpdateResult.send(true)
             } catch {
-                self.dbUpdateSucceed.send(false)
+                debugPrint(error.localizedDescription)
+                self.dbUpdateResult.send(false)
             }
         }
     }
@@ -121,7 +132,7 @@ final class FeedDetailViewModel {
         }
     }
 
-    private func requestDeleteFeedScrapUser(uuid: String) async throws {
+    private func requestDeleteScrapUser(at feedUUID: String) async throws {
         try await withCheckedThrowingContinuation { continuation in
             FirestoreCollection.scrapUser(feedUUID: feedUUID).reference
                 .document(UserManager.shared.user.userUUID)
@@ -135,7 +146,7 @@ final class FeedDetailViewModel {
         } as Void
     }
 
-    private func requestAppendFeedScrapUser(uuid: String) async throws {
+    private func requestAppendScrapUser(at feedUUID: String) async throws {
         let userUUID = UserManager.shared.user.userUUID
         try await withCheckedThrowingContinuation { continuation in
             FirestoreCollection.scrapUser(feedUUID: feedUUID).reference
