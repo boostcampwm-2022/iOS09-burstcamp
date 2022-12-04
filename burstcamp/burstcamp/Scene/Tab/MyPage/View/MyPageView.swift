@@ -64,7 +64,7 @@ final class MyPageView: UIView, ContainCollectionView {
     private func configureUI() {
         addSubview(myPageProfileView)
         myPageProfileView.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(Constant.space8)
             make.horizontalEdges.equalToSuperview().inset(Constant.Padding.horizontal)
             make.height.equalTo(Constant.Profile.height)
         }
@@ -79,7 +79,7 @@ final class MyPageView: UIView, ContainCollectionView {
 
         addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(myInfoEditButton.snp.bottom).offset(64)
+            make.top.equalTo(myInfoEditButton.snp.bottom).offset(Constant.space24)
             make.horizontalEdges.equalToSuperview().inset(Constant.Padding.horizontal)
             make.bottom.equalToSuperview()
         }

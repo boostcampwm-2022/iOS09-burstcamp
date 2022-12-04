@@ -16,7 +16,7 @@ enum MyPageEditValidationResult {
         switch self {
         case .validationOK: return "프로필 수정이 완료되었어요."
         case .nicknameError: return "닉네임을 다시 확인해주세요."
-        case .blogLinkError: return "블로그 링크를 다시 확인해주세요."
+        case .blogLinkError: return "블로그 주소를 다시 확인해주세요."
         }
     }
 }
