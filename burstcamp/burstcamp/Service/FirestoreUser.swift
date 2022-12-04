@@ -11,7 +11,7 @@ import Foundation
 import FirebaseFirestore
 
 struct FirestoreUser {
-    private static let userPath = Firestore.firestore().collection(FireStoreCollection.user.path)
+    private static let userPath = FirestoreCollection.user.reference
     private static let userUUIDField = "userUUID"
     private static let profileImageURLField = "profileImageURL"
     private static let nicknameField = "nickname"
