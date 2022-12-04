@@ -8,10 +8,9 @@
 import Foundation
 
 enum FireStoreCollection: String {
-    case user = "User"
-    case feed = "Feed"
+    case user = "user"
+    case feed = "feed"
     case fcmToken = "FCMToken"
-    case scrapUser = "ScrapUser"
     case recommendFeed = "RecommendFeed"
 
     var path: String {

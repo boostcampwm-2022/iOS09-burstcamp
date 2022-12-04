@@ -178,13 +178,13 @@ final class HomeViewModel {
     private func createQuery(lastSnapShot: QueryDocumentSnapshot?, isPagination: Bool) -> Query {
         if let lastSnapShot = lastSnapShot, isPagination {
             return Firestore.firestore()
-                .collection("Feed")
+                .collection("feed")
                 .order(by: "pubDate", descending: true)
                 .limit(to: 5)
                 .start(afterDocument: lastSnapShot)
         } else {
             return Firestore.firestore()
-                .collection("Feed")
+                .collection("feed")
                 .order(by: "pubDate", descending: true)
                 .limit(to: 5)
         }
@@ -240,7 +240,7 @@ final class HomeViewModel {
     private func requestFeedWriter(uuid: String) async throws -> [String: Any] {
         try await withCheckedThrowingContinuation({ continuation in
             Firestore.firestore()
-                .collection("User")
+                .collection("user")
                 .document(uuid)
                 .getDocument { documentSnapShot, error in
                     if let error = error {
@@ -259,7 +259,7 @@ final class HomeViewModel {
     }
 
     private func countFeedScrapCount(uuid: String) async throws -> Int {
-        let path = ["Feed", uuid, "scrapUserUUIDs"].joined(separator: "/")
+        let path = ["feed", uuid, "scrapUserUUIDs"].joined(separator: "/")
         let countQuery = Firestore.firestore().collection(path).count
         let collectionCount = try await countQuery.getAggregation(source: .server)
         return Int(truncating: collectionCount.count)

@@ -109,7 +109,7 @@ extension NormalFeedCellViewModel {
         feedUUID: String,
         userUUID: String
     ) async throws {
-        let path = ["Feed", feedUUID, "scrapUserUUIDs", userUUID].joined(separator: "/")
+        let path = ["feed", feedUUID, "scrapUserUUIDs", userUUID].joined(separator: "/")
         try await withCheckedThrowingContinuation { continuation in
             Firestore.firestore()
                 .document(path)
@@ -127,7 +127,7 @@ extension NormalFeedCellViewModel {
         feedUUID: String,
         userUUID: String
     ) async throws {
-        let path = ["Feed", feedUUID, "scrapUserUUIDs", userUUID].joined(separator: "/")
+        let path = ["feed", feedUUID, "scrapUserUUIDs", userUUID].joined(separator: "/")
         try await withCheckedThrowingContinuation { continuation in
             Firestore.firestore()
                 .document(path)
@@ -149,7 +149,7 @@ extension NormalFeedCellViewModel {
         feedUUID: String,
         update: FeedUpdate
     ) async throws {
-        let path = ["User", userUUID].joined(separator: "/")
+        let path = ["user", userUUID].joined(separator: "/")
         let updateData = getUpdateData(update: update, feedUUID: feedUUID)
         try await withCheckedThrowingContinuation { continuation in
             Firestore.firestore()
