@@ -5,7 +5,7 @@ env:
 
 on:
   push:
-    branches: [ develop, feature/*, refactor/*, fix/* ]
+    branches: [ feature/*, refactor/*, fix/* ]
   pull_request:
     branches: [ main, develop ]
 
