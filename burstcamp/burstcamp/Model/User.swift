@@ -56,7 +56,7 @@ struct User: Codable {
         self.blogURL = dictionary["blogURL"] as? String ?? ""
         self.blogTitle = dictionary["blogTitle"] as? String ?? ""
         self.scrapFeedUUIDs = dictionary["scrapFeedUUIDs"] as? [String] ?? []
-        self.signupDate = dictionary["signupDate"] as? Date ?? Date() // TODO: Timestamp
+        self.signupDate = dictionary["signupDate"] as? Date ?? Date()
         self.isPushOn = dictionary["isPushOn"] as? Bool ?? false
     }
 

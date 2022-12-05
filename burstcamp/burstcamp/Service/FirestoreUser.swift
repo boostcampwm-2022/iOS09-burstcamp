@@ -21,9 +21,10 @@ struct FirestoreUser {
 
     static func save(user: User) -> AnyPublisher<User, FirestoreError> {
         let path = userPath.document(user.userUUID)
-        guard let dictionary = user.asDictionary else {
+        guard var dictionary = user.asDictionary else {
             return Fail(error: FirestoreError.failAsDictionary).eraseToAnyPublisher()
         }
+        dictionary["signupDate"] = Timestamp()
         return Future<User, FirestoreError> { promise in
             path.setData(dictionary) { error in
                 if error != nil {
