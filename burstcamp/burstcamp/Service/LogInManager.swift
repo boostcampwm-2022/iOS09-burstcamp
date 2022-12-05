@@ -18,10 +18,11 @@ final class LogInManager {
 
     private var cancelBag = Set<AnyCancellable>()
 
+    var autoLogInPublisher = PassthroughSubject<Bool, Never>()
     var logInPublisher = PassthroughSubject<AuthCoordinatorEvent, Never>()
 
-    var userUUID: String {
-        return Auth.auth().currentUser?.uid ?? ""
+    var userUUID: String? {
+        return Auth.auth().currentUser?.uid
     }
 
     var token: String = ""
@@ -42,9 +43,21 @@ final class LogInManager {
         return apiKey.github
     }
 
-    func isLoggedIn() -> Bool {
-        guard Auth.auth().currentUser != nil else { return false }
-        return true
+    func isLoggedIn() {
+        guard let userUUID = userUUID else {
+            autoLogInPublisher.send(false)
+            return
+        }
+
+        FirestoreUser.fetch(userUUID: userUUID)
+            .sink { result in
+                if case .failure = result {
+                    self.autoLogInPublisher.send(false)
+                }
+            } receiveValue: { _ in
+                    self.autoLogInPublisher.send(true)
+            }
+            .store(in: &cancelBag)
     }
 
     func openGithubLoginView() {
@@ -69,63 +82,39 @@ final class LogInManager {
     func logIn(code: String) {
         requestGithubAccessToken(code: code)
             .map { $0.accessToken }
-            .flatMap { accessToken -> AnyPublisher<GithubUser, NetworkError> in
+            .flatMap { accessToken -> AnyPublisher<GithubUser, GithubError> in
                 self.token = accessToken
-                self.signInToFirebase(token: accessToken)
                 return self.requestGithubUserInfo(token: accessToken)
             }
             .map { $0.login }
-            .flatMap { nickname -> AnyPublisher<GithubMembership, NetworkError> in
+            .flatMap { nickname -> AnyPublisher<GithubMembership, GithubError> in
                 self.nickname = nickname
                 return self.getOrganizationMembership(nickname: nickname, token: self.token)
             }
             .receive(on: DispatchQueue.main)
             .sink { result in
-                if case .failure = result {
-                    print("LogInManager : notCamper login함수내")
-                    self.logInPublisher.send(.notCamper)
+                if case .failure(let error) = result {
+                    self.handleGithubError(error: error)
                 }
             } receiveValue: { _ in
-                self.isSignedUp(token: self.token, nickname: self.nickname)
+                self.signInToFirebase(token: self.token)
             }
             .store(in: &cancelBag)
     }
 
-    func signOut() {
-        Auth.auth().currentUser?.delete { error in
-            if error != nil {
-                return
-            } else {
-                guard (try? Auth.auth().signOut()) != nil else {
-                    self.signInToFirebase(token: self.token)
-                    return
-                }
-                FirestoreUser.delete(user: UserManager.shared.user)
-            }
+    func handleGithubError(error: GithubError) {
+        switch error {
+        case .requestAccessTokenError:
+            self.logInPublisher.send(.showAlert("AccessToken을 받을 수 없습니다"))
+        case .requestUserInfoError:
+            self.logInPublisher.send(.showAlert("Github UserInfo를 받을 수 없습니다"))
+        case .checkOrganizationError:
+            self.logInPublisher.send(.showAlert("캠퍼가 아닙니다"))
+        case .APIKeyError:
+            self.logInPublisher.send(.showAlert("관리자에게 문의해주세요 (APIKey)"))
+        case .encodingError:
+            self.logInPublisher.send(.showAlert("관리자에게 문의해주세요 (Github Request body)"))
         }
-    }
-
-    func isSignedUp(token: String, nickname: String) {
-        if self.userUUID.isEmpty {
-            print("LogInManager : moveToDomainScreen isSignedUp함수내")
-            self.logInPublisher.send(.moveToDomainScreen)
-            return
-        }
-
-        FirestoreUser.fetch(userUUID: self.userUUID)
-            .sink { result in
-                switch result {
-                case .finished:
-                    return
-                case .failure:
-                    print("LogInManager : moveToDomainScreen isSignedUp함수내 case failure")
-                    self.logInPublisher.send(.moveToDomainScreen)
-                }
-            } receiveValue: { _ in
-                print("LogInManager : moveToTabBarScreen isSignedUp함수내")
-                self.logInPublisher.send(.moveToTabBarScreen)
-            }
-            .store(in: &cancelBag)
     }
 
     func signInToFirebase(token: String) {
@@ -137,15 +126,53 @@ final class LogInManager {
             else {
                 return
             }
+            self.isSignedUp()
         }
     }
 
-    func requestGithubAccessToken(code: String) -> AnyPublisher<GithubToken, NetworkError> {
+    func isSignedUp() {
+        guard let userUUID = userUUID else { return }
+
+        FirestoreUser.fetch(userUUID: userUUID)
+            .sink { result in
+                switch result {
+                case .finished:
+                    return
+                case .failure(let error):
+                    print("LogInManager : moveToDomainScreen isSignedUp함수내 case failure")
+                    print(error)
+                    self.logInPublisher.send(.moveToDomainScreen)
+                }
+            } receiveValue: { _ in
+                self.logInPublisher.send(.moveToTabBarScreen)
+            }
+            .store(in: &cancelBag)
+    }
+
+    func signOut() -> AnyPublisher<Bool, FirebaseError> {
+        return Future<Bool, FirebaseError> { promise in
+            Auth.auth().currentUser?.delete { error in
+                if error != nil {
+                    promise(.failure(.userDeleteError))
+                } else {
+                    FirestoreUser.delete(user: UserManager.shared.user)
+                    guard (try? Auth.auth().signOut()) != nil else {
+                        promise(.failure(.userSignOutError))
+                        return
+                    }
+                    promise(.success(true))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+
+    func requestGithubAccessToken(code: String) -> AnyPublisher<GithubToken, GithubError> {
         let urlString = "https://github.com/login/oauth/access_token"
 
         guard let githubAPIKey = githubAPIKey
         else {
-            return Fail(error: NetworkError.unknownError).eraseToAnyPublisher()
+            return Fail(error: GithubError.APIKeyError).eraseToAnyPublisher()
         }
 
         let bodyInfos: [String: String] = [
@@ -156,7 +183,7 @@ final class LogInManager {
 
         guard let bodyData = try? JSONSerialization.data(withJSONObject: bodyInfos)
         else {
-            return Fail(error: NetworkError.encodingError)
+            return Fail(error: GithubError.encodingError)
                 .eraseToAnyPublisher()
         }
 
@@ -174,11 +201,11 @@ final class LogInManager {
 
         return request
             .decode(type: GithubToken.self, decoder: JSONDecoder())
-            .mapError { _ in NetworkError.responseDecoingError }
+            .mapError { _ in GithubError.requestAccessTokenError }
             .eraseToAnyPublisher()
     }
 
-    func requestGithubUserInfo(token: String) -> AnyPublisher<GithubUser, NetworkError> {
+    func requestGithubUserInfo(token: String) -> AnyPublisher<GithubUser, GithubError> {
         let urlString = "https:/api.github.com/user"
 
         let httpHeaders = [
@@ -195,14 +222,14 @@ final class LogInManager {
 
         return request
             .decode(type: GithubUser.self, decoder: JSONDecoder())
-            .mapError { _ in NetworkError.responseDecoingError }
+            .mapError { _ in GithubError.requestUserInfoError }
             .eraseToAnyPublisher()
     }
 
     func getOrganizationMembership(
         nickname: String,
         token: String
-    ) -> AnyPublisher<GithubMembership, NetworkError> {
+    ) -> AnyPublisher<GithubMembership, GithubError> {
         let urlString = "https://api.github.com/orgs/boostcampwm-2022/memberships/\(nickname)"
 
         let httpHeaders = [
@@ -219,7 +246,7 @@ final class LogInManager {
 
         return request
             .decode(type: GithubMembership.self, decoder: JSONDecoder())
-            .mapError { _ in NetworkError.responseDecoingError }
+            .mapError { _ in GithubError.checkOrganizationError }
             .eraseToAnyPublisher()
     }
 }

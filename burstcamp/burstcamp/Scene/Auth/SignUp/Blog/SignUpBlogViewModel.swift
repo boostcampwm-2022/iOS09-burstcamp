@@ -62,8 +62,10 @@ final class SignUpBlogViewModel {
     }
 
     private func createUser(blogURL: String, blogTitle: String) -> User {
+        guard let userUUID = LogInManager.shared.userUUID else { return User(dictionary: [:]) }
+
         return User(
-            userUUID: LogInManager.shared.userUUID,
+            userUUID: userUUID,
             nickname: LogInManager.shared.nickname,
             profileImageURL: "https://github.com/\(LogInManager.shared.nickname).png",
             domain: LogInManager.shared.domain,

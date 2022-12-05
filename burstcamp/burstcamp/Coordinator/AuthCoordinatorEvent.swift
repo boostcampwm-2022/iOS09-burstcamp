@@ -12,5 +12,5 @@ enum AuthCoordinatorEvent {
     case moveToIDScreen
     case moveToBlogScreen
     case moveToTabBarScreen
-    case notCamper
+    case showAlert(String)
 }
