@@ -49,7 +49,7 @@ final class LogInView: UIView {
     }
 
     private func configureUI() {
-        backgroundColor = .systemBackground
+        backgroundColor = .background
 
         addSubview(titleImage)
         titleImage.snp.makeConstraints {

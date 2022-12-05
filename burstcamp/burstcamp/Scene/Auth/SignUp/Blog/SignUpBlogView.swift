@@ -68,7 +68,7 @@ final class SignUpBlogView: UIView {
     }
 
     private func configureUI() {
-        backgroundColor = .systemBackground
+        backgroundColor = .background
 
         addSubview(mainLabel)
         mainLabel.snp.makeConstraints {
