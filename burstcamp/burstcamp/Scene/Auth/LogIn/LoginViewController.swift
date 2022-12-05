@@ -58,14 +58,11 @@ final class LogInViewController: UIViewController {
             .sink { logInEvent in
                 switch logInEvent {
                 case .moveToDomainScreen:
-                    print("LogInviewController : moveToDomainScreen")
                     self.coordinatorPublisher.send(.moveToDomainScreen)
                 case .moveToTabBarScreen:
-                    print("LogInviewController : moveToTabBarScreen")
                     self.coordinatorPublisher.send(.moveToTabBarScreen)
-                case .notCamper:
-                    print("LogInviewController : notCamper")
-                    self.showAlert(title: "경고", message: "캠퍼만 가입 가능합니다")
+                case .showAlert(let message):
+                    self.showAlert(title: "경고", message: message)
                 case .moveToBlogScreen, .moveToIDScreen:
                     return
                 }

@@ -26,7 +26,16 @@ final class AppCoordinator: AppCoordinatorProtocol {
     }
 
     func start() {
-        if LogInManager.shared.isLoggedIn() { showTabBarFlow() } else { showAuthFlow() }
+        LogInManager.shared.autoLogInPublisher
+            .sink { [weak self] isLogIn in
+                if isLogIn {
+                    self?.showTabBarFlow()
+                } else {
+                    self?.showAuthFlow()
+                }
+            }
+            .store(in: &cancelBag)
+        LogInManager.shared.isLoggedIn()
     }
 
     func showAuthFlow() {

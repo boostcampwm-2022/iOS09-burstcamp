@@ -56,7 +56,7 @@ extension UIViewController {
         }
     }
 
-    func showAlert(title: String, message: String, alertActions: [UIAlertAction] = []) {
+    func showAlert(title: String = "", message: String, alertActions: [UIAlertAction] = []) {
         let sheet = UIAlertController(
             title: title,
             message: message,

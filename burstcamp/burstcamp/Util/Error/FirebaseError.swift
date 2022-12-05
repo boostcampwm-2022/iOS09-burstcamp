@@ -12,4 +12,6 @@ enum FirebaseError: Error {
     case fetchFeedError
     case fetchScrapCountError
     case lastFetchError
+    case userDeleteError
+    case userSignOutError
 }
