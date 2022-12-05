@@ -82,8 +82,8 @@ final class FeedDetailViewController: UIViewController {
 
         output.feedDidUpdate
             .receive(on: DispatchQueue.main)
-            .sink { feed in
-                self.feedDetailView.configure(with: feed)
+            .sink { [weak self] feed in
+                self?.feedDetailView.configure(with: feed)
             }
             .store(in: &cancelBag)
 
@@ -96,21 +96,21 @@ final class FeedDetailViewController: UIViewController {
 
         output.openActivityView
             .receive(on: DispatchQueue.main)
-            .sink { feedURL in
+            .sink { [weak self] feedURL in
                 let shareViewController = UIActivityViewController(
                     activityItems: [feedURL],
                     applicationActivities: nil
                 )
-                shareViewController.popoverPresentationController?.sourceView = self.feedDetailView
+                shareViewController.popoverPresentationController?.sourceView = self?.feedDetailView
 
-                self.present(shareViewController, animated: true)
+                self?.present(shareViewController, animated: true)
             }
             .store(in: &cancelBag)
 
         output.scrapToggleButtonState
             .receive(on: DispatchQueue.main)
-            .sink { state in
-                self.scrapToggleButton.updateView(with: state)
+            .sink { [weak self] state in
+                self?.scrapToggleButton.updateView(with: state)
             }
             .store(in: &cancelBag)
 

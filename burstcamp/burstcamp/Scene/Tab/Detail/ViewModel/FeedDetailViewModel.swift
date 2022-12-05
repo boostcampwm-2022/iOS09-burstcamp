@@ -48,7 +48,6 @@ final class FeedDetailViewModel {
     func transform(input: Input) -> Output {
         let feedDidUpdate = feed
             .compactMap { $0 }
-            .share()
             .eraseToAnyPublisher()
 
         let openBlog = input.blogButtonDidTap
@@ -66,10 +65,10 @@ final class FeedDetailViewModel {
                 scheduler: DispatchQueue.main,
                 latest: false
             )
-            .sink { state in
-                guard let feedUUID = self.feed.value?.feedUUID else { return }
-                self.updateFeed(feedUUID: feedUUID, state: state)
-                self.scrapToggleButtonIsEnabled.send(false)
+            .sink { [weak self] state in
+                guard let feedUUID = self?.feed.value?.feedUUID else { return }
+                self?.updateFeed(feedUUID: feedUUID, state: state)
+                self?.scrapToggleButtonIsEnabled.send(false)
             }
             .store(in: &cancelBag)
 
@@ -85,8 +84,8 @@ final class FeedDetailViewModel {
 
         let scrapToggleButtonState = input.viewDidLoad
             .merge(with: sharedDBUpdateResult)
-            .map { _ in
-                guard let feedUUID = self.feed.value?.feedUUID else { return false }
+            .map { [weak self] _ in
+                guard let feedUUID = self?.feed.value?.feedUUID else { return false }
                 return UserManager.shared.user.scrapFeedUUIDs.contains(feedUUID)
             }
             .eraseToAnyPublisher()
