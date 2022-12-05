@@ -62,10 +62,7 @@ final class ScrapPageViewModel {
     }
 
     private func getUserScarpUUID() -> [String] {
-        return [
-            "Test2", "Test4", "Test6", "Test8", "Test10",
-                "Test3", "Test5", "Test7", "Test9", "Test11", "Feed1"
-        ]
+        return UserManager.shared.user.scrapFeedUUIDs
     }
 
     private func initScrapFeedUUID() {
@@ -158,7 +155,7 @@ final class ScrapPageViewModel {
     private func fetchFeedDTO(uuid: String) async throws -> FeedDTO {
         try await withCheckedThrowingContinuation({ continuation in
             Firestore.firestore()
-                .collection("Feed")
+                .collection("feed")
                 .document(uuid)
                 .getDocument { documentSnapShot, error in
                     if let error = error {
@@ -180,7 +177,7 @@ final class ScrapPageViewModel {
     private func fetchFeedWriter(uuid: String) async throws -> FeedWriter {
         try await withCheckedThrowingContinuation({ continuation in
             Firestore.firestore()
-                .collection("User")
+                .collection("user")
                 .document(uuid)
                 .getDocument { documentSnapShot, error in
                     if let error = error {

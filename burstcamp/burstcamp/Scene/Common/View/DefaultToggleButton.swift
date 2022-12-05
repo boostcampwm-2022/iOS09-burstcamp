@@ -12,7 +12,11 @@ final class ToggleButton: UIButton {
     private let onImage: UIImage?
     private let offImage: UIImage?
 
-    private(set) var isOn: Bool = false
+    private(set) var isOn: Bool = false {
+        didSet {
+            configure()
+        }
+    }
 
     init(
         onImage: UIImage?,
@@ -62,7 +66,10 @@ final class ToggleButton: UIButton {
 
     func toggle() {
         isOn.toggle()
-        configure()
+    }
+
+    func toggleOn() {
+        isOn = true
     }
 }
 

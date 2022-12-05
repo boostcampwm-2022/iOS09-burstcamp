@@ -30,6 +30,7 @@
 		143D93A6292E484100C67C27 /* burstcampTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143D93A5292E484100C67C27 /* burstcampTests.swift */; };
 		143D93AD292E48C100C67C27 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 143D93AC292E48C100C67C27 /* FirebaseAuth */; };
 		143D93B1292E4B9500C67C27 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 143D93B0292E4B9500C67C27 /* FirebaseFirestore */; };
+		144A1422293C76170067945D /* NormalFeedCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144A1421293C76170067945D /* NormalFeedCellViewModel.swift */; };
 		1458C6952928FB1B00E00B80 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458C6942928FB1B00E00B80 /* HomeView.swift */; };
 		1459C3BA292910B300FA885D /* RecommendFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3B9292910B300FA885D /* RecommendFeedCell.swift */; };
 		1459C3BC2929150200FA885D /* FeedCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3BB2929150200FA885D /* FeedCellType.swift */; };
@@ -180,6 +181,7 @@
 		143216552935C3490034DE9F /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
 		143D93A3292E484100C67C27 /* burstcampTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = burstcampTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		143D93A5292E484100C67C27 /* burstcampTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = burstcampTests.swift; sourceTree = "<group>"; };
+		144A1421293C76170067945D /* NormalFeedCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalFeedCellViewModel.swift; sourceTree = "<group>"; };
 		1458C6942928FB1B00E00B80 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		1459C3B9292910B300FA885D /* RecommendFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedCell.swift; sourceTree = "<group>"; };
 		1459C3BB2929150200FA885D /* FeedCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellType.swift; sourceTree = "<group>"; };
@@ -803,6 +805,7 @@
 		B5BA278C2927B08C00BDCE08 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				144A1421293C76170067945D /* NormalFeedCellViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1140,6 +1143,7 @@
 				141344D0292F800300187B86 /* UIView+addSubViews.swift in Sources */,
 				B5E0D94C292F750D001727F5 /* FeedContentWebView.swift in Sources */,
 				B50A27FC29279F5D00DF3E1F /* AppCoordinatorEvent.swift in Sources */,
+				144A1422293C76170067945D /* NormalFeedCellViewModel.swift in Sources */,
 				B50A27E229279F5D00DF3E1F /* LogInManager.swift in Sources */,
 				B50A27F529279F5D00DF3E1F /* AppCoordinator.swift in Sources */,
 				B50A27F929279F5D00DF3E1F /* TabBarPage.swift in Sources */,

@@ -59,6 +59,10 @@ final class HomeViewModel {
         return output
     }
 
+    func viewModelForCell(at index: Int) -> NormalFeedCellViewModel {
+        return NormalFeedCellViewModel(feed: normalFeedData[index])
+    }
+
     private func fetchAllFeed(output: Output) {
         Task {
             do {
@@ -118,7 +122,12 @@ final class HomeViewModel {
                         uuid: feedDTO.writerUUID
                     )
                     let feedWriter = FeedWriter(data: feedWriterDictionary)
-                    let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
+                    let scrapCount = try await self.countFeedScrapCount(uuid: feedDTO.feedUUID)
+                    let feed = Feed(
+                        feedDTO: feedDTO,
+                        feedWriter: feedWriter,
+                        scrapCount: scrapCount
+                    )
                     return feed
                 }
             }
@@ -169,13 +178,13 @@ final class HomeViewModel {
     private func createQuery(lastSnapShot: QueryDocumentSnapshot?, isPagination: Bool) -> Query {
         if let lastSnapShot = lastSnapShot, isPagination {
             return Firestore.firestore()
-                .collection("Feed")
+                .collection("feed")
                 .order(by: "pubDate", descending: true)
                 .limit(to: 5)
                 .start(afterDocument: lastSnapShot)
         } else {
             return Firestore.firestore()
-                .collection("Feed")
+                .collection("feed")
                 .order(by: "pubDate", descending: true)
                 .limit(to: 5)
         }
@@ -231,7 +240,7 @@ final class HomeViewModel {
     private func fetchFeedWriter(uuid: String) async throws -> [String: Any] {
         try await withCheckedThrowingContinuation({ continuation in
             Firestore.firestore()
-                .collection("User")
+                .collection("user")
                 .document(uuid)
                 .getDocument { documentSnapShot, error in
                     if let error = error {
@@ -247,5 +256,12 @@ final class HomeViewModel {
                     continuation.resume(returning: userData)
                 }
         })
+    }
+
+    private func countFeedScrapCount(uuid: String) async throws -> Int {
+        let path = ["feed", uuid, "scrapUserUUIDs"].joined(separator: "/")
+        let countQuery = Firestore.firestore().collection(path).count
+        let collectionCount = try await countQuery.getAggregation(source: .server)
+        return Int(truncating: collectionCount.count)
     }
 }

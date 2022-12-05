@@ -5,6 +5,7 @@
 //  Created by youtak on 2022/11/16.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -13,7 +14,11 @@ final class NormalFeedCell: UICollectionViewCell {
 
     private lazy var userInfoView = DefaultUserInfoView()
     private lazy var mainView = NormalFeedCellMain()
-    private lazy var footerView = NormalFeedCellFooter()
+    lazy var footerView = NormalFeedCellFooter()
+
+    private var viewModel: NormalFeedCellViewModel!
+
+    private var cancelBag = Set<AnyCancellable>()
 
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -22,6 +27,11 @@ final class NormalFeedCell: UICollectionViewCell {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cancelBag = Set<AnyCancellable>()
     }
 
     private func configureUI() {
@@ -58,6 +68,43 @@ final class NormalFeedCell: UICollectionViewCell {
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(Constant.Cell.normalFooterHeight)
         }
+    }
+
+    func configure(with viewModel: NormalFeedCellViewModel) {
+        self.viewModel = viewModel
+        bind()
+    }
+
+    private func bind() {
+
+        let scrapButton = footerView.scrapButton
+
+        let input = NormalFeedCellViewModel.Input(
+            cellScrapState: scrapButton.statePublisher
+        )
+
+        let output = viewModel.transform(input: input)
+
+        output.cellScrapButtonInitialState
+            .receive(on: DispatchQueue.main)
+            .sink { isScraped in
+                if isScraped {
+                    scrapButton.toggleOn()
+                }
+            }
+            .store(in: &cancelBag)
+
+        output.cellScrapButtonToggle
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                scrapButton.toggle()
+            }
+            .store(in: &cancelBag)
+
+        output.cellScrapButtonIsEnabled
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.isEnabled, on: scrapButton)
+            .store(in: &cancelBag)
     }
 }
 
