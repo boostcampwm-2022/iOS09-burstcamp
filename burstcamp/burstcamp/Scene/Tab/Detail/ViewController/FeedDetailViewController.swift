@@ -20,17 +20,17 @@ final class FeedDetailViewController: UIViewController {
     }
 
     private lazy var barButtonStackView = UIStackView().then {
-        $0.addArrangedSubViews([scrapButton, shareButton])
+        $0.addArrangedSubViews([scrapToggleButton, shareButton])
         $0.spacing = Constant.space24.cgFloat
     }
     private lazy var barButtonStackViewItem = UIBarButtonItem(customView: barButtonStackView)
 
-    private let scrapButton = ToggleButton(
+    private let scrapToggleButton = ToggleButton(
         image: UIImage(systemName: "bookmark.fill"),
         onColor: .main,
         offColor: .systemGray4
     )
-    private lazy var scrapBarButtonItem = UIBarButtonItem(customView: scrapButton)
+    private lazy var scrapBarButtonItem = UIBarButtonItem(customView: scrapToggleButton)
 
     private let shareButton = UIButton().then {
         $0.setImage(
@@ -40,11 +40,16 @@ final class FeedDetailViewController: UIViewController {
     }
     private lazy var shareBarButtonItem = UIBarButtonItem(customView: shareButton)
 
-    private let viewModel: FeedDetailViewModel
+    private let feedDetailViewModel: FeedDetailViewModel
+    private let feedScrapViewModel: FeedScrapViewModel
     private var cancelBag: Set<AnyCancellable> = []
 
-    init(viewModel: FeedDetailViewModel) {
-        self.viewModel = viewModel
+    init(
+        feedDetailViewModel: FeedDetailViewModel,
+        feedScrapViewModel: FeedScrapViewModel
+    ) {
+        self.feedDetailViewModel = feedDetailViewModel
+        self.feedScrapViewModel = feedScrapViewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -71,51 +76,64 @@ final class FeedDetailViewController: UIViewController {
     }
 
     private func bind() {
-        let input = FeedDetailViewModel.Input(
+        let viewDidLoad = Just(Void()).eraseToAnyPublisher()
+
+        // MARK: FeedDetailViewModel
+
+        let feedDetailInput = FeedDetailViewModel.Input(
+            viewDidLoad: viewDidLoad,
             blogButtonDidTap: feedDetailView.blogButtonTapPublisher,
-            scrapButtonDidTap: scrapButton.statePublisher,
             shareButtonDidTap: shareButton.tapPublisher
         )
 
-        let output = viewModel.transform(input: input)
+        let feedDetailOutput = feedDetailViewModel.transform(input: feedDetailInput)
 
-        output.feedDidUpdate
+        feedDetailOutput.feedDidUpdate
             .receive(on: DispatchQueue.main)
-            .sink { feed in
-                self.feedDetailView.configure(with: feed)
+            .sink { [weak self] feed in
+                self?.feedDetailView.configure(with: feed)
             }
             .store(in: &cancelBag)
 
-        output.openBlog
+        feedDetailOutput.openBlog
             .receive(on: DispatchQueue.main)
             .sink { url in
                 UIApplication.shared.open(url)
             }
             .store(in: &cancelBag)
 
-        output.openActivityView
+        feedDetailOutput.openActivityView
             .receive(on: DispatchQueue.main)
-            .sink { feedURL in
+            .sink { [weak self] feedURL in
                 let shareViewController = UIActivityViewController(
                     activityItems: [feedURL],
                     applicationActivities: nil
                 )
-                shareViewController.popoverPresentationController?.sourceView = self.feedDetailView
+                shareViewController.popoverPresentationController?.sourceView = self?.feedDetailView
 
-                self.present(shareViewController, animated: true)
+                self?.present(shareViewController, animated: true)
             }
             .store(in: &cancelBag)
 
-        output.scrapButtonToggle
+        // MARK: FeedScrapViewModel
+
+        let feedScrapInput = FeedScrapViewModel.Input(
+            viewDidLoad: viewDidLoad,
+            scrapToggleButtonDidTap: scrapToggleButton.statePublisher
+        )
+
+        let feedScrapOutput = feedScrapViewModel.transform(input: feedScrapInput)
+
+        feedScrapOutput.scrapToggleButtonState
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-                self.scrapButton.toggle()
+            .sink { [weak self] state in
+                self?.scrapToggleButton.updateView(with: state)
             }
             .store(in: &cancelBag)
 
-        output.scrapButtonIsEnabled
+        feedScrapOutput.scrapToggleButtonIsEnabled
             .receive(on: DispatchQueue.main)
-            .assign(to: \.isEnabled, on: scrapButton)
+            .assign(to: \.isEnabled, on: scrapToggleButton)
             .store(in: &cancelBag)
     }
 }

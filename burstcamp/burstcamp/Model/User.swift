@@ -16,9 +16,10 @@ struct User: Codable {
     let ordinalNumber: Int
     let blogURL: String
     let blogTitle: String
-    let scrapFeedUUIDs: [String]
+    var scrapFeedUUIDs: [String]
     let signupDate: Date
     let isPushOn: Bool
+
     init(
         userUUID: String,
         nickname: String,

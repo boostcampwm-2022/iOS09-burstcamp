@@ -112,6 +112,7 @@ final class AppCoordinator: AppCoordinatorProtocol {
             let navigationBarAppearance = UINavigationBarAppearance()
             navigationBarAppearance.configureWithDefaultBackground()
             navigationBarAppearance.backgroundColor = .background
+            navigationBarAppearance.shadowColor = .background
             self.navigationController.navigationBar.standardAppearance = navigationBarAppearance
             self.navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance
         }
