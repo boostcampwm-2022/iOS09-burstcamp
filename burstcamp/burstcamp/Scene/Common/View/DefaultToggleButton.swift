@@ -63,15 +63,9 @@ final class ToggleButton: UIButton {
         let image = isOn ? onImage : offImage
         setImage(image, for: .normal)
     }
-
-    func toggle() {
-        isOn.toggle()
-    }
-
-    func toggleOn() {
-        isOn = true
-    }
 }
+
+// MARK: Interface
 
 extension ToggleButton {
     var statePublisher: AnyPublisher<Bool, Never> {
@@ -79,5 +73,13 @@ extension ToggleButton {
             .compactMap { $0 as? ToggleButton }
             .map { $0.isOn }
             .eraseToAnyPublisher()
+    }
+
+    func toggle() {
+        isOn.toggle()
+    }
+
+    func updateView(with state: Bool) {
+        isOn = state
     }
 }

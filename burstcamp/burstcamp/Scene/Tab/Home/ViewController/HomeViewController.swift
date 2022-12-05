@@ -144,7 +144,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             let index = indexPath.row
             let feed = viewModel.normalFeedData[index]
-            cell.configure(with: viewModel.viewModelForCell(at: index))
+            cell.configure(with: viewModel.dequeueCellViewModel(at: index))
             cell.updateFeedCell(with: feed)
 
             return cell
@@ -176,8 +176,12 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     // FeedDetail Test용
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let feed = viewModel.normalFeedData[indexPath.row]
-        let viewModel = FeedDetailViewModel(feed: feed)
-        let viewController = FeedDetailViewController(viewModel: viewModel)
+        let feedDetailViewModel = FeedDetailViewModel(feed: feed)
+        let feedScrapViewModel = FeedScrapViewModel(feedUUID: feed.feedUUID)
+        let viewController = FeedDetailViewController(
+            feedDetailViewModel: feedDetailViewModel,
+            feedScrapViewModel: feedScrapViewModel
+        )
         navigationController?.pushViewController(viewController, animated: true)
     }
 

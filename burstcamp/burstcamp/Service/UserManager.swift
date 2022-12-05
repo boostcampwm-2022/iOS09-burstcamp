@@ -15,8 +15,9 @@ final class UserManager {
 
     static let shared = UserManager()
 
-    private(set) var user = User(dictionary: [:])
-    private let userPath = Firestore.firestore().collection(FireStoreCollection.user.path)
+//    private(set) var user = User(dictionary: [:])
+    var user = User(dictionary: [:])
+    private let userPath = FirestoreCollection.user.reference
     let userUpdatePublisher = PassthroughSubject<User, Never>()
 
     private init() {}

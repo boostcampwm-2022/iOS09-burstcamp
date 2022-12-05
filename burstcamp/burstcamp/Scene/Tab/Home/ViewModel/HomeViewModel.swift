@@ -59,8 +59,8 @@ final class HomeViewModel {
         return output
     }
 
-    func viewModelForCell(at index: Int) -> NormalFeedCellViewModel {
-        return NormalFeedCellViewModel(feed: normalFeedData[index])
+    func dequeueCellViewModel(at index: Int) -> FeedScrapViewModel {
+        return FeedScrapViewModel(feedUUID: normalFeedData[index].feedUUID)
     }
 
     private func fetchAllFeed(output: Output) {
@@ -75,11 +75,10 @@ final class HomeViewModel {
                 self.recommendFeedData = try await recommendFeeds
                 self.normalFeedData = try await normalFeeds
                 output.fetchResult.send(.fetchSuccess)
-
-                isFetching = false
             } catch {
-                isFetching = false
+                debugPrint(error.localizedDescription)
             }
+            isFetching = false
         }
     }
 
@@ -177,14 +176,12 @@ final class HomeViewModel {
 
     private func createQuery(lastSnapShot: QueryDocumentSnapshot?, isPagination: Bool) -> Query {
         if let lastSnapShot = lastSnapShot, isPagination {
-            return Firestore.firestore()
-                .collection("feed")
+            return FirestoreCollection.feed.reference
                 .order(by: "pubDate", descending: true)
                 .limit(to: 5)
                 .start(afterDocument: lastSnapShot)
         } else {
-            return Firestore.firestore()
-                .collection("feed")
+            return FirestoreCollection.feed.reference
                 .order(by: "pubDate", descending: true)
                 .limit(to: 5)
         }
@@ -217,8 +214,7 @@ final class HomeViewModel {
 
     private func fetchRecommendFeedDTOs() async throws -> [[String: Any]] {
         try await withCheckedThrowingContinuation({ continuation in
-            Firestore.firestore()
-                .collection("RecommendFeed")
+            FirestoreCollection.recommendFeed.reference
                 .getDocuments { querySnapShot, error in
                     if let error = error {
                         continuation.resume(throwing: error)
@@ -239,8 +235,7 @@ final class HomeViewModel {
 
     private func fetchFeedWriter(uuid: String) async throws -> [String: Any] {
         try await withCheckedThrowingContinuation({ continuation in
-            Firestore.firestore()
-                .collection("user")
+            FirestoreCollection.user.reference
                 .document(uuid)
                 .getDocument { documentSnapShot, error in
                     if let error = error {
