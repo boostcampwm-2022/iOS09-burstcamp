@@ -68,7 +68,7 @@ final class SignUpCamperIDView: UIView {
     }
 
     func configureUI() {
-        backgroundColor = .systemBackground
+        backgroundColor = .background
 
         addSubview(domainLabel)
         domainLabel.snp.makeConstraints {
