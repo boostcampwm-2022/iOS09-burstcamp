@@ -72,7 +72,7 @@ final class SignUpBlogViewModel {
             blogURL: blogURL,
             blogTitle: blogTitle,
             scrapFeedUUIDs: [],
-            signupDate: Date().timeIntervalSince1970,
+            signupDate: Date(),
             isPushOn: false
         )
     }

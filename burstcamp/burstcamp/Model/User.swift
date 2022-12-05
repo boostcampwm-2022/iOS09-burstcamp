@@ -17,7 +17,7 @@ struct User: Codable {
     let blogURL: String
     let blogTitle: String
     let scrapFeedUUIDs: [String]
-    let signupDate: TimeInterval
+    let signupDate: Date
     let isPushOn: Bool
     init(
         userUUID: String,
@@ -29,7 +29,7 @@ struct User: Codable {
         blogURL: String,
         blogTitle: String,
         scrapFeedUUIDs: [String],
-        signupDate: TimeInterval,
+        signupDate: Date,
         isPushOn: Bool
     ) {
         self.userUUID = userUUID
@@ -56,7 +56,7 @@ struct User: Codable {
         self.blogURL = dictionary["blogURL"] as? String ?? ""
         self.blogTitle = dictionary["blogTitle"] as? String ?? ""
         self.scrapFeedUUIDs = dictionary["scrapFeedUUIDs"] as? [String] ?? []
-        self.signupDate = dictionary["signupDate"] as? TimeInterval ?? Date().timeIntervalSince1970
+        self.signupDate = dictionary["signupDate"] as? Date ?? Date()
         self.isPushOn = dictionary["isPushOn"] as? Bool ?? false
     }
 
