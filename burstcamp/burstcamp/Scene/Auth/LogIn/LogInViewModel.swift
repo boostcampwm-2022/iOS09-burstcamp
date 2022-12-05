@@ -16,13 +16,13 @@ final class LogInViewModel {
 
     struct Output {
         let openLogInView: AnyPublisher<Void, Never>
-        let moveToOtherView: AnyPublisher<AuthCoordinatorEvent, Never>
+        let moveToOtherView: PassthroughSubject<AuthCoordinatorEvent, Never>
     }
 
     func transform(input: Input) -> Output {
         let openLogInView = input.logInButtonDidTap
 
-        let moveToOtherView = LogInManager.shared.logInPublisher.eraseToAnyPublisher()
+        let moveToOtherView = LogInManager.shared.logInPublisher
 
         return Output(
             openLogInView: openLogInView,

@@ -50,12 +50,12 @@ final class LogInManager {
         }
 
         FirestoreUser.fetch(userUUID: userUUID)
-            .sink { result in
+            .sink { [weak self] result in
                 if case .failure = result {
-                    self.autoLogInPublisher.send(false)
+                    self?.autoLogInPublisher.send(false)
                 }
-            } receiveValue: { _ in
-                    self.autoLogInPublisher.send(true)
+            } receiveValue: { [weak self] _ in
+                self?.autoLogInPublisher.send(true)
             }
             .store(in: &cancelBag)
     }
@@ -92,41 +92,44 @@ final class LogInManager {
                 return self.getOrganizationMembership(nickname: nickname, token: self.token)
             }
             .receive(on: DispatchQueue.main)
-            .sink { result in
+            .sink { [weak self] result in
                 if case .failure(let error) = result {
-                    self.handleGithubError(error: error)
+                    self?.handleGithubError(error: error)
                 }
-            } receiveValue: { _ in
+            } receiveValue: { [weak self] _ in
+                guard let self = self else {
+                    self?.logInPublisher.send(.showAlert("관리자에게 문의해주세요"))
+                    return
+                }
                 self.signInToFirebase(token: self.token)
             }
             .store(in: &cancelBag)
     }
 
     func handleGithubError(error: GithubError) {
+        self.logInPublisher.send(.showAlert(error.errorDescription ?? ""))
+    }
+
+    func handleFirebaseError(error: FirestoreError) {
         switch error {
-        case .requestAccessTokenError:
-            self.logInPublisher.send(.showAlert("AccessToken을 받을 수 없습니다"))
-        case .requestUserInfoError:
-            self.logInPublisher.send(.showAlert("Github UserInfo를 받을 수 없습니다"))
-        case .checkOrganizationError:
-            self.logInPublisher.send(.showAlert("캠퍼가 아닙니다"))
-        case .APIKeyError:
-            self.logInPublisher.send(.showAlert("관리자에게 문의해주세요 (APIKey)"))
-        case .encodingError:
-            self.logInPublisher.send(.showAlert("관리자에게 문의해주세요 (Github Request body)"))
+        case .noDataError, .setDataError:
+            self.logInPublisher.send(.moveToDomainScreen)
+        default:
+            return
         }
     }
 
     func signInToFirebase(token: String) {
         let credential = GitHubAuthProvider.credential(withToken: token)
 
-        Auth.auth().signIn(with: credential) { result, error in
+        Auth.auth().signIn(with: credential) { [weak self] result, error in
             guard result != nil,
                   error == nil
             else {
+                self?.logInPublisher.send(.showAlert("Fail to firebase auth signIn"))
                 return
             }
-            self.isSignedUp()
+            self?.isSignedUp()
         }
     }
 
@@ -134,17 +137,12 @@ final class LogInManager {
         guard let userUUID = userUUID else { return }
 
         FirestoreUser.fetch(userUUID: userUUID)
-            .sink { result in
-                switch result {
-                case .finished:
-                    return
-                case .failure(let error):
-                    print("LogInManager : moveToDomainScreen isSignedUp함수내 case failure")
-                    print(error)
-                    self.logInPublisher.send(.moveToDomainScreen)
+            .sink { [weak self] result in
+                if case .failure(let error) = result {
+                    self?.handleFirebaseError(error: error)
                 }
-            } receiveValue: { _ in
-                self.logInPublisher.send(.moveToTabBarScreen)
+            } receiveValue: { [weak self] _ in
+                self?.logInPublisher.send(.moveToTabBarScreen)
             }
             .store(in: &cancelBag)
     }
