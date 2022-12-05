@@ -59,8 +59,8 @@ final class HomeViewModel {
         return output
     }
 
-    func viewModelForCell(at index: Int) -> NormalFeedCellViewModel {
-        return NormalFeedCellViewModel(feed: normalFeedData[index])
+    func dequeueCellViewModel(at index: Int) -> FeedScrapViewModel {
+        return FeedScrapViewModel(feedUUID: normalFeedData[index].feedUUID)
     }
 
     private func fetchAllFeed(output: Output) {
@@ -75,11 +75,10 @@ final class HomeViewModel {
                 self.recommendFeedData = try await recommendFeeds
                 self.normalFeedData = try await normalFeeds
                 output.fetchResult.send(.fetchSuccess)
-
-                isFetching = false
             } catch {
-                isFetching = false
+                debugPrint(error.localizedDescription)
             }
+            isFetching = false
         }
     }
 

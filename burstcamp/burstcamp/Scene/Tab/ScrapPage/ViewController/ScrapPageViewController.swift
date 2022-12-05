@@ -141,4 +141,18 @@ extension ScrapPageViewController: UICollectionViewDelegateFlowLayout, UICollect
             paginateFeed()
         }
     }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        let feed = viewModel.scarpFeedData[indexPath.row]
+        let feedDetailViewModel = FeedDetailViewModel(feed: feed)
+        let feedScrapViewModel = FeedScrapViewModel(feedUUID: feed.feedUUID)
+        let viewController = FeedDetailViewController(
+            feedDetailViewModel: feedDetailViewModel,
+            feedScrapViewModel: feedScrapViewModel
+        )
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }

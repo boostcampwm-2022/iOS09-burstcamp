@@ -16,7 +16,7 @@ final class NormalFeedCell: UICollectionViewCell {
     private lazy var mainView = NormalFeedCellMain()
     lazy var footerView = NormalFeedCellFooter()
 
-    private var viewModel: NormalFeedCellViewModel!
+    private var feedScrapViewModel: FeedScrapViewModel!
 
     private var cancelBag = Set<AnyCancellable>()
 
@@ -70,38 +70,29 @@ final class NormalFeedCell: UICollectionViewCell {
         }
     }
 
-    func configure(with viewModel: NormalFeedCellViewModel) {
-        self.viewModel = viewModel
+    func configure(with feedScrapViewModel: FeedScrapViewModel) {
+        self.feedScrapViewModel = feedScrapViewModel
         bind()
     }
 
     private func bind() {
-
         let scrapButton = footerView.scrapButton
 
-        let input = NormalFeedCellViewModel.Input(
-            cellScrapState: scrapButton.statePublisher
+        let input = FeedScrapViewModel.Input(
+            viewDidLoad: Just(Void()).eraseToAnyPublisher(),
+            scrapToggleButtonDidTap: scrapButton.statePublisher
         )
 
-        let output = viewModel.transform(input: input)
+        let output = feedScrapViewModel.transform(input: input)
 
-        output.cellScrapButtonInitialState
+        output.scrapToggleButtonState
             .receive(on: DispatchQueue.main)
-            .sink { isScraped in
-                if isScraped {
-                    scrapButton.toggleOn()
-                }
+            .sink { state in
+                scrapButton.updateView(with: state)
             }
             .store(in: &cancelBag)
 
-        output.cellScrapButtonToggle
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                scrapButton.toggle()
-            }
-            .store(in: &cancelBag)
-
-        output.cellScrapButtonIsEnabled
+        output.scrapToggleButtonIsEnabled
             .receive(on: DispatchQueue.main)
             .assign(to: \.isEnabled, on: scrapButton)
             .store(in: &cancelBag)

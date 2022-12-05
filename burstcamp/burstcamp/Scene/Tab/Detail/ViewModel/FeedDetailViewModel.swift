@@ -16,7 +16,6 @@ final class FeedDetailViewModel {
 
     private let feed = CurrentValueSubject<Feed?, Never>(nil)
     private let dbUpdateResult = PassthroughSubject<Bool, Never>()
-    private let scrapToggleButtonIsEnabled = PassthroughSubject<Bool, Never>()
 
     init() { }
 
@@ -33,7 +32,6 @@ final class FeedDetailViewModel {
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
         let blogButtonDidTap: AnyPublisher<Void, Never>
-        let scrapToggleButtonDidTap: AnyPublisher<Bool, Never>
         let shareButtonDidTap: AnyPublisher<Void, Never>
     }
 
@@ -41,8 +39,6 @@ final class FeedDetailViewModel {
         let feedDidUpdate: AnyPublisher<Feed, Never>
         let openBlog: AnyPublisher<URL, Never>
         let openActivityView: AnyPublisher<String, Never>
-        let scrapToggleButtonState: AnyPublisher<Bool, Never>
-        let scrapToggleButtonIsEnabled: AnyPublisher<Bool, Never>
     }
 
     func transform(input: Input) -> Output {
@@ -59,63 +55,15 @@ final class FeedDetailViewModel {
             .compactMap { self.feed.value?.url }
             .eraseToAnyPublisher()
 
-        input.scrapToggleButtonDidTap
-            .throttle(
-                for: .milliseconds(500),
-                scheduler: DispatchQueue.main,
-                latest: false
-            )
-            .sink { [weak self] state in
-                guard let feedUUID = self?.feed.value?.feedUUID else { return }
-                self?.updateFeed(feedUUID: feedUUID, state: state)
-                self?.scrapToggleButtonIsEnabled.send(false)
-            }
-            .store(in: &cancelBag)
-
         let sharedDBUpdateResult = dbUpdateResult
             .map { _ in Void() }
             .share()
 
-        sharedDBUpdateResult
-            .sink { _ in
-                self.scrapToggleButtonIsEnabled.send(true)
-            }
-            .store(in: &cancelBag)
-
-        let scrapToggleButtonState = input.viewDidLoad
-            .merge(with: sharedDBUpdateResult)
-            .map { [weak self] _ in
-                guard let feedUUID = self?.feed.value?.feedUUID else { return false }
-                return UserManager.shared.user.scrapFeedUUIDs.contains(feedUUID)
-            }
-            .eraseToAnyPublisher()
-
         return Output(
             feedDidUpdate: feedDidUpdate,
             openBlog: openBlog,
-            openActivityView: openActivityView,
-            scrapToggleButtonState: scrapToggleButtonState,
-            scrapToggleButtonIsEnabled: scrapToggleButtonIsEnabled.eraseToAnyPublisher()
+            openActivityView: openActivityView
         )
-    }
-
-    private func updateFeed(feedUUID: String, state: Bool) {
-        Task {
-            do {
-                switch state {
-                case true:
-                    try await requestDeleteScrapUser(at: feedUUID)
-                    UserManager.shared.user.scrapFeedUUIDs.removeAll(where: { $0 == feedUUID })
-                case false:
-                    try await requestAppendScrapUser(at: feedUUID)
-                    UserManager.shared.user.scrapFeedUUIDs.append(feedUUID)
-                }
-                self.dbUpdateResult.send(true)
-            } catch {
-                debugPrint(error.localizedDescription)
-                self.dbUpdateResult.send(false)
-            }
-        }
     }
 
     private func fetchFeed(uuid: String) {
@@ -129,38 +77,6 @@ final class FeedDetailViewModel {
 
             self.feed.send(feed)
         }
-    }
-
-    private func requestDeleteScrapUser(at feedUUID: String) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            FirestoreCollection.scrapUser(feedUUID: feedUUID).reference
-                .document(UserManager.shared.user.userUUID)
-                .delete { error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    continuation.resume()
-                }
-        } as Void
-    }
-
-    private func requestAppendScrapUser(at feedUUID: String) async throws {
-        let userUUID = UserManager.shared.user.userUUID
-        try await withCheckedThrowingContinuation { continuation in
-            FirestoreCollection.scrapUser(feedUUID: feedUUID).reference
-                .document(userUUID)
-                .setData([
-                    "userUUID": userUUID,
-                    "scrapDate": Timestamp(date: Date())
-                ]) { error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    continuation.resume()
-                }
-        } as Void
     }
 
     private func requestGetFeed(uuid: String) async throws -> [String: Any] {

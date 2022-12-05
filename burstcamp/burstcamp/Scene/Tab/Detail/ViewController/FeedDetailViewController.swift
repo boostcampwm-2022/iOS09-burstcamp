@@ -40,11 +40,16 @@ final class FeedDetailViewController: UIViewController {
     }
     private lazy var shareBarButtonItem = UIBarButtonItem(customView: shareButton)
 
-    private let viewModel: FeedDetailViewModel
+    private let feedDetailViewModel: FeedDetailViewModel
+    private let feedScrapViewModel: FeedScrapViewModel
     private var cancelBag: Set<AnyCancellable> = []
 
-    init(viewModel: FeedDetailViewModel) {
-        self.viewModel = viewModel
+    init(
+        feedDetailViewModel: FeedDetailViewModel,
+        feedScrapViewModel: FeedScrapViewModel
+    ) {
+        self.feedDetailViewModel = feedDetailViewModel
+        self.feedScrapViewModel = feedScrapViewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -71,30 +76,33 @@ final class FeedDetailViewController: UIViewController {
     }
 
     private func bind() {
-        let input = FeedDetailViewModel.Input(
-            viewDidLoad: Just(Void()).eraseToAnyPublisher(),
+        let viewDidLoad = Just(Void()).eraseToAnyPublisher()
+
+        // MARK: FeedDetailViewModel
+
+        let feedDetailInput = FeedDetailViewModel.Input(
+            viewDidLoad: viewDidLoad,
             blogButtonDidTap: feedDetailView.blogButtonTapPublisher,
-            scrapToggleButtonDidTap: scrapToggleButton.statePublisher,
             shareButtonDidTap: shareButton.tapPublisher
         )
 
-        let output = viewModel.transform(input: input)
+        let feedDetailOutput = feedDetailViewModel.transform(input: feedDetailInput)
 
-        output.feedDidUpdate
+        feedDetailOutput.feedDidUpdate
             .receive(on: DispatchQueue.main)
             .sink { [weak self] feed in
                 self?.feedDetailView.configure(with: feed)
             }
             .store(in: &cancelBag)
 
-        output.openBlog
+        feedDetailOutput.openBlog
             .receive(on: DispatchQueue.main)
             .sink { url in
                 UIApplication.shared.open(url)
             }
             .store(in: &cancelBag)
 
-        output.openActivityView
+        feedDetailOutput.openActivityView
             .receive(on: DispatchQueue.main)
             .sink { [weak self] feedURL in
                 let shareViewController = UIActivityViewController(
@@ -107,14 +115,23 @@ final class FeedDetailViewController: UIViewController {
             }
             .store(in: &cancelBag)
 
-        output.scrapToggleButtonState
+        // MARK: FeedScrapViewModel
+
+        let feedScrapInput = FeedScrapViewModel.Input(
+            viewDidLoad: viewDidLoad,
+            scrapToggleButtonDidTap: scrapToggleButton.statePublisher
+        )
+
+        let feedScrapOutput = feedScrapViewModel.transform(input: feedScrapInput)
+
+        feedScrapOutput.scrapToggleButtonState
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 self?.scrapToggleButton.updateView(with: state)
             }
             .store(in: &cancelBag)
 
-        output.scrapToggleButtonIsEnabled
+        feedScrapOutput.scrapToggleButtonIsEnabled
             .receive(on: DispatchQueue.main)
             .assign(to: \.isEnabled, on: scrapToggleButton)
             .store(in: &cancelBag)
