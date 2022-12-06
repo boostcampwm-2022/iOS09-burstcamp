@@ -21,6 +21,7 @@ final class SignUpBlogView: UIView {
         $0.text = "주소는 추후에 추가/수정할 수 있어요\n현재는 Tistory, Velog만 지원 중 이에요"
         $0.font = UIFont.regular12
         $0.numberOfLines = 2
+        $0.setLineHeight160()
         $0.textColor = .systemGray2
     }
 
@@ -72,7 +73,7 @@ final class SignUpBlogView: UIView {
 
         addSubview(mainLabel)
         mainLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(Constant.space176)
+            $0.bottom.equalToSuperview().multipliedBy(0.2)
             $0.leading.equalToSuperview().offset(Constant.space16)
         }
 

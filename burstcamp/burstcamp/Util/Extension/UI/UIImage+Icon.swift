@@ -9,5 +9,5 @@ import UIKit
 
 extension UIImage {
     static let appIcon = UIImage(named: "AppIcon")
-    static let burstercamper = UIImage(named: "burstercamper100")
+    static let burstcamper = UIImage(named: "burstcamper100")
 }
