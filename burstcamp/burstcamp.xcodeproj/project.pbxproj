@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		140438B3293F5CF0004D035C /* FeedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438B2293F5CF0004D035C /* FeedCoordinator.swift */; };
+		140438B5293F5D04004D035C /* MyPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438B4293F5D04004D035C /* MyPageCoordinator.swift */; };
 		141344CB292F800300187B86 /* UIFont+FontSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C4292F800300187B86 /* UIFont+FontSet.swift */; };
 		141344CC292F800300187B86 /* UIColor+ColorSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C5292F800300187B86 /* UIColor+ColorSet.swift */; };
 		141344CD292F800300187B86 /* UI+ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C6292F800300187B86 /* UI+ReusableView.swift */; };
@@ -161,6 +163,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		140438B2293F5CF0004D035C /* FeedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCoordinator.swift; sourceTree = "<group>"; };
+		140438B4293F5D04004D035C /* MyPageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageCoordinator.swift; sourceTree = "<group>"; };
 		141344C4292F800300187B86 /* UIFont+FontSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+FontSet.swift"; sourceTree = "<group>"; };
 		141344C5292F800300187B86 /* UIColor+ColorSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+ColorSet.swift"; sourceTree = "<group>"; };
 		141344C6292F800300187B86 /* UI+ReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UI+ReusableView.swift"; sourceTree = "<group>"; };
@@ -326,6 +330,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		140438AD293F5C9C004D035C /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				B50A27C429279F5D00DF3E1F /* AuthCoordinator.swift */,
+				D8E02D6A292C981C00C1E59B /* AuthCoordinatorEvent.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		140438AE293F5CBC004D035C /* App */ = {
+			isa = PBXGroup;
+			children = (
+				B50A27C329279F5D00DF3E1F /* AppCoordinator.swift */,
+				B50A27CB29279F5D00DF3E1F /* AppCoordinatorEvent.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		140438AF293F5CC6004D035C /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				B50A27C529279F5D00DF3E1F /* TabBarCoordinator.swift */,
+				D84452E6292C9A54008E811B /* TabBarCoordinatorEvent.swift */,
+				B50A27C729279F5D00DF3E1F /* TabBarPage.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		140438B0293F5CCA004D035C /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				140438B2293F5CF0004D035C /* FeedCoordinator.swift */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		140438B1293F5CCD004D035C /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				140438B4293F5D04004D035C /* MyPageCoordinator.swift */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
 		142C933F292F517200F6428E /* CombineUIkit */ = {
 			isa = PBXGroup;
 			children = (
@@ -716,13 +764,11 @@
 			isa = PBXGroup;
 			children = (
 				B50A27C929279F5D00DF3E1F /* Base */,
-				B50A27C329279F5D00DF3E1F /* AppCoordinator.swift */,
-				B50A27CB29279F5D00DF3E1F /* AppCoordinatorEvent.swift */,
-				B50A27C429279F5D00DF3E1F /* AuthCoordinator.swift */,
-				D8E02D6A292C981C00C1E59B /* AuthCoordinatorEvent.swift */,
-				B50A27C529279F5D00DF3E1F /* TabBarCoordinator.swift */,
-				D84452E6292C9A54008E811B /* TabBarCoordinatorEvent.swift */,
-				B50A27C729279F5D00DF3E1F /* TabBarPage.swift */,
+				140438AE293F5CBC004D035C /* App */,
+				140438AD293F5C9C004D035C /* Auth */,
+				140438AF293F5CC6004D035C /* TabBar */,
+				140438B0293F5CCA004D035C /* Feed */,
+				140438B1293F5CCD004D035C /* MyPage */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -1111,6 +1157,7 @@
 				B50A27F729279F5D00DF3E1F /* TabBarCoordinator.swift in Sources */,
 				141344D9292F803800187B86 /* UIControl+Combine.swift in Sources */,
 				143185EA292B4A8D008CE459 /* ScrapPageViewController.swift in Sources */,
+				140438B3293F5CF0004D035C /* FeedCoordinator.swift in Sources */,
 				B5DAD67A292E4C6800C4A126 /* FeedDetailView.swift in Sources */,
 				D8095C6B293DC59900964537 /* UIImage+Icon.swift in Sources */,
 				3B7491E92938DCCD00A4BEA0 /* SignUpDomainViewModel.swift in Sources */,
@@ -1127,6 +1174,7 @@
 				D89AE4F32935AFE100446AB3 /* Notification+.swift in Sources */,
 				1458C6952928FB1B00E00B80 /* HomeView.swift in Sources */,
 				B50A27FE29279F5D00DF3E1F /* Coordinator.swift in Sources */,
+				140438B5293F5D04004D035C /* MyPageCoordinator.swift in Sources */,
 				D8576F34293779E2002885FE /* FirestoreUser.swift in Sources */,
 				143185E8292B46F9008CE459 /* HomeViewModel.swift in Sources */,
 				D8095C69293B718C00964537 /* KeyChainManager.swift in Sources */,
