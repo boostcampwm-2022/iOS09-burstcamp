@@ -8,10 +8,10 @@
 import Combine
 import UIKit
 
-protocol AppCoordinatorProtocol: Coordinator {
+protocol AppCoordinatorProtocol: NormalCoordinator {
     func showAuthFlow()
     func showTabBarFlow()
-    func showTabBarFlowByPushNotifiaction(feedUUID: String)
+    func showTabBarFlowByPushNotification(feedUUID: String)
 }
 
 final class AppCoordinator: AppCoordinatorProtocol {
@@ -73,7 +73,7 @@ final class AppCoordinator: AppCoordinatorProtocol {
         tabBarCoordinator.start()
     }
 
-    func showTabBarFlowByPushNotifiaction(feedUUID: String) {
+    func showTabBarFlowByPushNotification(feedUUID: String) {
         if let tabBarCoordinator = tabBarCoordinator() {
             tabBarCoordinator.moveToDetailScreen(feedUUID: feedUUID)
         } else {
@@ -96,7 +96,7 @@ final class AppCoordinator: AppCoordinatorProtocol {
     @objc private func receivePushNotification(_ notification: Notification) {
         guard let feedUUID = notification.userInfo?[NotificationKey.feedUUID] as? String
         else { return }
-        showTabBarFlowByPushNotifiaction(feedUUID: feedUUID)
+        showTabBarFlowByPushNotification(feedUUID: feedUUID)
     }
 
     private func tabBarCoordinator() -> TabBarCoordinator? {

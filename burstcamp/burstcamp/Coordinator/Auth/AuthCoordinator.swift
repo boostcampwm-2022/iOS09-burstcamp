@@ -8,7 +8,7 @@
 import Combine
 import UIKit
 
-protocol AuthCoordinatorProtocol: Coordinator {
+protocol AuthCoordinatorProtocol: NormalCoordinator {
     func moveToTabBarFlow()
     func moveToDomainScreen()
     func moveToIDScreen()

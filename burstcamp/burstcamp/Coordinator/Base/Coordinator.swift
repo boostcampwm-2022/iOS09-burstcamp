@@ -14,8 +14,6 @@ protocol Coordinator: AnyObject {
     var cancelBag: Set<AnyCancellable> { get }
 
     init(navigationController: UINavigationController)
-
-    func start()
 }
 
 extension Coordinator {
@@ -26,4 +24,12 @@ extension Coordinator {
     func remove(childCoordinator: Coordinator) {
         childCoordinators = childCoordinators.filter({ $0 !== childCoordinator })
     }
+}
+
+protocol NormalCoordinator: Coordinator {
+    func start()
+}
+
+protocol TabBarChildCoordinator: Coordinator {
+    func start(viewController: UIViewController)
 }

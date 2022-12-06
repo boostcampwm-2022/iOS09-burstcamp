@@ -9,25 +9,16 @@ import UIKit
 
 import Then
 
-protocol TabBarCoordinatorProtocol: Coordinator {
+protocol TabBarCoordinatorProtocol: NormalCoordinator {
     var tabBarController: UITabBarController { get set }
     var currentPage: TabBarPage? { get }
 
     func selectPage(_ page: TabBarPage)
 
-    func moveToMyPageEditScreen(myPageViewController: MyPageViewController)
-    func moveToOpenSourceScreen()
-    func moveToAuthFlow()
-    func moveMyPageEditScreenToBackScreen(
-        myPageViewController: MyPageViewController,
-        toastMessage: String
-    )
-
     func moveToDetailScreen(feedUUID: String)
 }
 
 final class TabBarCoordinator: TabBarCoordinatorProtocol {
-
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     var tabBarController = UITabBarController()
@@ -43,7 +34,7 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
     }
 
     func start() {
-        let controllers = [TabBarPage.myPage, TabBarPage.bookmark, TabBarPage.home]
+        let controllers = [TabBarPage.myPage, TabBarPage.scrapPage, TabBarPage.home]
             .sorted { $0.index < $1.index }
             .map { prepareTabController($0) }
 
@@ -83,86 +74,23 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
         case .home:
             let homeViewModel = HomeViewModel()
             controller = HomeViewController(viewModel: homeViewModel)
-        case .bookmark:
+        case .scrapPage:
             let scrapPageViewModel = ScrapPageViewModel()
             controller = ScrapPageViewController(viewModel: scrapPageViewModel)
         case .myPage:
-            controller = prepareMyPageViewController()
+            controller = myPageCoordinatorStart()
         }
         configureTabBarItem(of: controller, with: page)
         return controller
     }
 
-    private func prepareMyPageViewController() -> MyPageViewController {
-        let viewModel = MyPageViewModel()
-        let myPageViewController = MyPageViewController(viewModel: viewModel)
-
-        myPageViewController.coordinatorPublisher
-            .sink { [weak self] event in
-                switch event {
-                case .moveToAuthFlow: self?.moveToAuthFlow()
-                case .moveToMyPageEditScreen: self?.moveToMyPageEditScreen(
-                    myPageViewController: myPageViewController
-                )
-                case .moveToOpenSourceScreen: self?.moveToOpenSourceScreen()
-                default: break
-                }
-            }
-            .store(in: &cancelBag)
-
+    private func myPageCoordinatorStart() -> MyPageViewController {
+        let myPageViewModel = MyPageViewModel()
+        let myPageViewController = MyPageViewController(viewModel: myPageViewModel)
+        let myPageCoordinator = MyPageCoordinator(navigationController: navigationController)
+        myPageCoordinator.start(viewController: myPageViewController)
+        childCoordinators.append(myPageCoordinator)
         return myPageViewController
-    }
-
-    private func prepareMyPageEditViewController(
-        myPageViewController: MyPageViewController
-    ) -> MyPageEditViewController {
-        let viewModel = MyPageEditViewModel()
-        let myPageEditViewController = MyPageEditViewController(viewModel: viewModel)
-
-        myPageEditViewController.coordinatorPublisher
-            .sink { [weak self] event in
-                switch event {
-                case .moveMyPageEditScreenToBackScreen(let toastMessage):
-                    self?.moveMyPageEditScreenToBackScreen(
-                        myPageViewController: myPageViewController,
-                        toastMessage: toastMessage
-                    )
-                default: break
-                }
-            }
-            .store(in: &cancelBag)
-
-        return myPageEditViewController
-    }
-}
-
-// MARK: - MyPageEvent
-
-extension TabBarCoordinator {
-
-    func moveToMyPageEditScreen(myPageViewController: MyPageViewController) {
-        let myPageEditViewController = prepareMyPageEditViewController(
-            myPageViewController: myPageViewController
-        )
-        navigationController.pushViewController(myPageEditViewController, animated: true)
-    }
-
-    func moveToOpenSourceScreen() {
-        let openSourceLicenseViewController = OpenSourceLicenseViewController()
-        navigationController.pushViewController(openSourceLicenseViewController, animated: true)
-    }
-
-    func moveToAuthFlow() {
-        finish()
-        coordinatorPublisher.send(.moveToAuthFlow)
-    }
-
-    func moveMyPageEditScreenToBackScreen(
-        myPageViewController: MyPageViewController,
-        toastMessage: String
-    ) {
-        navigationController.popViewController(animated: true)
-        myPageViewController.toastMessagePublisher.send(toastMessage)
     }
 }
 

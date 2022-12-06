@@ -27,7 +27,7 @@ final class MyPageEditViewController: UIViewController {
     private var viewModel: MyPageEditViewModel
     private var cancelBag = Set<AnyCancellable>()
 
-    var coordinatorPublisher = PassthroughSubject<TabBarCoordinatorEvent, Never>()
+    var coordinatorPublisher = PassthroughSubject<MyPageCoordinatorEvent, Never>()
     var imagePickerPublisher = PassthroughSubject<UIImage?, Never>()
 
     private lazy var phpickerConfiguration: PHPickerConfiguration = {
