@@ -101,7 +101,9 @@ final class HomeViewController: UIViewController {
     }
 
     func reloadCollectionView(indexPath: IndexPath) {
-        homeView.collectionView.reloadItems(at: [indexPath])
+        UIView.performWithoutAnimation {
+            homeView.collectionView.reloadItems(at: [indexPath])
+        }
     }
 
     private func paginateFeed() {
@@ -113,7 +115,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return FeedCellType.count
     }
-
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
