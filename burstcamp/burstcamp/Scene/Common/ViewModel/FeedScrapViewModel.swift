@@ -20,6 +20,7 @@ final class FeedScrapViewModel {
 
     private let dbUpdateResult = PassthroughSubject<Bool, Never>()
     private let scrapToggleButtonIsEnabled = PassthroughSubject<Bool, Never>()
+    private let scrapCountUp = PassthroughSubject<Bool, Never>()
     private let feedUUID: String
     private let userUUID: String
 
@@ -70,7 +71,9 @@ final class FeedScrapViewModel {
             .merge(with: sharedDBUpdateResult)
             .map { [weak self] _ in
                 guard let feedUUID = self?.feedUUID else { return false }
-                return UserManager.shared.user.scrapFeedUUIDs.contains(feedUUID)
+                let state = UserManager.shared.user.scrapFeedUUIDs.contains(feedUUID)
+                self?.scrapCountUp.send(state)
+                return state
             }
             .eraseToAnyPublisher()
 
@@ -78,6 +81,10 @@ final class FeedScrapViewModel {
             scrapToggleButtonState: scrapToggleButtonState,
             scrapToggleButtonIsEnabled: scrapToggleButtonIsEnabled.eraseToAnyPublisher()
         )
+    }
+
+    var getScrapCountUp: AnyPublisher<Bool, Never> {
+        return scrapCountUp.eraseToAnyPublisher()
     }
 
     private func updateFeed(userUUID: String, feedUUID: String, scrapState: Bool) {

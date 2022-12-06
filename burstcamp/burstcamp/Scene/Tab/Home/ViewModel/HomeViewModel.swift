@@ -14,7 +14,9 @@ final class HomeViewModel {
 
     var recommendFeedData: [Feed] = []
     var normalFeedData: [Feed] = []
-    var cancelBag = Set<AnyCancellable>()
+
+    private var cellUpdate = PassthroughSubject<IndexPath, Never>()
+    private var cancelBag = Set<AnyCancellable>()
 
     private var lastSnapShot: QueryDocumentSnapshot?
     private var isFetching: Bool = false
@@ -33,10 +35,13 @@ final class HomeViewModel {
 
     struct Output {
         var fetchResult = PassthroughSubject<FetchResult, Never>()
+        var cellUpdate: AnyPublisher<IndexPath, Never>
     }
 
     func transform(input: Input) -> Output {
-        let output = Output()
+        let output = Output(
+            cellUpdate: cellUpdate.eraseToAnyPublisher()
+        )
 
         input.viewDidLoad
             .sink { [weak self] _ in
@@ -60,7 +65,21 @@ final class HomeViewModel {
     }
 
     func dequeueCellViewModel(at index: Int) -> FeedScrapViewModel {
-        return FeedScrapViewModel(feedUUID: normalFeedData[index].feedUUID)
+        let feedScrapViewModel = FeedScrapViewModel(feedUUID: normalFeedData[index].feedUUID)
+        feedScrapViewModel.getScrapCountUp
+            .sink { [weak self] state in
+                guard let self = self else { return }
+                if state {
+                    self.normalFeedData[index].scrapCountUp()
+                } else {
+                    self.normalFeedData[index].scrapCountDown()
+                }
+                let indexPath = IndexPath(row: index, section: FeedCellType.normal.index)
+                self.cellUpdate.send(indexPath)
+            }
+            .store(in: &cancelBag)
+
+        return feedScrapViewModel
     }
 
     private func fetchAllFeed(output: Output) {

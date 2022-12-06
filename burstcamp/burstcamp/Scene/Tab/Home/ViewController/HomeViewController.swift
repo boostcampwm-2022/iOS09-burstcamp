@@ -91,6 +91,17 @@ final class HomeViewController: UIViewController {
                 }
             }
             .store(in: &cancelBag)
+
+        output.cellUpdate
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] indexPath in
+                self?.reloadCollectionView(indexPath: indexPath)
+            }
+            .store(in: &cancelBag)
+    }
+
+    func reloadCollectionView(indexPath: IndexPath) {
+        homeView.collectionView.reloadItems(at: [indexPath])
     }
 
     private func paginateFeed() {
@@ -144,7 +155,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             let index = indexPath.row
             let feed = viewModel.normalFeedData[index]
-            cell.configure(with: viewModel.dequeueCellViewModel(at: index))
+            let cellViewModel = viewModel.dequeueCellViewModel(at: index)
+            cell.configure(with: cellViewModel)
             cell.updateFeedCell(with: feed)
 
             return cell

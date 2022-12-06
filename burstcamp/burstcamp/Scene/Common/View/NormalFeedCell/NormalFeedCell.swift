@@ -97,6 +97,9 @@ final class NormalFeedCell: UICollectionViewCell {
             .assign(to: \.isEnabled, on: scrapButton)
             .store(in: &cancelBag)
     }
+
+    private func updateScrapCount(scrapCount: Int) {
+    }
 }
 
 extension NormalFeedCell {
