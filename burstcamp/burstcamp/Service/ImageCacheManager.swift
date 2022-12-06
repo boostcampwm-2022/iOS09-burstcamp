@@ -33,8 +33,8 @@ final class ImageCacheManager: NSObject, NSCacheDelegate {
     }
 
     func cache(_ cache: NSCache<AnyObject, AnyObject>, willEvictObject obj: Any) {
-        guard let image = obj as? UIImage else { return }
-        print("\(image)삭제중...\n", obj)
+//        guard let image = obj as? UIImage else { return }
+//        print("\(image)삭제중...\n", obj)
     }
 
     func image(
@@ -130,7 +130,7 @@ final class ImageCacheManager: NSObject, NSCacheDelegate {
                         throw self.makeImageCacheError(by: response.statusCode)
                     }
                 }
-                print(data)
+//                print(data)
                 return self.createThumnail(data: data)
             }
             .map { image in
@@ -182,7 +182,7 @@ final class ImageCacheManager: NSObject, NSCacheDelegate {
               let imageHeight = properties[kCGImagePropertyPixelHeight] as? UInt
         else { return UIImage() }
 
-        print(imageWidth, imageHeight)
+//        print(imageWidth, imageHeight)
         let imageMaxPixel = maxPixel(width: imageWidth, height: imageHeight)
 
         let thumnailOptions = [
@@ -200,7 +200,7 @@ final class ImageCacheManager: NSObject, NSCacheDelegate {
 
     private func maxPixel(width: UInt, height: UInt) -> Int {
         let max = Int(max(width, height))
-        print("최대픽셀", maxPixel)
+//        print("최대픽셀", maxPixel)
         switch max {
         case 0...300: return max
         case 301...600: return ImageCacheManager.thumnailMaxPixel
