@@ -72,13 +72,13 @@ final class SignUpCamperIDView: UIView {
 
         addSubview(domainLabel)
         domainLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(Constant.space176)
+            $0.bottom.equalToSuperview().multipliedBy(0.2)
             $0.leading.equalToSuperview().offset(Constant.space16)
         }
 
         addSubview(mainLabel)
         mainLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(Constant.space176)
+            $0.bottom.equalToSuperview().multipliedBy(0.2)
             $0.leading.equalTo(domainLabel.snp.trailing).offset(Constant.space8)
         }
 
@@ -90,7 +90,7 @@ final class SignUpCamperIDView: UIView {
 
         addSubview(representingDomainLabel)
         representingDomainLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(Constant.space288)
+            $0.bottom.equalToSuperview().multipliedBy(0.35)
             $0.leading.equalToSuperview().offset(Constant.space24)
         }
 
