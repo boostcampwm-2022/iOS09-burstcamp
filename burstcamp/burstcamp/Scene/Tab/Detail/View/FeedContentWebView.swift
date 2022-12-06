@@ -22,6 +22,10 @@ final class FeedContentWebView: WKWebView {
         isOpaque = false
         tintColor = .dynamicWhite
         allowsLinkPreview = false
+        scrollView.contentInset = .zero
+        scrollView.isScrollEnabled = false
+        scrollView.layer.masksToBounds = false
+        scrollView.bounces = false
     }
 
     private var meta: String {
