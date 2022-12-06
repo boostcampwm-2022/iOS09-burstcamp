@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+protocol MyPageCoordinatorProtocol: Coordinator {
+    func moveToMyPageEditScreen(myPageViewController: MyPageViewController)
+    func moveToOpenSourceScreen()
+    func moveToAuthFlow()
+    func moveMyPageEditScreenToBackScreen(
+        myPageViewController: MyPageViewController,
+        toastMessage: String
+    )
+}

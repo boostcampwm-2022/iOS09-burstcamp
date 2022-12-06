@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+protocol FeedCoordinatorProtocol: Coordinator {
+    func moveToScrapDetail()
+}
