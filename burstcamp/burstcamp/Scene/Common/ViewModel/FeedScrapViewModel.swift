@@ -62,8 +62,11 @@ final class FeedScrapViewModel {
             .share()
 
         sharedDBUpdateResult
-            .sink { _ in
-                self.scrapToggleButtonIsEnabled.send(true)
+            .sink { [weak self] _ in
+                guard let feedUUID = self?.feedUUID else { return }
+                let state = UserManager.shared.user.scrapFeedUUIDs.contains(feedUUID)
+                self?.scrapCountUp.send(state)
+                self?.scrapToggleButtonIsEnabled.send(true)
             }
             .store(in: &cancelBag)
 
@@ -72,7 +75,6 @@ final class FeedScrapViewModel {
             .map { [weak self] _ in
                 guard let feedUUID = self?.feedUUID else { return false }
                 let state = UserManager.shared.user.scrapFeedUUIDs.contains(feedUUID)
-                self?.scrapCountUp.send(state)
                 return state
             }
             .eraseToAnyPublisher()
