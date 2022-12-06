@@ -100,7 +100,7 @@ final class HomeViewController: UIViewController {
             .store(in: &cancelBag)
     }
 
-    func reloadCollectionView(indexPath: IndexPath) {
+    private func reloadCollectionView(indexPath: IndexPath) {
         UIView.performWithoutAnimation {
             homeView.collectionView.reloadItems(at: [indexPath])
         }
@@ -157,6 +157,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let index = indexPath.row
             let feed = viewModel.normalFeedData[index]
             let cellViewModel = viewModel.dequeueCellViewModel(at: index)
+
             cell.configure(with: cellViewModel)
             cell.updateFeedCell(with: feed)
 

@@ -14,8 +14,10 @@ typealias FeedWithOrder = (order: Int, feed: Feed)
 
 final class ScrapPageViewModel {
 
-    var scarpFeedData: [Feed] = []
+    var scrapFeedData: [Feed] = []
     private var willRequestFeedID: [String] = []
+
+    private var cellUpdate = PassthroughSubject<IndexPath, Never>()
     var cancelBag = Set<AnyCancellable>()
 
     private let requestFeedCount = 7
@@ -35,10 +37,13 @@ final class ScrapPageViewModel {
 
     struct Output {
         var fetchResult = PassthroughSubject<FetchResult, Never>()
+        var cellUpdate: AnyPublisher<IndexPath, Never>
     }
 
     func transform(input: Input) -> Output {
-        let output = Output()
+        let output = Output(
+            cellUpdate: cellUpdate.eraseToAnyPublisher()
+        )
 
         input.viewDidLoad
             .sink { [weak self] _ in
@@ -59,6 +64,24 @@ final class ScrapPageViewModel {
             .store(in: &cancelBag)
 
         return output
+    }
+
+    func dequeueCellViewModel(at index: Int) -> FeedScrapViewModel {
+        let feedScrapViewModel = FeedScrapViewModel(feedUUID: scrapFeedData[index].feedUUID)
+        feedScrapViewModel.getScrapCountUp
+            .sink { [weak self] state in
+                guard let self = self else { return }
+                if state {
+                    self.scrapFeedData[index].scrapCountUp()
+                } else {
+                    self.scrapFeedData[index].scrapCountDown()
+                }
+                let indexPath = IndexPath(row: index, section: 0)
+                self.cellUpdate.send(indexPath)
+            }
+            .store(in: &cancelBag)
+
+        return feedScrapViewModel
     }
 
     private func getUserScarpUUID() -> [String] {
@@ -89,7 +112,7 @@ final class ScrapPageViewModel {
                 canFetchMoreFeed = true
 
                 let scrapFeeds = try await fetchFeeds()
-                scarpFeedData = scrapFeeds
+                scrapFeedData = scrapFeeds
                 output.fetchResult.send(.fetchSuccess)
 
                 isFetching = false
@@ -111,7 +134,7 @@ final class ScrapPageViewModel {
                 canFetchMoreFeed = true
 
                 let scrapFeeds = try await fetchFeeds()
-                scarpFeedData.append(contentsOf: scrapFeeds)
+                scrapFeedData.append(contentsOf: scrapFeeds)
                 output.fetchResult.send(.fetchSuccess)
 
                 isFetching = false
@@ -148,7 +171,8 @@ final class ScrapPageViewModel {
     private func fetchFeed(uuid: String) async throws -> Feed {
         let feedDTO = try await fetchFeedDTO(uuid: uuid)
         let feedWriter = try await fetchFeedWriter(uuid: feedDTO.writerUUID)
-        let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
+        let scrapCount = try await countFeedScrapCount(uuid: uuid)
+        let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter, scrapCount: scrapCount)
         return feed
     }
 
@@ -192,5 +216,12 @@ final class ScrapPageViewModel {
                     continuation.resume(returning: feedWriter)
                 }
         })
+    }
+
+    private func countFeedScrapCount(uuid: String) async throws -> Int {
+        let path = ["feed", uuid, "scrapUsers"].joined(separator: "/")
+        let countQuery = Firestore.firestore().collection(path).count
+        let collectionCount = try await countQuery.getAggregation(source: .server)
+        return Int(truncating: collectionCount.count)
     }
 }
