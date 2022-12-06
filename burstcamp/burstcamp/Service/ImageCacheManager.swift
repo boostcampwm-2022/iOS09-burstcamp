@@ -7,14 +7,35 @@
 
 import Combine
 import UIKit
+import ImageIO
 
-final class ImageCacheManager {
+final class ImageCacheManager: NSObject, NSCacheDelegate {
 
-    static let shared = ImageCacheManager()
+    private static let countLimit = 100
+    private static let totalCostLimit = 1024 * 1024 * ImageCacheManager.countLimit
+    private static let thumnailMaxPixel = 300
+
+    static let shared = ImageCacheManager(
+        countLimit: ImageCacheManager.countLimit,
+        totalCostLimit: ImageCacheManager.totalCostLimit
+    )
     private var cache = NSCache<NSString, UIImage>()
     var cancelBag = Set<AnyCancellable>()
 
-    private init() {}
+    private init(
+        countLimit: Int,
+        totalCostLimit: Int
+    ) {
+        super.init()
+        cache.delegate = self
+        cache.countLimit = countLimit
+        cache.totalCostLimit = totalCostLimit
+    }
+
+    func cache(_ cache: NSCache<AnyObject, AnyObject>, willEvictObject obj: Any) {
+        guard let image = obj as? UIImage else { return }
+        print("\(image)삭제중...\n", obj)
+    }
 
     func image(
         urlString: String,
@@ -39,7 +60,7 @@ final class ImageCacheManager {
         // 3. network request
         return request(urlString: urlString, etag: nil, isDisk: isDiskCaching)
             .catch { _ in
-                Just(UIImage(named: "AppIcon")!)
+                Just(nil)
             }
             .eraseToAnyPublisher()
     }
@@ -97,7 +118,8 @@ final class ImageCacheManager {
 
         return URLSession.shared
             .dataTaskPublisher(for: request)
-            .tryMap { data, response -> UIImage? in
+            .tryMap { [weak self] data, response -> UIImage? in
+                guard let self = self else { return nil }
                 if let response = response as? HTTPURLResponse {
                     switch response.statusCode {
                     case 200...299:
@@ -108,7 +130,8 @@ final class ImageCacheManager {
                         throw self.makeImageCacheError(by: response.statusCode)
                     }
                 }
-                return UIImage(data: data)
+                print(data)
+                return self.createThumnail(data: data)
             }
             .map { image in
                 self.saveInMemoryAndDisk(image: image, urlString: urlString, isDisk: isDisk)
@@ -148,5 +171,40 @@ final class ImageCacheManager {
         let cacheURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
         let imagePath = urlString.replacingOccurrences(of: "/", with: "-")
         return cacheURL.appendingPathExtension(imagePath)
+    }
+
+    private func createThumnail(data: Data) -> UIImage {
+        guard let cgImageSource = CGImageSourceCreateWithData(data as CFData, nil),
+              let properties = CGImageSourceCopyPropertiesAtIndex(
+                cgImageSource, 0, nil
+              ) as? [CFString: Any],
+              let imageWidth = properties[kCGImagePropertyPixelWidth] as? UInt,
+              let imageHeight = properties[kCGImagePropertyPixelHeight] as? UInt
+        else { return UIImage() }
+
+        print(imageWidth, imageHeight)
+        let imageMaxPixel = maxPixel(width: imageWidth, height: imageHeight)
+
+        let thumnailOptions = [
+            kCGImageSourceShouldCache: true,
+            kCGImageSourceCreateThumbnailFromImageAlways: true,
+            kCGImageSourceThumbnailMaxPixelSize: imageMaxPixel,
+            kCGImageSourceCreateThumbnailWithTransform: true
+        ] as CFDictionary
+
+        guard let cgImage = CGImageSourceCreateThumbnailAtIndex(cgImageSource, 0, thumnailOptions)
+        else { return UIImage() }
+
+        return UIImage(cgImage: cgImage)
+    }
+
+    private func maxPixel(width: UInt, height: UInt) -> Int {
+        let max = Int(max(width, height))
+        print("최대픽셀", maxPixel)
+        switch max {
+        case 0...300: return max
+        case 301...600: return ImageCacheManager.thumnailMaxPixel
+        default: return max / 2
+        }
     }
 }
