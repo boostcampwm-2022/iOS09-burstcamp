@@ -51,11 +51,14 @@ final class LogInViewController: UIViewController {
         output.openLogInView
             .sink {
                 LogInManager.shared.openGithubLoginView()
+                self.logInView.activityIndicator.startAnimating()
             }
             .store(in: &cancelBag)
 
         output.moveToOtherView
             .sink { logInEvent in
+                self.logInView.activityIndicator.stopAnimating()
+
                 switch logInEvent {
                 case .moveToDomainScreen:
                     self.coordinatorPublisher.send(.moveToDomainScreen)
