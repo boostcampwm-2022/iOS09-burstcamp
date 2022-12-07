@@ -164,7 +164,7 @@ extension ScrapPageViewController: UICollectionViewDelegateFlowLayout, UICollect
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        let feed = viewModel.scarpFeedData[indexPath.row]
+        let feed = viewModel.scrapFeedData[indexPath.row]
         coordinatorPublisher.send(.moveToFeedDetail(feed: feed))
     }
 }
