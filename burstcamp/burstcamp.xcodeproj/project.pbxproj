@@ -456,6 +456,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		1496CF1F294080E6008F312F /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				D8576F33293779E2002885FE /* FirestoreUser.swift */,
+				D89AE4FC2935F5AE00446AB3 /* FireFunctionsManager.swift */,
+				D89E48AE2939D99300744A56 /* FireStorageService.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
 		14A93D3E2936EFEE00790034 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
@@ -740,6 +750,7 @@
 		B50A28002927A16F00DF3E1F /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				1496CF1F294080E6008F312F /* Firebase */,
 				D88295FD292A4459005B4273 /* URLSessionService.swift */,
 				B50A27A429279F5D00DF3E1F /* LogInManager.swift */,
 				D8C38671292B88DE005A2563 /* UserDefaultsManager.swift */,
@@ -747,9 +758,6 @@
 				D89AE4E72933AF1E00446AB3 /* ImageCacheManager.swift */,
 				D89AE4EE2935AC9C00446AB3 /* FirestoreFCMToken.swift */,
 				D8576F31293779D4002885FE /* UserManager.swift */,
-				D8576F33293779E2002885FE /* FirestoreUser.swift */,
-				D89AE4FC2935F5AE00446AB3 /* FireFunctionsManager.swift */,
-				D89E48AE2939D99300744A56 /* FireStorageService.swift */,
 				D8095C68293B718C00964537 /* KeyChainManager.swift */,
 			);
 			path = Service;
