@@ -10,13 +10,19 @@ import Foundation
 import FirebaseFirestore
 
 protocol FirestoreFeedService {
-    func fetchRecommendFeeds() async throws -> [String: Any]
-    func fetchLatestFeeds() async throws -> [[String: Any]]
     func createLatestQuery() -> Query
     func createPaginateQuery(lastSnapShot: QueryDocumentSnapshot) -> Query
-    func fetchMoreFeeds() async throws -> [[String: Any]]
-    func fetchFeed() async throws -> [String: Any]
-    func fetchUser() async throws -> [String: Any]
+    func fetchRecommendFeedDTOs() async throws -> [[String: Any]]
+    func fetchLatestFeedDTOs() async throws -> (
+        lastestFeedDTOS: [[String: Any]],
+        lastSnapShot: QueryDocumentSnapshot?
+    )
+    func fetchMoreFeeds(query: Query) async throws -> (
+        lastestFeedDTOS: [[String: Any]],
+        lastSnapShot: QueryDocumentSnapshot?
+    )
+    func fetchFeedDTO(feedUUID: String) async throws -> [String: Any]
+    func fetchUser(userUUID: String) async throws -> [String: Any]
     func countFeedScarp(feedUUID: String) async throws -> Int
     func appendUserToFeed(userUUID: String, at feedUUID: String) async throws
     func deleteUserFromFeed(userUUID: String, at feedUUID: String) async throws
@@ -25,14 +31,6 @@ protocol FirestoreFeedService {
 }
 
 final class DefaultFirestoreFeedService: FirestoreFeedService {
-
-    func fetchRecommendFeeds() async throws -> [String: Any] {
-        return [:]
-    }
-
-    func fetchLatestFeeds() async throws -> [[String: Any]] {
-        return [[:]]
-    }
 
     func createLatestQuery() -> Query {
         return FirestoreCollection.feed.reference
@@ -47,20 +45,134 @@ final class DefaultFirestoreFeedService: FirestoreFeedService {
             .start(afterDocument: lastSnapShot)
     }
 
-    func fetchMoreFeeds() async throws -> [[String: Any]] {
-        return [[:]]
+    func fetchRecommendFeedDTOs() async throws -> [[String: Any]] {
+        try await withCheckedThrowingContinuation({ continuation in
+            FirestoreCollection.recommendFeed.reference
+                .getDocuments { querySnapShot, error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    guard let querySnapShot = querySnapShot else {
+                        continuation.resume(throwing: FirebaseError.fetchFeedError)
+                        return
+                    }
+                    let recommendFeeds = querySnapShot.documents.map { queryDocumentSnapshot in
+                        let recommendFeed = queryDocumentSnapshot.data()
+                        return recommendFeed
+                    }
+                    continuation.resume(returning: recommendFeeds)
+                }
+        })
     }
 
-    func fetchFeed() async throws -> [String: Any] {
-        return [:]
+    func fetchLatestFeedDTOs() async throws -> (
+        lastestFeedDTOS: [[String: Any]],
+        lastSnapShot: QueryDocumentSnapshot?
+    ) {
+        try await withCheckedThrowingContinuation({ continuation in
+            var lastSnapShot: QueryDocumentSnapshot?
+            let feedQuery = createLatestQuery()
+
+            feedQuery
+                .getDocuments { querySnapShot, error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    guard let querySnapShot = querySnapShot else {
+                        continuation.resume(throwing: FirebaseError.fetchFeedError)
+                        return
+                    }
+                    lastSnapShot = querySnapShot.documents.last
+                    if lastSnapShot == nil { // 응답한 Feed가 없는 경우
+                        continuation.resume(throwing: FirebaseError.lastFetchError)
+                        return
+                    }
+
+                    let normalFeeds = querySnapShot.documents.map { queryDocumentSnapshot in
+                        let normalFeed = queryDocumentSnapshot.data()
+                        return normalFeed
+                    }
+                    continuation.resume(returning: (normalFeeds, lastSnapShot))
+                }
+        })
     }
 
-    func fetchUser() async throws -> [String: Any] {
-        return [:]
+    func fetchMoreFeeds(query: Query) async throws -> (
+        lastestFeedDTOS: [[String: Any]],
+        lastSnapShot: QueryDocumentSnapshot?
+    ) {
+        try await withCheckedThrowingContinuation({ continuation in
+            var lastSnapShot: QueryDocumentSnapshot?
+
+            query
+                .getDocuments { querySnapShot, error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    guard let querySnapShot = querySnapShot else {
+                        continuation.resume(throwing: FirebaseError.fetchFeedError)
+                        return
+                    }
+                    lastSnapShot = querySnapShot.documents.last
+                    if lastSnapShot == nil { // 응답한 Feed가 없는 경우
+                        continuation.resume(throwing: FirebaseError.lastFetchError)
+                        return
+                    }
+
+                    let normalFeeds = querySnapShot.documents.map { queryDocumentSnapshot in
+                        let normalFeed = queryDocumentSnapshot.data()
+                        return normalFeed
+                    }
+                    continuation.resume(returning: (normalFeeds, lastSnapShot))
+                }
+        })
+    }
+
+    func fetchFeedDTO(feedUUID: String) async throws -> [String: Any] {
+        try await withCheckedThrowingContinuation({ continuation in
+            FirestoreCollection.feed.reference
+                .document(feedUUID)
+                .getDocument { documentSnapShot, error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    guard let snapShot = documentSnapShot,
+                          let feedDTO = snapShot.data()
+                    else {
+                        continuation.resume(throwing: FirebaseError.fetchUserError)
+                        return
+                    }
+                    continuation.resume(returning: feedDTO)
+                }
+        })
+    }
+
+    func fetchUser(userUUID: String) async throws -> [String: Any] {
+        try await withCheckedThrowingContinuation({ continuation in
+            FirestoreCollection.user.reference
+                .document(userUUID)
+                .getDocument { documentSnapShot, error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    guard let snapShot = documentSnapShot,
+                          let userData = snapShot.data()
+                    else {
+                        continuation.resume(throwing: FirebaseError.fetchUserError)
+                        return
+                    }
+                    continuation.resume(returning: userData)
+                }
+        })
     }
 
     func countFeedScarp(feedUUID: String) async throws -> Int {
-        let path = FirestoreCollection.scrapUser(feedUUID: uuid).path
+        let path = FirestoreCollection.scrapUser(feedUUID: feedUUID).path
         let countQuery = Firestore.firestore().collection(path).count
         let collectionCount = try await countQuery.getAggregation(source: .server)
         return Int(truncating: collectionCount.count)

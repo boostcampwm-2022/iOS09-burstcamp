@@ -15,12 +15,17 @@ final class HomeViewModel {
     var recommendFeedData: [Feed] = []
     var normalFeedData: [Feed] = []
 
+    private let firestoreFeedService: FirestoreFeedService
     private var cellUpdate = PassthroughSubject<IndexPath, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
     private var lastSnapShot: QueryDocumentSnapshot?
     private var isFetching: Bool = false
     private var canFetchMoreFeed: Bool = true
+
+    init(firestoreFeedService: FirestoreFeedService) {
+        self.firestoreFeedService = firestoreFeedService
+    }
 
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
