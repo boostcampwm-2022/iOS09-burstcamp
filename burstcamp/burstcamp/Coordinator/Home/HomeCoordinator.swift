@@ -10,6 +10,7 @@ import UIKit
 
 protocol HomeCoordinatorProtocol: TabBarChildCoordinator {
     func moveToFeedDetail(feed: Feed)
+    func moveToFeedDetail(feedUUID: String)
 }
 
 final class HomeCoordinator: HomeCoordinatorProtocol {
@@ -42,13 +43,27 @@ extension HomeCoordinator {
 
     func moveToFeedDetail(feed: Feed) {
         let feedDetailViewController = prepareFeedDetailViewController(feed: feed)
-
         self.navigationController.pushViewController(feedDetailViewController, animated: true)
     }
 
-    func prepareFeedDetailViewController(feed: Feed) -> FeedDetailViewController {
+    func moveToFeedDetail(feedUUID: String) {
+        let feedDetailViewController = prepareFeedDetailViewController(feedUUID: feedUUID)
+        self.navigationController.pushViewController(feedDetailViewController, animated: true)
+    }
+
+    private func prepareFeedDetailViewController(feed: Feed) -> FeedDetailViewController {
         let feedDetailViewModel = FeedDetailViewModel(feed: feed)
         let feedScrapViewModel = FeedScrapViewModel(feedUUID: feed.feedUUID)
+        let feedDetailViewController = FeedDetailViewController(
+            feedDetailViewModel: feedDetailViewModel,
+            feedScrapViewModel: feedScrapViewModel
+        )
+        return feedDetailViewController
+    }
+
+    private func prepareFeedDetailViewController(feedUUID: String) -> FeedDetailViewController {
+        let feedDetailViewModel = FeedDetailViewModel(feedUUID: feedUUID)
+        let feedScrapViewModel = FeedScrapViewModel(feedUUID: feedUUID)
         let feedDetailViewController = FeedDetailViewController(
             feedDetailViewModel: feedDetailViewModel,
             feedScrapViewModel: feedScrapViewModel

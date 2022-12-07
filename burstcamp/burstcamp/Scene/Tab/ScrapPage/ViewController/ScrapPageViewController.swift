@@ -21,6 +21,7 @@ final class ScrapPageViewController: UIViewController {
 
     private var viewModel: ScrapPageViewModel
     private var cancelBag = Set<AnyCancellable>()
+    let coordinatorPublisher = PassthroughSubject<ScrapPageCoordinatorEvent, Never>()
     private let paginationPublisher = PassthroughSubject<Void, Never>()
 
     // MARK: - Initializer
@@ -147,12 +148,6 @@ extension ScrapPageViewController: UICollectionViewDelegateFlowLayout, UICollect
         didSelectItemAt indexPath: IndexPath
     ) {
         let feed = viewModel.scarpFeedData[indexPath.row]
-        let feedDetailViewModel = FeedDetailViewModel(feed: feed)
-        let feedScrapViewModel = FeedScrapViewModel(feedUUID: feed.feedUUID)
-        let viewController = FeedDetailViewController(
-            feedDetailViewModel: feedDetailViewModel,
-            feedScrapViewModel: feedScrapViewModel
-        )
-        navigationController?.pushViewController(viewController, animated: true)
+        coordinatorPublisher.send(.moveToFeedDetail(feed: feed))
     }
 }

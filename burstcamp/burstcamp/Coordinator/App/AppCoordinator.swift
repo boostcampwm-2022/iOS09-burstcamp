@@ -75,13 +75,18 @@ final class AppCoordinator: AppCoordinatorProtocol {
 
     func showTabBarFlowByPushNotification(feedUUID: String) {
         if let tabBarCoordinator = tabBarCoordinator() {
-            tabBarCoordinator.moveToDetailScreen(feedUUID: feedUUID)
+            moveToFeedDetail(tabBarCoordinator: tabBarCoordinator, feedUUID: feedUUID)
         } else {
             showTabBarFlow()
             if let tabBarCoordinator = tabBarCoordinator() {
-                tabBarCoordinator.moveToDetailScreen(feedUUID: feedUUID)
+                moveToFeedDetail(tabBarCoordinator: tabBarCoordinator, feedUUID: feedUUID)
             }
         }
+    }
+
+    private func moveToFeedDetail(tabBarCoordinator: TabBarCoordinator, feedUUID: String) {
+        let homeCoordinator = tabBarCoordinator.getHomeCoordinator()
+        homeCoordinator?.moveToFeedDetail(feedUUID: feedUUID)
     }
 
     private func addObserver() {

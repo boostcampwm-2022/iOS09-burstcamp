@@ -72,8 +72,7 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
         case .home:
             controller = homeCoordinatorStart()
         case .scrapPage:
-            let scrapPageViewModel = ScrapPageViewModel()
-            controller = ScrapPageViewController(viewModel: scrapPageViewModel)
+            controller = scrapPageCoordinatorStart()
         case .myPage:
             controller = myPageCoordinatorStart()
         }
@@ -90,6 +89,15 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
         return homeViewController
     }
 
+    private func scrapPageCoordinatorStart() -> ScrapPageViewController {
+        let scrapPageViewModel = ScrapPageViewModel()
+        let scrapPageViewController = ScrapPageViewController(viewModel: scrapPageViewModel)
+        let scrapCoordinator = ScrapPageCoordinator(navigationController: navigationController)
+        scrapCoordinator.start(viewController: scrapPageViewController)
+        childCoordinators.append(scrapCoordinator)
+        return scrapPageViewController
+    }
+
     private func myPageCoordinatorStart() -> MyPageViewController {
         let myPageViewModel = MyPageViewModel()
         let myPageViewController = MyPageViewController(viewModel: myPageViewModel)
@@ -97,5 +105,14 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
         myPageCoordinator.start(viewController: myPageViewController)
         childCoordinators.append(myPageCoordinator)
         return myPageViewController
+    }
+}
+
+extension TabBarCoordinator {
+    func getHomeCoordinator() -> HomeCoordinator? {
+        let homeCoordinator = childCoordinators.first {
+            type(of: $0) == HomeCoordinator.self
+        } as? HomeCoordinator
+        return homeCoordinator
     }
 }
