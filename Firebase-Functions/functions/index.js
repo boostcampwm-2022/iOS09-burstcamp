@@ -25,10 +25,3 @@ export const fetchBlogTitle = https.onCall(async (data, context) => {
 export const scheduledSendNotification = pubsub.schedule('every day 12:16').onRun(async (context) => {
 	sendNotification()
 })
-
-/**
- * 결제가 필요하지만 각 Cloud Scheduler 작업 비용은 월 $0.10(USD)이고 
- * Google 계정당 작업 3개가 무료로 허용되므로 
- * 전체 비용을 감당할 수 있을 것으로 예상할 수 있습니다. 
- * Blaze 가격 계산기 를 사용하여 예상 사용량을 기반으로 비용 추정치를 생성합니다.
- */

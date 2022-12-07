@@ -112,6 +112,11 @@ export async function getUsersIsPushOnTrue() {
 	return userUUIDs
 }
 
+/**
+ * userUUID로 FCM Token을 찾는다.
+ * @param {String} userUUID 
+ * @returns userUUID에 해당하는 FCM Token
+ */
 export async function getFCMToken(userUUID) {
 	logger.log('유저 아이디' + userUUID);
 	return fcmTokenRef
@@ -122,6 +127,11 @@ export async function getFCMToken(userUUID) {
 		})
 }
 
+/**
+ * userUUID로 User를 찾는다.
+ * @param {String} userUUID 
+ * @returns user
+ */
 export async function getUser(userUUID) {
 	return userRef
 		.doc(userUUID)
