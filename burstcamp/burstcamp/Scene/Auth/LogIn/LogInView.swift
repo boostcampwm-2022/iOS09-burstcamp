@@ -10,7 +10,7 @@ import UIKit
 final class LogInView: UIView {
 
     private lazy var titleImage: UIImageView = UIImageView().then {
-        $0.image = UIImage(named: "AppIcon")
+        $0.image = UIImage.burstcamper
     }
 
     private lazy var titleLabel: UILabel = UILabel().then {
@@ -21,7 +21,7 @@ final class LogInView: UIView {
 
     private lazy var identitySentenceLabel: UILabel = UILabel().then {
         $0.text = "부스트 캠프, 또 하나의 이야기"
-        $0.font = UIFont.bold20
+        $0.font = UIFont.regular14
     }
 
     lazy var githubLogInButton: UIButton = UIButton().then {
@@ -73,8 +73,8 @@ final class LogInView: UIView {
         addSubview(githubLogInButton)
         githubLogInButton.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(Constant.space16)
-            $0.height.equalTo(Constant.Button.defaultButton)
-            $0.bottom.equalToSuperview().offset(Constant.spaceMinus110)
+            $0.height.equalTo(Constant.Button.githubLogInButtonHeight)
+            $0.bottom.equalToSuperview().multipliedBy(0.9)
         }
 
         addSubview(githubLogInLabel)

@@ -64,6 +64,7 @@ enum Constant {
         static let script = 24
         static let editButton = 40
         static let defaultButton = 48
+        static let githubLogInButtonHeight = 48
         static let domainWidth = 120
         static let domainHeight = 60
         static let camera = 24

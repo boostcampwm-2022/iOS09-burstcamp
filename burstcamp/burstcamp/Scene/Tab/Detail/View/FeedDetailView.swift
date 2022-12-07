@@ -13,30 +13,11 @@ import Then
 
 final class FeedDetailView: UIView {
 
+    private let deviceWidth = UIScreen.main.bounds.width
+    private let scrollView = UIScrollView()
+
     private lazy var userInfoStackView = DefaultUserInfoView()
-
-    private lazy var feedInfoStackView = UIStackView().then {
-        $0.addArrangedSubViews([titleLabel, blogTitleLabel, pubDateLabel])
-        $0.axis = .vertical
-        $0.spacing = Constant.space6.cgFloat
-    }
-
-    private lazy var titleLabel = DefaultMultiLineLabel().then {
-        $0.font = .extraBold16
-        $0.textColor = .dynamicBlack
-        $0.numberOfLines = 3
-    }
-
-    private lazy var blogTitleLabel = UILabel().then {
-        $0.font = .regular12
-        $0.textColor = .systemGray2
-    }
-
-    private lazy var pubDateLabel = UILabel().then {
-        $0.font = .regular12
-        $0.textColor = .dynamicBlack
-    }
-
+    private lazy var feedInfoStackView = FeedInfoStackView()
     private lazy var contentView = FeedContentWebView()
 
     private lazy var blogButton = DefaultButton(title: "블로그 바로가기")
@@ -45,55 +26,75 @@ final class FeedDetailView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
+        configureDelegate()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private func configureDelegate() {
+        contentView.navigationDelegate = self
+    }
+
     private func configureUI() {
         backgroundColor = .background
-        addSubViews([userInfoStackView, feedInfoStackView, contentView, blogButton])
+        addSubViews([scrollView, blogButton])
+
+        scrollView.addSubViews([userInfoStackView, feedInfoStackView, contentView])
+
+        scrollView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(blogButton.snp.top).offset(-Constant.space12)
+        }
 
         blogButton.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(Constant.Padding.horizontal)
-            $0.bottom.equalTo(safeAreaLayoutGuide).inset(Constant.space12)
+            $0.bottom.equalTo(safeAreaLayoutGuide)
             $0.height.equalTo(Constant.Button.defaultButton)
         }
 
         userInfoStackView.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(Constant.Padding.horizontal)
-            $0.trailing.lessThanOrEqualToSuperview().inset(Constant.Padding.horizontal)
-            $0.top.equalTo(safeAreaLayoutGuide).inset(Constant.space12)
+            $0.top.equalToSuperview().offset(Constant.space8)
+            $0.leading.equalToSuperview().inset(Constant.space12)
         }
 
         feedInfoStackView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(Constant.Padding.horizontal)
-            $0.top.equalTo(userInfoStackView.snp.bottom).offset(Constant.space24)
+            $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview().inset(Constant.Padding.horizontal)
+            $0.top.equalTo(userInfoStackView.snp.bottom).offset(Constant.space8)
         }
 
         contentView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(Constant.Padding.horizontal)
+            $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview().inset(Constant.Padding.horizontal)
+            $0.height.equalTo(0)
             $0.top.equalTo(feedInfoStackView.snp.bottom).offset(Constant.space24)
-            $0.bottom.equalTo(blogButton.snp.top).offset(-Constant.space12)
+            $0.bottom.equalToSuperview().offset(-Constant.space12)
+        }
+    }
+
+    private func updateContentViewConstraints(height: CGFloat) {
+        contentView.snp.updateConstraints {
+            $0.height.equalTo(height)
+        }
+    }
+}
+
+extension FeedDetailView: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let contentViewHeight = webView.scrollView.contentSize.height
+            self.updateContentViewConstraints(height: contentViewHeight)
         }
     }
 }
 
 extension FeedDetailView {
 
-    private func fetchMockData() {
-        titleLabel.text = "[SwiftUI] NavigationView ➡️ NavigationStack"
-        blogTitleLabel.text = "Zedd"
-        pubDateLabel.text = "2022. 11. 20. 17:38"
-        contentView.loadFormattedHTMLString(String.htmlReadability)
-    }
-
     func configure(with feed: Feed) {
         userInfoStackView.updateView(feedWriter: feed.writer)
-        titleLabel.text = feed.title
-        blogTitleLabel.text = feed.writer.blogTitle
-        pubDateLabel.text = feed.pubDate.monthDateFormatString
+        feedInfoStackView.updateView(feed: feed)
         contentView.loadFormattedHTMLString(feed.content)
     }
 }

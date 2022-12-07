@@ -24,6 +24,12 @@ extension FeedCellType {
         }
     }
 
+    var index: Int {
+        switch self {
+        case .recommend: return 0
+        case .normal: return 1
+        }
+    }
     static var count: Int {
         return FeedCellType.allCases.count
     }

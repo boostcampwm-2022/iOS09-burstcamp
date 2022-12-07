@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		140438AC293F4285004D035C /* FeedInfoStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438AB293F4285004D035C /* FeedInfoStackView.swift */; };
 		140438B5293F5D04004D035C /* MyPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438B4293F5D04004D035C /* MyPageCoordinator.swift */; };
 		140438BB293F6FD7004D035C /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438BA293F6FD7004D035C /* HomeCoordinator.swift */; };
 		140438BD293F6FDF004D035C /* ScrapPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438BC293F6FDF004D035C /* ScrapPageCoordinator.swift */; };
@@ -164,6 +165,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		140438AB293F4285004D035C /* FeedInfoStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedInfoStackView.swift; sourceTree = "<group>"; };
 		140438B4293F5D04004D035C /* MyPageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageCoordinator.swift; sourceTree = "<group>"; };
 		140438BA293F6FD7004D035C /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		140438BC293F6FDF004D035C /* ScrapPageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageCoordinator.swift; sourceTree = "<group>"; };
@@ -903,6 +905,7 @@
 			isa = PBXGroup;
 			children = (
 				B5DAD676292E4C6800C4A126 /* FeedDetailView.swift */,
+				140438AB293F4285004D035C /* FeedInfoStackView.swift */,
 				B5E0D94B292F750D001727F5 /* FeedContentWebView.swift */,
 				B5E0D949292F631C001727F5 /* MockHTMLString.swift */,
 			);
@@ -1221,6 +1224,7 @@
 				B50A27F929279F5D00DF3E1F /* TabBarPage.swift in Sources */,
 				3B061FE2292926DA00BFA71D /* SignUpBlogViewModel.swift in Sources */,
 				14A93D422936F00F00790034 /* FeedWriter.swift in Sources */,
+				140438AC293F4285004D035C /* FeedInfoStackView.swift in Sources */,
 				D84452F8292CF4E0008E811B /* DefaultTextField.swift in Sources */,
 				D8C3866C292B4B0B005A2563 /* OpenSourceLicenseView.swift in Sources */,
 				B50A27DB29279F5D00DF3E1F /* Colors+Generated.swift in Sources */,

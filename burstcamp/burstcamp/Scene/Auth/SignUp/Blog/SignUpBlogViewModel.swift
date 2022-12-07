@@ -14,11 +14,13 @@ final class SignUpBlogViewModel {
         let blogAddressTextFieldDidEdit: AnyPublisher<String, Never>
         let nextButtonDidTap: AnyPublisher<Void, Never>
         let skipConfirmDidTap: PassthroughSubject<Bool, Never>
+        let blogTitleConfirmDidTap: PassthroughSubject<String, Never>
     }
 
     struct Output {
         let validateBlogAddress: AnyPublisher<Bool, Never>
-        let signUpWithNextButton: AnyPublisher<User, FirestoreError>
+        let signUpWithNextButton: AnyPublisher<String, Never>
+        let signUpWithBlogTitle: AnyPublisher<User, FirestoreError>
         let signUpWithSkipButton: AnyPublisher<User, FirestoreError>
     }
 
@@ -31,13 +33,19 @@ final class SignUpBlogViewModel {
             .eraseToAnyPublisher()
 
         let signUpWithNextButton = input.nextButtonDidTap
+            .throttle(for: 1, scheduler: DispatchQueue.main, latest: false)
             .flatMap { _ in
                 return FireFunctionsManager.blogTitle(
                     link: LogInManager.shared.blodURL
                 )
                 .eraseToAnyPublisher()
             }
-            .mapError { _ in FirestoreError.setDataError }
+            .catch { _ in
+                return Just("").eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+
+        let signUpWithBlogTitle = input.blogTitleConfirmDidTap
             .flatMap { title -> AnyPublisher<User, FirestoreError> in
                 return Future<User, FirestoreError> { promise in
                     guard let user = try? self.createUser(
@@ -57,6 +65,7 @@ final class SignUpBlogViewModel {
             .eraseToAnyPublisher()
 
         let signUpWithSkipButton = input.skipConfirmDidTap
+            .throttle(for: 1, scheduler: DispatchQueue.main, latest: false)
             .flatMap { _ -> AnyPublisher<User, FirestoreError> in
                 return Future<User, FirestoreError> { promise in
                     guard let user = try? self.createUser(blogURL: "", blogTitle: "") else {
@@ -75,6 +84,7 @@ final class SignUpBlogViewModel {
         return Output(
             validateBlogAddress: validateBlogAddress,
             signUpWithNextButton: signUpWithNextButton,
+            signUpWithBlogTitle: signUpWithBlogTitle,
             signUpWithSkipButton: signUpWithSkipButton
         )
     }

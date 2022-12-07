@@ -56,7 +56,7 @@ final class SignUpDomainView: UIView {
 
         addSubview(mainLabel)
         mainLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(Constant.space176)
+            $0.bottom.equalToSuperview().multipliedBy(0.2)
             $0.leading.equalToSuperview().offset(Constant.space16)
         }
 
@@ -71,7 +71,7 @@ final class SignUpDomainView: UIView {
             $0.width.equalTo(Constant.Button.domainWidth)
             $0.height.equalTo(Constant.Button.domainHeight)
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(Constant.space326)
+            $0.bottom.equalToSuperview().multipliedBy(0.45)
         }
 
         addSubview(aosButton)
