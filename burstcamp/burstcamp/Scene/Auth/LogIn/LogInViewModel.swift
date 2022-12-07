@@ -16,7 +16,7 @@ final class LogInViewModel {
 
     struct Output {
         let openLogInView: AnyPublisher<Void, Never>
-        let moveToOtherView: PassthroughSubject<AuthCoordinatorEvent, Never>
+        let moveToOtherView: AnyPublisher<AuthCoordinatorEvent, Never>
     }
 
     func transform(input: Input) -> Output {
@@ -25,6 +25,8 @@ final class LogInViewModel {
             .eraseToAnyPublisher()
 
         let moveToOtherView = LogInManager.shared.logInPublisher
+            .throttle(for: 1, scheduler: DispatchQueue.main, latest: false)
+            .eraseToAnyPublisher()
 
         return Output(
             openLogInView: openLogInView,
