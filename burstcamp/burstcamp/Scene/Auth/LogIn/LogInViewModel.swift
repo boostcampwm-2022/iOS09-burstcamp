@@ -21,6 +21,8 @@ final class LogInViewModel {
 
     func transform(input: Input) -> Output {
         let openLogInView = input.logInButtonDidTap
+            .throttle(for: 1, scheduler: DispatchQueue.main, latest: false)
+            .eraseToAnyPublisher()
 
         let moveToOtherView = LogInManager.shared.logInPublisher
 

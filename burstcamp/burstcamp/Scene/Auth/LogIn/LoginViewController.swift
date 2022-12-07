@@ -62,7 +62,7 @@ final class LogInViewController: UIViewController {
                 case .moveToTabBarScreen:
                     self.coordinatorPublisher.send(.moveToTabBarScreen)
                 case .showAlert(let message):
-                    self.showAlert(title: "경고", message: message)
+                    self.showAlert(message: message)
                 case .moveToBlogScreen, .moveToIDScreen:
                     return
                 }
