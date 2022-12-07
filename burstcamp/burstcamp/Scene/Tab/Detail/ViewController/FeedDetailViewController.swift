@@ -42,6 +42,7 @@ final class FeedDetailViewController: UIViewController {
 
     private let feedDetailViewModel: FeedDetailViewModel
     private let feedScrapViewModel: FeedScrapViewModel
+    let coordinatorPublisher = PassthroughSubject<FeedDetailCoordinatorEvent, Never>()
     private var cancelBag: Set<AnyCancellable> = []
 
     init(
@@ -97,8 +98,8 @@ final class FeedDetailViewController: UIViewController {
 
         feedDetailOutput.openBlog
             .receive(on: DispatchQueue.main)
-            .sink { url in
-                UIApplication.shared.open(url)
+            .sink { [weak self] url in
+                self?.coordinatorPublisher.send(.moveToBlogSafari(url: url))
             }
             .store(in: &cancelBag)
 

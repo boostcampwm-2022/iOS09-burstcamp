@@ -22,6 +22,7 @@ final class HomeViewController: UIViewController {
 
     private var viewModel: HomeViewModel
     private var cancelBag = Set<AnyCancellable>()
+    let coordinatorPublisher = PassthroughSubject<HomeCoordinatorEvent, Never>()
     private let paginationPublisher = PassthroughSubject<Void, Never>()
 
     init(viewModel: HomeViewModel) {
@@ -190,17 +191,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     // FeedDetail Test용
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let feed = viewModel.normalFeedData[indexPath.row]
-        let feedDetailViewModel = FeedDetailViewModel(feed: feed)
-        let fireStoreFeedService = DefaultFirestoreFeedService()
-        let feedScrapViewModel = FeedScrapViewModel(
-            feedUUID: feed.feedUUID,
-            firestoreFeedService: fireStoreFeedService
-        )
-        let viewController = FeedDetailViewController(
-            feedDetailViewModel: feedDetailViewModel,
-            feedScrapViewModel: feedScrapViewModel
-        )
-        navigationController?.pushViewController(viewController, animated: true)
+        coordinatorPublisher.send(.moveToFeedDetail(feed: feed))
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

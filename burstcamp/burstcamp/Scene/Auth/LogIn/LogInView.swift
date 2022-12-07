@@ -7,6 +7,9 @@
 
 import UIKit
 
+import SnapKit
+import Then
+
 final class LogInView: UIView {
 
     private lazy var titleImage: UIImageView = UIImageView().then {
@@ -36,6 +39,10 @@ final class LogInView: UIView {
         $0.text = "캠퍼 인증을 위해 Github으로 로그인을 해주세요."
         $0.font = UIFont.regular12
         $0.textColor = .systemGray2
+    }
+
+    lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView().then {
+        $0.style = .large
     }
 
     override init(frame: CGRect) {
@@ -81,6 +88,11 @@ final class LogInView: UIView {
         githubLogInLabel.snp.makeConstraints {
             $0.top.equalTo(githubLogInButton.snp.bottom).offset(Constant.space12)
             $0.centerX.equalToSuperview()
+        }
+
+        addSubview(activityIndicator)
+        activityIndicator.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
         }
     }
 }

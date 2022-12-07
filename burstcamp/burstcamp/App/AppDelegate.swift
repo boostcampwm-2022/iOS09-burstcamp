@@ -7,6 +7,7 @@
 
 import UIKit
 
+import BCResource
 import Firebase
 import FirebaseCore
 
