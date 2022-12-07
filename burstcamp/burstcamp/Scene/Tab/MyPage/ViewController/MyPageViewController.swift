@@ -23,7 +23,7 @@ final class MyPageViewController: UIViewController {
     private var viewModel: MyPageViewModel
     private var cancelBag = Set<AnyCancellable>()
 
-    var coordinatorPublisher = PassthroughSubject<TabBarCoordinatorEvent, Never>()
+    var coordinatorPublisher = PassthroughSubject<MyPageCoordinatorEvent, Never>()
     var toastMessagePublisher = PassthroughSubject<String, Never>()
     var withDrawalPublisher = PassthroughSubject<Void, Never>()
 

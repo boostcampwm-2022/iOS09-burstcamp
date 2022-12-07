@@ -9,7 +9,7 @@ import Foundation
 
 enum TabBarPage: Int {
     case home
-    case bookmark
+    case scrapPage
     case myPage
 }
 
@@ -21,7 +21,7 @@ extension TabBarPage {
     var pageTitle: String {
         switch self {
         case .home: return "홈"
-        case .bookmark: return "모아보기"
+        case .scrapPage: return "모아보기"
         case .myPage: return "마이페이지"
         }
     }
@@ -29,7 +29,7 @@ extension TabBarPage {
     var pageIconTitle: String {
         switch self {
         case .home: return "house"
-        case .bookmark: return "bookmark"
+        case .scrapPage: return "bookmark"
         case .myPage: return "person.circle"
         }
     }
