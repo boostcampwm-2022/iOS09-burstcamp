@@ -18,10 +18,10 @@ protocol FirestoreFeedService {
     func fetchFeed() async throws -> [String: Any]
     func fetchUser() async throws -> [String: Any]
     func countFeedScarp() async throws -> Int
-    func appendUserToFeedScrapUser() async throws
-    func deleteUserFromFeedScrapUser() async throws
-    func appendFeedUUIDToUserScrapFeed() async throws
-    func deleteFeedUUIDFromUserScrapFeed() async throws
+    func appendUserToFeed(userUUID: String, at feedUUID: String) async throws
+    func deleteUserFromFeed(userUUID: String, at feedUUID: String) async throws
+    func appendFeedUUIDToUser(feedUUID: String, at userUUID: String) async throws
+    func deleteFeedUUIDFromUser(feedUUID: String, at userUUID: String) async throws
 }
 
 final class DefaultFirestoreFeedService: FirestoreFeedService {
@@ -63,15 +63,66 @@ final class DefaultFirestoreFeedService: FirestoreFeedService {
         return 0
     }
 
-    func appendUserToFeedScrapUser() async throws {
+    func appendUserToFeed(userUUID: String, at feedUUID: String) async throws {
+        try await withCheckedThrowingContinuation { continuation in
+            FirestoreCollection.scrapUser(feedUUID: feedUUID).reference
+                .document(userUUID)
+                .setData([
+                    "userUUID": userUUID,
+                    "scrapDate": Timestamp(date: Date())
+                ]) { error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    continuation.resume()
+                }
+        } as Void
     }
 
-    func deleteUserFromFeedScrapUser() async throws {
+    func deleteUserFromFeed(userUUID: String, at feedUUID: String) async throws {
+        try await withCheckedThrowingContinuation { continuation in
+            FirestoreCollection.scrapUser(feedUUID: feedUUID).reference
+                .document(userUUID)
+                .delete { error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    continuation.resume()
+                }
+        } as Void
     }
 
-    func appendFeedUUIDToUserScrapFeed() async throws {
+    func appendFeedUUIDToUser(feedUUID: String, at userUUID: String) async throws {
+        try await withCheckedThrowingContinuation { continuation in
+            FirestoreCollection.user.reference
+                .document(userUUID)
+                .updateData([
+                    "scrapFeedUUIDs": FieldValue.arrayUnion([feedUUID])
+                ]) { error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    continuation.resume()
+                }
+        } as Void
     }
 
-    func deleteFeedUUIDFromUserScrapFeed() async throws {
+    func deleteFeedUUIDFromUser(feedUUID: String, at userUUID: String) async throws {
+        try await withCheckedThrowingContinuation { continuation in
+            FirestoreCollection.user.reference
+                .document(userUUID)
+                .updateData([
+                    "scrapFeedUUIDs": FieldValue.arrayRemove([feedUUID])
+                ]) { error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    continuation.resume()
+                }
+        } as Void
     }
 }
