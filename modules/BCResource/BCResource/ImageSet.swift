@@ -9,4 +9,5 @@ import UIKit
 
 public extension UIImage {
     static let burstcamper = Assets.Image.burstcamper100.image
+    static let github = Assets.Image.github.image
 }
