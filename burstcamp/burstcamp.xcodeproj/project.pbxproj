@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		140438B3293F5CF0004D035C /* FeedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438B2293F5CF0004D035C /* FeedCoordinator.swift */; };
 		140438B5293F5D04004D035C /* MyPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438B4293F5D04004D035C /* MyPageCoordinator.swift */; };
 		140438B7293F5EC0004D035C /* MyPageCoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438B6293F5EC0004D035C /* MyPageCoordinatorEvent.swift */; };
+		140438BB293F6FD7004D035C /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438BA293F6FD7004D035C /* HomeCoordinator.swift */; };
+		140438BD293F6FDF004D035C /* ScrapPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438BC293F6FDF004D035C /* ScrapPageCoordinator.swift */; };
+		140438C0293F77DD004D035C /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438BF293F77DD004D035C /* Factory.swift */; };
 		141344CB292F800300187B86 /* UIFont+FontSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C4292F800300187B86 /* UIFont+FontSet.swift */; };
 		141344CC292F800300187B86 /* UIColor+ColorSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C5292F800300187B86 /* UIColor+ColorSet.swift */; };
 		141344CD292F800300187B86 /* UI+ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C6292F800300187B86 /* UI+ReusableView.swift */; };
@@ -38,6 +40,7 @@
 		1459C3BC2929150200FA885D /* FeedCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3BB2929150200FA885D /* FeedCellType.swift */; };
 		14927E1E2929C71C001F2E97 /* RecommendFeedUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14927E1D2929C71C001F2E97 /* RecommendFeedUserView.swift */; };
 		14927E202929CCA0001F2E97 /* RecommendFeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */; };
+		1496CF17294057F1008F312F /* HomeCoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF16294057F1008F312F /* HomeCoordinatorEvent.swift */; };
 		14A93D402936EFF900790034 /* FeedDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D3F2936EFF900790034 /* FeedDTO.swift */; };
 		14A93D422936F00F00790034 /* FeedWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D412936F00F00790034 /* FeedWriter.swift */; };
 		14F94BE62939E16D0058A79A /* UICollectionView+emptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */; };
@@ -164,9 +167,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		140438B2293F5CF0004D035C /* FeedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCoordinator.swift; sourceTree = "<group>"; };
 		140438B4293F5D04004D035C /* MyPageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageCoordinator.swift; sourceTree = "<group>"; };
 		140438B6293F5EC0004D035C /* MyPageCoordinatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageCoordinatorEvent.swift; sourceTree = "<group>"; };
+		140438BA293F6FD7004D035C /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
+		140438BC293F6FDF004D035C /* ScrapPageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageCoordinator.swift; sourceTree = "<group>"; };
+		140438BF293F77DD004D035C /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
 		141344C4292F800300187B86 /* UIFont+FontSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+FontSet.swift"; sourceTree = "<group>"; };
 		141344C5292F800300187B86 /* UIColor+ColorSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+ColorSet.swift"; sourceTree = "<group>"; };
 		141344C6292F800300187B86 /* UI+ReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UI+ReusableView.swift"; sourceTree = "<group>"; };
@@ -194,6 +199,7 @@
 		1459C3BB2929150200FA885D /* FeedCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellType.swift; sourceTree = "<group>"; };
 		14927E1D2929C71C001F2E97 /* RecommendFeedUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedUserView.swift; sourceTree = "<group>"; };
 		14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedHeader.swift; sourceTree = "<group>"; };
+		1496CF16294057F1008F312F /* HomeCoordinatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinatorEvent.swift; sourceTree = "<group>"; };
 		14A93D3F2936EFF900790034 /* FeedDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDTO.swift; sourceTree = "<group>"; };
 		14A93D412936F00F00790034 /* FeedWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedWriter.swift; sourceTree = "<group>"; };
 		14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+emptyView.swift"; sourceTree = "<group>"; };
@@ -360,14 +366,6 @@
 			path = TabBar;
 			sourceTree = "<group>";
 		};
-		140438B0293F5CCA004D035C /* Feed */ = {
-			isa = PBXGroup;
-			children = (
-				140438B2293F5CF0004D035C /* FeedCoordinator.swift */,
-			);
-			path = Feed;
-			sourceTree = "<group>";
-		};
 		140438B1293F5CCD004D035C /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -375,6 +373,31 @@
 				140438B6293F5EC0004D035C /* MyPageCoordinatorEvent.swift */,
 			);
 			path = MyPage;
+			sourceTree = "<group>";
+		};
+		140438B8293F6EAF004D035C /* ScrapPage */ = {
+			isa = PBXGroup;
+			children = (
+				140438BC293F6FDF004D035C /* ScrapPageCoordinator.swift */,
+			);
+			path = ScrapPage;
+			sourceTree = "<group>";
+		};
+		140438B9293F6EBE004D035C /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				140438BA293F6FD7004D035C /* HomeCoordinator.swift */,
+				1496CF16294057F1008F312F /* HomeCoordinatorEvent.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		140438BE293F77C5004D035C /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				140438BF293F77DD004D035C /* Factory.swift */,
+			);
+			path = Factory;
 			sourceTree = "<group>";
 		};
 		142C933F292F517200F6428E /* CombineUIkit */ = {
@@ -597,6 +620,7 @@
 		B50A278829279F5D00DF3E1F /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				140438BE293F77C5004D035C /* Factory */,
 				143216542935C3320034DE9F /* Error */,
 				D84C8128292E513500C984E8 /* Validation */,
 				B5BA27882927AFC200BDCE08 /* Constant */,
@@ -766,11 +790,12 @@
 		B50A27C229279F5D00DF3E1F /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
+				140438B9293F6EBE004D035C /* Home */,
+				140438B8293F6EAF004D035C /* ScrapPage */,
 				B50A27C929279F5D00DF3E1F /* Base */,
 				140438AE293F5CBC004D035C /* App */,
 				140438AD293F5C9C004D035C /* Auth */,
 				140438AF293F5CC6004D035C /* TabBar */,
-				140438B0293F5CCA004D035C /* Feed */,
 				140438B1293F5CCD004D035C /* MyPage */,
 			);
 			path = Coordinator;
@@ -1124,6 +1149,7 @@
 				B5DAD681292E58BF00C4A126 /* DefaultMultilLineLabel.swift in Sources */,
 				B50A27DC29279F5D00DF3E1F /* Fonts+Generated.swift in Sources */,
 				3B061FDD2928E8E300BFA71D /* SignUpCamperIDViewController.swift in Sources */,
+				140438C0293F77DD004D035C /* Factory.swift in Sources */,
 				B50A27EE29279F5D00DF3E1F /* HomeViewController.swift in Sources */,
 				B50A27E629279F5D00DF3E1F /* LogInViewController.swift in Sources */,
 				141344CE292F800300187B86 /* UINavigationController+configure.swift in Sources */,
@@ -1143,6 +1169,7 @@
 				D84452F0292CA57D008E811B /* MyPageEditViewController.swift in Sources */,
 				D84452FC292DB7DE008E811B /* CellIndexPath.swift in Sources */,
 				D8E979CA293A6D430092EBF6 /* Alert.swift in Sources */,
+				140438BB293F6FD7004D035C /* HomeCoordinator.swift in Sources */,
 				D84452E7292C9A54008E811B /* TabBarCoordinatorEvent.swift in Sources */,
 				B50A27E429279F5D00DF3E1F /* APIKey.swift in Sources */,
 				B50A27ED29279F5D00DF3E1F /* NormalFeedCell.swift in Sources */,
@@ -1160,7 +1187,6 @@
 				B50A27F729279F5D00DF3E1F /* TabBarCoordinator.swift in Sources */,
 				141344D9292F803800187B86 /* UIControl+Combine.swift in Sources */,
 				143185EA292B4A8D008CE459 /* ScrapPageViewController.swift in Sources */,
-				140438B3293F5CF0004D035C /* FeedCoordinator.swift in Sources */,
 				B5DAD67A292E4C6800C4A126 /* FeedDetailView.swift in Sources */,
 				D8095C6B293DC59900964537 /* UIImage+Icon.swift in Sources */,
 				3B7491E92938DCCD00A4BEA0 /* SignUpDomainViewModel.swift in Sources */,
@@ -1174,6 +1200,7 @@
 				D8494D482927C9E8008157F1 /* MyPageViewModel.swift in Sources */,
 				141344D7292F801100187B86 /* TimeInterval+.swift in Sources */,
 				D8494D4A2927CBD4008157F1 /* DefaultButton.swift in Sources */,
+				1496CF17294057F1008F312F /* HomeCoordinatorEvent.swift in Sources */,
 				D89AE4F32935AFE100446AB3 /* Notification+.swift in Sources */,
 				1458C6952928FB1B00E00B80 /* HomeView.swift in Sources */,
 				B50A27FE29279F5D00DF3E1F /* Coordinator.swift in Sources */,
@@ -1209,6 +1236,7 @@
 				D8C3866C292B4B0B005A2563 /* OpenSourceLicenseView.swift in Sources */,
 				B50A27DB29279F5D00DF3E1F /* Colors+Generated.swift in Sources */,
 				D89AE4EF2935AC9C00446AB3 /* FirestoreFCMToken.swift in Sources */,
+				140438BD293F6FDF004D035C /* ScrapPageCoordinator.swift in Sources */,
 				D84452F6292CF4BC008E811B /* DefaultImageLabel.swift in Sources */,
 				140438B7293F5EC0004D035C /* MyPageCoordinatorEvent.swift in Sources */,
 				D8C38672292B88DE005A2563 /* UserDefaultsManager.swift in Sources */,

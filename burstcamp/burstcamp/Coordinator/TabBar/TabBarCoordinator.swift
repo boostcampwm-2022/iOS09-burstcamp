@@ -14,8 +14,6 @@ protocol TabBarCoordinatorProtocol: NormalCoordinator {
     var currentPage: TabBarPage? { get }
 
     func selectPage(_ page: TabBarPage)
-
-    func moveToDetailScreen(feedUUID: String)
 }
 
 final class TabBarCoordinator: TabBarCoordinatorProtocol {
@@ -72,8 +70,7 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
         var controller: UIViewController
         switch page {
         case .home:
-            let homeViewModel = HomeViewModel()
-            controller = HomeViewController(viewModel: homeViewModel)
+            controller = homeCoordinatorStart()
         case .scrapPage:
             let scrapPageViewModel = ScrapPageViewModel()
             controller = ScrapPageViewController(viewModel: scrapPageViewModel)
@@ -84,6 +81,15 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
         return controller
     }
 
+    private func homeCoordinatorStart() -> HomeViewController {
+        let homeViewModel = HomeViewModel()
+        let homeViewController = HomeViewController(viewModel: homeViewModel)
+        let homeCoordinator = HomeCoordinator(navigationController: navigationController)
+        homeCoordinator.start(viewController: homeViewController)
+        childCoordinators.append(homeCoordinator)
+        return homeViewController
+    }
+
     private func myPageCoordinatorStart() -> MyPageViewController {
         let myPageViewModel = MyPageViewModel()
         let myPageViewController = MyPageViewController(viewModel: myPageViewModel)
@@ -91,15 +97,5 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
         myPageCoordinator.start(viewController: myPageViewController)
         childCoordinators.append(myPageCoordinator)
         return myPageViewController
-    }
-}
-
-// MARK: - Push Notification
-
-extension TabBarCoordinator {
-
-    func moveToDetailScreen(feedUUID: String) {
-//        let detailViewController = FeedDetailViewController(feedUUID: feedUUID)
-//        navigationController.pushViewController(detailViewController, animated: true)
     }
 }
