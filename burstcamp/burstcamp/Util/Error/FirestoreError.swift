@@ -22,7 +22,9 @@ enum FirestoreError: LocalizedError {
     case fetchScrapCountError
     case lastFetchError
     case paginateQueryError
+}
 
+extension FirestoreError {
     var errorDescription: String? {
         switch self {
         /// 유저

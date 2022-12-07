@@ -14,30 +14,30 @@ final class FireStorageService {
 
     private static let storagePath = Storage.storage()
 
-    static func save(image: UIImage) -> AnyPublisher<String, FireStorageError> {
+    static func save(image: UIImage) -> AnyPublisher<String, Error> {
         guard let imageData = image.jpegData(compressionQuality: 1.0)
         else {
-            return Fail(error: FireStorageError.invalidConversionFromImageToData)
+            return Fail(error: ConvertError.invalidImageConvert)
                 .eraseToAnyPublisher()
         }
 
         let filename = UserManager.shared.user.userUUID
         let ref = storagePath.reference(withPath: "/images/\(filename)")
 
-        return Future<String, FireStorageError> { promise in
+        return Future<String, Error> { promise in
             ref.putData(imageData) { _, error in
                 if error != nil {
-                    promise(.failure(.failPutDataToStorage))
+                    promise(.failure(FireStorageError.dataUploadError))
                 }
                 ref.downloadURL { url, error in
                     if error != nil {
-                        promise(.failure(.failDownloadURL))
+                        promise(.failure(FireStorageError.URLDownloadError))
                     }
                     if let url = url {
                         let imageURL = url.absoluteString
                         promise(.success(imageURL))
                     } else {
-                        promise(.failure(.failDownloadURL))
+                        promise(.failure(FireStorageError.URLDownloadError))
                     }
                 }
             }
