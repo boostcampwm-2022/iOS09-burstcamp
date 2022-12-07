@@ -42,6 +42,7 @@ final class SignUpBlogViewController: UIViewController {
         let nextButtonSubject = PassthroughSubject<Bool, Never>()
         let skipConfirmSubject = PassthroughSubject<Bool, Never>()
         let blogTitleConfirmSubject = PassthroughSubject<String, Never>()
+        let saveFCMToken = PassthroughSubject<Void, Never>()
 
         signUpBlogView.skipButton.tapPublisher
             .sink { _ in
@@ -68,7 +69,8 @@ final class SignUpBlogViewController: UIViewController {
             blogAddressTextFieldDidEdit: signUpBlogView.blogTextField.textPublisher,
             nextButtonDidTap: nextButtonSubject,
             skipConfirmDidTap: skipConfirmSubject,
-            blogTitleConfirmDidTap: blogTitleConfirmSubject
+            blogTitleConfirmDidTap: blogTitleConfirmSubject,
+            saveFCMToken: saveFCMToken
         )
 
         let output = viewModel.transform(input: input)
@@ -118,6 +120,7 @@ final class SignUpBlogViewController: UIViewController {
                     self.showAlert(message: "회원가입에 실패했습니다")
                 }
             }, receiveValue: { _ in
+                saveFCMToken.send()
                 self.coordinatorPublisher.send(.moveToTabBarFlow)
             })
             .store(in: &cancelBag)

@@ -15,6 +15,7 @@ final class SignUpBlogViewModel {
         let nextButtonDidTap: PassthroughSubject<Bool, Never>
         let skipConfirmDidTap: PassthroughSubject<Bool, Never>
         let blogTitleConfirmDidTap: PassthroughSubject<String, Never>
+        let saveFCMToken: PassthroughSubject<Void, Never>
     }
 
     struct Output {
@@ -23,6 +24,8 @@ final class SignUpBlogViewModel {
         let signUpWithBlogTitle: AnyPublisher<User, Error>
         let signUpWithSkipButton: AnyPublisher<User, Error>
     }
+
+    private var cancelBag = Set<AnyCancellable>()
 
     func transform(input: Input) -> Output {
         let validateBlogAddress = input.blogAddressTextFieldDidEdit
@@ -81,6 +84,10 @@ final class SignUpBlogViewModel {
             }
             .eraseToAnyPublisher()
 
+        input.saveFCMToken
+            .sink { _ in self.saveFCMToken() }
+            .store(in: &cancelBag)
+
         return Output(
             validateBlogAddress: validateBlogAddress,
             signUpWithNextButton: signUpWithNextButton,
@@ -107,5 +114,11 @@ final class SignUpBlogViewModel {
             signupDate: Date(),
             isPushOn: false
         )
+    }
+
+    private func saveFCMToken() {
+        guard let fcmToken = UserDefaultsManager.fcmToken() else { return }
+        let userUUID = UserManager.shared.user.userUUID
+        FirebaseFCMToken.save(fcmToken: fcmToken, to: userUUID)
     }
 }
