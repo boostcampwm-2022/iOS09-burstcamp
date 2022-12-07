@@ -7,6 +7,9 @@
 
 import UIKit
 
+import SnapKit
+import Then
+
 final class LogInView: UIView {
 
     private lazy var titleImage: UIImageView = UIImageView().then {
