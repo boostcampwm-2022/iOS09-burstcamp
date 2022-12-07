@@ -11,7 +11,7 @@ import Firebase
 import FirebaseFirestore
 
 struct FirebaseFCMToken {
-    private static let fcmTokenPath = Firestore.firestore().collection("FCMToken")
+    private static let fcmTokenPath = Firestore.firestore().collection("fcmToken")
 
     static func save(fcmToken: String, to userUUID: String) {
         let fcmToken = FCMToken(fcmToken: fcmToken)
