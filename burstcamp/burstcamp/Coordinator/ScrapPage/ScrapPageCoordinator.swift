@@ -24,7 +24,7 @@ final class ScrapPageCoordinator: ScrapPageCoordinatorProtocol, ContainFeedDetai
 
 extension ScrapPageCoordinator {
     func start(viewController: UIViewController) {
-        guard let scrapPageViewController = viewController as? HomeViewController else {
+        guard let scrapPageViewController = viewController as? ScrapPageViewController else {
             return
         }
 
