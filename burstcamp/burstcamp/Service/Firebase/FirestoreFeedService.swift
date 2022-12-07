@@ -70,7 +70,7 @@ final class DefaultFirestoreFeedService: FirestoreFeedService {
                         return
                     }
                     guard let querySnapShot = querySnapShot else {
-                        continuation.resume(throwing: FirebaseError.fetchRecommendFeedError)
+                        continuation.resume(throwing: FirestoreError.fetchRecommendFeedError)
                         return
                     }
                     let recommendFeeds = querySnapShot.documents.map { queryDocumentSnapshot in
@@ -97,12 +97,12 @@ final class DefaultFirestoreFeedService: FirestoreFeedService {
                         return
                     }
                     guard let querySnapShot = querySnapShot else {
-                        continuation.resume(throwing: FirebaseError.fetchFeedError)
+                        continuation.resume(throwing: FirestoreError.fetchFeedError)
                         return
                     }
                     self.lastSnapShot = querySnapShot.documents.last
                     if self.lastSnapShot == nil { // 응답한 Feed가 없는 경우
-                        continuation.resume(throwing: FirebaseError.lastFetchError)
+                        continuation.resume(throwing: FirestoreError.lastFetchError)
                         return
                     }
 
@@ -123,7 +123,7 @@ final class DefaultFirestoreFeedService: FirestoreFeedService {
     func fetchMoreFeeds() async throws -> [[String: Any]] {
         try await withCheckedThrowingContinuation({ continuation in
             guard let feedQuery = createPaginateQuery() else {
-                continuation.resume(throwing: FirebaseError.paginateQueryError)
+                continuation.resume(throwing: FirestoreError.paginateQueryError)
                 return
             }
 
@@ -134,13 +134,13 @@ final class DefaultFirestoreFeedService: FirestoreFeedService {
                         return
                     }
                     guard let querySnapShot = querySnapShot else {
-                        continuation.resume(throwing: FirebaseError.fetchFeedError)
+                        continuation.resume(throwing: FirestoreError.fetchFeedError)
                         return
                     }
 
                     self.lastSnapShot = querySnapShot.documents.last
                     if self.lastSnapShot == nil { // 응답한 Feed가 없는 경우
-                        continuation.resume(throwing: FirebaseError.lastFetchError)
+                        continuation.resume(throwing: FirestoreError.lastFetchError)
                         return
                     }
 
@@ -170,7 +170,7 @@ final class DefaultFirestoreFeedService: FirestoreFeedService {
                     guard let snapShot = documentSnapShot,
                           let feedDTO = snapShot.data()
                     else {
-                        continuation.resume(throwing: FirebaseError.fetchFeedError)
+                        continuation.resume(throwing: FirestoreError.fetchFeedError)
                         return
                     }
                     continuation.resume(returning: feedDTO)
@@ -195,7 +195,7 @@ final class DefaultFirestoreFeedService: FirestoreFeedService {
                     guard let snapShot = documentSnapShot,
                           let userData = snapShot.data()
                     else {
-                        continuation.resume(throwing: FirebaseError.fetchUserError)
+                        continuation.resume(throwing: FirestoreError.fetchUserError)
                         return
                     }
                     continuation.resume(returning: userData)

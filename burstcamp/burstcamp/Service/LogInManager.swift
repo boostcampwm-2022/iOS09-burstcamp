@@ -147,8 +147,8 @@ final class LogInManager {
             .store(in: &cancelBag)
     }
 
-    func signOut() -> AnyPublisher<Bool, FirebaseError> {
-        return Future<Bool, FirebaseError> { promise in
+    func signOut() -> AnyPublisher<Bool, FirestoreError> {
+        return Future<Bool, FirestoreError> { promise in
             Auth.auth().currentUser?.delete { error in
                 if error != nil {
                     promise(.failure(.userDeleteError))
