@@ -465,6 +465,7 @@
 				1496CF2029408176008F312F /* FirestoreFeedService.swift */,
 				D89AE4FC2935F5AE00446AB3 /* FireFunctionsManager.swift */,
 				D89E48AE2939D99300744A56 /* FireStorageService.swift */,
+				B5F4B035293CC0B300947250 /* FirestoreCollection.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -769,7 +770,6 @@
 		B5BA27882927AFC200BDCE08 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
-				B5F4B035293CC0B300947250 /* FirestoreCollection.swift */,
 				B50A278B29279F5D00DF3E1F /* Constant.swift */,
 				D88295FB292A4452005B4273 /* HTTPMethod.swift */,
 				D84C812D292E590300C984E8 /* MyPageEditValidationResult.swift */,

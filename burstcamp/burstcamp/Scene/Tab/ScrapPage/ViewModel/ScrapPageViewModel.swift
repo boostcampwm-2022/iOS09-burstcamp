@@ -67,7 +67,11 @@ final class ScrapPageViewModel {
     }
 
     func dequeueCellViewModel(at index: Int) -> FeedScrapViewModel {
-        let feedScrapViewModel = FeedScrapViewModel(feedUUID: scrapFeedData[index].feedUUID)
+        let firestoreFeedService = DefaultFirestoreFeedService()
+        let feedScrapViewModel = FeedScrapViewModel(
+            feedUUID: scrapFeedData[index].feedUUID,
+            firestoreFeedService: firestoreFeedService
+        )
         feedScrapViewModel.getScrapCountUp
             .sink { [weak self] state in
                 guard let self = self else { return }

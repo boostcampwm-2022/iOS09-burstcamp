@@ -165,7 +165,11 @@ extension ScrapPageViewController: UICollectionViewDelegateFlowLayout, UICollect
     ) {
         let feed = viewModel.scrapFeedData[indexPath.row]
         let feedDetailViewModel = FeedDetailViewModel(feed: feed)
-        let feedScrapViewModel = FeedScrapViewModel(feedUUID: feed.feedUUID)
+        let firestoreFeedService = DefaultFirestoreFeedService()
+        let feedScrapViewModel = FeedScrapViewModel(
+            feedUUID: feed.feedUUID,
+            firestoreFeedService: firestoreFeedService
+        )
         let viewController = FeedDetailViewController(
             feedDetailViewModel: feedDetailViewModel,
             feedScrapViewModel: feedScrapViewModel

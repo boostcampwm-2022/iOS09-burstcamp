@@ -191,7 +191,11 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let feed = viewModel.normalFeedData[indexPath.row]
         let feedDetailViewModel = FeedDetailViewModel(feed: feed)
-        let feedScrapViewModel = FeedScrapViewModel(feedUUID: feed.feedUUID)
+        let fireStoreFeedService = DefaultFirestoreFeedService()
+        let feedScrapViewModel = FeedScrapViewModel(
+            feedUUID: feed.feedUUID,
+            firestoreFeedService: fireStoreFeedService
+        )
         let viewController = FeedDetailViewController(
             feedDetailViewModel: feedDetailViewModel,
             feedScrapViewModel: feedScrapViewModel
