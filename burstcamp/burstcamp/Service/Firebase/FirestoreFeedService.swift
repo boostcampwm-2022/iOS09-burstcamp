@@ -10,17 +10,14 @@ import Foundation
 import FirebaseFirestore
 
 protocol FirestoreFeedService {
+
+    var lastSnapShot: QueryDocumentSnapshot? { get set }
+
     func createLatestQuery() -> Query
-    func createPaginateQuery(lastSnapShot: QueryDocumentSnapshot) -> Query
+    func createPaginateQuery() -> Query?
     func fetchRecommendFeedDTOs() async throws -> [[String: Any]]
-    func fetchLatestFeedDTOs() async throws -> (
-        lastestFeedDTOS: [[String: Any]],
-        lastSnapShot: QueryDocumentSnapshot?
-    )
-    func fetchMoreFeeds(query: Query) async throws -> (
-        lastestFeedDTOS: [[String: Any]],
-        lastSnapShot: QueryDocumentSnapshot?
-    )
+    func fetchLatestFeedDTOs() async throws -> [[String: Any]]
+    func fetchMoreFeeds() async throws -> [[String: Any]]
     func fetchFeedDTO(feedUUID: String) async throws -> [String: Any]
     func fetchUser(userUUID: String) async throws -> [String: Any]
     func countFeedScarp(feedUUID: String) async throws -> Int
@@ -32,16 +29,22 @@ protocol FirestoreFeedService {
 
 final class DefaultFirestoreFeedService: FirestoreFeedService {
 
+    var lastSnapShot: QueryDocumentSnapshot?
+    private let paginateCount = 7
+
     func createLatestQuery() -> Query {
         return FirestoreCollection.feed.reference
             .order(by: "pubDate", descending: true)
-            .limit(to: 5)
+            .limit(to: paginateCount)
     }
 
-    func createPaginateQuery(lastSnapShot: QueryDocumentSnapshot) -> Query {
+    func createPaginateQuery() -> Query? {
+        guard let lastSnapShot = lastSnapShot
+        else { return nil }
+
         return FirestoreCollection.feed.reference
             .order(by: "pubDate", descending: true)
-            .limit(to: 5)
+            .limit(to: paginateCount)
             .start(afterDocument: lastSnapShot)
     }
 
@@ -66,12 +69,8 @@ final class DefaultFirestoreFeedService: FirestoreFeedService {
         })
     }
 
-    func fetchLatestFeedDTOs() async throws -> (
-        lastestFeedDTOS: [[String: Any]],
-        lastSnapShot: QueryDocumentSnapshot?
-    ) {
+    func fetchLatestFeedDTOs() async throws -> [[String: Any]] {
         try await withCheckedThrowingContinuation({ continuation in
-            var lastSnapShot: QueryDocumentSnapshot?
             let feedQuery = createLatestQuery()
 
             feedQuery
@@ -84,8 +83,8 @@ final class DefaultFirestoreFeedService: FirestoreFeedService {
                         continuation.resume(throwing: FirebaseError.fetchFeedError)
                         return
                     }
-                    lastSnapShot = querySnapShot.documents.last
-                    if lastSnapShot == nil { // 응답한 Feed가 없는 경우
+                    self.lastSnapShot = querySnapShot.documents.last
+                    if self.lastSnapShot == nil { // 응답한 Feed가 없는 경우
                         continuation.resume(throwing: FirebaseError.lastFetchError)
                         return
                     }
@@ -94,19 +93,19 @@ final class DefaultFirestoreFeedService: FirestoreFeedService {
                         let normalFeed = queryDocumentSnapshot.data()
                         return normalFeed
                     }
-                    continuation.resume(returning: (normalFeeds, lastSnapShot))
+                    continuation.resume(returning: normalFeeds)
                 }
         })
     }
 
-    func fetchMoreFeeds(query: Query) async throws -> (
-        lastestFeedDTOS: [[String: Any]],
-        lastSnapShot: QueryDocumentSnapshot?
-    ) {
+    func fetchMoreFeeds() async throws -> [[String: Any]] {
         try await withCheckedThrowingContinuation({ continuation in
-            var lastSnapShot: QueryDocumentSnapshot?
+            guard let feedQuery = createPaginateQuery() else {
+                continuation.resume(throwing: FirebaseError.paginateQueryError)
+                return
+            }
 
-            query
+            feedQuery
                 .getDocuments { querySnapShot, error in
                     if let error = error {
                         continuation.resume(throwing: error)
@@ -116,8 +115,9 @@ final class DefaultFirestoreFeedService: FirestoreFeedService {
                         continuation.resume(throwing: FirebaseError.fetchFeedError)
                         return
                     }
-                    lastSnapShot = querySnapShot.documents.last
-                    if lastSnapShot == nil { // 응답한 Feed가 없는 경우
+
+                    self.lastSnapShot = querySnapShot.documents.last
+                    if self.lastSnapShot == nil { // 응답한 Feed가 없는 경우
                         continuation.resume(throwing: FirebaseError.lastFetchError)
                         return
                     }
@@ -126,7 +126,7 @@ final class DefaultFirestoreFeedService: FirestoreFeedService {
                         let normalFeed = queryDocumentSnapshot.data()
                         return normalFeed
                     }
-                    continuation.resume(returning: (normalFeeds, lastSnapShot))
+                    continuation.resume(returning: normalFeeds)
                 }
         })
     }
@@ -143,7 +143,7 @@ final class DefaultFirestoreFeedService: FirestoreFeedService {
                     guard let snapShot = documentSnapShot,
                           let feedDTO = snapShot.data()
                     else {
-                        continuation.resume(throwing: FirebaseError.fetchUserError)
+                        continuation.resume(throwing: FirebaseError.fetchFeedError)
                         return
                     }
                     continuation.resume(returning: feedDTO)
