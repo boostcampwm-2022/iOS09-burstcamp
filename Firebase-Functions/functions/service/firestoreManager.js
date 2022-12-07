@@ -3,6 +3,7 @@ import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { fetchContent, fetchParsedRSSList } from './feedAPI.js';
 import { logger } from 'firebase-functions';
 import { convertURL } from '../util.js';
+import { sendMessage } from './apnsManager.js';
 
 if (!getApps().length) initializeApp()
 const db = getFirestore()
@@ -98,49 +99,48 @@ export async function getFeedWriterUUID(blogURL) {
 /**
  * @returns 푸시알림이 on 되어있는 유저의 UUID들
  */
-async function getUsersIsPushOnTrue() {
-	return await userRef
+export async function getUsersIsPushOnTrue() {
+	const users = await userRef
 		.where('isPushOn', '==', true)
 		.get()
-		.map(function(user){
-			return user.data()['userUUID']
+
+	const userUUIDs = []
+	users.forEach((doc) => {
+		userUUIDs.push(doc.data()['userUUID'])
+	})
+
+	return userUUIDs
+}
+
+export async function getFCMToken(userUUID) {
+	logger.log('유저 아이디' + userUUID);
+	return fcmTokenRef
+		.doc(userUUID)
+		.get()
+		.then((doc) => {
+			return doc.data()['fcmToken'] 
 		})
 }
 
-/**
- * 푸시알림이 on 되어있는 유저의 UUID를 받아서
- * 그 유저의 FCM token들을 반환한다.
- * @returns 푸시알림을 보낼 FCM 토큰들
- */
-export async function getFCMTokens() {
-	const userUUIDs = await getUsersIsPushOnTrue()
-	
-	const fcmTokens = Promise.all(userUUIDs.map(async function(userUUID){
-		const fcmDoc = await fcmTokenRef.doc(userUUID).get();
-		if (!doc.exists) {
-			logger.log(userUUID, 'dont have FCM Token');
-			return
-		} else {
-			return doc.data()['fcmToken']
-		}
-	}))
-
-	return fcmTokens
-		.filter(token => token != undefined)
+export async function getUser(userUUID) {
+	return userRef
+		.doc(userUUID)
+		.get()
+		.then((doc) => {
+			return doc.data()
+		})
 }
 
 /**
  * @returns 가장 최근의 Feed
  */
 export async function getRecentFeed() {
-	const recentFeed = await feedRef
+	return await feedRef
 		.orderBy('pubDate', 'desc')
 		.limit(1)
 		.get()
 		.then((querySnapshot) => {
-			querySnapshot.docs.forEach((doc) => {
-				return doc.data()
-			})
+			return querySnapshot.docs.at(0).data()
 		})
-	return recentFeed[0]
 }
+
