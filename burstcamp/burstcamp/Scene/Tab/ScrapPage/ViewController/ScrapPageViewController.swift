@@ -81,6 +81,13 @@ final class ScrapPageViewController: UIViewController {
                 }
             }
             .store(in: &cancelBag)
+
+        output.cellUpdate
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] indexPath in
+                self?.reloadCollectionView(indexPath: indexPath)
+            }
+            .store(in: &cancelBag)
     }
 
     private func collectionViewDelegate() {
@@ -95,6 +102,12 @@ final class ScrapPageViewController: UIViewController {
     private func paginateFeed() {
         paginationPublisher.send(Void())
     }
+
+    private func reloadCollectionView(indexPath: IndexPath) {
+        UIView.performWithoutAnimation {
+            scrapPageView.collectionView.reloadItems(at: [indexPath])
+        }
+    }
 }
 
 extension ScrapPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
@@ -102,12 +115,12 @@ extension ScrapPageViewController: UICollectionViewDelegateFlowLayout, UICollect
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        if viewModel.scarpFeedData.isEmpty {
+        if viewModel.scrapFeedData.isEmpty {
             collectionView.configureEmptyView()
         } else {
             collectionView.resetEmptyView()
         }
-        return viewModel.scarpFeedData.count
+        return viewModel.scrapFeedData.count
     }
 
     func collectionView(
@@ -122,8 +135,12 @@ extension ScrapPageViewController: UICollectionViewDelegateFlowLayout, UICollect
             return UICollectionViewCell()
         }
         let index = indexPath.row
-        let feed = viewModel.scarpFeedData[index]
+        let feed = viewModel.scrapFeedData[index]
+        let cellViewModel = viewModel.dequeueCellViewModel(at: index)
+
+        cell.configure(with: cellViewModel)
         cell.updateFeedCell(with: feed)
+
         return cell
     }
 
@@ -146,7 +163,7 @@ extension ScrapPageViewController: UICollectionViewDelegateFlowLayout, UICollect
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        let feed = viewModel.scarpFeedData[indexPath.row]
+        let feed = viewModel.scrapFeedData[indexPath.row]
         let feedDetailViewModel = FeedDetailViewModel(feed: feed)
         let feedScrapViewModel = FeedScrapViewModel(feedUUID: feed.feedUUID)
         let viewController = FeedDetailViewController(
