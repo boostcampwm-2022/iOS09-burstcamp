@@ -6,14 +6,13 @@
 //
 
 import Combine
-import SafariServices.SFSafariViewController
 import UIKit
 
 protocol ScrapPageCoordinatorProtocol: TabBarChildCoordinator {
     func moveToFeedDetail(feed: Feed)
 }
 
-final class ScrapPageCoordinator: ScrapPageCoordinatorProtocol {
+final class ScrapPageCoordinator: ScrapPageCoordinatorProtocol, ContainFeedDetailCoordinator {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     var cancelBag = Set<AnyCancellable>()
@@ -45,31 +44,5 @@ extension ScrapPageCoordinator {
         let feedDetailViewController = prepareFeedDetailViewController(feed: feed)
         sinkFeedViewController(feedDetailViewController)
         self.navigationController.pushViewController(feedDetailViewController, animated: true)
-    }
-
-    func moveToBlogSafari(url: URL) {
-        let safariViewController = SFSafariViewController(url: url)
-        self.navigationController.present(safariViewController, animated: true)
-    }
-
-    private func sinkFeedViewController(_ feedDetailViewController: FeedDetailViewController) {
-        feedDetailViewController.coordinatorPublisher
-            .sink { [weak self] event in
-                switch event {
-                case .moveToBlogSafari(let url):
-                    self?.moveToBlogSafari(url: url)
-                }
-            }
-            .store(in: &cancelBag)
-    }
-
-    private func prepareFeedDetailViewController(feed: Feed) -> FeedDetailViewController {
-        let feedDetailViewModel = FeedDetailViewModel(feed: feed)
-        let feedScrapViewModel = FeedScrapViewModel(feedUUID: feed.feedUUID)
-        let feedDetailViewController = FeedDetailViewController(
-            feedDetailViewModel: feedDetailViewModel,
-            feedScrapViewModel: feedScrapViewModel
-        )
-        return feedDetailViewController
     }
 }

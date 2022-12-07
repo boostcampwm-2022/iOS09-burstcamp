@@ -784,7 +784,6 @@
 				140438AD293F5C9C004D035C /* Auth */,
 				140438AF293F5CC6004D035C /* TabBar */,
 				140438B1293F5CCD004D035C /* MyPage */,
-				1496CF1B2940679C008F312F /* CoordinatorEvent.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -792,6 +791,7 @@
 		B50A27C929279F5D00DF3E1F /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				1496CF1B2940679C008F312F /* CoordinatorEvent.swift */,
 				B50A27CD29279F5D00DF3E1F /* Coordinator.swift */,
 			);
 			path = Base;

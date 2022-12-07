@@ -6,7 +6,6 @@
 //
 
 import Combine
-import SafariServices.SFSafariViewController
 import UIKit
 
 protocol HomeCoordinatorProtocol: TabBarChildCoordinator {
@@ -15,7 +14,7 @@ protocol HomeCoordinatorProtocol: TabBarChildCoordinator {
     func moveToBlogSafari(url: URL)
 }
 
-final class HomeCoordinator: HomeCoordinatorProtocol {
+final class HomeCoordinator: HomeCoordinatorProtocol, ContainFeedDetailCoordinator {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     var cancelBag = Set<AnyCancellable>()
@@ -53,41 +52,5 @@ extension HomeCoordinator {
         let feedDetailViewController = prepareFeedDetailViewController(feedUUID: feedUUID)
         sinkFeedViewController(feedDetailViewController)
         self.navigationController.pushViewController(feedDetailViewController, animated: true)
-    }
-
-    func moveToBlogSafari(url: URL) {
-        let safariViewController = SFSafariViewController(url: url)
-        self.navigationController.present(safariViewController, animated: true)
-    }
-
-    private func sinkFeedViewController(_ feedDetailViewController: FeedDetailViewController) {
-        feedDetailViewController.coordinatorPublisher
-            .sink { [weak self] event in
-                switch event {
-                case .moveToBlogSafari(let url):
-                    self?.moveToBlogSafari(url: url)
-                }
-            }
-            .store(in: &cancelBag)
-    }
-
-    private func prepareFeedDetailViewController(feed: Feed) -> FeedDetailViewController {
-        let feedDetailViewModel = FeedDetailViewModel(feed: feed)
-        let feedScrapViewModel = FeedScrapViewModel(feedUUID: feed.feedUUID)
-        let feedDetailViewController = FeedDetailViewController(
-            feedDetailViewModel: feedDetailViewModel,
-            feedScrapViewModel: feedScrapViewModel
-        )
-        return feedDetailViewController
-    }
-
-    private func prepareFeedDetailViewController(feedUUID: String) -> FeedDetailViewController {
-        let feedDetailViewModel = FeedDetailViewModel(feedUUID: feedUUID)
-        let feedScrapViewModel = FeedScrapViewModel(feedUUID: feedUUID)
-        let feedDetailViewController = FeedDetailViewController(
-            feedDetailViewModel: feedDetailViewModel,
-            feedScrapViewModel: feedScrapViewModel
-        )
-        return feedDetailViewController
     }
 }
