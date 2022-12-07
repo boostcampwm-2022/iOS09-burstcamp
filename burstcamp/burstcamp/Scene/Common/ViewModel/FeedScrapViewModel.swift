@@ -8,8 +8,6 @@
 import Combine
 import Foundation
 
-import FirebaseFirestore
-
 enum UpdateMethod {
     case append
     case remove
