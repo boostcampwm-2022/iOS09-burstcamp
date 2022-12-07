@@ -21,7 +21,7 @@ enum FirestoreCollection {
 extension FirestoreCollection {
     private static let database = Firestore.firestore()
 
-    private var path: String {
+    var path: String {
         switch self {
 
         case .feed: return "feed"

@@ -277,7 +277,7 @@ final class HomeViewModel {
     }
 
     private func countFeedScrapCount(uuid: String) async throws -> Int {
-        let path = ["feed", uuid, "scrapUsers"].joined(separator: "/")
+        let path = FirestoreCollection.scrapUser(feedUUID: uuid).path
         let countQuery = Firestore.firestore().collection(path).count
         let collectionCount = try await countQuery.getAggregation(source: .server)
         return Int(truncating: collectionCount.count)

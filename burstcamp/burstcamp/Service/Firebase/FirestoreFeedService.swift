@@ -17,7 +17,7 @@ protocol FirestoreFeedService {
     func fetchMoreFeeds() async throws -> [[String: Any]]
     func fetchFeed() async throws -> [String: Any]
     func fetchUser() async throws -> [String: Any]
-    func countFeedScarp() async throws -> Int
+    func countFeedScarp(feedUUID: String) async throws -> Int
     func appendUserToFeed(userUUID: String, at feedUUID: String) async throws
     func deleteUserFromFeed(userUUID: String, at feedUUID: String) async throws
     func appendFeedUUIDToUser(feedUUID: String, at userUUID: String) async throws
@@ -59,8 +59,11 @@ final class DefaultFirestoreFeedService: FirestoreFeedService {
         return [:]
     }
 
-    func countFeedScarp() async throws -> Int {
-        return 0
+    func countFeedScarp(feedUUID: String) async throws -> Int {
+        let path = FirestoreCollection.scrapUser(feedUUID: uuid).path
+        let countQuery = Firestore.firestore().collection(path).count
+        let collectionCount = try await countQuery.getAggregation(source: .server)
+        return Int(truncating: collectionCount.count)
     }
 
     func appendUserToFeed(userUUID: String, at feedUUID: String) async throws {
