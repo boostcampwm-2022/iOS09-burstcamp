@@ -10,7 +10,9 @@ import Foundation
 struct UserDefaultsManager {
 
     private static let appearanceKey = "Appearance"
+    private static let fcmTokenKey = "fcmTokenKey"
 
+    // dark mode
     static func saveAppearance(appearance: Appearance) {
         UserDefaults.standard.set(appearance.theme, forKey: appearanceKey)
     }
@@ -22,11 +24,21 @@ struct UserDefaultsManager {
         return currentAppearance
     }
 
+    // etag
     static func save(etag: String, urlString: String) {
         UserDefaults.standard.set(etag, forKey: urlString)
     }
 
     static func etag(urlString: String) -> String? {
         return UserDefaults.standard.string(forKey: urlString)
+    }
+
+    // FCMToken
+    static func save(fcmToken: String) {
+        UserDefaults.standard.set(fcmToken, forKey: fcmToken)
+    }
+
+    static func fcmToken() -> String? {
+        return UserDefaults.standard.string(forKey: fcmTokenKey)
     }
 }
