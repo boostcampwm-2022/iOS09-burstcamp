@@ -6,11 +6,13 @@
 //
 
 import Combine
+import SafariServices.SFSafariViewController
 import UIKit
 
 protocol HomeCoordinatorProtocol: TabBarChildCoordinator {
     func moveToFeedDetail(feed: Feed)
     func moveToFeedDetail(feedUUID: String)
+    func moveToBlogSafari(url: URL)
 }
 
 final class HomeCoordinator: HomeCoordinatorProtocol {
@@ -43,12 +45,30 @@ extension HomeCoordinator {
 
     func moveToFeedDetail(feed: Feed) {
         let feedDetailViewController = prepareFeedDetailViewController(feed: feed)
+        sinkFeedViewController(feedDetailViewController)
         self.navigationController.pushViewController(feedDetailViewController, animated: true)
     }
 
     func moveToFeedDetail(feedUUID: String) {
         let feedDetailViewController = prepareFeedDetailViewController(feedUUID: feedUUID)
+        sinkFeedViewController(feedDetailViewController)
         self.navigationController.pushViewController(feedDetailViewController, animated: true)
+    }
+
+    func moveToBlogSafari(url: URL) {
+        let safariViewController = SFSafariViewController(url: url)
+        self.navigationController.present(safariViewController, animated: true)
+    }
+
+    private func sinkFeedViewController(_ feedDetailViewController: FeedDetailViewController) {
+        feedDetailViewController.coordinatorPublisher
+            .sink { [weak self] event in
+                switch event {
+                case .moveToBlogSafari(let url):
+                    self?.moveToBlogSafari(url: url)
+                }
+            }
+            .store(in: &cancelBag)
     }
 
     private func prepareFeedDetailViewController(feed: Feed) -> FeedDetailViewController {
