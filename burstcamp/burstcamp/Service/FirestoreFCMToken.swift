@@ -11,12 +11,12 @@ import Firebase
 import FirebaseFirestore
 
 struct FirebaseFCMToken {
-    private static let fcmTokenPath = Firestore.firestore().collection("fcmToken")
+    private static let fcmTokenPath = FirestoreCollection.fcmToken.reference
 
     static func save(fcmToken: String, to userUUID: String) {
         let fcmToken = FCMToken(fcmToken: fcmToken)
         let path = fcmTokenPath.document(userUUID)
-
+        print("fcmToken 저장하는중", userUUID)
         guard let dictionary = fcmToken.asDictionary
         else {
             print("데이터 dictionary 변환 실패")
