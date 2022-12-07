@@ -85,7 +85,8 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
             let homeViewModel = HomeViewModel(firestoreFeedService: firestoreFeedService)
             controller = HomeViewController(viewModel: homeViewModel)
         case .bookmark:
-            let scrapPageViewModel = ScrapPageViewModel()
+            let firestoreFeedService = DefaultFirestoreFeedService()
+            let scrapPageViewModel = ScrapPageViewModel(firestoreFeedService: firestoreFeedService)
             controller = ScrapPageViewController(viewModel: scrapPageViewModel)
         case .myPage:
             controller = prepareMyPageViewController()
