@@ -40,6 +40,7 @@ final class SignUpBlogViewController: UIViewController {
 
     private func bind() {
         let skipConfirmSubject = PassthroughSubject<Bool, Never>()
+        let blogTitleConfirmSubject = PassthroughSubject<String, Never>()
 
         signUpBlogView.skipButton.tapPublisher
             .sink { _ in
@@ -48,20 +49,17 @@ final class SignUpBlogViewController: UIViewController {
                 }
                 let cancelAction = UIAlertAction(title: "아니오", style: .destructive)
                 self.showAlert(
-                    title: "경고",
                     message: "블로그가 없으신가요?",
                     alertActions: [confirmAction, cancelAction]
                 )
             }
             .store(in: &cancelBag)
 
-        let textPublisher = signUpBlogView.blogTextField.textPublisher
-        let nextButtonPublisher = signUpBlogView.nextButton.tapPublisher
-
         let input = SignUpBlogViewModel.Input(
-            blogAddressTextFieldDidEdit: textPublisher,
-            nextButtonDidTap: nextButtonPublisher,
-            skipConfirmDidTap: skipConfirmSubject
+            blogAddressTextFieldDidEdit: signUpBlogView.blogTextField.textPublisher,
+            nextButtonDidTap: signUpBlogView.nextButton.tapPublisher,
+            skipConfirmDidTap: skipConfirmSubject,
+            blogTitleConfirmDidTap: blogTitleConfirmSubject
         )
 
         let output = viewModel.transform(input: input)
@@ -74,6 +72,27 @@ final class SignUpBlogViewController: UIViewController {
             .store(in: &cancelBag)
 
         output.signUpWithNextButton
+            .sink { blogTitle in
+                if blogTitle.isEmpty {
+                    let confirmAction = UIAlertAction(title: "확인", style: .default)
+                    self.showAlert(
+                        message: "블로그 주소를 확인해주세요",
+                        alertActions: [confirmAction]
+                    )
+                } else {
+                    let confirmAction = UIAlertAction(title: "네", style: .default) { _ in
+                        blogTitleConfirmSubject.send(blogTitle)
+                    }
+                    let cancelAction = UIAlertAction(title: "아니오", style: .destructive)
+                    self.showAlert(
+                        message: "\(blogTitle) 블로그가 맞으신가요??",
+                        alertActions: [confirmAction, cancelAction]
+                    )
+                }
+            }
+            .store(in: &cancelBag)
+
+        output.signUpWithBlogTitle
             .sink(receiveCompletion: { result in
                 if case .failure = result {
                     self.showAlert(message: "회원가입에 실패했습니다")
