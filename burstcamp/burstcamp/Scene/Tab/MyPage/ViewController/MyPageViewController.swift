@@ -74,23 +74,32 @@ final class MyPageViewController: UIViewController {
             withdrawDidTap: withDrawalPublisher
         )
 
-        let output = viewModel.transform(input: input, cancelBag: &cancelBag)
+        let output = viewModel.transform(input: input)
 
         output.updateUserValue
-            .sink { user in
-                self.myPageView.updateView(user: user)
+            .sink { [weak self] user in
+                self?.myPageView.updateView(user: user)
             }
             .store(in: &cancelBag)
 
         output.darkModeInitialValue
-            .sink { appearance in
-                self.myPageView.updateDarkModeSwitch(appearance: appearance)
+            .sink { [weak self] appearance in
+                self?.myPageView.updateDarkModeSwitch(appearance: appearance)
             }
             .store(in: &cancelBag)
 
         output.appVersionValue
-            .sink { appVersion in
-                self.myPageView.updateAppVersionLabel(appVersion: appVersion)
+            .sink { [weak self] appVersion in
+                self?.myPageView.updateAppVersionLabel(appVersion: appVersion)
+            }
+            .store(in: &cancelBag)
+
+        output.signOutFailMessage
+            .sink { [weak self] message in
+                self?.showToastMessage(
+                    text: message,
+                    icon: UIImage(systemName: "exclamationmark.octagon.fill")
+                )
             }
             .store(in: &cancelBag)
 
@@ -173,8 +182,6 @@ extension MyPageViewController {
     }
 
     private func moveToAuthFlow() {
-        // TODO: 탈퇴 로직 추가
-        try? Auth.auth().signOut()
         coordinatorPublisher.send(.moveToAuthFlow)
     }
 }
