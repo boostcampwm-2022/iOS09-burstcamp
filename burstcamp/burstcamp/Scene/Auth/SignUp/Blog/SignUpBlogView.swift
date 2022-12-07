@@ -59,6 +59,10 @@ final class SignUpBlogView: UIView {
         $0.alpha = 0.3
     }
 
+    lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView().then {
+        $0.style = .large
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -102,6 +106,11 @@ final class SignUpBlogView: UIView {
 
         nextButton.snp.makeConstraints {
             $0.height.equalTo(Constant.space48)
+        }
+
+        addSubview(activityIndicator)
+        activityIndicator.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
         }
     }
 }

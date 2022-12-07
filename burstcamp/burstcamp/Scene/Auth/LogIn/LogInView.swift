@@ -38,6 +38,10 @@ final class LogInView: UIView {
         $0.textColor = .systemGray2
     }
 
+    lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView().then {
+        $0.style = .large
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -81,6 +85,11 @@ final class LogInView: UIView {
         githubLogInLabel.snp.makeConstraints {
             $0.top.equalTo(githubLogInButton.snp.bottom).offset(Constant.space12)
             $0.centerX.equalToSuperview()
+        }
+
+        addSubview(activityIndicator)
+        activityIndicator.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
         }
     }
 }

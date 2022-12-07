@@ -12,7 +12,7 @@ final class SignUpBlogViewModel {
 
     struct Input {
         let blogAddressTextFieldDidEdit: AnyPublisher<String, Never>
-        let nextButtonDidTap: AnyPublisher<Void, Never>
+        let nextButtonDidTap: PassthroughSubject<Bool, Never>
         let skipConfirmDidTap: PassthroughSubject<Bool, Never>
         let blogTitleConfirmDidTap: PassthroughSubject<String, Never>
     }
