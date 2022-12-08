@@ -8,19 +8,21 @@
 import Combine
 import Foundation
 
-import FirebaseFirestore
-
 final class HomeViewModel {
 
     var recommendFeedData: [Feed] = []
     var normalFeedData: [Feed] = []
 
+    private let firestoreFeedService: FirestoreFeedService
     private var cellUpdate = PassthroughSubject<IndexPath, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
-    private var lastSnapShot: QueryDocumentSnapshot?
     private var isFetching: Bool = false
     private var canFetchMoreFeed: Bool = true
+
+    init(firestoreFeedService: FirestoreFeedService) {
+        self.firestoreFeedService = firestoreFeedService
+    }
 
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
@@ -65,7 +67,11 @@ final class HomeViewModel {
     }
 
     func dequeueCellViewModel(at index: Int) -> FeedScrapViewModel {
-        let feedScrapViewModel = FeedScrapViewModel(feedUUID: normalFeedData[index].feedUUID)
+        let firestoreFeedService = DefaultFirestoreFeedService()
+        let feedScrapViewModel = FeedScrapViewModel(
+            feedUUID: normalFeedData[index].feedUUID,
+            firestoreFeedService: firestoreFeedService
+        )
         feedScrapViewModel.getScrapCountUp
             .sink { [weak self] state in
                 guard let self = self else { return }
@@ -90,11 +96,12 @@ final class HomeViewModel {
                 canFetchMoreFeed = true
 
                 async let recommendFeeds = fetchRecommendFeeds()
-                async let normalFeeds = fetchNormalFeeds(lastSnapShot: self.lastSnapShot)
+                async let normalFeeds = fetchLastestFeeds()
                 self.recommendFeedData = try await recommendFeeds
                 self.normalFeedData = try await normalFeeds
                 output.fetchResult.send(.fetchSuccess)
             } catch {
+                canFetchMoreFeed = false
                 debugPrint(error.localizedDescription)
             }
             isFetching = false
@@ -107,40 +114,57 @@ final class HomeViewModel {
                 guard !isFetching, canFetchMoreFeed else { return }
                 isFetching = true
 
-                let normalFeeds = try await fetchNormalFeeds(
-                    lastSnapShot: self.lastSnapShot,
-                    isPagination: true
-                )
+                let normalFeeds = try await fetchMoreFeeds()
                 self.normalFeedData.append(contentsOf: normalFeeds)
                 output.fetchResult.send(.fetchSuccess)
-
-                isFetching = false
             } catch {
                 canFetchMoreFeed = false
-                isFetching = false
+                print(error.localizedDescription)
             }
+            isFetching = false
         }
     }
 
-    private func fetchNormalFeeds(
-        lastSnapShot: QueryDocumentSnapshot?,
-        isPagination: Bool = false
-    ) async throws -> [Feed] {
+    private func fetchRecommendFeeds() async throws -> [Feed] {
         try await withThrowingTaskGroup(of: Feed.self, body: { taskGroup in
-            var normalFeeds: [Feed] = []
-            let feedDTODictionary = try await self.fetchNormalFeedDTOs(
-                lastSnapShot: lastSnapShot,
-                isPagination: isPagination
-            )
+            var recommendFeeds: [Feed] = []
+            let feedDTODictionary = try await self.firestoreFeedService.fetchRecommendFeedDTOs()
 
             for feedDTO in feedDTODictionary {
                 taskGroup.addTask {
                     let feedDTO = FeedDTO(data: feedDTO)
-                    let feedWriterDictionary = try await self.fetchFeedWriter(
-                        uuid: feedDTO.writerUUID
+                    let feedWriterDictionary = try await self.firestoreFeedService.fetchUser(
+                        userUUID: feedDTO.writerUUID
                     )
                     let feedWriter = FeedWriter(data: feedWriterDictionary)
-                    let scrapCount = try await self.countFeedScrapCount(uuid: feedDTO.feedUUID)
+                    let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
+                    return feed
+                }
+            }
+
+            for try await feed in taskGroup {
+                recommendFeeds.append(feed)
+            }
+
+            return recommendFeeds
+        })
+    }
+
+    private func fetchLastestFeeds() async throws -> [Feed] {
+        try await withThrowingTaskGroup(of: Feed.self, body: { taskGroup in
+            var normalFeeds: [Feed] = []
+            let feedDTODictionary = try await self.firestoreFeedService.fetchLatestFeedDTOs()
+
+            for feedDTO in feedDTODictionary {
+                taskGroup.addTask {
+                    let feedDTO = FeedDTO(data: feedDTO)
+                    let feedWriterDictionary = try await self.firestoreFeedService.fetchUser(
+                        userUUID: feedDTO.writerUUID
+                    )
+                    let feedWriter = FeedWriter(data: feedWriterDictionary)
+                    let scrapCount = try await self.firestoreFeedService.countFeedScarp(
+                        feedUUID: feedDTO.feedUUID
+                    )
                     let feed = Feed(
                         feedDTO: feedDTO,
                         feedWriter: feedWriter,
@@ -160,122 +184,38 @@ final class HomeViewModel {
         })
     }
 
-    private func fetchNormalFeedDTOs(
-        lastSnapShot: QueryDocumentSnapshot?,
-        isPagination: Bool
-    ) async throws -> [[String: Any]] {
-        try await withCheckedThrowingContinuation({ continuation in
-            let feedQuery = createQuery(lastSnapShot: lastSnapShot, isPagination: isPagination)
-
-            feedQuery
-                .getDocuments { querySnapShot, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    guard let querySnapShot = querySnapShot else {
-                        continuation.resume(throwing: FirebaseError.fetchFeedError)
-                        return
-                    }
-                    self.lastSnapShot = querySnapShot.documents.last
-
-                    if self.lastSnapShot == nil { // 응답한 Feed가 없는 경우
-                        continuation.resume(throwing: FirebaseError.lastFetchError)
-                        return
-                    }
-
-                    let normalFeeds = querySnapShot.documents.map { queryDocumentSnapshot in
-                        let normalFeed = queryDocumentSnapshot.data()
-                        return normalFeed
-                    }
-                    continuation.resume(returning: normalFeeds)
-                }
-        })
-    }
-
-    private func createQuery(lastSnapShot: QueryDocumentSnapshot?, isPagination: Bool) -> Query {
-        if let lastSnapShot = lastSnapShot, isPagination {
-            return FirestoreCollection.feed.reference
-                .order(by: "pubDate", descending: true)
-                .limit(to: 5)
-                .start(afterDocument: lastSnapShot)
-        } else {
-            return FirestoreCollection.feed.reference
-                .order(by: "pubDate", descending: true)
-                .limit(to: 5)
-        }
-    }
-
-    private func fetchRecommendFeeds() async throws -> [Feed] {
+    private func fetchMoreFeeds() async throws -> [Feed] {
         try await withThrowingTaskGroup(of: Feed.self, body: { taskGroup in
-            var recommendFeeds: [Feed] = []
-            let feedDTODictionary = try await self.fetchRecommendFeedDTOs()
+            var normalFeeds: [Feed] = []
+            let feedDTODictionary = try await self.firestoreFeedService.fetchMoreFeeds()
 
             for feedDTO in feedDTODictionary {
                 taskGroup.addTask {
                     let feedDTO = FeedDTO(data: feedDTO)
-                    let feedWriterDictionary = try await self.fetchFeedWriter(
-                        uuid: feedDTO.writerUUID
+                    print(feedDTO.writerUUID)
+                    let feedWriterDictionary = try await self.firestoreFeedService.fetchUser(
+                        userUUID: feedDTO.writerUUID
                     )
                     let feedWriter = FeedWriter(data: feedWriterDictionary)
-                    let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
+                    let scrapCount = try await self.firestoreFeedService.countFeedScarp(
+                        feedUUID: feedDTO.feedUUID
+                    )
+                    let feed = Feed(
+                        feedDTO: feedDTO,
+                        feedWriter: feedWriter,
+                        scrapCount: scrapCount
+                    )
                     return feed
                 }
             }
 
             for try await feed in taskGroup {
-                recommendFeeds.append(feed)
+                normalFeeds.append(feed)
             }
 
-            return recommendFeeds
-        })
-    }
+            let result = normalFeeds.sorted { $0.pubDate > $1.pubDate }
 
-    private func fetchRecommendFeedDTOs() async throws -> [[String: Any]] {
-        try await withCheckedThrowingContinuation({ continuation in
-            FirestoreCollection.recommendFeed.reference
-                .getDocuments { querySnapShot, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    guard let querySnapShot = querySnapShot else {
-                        continuation.resume(throwing: FirebaseError.fetchFeedError)
-                        return
-                    }
-                    let recommendFeeds = querySnapShot.documents.map { queryDocumentSnapshot in
-                        let recommendFeed = queryDocumentSnapshot.data()
-                        return recommendFeed
-                    }
-                    continuation.resume(returning: recommendFeeds)
-                }
+            return result
         })
-    }
-
-    private func fetchFeedWriter(uuid: String) async throws -> [String: Any] {
-        try await withCheckedThrowingContinuation({ continuation in
-            FirestoreCollection.user.reference
-                .document(uuid)
-                .getDocument { documentSnapShot, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    guard let snapShot = documentSnapShot,
-                          let userData = snapShot.data()
-                    else {
-                        continuation.resume(throwing: FirebaseError.fetchUserError)
-                        return
-                    }
-                    continuation.resume(returning: userData)
-                }
-        })
-    }
-
-    private func countFeedScrapCount(uuid: String) async throws -> Int {
-        let path = ["feed", uuid, "scrapUsers"].joined(separator: "/")
-        let countQuery = Firestore.firestore().collection(path).count
-        let collectionCount = try await countQuery.getAggregation(source: .server)
-        return Int(truncating: collectionCount.count)
     }
 }

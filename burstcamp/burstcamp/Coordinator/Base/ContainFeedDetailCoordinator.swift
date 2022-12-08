@@ -31,7 +31,11 @@ extension ContainFeedDetailCoordinator {
 
     func prepareFeedDetailViewController(feed: Feed) -> FeedDetailViewController {
         let feedDetailViewModel = FeedDetailViewModel(feed: feed)
-        let feedScrapViewModel = FeedScrapViewModel(feedUUID: feed.feedUUID)
+        let firestoreFeedService = DefaultFirestoreFeedService()
+        let feedScrapViewModel = FeedScrapViewModel(
+            feedUUID: feed.feedUUID,
+            firestoreFeedService: firestoreFeedService
+        )
         let feedDetailViewController = FeedDetailViewController(
             feedDetailViewModel: feedDetailViewModel,
             feedScrapViewModel: feedScrapViewModel
@@ -41,7 +45,11 @@ extension ContainFeedDetailCoordinator {
 
     func prepareFeedDetailViewController(feedUUID: String) -> FeedDetailViewController {
         let feedDetailViewModel = FeedDetailViewModel(feedUUID: feedUUID)
-        let feedScrapViewModel = FeedScrapViewModel(feedUUID: feedUUID)
+        let firestoreFeedService = DefaultFirestoreFeedService()
+        let feedScrapViewModel = FeedScrapViewModel(
+            feedUUID: feedUUID,
+            firestoreFeedService: firestoreFeedService
+        )
         let feedDetailViewController = FeedDetailViewController(
             feedDetailViewModel: feedDetailViewModel,
             feedScrapViewModel: feedScrapViewModel

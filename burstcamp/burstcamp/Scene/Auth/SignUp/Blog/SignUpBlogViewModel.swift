@@ -20,8 +20,8 @@ final class SignUpBlogViewModel {
     struct Output {
         let validateBlogAddress: AnyPublisher<Bool, Never>
         let signUpWithNextButton: AnyPublisher<String, Never>
-        let signUpWithBlogTitle: AnyPublisher<User, FirestoreError>
-        let signUpWithSkipButton: AnyPublisher<User, FirestoreError>
+        let signUpWithBlogTitle: AnyPublisher<User, Error>
+        let signUpWithSkipButton: AnyPublisher<User, Error>
     }
 
     func transform(input: Input) -> Output {
@@ -46,13 +46,13 @@ final class SignUpBlogViewModel {
             .eraseToAnyPublisher()
 
         let signUpWithBlogTitle = input.blogTitleConfirmDidTap
-            .flatMap { title -> AnyPublisher<User, FirestoreError> in
-                return Future<User, FirestoreError> { promise in
+            .flatMap { title -> AnyPublisher<User, Error> in
+                return Future<User, Error> { promise in
                     guard let user = try? self.createUser(
                         blogURL: LogInManager.shared.blodURL,
                         blogTitle: title
                     ) else {
-                        promise(.failure(.noDataError))
+                        promise(.failure(FirestoreError.noDataError))
                         return
                     }
                     promise(.success(user))
@@ -66,17 +66,17 @@ final class SignUpBlogViewModel {
 
         let signUpWithSkipButton = input.skipConfirmDidTap
             .throttle(for: 1, scheduler: DispatchQueue.main, latest: false)
-            .flatMap { _ -> AnyPublisher<User, FirestoreError> in
-                return Future<User, FirestoreError> { promise in
+            .flatMap { _ -> AnyPublisher<User, Error> in
+                return Future<User, Error> { promise in
                     guard let user = try? self.createUser(blogURL: "", blogTitle: "") else {
-                        promise(.failure(.noDataError))
+                        promise(.failure(FirestoreError.noDataError))
                         return
                     }
                     promise(.success(user))
                 }
                 .eraseToAnyPublisher()
             }
-            .flatMap { user -> AnyPublisher<User, FirestoreError> in
+            .flatMap { user -> AnyPublisher<User, Error> in
                 return FirestoreUser.save(user: user).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()

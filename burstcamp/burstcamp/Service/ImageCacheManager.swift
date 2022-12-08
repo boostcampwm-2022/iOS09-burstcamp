@@ -111,7 +111,7 @@ final class ImageCacheManager: NSObject, NSCacheDelegate {
     private func request(urlString: String, etag: String?, isDisk: Bool)
     -> AnyPublisher<UIImage?, ImageCacheError> {
         guard let url = URL(string: urlString)
-        else { return Fail(error: ImageCacheError.invalidationImageURL).eraseToAnyPublisher() }
+        else { return Fail(error: ImageCacheError.imageURLErrror).eraseToAnyPublisher() }
 
         var request = URLRequest(url: url)
         request.addValue(etag ?? "", forHTTPHeaderField: "If-None-Match")
@@ -163,7 +163,7 @@ final class ImageCacheManager: NSObject, NSCacheDelegate {
 
     private func makeImageCacheError(by error: Error) -> ImageCacheError {
         guard let error = error as? ImageCacheError
-        else { return ImageCacheError.unknownerror }
+        else { return ImageCacheError.unKnownError }
         return error
     }
 

@@ -8,25 +8,28 @@
 import Combine
 import Foundation
 
-import FirebaseFirestore
-
 final class FeedDetailViewModel {
 
-    private var cancelBag = Set<AnyCancellable>()
+    private let firestoreFeedService: FirestoreFeedService
 
     private let feed = CurrentValueSubject<Feed?, Never>(nil)
     private let dbUpdateResult = PassthroughSubject<Bool, Never>()
+    private var cancelBag = Set<AnyCancellable>()
 
-    init() { }
+    init(firestoreFeedService: FirestoreFeedService) {
+        self.firestoreFeedService = firestoreFeedService
+    }
 
     convenience init(feed: Feed) {
-        self.init()
+        let firestoreFeedService = DefaultFirestoreFeedService()
+        self.init(firestoreFeedService: firestoreFeedService)
         self.feed.send(feed)
     }
 
     convenience init(feedUUID: String) {
-        self.init()
-        self.fetchFeed(uuid: feedUUID)
+        let firestoreFeedService = DefaultFirestoreFeedService()
+        self.init(firestoreFeedService: firestoreFeedService)
+        self.fetchFeed(feedUUID: feedUUID)
     }
 
     struct Input {
@@ -66,56 +69,28 @@ final class FeedDetailViewModel {
         )
     }
 
-    private func fetchFeed(uuid: String) {
-        Task {
-            // TODO: 오류 처리
-            let feedDict = try await requestGetFeed(uuid: uuid)
-            let feedDTO = FeedDTO(data: feedDict)
-            let feedWriterDict = try await requestGetFeedWriter(uuid: feedDTO.writerUUID)
-            let feedWriter = FeedWriter(data: feedWriterDict)
-            let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
-
-            self.feed.send(feed)
-        }
-    }
-
-    private func requestGetFeed(uuid: String) async throws -> [String: Any] {
-        try await withCheckedThrowingContinuation { continuation in
-            FirestoreCollection.feed.reference
-                .document(uuid)
-                .getDocument { documentSnapshot, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    guard let snapShot = documentSnapshot,
-                          let feedData = snapShot.data()
-                    else {
-                        continuation.resume(throwing: FirebaseError.fetchFeedError)
-                        return
-                    }
-                    continuation.resume(returning: feedData)
+    private func fetchFeed(feedUUID: String) {
+        Task { [weak self] in
+            do {
+                guard let feedDTODictionary = try await self?.firestoreFeedService.fetchFeedDTO(
+                    feedUUID: feedUUID
+                ) else {
+                    throw ConvertError.dictionaryUnwrappingError
                 }
-        }
-    }
+                let feedDTO = FeedDTO(data: feedDTODictionary)
 
-    private func requestGetFeedWriter(uuid: String) async throws -> [String: Any] {
-        try await withCheckedThrowingContinuation { continuation in
-            FirestoreCollection.user.reference
-                .document(uuid)
-                .getDocument { documentSnapShot, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    guard let snapShot = documentSnapShot,
-                          let userData = snapShot.data()
-                    else {
-                        continuation.resume(throwing: FirebaseError.fetchUserError)
-                        return
-                    }
-                    continuation.resume(returning: userData)
+                guard let feedWriterDictionary = try await self?.firestoreFeedService.fetchUser(
+                    userUUID: feedDTO.writerUUID
+                ) else {
+                    throw ConvertError.dictionaryUnwrappingError
                 }
+                let feedWriter = FeedWriter(data: feedWriterDictionary)
+
+                let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
+                self?.feed.send(feed)
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
 }

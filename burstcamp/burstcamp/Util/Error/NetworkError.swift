@@ -7,10 +7,7 @@
 
 import Foundation
 
-enum NetworkError: Int, Error, CustomStringConvertible {
-
-    var description: String { errorDescription }
-
+enum NetworkError: Int, LocalizedError {
     case responseDecoingError
     case queryEncodingError
     case decodingError
@@ -28,7 +25,9 @@ enum NetworkError: Int, Error, CustomStringConvertible {
     case notSupportedError = 501
     case badGatewayError = 502
     case invalidServiceError = 503
+}
 
+extension NetworkError {
     var errorDescription: String {
         switch self {
         case .responseDecoingError: return "RESPONSE_DECODING_ERROR"

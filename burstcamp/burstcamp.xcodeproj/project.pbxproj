@@ -29,7 +29,6 @@
 		143185EC292B4AB8008CE459 /* ScrapPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185EB292B4AB8008CE459 /* ScrapPageViewModel.swift */; };
 		143185EE292B4ABC008CE459 /* ScrapPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185ED292B4ABC008CE459 /* ScrapPageView.swift */; };
 		143185F8292B5C88008CE459 /* ContainCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185F7292B5C88008CE459 /* ContainCollectionView.swift */; };
-		143216562935C3490034DE9F /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143216552935C3490034DE9F /* FirebaseError.swift */; };
 		143D93A6292E484100C67C27 /* burstcampTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143D93A5292E484100C67C27 /* burstcampTests.swift */; };
 		143D93AD292E48C100C67C27 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 143D93AC292E48C100C67C27 /* FirebaseAuth */; };
 		143D93B1292E4B9500C67C27 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 143D93B0292E4B9500C67C27 /* FirebaseFirestore */; };
@@ -40,6 +39,8 @@
 		14927E202929CCA0001F2E97 /* RecommendFeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */; };
 		1496CF1C2940679C008F312F /* CoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF1B2940679C008F312F /* CoordinatorEvent.swift */; };
 		1496CF1E294070A3008F312F /* ContainFeedDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF1D294070A3008F312F /* ContainFeedDetailCoordinator.swift */; };
+		1496CF2129408176008F312F /* FirestoreFeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF2029408176008F312F /* FirestoreFeedService.swift */; };
+		1496CF232940AEC6008F312F /* ConvertError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF222940AEC6008F312F /* ConvertError.swift */; };
 		14A93D402936EFF900790034 /* FeedDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D3F2936EFF900790034 /* FeedDTO.swift */; };
 		14A93D422936F00F00790034 /* FeedWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D412936F00F00790034 /* FeedWriter.swift */; };
 		14F94BE62939E16D0058A79A /* UICollectionView+emptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */; };
@@ -200,7 +201,6 @@
 		143185EB292B4AB8008CE459 /* ScrapPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageViewModel.swift; sourceTree = "<group>"; };
 		143185ED292B4ABC008CE459 /* ScrapPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageView.swift; sourceTree = "<group>"; };
 		143185F7292B5C88008CE459 /* ContainCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainCollectionView.swift; sourceTree = "<group>"; };
-		143216552935C3490034DE9F /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
 		143D93A3292E484100C67C27 /* burstcampTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = burstcampTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		143D93A5292E484100C67C27 /* burstcampTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = burstcampTests.swift; sourceTree = "<group>"; };
 		1458C6942928FB1B00E00B80 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -210,6 +210,8 @@
 		14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedHeader.swift; sourceTree = "<group>"; };
 		1496CF1B2940679C008F312F /* CoordinatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorEvent.swift; sourceTree = "<group>"; };
 		1496CF1D294070A3008F312F /* ContainFeedDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainFeedDetailCoordinator.swift; sourceTree = "<group>"; };
+		1496CF2029408176008F312F /* FirestoreFeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreFeedService.swift; sourceTree = "<group>"; };
+		1496CF222940AEC6008F312F /* ConvertError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertError.swift; sourceTree = "<group>"; };
 		14A93D3F2936EFF900790034 /* FeedDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDTO.swift; sourceTree = "<group>"; };
 		14A93D412936F00F00790034 /* FeedWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedWriter.swift; sourceTree = "<group>"; };
 		14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+emptyView.swift"; sourceTree = "<group>"; };
@@ -487,10 +489,10 @@
 			children = (
 				D88295EE292A43EB005B4273 /* NetworkError.swift */,
 				D89AE4E32933AEE900446AB3 /* ImageCacheError.swift */,
-				143216552935C3490034DE9F /* FirebaseError.swift */,
 				D8576F2F293779C4002885FE /* FirestoreError.swift */,
 				D89E48B02939D9AC00744A56 /* FireStorageError.swift */,
 				3B74920C293DCCAC00A4BEA0 /* GithubError.swift */,
+				1496CF222940AEC6008F312F /* ConvertError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -519,6 +521,18 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1496CF1F294080E6008F312F /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				D8576F33293779E2002885FE /* FirestoreUser.swift */,
+				1496CF2029408176008F312F /* FirestoreFeedService.swift */,
+				D89AE4FC2935F5AE00446AB3 /* FireFunctionsManager.swift */,
+				D89E48AE2939D99300744A56 /* FireStorageService.swift */,
+				B5F4B035293CC0B300947250 /* FirestoreCollection.swift */,
+			);
+			path = Firebase;
 			sourceTree = "<group>";
 		};
 		14A93D3E2936EFEE00790034 /* Feed */ = {
@@ -785,6 +799,7 @@
 		B50A28002927A16F00DF3E1F /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				1496CF1F294080E6008F312F /* Firebase */,
 				D88295FD292A4459005B4273 /* URLSessionService.swift */,
 				B50A27A429279F5D00DF3E1F /* LogInManager.swift */,
 				D8C38671292B88DE005A2563 /* UserDefaultsManager.swift */,
@@ -792,9 +807,6 @@
 				D89AE4E72933AF1E00446AB3 /* ImageCacheManager.swift */,
 				D89AE4EE2935AC9C00446AB3 /* FirestoreFCMToken.swift */,
 				D8576F31293779D4002885FE /* UserManager.swift */,
-				D8576F33293779E2002885FE /* FirestoreUser.swift */,
-				D89AE4FC2935F5AE00446AB3 /* FireFunctionsManager.swift */,
-				D89E48AE2939D99300744A56 /* FireStorageService.swift */,
 				D8095C68293B718C00964537 /* KeyChainManager.swift */,
 			);
 			path = Service;
@@ -819,7 +831,6 @@
 		B5BA27882927AFC200BDCE08 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
-				B5F4B035293CC0B300947250 /* FirestoreCollection.swift */,
 				B50A278B29279F5D00DF3E1F /* Constant.swift */,
 				D88295FB292A4452005B4273 /* HTTPMethod.swift */,
 				D84C812D292E590300C984E8 /* MyPageEditValidationResult.swift */,
@@ -1159,8 +1170,10 @@
 				141344D6292F801100187B86 /* Date+FormatString.swift in Sources */,
 				D89AE4FD2935F5AE00446AB3 /* FireFunctionsManager.swift in Sources */,
 				D8494D462927C97E008157F1 /* MyPageView.swift in Sources */,
+				1496CF2129408176008F312F /* FirestoreFeedService.swift in Sources */,
 				D89E48AF2939D99300744A56 /* FireStorageService.swift in Sources */,
 				D8494D562927D6EB008157F1 /* DefaultBadgeView.swift in Sources */,
+				1496CF232940AEC6008F312F /* ConvertError.swift in Sources */,
 				3B061FE7292A1F9600BFA71D /* SignUpBlogView.swift in Sources */,
 				D88295FE292A4459005B4273 /* URLSessionService.swift in Sources */,
 				D89AE4F12935AE7800446AB3 /* Encodable+dictionary.swift in Sources */,
@@ -1190,7 +1203,6 @@
 				143185EC292B4AB8008CE459 /* ScrapPageViewModel.swift in Sources */,
 				D89AE4ED2935AA2100446AB3 /* FCMToken.swift in Sources */,
 				D89AE4E42933AEE900446AB3 /* ImageCacheError.swift in Sources */,
-				143216562935C3490034DE9F /* FirebaseError.swift in Sources */,
 				B50A27E929279F5D00DF3E1F /* NormalFeedCellFooter.swift in Sources */,
 				143185F8292B5C88008CE459 /* ContainCollectionView.swift in Sources */,
 				B5DAD67B292E4C6800C4A126 /* FeedDetailViewController.swift in Sources */,

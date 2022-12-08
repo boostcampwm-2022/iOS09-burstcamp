@@ -8,8 +8,6 @@
 import Combine
 import Foundation
 
-import FirebaseFirestore
-
 enum UpdateMethod {
     case append
     case remove
@@ -21,12 +19,15 @@ final class FeedScrapViewModel {
     private let dbUpdateResult = PassthroughSubject<Bool, Never>()
     private let scrapToggleButtonIsEnabled = PassthroughSubject<Bool, Never>()
     private let scrapCountUp = PassthroughSubject<Bool, Never>()
+
     private let feedUUID: String
     private let userUUID: String
+    private let firestoreFeedService: FirestoreFeedService
 
-    init(feedUUID: String) {
+    init(feedUUID: String, firestoreFeedService: FirestoreFeedService) {
         self.feedUUID = feedUUID
         self.userUUID = UserManager.shared.user.userUUID
+        self.firestoreFeedService = firestoreFeedService
     }
 
     struct Input {
@@ -94,11 +95,22 @@ final class FeedScrapViewModel {
             do {
                 switch scrapState {
                 case true:
-                    try await requestDeleteScrapUser(userUUID, at: feedUUID)
-                    try await requestDeleteUserScrapFeedUUID(feedUUID, at: userUUID)
+                    try await firestoreFeedService.deleteUserFromFeed(
+                        userUUID: userUUID,
+                        at: feedUUID
+                    )
+                    try await firestoreFeedService.deleteFeedUUIDFromUser(
+                        feedUUID: feedUUID,
+                        at: userUUID
+                    )
                 case false:
-                    try await requestAppendScrapUser(userUUID, at: feedUUID)
-                    try await requestAppendUserScrapFeedUUID(feedUUID, at: userUUID)
+                    try await firestoreFeedService.appendUserToFeed(
+                        userUUID: userUUID,
+                        at: feedUUID
+                    )
+                    try await firestoreFeedService.appendFeedUUIDToUser(
+                        feedUUID: feedUUID, at: userUUID
+                    )
                 }
                 self.dbUpdateResult.send(true)
             } catch {
@@ -106,81 +118,5 @@ final class FeedScrapViewModel {
                 self.dbUpdateResult.send(false)
             }
         }
-    }
-
-    // MARK: Append
-
-    private func requestDeleteUserScrapFeedUUID(
-        _ feedUUID: String,
-        at userUUID: String
-    ) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            FirestoreCollection.user.reference
-                .document(userUUID)
-                .updateData([
-                    "scrapFeedUUIDs": FieldValue.arrayRemove([feedUUID])
-                ]) { error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    continuation.resume()
-                }
-        } as Void
-    }
-
-    private func requestDeleteScrapUser(_ userUUID: String, at feedUUID: String) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            FirestoreCollection.scrapUser(feedUUID: feedUUID).reference
-                .document(UserManager.shared.user.userUUID)
-                .delete { error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    continuation.resume()
-                }
-        } as Void
-    }
-
-    // MARK: Append
-
-    private func requestAppendScrapUser(
-        _ userUUID: String
-        , at feedUUID: String
-    ) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            FirestoreCollection.scrapUser(feedUUID: feedUUID).reference
-                .document(userUUID)
-                .setData([
-                    "userUUID": userUUID,
-                    "scrapDate": Timestamp(date: Date())
-                ]) { error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    continuation.resume()
-                }
-        } as Void
-    }
-
-    private func requestAppendUserScrapFeedUUID(
-        _ feedUUID: String,
-        at userUUID: String
-    ) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            FirestoreCollection.user.reference
-                .document(userUUID)
-                .updateData([
-                    "scrapFeedUUIDs": FieldValue.arrayUnion([feedUUID])
-                ]) { error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    continuation.resume()
-                }
-        } as Void
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum GithubError: Error {
+enum GithubError: LocalizedError {
     case requestAccessTokenError
     case requestUserInfoError
     case checkOrganizationError
@@ -15,15 +15,15 @@ enum GithubError: Error {
     case encodingError
 }
 
-extension GithubError: LocalizedError {
+extension GithubError {
     var errorDescription: String? {
         switch self {
         case .requestAccessTokenError:
-            return "AccessToken을 받을 수 없습니다"
+            return "Github에서 AccessToken을 불러올 수 없습니다"
         case .requestUserInfoError:
-            return "Github UserInfo를 받을 수 없습니다"
+            return "Github 유저 정보를 불러올 수 없습니다"
         case .checkOrganizationError:
-            return "캠퍼가 아닙니다"
+            return "부스트캠퍼가 아닙니다"
         case .APIKeyError:
             return "관리자에게 문의해주세요 (APIKey)"
         case .encodingError:

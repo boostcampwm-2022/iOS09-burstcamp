@@ -10,23 +10,26 @@ import Foundation
 import FirebaseFirestore
 
 enum FirestoreCollection {
-    case user
     case feed
-    case fcmToken
-    case scrapUser(feedUUID: String)
     case recommendFeed
+    case user
+    case scrapUser(feedUUID: String)
+    case admin
+    case fcmToken
 }
 
 extension FirestoreCollection {
     private static let database = Firestore.firestore()
 
-    private var path: String {
+    var path: String {
         switch self {
-        case .user: return "user"
+
         case .feed: return "feed"
-        case .fcmToken: return "FCMToken"
-        case .scrapUser(let feedUUID): return "feed/\(feedUUID)/scrapUsers"
         case .recommendFeed: return "recommendFeed"
+        case .user: return "user"
+        case .scrapUser(let feedUUID): return "feed/\(feedUUID)/scrapUsers"
+        case .admin: return "admin"
+        case .fcmToken: return "FCMToken"
         }
     }
 

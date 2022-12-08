@@ -19,13 +19,13 @@ struct FirestoreUser {
     private static let blogTitleField = "blogTitle"
     private static let isPushOnField = "isPushOn"
 
-    static func save(user: User) -> AnyPublisher<User, FirestoreError> {
+    static func save(user: User) -> AnyPublisher<User, Error> {
         let path = userPath.document(user.userUUID)
         guard var dictionary = user.asDictionary else {
-            return Fail(error: FirestoreError.failAsDictionary).eraseToAnyPublisher()
+            return Fail(error: ConvertError.dictionaryUnwrappingError).eraseToAnyPublisher()
         }
         dictionary["signupDate"] = Timestamp()
-        return Future<User, FirestoreError> { promise in
+        return Future<User, Error> { promise in
             path.setData(dictionary) { error in
                 if error != nil {
                     promise(.failure(FirestoreError.setDataError))
