@@ -52,12 +52,14 @@ final class LogInViewController: UIViewController {
             .sink {
                 LogInManager.shared.openGithubLoginView()
                 self.logInView.activityIndicator.startAnimating()
+                self.logInView.loadingLabel.isHidden = false
             }
             .store(in: &cancelBag)
 
         output.moveToOtherView
             .sink { logInEvent in
                 self.logInView.activityIndicator.stopAnimating()
+                self.logInView.loadingLabel.isHidden = true
 
                 switch logInEvent {
                 case .moveToDomainScreen:

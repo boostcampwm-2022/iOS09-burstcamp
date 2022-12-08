@@ -176,7 +176,6 @@ final class LogInManager {
                                 promise(.failure(.userSignOutError))
                                 return
                             }
-                            KeyChainManager.deleteToken()
                             promise(.success(true))
                         }
                     }

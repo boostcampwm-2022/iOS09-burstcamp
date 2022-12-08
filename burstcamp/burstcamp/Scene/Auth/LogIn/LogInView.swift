@@ -76,6 +76,7 @@ final class LogInView: UIView {
 
     lazy var loadingLabel: UILabel = UILabel().then {
         $0.text = "캠퍼 인증 중"
+        $0.textColor = .dynamicBlack
         $0.isHidden = true
     }
 
