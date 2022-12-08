@@ -62,8 +62,6 @@ final class MyPageViewModel {
     }
 
     private func signOut(output: Output) {
-        output.moveToLoginFlow.send()
-        return
         LogInManager.shared.signOut()
             .sink { completion in
                 if case .failure = completion {

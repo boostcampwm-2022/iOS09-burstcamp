@@ -96,7 +96,7 @@ extension AppDelegate: MessagingDelegate {
         _ messaging: Messaging,
         didReceiveRegistrationToken fcmToken: String?
     ) {
-        if let fcmToken = fcmToken, !UserManager.shared.user.userUUID.isEmpty {
+        if let fcmToken = fcmToken {
             if UserManager.shared.user.userUUID.isEmpty {
                 UserDefaultsManager.save(fcmToken: fcmToken)
             } else {
