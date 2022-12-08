@@ -37,6 +37,7 @@
 		1459C3BC2929150200FA885D /* FeedCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3BB2929150200FA885D /* FeedCellType.swift */; };
 		1481B1092941C39A0093E591 /* ErrorCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481B1082941C39A0093E591 /* ErrorCategory.swift */; };
 		1481B10B2941C5440093E591 /* Error+resolveCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481B10A2941C5440093E591 /* Error+resolveCategory.swift */; };
+		1481B10D2941D1AB0093E591 /* UIResponder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481B10C2941D1AB0093E591 /* UIResponder+.swift */; };
 		14927E1E2929C71C001F2E97 /* RecommendFeedUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14927E1D2929C71C001F2E97 /* RecommendFeedUserView.swift */; };
 		14927E202929CCA0001F2E97 /* RecommendFeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */; };
 		1496CF1C2940679C008F312F /* CoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF1B2940679C008F312F /* CoordinatorEvent.swift */; };
@@ -210,6 +211,7 @@
 		1459C3BB2929150200FA885D /* FeedCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellType.swift; sourceTree = "<group>"; };
 		1481B1082941C39A0093E591 /* ErrorCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCategory.swift; sourceTree = "<group>"; };
 		1481B10A2941C5440093E591 /* Error+resolveCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+resolveCategory.swift"; sourceTree = "<group>"; };
+		1481B10C2941D1AB0093E591 /* UIResponder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+.swift"; sourceTree = "<group>"; };
 		14927E1D2929C71C001F2E97 /* RecommendFeedUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedUserView.swift; sourceTree = "<group>"; };
 		14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedHeader.swift; sourceTree = "<group>"; };
 		1496CF1B2940679C008F312F /* CoordinatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorEvent.swift; sourceTree = "<group>"; };
@@ -422,6 +424,7 @@
 				D84C8131292F0A1E00C984E8 /* UIViewController+.swift */,
 				1418960129377593005A42D4 /* UIScrollView+.swift */,
 				14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */,
+				1481B10C2941D1AB0093E591 /* UIResponder+.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1258,6 +1261,7 @@
 				D89AE4F92935EC6E00446AB3 /* Validation.swift in Sources */,
 				1481B10B2941C5440093E591 /* Error+resolveCategory.swift in Sources */,
 				1422C62F292F08BC00337710 /* BCDateFormatter.swift in Sources */,
+				1481B10D2941D1AB0093E591 /* UIResponder+.swift in Sources */,
 				B597F9552935B94B0022D3E6 /* DefaultToggleButton.swift in Sources */,
 				B50A27F229279F5D00DF3E1F /* AppDelegate.swift in Sources */,
 				141344CF292F800300187B86 /* UIStackView+addArrangedSubviews.swift in Sources */,

@@ -162,7 +162,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
             cell.configure(with: cellViewModel)
             cell.updateFeedCell(with: feed)
-
             return cell
         case .none:
             return UICollectionViewCell()
