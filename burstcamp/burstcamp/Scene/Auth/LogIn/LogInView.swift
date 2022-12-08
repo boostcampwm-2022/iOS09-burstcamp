@@ -64,7 +64,7 @@ final class LogInView: UIView {
         }
     }()
 
-    private lazy var githubLogInLabel: UILabel = UILabel().then {
+    private lazy var camperAuthLabel: UILabel = UILabel().then {
         $0.text = "캠퍼 인증을 위해 Github으로 로그인을 해주세요."
         $0.font = UIFont.regular12
         $0.textColor = .systemGray2
@@ -100,7 +100,7 @@ final class LogInView: UIView {
         addSubview(titleLabel)
         addSubview(identitySentenceLabel)
         addSubview(camperAuthButton)
-        addSubview(githubLogInLabel)
+        addSubview(camperAuthLabel)
         addSubview(activityIndicator)
         addSubview(loadingLabel)
     }
@@ -124,7 +124,7 @@ final class LogInView: UIView {
 
         camperAuthButton.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(Constant.space16)
-            $0.height.equalTo(Constant.Button.githubLogInButtonHeight)
+            $0.height.equalTo(Constant.Button.camperAuthButtonHeight)
             $0.bottom.equalToSuperview().multipliedBy(0.9)
         }
 
@@ -137,7 +137,7 @@ final class LogInView: UIView {
             $0.center.equalToSuperview()
         }
 
-        githubLogInLabel.snp.makeConstraints {
+        camperAuthLabel.snp.makeConstraints {
             $0.top.equalTo(camperAuthButton.snp.bottom).offset(Constant.space12)
             $0.centerX.equalToSuperview()
         }

@@ -43,7 +43,7 @@ final class LogInViewController: UIViewController {
 
     private func bind() {
         let input = LogInViewModel.Input(
-            logInButtonDidTap: logInView.githubLogInButton.tapPublisher
+            logInButtonDidTap: logInView.camperAuthButton.tapPublisher
         )
 
         let output = viewModel.transform(input: input)
