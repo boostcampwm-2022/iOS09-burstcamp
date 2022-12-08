@@ -36,7 +36,7 @@ struct FireFunctionsManager {
         }
     }
 
-    static func deleteUser(userUUID: String) -> Future<Bool, NetworkError> {
+    static func deleteUser(userUUID: String) -> AnyPublisher<Bool, NetworkError> {
         return Future<Bool, NetworkError> { promise in
             functions
                 .httpsCallable(deleteUser)
@@ -51,5 +51,6 @@ struct FireFunctionsManager {
                     promise(.failure(NetworkError.unknownError))
                 }
         }
+        .eraseToAnyPublisher()
     }
 }
