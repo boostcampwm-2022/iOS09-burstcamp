@@ -15,28 +15,33 @@ export async function sendNotification() {
     const recentFeed = await getRecentFeed()
     const writerUUID = recentFeed['writerUUID']
     const writer = await getUser(writerUUID)
+    logger.log('작성자UUID에오', writerUUID)
     logger.log('작성자에오', writer)
 
-    userUUIDs.forEach(async (userUUID) => {
-        const token = await getFCMToken(userUUID)
-        logger.log('FCM 토큰이에오', token)
-        sendMessage(token, recentFeed, writer)
-    })
+    const tokens = await Promise.all(
+        userUUIDs.map(userUUID => {
+        return getFCMToken(userUUID)
+    }))
+
+    logger.log('보낼 토큰들을 만들었어요', tokens)
+
+    sendMessage(tokens, recentFeed, writer)
 }
 
+
 /**
- * 1. 메세지를 만든다.
- * 2. getMessaging().send(message)
- * @param {String} token 
- * @param {Feed} feed 
- * @param {User} writer 
- */
-export async function sendMessage(token, feed, writer) {
-    const message = makeMessage(token, feed, writer)
+* 메세지를 한번에 모든 token에게 보낸다.
+* @param {[String]} token 
+* @param {Feed} feed 
+* @param {User} writer 
+*/
+export async function sendMessage(tokens, feed, writer) {
+    logger.log('실행하는중~~~~~~~')
+    const message = makeMessage(tokens, feed, writer)
     const messaging = getMessaging()
-    messaging.send(message)
+    messaging.sendMulticast(message)
     .then((response) => {
-        logger.log('어디로 보냈니? token: ' + token)
+        logger.log('어디로 보냈니? tokens: ' + tokens)
         logger.log(response.successCount + '개 전송 성공');
     })    
     .catch((error) => {
@@ -45,22 +50,36 @@ export async function sendMessage(token, feed, writer) {
 }
 
 /**
- * apns message 생성
- */
-function makeMessage(fcmToken, feed, writer) {
-    logger.log('Feed 작성자에오, ', writer)
-    const title = feed['title']
-    const feedUUID = feed['feedUUID']
-    const nickname = writer['nickname']
-    const body = title + ' 📣 by ' + nickname
-
-    const message = {
-        notification: {
-            title: '오늘의 피드를 확인해보세요 💙',
-            body: body
-        },
-        data: { feedUUID: feedUUID },
-        token: fcmToken
+* 1. 메세지를 만든다.
+* 2. getMessaging().send(message)
+* @param {[String]} token 
+* @param {Feed} feed 
+* @param {User} writer 
+*/
+function makeMessage(fcmTokens, feed, writer) {
+        logger.log('Feed 작성자에오, ', writer)
+        const title = feed['title']
+        const feedUUID = feed['feedUUID']
+        const nickname = writer['nickname']
+        const body = title + ' 📣 by ' + nickname
+    
+        const message = {
+            notification: {
+                title: '오늘의 피드를 확인해보세요 💙',
+                body: body
+            },
+            data: { feedUUID: feedUUID },
+            tokens: fcmTokens,
+            apns: {
+                headers: {
+                    'apns-priority': '10',
+                },
+                payload: {
+                    aps: {
+                        sound: 'default',
+                    }
+                },
+            },
+        }
+        return message
     }
-    return message
-}
