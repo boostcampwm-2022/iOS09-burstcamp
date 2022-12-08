@@ -89,10 +89,7 @@ final class HomeViewController: UIViewController {
                     self?.homeView.endCollectionViewRefreshing()
                     self?.homeView.collectionView.reloadData()
                 case .fetchFail(let error):
-                    guard let self = self else { return }
-                    self.handleError(error, from: self) {
-                        self.paginateFeed()
-                    }
+                    self?.handleError(error)
                 }
             }
             .store(in: &cancelBag)

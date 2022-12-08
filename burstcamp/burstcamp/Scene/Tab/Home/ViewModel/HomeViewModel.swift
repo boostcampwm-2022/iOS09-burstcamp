@@ -111,7 +111,9 @@ final class HomeViewModel {
     private func paginateFeed(output: Output) {
         Task {
             do {
-                guard !isFetching, canFetchMoreFeed else { return }
+                guard !isFetching, canFetchMoreFeed else {
+                    return
+                }
                 isFetching = true
 
                 let normalFeeds = try await fetchMoreFeeds()

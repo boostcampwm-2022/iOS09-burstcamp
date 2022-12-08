@@ -38,7 +38,7 @@
 		1481B1092941C39A0093E591 /* ErrorCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481B1082941C39A0093E591 /* ErrorCategory.swift */; };
 		1481B10B2941C5440093E591 /* Error+resolveCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481B10A2941C5440093E591 /* Error+resolveCategory.swift */; };
 		1481B10D2941D1AB0093E591 /* UIResponder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481B10C2941D1AB0093E591 /* UIResponder+.swift */; };
-		1481B10F2941D4F90093E591 /* AppDelegate+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481B10E2941D4F90093E591 /* AppDelegate+.swift */; };
+		1481B1112941E0C50093E591 /* HomeViewController+handleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481B1102941E0C50093E591 /* HomeViewController+handleError.swift */; };
 		14927E1E2929C71C001F2E97 /* RecommendFeedUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14927E1D2929C71C001F2E97 /* RecommendFeedUserView.swift */; };
 		14927E202929CCA0001F2E97 /* RecommendFeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */; };
 		1496CF1C2940679C008F312F /* CoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF1B2940679C008F312F /* CoordinatorEvent.swift */; };
@@ -213,7 +213,7 @@
 		1481B1082941C39A0093E591 /* ErrorCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCategory.swift; sourceTree = "<group>"; };
 		1481B10A2941C5440093E591 /* Error+resolveCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+resolveCategory.swift"; sourceTree = "<group>"; };
 		1481B10C2941D1AB0093E591 /* UIResponder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+.swift"; sourceTree = "<group>"; };
-		1481B10E2941D4F90093E591 /* AppDelegate+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+.swift"; sourceTree = "<group>"; };
+		1481B1102941E0C50093E591 /* HomeViewController+handleError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+handleError.swift"; sourceTree = "<group>"; };
 		14927E1D2929C71C001F2E97 /* RecommendFeedUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedUserView.swift; sourceTree = "<group>"; };
 		14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedHeader.swift; sourceTree = "<group>"; };
 		1496CF1B2940679C008F312F /* CoordinatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorEvent.swift; sourceTree = "<group>"; };
@@ -424,7 +424,6 @@
 				141344C9292F800300187B86 /* UIView+addSubViews.swift */,
 				D89AE4E52933AEF900446AB3 /* UIImageView+Cache.swift */,
 				D84C8131292F0A1E00C984E8 /* UIViewController+.swift */,
-				1481B10E2941D4F90093E591 /* AppDelegate+.swift */,
 				1418960129377593005A42D4 /* UIScrollView+.swift */,
 				14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */,
 				1481B10C2941D1AB0093E591 /* UIResponder+.swift */,
@@ -448,6 +447,7 @@
 			isa = PBXGroup;
 			children = (
 				B50A27B729279F5D00DF3E1F /* HomeViewController.swift */,
+				1481B1102941E0C50093E591 /* HomeViewController+handleError.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1195,11 +1195,11 @@
 				143185EA292B4A8D008CE459 /* ScrapPageViewController.swift in Sources */,
 				B5DAD67A292E4C6800C4A126 /* FeedDetailView.swift in Sources */,
 				3B7491E92938DCCD00A4BEA0 /* SignUpDomainViewModel.swift in Sources */,
-				1481B10F2941D4F90093E591 /* AppDelegate+.swift in Sources */,
 				141344D5292F801100187B86 /* TypeConversion.swift in Sources */,
 				D89AE4E82933AF1E00446AB3 /* ImageCacheManager.swift in Sources */,
 				1459C3BA292910B300FA885D /* RecommendFeedCell.swift in Sources */,
 				B50A27E529279F5D00DF3E1F /* LogInView.swift in Sources */,
+				1481B1112941E0C50093E591 /* HomeViewController+handleError.swift in Sources */,
 				D8494D4E2927CE64008157F1 /* Domain.swift in Sources */,
 				3B061FDA2928CF7E00BFA71D /* SighUpDomainView.swift in Sources */,
 				D8494D482927C9E8008157F1 /* MyPageViewModel.swift in Sources */,

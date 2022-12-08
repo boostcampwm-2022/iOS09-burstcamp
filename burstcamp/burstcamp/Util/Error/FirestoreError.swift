@@ -45,7 +45,7 @@ extension FirestoreError {
         case .fetchFeedError: return "피드를 불러오던 중 에러가 발생했습니다."
         case .fetchRecommendFeedError: return "추천 피드를 불러오던 중 에러가 발생했습니다."
         case .fetchScrapCountError: return "스크랩 수를 불러오던 중 에러가 발생했습니다."
-        case .lastFetchError: return "마지막 스크랩입니다."
+        case .lastFetchError: return "버스트 캠프의 모든 스크랩을 불러왔어요"
         case .paginateQueryError: return "피드를 추가로 불러오던 중 에러가 발생했습니다."
         }
     }

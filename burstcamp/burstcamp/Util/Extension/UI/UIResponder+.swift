@@ -17,20 +17,37 @@ extension UIResponder {
     ///   @discussion
     ///     @objc 함수로 정의해야지 서브클래스 (AppDelegate, UIViewController, UIView 등)에서 override할 수 잇음
     @objc func handleError(
-        _ error: Error,
-        from viewController: UIViewController,
-        retryHandler: @escaping () -> Void = {}
+        _ error: Error
     ) {
-        guard let nextResponder = next else {
-            return assertionFailure("""
-            처리할 수 없는 에러입니다 :  \(error)
-            """)
+        guard let viewController = self as? UIViewController else {
+            guard let nextResponder = next else {
+                return assertionFailure("""
+                처리할 수 없는 에러입니다 :  \(error)
+                """)
+            }
+
+            nextResponder.handleError(
+                error
+            )
+            return
         }
 
-        nextResponder.handleError(
-            error,
-            from: viewController,
-            retryHandler: retryHandler
+        let alert = UIAlertController(
+            title: "에러가 발생했습니다",
+            message: error.localizedDescription,
+            preferredStyle: .alert
         )
+
+        alert.addAction(UIAlertAction(
+            title: "취소",
+            style: .default)
+        )
+
+        alert.addAction(UIAlertAction(
+            title: "확인",
+            style: .default)
+        )
+
+        viewController.present(alert, animated: true)
     }
 }
