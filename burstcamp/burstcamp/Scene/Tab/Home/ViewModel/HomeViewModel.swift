@@ -102,7 +102,7 @@ final class HomeViewModel {
                 output.fetchResult.send(.fetchSuccess)
             } catch {
                 canFetchMoreFeed = false
-                debugPrint(error.localizedDescription)
+                output.fetchResult.send(.fetchFail(error: error))
             }
             isFetching = false
         }
@@ -119,7 +119,7 @@ final class HomeViewModel {
                 output.fetchResult.send(.fetchSuccess)
             } catch {
                 canFetchMoreFeed = false
-                print(error.localizedDescription)
+                output.fetchResult.send(.fetchFail(error: error))
             }
             isFetching = false
         }

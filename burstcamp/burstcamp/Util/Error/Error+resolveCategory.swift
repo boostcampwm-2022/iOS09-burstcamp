@@ -8,7 +8,7 @@
 import Foundation
 
 extension Error {
-    func resolveError() -> ErrorCategory {
+    func resolveCategory() -> ErrorCategory {
         guard let category = self as? CategorizedError else {
             return .nonRetryable
         }

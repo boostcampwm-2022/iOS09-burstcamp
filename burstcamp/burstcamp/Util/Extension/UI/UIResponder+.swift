@@ -8,17 +8,17 @@
 import UIKit
 
 extension UIResponder {
-    
+
     /// UIResponder에서 일어나는 에러를 처리함
     /// - Parameters:
     ///   - error: Error 타입
-    ///   - uiResponder: UIResponder를 상속받는 UIViewController, UIView 등
+    ///   - viewController: alert을 present 해줄 viewController
     ///   - retryHandler: 재시도 할 때 실행할 클로져. default 값은 없음
     ///   @discussion
     ///     @objc 함수로 정의해야지 서브클래스 (AppDelegate, UIViewController, UIView 등)에서 override할 수 잇음
     @objc func handleError(
         _ error: Error,
-        from uiResponder: UIResponder,
+        from viewController: UIViewController,
         retryHandler: @escaping () -> Void = {}
     ) {
         guard let nextResponder = next else {
@@ -29,7 +29,7 @@ extension UIResponder {
 
         nextResponder.handleError(
             error,
-            from: uiResponder,
+            from: viewController,
             retryHandler: retryHandler
         )
     }
