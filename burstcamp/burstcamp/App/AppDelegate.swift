@@ -19,27 +19,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         FirebaseApp.configure()
+        UserManager.shared.appStart()
+        // TODO: 삭제
+        print("Auth.auth().currentUser?.uid 값이에오: ", Auth.auth().currentUser?.uid)
+        print("키체인에 있던 유저의 UUID 값이에오: ", UserManager.shared.user.userUUID)
         configurePushNotification(application)
         configureMessaging()
         return true
     }
 }
 
-// TODO: HomeViewController로 옮기기
 // MARK: - UNUserNotificationCenterDelegate
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     private func configurePushNotification(_ application: UIApplication) {
         UNUserNotificationCenter.current().delegate = self
-
-        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-        UNUserNotificationCenter.current().requestAuthorization(
-            options: authOptions
-        ) { isPushOn, _ in
-            // TODO: update isPushOn
-            print("알림 허용했나요? ", isPushOn)
-        }
-
         application.registerForRemoteNotifications()
     }
 
@@ -88,10 +82,11 @@ extension AppDelegate: MessagingDelegate {
     private func configureMessaging() {
         Messaging.messaging().delegate = self
         Messaging.messaging().token { token, error in
-            if let error = error {
-                print("Error fetching FCM registration token: \(error)")
-            } else if let token = token {
-                print("FCM registration token: \(token)")
+            if let token = token {
+                // TODO: 삭제
+                print("현재 UserManager에 있는 userUUID", UserManager.shared.user.userUUID)
+                print("의 토큰 값이에오: ", token)
+                UserDefaultsManager.save(fcmToken: token)
             }
         }
     }
@@ -101,10 +96,12 @@ extension AppDelegate: MessagingDelegate {
         _ messaging: Messaging,
         didReceiveRegistrationToken fcmToken: String?
     ) {
-        print("Firebase registration token: \(String(describing: fcmToken))")
-        // TODO: change userUUID
         if let fcmToken = fcmToken {
-            FirebaseFCMToken.save(fcmToken: fcmToken, to: "zP9Kqm1JwzXLoPfsrrWSOA4u7P33")
+            if UserManager.shared.user.userUUID.isEmpty {
+                UserDefaultsManager.save(fcmToken: fcmToken)
+            } else {
+                FirebaseFCMToken.save(fcmToken: fcmToken, to: UserManager.shared.user.userUUID)
+            }
         }
     }
 }
@@ -114,6 +111,8 @@ extension AppDelegate: MessagingDelegate {
 extension AppDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         KeyChainManager.deleteUser()
+        // TODO: 삭제
+        print("앱 종료 전에 키체인에 저장될 UserManager에 있는 userUUID", UserManager.shared.user.userUUID)
         KeyChainManager.save(user: UserManager.shared.user)
     }
 }

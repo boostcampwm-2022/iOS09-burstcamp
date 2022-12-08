@@ -2,6 +2,7 @@ import { initializeApp, getApps } from 'firebase-admin/app';
 import { pubsub, https } from 'firebase-functions';
 import { getBlogTitle } from './service/feedAPI.js';
 import { updateFeedDB, updateRecommendFeedDB } from './service/firestoreManager.js'
+import { sendNotification } from './service/apnsManager.js'
 
 // Initialize
 if ( !getApps().length ) initializeApp()
@@ -19,4 +20,9 @@ export const fetchBlogTitle = https.onCall(async (data, context) => {
 	return {
 		blogTitle: blogTitle
 	}
+})
+
+export const scheduledSendNotification = pubsub.schedule('every day 12:16').timeZone("Asia/Seoul")
+.onRun(async (context) => {
+	sendNotification()
 })

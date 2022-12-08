@@ -22,14 +22,22 @@ final class UserManager {
 
     private init() {}
 
-    func start() {
+    func appStart() {
         userByKeyChain()
+    }
+
+    func addListener() {
         addUserListener()
+    }
+
+    func deleteUserInfo() {
+        user = User(dictionary: [:])
     }
 
     private func userByKeyChain() {
         if let user = KeyChainManager.readUser() {
             self.user = user
+            print(user)
         }
     }
 

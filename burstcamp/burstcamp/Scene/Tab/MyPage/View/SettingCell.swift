@@ -11,7 +11,7 @@ enum SettingCell: CaseIterable {
     case settingHeader
     case notification
     case darkMode
-    case withDrawal
+    case withdrawal
     case appInfoHeader
     case openSource
     case appVersion
@@ -21,7 +21,7 @@ enum SettingCell: CaseIterable {
         case .settingHeader: return "설정"
         case .notification: return "알림설정"
         case .darkMode: return "다크모드"
-        case .withDrawal: return "탈퇴하기"
+        case .withdrawal: return "탈퇴하기"
         case .appInfoHeader: return "앱 정보"
         case .openSource: return "오픈소스 라이선스"
         case .appVersion: return "앱 버전"
@@ -30,7 +30,7 @@ enum SettingCell: CaseIterable {
 
     var section: SettingSection {
         switch self {
-        case .settingHeader, .notification, .darkMode, .withDrawal:
+        case .settingHeader, .notification, .darkMode, .withdrawal:
             return .setting
         case .appInfoHeader, .openSource, .appVersion:
             return .appInfo
@@ -41,7 +41,7 @@ enum SettingCell: CaseIterable {
         switch self {
         case .notification: return UIImage(systemName: "bell.fill")
         case .darkMode: return UIImage(systemName: "moon.fill")
-        case .withDrawal: return UIImage(systemName: "airplane.departure")
+        case .withdrawal: return UIImage(systemName: "airplane.departure")
         default: return nil
         }
     }
@@ -51,7 +51,7 @@ enum SettingCell: CaseIterable {
         case .settingHeader: return 0
         case .notification: return 1
         case .darkMode: return 2
-        case .withDrawal: return 3
+        case .withdrawal: return 3
         case .appInfoHeader: return 0
         case .openSource: return 1
         case .appVersion: return 2
@@ -72,7 +72,7 @@ enum SettingCell: CaseIterable {
             return CellIndexPath(
                 indexPath: (SettingSection.setting.index, self.index)
             )
-        case .withDrawal:
+        case .withdrawal:
             return CellIndexPath(
                 indexPath: (SettingSection.setting.index, self.index)
             )

@@ -43,6 +43,7 @@ final class HomeViewController: UIViewController {
         configureUI()
         collectionViewDelegate()
         bind()
+        configurePushNotification()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -198,5 +199,26 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         if scrollView.isOverTarget() {
             paginateFeed()
         }
+    }
+}
+
+// MARK: - UNUserNotificationCenterDelegate
+
+extension HomeViewController: UNUserNotificationCenterDelegate {
+    private func configurePushNotification() {
+        let application = UIApplication.shared
+        UNUserNotificationCenter.current().delegate = self
+
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: authOptions
+        ) { isPushOn, _ in
+            let userUUID = UserManager.shared.user.userUUID
+            if !userUUID.isEmpty {
+                FirestoreUser.update(userUUID: userUUID, isPushOn: isPushOn)
+            }
+        }
+
+        application.registerForRemoteNotifications()
     }
 }

@@ -3,12 +3,14 @@ import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { fetchContent, fetchParsedRSSList } from './feedAPI.js';
 import { logger } from 'firebase-functions';
 import { convertURL } from '../util.js';
+import { sendMessage } from './apnsManager.js';
 
 if (!getApps().length) initializeApp()
 const db = getFirestore()
 const userRef = db.collection('user')
 const feedRef = db.collection('feed')
 const recommendFeedRef = db.collection('recommendFeed')
+const fcmTokenRef = db.collection('fcmToken')
 
 export async function updateFeedDB() {
 	const userSnapshot = await userRef.get()
@@ -93,3 +95,62 @@ export async function getFeedWriterUUID(blogURL) {
 			return querySnapshot.docs.at(0).id
 		})
 }
+
+/**
+ * @returns 푸시알림이 on 되어있는 유저의 UUID들
+ */
+export async function getUsersIsPushOnTrue() {
+	const users = await userRef
+		.where('isPushOn', '==', true)
+		.get()
+
+	const userUUIDs = []
+	users.forEach((doc) => {
+		userUUIDs.push(doc.data()['userUUID'])
+	})
+
+	return userUUIDs
+}
+
+/**
+ * userUUID로 FCM Token을 찾는다.
+ * @param {String} userUUID 
+ * @returns userUUID에 해당하는 FCM Token
+ */
+export async function getFCMToken(userUUID) {
+	logger.log('유저 아이디' + userUUID);
+	return fcmTokenRef
+		.doc(userUUID)
+		.get()
+		.then((doc) => {
+			return doc.data()['fcmToken'] 
+		})
+}
+
+/**
+ * userUUID로 User를 찾는다.
+ * @param {String} userUUID 
+ * @returns user
+ */
+export async function getUser(userUUID) {
+	return userRef
+		.doc(userUUID)
+		.get()
+		.then((doc) => {
+			return doc.data()
+		})
+}
+
+/**
+ * @returns 가장 최근의 Feed
+ */
+export async function getRecentFeed() {
+	return await feedRef
+		.orderBy('pubDate', 'desc')
+		.limit(1)
+		.get()
+		.then((querySnapshot) => {
+			return querySnapshot.docs.at(0).data()
+		})
+}
+

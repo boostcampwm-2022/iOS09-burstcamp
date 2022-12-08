@@ -24,10 +24,13 @@ final class MyPageViewModel {
         var appVersionValue = Just<String>(
             Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
         )
+        var signOutFailMessage = PassthroughSubject<String, Never>()
         var moveToLoginFlow = PassthroughSubject<Void, Never>()
     }
 
-    func transform(input: Input, cancelBag: inout Set<AnyCancellable>) -> Output {
+    private var cancelBag = Set<AnyCancellable>()
+
+    func transform(input: Input) -> Output {
         input.notificationDidSwitch
             .sink { isOn in
                 FirestoreUser.update(userUUID: UserManager.shared.user.userUUID, isPushOn: isOn)
@@ -50,16 +53,27 @@ final class MyPageViewModel {
             .store(in: &cancelBag)
 
         input.withdrawDidTap
-            .sink { _ in
-                FirestoreUser.delete(user: UserManager.shared.user)
-                // TODO: Feed 스크랩 정보 삭제
-                // TODO: LoginManager 탈퇴 호출
-                Auth.auth().currentUser?.delete() { _ in
-                    output.moveToLoginFlow.send()
-                }
+            .sink { [weak self] _ in
+                self?.signOut(output: output)
             }
             .store(in: &cancelBag)
 
         return output
+    }
+
+    private func signOut(output: Output) {
+        LogInManager.shared.signOut()
+            .sink { completion in
+                if case .failure = completion {
+                    output.signOutFailMessage.send("탈퇴에 실패했어요.")
+                }
+            } receiveValue: { isSignOut in
+                if isSignOut {
+                    KeyChainManager.deleteUser()
+                    UserManager.shared.deleteUserInfo()
+                    output.moveToLoginFlow.send()
+                }
+            }
+            .store(in: &cancelBag)
     }
 }
