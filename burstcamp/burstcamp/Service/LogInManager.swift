@@ -129,6 +129,12 @@ final class LogInManager {
                 self?.logInPublisher.send(.showAlert("Fail to firebase auth signIn"))
                 return
             }
+
+            guard let token = self?.token else {
+                self?.logInPublisher.send(.showAlert("토큰 저장 실패"))
+                return
+            }
+            KeyChainManager.save(token: token)
             self?.isSignedUp()
         }
     }
@@ -149,16 +155,31 @@ final class LogInManager {
 
     func signOut() -> AnyPublisher<Bool, FirestoreError> {
         return Future<Bool, FirestoreError> { promise in
-            Auth.auth().currentUser?.delete { error in
+
+            guard let token = KeyChainManager.readToken() else {
+                promise(.failure(.noDataError))
+                return
+            }
+
+            let credential = GitHubAuthProvider.credential(withToken: token)
+
+            Auth.auth().currentUser?.reauthenticate(with: credential) { _, error in
                 if error != nil {
-                    promise(.failure(.userDeleteError))
+                    promise(.failure(.userReAuthError))
                 } else {
-                    FirestoreUser.delete(user: UserManager.shared.user)
-                    guard (try? Auth.auth().signOut()) != nil else {
-                        promise(.failure(.userSignOutError))
-                        return
+                    Auth.auth().currentUser?.delete { error in
+                        if error != nil {
+                            promise(.failure(.userDeleteError))
+                        } else {
+                            FirestoreUser.delete(user: UserManager.shared.user)
+                            guard (try? Auth.auth().signOut()) != nil else {
+                                promise(.failure(.userSignOutError))
+                                return
+                            }
+                            KeyChainManager.deleteToken()
+                            promise(.success(true))
+                        }
                     }
-                    promise(.success(true))
                 }
             }
         }

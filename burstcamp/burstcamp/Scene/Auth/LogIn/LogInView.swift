@@ -45,6 +45,11 @@ final class LogInView: UIView {
         $0.style = .large
     }
 
+    lazy var loadingLabel: UILabel = UILabel().then {
+        $0.text = "캠퍼 인증 중"
+        $0.isHidden = true
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -57,42 +62,55 @@ final class LogInView: UIView {
 
     private func configureUI() {
         backgroundColor = .background
+        addViews()
+        configureLayout()
+    }
 
+    private func addViews() {
         addSubview(titleImage)
+        addSubview(titleLabel)
+        addSubview(identitySentenceLabel)
+        addSubview(githubLogInButton)
+        addSubview(githubLogInLabel)
+        addSubview(activityIndicator)
+        addSubview(loadingLabel)
+    }
+
+    private func configureLayout() {
         titleImage.snp.makeConstraints {
             $0.height.width.equalTo(Constant.Image.appTitle)
             $0.centerY.equalToSuperview().offset(Constant.spaceMinus72)
             $0.leading.equalToSuperview().offset(Constant.space16)
         }
 
-        addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.leading.equalTo(titleImage.snp.trailing)
             $0.centerY.equalToSuperview().offset(Constant.spaceMinus72)
         }
 
-        addSubview(identitySentenceLabel)
         identitySentenceLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(Constant.space10)
             $0.leading.equalToSuperview().offset(Constant.space16)
         }
 
-        addSubview(githubLogInButton)
         githubLogInButton.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(Constant.space16)
             $0.height.equalTo(Constant.Button.githubLogInButtonHeight)
             $0.bottom.equalToSuperview().multipliedBy(0.9)
         }
 
-        addSubview(githubLogInLabel)
         githubLogInLabel.snp.makeConstraints {
             $0.top.equalTo(githubLogInButton.snp.bottom).offset(Constant.space12)
             $0.centerX.equalToSuperview()
         }
 
-        addSubview(activityIndicator)
         activityIndicator.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()
+        }
+
+        loadingLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(activityIndicator.snp.bottom).offset(Constant.space10)
         }
     }
 }

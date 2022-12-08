@@ -12,8 +12,8 @@ final class SignUpBlogViewModel {
 
     struct Input {
         let blogAddressTextFieldDidEdit: AnyPublisher<String, Never>
-        let nextButtonDidTap: PassthroughSubject<Bool, Never>
-        let skipConfirmDidTap: PassthroughSubject<Bool, Never>
+        let nextButtonDidTap: PassthroughSubject<Void, Never>
+        let skipConfirmDidTap: PassthroughSubject<Void, Never>
         let blogTitleConfirmDidTap: PassthroughSubject<String, Never>
         let saveFCMToken: PassthroughSubject<Void, Never>
     }
