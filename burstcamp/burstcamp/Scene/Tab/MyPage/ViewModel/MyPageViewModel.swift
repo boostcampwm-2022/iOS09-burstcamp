@@ -33,7 +33,8 @@ final class MyPageViewModel {
     func transform(input: Input) -> Output {
         input.notificationDidSwitch
             .sink { isOn in
-                FirestoreUser.update(userUUID: UserManager.shared.user.userUUID, isPushOn: isOn)
+                let userUUID = UserManager.shared.user.userUUID
+                FirestoreUser.update(userUUID: userUUID, isPushOn: isOn)
             }
             .store(in: &cancelBag)
 
@@ -69,7 +70,10 @@ final class MyPageViewModel {
                 }
             } receiveValue: { isSignOut in
                 if isSignOut {
+                    // TODO: deleteToken
+                    // KeyChainManager.deleteToken()
                     KeyChainManager.deleteUser()
+                    UserManager.shared.removeUserListener()
                     UserManager.shared.deleteUserInfo()
                     output.moveToLoginFlow.send()
                 }
