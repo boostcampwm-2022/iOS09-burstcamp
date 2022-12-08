@@ -24,6 +24,12 @@ enum FirestoreError: LocalizedError {
     case paginateQueryError
 }
 
+extension FirestoreError: CategorizedError {
+    var category: ErrorCategory {
+        return .retryable
+    }
+}
+
 extension FirestoreError {
     var errorDescription: String? {
         switch self {
