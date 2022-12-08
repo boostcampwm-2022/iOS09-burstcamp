@@ -33,7 +33,7 @@ extension UIResponder {
         }
 
         let alert = UIAlertController(
-            title: "에러가 발생했습니다",
+            title: "에러",
             message: error.localizedDescription,
             preferredStyle: .alert
         )
