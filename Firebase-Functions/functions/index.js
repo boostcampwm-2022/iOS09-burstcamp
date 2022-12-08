@@ -22,6 +22,7 @@ export const fetchBlogTitle = https.onCall(async (data, context) => {
 	}
 })
 
-export const scheduledSendNotification = pubsub.schedule('every day 12:16').onRun(async (context) => {
+export const scheduledSendNotification = pubsub.schedule('every day 12:16').timeZone("Asia/Seoul")
+.onRun(async (context) => {
 	sendNotification()
 })

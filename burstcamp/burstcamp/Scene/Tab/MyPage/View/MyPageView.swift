@@ -194,7 +194,7 @@ extension MyPageView {
                 .customView(configuration: iconAccessoryConfiguration(cell: itemIdentifier)),
                 .customView(configuration: switchAccessoryConfiguration(cell: itemIdentifier))
             ]
-        case .withDrawal:
+        case .withdrawal:
             cell.accessories = [
                 .customView(configuration: iconAccessoryConfiguration(cell: itemIdentifier))
             ]
