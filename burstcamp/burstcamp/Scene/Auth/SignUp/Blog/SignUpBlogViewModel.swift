@@ -55,7 +55,7 @@ final class SignUpBlogViewModel {
                         blogURL: LogInManager.shared.blodURL,
                         blogTitle: title
                     ) else {
-                        promise(.failure(FirestoreError.noDataError))
+                        promise(.failure(FirebaseAuthError.fetchUUIDError))
                         return
                     }
                     promise(.success(user))
