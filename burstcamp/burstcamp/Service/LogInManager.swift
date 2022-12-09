@@ -112,7 +112,7 @@ final class LogInManager {
                 self.logInPublisher.send(.showAlert(FirebaseAuthError.failSignInError.errorDescription ?? ""))
                 return
             }
-            
+
             KeyChainManager.save(token: token)
             self.isSignedUp(uuid: result.user.uid)
         }
@@ -161,7 +161,7 @@ final class LogInManager {
         }
         .eraseToAnyPublisher()
     }
-    
+
     func requestGithubAccessToken(code: String) -> AnyPublisher<GithubToken, GithubError> {
         let urlString = "https://github.com/login/oauth/access_token"
 
