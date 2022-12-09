@@ -39,16 +39,17 @@ final class SignUpBlogViewController: UIViewController {
     }
 
     private func bind() {
-        let nextButtonSubject = PassthroughSubject<Bool, Never>()
-        let skipConfirmSubject = PassthroughSubject<Bool, Never>()
+        let nextButtonSubject = PassthroughSubject<Void, Never>()
+        let skipConfirmSubject = PassthroughSubject<Void, Never>()
         let blogTitleConfirmSubject = PassthroughSubject<String, Never>()
         let saveFCMToken = PassthroughSubject<Void, Never>()
 
         signUpBlogView.skipButton.tapPublisher
             .sink { _ in
                 let confirmAction = UIAlertAction(title: "네", style: .default) { _ in
-                    skipConfirmSubject.send(true)
+                    skipConfirmSubject.send()
                     self.signUpBlogView.activityIndicator.startAnimating()
+                    self.signUpBlogView.signUpLabel.isHidden = false
                 }
                 let cancelAction = UIAlertAction(title: "아니오", style: .destructive)
                 self.showAlert(
@@ -60,8 +61,9 @@ final class SignUpBlogViewController: UIViewController {
 
         signUpBlogView.nextButton.tapPublisher
             .sink { _ in
+                nextButtonSubject.send()
                 self.signUpBlogView.activityIndicator.startAnimating()
-                nextButtonSubject.send(true)
+                self.signUpBlogView.confirmBlogLabel.isHidden = false
             }
             .store(in: &cancelBag)
 
@@ -85,6 +87,7 @@ final class SignUpBlogViewController: UIViewController {
         output.signUpWithNextButton
             .sink { blogTitle in
                 self.signUpBlogView.activityIndicator.stopAnimating()
+                self.signUpBlogView.confirmBlogLabel.isHidden = true
 
                 if blogTitle.isEmpty {
                     self.showAlert(message: "블로그 주소를 확인해주세요")
@@ -92,6 +95,7 @@ final class SignUpBlogViewController: UIViewController {
                     let confirmAction = UIAlertAction(title: "네", style: .default) { _ in
                         blogTitleConfirmSubject.send(blogTitle)
                         self.signUpBlogView.activityIndicator.startAnimating()
+                        self.signUpBlogView.signUpLabel.isHidden = false
                     }
                     let cancelAction = UIAlertAction(title: "아니오", style: .destructive)
                     self.showAlert(
@@ -105,6 +109,7 @@ final class SignUpBlogViewController: UIViewController {
         output.signUpWithBlogTitle
             .sink(receiveCompletion: { result in
                 self.signUpBlogView.activityIndicator.stopAnimating()
+                self.signUpBlogView.signUpLabel.isHidden = true
                 if case .failure = result {
                     self.showAlert(message: "회원가입에 실패했습니다")
                 }
@@ -117,6 +122,7 @@ final class SignUpBlogViewController: UIViewController {
         output.signUpWithSkipButton
             .sink(receiveCompletion: { result in
                 self.signUpBlogView.activityIndicator.stopAnimating()
+                self.signUpBlogView.signUpLabel.isHidden = true
                 if case .failure = result {
                     self.showAlert(message: "회원가입에 실패했습니다")
                 }

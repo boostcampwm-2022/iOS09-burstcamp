@@ -69,32 +69,39 @@ final class SignUpCamperIDView: UIView {
 
     func configureUI() {
         backgroundColor = .background
+        addViews()
+        configureLayout()
+    }
 
+    private func addViews() {
         addSubview(domainLabel)
+        addSubview(mainLabel)
+        addSubview(subLabel)
+        addSubview(representingDomainLabel)
+        addSubview(idTextField)
+    }
+
+    private func configureLayout() {
         domainLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().multipliedBy(0.2)
             $0.leading.equalToSuperview().offset(Constant.space16)
         }
 
-        addSubview(mainLabel)
         mainLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().multipliedBy(0.2)
             $0.leading.equalTo(domainLabel.snp.trailing).offset(Constant.space8)
         }
 
-        addSubview(subLabel)
         subLabel.snp.makeConstraints {
             $0.top.equalTo(mainLabel.snp.bottom).offset(Constant.space8)
             $0.leading.equalToSuperview().offset(Constant.space16)
         }
 
-        addSubview(representingDomainLabel)
         representingDomainLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().multipliedBy(0.35)
             $0.leading.equalToSuperview().offset(Constant.space24)
         }
 
-        addSubview(idTextField)
         idTextField.snp.makeConstraints {
             $0.centerY.equalTo(representingDomainLabel.snp.centerY)
             $0.leading.equalTo(representingDomainLabel.snp.trailing).offset(Constant.space12)

@@ -12,8 +12,8 @@ final class SignUpBlogViewModel {
 
     struct Input {
         let blogAddressTextFieldDidEdit: AnyPublisher<String, Never>
-        let nextButtonDidTap: PassthroughSubject<Bool, Never>
-        let skipConfirmDidTap: PassthroughSubject<Bool, Never>
+        let nextButtonDidTap: PassthroughSubject<Void, Never>
+        let skipConfirmDidTap: PassthroughSubject<Void, Never>
         let blogTitleConfirmDidTap: PassthroughSubject<String, Never>
         let saveFCMToken: PassthroughSubject<Void, Never>
     }
@@ -55,7 +55,7 @@ final class SignUpBlogViewModel {
                         blogURL: LogInManager.shared.blodURL,
                         blogTitle: title
                     ) else {
-                        promise(.failure(FirestoreError.noDataError))
+                        promise(.failure(FirebaseAuthError.fetchUUIDError))
                         return
                     }
                     promise(.success(user))
@@ -72,7 +72,7 @@ final class SignUpBlogViewModel {
             .flatMap { _ -> AnyPublisher<User, Error> in
                 return Future<User, Error> { promise in
                     guard let user = try? self.createUser(blogURL: "", blogTitle: "") else {
-                        promise(.failure(FirestoreError.noDataError))
+                        promise(.failure(FirebaseAuthError.fetchUUIDError))
                         return
                     }
                     promise(.success(user))
@@ -98,7 +98,7 @@ final class SignUpBlogViewModel {
 
     private func createUser(blogURL: String, blogTitle: String) throws -> User {
         guard let userUUID = LogInManager.shared.userUUID else {
-            throw FirestoreError.noDataError
+            throw FirebaseAuthError.fetchUUIDError
         }
 
         return User(

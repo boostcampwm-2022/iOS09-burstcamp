@@ -18,7 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         else {
             return
         }
-
+        appCoordinator.dismissNavigationController()
+        appCoordinator.displayIndicator()
         LogInManager.shared.logIn(code: code)
     }
 

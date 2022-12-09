@@ -53,20 +53,29 @@ final class SignUpDomainView: UIView {
 
     private func configureUI() {
         backgroundColor = .background
+        addViews()
+        configureLayout()
+    }
 
+    private func addViews() {
         addSubview(mainLabel)
+        addSubview(subLabel)
+        addSubview(webButton)
+        addSubview(aosButton)
+        addSubview(iosButton)
+    }
+
+    private func configureLayout() {
         mainLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().multipliedBy(0.2)
             $0.leading.equalToSuperview().offset(Constant.space16)
         }
 
-        addSubview(subLabel)
         subLabel.snp.makeConstraints {
             $0.top.equalTo(mainLabel.snp.bottom).offset(Constant.space8)
             $0.leading.equalToSuperview().offset(Constant.space16)
         }
 
-        addSubview(webButton)
         webButton.snp.makeConstraints {
             $0.width.equalTo(Constant.Button.domainWidth)
             $0.height.equalTo(Constant.Button.domainHeight)
@@ -74,7 +83,6 @@ final class SignUpDomainView: UIView {
             $0.bottom.equalToSuperview().multipliedBy(0.45)
         }
 
-        addSubview(aosButton)
         aosButton.snp.makeConstraints {
             $0.width.equalTo(Constant.Button.domainWidth)
             $0.height.equalTo(Constant.Button.domainHeight)
@@ -82,7 +90,6 @@ final class SignUpDomainView: UIView {
             $0.top.equalTo(webButton.snp.bottom).offset(Constant.space48)
         }
 
-        addSubview(iosButton)
         iosButton.snp.makeConstraints {
             $0.width.equalTo(Constant.Button.domainWidth)
             $0.height.equalTo(Constant.Button.domainHeight)

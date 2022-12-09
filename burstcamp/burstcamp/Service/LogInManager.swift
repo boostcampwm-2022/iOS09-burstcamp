@@ -32,7 +32,7 @@ final class LogInManager {
     var camperID: String = ""
     var blodURL: String = ""
 
-    private var githubAPIKey: Github? {
+    var githubAPIKey: Github? {
         guard let serviceInfoURL = Bundle.main.url(
             forResource: "Service-Info",
             withExtension: "plist"
@@ -60,25 +60,6 @@ final class LogInManager {
             .store(in: &cancelBag)
     }
 
-    func openGithubLoginView() {
-        let urlString = "https://github.com/login/oauth/authorize"
-
-        guard var urlComponent = URLComponents(string: urlString),
-              let clientID = githubAPIKey?.clientID
-        else {
-            return
-        }
-
-        urlComponent.queryItems = [
-            URLQueryItem(name: "client_id", value: clientID),
-            URLQueryItem(name: "scope", value: "admin:org")
-        ]
-
-        guard let url = urlComponent.url else { return }
-
-        UIApplication.shared.open(url)
-    }
-
     func logIn(code: String) {
         requestGithubAccessToken(code: code)
             .map { $0.accessToken }
@@ -92,73 +73,72 @@ final class LogInManager {
                 return self.getOrganizationMembership(nickname: nickname, token: self.token)
             }
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] result in
+            .sink { result in
                 if case .failure(let error) = result {
-                    self?.handleGithubError(error: error)
+                    self.logInPublisher.send(.showAlert(error.errorDescription ?? ""))
                 }
-            } receiveValue: { [weak self] _ in
-                guard let self = self else {
-                    self?.logInPublisher.send(.showAlert("관리자에게 문의해주세요"))
-                    return
-                }
+            } receiveValue: { _ in
                 self.signInToFirebase(token: self.token)
             }
             .store(in: &cancelBag)
     }
 
-    func handleGithubError(error: GithubError) {
-        self.logInPublisher.send(.showAlert(error.errorDescription ?? ""))
-    }
-
-    func handleFirebaseError(error: FirestoreError) {
-        switch error {
-        case .noDataError, .setDataError:
-            self.logInPublisher.send(.moveToDomainScreen)
-        default:
-            return
-        }
-    }
-
     func signInToFirebase(token: String) {
         let credential = GitHubAuthProvider.credential(withToken: token)
 
-        Auth.auth().signIn(with: credential) { [weak self] result, error in
-            guard result != nil,
+        Auth.auth().signIn(with: credential) { result, error in
+            guard let result = result,
                   error == nil
             else {
-                self?.logInPublisher.send(.showAlert("Fail to firebase auth signIn"))
+                self.logInPublisher.send(
+                    .showAlert(FirebaseAuthError.failSignInError.errorDescription ?? "")
+                )
                 return
             }
-            self?.isSignedUp()
+
+            KeyChainManager.save(token: token)
+            self.isSignedUp(uuid: result.user.uid)
         }
     }
 
-    func isSignedUp() {
-        guard let userUUID = userUUID else { return }
-
-        FirestoreUser.fetch(userUUID: userUUID)
-            .sink { [weak self] result in
-                if case .failure(let error) = result {
-                    self?.handleFirebaseError(error: error)
+    func isSignedUp(uuid: String) {
+        FirestoreUser.fetch(userUUID: uuid)
+            .sink {  result in
+                if case .failure = result {
+                    self.logInPublisher.send(.moveToDomainScreen)
                 }
-            } receiveValue: { [weak self] _ in
-                self?.logInPublisher.send(.moveToTabBarScreen)
+            } receiveValue: {  _ in
+                self.logInPublisher.send(.moveToTabBarScreen)
             }
             .store(in: &cancelBag)
     }
 
-    func signOut() -> AnyPublisher<Bool, FirestoreError> {
-        return Future<Bool, FirestoreError> { promise in
-            Auth.auth().currentUser?.delete { error in
+    func signOut() -> AnyPublisher<Bool, FirebaseAuthError> {
+        return Future<Bool, FirebaseAuthError> { promise in
+
+            guard let token = KeyChainManager.readToken() else {
+                promise(.failure(.readTokenError))
+                return
+            }
+
+            let credential = GitHubAuthProvider.credential(withToken: token)
+
+            Auth.auth().currentUser?.reauthenticate(with: credential) { _, error in
                 if error != nil {
-                    promise(.failure(.userDeleteError))
+                    promise(.failure(.userReAuthError))
                 } else {
-                    FirestoreUser.delete(user: UserManager.shared.user)
-                    guard (try? Auth.auth().signOut()) != nil else {
-                        promise(.failure(.userSignOutError))
-                        return
+                    Auth.auth().currentUser?.delete { error in
+                        if error != nil {
+                            promise(.failure(.userDeleteError))
+                        } else {
+                            FirestoreUser.delete(user: UserManager.shared.user)
+                            guard (try? Auth.auth().signOut()) != nil else {
+                                promise(.failure(.authSignOutError))
+                                return
+                            }
+                            promise(.success(true))
+                        }
                     }
-                    promise(.success(true))
                 }
             }
         }

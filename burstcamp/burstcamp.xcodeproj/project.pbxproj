@@ -54,6 +54,7 @@
 		3B7491E92938DCCD00A4BEA0 /* SignUpDomainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7491E82938DCCD00A4BEA0 /* SignUpDomainViewModel.swift */; };
 		3B7491EB2938F12600A4BEA0 /* SignUpCamperIDViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7491EA2938F12600A4BEA0 /* SignUpCamperIDViewModel.swift */; };
 		3B74920D293DCCAC00A4BEA0 /* GithubError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B74920C293DCCAC00A4BEA0 /* GithubError.swift */; };
+		3B7492292942EDCB00A4BEA0 /* FirebaseAuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7492282942EDCB00A4BEA0 /* FirebaseAuthError.swift */; };
 		B500C9EE293DBA0800EBE39E /* FeedScrapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B500C9ED293DBA0800EBE39E /* FeedScrapViewModel.swift */; };
 		B50A27CF29279F5D00DF3E1F /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A278B29279F5D00DF3E1F /* Constant.swift */; };
 		B50A27DA29279F5D00DF3E1F /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A279729279F5D00DF3E1F /* ReusableView.swift */; };
@@ -225,6 +226,7 @@
 		3B7491E82938DCCD00A4BEA0 /* SignUpDomainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDomainViewModel.swift; sourceTree = "<group>"; };
 		3B7491EA2938F12600A4BEA0 /* SignUpCamperIDViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCamperIDViewModel.swift; sourceTree = "<group>"; };
 		3B74920C293DCCAC00A4BEA0 /* GithubError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubError.swift; sourceTree = "<group>"; };
+		3B7492282942EDCB00A4BEA0 /* FirebaseAuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthError.swift; sourceTree = "<group>"; };
 		B500C9ED293DBA0800EBE39E /* FeedScrapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedScrapViewModel.swift; sourceTree = "<group>"; };
 		B50A277129279F2600DF3E1F /* burstcamp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = burstcamp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B50A278B29279F5D00DF3E1F /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
@@ -493,6 +495,7 @@
 				D89E48B02939D9AC00744A56 /* FireStorageError.swift */,
 				3B74920C293DCCAC00A4BEA0 /* GithubError.swift */,
 				1496CF222940AEC6008F312F /* ConvertError.swift */,
+				3B7492282942EDCB00A4BEA0 /* FirebaseAuthError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -1217,6 +1220,7 @@
 				141344D0292F800300187B86 /* UIView+addSubViews.swift in Sources */,
 				B5E0D94C292F750D001727F5 /* FeedContentWebView.swift in Sources */,
 				B50A27E229279F5D00DF3E1F /* LogInManager.swift in Sources */,
+				3B7492292942EDCB00A4BEA0 /* FirebaseAuthError.swift in Sources */,
 				B50A27F529279F5D00DF3E1F /* AppCoordinator.swift in Sources */,
 				B50A27F929279F5D00DF3E1F /* TabBarPage.swift in Sources */,
 				3B061FE2292926DA00BFA71D /* SignUpBlogViewModel.swift in Sources */,
