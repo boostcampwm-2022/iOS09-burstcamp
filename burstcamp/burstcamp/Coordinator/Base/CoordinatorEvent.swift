@@ -18,6 +18,7 @@ enum AuthCoordinatorEvent {
     case moveToBlogScreen
     case moveToTabBarScreen
     case showAlert(String)
+    case moveToGithubLogIn
 }
 
 enum TabBarCoordinatorEvent {

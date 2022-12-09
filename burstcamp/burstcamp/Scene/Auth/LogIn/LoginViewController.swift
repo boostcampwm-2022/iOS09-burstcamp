@@ -41,6 +41,11 @@ final class LogInViewController: UIViewController {
         bind()
     }
 
+    func displayIndicator() {
+        logInView.activityIndicator.startAnimating()
+        logInView.loadingLabel.isHidden = false
+    }
+
     private func bind() {
         let input = LogInViewModel.Input(
             logInButtonDidTap: logInView.camperAuthButton.tapPublisher
@@ -50,9 +55,7 @@ final class LogInViewController: UIViewController {
 
         output.openLogInView
             .sink {
-                LogInManager.shared.openGithubLoginView()
-                self.logInView.activityIndicator.startAnimating()
-                self.logInView.loadingLabel.isHidden = false
+                self.coordinatorPublisher.send(.moveToGithubLogIn)
             }
             .store(in: &cancelBag)
 
@@ -68,7 +71,7 @@ final class LogInViewController: UIViewController {
                     self.coordinatorPublisher.send(.moveToTabBarScreen)
                 case .showAlert(let message):
                     self.showAlert(message: message)
-                case .moveToBlogScreen, .moveToIDScreen:
+                case .moveToBlogScreen, .moveToIDScreen, .moveToGithubLogIn:
                     return
                 }
             }

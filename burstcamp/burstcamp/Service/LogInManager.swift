@@ -32,7 +32,7 @@ final class LogInManager {
     var camperID: String = ""
     var blodURL: String = ""
 
-    private var githubAPIKey: Github? {
+    var githubAPIKey: Github? {
         guard let serviceInfoURL = Bundle.main.url(
             forResource: "Service-Info",
             withExtension: "plist"
@@ -58,25 +58,6 @@ final class LogInManager {
                 self?.autoLogInPublisher.send(true)
             }
             .store(in: &cancelBag)
-    }
-
-    func openGithubLoginView() {
-        let urlString = "https://github.com/login/oauth/authorize"
-
-        guard var urlComponent = URLComponents(string: urlString),
-              let clientID = githubAPIKey?.clientID
-        else {
-            return
-        }
-
-        urlComponent.queryItems = [
-            URLQueryItem(name: "client_id", value: clientID),
-            URLQueryItem(name: "scope", value: "admin:org")
-        ]
-
-        guard let url = urlComponent.url else { return }
-
-        UIApplication.shared.open(url)
     }
 
     func logIn(code: String) {
@@ -109,7 +90,9 @@ final class LogInManager {
             guard let result = result,
                   error == nil
             else {
-                self.logInPublisher.send(.showAlert(FirebaseAuthError.failSignInError.errorDescription ?? ""))
+                self.logInPublisher.send(
+                    .showAlert(FirebaseAuthError.failSignInError.errorDescription ?? "")
+                )
                 return
             }
 

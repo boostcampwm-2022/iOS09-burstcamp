@@ -25,6 +25,19 @@ final class AppCoordinator: AppCoordinatorProtocol {
         addObserver()
     }
 
+    func dismissNavigationController() {
+        navigationController.dismiss(animated: true)
+    }
+
+    func displayIndicator() {
+        guard let authCoordinator = childCoordinators.first(
+            where: { $0 is AuthCoordinator }) as? AuthCoordinator
+        else {
+            return
+        }
+        authCoordinator.displayIndicator()
+    }
+
     func start() {
         LogInManager.shared.autoLogInPublisher
             .sink { [weak self] isLogIn in
