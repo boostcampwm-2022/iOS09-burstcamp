@@ -3,7 +3,6 @@ import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { fetchContent, fetchParsedRSSList } from './feedAPI.js';
 import { logger } from 'firebase-functions';
 import { convertURL } from '../util.js';
-import { sendMessage } from './apnsManager.js';
 
 if (!getApps().length) initializeApp()
 const db = getFirestore()
@@ -154,3 +153,128 @@ export async function getRecentFeed() {
 		})
 }
 
+
+// MARK: 탈퇴
+
+/**
+ * FireStore FCM 삭제
+ * @param {String} userUUID 
+ */
+export async function deleteFCMToken(userUUID) {
+	logger.log('fcmToken을 삭제중')
+	await fcmTokenRef.doc(userUUID).delete().then(() => {
+		logger.log('fcmToken 삭제완료')
+	})
+}
+
+/**
+ * 내가 쓴 글 가져오기 - feed 중에서 writerUUID 가 userUUID와 일치하는 피드 UUID 가져오기
+ * @param {String} userUUID 
+ * @returns 해당 유저가 쓴 글
+ */
+export async function getUserFeedsUUIDs(userUUID) {
+	logger.log('feed에서 유저가 쓴 글의 정보를 가져온다.')
+	const querySnapshot = await feedRef
+		.where('writerUUID', '==', userUUID)
+		.get()
+	
+	const feedUUIDs = querySnapshot.docs.map(doc => {
+		return doc.data()['feedUUID']
+	})
+	logger.log('유저가 쓴 글 들: ', feedUUIDs)
+
+	return feedUUIDs
+}
+
+/**
+ * 내가 쓴 글을 스크랩한 유저의 scrapFeedUUIDs 업데이트
+ * @param {[String]} feedUUIDs 
+ */
+export async function updateUserScrapFeedUUIDs(feedUUIDs) {
+	const batch = db.batch();
+
+	logger.log('유저가 쓴 글의 feedUUIDs: ', feedUUIDs)
+	logger.log('이 글을 스크랩한 유저를 찾는다.')
+
+	feedUUIDs.forEach(async(feedUUID)=> {
+		await userRef
+			.where('scrapFeedUUIDs', 'array-contains', feedUUID)
+			.get()
+			.then((querySnapshot) => {
+				logger.log('이 유저들의 스크랩 정보에서')
+				querySnapshot.docs.forEach((doc) => {
+					const userUUID = doc.data()['userUUID'];
+					logger.log('이 유저의 정보에서', doc.data()['nickname'])
+					const curFeedUUIDs = doc.data()['scrapFeedUUIDs']
+					logger.log('삭제 전 피드들:', curFeedUUIDs)
+					const deletedFeedUUIDs = curFeedUUIDs.filter(uuid => uuid != feedUUID)
+					logger.log('삭제 후 피드들:', deletedFeedUUIDs)
+
+					const curRef = userRef.doc(userUUID);
+					batch.set(curRef, {'scrapFeddUUIDs': deletedFeedUUIDs})
+				})
+			})
+	})
+
+	batch.commit
+}
+
+/**
+ * 내가 쓴 글들 삭제 후 recommend 재업데이트
+ * @param {*} feedUUIDs 
+ */
+export async function deleteFeedsAndUpdateRecommendFeed(feedUUIDs) {
+	logger.log('내가 쓴 글들 삭제 후 recommend 재업데이트')
+	await feedUUIDs
+		.forEach(async (feedUUID) => {
+			await feedRef
+				.doc(feedUUID)
+				.delete()
+		})
+	updateRecommendFeedDB()
+}
+
+/**
+ * 유저가 스크랩한 피드 아이디들을 가져온다.
+ * @param {String} userUUID 
+ * @returns 유저가 스크랩한 피드들
+ */
+export async function getUserScrapFeedsUUIDs(userUUID) {
+	return userRef
+		.doc(userUUID)
+		.get()
+		.then((doc) => {
+			logger.log('스크랩한 피드 아이디들:', doc.data()['scrapFeedUUIDs'])
+			return doc.data()['scrapFeedUUIDs']
+		})
+}
+
+/**
+ * 내가 스크랩한 피드의 scrapUsers 에서 나의 userUUID를 지운다.
+ * @param {String} userUUID 
+ * @param {[String]} feedUUIDs 
+ */
+export async function deleteUserUUIDAtScrapFeed(userUUID, feedUUIDs) {
+	logger.log('나는야 유저', userUUID)
+	logger.log('유저가 스크랩 한 글의 feedUUIDs: ', feedUUIDs)
+
+	feedUUIDs.forEach(async(feedUUID) => {
+		await feedRef
+			.doc(feedUUID)
+			.collection('scrapUsers')
+			.doc(userUUID)
+			.delete()
+			})
+}
+
+// 3. FireStore User 삭제
+/**
+ * 유저 삭제
+ * @param {*} userUUID 
+ */
+export async function deleteUser(userUUID) {
+	logger.log('유저를 삭제합니다.')
+	userRef
+		.doc(userUUID)
+		.delete()
+}
