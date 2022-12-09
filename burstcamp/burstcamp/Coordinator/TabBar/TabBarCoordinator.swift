@@ -104,6 +104,15 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
         let myPageViewModel = MyPageViewModel()
         let myPageViewController = MyPageViewController(viewModel: myPageViewModel)
         let myPageCoordinator = MyPageCoordinator(navigationController: navigationController)
+        myPageCoordinator.coordinatorPublisher
+            .sink { tabBarEvent in
+                switch tabBarEvent {
+                case .moveToAuthFlow:
+                    self.coordinatorPublisher.send(.moveToAuthFlow)
+                }
+            }
+            .store(in: &cancelBag)
+
         myPageCoordinator.start(viewController: myPageViewController)
         childCoordinators.append(myPageCoordinator)
         return myPageViewController
