@@ -92,72 +92,49 @@ final class LogInManager {
                 return self.getOrganizationMembership(nickname: nickname, token: self.token)
             }
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] result in
+            .sink { result in
                 if case .failure(let error) = result {
-                    self?.handleGithubError(error: error)
+                    self.logInPublisher.send(.showAlert(error.errorDescription ?? ""))
                 }
-            } receiveValue: { [weak self] _ in
-                guard let self = self else {
-                    self?.logInPublisher.send(.showAlert("관리자에게 문의해주세요"))
-                    return
-                }
+            } receiveValue: { _ in
                 self.signInToFirebase(token: self.token)
             }
             .store(in: &cancelBag)
     }
 
-    func handleGithubError(error: GithubError) {
-        self.logInPublisher.send(.showAlert(error.errorDescription ?? ""))
-    }
-
-    func handleFirebaseError(error: FirestoreError) {
-        switch error {
-        case .noDataError, .setDataError:
-            self.logInPublisher.send(.moveToDomainScreen)
-        default:
-            return
-        }
-    }
-
     func signInToFirebase(token: String) {
         let credential = GitHubAuthProvider.credential(withToken: token)
 
-        Auth.auth().signIn(with: credential) { [weak self] result, error in
-            guard result != nil,
+        Auth.auth().signIn(with: credential) { result, error in
+            guard let result = result,
                   error == nil
             else {
-                self?.logInPublisher.send(.showAlert("Fail to firebase auth signIn"))
+                self.logInPublisher.send(.showAlert(FirebaseAuthError.failSignInError.errorDescription ?? ""))
                 return
             }
-
-            guard let token = self?.token else {
-                self?.logInPublisher.send(.showAlert("토큰 저장 실패"))
-                return
-            }
+            
             KeyChainManager.save(token: token)
-            self?.isSignedUp()
+            self.isSignedUp(uuid: result.user.uid)
         }
     }
 
-    func isSignedUp() {
-        guard let userUUID = userUUID else { return }
-
-        FirestoreUser.fetch(userUUID: userUUID)
-            .sink { [weak self] result in
-                if case .failure(let error) = result {
-                    self?.handleFirebaseError(error: error)
+    func isSignedUp(uuid: String) {
+        FirestoreUser.fetch(userUUID: uuid)
+            .sink {  result in
+                if case .failure = result {
+                    self.logInPublisher.send(.moveToDomainScreen)
                 }
-            } receiveValue: { [weak self] _ in
-                self?.logInPublisher.send(.moveToTabBarScreen)
+            } receiveValue: {  _ in
+                self.logInPublisher.send(.moveToTabBarScreen)
             }
             .store(in: &cancelBag)
     }
 
-    func signOut() -> AnyPublisher<Bool, FirestoreError> {
-        return Future<Bool, FirestoreError> { promise in
+    func signOut() -> AnyPublisher<Bool, FirebaseAuthError> {
+        return Future<Bool, FirebaseAuthError> { promise in
 
             guard let token = KeyChainManager.readToken() else {
-                promise(.failure(.noDataError))
+                promise(.failure(.readTokenError))
                 return
             }
 
@@ -173,7 +150,7 @@ final class LogInManager {
                         } else {
                             FirestoreUser.delete(user: UserManager.shared.user)
                             guard (try? Auth.auth().signOut()) != nil else {
-                                promise(.failure(.userSignOutError))
+                                promise(.failure(.authSignOutError))
                                 return
                             }
                             promise(.success(true))
@@ -184,7 +161,7 @@ final class LogInManager {
         }
         .eraseToAnyPublisher()
     }
-
+    
     func requestGithubAccessToken(code: String) -> AnyPublisher<GithubToken, GithubError> {
         let urlString = "https://github.com/login/oauth/access_token"
 
