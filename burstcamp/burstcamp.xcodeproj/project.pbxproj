@@ -13,6 +13,7 @@
 		140438BD293F6FDF004D035C /* ScrapPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438BC293F6FDF004D035C /* ScrapPageCoordinator.swift */; };
 		140438C0293F77DD004D035C /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438BF293F77DD004D035C /* Factory.swift */; };
 		140E210429443E6300D6E2E5 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E210329443E6300D6E2E5 /* FirestoreService.swift */; };
+		140E21062944519E00D6E2E5 /* BCFirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E21052944519E00D6E2E5 /* BCFirestoreService.swift */; };
 		141344CD292F800300187B86 /* UI+ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C6292F800300187B86 /* UI+ReusableView.swift */; };
 		141344CE292F800300187B86 /* UINavigationController+configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C7292F800300187B86 /* UINavigationController+configure.swift */; };
 		141344CF292F800300187B86 /* UIStackView+addArrangedSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C8292F800300187B86 /* UIStackView+addArrangedSubviews.swift */; };
@@ -187,6 +188,7 @@
 		140438BC293F6FDF004D035C /* ScrapPageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageCoordinator.swift; sourceTree = "<group>"; };
 		140438BF293F77DD004D035C /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
 		140E210329443E6300D6E2E5 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
+		140E21052944519E00D6E2E5 /* BCFirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCFirestoreService.swift; sourceTree = "<group>"; };
 		141344C6292F800300187B86 /* UI+ReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UI+ReusableView.swift"; sourceTree = "<group>"; };
 		141344C7292F800300187B86 /* UINavigationController+configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+configure.swift"; sourceTree = "<group>"; };
 		141344C8292F800300187B86 /* UIStackView+addArrangedSubviews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+addArrangedSubviews.swift"; sourceTree = "<group>"; };
@@ -409,6 +411,7 @@
 				1496CF2029408176008F312F /* BeforeFirestoreFeedService.swift */,
 				140E210329443E6300D6E2E5 /* FirestoreService.swift */,
 				B5F4B035293CC0B300947250 /* FirestoreCollection.swift */,
+				140E21052944519E00D6E2E5 /* BCFirestoreService.swift */,
 			);
 			path = Firestore;
 			sourceTree = "<group>";
@@ -1272,6 +1275,7 @@
 				B50A27DA29279F5D00DF3E1F /* ReusableView.swift in Sources */,
 				D84C812E292E590300C984E8 /* MyPageEditValidationResult.swift in Sources */,
 				D8494D4C2927CD6C008157F1 /* DefaultProfileImageView.swift in Sources */,
+				140E21062944519E00D6E2E5 /* BCFirestoreService.swift in Sources */,
 				B5DAD679292E4C6800C4A126 /* FeedDetailViewModel.swift in Sources */,
 				B500C9EE293DBA0800EBE39E /* FeedScrapViewModel.swift in Sources */,
 				1496CF1C2940679C008F312F /* CoordinatorEvent.swift in Sources */,

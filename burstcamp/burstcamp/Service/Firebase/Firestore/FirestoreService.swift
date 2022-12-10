@@ -12,6 +12,7 @@ import FirebaseFirestore
 enum FirestoreServiceError: Error {
     case getCollection
     case getDocument
+    case lastCollectionError
 }
 
 typealias FirestoreData = [String: Any]
@@ -20,15 +21,20 @@ final class FirestoreService {
 
     private let database: Firestore
 
-    init(database: Firestore = Firestore.firestore()) {
+    init(database: Firestore) {
         self.database = database
+    }
+
+    convenience init() {
+        let database = Firestore.firestore()
+        self.init(database: database)
     }
 
     public func createPaginateQuery(
         collectionPath: String,
         field: String,
         count: Int,
-        lastSnapShot: inout QueryDocumentSnapshot?
+        lastSnapShot: QueryDocumentSnapshot?
     ) -> Query {
         if let lastSnapShot = lastSnapShot {
             return database
@@ -59,6 +65,37 @@ final class FirestoreService {
                     }
                     let collectionData = querySnapShot.documents.map { $0.data() }
                     continuation.resume(returning: collectionData)
+                }
+        }
+    }
+
+    public func getCollection(
+        query: Query
+    ) async throws
+    -> (
+        collectionData: [FirestoreData],
+        lastSnapshot: QueryDocumentSnapshot?
+    ) {
+        try await withCheckedThrowingContinuation { continuation in
+            query
+                .getDocuments { querySnapshot, error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    guard let querySnapshot = querySnapshot else {
+                        continuation.resume(throwing: FirestoreServiceError.getCollection)
+                        return
+                    }
+                    let lastSnapshot = querySnapshot.documents.last
+                    if lastSnapshot == nil {
+                        continuation.resume(throwing: FirestoreServiceError.lastCollectionError)
+                        return
+                    }
+
+                    let collectionData = querySnapshot.documents.map { $0.data() }
+                    let result = (collectionData, lastSnapshot)
+                    continuation.resume(returning: result)
                 }
         }
     }
