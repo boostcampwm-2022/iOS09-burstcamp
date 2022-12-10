@@ -16,7 +16,7 @@ struct FireFunctionsManager {
 
     private static let fetchBlogTitleFunction = "fetchBlogTitle"
     private static let deleteUserFunction = "deleteUser"
-    
+
     private static let blogTitleField = "blogTitle"
     private static let userUUIDField = "userUUID"
     private static let isFinishField = "isFinish"
