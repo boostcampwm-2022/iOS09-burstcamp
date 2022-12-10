@@ -442,6 +442,65 @@
 			path = Combine;
 			sourceTree = "<group>";
 		};
+		140E21172944A18300D6E2E5 /* MyPageEdit */ = {
+			isa = PBXGroup;
+			children = (
+				140E21192944A2F800D6E2E5 /* ViewController */,
+				140E211A2944A2FD00D6E2E5 /* View */,
+				140E211B2944A30100D6E2E5 /* ViewModel */,
+			);
+			path = MyPageEdit;
+			sourceTree = "<group>";
+		};
+		140E21182944A18A00D6E2E5 /* OpenSource */ = {
+			isa = PBXGroup;
+			children = (
+				140E211D2944A32300D6E2E5 /* ViewController */,
+				140E211C2944A31F00D6E2E5 /* View */,
+			);
+			path = OpenSource;
+			sourceTree = "<group>";
+		};
+		140E21192944A2F800D6E2E5 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D84452EF292CA57D008E811B /* MyPageEditViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		140E211A2944A2FD00D6E2E5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D84452EB292CA55F008E811B /* MyPageEditView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		140E211B2944A30100D6E2E5 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D84452ED292CA569008E811B /* MyPageEditViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		140E211C2944A31F00D6E2E5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D8C3866B292B4B0B005A2563 /* OpenSourceLicenseView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		140E211D2944A32300D6E2E5 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D8C38669292B4AEF005A2563 /* OpenSourceLicenseViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		142C933F292F517200F6428E /* CombineUIkit */ = {
 			isa = PBXGroup;
 			children = (
@@ -801,6 +860,8 @@
 				D8494D582927E915008157F1 /* ViewController */,
 				D8494D572927E8FB008157F1 /* View */,
 				D8494D592927E91F008157F1 /* ViewModel */,
+				140E21172944A18300D6E2E5 /* MyPageEdit */,
+				140E21182944A18A00D6E2E5 /* OpenSource */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -976,8 +1037,6 @@
 			children = (
 				D8494D452927C97E008157F1 /* MyPageView.swift */,
 				D8494D512927D085008157F1 /* MyPageProfileView.swift */,
-				D84452EB292CA55F008E811B /* MyPageEditView.swift */,
-				D8C3866B292B4B0B005A2563 /* OpenSourceLicenseView.swift */,
 				D84452F1292CCA80008E811B /* SettingSection.swift */,
 				D84452F3292CCA92008E811B /* SettingCell.swift */,
 			);
@@ -988,8 +1047,6 @@
 			isa = PBXGroup;
 			children = (
 				B50A27BB29279F5D00DF3E1F /* MyPageViewController.swift */,
-				D84452EF292CA57D008E811B /* MyPageEditViewController.swift */,
-				D8C38669292B4AEF005A2563 /* OpenSourceLicenseViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -998,7 +1055,6 @@
 			isa = PBXGroup;
 			children = (
 				D8494D472927C9E8008157F1 /* MyPageViewModel.swift */,
-				D84452ED292CA569008E811B /* MyPageEditViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
