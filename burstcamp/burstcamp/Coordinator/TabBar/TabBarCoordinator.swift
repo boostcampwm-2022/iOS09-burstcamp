@@ -81,7 +81,7 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
     }
 
     private func homeCoordinatorStart() -> HomeViewController {
-        let firestoreFeedService = DefaultFirestoreFeedService()
+        let firestoreFeedService = BeforeDefaultFirestoreFeedService()
         let homeViewModel = HomeViewModel(firestoreFeedService: firestoreFeedService)
         let homeViewController = HomeViewController(viewModel: homeViewModel)
         let homeCoordinator = HomeCoordinator(navigationController: navigationController)
@@ -91,7 +91,7 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
     }
 
     private func scrapPageCoordinatorStart() -> ScrapPageViewController {
-        let firestoreFeedService = DefaultFirestoreFeedService()
+        let firestoreFeedService = BeforeDefaultFirestoreFeedService()
         let scrapPageViewModel = ScrapPageViewModel(firestoreFeedService: firestoreFeedService)
         let scrapPageViewController = ScrapPageViewController(viewModel: scrapPageViewModel)
         let scrapCoordinator = ScrapPageCoordinator(navigationController: navigationController)
