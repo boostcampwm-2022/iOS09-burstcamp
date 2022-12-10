@@ -14,6 +14,7 @@
 		140438C0293F77DD004D035C /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438BF293F77DD004D035C /* Factory.swift */; };
 		140E210429443E6300D6E2E5 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E210329443E6300D6E2E5 /* FirestoreService.swift */; };
 		140E21062944519E00D6E2E5 /* BCFirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E21052944519E00D6E2E5 /* BCFirestoreService.swift */; };
+		140E21092944688B00D6E2E5 /* Future+async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E21082944688B00D6E2E5 /* Future+async.swift */; };
 		141344CD292F800300187B86 /* UI+ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C6292F800300187B86 /* UI+ReusableView.swift */; };
 		141344CE292F800300187B86 /* UINavigationController+configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C7292F800300187B86 /* UINavigationController+configure.swift */; };
 		141344CF292F800300187B86 /* UIStackView+addArrangedSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C8292F800300187B86 /* UIStackView+addArrangedSubviews.swift */; };
@@ -189,6 +190,7 @@
 		140438BF293F77DD004D035C /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
 		140E210329443E6300D6E2E5 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		140E21052944519E00D6E2E5 /* BCFirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCFirestoreService.swift; sourceTree = "<group>"; };
+		140E21082944688B00D6E2E5 /* Future+async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Future+async.swift"; sourceTree = "<group>"; };
 		141344C6292F800300187B86 /* UI+ReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UI+ReusableView.swift"; sourceTree = "<group>"; };
 		141344C7292F800300187B86 /* UINavigationController+configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+configure.swift"; sourceTree = "<group>"; };
 		141344C8292F800300187B86 /* UIStackView+addArrangedSubviews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+addArrangedSubviews.swift"; sourceTree = "<group>"; };
@@ -430,6 +432,14 @@
 				D89AE4FC2935F5AE00446AB3 /* FireFunctionsManager.swift */,
 			);
 			path = FireFunction;
+			sourceTree = "<group>";
+		};
+		140E21072944687600D6E2E5 /* Combine */ = {
+			isa = PBXGroup;
+			children = (
+				140E21082944688B00D6E2E5 /* Future+async.swift */,
+			);
+			path = Combine;
 			sourceTree = "<group>";
 		};
 		142C933F292F517200F6428E /* CombineUIkit */ = {
@@ -674,6 +684,7 @@
 		B50A278929279F5D00DF3E1F /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				140E21072944687600D6E2E5 /* Combine */,
 				142C933F292F517200F6428E /* CombineUIkit */,
 				142C9340292F51A500F6428E /* UI */,
 				142C9341292F51A800F6428E /* Type */,
@@ -1232,6 +1243,7 @@
 				D8576F34293779E2002885FE /* FirestoreUser.swift in Sources */,
 				143185E8292B46F9008CE459 /* HomeViewModel.swift in Sources */,
 				D8095C69293B718C00964537 /* KeyChainManager.swift in Sources */,
+				140E21092944688B00D6E2E5 /* Future+async.swift in Sources */,
 				B50A27F429279F5D00DF3E1F /* SceneDelegate.swift in Sources */,
 				143185EC292B4AB8008CE459 /* ScrapPageViewModel.swift in Sources */,
 				D89AE4ED2935AA2100446AB3 /* FCMToken.swift in Sources */,

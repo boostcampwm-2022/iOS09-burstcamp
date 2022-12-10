@@ -15,6 +15,10 @@ protocol BCFirestoreService {
     func fetchMoreNormalFeeds() async throws -> [FirestoreData]
     func fetchFeed(feedUUID: String) async throws -> FirestoreData
     func fetchUser(userUUID: String) async throws -> FirestoreData
+    func saveUser(userUUID: String, user: FirestoreData) async throws
+    func updateUser(userUUID: String, data: FirestoreData) async throws
+    func deleteUser(userUUID: String) async throws
+    func addListenerToUser(userUUID: String) async throws -> FirestoreData
     func countFeedScrap(feedUUID: String) async throws -> Int
     func appendScrapUser(userUUID: String, at feedUUID: String) async throws
     func deleteScrapUser(userUUID: String, from feedUUID: String) async throws
@@ -26,7 +30,7 @@ final class DefaultBCFirestoreService: BCFirestoreService {
 
     private let firestoreService: FirestoreService
     private var lastSnapShot: QueryDocumentSnapshot?
-    private let paginateCount = 10
+    private let paginateCount: Int
 
     private var feedQuery: Query {
         return firestoreService.createPaginateQuery(
@@ -37,13 +41,14 @@ final class DefaultBCFirestoreService: BCFirestoreService {
         )
     }
 
-    init(firestoreService: FirestoreService) {
+    init(firestoreService: FirestoreService, paginateCount: Int) {
         self.firestoreService = firestoreService
+        self.paginateCount = paginateCount
     }
 
-    convenience init() {
+    convenience init(paginateCount: Int = 10) {
         let firestoreService = FirestoreService()
-        self.init(firestoreService: firestoreService)
+        self.init(firestoreService: firestoreService, paginateCount: paginateCount)
     }
 
     private func initFeedQuery() {
@@ -90,16 +95,40 @@ final class DefaultBCFirestoreService: BCFirestoreService {
         return user
     }
 
-    func saveUser(userUUID: String) {
+    func saveUser(userUUID: String, user: FirestoreData) async throws {
+        let userPath = FirestoreCollection.user.path
+        try await firestoreService.createDocument(
+            collectionPath: userPath,
+            document: userUUID,
+            value: user
+        )
     }
 
-    func updateUser(userUUID: String) {
+    func updateUser(userUUID: String, data: FirestoreData) async throws {
+        let userPath = FirestoreCollection.user.path
+        try await firestoreService.updateDocument(
+            collectionPath: userPath,
+            document: userUUID,
+            data: data
+        )
     }
 
-    func deleteUser(userUUID: String) {
+    func deleteUser(userUUID: String) async throws {
+        let userPath = FirestoreCollection.user.path
+        try await firestoreService.deleteDocument(
+            collectionPath: userPath,
+            document: userUUID
+        )
     }
 
-    func addListenerToUser(userUUID: String) {
+    func addListenerToUser(userUUID: String) async throws -> FirestoreData {
+        let userPath = FirestoreCollection.user.path
+        let userData = try await firestoreService.addListenerToDocument(
+            collectionPath: userPath,
+            document: userUUID
+        )
+
+        return userData
     }
 
     func countFeedScrap(feedUUID: String) async throws -> Int {
