@@ -14,8 +14,9 @@ struct FireFunctionsManager {
 
     private static var functions = Functions.functions()
 
-    private static let fetchBlogTitle = "fetchBlogTitle"
-    private static let deleteUser = "deleteUser"
+    private static let fetchBlogTitleFunction = "fetchBlogTitle"
+    private static let deleteUserFunction = "deleteUser"
+    
     private static let blogTitleField = "blogTitle"
     private static let userUUIDField = "userUUID"
     private static let isFinishField = "isFinish"
@@ -23,7 +24,7 @@ struct FireFunctionsManager {
     static func blogTitle(link: String) -> Future<String, NetworkError> {
         return Future<String, NetworkError> { promise in
             functions
-                .httpsCallable(fetchBlogTitle)
+                .httpsCallable(fetchBlogTitleFunction)
                 .call([blogTitleField: link]) { result, error in
                     if error != nil {
                         promise(.failure(NetworkError.unknownError))
@@ -40,7 +41,7 @@ struct FireFunctionsManager {
     static func deleteUser(userUUID: String) -> AnyPublisher<Bool, NetworkError> {
         return Future<Bool, NetworkError> { promise in
             functions
-                .httpsCallable(deleteUser)
+                .httpsCallable(deleteUserFunction)
                 .call([userUUIDField: userUUID]) { result, error in
                     if error != nil {
                         promise(.success(false))
