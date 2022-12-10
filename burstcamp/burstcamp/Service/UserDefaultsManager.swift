@@ -9,9 +9,9 @@ import Foundation
 
 struct UserDefaultsManager {
 
-    private static let appearanceKey = "Appearance"
+    private static let appearanceKey = "AppearanceKey"
     private static let fcmTokenKey = "fcmTokenKey"
-    private static let isForegroundKey = "isForeground"
+    private static let isForegroundKey = "isForegroundKey"
     private static let notificationFeedUUIDKey = "notificationFeedUUIDKey"
 
     // dark mode
