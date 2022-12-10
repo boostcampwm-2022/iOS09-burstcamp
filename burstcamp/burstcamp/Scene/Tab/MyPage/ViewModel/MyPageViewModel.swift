@@ -26,6 +26,7 @@ final class MyPageViewModel {
         )
         var signOutFailMessage = PassthroughSubject<String, Never>()
         var moveToLoginFlow = PassthroughSubject<Void, Never>()
+        var indicatorViewRun = PassthroughSubject<Bool, Never>()
     }
 
     private var cancelBag = Set<AnyCancellable>()
@@ -33,7 +34,8 @@ final class MyPageViewModel {
     func transform(input: Input) -> Output {
         input.notificationDidSwitch
             .sink { isOn in
-                FirestoreUser.update(userUUID: UserManager.shared.user.userUUID, isPushOn: isOn)
+                let userUUID = UserManager.shared.user.userUUID
+                FirestoreUser.update(userUUID: userUUID, isPushOn: isOn)
             }
             .store(in: &cancelBag)
 
@@ -62,6 +64,7 @@ final class MyPageViewModel {
     }
 
     private func signOut(output: Output) {
+        output.indicatorViewRun.send(true)
         LogInManager.shared.signOut()
             .sink { completion in
                 if case .failure = completion {
@@ -69,9 +72,27 @@ final class MyPageViewModel {
                 }
             } receiveValue: { isSignOut in
                 if isSignOut {
-                    KeyChainManager.deleteUser()
-                    UserManager.shared.deleteUserInfo()
+                    self.deleteUserInfos(output: output)
+                }
+            }
+            .store(in: &cancelBag)
+    }
+
+    private func deleteUserInfos(output: Output) {
+        let userUUID = UserManager.shared.user.userUUID
+        print(userUUID)
+        KeyChainManager.deleteToken()
+        KeyChainManager.deleteUser()
+        UserManager.shared.removeUserListener()
+        UserManager.shared.deleteUserInfo()
+        FireFunctionsManager.deleteUser(userUUID: userUUID)
+            .sink { _ in
+            } receiveValue: { isFinish in
+                if isFinish {
                     output.moveToLoginFlow.send()
+                } else {
+                    output.indicatorViewRun.send(false)
+                    output.signOutFailMessage.send("탈퇴 정보 삭제에 실패했어요.")
                 }
             }
             .store(in: &cancelBag)

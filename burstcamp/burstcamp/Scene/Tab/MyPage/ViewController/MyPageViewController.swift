@@ -109,6 +109,14 @@ final class MyPageViewController: UIViewController {
             }
             .store(in: &cancelBag)
 
+        output.indicatorViewRun
+            .sink { [weak self] isRun in
+                isRun
+                ? self?.myPageView.indicatorView.startAnimating()
+                : self?.myPageView.indicatorView.stopAnimating()
+            }
+            .store(in: &cancelBag)
+
         myPageView.notificationSwitchStatePublisher
             .sink { isOn in
                 let text = isOn ? "알림이 켜졌어요." : "알림이 꺼졌어요."
