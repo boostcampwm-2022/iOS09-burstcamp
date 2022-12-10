@@ -53,7 +53,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             UNNotificationPresentationOptions
         ) -> Void
     ) {
-        UserDefaultsManager.save(isForeground: "true")
+        UserDefaultsManager.save(isForeground: true)
         completionHandler([.banner, .badge, .sound])
     }
 
@@ -69,7 +69,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         else { return }
 
         UserDefaultsManager.save(notificationFeedUUID: feedUUID)
-        if UserDefaultsManager.isForeground() != nil {
+        if UserDefaultsManager.isForeground() {
             NotificationCenter.default.post(name: .Push, object: nil)
         }
     }

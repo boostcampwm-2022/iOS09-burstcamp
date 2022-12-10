@@ -47,12 +47,12 @@ struct UserDefaultsManager {
     }
 
     // isBackground
-    static func save(isForeground: String) {
+    static func save(isForeground: Bool) {
         UserDefaults.standard.set(isForeground, forKey: isForegroundKey)
     }
 
-    static func isForeground() -> String? {
-        return UserDefaults.standard.string(forKey: isForegroundKey)
+    static func isForeground() -> Bool {
+        return UserDefaults.standard.bool(forKey: isForegroundKey)
     }
 
     static func removeIsForeground() {

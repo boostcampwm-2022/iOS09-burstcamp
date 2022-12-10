@@ -61,7 +61,7 @@ extension HomeCoordinator {
 
 extension HomeCoordinator {
     private func checkNotificationFeed() {
-        if UserDefaultsManager.isForeground() == nil,
+        if !UserDefaultsManager.isForeground(),
            let feedUUID = UserDefaultsManager.notificationFeedUUID() {
             UserDefaultsManager.removeNotificationFeedUUID()
             moveToFeedDetail(feedUUID: feedUUID)
