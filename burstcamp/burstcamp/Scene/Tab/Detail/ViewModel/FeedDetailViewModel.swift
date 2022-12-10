@@ -10,24 +10,24 @@ import Foundation
 
 final class FeedDetailViewModel {
 
-    private let firestoreFeedService: FirestoreFeedService
+    private let firestoreFeedService: BeforeFirestoreFeedService
 
     private let feed = CurrentValueSubject<Feed?, Never>(nil)
     private let dbUpdateResult = PassthroughSubject<Bool, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
-    init(firestoreFeedService: FirestoreFeedService) {
+    init(firestoreFeedService: BeforeFirestoreFeedService) {
         self.firestoreFeedService = firestoreFeedService
     }
 
     convenience init(feed: Feed) {
-        let firestoreFeedService = DefaultFirestoreFeedService()
+        let firestoreFeedService = BeforeDefaultFirestoreFeedService()
         self.init(firestoreFeedService: firestoreFeedService)
         self.feed.send(feed)
     }
 
     convenience init(feedUUID: String) {
-        let firestoreFeedService = DefaultFirestoreFeedService()
+        let firestoreFeedService = BeforeDefaultFirestoreFeedService()
         self.init(firestoreFeedService: firestoreFeedService)
         self.fetchFeed(feedUUID: feedUUID)
     }

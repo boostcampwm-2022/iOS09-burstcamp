@@ -12,6 +12,9 @@
 		140438BB293F6FD7004D035C /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438BA293F6FD7004D035C /* HomeCoordinator.swift */; };
 		140438BD293F6FDF004D035C /* ScrapPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438BC293F6FDF004D035C /* ScrapPageCoordinator.swift */; };
 		140438C0293F77DD004D035C /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438BF293F77DD004D035C /* Factory.swift */; };
+		140E210429443E6300D6E2E5 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E210329443E6300D6E2E5 /* FirestoreService.swift */; };
+		140E21062944519E00D6E2E5 /* BCFirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E21052944519E00D6E2E5 /* BCFirestoreService.swift */; };
+		140E21092944688B00D6E2E5 /* Future+async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E21082944688B00D6E2E5 /* Future+async.swift */; };
 		141344CD292F800300187B86 /* UI+ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C6292F800300187B86 /* UI+ReusableView.swift */; };
 		141344CE292F800300187B86 /* UINavigationController+configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C7292F800300187B86 /* UINavigationController+configure.swift */; };
 		141344CF292F800300187B86 /* UIStackView+addArrangedSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C8292F800300187B86 /* UIStackView+addArrangedSubviews.swift */; };
@@ -39,7 +42,7 @@
 		14927E202929CCA0001F2E97 /* RecommendFeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */; };
 		1496CF1C2940679C008F312F /* CoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF1B2940679C008F312F /* CoordinatorEvent.swift */; };
 		1496CF1E294070A3008F312F /* ContainFeedDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF1D294070A3008F312F /* ContainFeedDetailCoordinator.swift */; };
-		1496CF2129408176008F312F /* FirestoreFeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF2029408176008F312F /* FirestoreFeedService.swift */; };
+		1496CF2129408176008F312F /* BeforeFirestoreFeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF2029408176008F312F /* BeforeFirestoreFeedService.swift */; };
 		1496CF232940AEC6008F312F /* ConvertError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF222940AEC6008F312F /* ConvertError.swift */; };
 		14A93D402936EFF900790034 /* FeedDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D3F2936EFF900790034 /* FeedDTO.swift */; };
 		14A93D422936F00F00790034 /* FeedWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D412936F00F00790034 /* FeedWriter.swift */; };
@@ -185,6 +188,9 @@
 		140438BA293F6FD7004D035C /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		140438BC293F6FDF004D035C /* ScrapPageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageCoordinator.swift; sourceTree = "<group>"; };
 		140438BF293F77DD004D035C /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
+		140E210329443E6300D6E2E5 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
+		140E21052944519E00D6E2E5 /* BCFirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCFirestoreService.swift; sourceTree = "<group>"; };
+		140E21082944688B00D6E2E5 /* Future+async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Future+async.swift"; sourceTree = "<group>"; };
 		141344C6292F800300187B86 /* UI+ReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UI+ReusableView.swift"; sourceTree = "<group>"; };
 		141344C7292F800300187B86 /* UINavigationController+configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+configure.swift"; sourceTree = "<group>"; };
 		141344C8292F800300187B86 /* UIStackView+addArrangedSubviews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+addArrangedSubviews.swift"; sourceTree = "<group>"; };
@@ -211,7 +217,7 @@
 		14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedHeader.swift; sourceTree = "<group>"; };
 		1496CF1B2940679C008F312F /* CoordinatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorEvent.swift; sourceTree = "<group>"; };
 		1496CF1D294070A3008F312F /* ContainFeedDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainFeedDetailCoordinator.swift; sourceTree = "<group>"; };
-		1496CF2029408176008F312F /* FirestoreFeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreFeedService.swift; sourceTree = "<group>"; };
+		1496CF2029408176008F312F /* BeforeFirestoreFeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeforeFirestoreFeedService.swift; sourceTree = "<group>"; };
 		1496CF222940AEC6008F312F /* ConvertError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertError.swift; sourceTree = "<group>"; };
 		14A93D3F2936EFF900790034 /* FeedDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDTO.swift; sourceTree = "<group>"; };
 		14A93D412936F00F00790034 /* FeedWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedWriter.swift; sourceTree = "<group>"; };
@@ -400,6 +406,42 @@
 			path = Factory;
 			sourceTree = "<group>";
 		};
+		140E210029443D2200D6E2E5 /* Firestore */ = {
+			isa = PBXGroup;
+			children = (
+				D8576F33293779E2002885FE /* FirestoreUser.swift */,
+				1496CF2029408176008F312F /* BeforeFirestoreFeedService.swift */,
+				140E210329443E6300D6E2E5 /* FirestoreService.swift */,
+				B5F4B035293CC0B300947250 /* FirestoreCollection.swift */,
+				140E21052944519E00D6E2E5 /* BCFirestoreService.swift */,
+			);
+			path = Firestore;
+			sourceTree = "<group>";
+		};
+		140E210129443D2600D6E2E5 /* FireStorage */ = {
+			isa = PBXGroup;
+			children = (
+				D89E48AE2939D99300744A56 /* FireStorageService.swift */,
+			);
+			path = FireStorage;
+			sourceTree = "<group>";
+		};
+		140E210229443D2A00D6E2E5 /* FireFunction */ = {
+			isa = PBXGroup;
+			children = (
+				D89AE4FC2935F5AE00446AB3 /* FireFunctionsManager.swift */,
+			);
+			path = FireFunction;
+			sourceTree = "<group>";
+		};
+		140E21072944687600D6E2E5 /* Combine */ = {
+			isa = PBXGroup;
+			children = (
+				140E21082944688B00D6E2E5 /* Future+async.swift */,
+			);
+			path = Combine;
+			sourceTree = "<group>";
+		};
 		142C933F292F517200F6428E /* CombineUIkit */ = {
 			isa = PBXGroup;
 			children = (
@@ -529,11 +571,9 @@
 		1496CF1F294080E6008F312F /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
-				D8576F33293779E2002885FE /* FirestoreUser.swift */,
-				1496CF2029408176008F312F /* FirestoreFeedService.swift */,
-				D89AE4FC2935F5AE00446AB3 /* FireFunctionsManager.swift */,
-				D89E48AE2939D99300744A56 /* FireStorageService.swift */,
-				B5F4B035293CC0B300947250 /* FirestoreCollection.swift */,
+				140E210229443D2A00D6E2E5 /* FireFunction */,
+				140E210129443D2600D6E2E5 /* FireStorage */,
+				140E210029443D2200D6E2E5 /* Firestore */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -644,6 +684,7 @@
 		B50A278929279F5D00DF3E1F /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				140E21072944687600D6E2E5 /* Combine */,
 				142C933F292F517200F6428E /* CombineUIkit */,
 				142C9340292F51A500F6428E /* UI */,
 				142C9341292F51A800F6428E /* Type */,
@@ -1173,7 +1214,7 @@
 				141344D6292F801100187B86 /* Date+FormatString.swift in Sources */,
 				D89AE4FD2935F5AE00446AB3 /* FireFunctionsManager.swift in Sources */,
 				D8494D462927C97E008157F1 /* MyPageView.swift in Sources */,
-				1496CF2129408176008F312F /* FirestoreFeedService.swift in Sources */,
+				1496CF2129408176008F312F /* BeforeFirestoreFeedService.swift in Sources */,
 				D89E48AF2939D99300744A56 /* FireStorageService.swift in Sources */,
 				D8494D562927D6EB008157F1 /* DefaultBadgeView.swift in Sources */,
 				1496CF232940AEC6008F312F /* ConvertError.swift in Sources */,
@@ -1202,6 +1243,7 @@
 				D8576F34293779E2002885FE /* FirestoreUser.swift in Sources */,
 				143185E8292B46F9008CE459 /* HomeViewModel.swift in Sources */,
 				D8095C69293B718C00964537 /* KeyChainManager.swift in Sources */,
+				140E21092944688B00D6E2E5 /* Future+async.swift in Sources */,
 				B50A27F429279F5D00DF3E1F /* SceneDelegate.swift in Sources */,
 				143185EC292B4AB8008CE459 /* ScrapPageViewModel.swift in Sources */,
 				D89AE4ED2935AA2100446AB3 /* FCMToken.swift in Sources */,
@@ -1210,6 +1252,7 @@
 				143185F8292B5C88008CE459 /* ContainCollectionView.swift in Sources */,
 				B5DAD67B292E4C6800C4A126 /* FeedDetailViewController.swift in Sources */,
 				D84452EC292CA55F008E811B /* MyPageEditView.swift in Sources */,
+				140E210429443E6300D6E2E5 /* FirestoreService.swift in Sources */,
 				D89E48B12939D9AC00744A56 /* FireStorageError.swift in Sources */,
 				D8494D522927D086008157F1 /* MyPageProfileView.swift in Sources */,
 				141344DB292F82BE00187B86 /* Feed.swift in Sources */,
@@ -1244,6 +1287,7 @@
 				B50A27DA29279F5D00DF3E1F /* ReusableView.swift in Sources */,
 				D84C812E292E590300C984E8 /* MyPageEditValidationResult.swift in Sources */,
 				D8494D4C2927CD6C008157F1 /* DefaultProfileImageView.swift in Sources */,
+				140E21062944519E00D6E2E5 /* BCFirestoreService.swift in Sources */,
 				B5DAD679292E4C6800C4A126 /* FeedDetailViewModel.swift in Sources */,
 				B500C9EE293DBA0800EBE39E /* FeedScrapViewModel.swift in Sources */,
 				1496CF1C2940679C008F312F /* CoordinatorEvent.swift in Sources */,
