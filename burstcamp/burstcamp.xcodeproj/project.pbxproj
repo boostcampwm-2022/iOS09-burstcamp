@@ -400,6 +400,32 @@
 			path = Factory;
 			sourceTree = "<group>";
 		};
+		140E210029443D2200D6E2E5 /* Firestore */ = {
+			isa = PBXGroup;
+			children = (
+				D8576F33293779E2002885FE /* FirestoreUser.swift */,
+				1496CF2029408176008F312F /* FirestoreFeedService.swift */,
+				B5F4B035293CC0B300947250 /* FirestoreCollection.swift */,
+			);
+			path = Firestore;
+			sourceTree = "<group>";
+		};
+		140E210129443D2600D6E2E5 /* FireStorage */ = {
+			isa = PBXGroup;
+			children = (
+				D89E48AE2939D99300744A56 /* FireStorageService.swift */,
+			);
+			path = FireStorage;
+			sourceTree = "<group>";
+		};
+		140E210229443D2A00D6E2E5 /* FireFunction */ = {
+			isa = PBXGroup;
+			children = (
+				D89AE4FC2935F5AE00446AB3 /* FireFunctionsManager.swift */,
+			);
+			path = FireFunction;
+			sourceTree = "<group>";
+		};
 		142C933F292F517200F6428E /* CombineUIkit */ = {
 			isa = PBXGroup;
 			children = (
@@ -529,11 +555,9 @@
 		1496CF1F294080E6008F312F /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
-				D8576F33293779E2002885FE /* FirestoreUser.swift */,
-				1496CF2029408176008F312F /* FirestoreFeedService.swift */,
-				D89AE4FC2935F5AE00446AB3 /* FireFunctionsManager.swift */,
-				D89E48AE2939D99300744A56 /* FireStorageService.swift */,
-				B5F4B035293CC0B300947250 /* FirestoreCollection.swift */,
+				140E210229443D2A00D6E2E5 /* FireFunction */,
+				140E210129443D2600D6E2E5 /* FireStorage */,
+				140E210029443D2200D6E2E5 /* Firestore */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
