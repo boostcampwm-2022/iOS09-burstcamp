@@ -37,6 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func configurePushNotification(_ application: UIApplication) {
         UNUserNotificationCenter.current().delegate = self
+        UserDefaultsManager.removeIsForeground()
         application.registerForRemoteNotifications()
     }
 }
