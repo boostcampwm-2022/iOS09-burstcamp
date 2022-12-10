@@ -13,6 +13,7 @@ enum FirestoreServiceError: Error {
     case getCollection
     case getDocument
     case lastCollectionError
+    case addListnerFail
 }
 
 typealias FirestoreData = [String: Any]
@@ -69,10 +70,7 @@ final class FirestoreService {
         }
     }
 
-    public func getCollection(
-        query: Query
-    ) async throws
-    -> (
+    public func getCollection(query: Query) async throws -> (
         collectionData: [FirestoreData],
         lastSnapshot: QueryDocumentSnapshot?
     ) {
@@ -100,6 +98,12 @@ final class FirestoreService {
         }
     }
 
+    public func countCollection(collectionPath: String) async throws -> Int {
+        let countQuery = database.collection(collectionPath).count
+        let collectionCount = try await countQuery.getAggregation(source: .server).count
+        return Int(truncating: collectionCount)
+    }
+
     public func getDocument(
         collectionPath: String,
         document: String
@@ -124,13 +128,7 @@ final class FirestoreService {
         }
     }
 
-    public func countCollection(collectionPath: String) async throws -> Int {
-        let countQuery = database.collection(collectionPath).count
-        let collectionCount = try await countQuery.getAggregation(source: .server).count
-        return Int(truncating: collectionCount)
-    }
-
-    public func appendDocument(
+    public func createDocument(
         collectionPath: String,
         document: String,
         value: FirestoreData
@@ -140,6 +138,26 @@ final class FirestoreService {
                 .collection(collectionPath)
                 .document(document)
                 .setData(value) { error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    continuation.resume()
+                }
+        }
+        as Void
+    }
+
+    public func updateDocument(
+        collectionPath: String,
+        document: String,
+        data: FirestoreData
+    )  async throws {
+        try await withCheckedThrowingContinuation { continuation in
+            database
+                .collection(collectionPath)
+                .document(document)
+                .updateData(data) { error in
                     if let error = error {
                         continuation.resume(throwing: error)
                         return
@@ -166,6 +184,30 @@ final class FirestoreService {
                     continuation.resume()
                 }
         } as Void
+    }
+
+    public func addListenerToDocument(
+        collectionPath: String,
+        document: String
+    ) async throws -> FirestoreData {
+        try await withCheckedThrowingContinuation { continuation in
+            database
+                .collection(collectionPath)
+                .document(document)
+                .addSnapshotListener { documentSnapshot, error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    guard let documentSnapshot = documentSnapshot,
+                          let data = documentSnapshot.data()
+                    else {
+                        continuation.resume(throwing: FirestoreServiceError.addListnerFail)
+                        return
+                    }
+                    continuation.resume(returning: data)
+                }
+        }
     }
 
     public func appendDocumentArrayField(

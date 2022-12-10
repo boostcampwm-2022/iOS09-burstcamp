@@ -59,34 +59,53 @@ final class DefaultBCFirestoreService: BCFirestoreService {
         initFeedQuery()
         let result = try await firestoreService.getCollection(query: feedQuery)
         self.lastSnapShot = result.lastSnapshot
-        
+
         return result.collectionData
     }
 
     func fetchMoreNormalFeeds() async throws -> [FirestoreData] {
         let result = try await firestoreService.getCollection(query: feedQuery)
         self.lastSnapShot = result.lastSnapshot
-        
+
         return result.collectionData
     }
 
     func fetchFeed(feedUUID: String) async throws -> FirestoreData {
         let feedPath = FirestoreCollection.feed.path
-        let feed = try await firestoreService.getDocument(collectionPath: feedPath, document: feedUUID)
-        
+        let feed = try await firestoreService.getDocument(
+            collectionPath: feedPath,
+            document: feedUUID
+        )
+
         return feed
     }
 
     func fetchUser(userUUID: String) async throws -> FirestoreData {
         let userPath = FirestoreCollection.user.path
-        let user = try await firestoreService.getDocument(collectionPath: userPath, document: userUUID)
-        
+        let user = try await firestoreService.getDocument(
+            collectionPath: userPath,
+            document: userUUID
+        )
+
         return user
+    }
+
+    func saveUser(userUUID: String) {
+    }
+
+    func updateUser(userUUID: String) {
+    }
+
+    func deleteUser(userUUID: String) {
+    }
+
+    func addListenerToUser(userUUID: String) {
     }
 
     func countFeedScrap(feedUUID: String) async throws -> Int {
         let scrapUserPath = FirestoreCollection.scrapUser(feedUUID: feedUUID).path
         let scrapCount = try await firestoreService.countCollection(collectionPath: scrapUserPath)
+
         return scrapCount
     }
 
@@ -96,8 +115,8 @@ final class DefaultBCFirestoreService: BCFirestoreService {
             "userUUID": userUUID,
             "scrapDate": Timestamp(date: Date())
         ]
-        
-        try await firestoreService.appendDocument(
+
+        try await firestoreService.createDocument(
             collectionPath: scrapUserPath,
             document: userUUID,
             value: value
@@ -106,7 +125,7 @@ final class DefaultBCFirestoreService: BCFirestoreService {
 
     func deleteScrapUser(userUUID: String, from feedUUID: String) async throws {
         let scrapUserPath = FirestoreCollection.scrapUser(feedUUID: feedUUID).path
-        
+
         try await firestoreService.deleteDocument(
             collectionPath: scrapUserPath,
             document: userUUID
@@ -116,7 +135,7 @@ final class DefaultBCFirestoreService: BCFirestoreService {
     func appendFeedUUID(_ feedUUID: String, at userUUID: String) async throws {
         let userPath = FirestoreCollection.user.path
         let arrayName = "scrapFeedUUIDs"
-        
+
         try await firestoreService.deleteDocumentArrayField(
             collectionPath: userPath,
             document: userUUID,
@@ -128,7 +147,7 @@ final class DefaultBCFirestoreService: BCFirestoreService {
     func deleteFeedUUID(_ feedUUID: String, from userUUID: String) async throws {
         let userPath = FirestoreCollection.user.path
         let arrayName = "scrapFeedUUIDs"
-        
+
         try await firestoreService.deleteDocumentArrayField(
             collectionPath: userPath,
             document: userUUID,
