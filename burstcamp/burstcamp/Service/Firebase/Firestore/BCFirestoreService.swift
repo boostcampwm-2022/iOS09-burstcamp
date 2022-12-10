@@ -10,9 +10,19 @@ import Foundation
 import FirebaseFirestore
 
 protocol BCFirestoreService {
+    func fetchRecommendFeed() async throws -> [FirestoreData]
+    func fetchLatestNormalFeeds() async throws -> [FirestoreData]
+    func fetchMoreNormalFeeds() async throws -> [FirestoreData]
+    func fetchFeed(feedUUID: String) async throws -> FirestoreData
+    func fetchUser(userUUID: String) async throws -> FirestoreData
+    func countFeedScrap(feedUUID: String) async throws -> Int
+    func appendScrapUser(userUUID: String, at feedUUID: String) async throws
+    func deleteScrapUser(userUUID: String, from feedUUID: String) async throws
+    func appendFeedUUID(_ feedUUID: String, at userUUID: String) async throws
+    func deleteFeedUUID(_ feedUUID: String, from userUUID: String) async throws
 }
 
-final class DefaultBCFirestoreService {
+final class DefaultBCFirestoreService: BCFirestoreService {
 
     private let firestoreService: FirestoreService
     private var lastSnapShot: QueryDocumentSnapshot?
