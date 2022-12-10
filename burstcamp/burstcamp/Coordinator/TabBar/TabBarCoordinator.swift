@@ -29,6 +29,7 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
+        addObserver()
     }
 
     func start() {
@@ -125,5 +126,27 @@ extension TabBarCoordinator {
             type(of: $0) == HomeCoordinator.self
         } as? HomeCoordinator
         return homeCoordinator
+    }
+}
+
+// MARK: - handle Push Notification
+
+extension TabBarCoordinator: ContainFeedDetailCoordinator {
+    private func addObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(moveToDetail),
+            name: .Push,
+            object: nil
+        )
+    }
+
+    @objc func moveToDetail() {
+        guard let feedUUID = UserDefaultsManager.notificationFeedUUID() else { return }
+        UserDefaultsManager.removeIsForeground()
+        UserDefaultsManager.removeNotificationFeedUUID()
+        let feedDetailViewController = prepareFeedDetailViewController(feedUUID: feedUUID)
+        sinkFeedViewController(feedDetailViewController)
+        self.navigationController.pushViewController(feedDetailViewController, animated: true)
     }
 }

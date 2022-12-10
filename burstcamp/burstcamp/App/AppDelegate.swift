@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 import BCResource
 import Firebase
@@ -20,24 +21,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         FirebaseApp.configure()
         UserManager.shared.appStart()
-        // TODO: 삭제
         print("Auth.auth().currentUser?.uid 값이에오: ", Auth.auth().currentUser?.uid)
         print("키체인에 있던 유저의 UUID 값이에오: ", UserManager.shared.user.userUUID)
         configurePushNotification(application)
         configureMessaging()
         return true
     }
+
+    func application(
+        _ application: UIApplication,
+        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+    ) {
+        Messaging.messaging().apnsToken = deviceToken
+    }
+
+    private func configurePushNotification(_ application: UIApplication) {
+        UNUserNotificationCenter.current().delegate = self
+        UserDefaultsManager.removeIsForeground()
+        application.registerForRemoteNotifications()
+    }
 }
 
 // MARK: - UNUserNotificationCenterDelegate
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    private func configurePushNotification(_ application: UIApplication) {
-        UNUserNotificationCenter.current().delegate = self
-        application.registerForRemoteNotifications()
-    }
 
-    /// receive push noti when app is foreground
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         willPresent notification: UNNotification,
@@ -45,34 +53,24 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             UNNotificationPresentationOptions
         ) -> Void
     ) {
-        let userInfo = notification.request.content.userInfo
-        // TODO: userInfo -> feedUUID
-        print(userInfo)
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(
-                name: .Push,
-                object: nil,
-                userInfo: userInfo
-            )
-        }
-
+        UserDefaultsManager.save(isForeground: true)
         completionHandler([.banner, .badge, .sound])
     }
 
-    /// receive push noti when app is background
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
-        let userInfo = response.notification.request.content.userInfo
-        // TODO: userInfo -> feedUUID
-        print(userInfo)
-        NotificationCenter.default.post(
-            name: .Push,
-            object: nil,
-            userInfo: userInfo
-        )
+        guard let feedUUID = response.notification.request.content.userInfo[
+            NotificationKey.feedUUID
+        ] as? String
+        else { return }
+
+        UserDefaultsManager.save(notificationFeedUUID: feedUUID)
+        if UserDefaultsManager.isForeground() {
+            NotificationCenter.default.post(name: .Push, object: nil)
+        }
     }
 }
 
@@ -82,11 +80,15 @@ extension AppDelegate: MessagingDelegate {
     private func configureMessaging() {
         Messaging.messaging().delegate = self
         Messaging.messaging().token { token, error in
-            if let token = token {
+            if let token = token,
+               let savedToken = UserDefaultsManager.fcmToken(),
+               token != savedToken {
                 // TODO: 삭제
                 print("현재 UserManager에 있는 userUUID", UserManager.shared.user.userUUID)
-                print("의 토큰 값이에오: ", token)
+                print("의 토큰 값: ", token)
+                print("저장되어있던 토큰 값: ", savedToken)
                 UserDefaultsManager.save(fcmToken: token)
+                FirebaseFCMToken.save(fcmToken: token, to: UserManager.shared.user.userUUID)
             }
         }
     }
@@ -97,6 +99,7 @@ extension AppDelegate: MessagingDelegate {
         didReceiveRegistrationToken fcmToken: String?
     ) {
         if let fcmToken = fcmToken {
+            print("리프레쉬 fcmToken", fcmToken)
             if UserManager.shared.user.userUUID.isEmpty {
                 UserDefaultsManager.save(fcmToken: fcmToken)
             } else {
@@ -107,7 +110,7 @@ extension AppDelegate: MessagingDelegate {
 }
 
 // MARK: - save user in keychain
-
+// TODO: https://medium.com/cashwalk/ios-background-mode-9bf921f1c55b
 extension AppDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         KeyChainManager.deleteUser()

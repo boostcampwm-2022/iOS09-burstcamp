@@ -16,7 +16,7 @@ struct FirebaseFCMToken {
     static func save(fcmToken: String, to userUUID: String) {
         let fcmToken = FCMToken(fcmToken: fcmToken)
         let path = fcmTokenPath.document(userUUID)
-        print("fcmToken 저장하는중", userUUID)
+        print("fcmToken 저장하는중", userUUID, fcmToken)
         guard let dictionary = fcmToken.asDictionary
         else {
             print("데이터 dictionary 변환 실패")

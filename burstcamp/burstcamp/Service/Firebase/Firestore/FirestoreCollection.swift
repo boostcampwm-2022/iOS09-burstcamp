@@ -29,7 +29,7 @@ extension FirestoreCollection {
         case .user: return "user"
         case .scrapUser(let feedUUID): return "feed/\(feedUUID)/scrapUsers"
         case .admin: return "admin"
-        case .fcmToken: return "FCMToken"
+        case .fcmToken: return "fcmToken"
         }
     }
 

@@ -12,17 +12,19 @@ import FirebaseFunctions
 
 struct FireFunctionsManager {
 
-    static var functions = Functions.functions()
+    private static var functions = Functions.functions()
 
-    static let fetchBlogTitle = "fetchBlogTitle"
-    static let deleteUser = "deleteUser"
-    static let blogTitleField = "blogTitle"
-    static let userUUIDFeild = "userUUID"
+    private static let fetchBlogTitleFunction = "fetchBlogTitle"
+    private static let deleteUserFunction = "deleteUser"
+    
+    private static let blogTitleField = "blogTitle"
+    private static let userUUIDField = "userUUID"
+    private static let isFinishField = "isFinish"
 
     static func blogTitle(link: String) -> Future<String, NetworkError> {
         return Future<String, NetworkError> { promise in
             functions
-                .httpsCallable(fetchBlogTitle)
+                .httpsCallable(fetchBlogTitleFunction)
                 .call([blogTitleField: link]) { result, error in
                     if error != nil {
                         promise(.failure(NetworkError.unknownError))
@@ -39,16 +41,16 @@ struct FireFunctionsManager {
     static func deleteUser(userUUID: String) -> AnyPublisher<Bool, NetworkError> {
         return Future<Bool, NetworkError> { promise in
             functions
-                .httpsCallable(deleteUser)
-                .call([userUUIDFeild: userUUID]) { result, error in
+                .httpsCallable(deleteUserFunction)
+                .call([userUUIDField: userUUID]) { result, error in
                     if error != nil {
-                        promise(.failure(NetworkError.unknownError))
+                        promise(.success(false))
                     }
                     if let data = result?.data as? [String: Any],
-                       let isFinish = data[userUUIDFeild] as? Bool {
+                       let isFinish = data[isFinishField] as? Bool {
                         promise(.success(isFinish))
                     }
-                    promise(.failure(NetworkError.unknownError))
+                    promise(.success(false))
                 }
         }
         .eraseToAnyPublisher()
