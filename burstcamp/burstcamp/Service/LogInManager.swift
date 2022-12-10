@@ -131,7 +131,6 @@ final class LogInManager {
                         if error != nil {
                             promise(.failure(.userDeleteError))
                         } else {
-                            FirestoreUser.delete(user: UserManager.shared.user)
                             guard (try? Auth.auth().signOut()) != nil else {
                                 promise(.failure(.authSignOutError))
                                 return
