@@ -46,7 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
 
-    /// receive push noti when app is foreground
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         willPresent notification: UNNotification,
@@ -58,7 +57,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler([.banner, .badge, .sound])
     }
 
-    /// receive push noti when app is background
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         didReceive response: UNNotificationResponse,
