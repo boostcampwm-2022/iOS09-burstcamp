@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 public extension Set where Element == AnyCancellable {
     func store(in set: inout Self) {
