@@ -95,7 +95,7 @@ final class LogInManager {
                 )
                 return
             }
-
+            KeyChainManager.deleteToken()
             KeyChainManager.save(token: token)
             self.isSignedUp(uuid: result.user.uid)
         }
