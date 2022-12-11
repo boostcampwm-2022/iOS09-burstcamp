@@ -25,12 +25,17 @@ extension FeedCellType {
     }
 
     var index: Int {
+        return self.rawValue
+    }
+
+    var collectionName: String {
         switch self {
-        case .recommend: return 0
-        case .normal: return 1
+        case .recommend: return "recommendFeed"
+        case .normal: return "feed"
         }
     }
+
     static var count: Int {
-        return FeedCellType.allCases.count
+        return Self.allCases.count
     }
 }

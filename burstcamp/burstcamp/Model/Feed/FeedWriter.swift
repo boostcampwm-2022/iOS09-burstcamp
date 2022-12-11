@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FeedWriter {
+struct FeedWriter: Equatable {
     let nickname: String
     let camperID: String
     let ordinalNumber: Int

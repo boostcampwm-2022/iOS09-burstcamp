@@ -30,7 +30,7 @@ final class ScrapPageViewModel {
 
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
-        let viewRefresh: AnyPublisher<Bool, Never>
+        let viewDidRefresh: AnyPublisher<Void, Never>
         let pagination: AnyPublisher<Void, Never>
     }
 
@@ -55,7 +55,7 @@ final class ScrapPageViewModel {
             }
             .store(in: &cancelBag)
 
-        input.viewRefresh
+        input.viewDidRefresh
             .sink { [weak self] _ in
                 self?.fetchScrapFeed(output: output)
             }

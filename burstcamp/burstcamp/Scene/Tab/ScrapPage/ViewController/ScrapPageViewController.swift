@@ -64,31 +64,31 @@ final class ScrapPageViewController: UIViewController {
 
         let input = ScrapPageViewModel.Input(
             viewDidLoad: viewDidLoadJust,
-            viewRefresh: refreshControl.isRefreshPublisher,
+            viewDidRefresh: refreshControl.refreshPublisher,
             pagination: paginationPublisher.eraseToAnyPublisher()
         )
 
         let output = viewModel.transform(input: input)
 
-        output.fetchResult
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] fetchResult in
-                switch fetchResult {
-                case .fetchSuccess:
-                    self?.scrapPageView.endCollectionViewRefreshing()
-                    self?.scrapPageView.collectionView.reloadData()
-                case .fetchFail(let error):
-                    self?.handleError(error)
-                }
-            }
-            .store(in: &cancelBag)
+//        output.fetchResult
+//            .receive(on: DispatchQueue.main)
+//            .sink { [weak self] fetchResult in
+//                switch fetchResult {
+//                case .fetchSuccess:
+//                    self?.scrapPageView.endCollectionViewRefreshing()
+//                    self?.scrapPageView.collectionView.reloadData()
+//                case .fetchFail(let error):
+//                    print(error)
+//                }
+//            }
+//            .store(in: &cancelBag)
 
-        output.cellUpdate
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] indexPath in
-                self?.reloadCollectionView(indexPath: indexPath)
-            }
-            .store(in: &cancelBag)
+//        output.cellUpdate
+//            .receive(on: DispatchQueue.main)
+//            .sink { [weak self] indexPath in
+//                self?.reloadCollectionView(indexPath: indexPath)
+//            }
+//            .store(in: &cancelBag)
     }
 
     private func collectionViewDelegate() {
