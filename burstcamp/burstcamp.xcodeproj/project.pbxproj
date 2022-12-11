@@ -14,8 +14,8 @@
 		140438C0293F77DD004D035C /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438BF293F77DD004D035C /* Factory.swift */; };
 		140E210429443E6300D6E2E5 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E210329443E6300D6E2E5 /* FirestoreService.swift */; };
 		140E21062944519E00D6E2E5 /* BCFirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E21052944519E00D6E2E5 /* BCFirestoreService.swift */; };
-		140E21092944688B00D6E2E5 /* Future+async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E21082944688B00D6E2E5 /* Future+async.swift */; };
 		1413169229485C4600DEFB1F /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1413169129485C4600DEFB1F /* LoadingView.swift */; };
+		140E21092944688B00D6E2E5 /* Future+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E21082944688B00D6E2E5 /* Future+Async.swift */; };
 		141344CD292F800300187B86 /* UI+ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C6292F800300187B86 /* UI+ReusableView.swift */; };
 		141344CE292F800300187B86 /* UINavigationController+configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C7292F800300187B86 /* UINavigationController+configure.swift */; };
 		141344CF292F800300187B86 /* UIStackView+addArrangedSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C8292F800300187B86 /* UIStackView+addArrangedSubviews.swift */; };
@@ -93,6 +93,8 @@
 		B52A7F272927A88F00E271D2 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = B52A7F262927A88F00E271D2 /* Then */; };
 		B52A7F2A2927A89C00E271D2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B52A7F292927A89C00E271D2 /* SnapKit */; };
 		B572EF7A2945D81D00A9413C /* Publisher+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EF792945D81D00A9413C /* Publisher+Extension.swift */; };
+		B572EF812945E19C00A9413C /* Sequence+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EF802945E19C00A9413C /* Sequence+Async.swift */; };
+		B572EF832945E1CA00A9413C /* Publisher+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EF822945E1CA00A9413C /* Publisher+Async.swift */; };
 		B597F9552935B94B0022D3E6 /* DefaultToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */; };
 		B59EDAD529408DAF00D451CC /* BCResource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59EDAD429408D8000D451CC /* BCResource.framework */; };
 		B59EDAD629408DAF00D451CC /* BCResource.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B59EDAD429408D8000D451CC /* BCResource.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -207,8 +209,8 @@
 		140438BF293F77DD004D035C /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
 		140E210329443E6300D6E2E5 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		140E21052944519E00D6E2E5 /* BCFirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCFirestoreService.swift; sourceTree = "<group>"; };
-		140E21082944688B00D6E2E5 /* Future+async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Future+async.swift"; sourceTree = "<group>"; };
 		1413169129485C4600DEFB1F /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		140E21082944688B00D6E2E5 /* Future+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Future+Async.swift"; sourceTree = "<group>"; };
 		141344C6292F800300187B86 /* UI+ReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UI+ReusableView.swift"; sourceTree = "<group>"; };
 		141344C7292F800300187B86 /* UINavigationController+configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+configure.swift"; sourceTree = "<group>"; };
 		141344C8292F800300187B86 /* UIStackView+addArrangedSubviews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+addArrangedSubviews.swift"; sourceTree = "<group>"; };
@@ -285,6 +287,8 @@
 		B52A7F1A2927A4E300E271D2 /* .swiftlint.auto.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.auto.yml; sourceTree = "<group>"; };
 		B52A7F232927A68F00E271D2 /* Service-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Service-Info.plist"; sourceTree = "<group>"; };
 		B572EF792945D81D00A9413C /* Publisher+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Extension.swift"; sourceTree = "<group>"; };
+		B572EF802945E19C00A9413C /* Sequence+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Async.swift"; sourceTree = "<group>"; };
+		B572EF822945E1CA00A9413C /* Publisher+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Async.swift"; sourceTree = "<group>"; };
 		B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultToggleButton.swift; sourceTree = "<group>"; };
 		B59EDACF29408D8000D451CC /* BCResource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BCResource.xcodeproj; path = ../../modules/BCResource/BCResource.xcodeproj; sourceTree = "<group>"; };
 		B5BA27862927AEF600BDCE08 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -463,8 +467,8 @@
 		140E21072944687600D6E2E5 /* Combine */ = {
 			isa = PBXGroup;
 			children = (
-				140E21082944688B00D6E2E5 /* Future+async.swift */,
 				B572EF792945D81D00A9413C /* Publisher+Extension.swift */,
+				141344D8292F803800187B86 /* UIControl+Combine.swift */,
 			);
 			path = Combine;
 			sourceTree = "<group>";
@@ -722,8 +726,8 @@
 		B50A278929279F5D00DF3E1F /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				B572EF7F2945E14000A9413C /* AsyncCompatible */,
 				140E21072944687600D6E2E5 /* Combine */,
-				142C933F292F517200F6428E /* CombineUIkit */,
 				142C9340292F51A500F6428E /* UI */,
 				142C9341292F51A800F6428E /* Type */,
 			);
@@ -893,6 +897,16 @@
 				D8095C68293B718C00964537 /* KeyChainManager.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		B572EF7F2945E14000A9413C /* AsyncCompatible */ = {
+			isa = PBXGroup;
+			children = (
+				B572EF802945E19C00A9413C /* Sequence+Async.swift */,
+				B572EF822945E1CA00A9413C /* Publisher+Async.swift */,
+				140E21082944688B00D6E2E5 /* Future+Async.swift */,
+			);
+			path = AsyncCompatible;
 			sourceTree = "<group>";
 		};
 		B59EDACE29408D5C00D451CC /* Modules */ = {
@@ -1258,6 +1272,7 @@
 				D8576F3629378F51002885FE /* URLRegularExpression.swift in Sources */,
 				D88295FC292A4452005B4273 /* HTTPMethod.swift in Sources */,
 				D84452F2292CCA80008E811B /* SettingSection.swift in Sources */,
+				B572EF812945E19C00A9413C /* Sequence+Async.swift in Sources */,
 				D8494D502927CEAA008157F1 /* DefaultBadgeLabel.swift in Sources */,
 				B5E0D94A292F631C001727F5 /* MockHTMLString.swift in Sources */,
 				14927E1E2929C71C001F2E97 /* RecommendFeedUserView.swift in Sources */,
@@ -1305,14 +1320,15 @@
 				D8576F34293779E2002885FE /* FirestoreUser.swift in Sources */,
 				143185E8292B46F9008CE459 /* HomeViewModel.swift in Sources */,
 				D8095C69293B718C00964537 /* KeyChainManager.swift in Sources */,
-				1413169229485C4600DEFB1F /* LoadingView.swift in Sources */,
 				140E21092944688B00D6E2E5 /* Future+async.swift in Sources */,
+				140E21092944688B00D6E2E5 /* Future+Async.swift in Sources */,
 				B50A27F429279F5D00DF3E1F /* SceneDelegate.swift in Sources */,
 				143185EC292B4AB8008CE459 /* ScrapPageViewModel.swift in Sources */,
 				D89AE4ED2935AA2100446AB3 /* FCMToken.swift in Sources */,
 				D89AE4E42933AEE900446AB3 /* ImageCacheError.swift in Sources */,
 				B50A27E929279F5D00DF3E1F /* NormalFeedCellFooter.swift in Sources */,
 				143185F8292B5C88008CE459 /* ContainCollectionView.swift in Sources */,
+				B572EF832945E1CA00A9413C /* Publisher+Async.swift in Sources */,
 				B5DAD67B292E4C6800C4A126 /* FeedDetailViewController.swift in Sources */,
 				D84452EC292CA55F008E811B /* MyPageEditView.swift in Sources */,
 				140E210429443E6300D6E2E5 /* FirestoreService.swift in Sources */,
@@ -1364,6 +1380,7 @@
 				D89AE4F92935EC6E00446AB3 /* Validation.swift in Sources */,
 				1481B10B2941C5440093E591 /* Error+resolveCategory.swift in Sources */,
 				1422C62F292F08BC00337710 /* BCDateFormatter.swift in Sources */,
+				B572EF7A2945D81D00A9413C /* Publisher+Extension.swift in Sources */,
 				1481B10D2941D1AB0093E591 /* UIResponder+.swift in Sources */,
 				B597F9552935B94B0022D3E6 /* DefaultToggleButton.swift in Sources */,
 				B50A27F229279F5D00DF3E1F /* AppDelegate.swift in Sources */,

@@ -1,12 +1,11 @@
 //
-//  Future+async.swift
+//  Future+Async.swift
 //  burstcamp
 //
 //  Created by youtak on 2022/12/10.
 //
 
-import Combine
-import Foundation
+import class Combine.Future
 
 extension Future where Failure == Error {
     convenience init(
