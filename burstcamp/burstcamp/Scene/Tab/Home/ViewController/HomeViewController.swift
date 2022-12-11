@@ -76,31 +76,52 @@ final class HomeViewController: UIViewController {
 
         let input = HomeViewModel.Input(
             viewDidLoad: viewDidLoadJust,
-            viewRefresh: refreshControl.isRefreshPublisher,
+            viewDidRefresh: refreshControl.refreshPublisher,
             pagination: paginationPublisher.eraseToAnyPublisher()
         )
 
         let output = viewModel.transform(input: input)
 
-        output.fetchResult
+        output.reloadData
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] fetchResult in
-                switch fetchResult {
-                case .fetchSuccess:
-                    self?.homeView.endCollectionViewRefreshing()
-                    self?.homeView.collectionView.reloadData()
-                case .fetchFail(let error):
-                    self?.handleError(error)
-                }
+            .sink { [weak self] _ in
+                self?.homeView.collectionView.reloadData()
             }
             .store(in: &cancelBag)
 
-        output.cellUpdate
+        output.showAlert
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] indexPath in
-                self?.reloadCollectionView(indexPath: indexPath)
+            .sink { [weak self] error in
+                self?.showAlert(message: error.localizedDescription)
             }
             .store(in: &cancelBag)
+
+        output.hideIndicator
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.homeView.endCollectionViewRefreshing()
+            }
+            .store(in: &cancelBag)
+
+//        output.fetchResult
+//            .receive(on: DispatchQueue.main)
+//            .sink { [weak self] fetchResult in
+//                switch fetchResult {
+//                case .fetchSuccess:
+//                    self?.homeView.endCollectionViewRefreshing()
+//                    self?.homeView.collectionView.reloadData()
+//                case .fetchFail(let error):
+//                    print(error)
+//                }
+//            }
+//            .store(in: &cancelBag)
+//
+//        output.cellUpdate
+//            .receive(on: DispatchQueue.main)
+//            .sink { [weak self] indexPath in
+//                self?.reloadCollectionView(indexPath: indexPath)
+//            }
+//            .store(in: &cancelBag)
     }
 
     private func reloadCollectionView(indexPath: IndexPath) {
@@ -118,6 +139,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return FeedCellType.count
     }
+
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
@@ -189,9 +211,14 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         return UICollectionReusableView()
     }
 
-    // FeedDetail Test용
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let feed = viewModel.normalFeedData[indexPath.row]
+        let feedCellType = FeedCellType(index: indexPath.section)
+        var feed: Feed
+        switch feedCellType {
+            case .recommend: feed = viewModel.recommendFeedData[indexPath.row]
+            case .normal: feed = viewModel.normalFeedData[indexPath.row]
+            default: return
+        }
         coordinatorPublisher.send(.moveToFeedDetail(feed: feed))
     }
 

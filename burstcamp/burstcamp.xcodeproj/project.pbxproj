@@ -106,6 +106,8 @@
 		B5BA27872927AEF600BDCE08 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5BA27862927AEF600BDCE08 /* GoogleService-Info.plist */; };
 		B5BC81BA2945BB5D0077BF29 /* BCFetcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5BC81B92945BB580077BF29 /* BCFetcher.framework */; };
 		B5BC81BB2945BB5D0077BF29 /* BCFetcher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B5BC81B92945BB580077BF29 /* BCFetcher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B5BC81BD2945BD500077BF29 /* FeedLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BC81BC2945BD500077BF29 /* FeedLocalDataSource.swift */; };
+		B5BC81BF2945BFA30077BF29 /* FeedRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BC81BE2945BFA30077BF29 /* FeedRemoteDataSource.swift */; };
 		B5DAD679292E4C6800C4A126 /* FeedDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD674292E4C6800C4A126 /* FeedDetailViewModel.swift */; };
 		B5DAD67A292E4C6800C4A126 /* FeedDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD676292E4C6800C4A126 /* FeedDetailView.swift */; };
 		B5DAD67B292E4C6800C4A126 /* FeedDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD678292E4C6800C4A126 /* FeedDetailViewController.swift */; };
@@ -293,6 +295,8 @@
 		B59EDACF29408D8000D451CC /* BCResource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BCResource.xcodeproj; path = ../../modules/BCResource/BCResource.xcodeproj; sourceTree = "<group>"; };
 		B5BA27862927AEF600BDCE08 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B5BC81B42945BB580077BF29 /* BCFetcher.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BCFetcher.xcodeproj; path = ../../modules/BCFetcher/BCFetcher.xcodeproj; sourceTree = "<group>"; };
+		B5BC81BC2945BD500077BF29 /* FeedLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLocalDataSource.swift; sourceTree = "<group>"; };
+		B5BC81BE2945BFA30077BF29 /* FeedRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRemoteDataSource.swift; sourceTree = "<group>"; };
 		B5DAD674292E4C6800C4A126 /* FeedDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailViewModel.swift; sourceTree = "<group>"; };
 		B5DAD676292E4C6800C4A126 /* FeedDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailView.swift; sourceTree = "<group>"; };
 		B5DAD678292E4C6800C4A126 /* FeedDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailViewController.swift; sourceTree = "<group>"; };
@@ -697,6 +701,8 @@
 				B5BA27892927B07300BDCE08 /* Model */,
 				B50A279829279F5D00DF3E1F /* Resource */,
 				B50A278829279F5D00DF3E1F /* Util */,
+				B5BC81BC2945BD500077BF29 /* FeedLocalDataSource.swift */,
+				B5BC81BE2945BFA30077BF29 /* FeedRemoteDataSource.swift */,
 			);
 			path = burstcamp;
 			sourceTree = "<group>";
@@ -1268,6 +1274,7 @@
 				D8494D502927CEAA008157F1 /* DefaultBadgeLabel.swift in Sources */,
 				B5E0D94A292F631C001727F5 /* MockHTMLString.swift in Sources */,
 				14927E1E2929C71C001F2E97 /* RecommendFeedUserView.swift in Sources */,
+				B5BC81BD2945BD500077BF29 /* FeedLocalDataSource.swift in Sources */,
 				14A93D402936EFF900790034 /* FeedDTO.swift in Sources */,
 				D84C8132292F0A1E00C984E8 /* UIViewController+.swift in Sources */,
 				D88295EF292A43EB005B4273 /* NetworkError.swift in Sources */,
@@ -1290,6 +1297,7 @@
 				D88295FE292A4459005B4273 /* URLSessionService.swift in Sources */,
 				D89AE4F12935AE7800446AB3 /* Encodable+dictionary.swift in Sources */,
 				D8C38674292B8D82005A2563 /* Appearance.swift in Sources */,
+				B5BC81BF2945BFA30077BF29 /* FeedRemoteDataSource.swift in Sources */,
 				B50A27F729279F5D00DF3E1F /* TabBarCoordinator.swift in Sources */,
 				141344D9292F803800187B86 /* UIControl+Combine.swift in Sources */,
 				143185EA292B4A8D008CE459 /* ScrapPageViewController.swift in Sources */,
