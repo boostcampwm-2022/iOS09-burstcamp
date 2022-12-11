@@ -13,7 +13,8 @@ enum FirestoreServiceError: Error {
     case getCollection
     case getDocument
     case lastCollectionError
-    case addListnerFail
+    case addListenerFail
+    case errorCastingFail(message: String)
 }
 
 typealias FirestoreData = [String: Any]
@@ -202,7 +203,7 @@ final class FirestoreService {
                     guard let documentSnapshot = documentSnapshot,
                           let data = documentSnapshot.data()
                     else {
-                        continuation.resume(throwing: FirestoreServiceError.addListnerFail)
+                        continuation.resume(throwing: FirestoreServiceError.addListenerFail)
                         return
                     }
                     continuation.resume(returning: data)
