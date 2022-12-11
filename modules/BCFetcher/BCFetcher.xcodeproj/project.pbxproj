@@ -11,6 +11,7 @@
 		B5BC81AF2945BB010077BF29 /* Fetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BC81AE2945BB010077BF29 /* Fetchable.swift */; };
 		B5BC81B12945BB180077BF29 /* FetchingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BC81B02945BB180077BF29 /* FetchingState.swift */; };
 		B5BC81B32945BB240077BF29 /* Fetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BC81B22945BB230077BF29 /* Fetcher.swift */; };
+		B5BC81C12945D5580077BF29 /* AnyCancellable+store.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BC81C02945D5580077BF29 /* AnyCancellable+store.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		B5BC81AE2945BB010077BF29 /* Fetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fetchable.swift; sourceTree = "<group>"; };
 		B5BC81B02945BB180077BF29 /* FetchingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingState.swift; sourceTree = "<group>"; };
 		B5BC81B22945BB230077BF29 /* Fetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fetcher.swift; sourceTree = "<group>"; };
+		B5BC81C02945D5580077BF29 /* AnyCancellable+store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnyCancellable+store.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +37,7 @@
 		B5BC819A2945BAD60077BF29 = {
 			isa = PBXGroup;
 			children = (
+				B5BC81C22945D59B0077BF29 /* Extension */,
 				B5BC81A62945BAD60077BF29 /* BCFetcher */,
 				B5BC81A52945BAD60077BF29 /* Products */,
 			);
@@ -57,6 +60,14 @@
 				B5BC81B22945BB230077BF29 /* Fetcher.swift */,
 			);
 			path = BCFetcher;
+			sourceTree = "<group>";
+		};
+		B5BC81C22945D59B0077BF29 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				B5BC81C02945D5580077BF29 /* AnyCancellable+store.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,6 +151,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5BC81AF2945BB010077BF29 /* Fetchable.swift in Sources */,
+				B5BC81C12945D5580077BF29 /* AnyCancellable+store.swift in Sources */,
 				B5BC81B12945BB180077BF29 /* FetchingState.swift in Sources */,
 				B5BC81B32945BB240077BF29 /* Fetcher.swift in Sources */,
 			);
