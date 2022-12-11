@@ -8,7 +8,8 @@
 import Combine
 import Foundation
 
-public final class Fetcher<Data, FetchingError: Swift.Error>: Fetchable {
+public final class Fetcher<Data, FetchingError>: Fetchable
+where Data: Equatable, FetchingError: Error {
     
     // Remote
     public var onRemoteCombine: (() -> AnyPublisher<Data, FetchingError>)
@@ -45,8 +46,14 @@ public final class Fetcher<Data, FetchingError: Swift.Error>: Fetchable {
                     onNext(.failure(error), self.onLocal())
                 }
             },receiveValue: { data in
-                // local storage를 업데이트
-                self.onUpdateLocal(data)
+//                if data == self.onLocal() {
+//                    // 이미 있는 데이터
+//                    onNext(.alreadyLatest, data)
+//                    return
+//                } else {
+                    // local storage를 업데이트
+                    self.onUpdateLocal(data)
+//                }
                 
                 // local storage를 구독하면서, 데이터를 중계(relay)한다.
                 self.onLocalCombine()
@@ -62,8 +69,7 @@ public final class Fetcher<Data, FetchingError: Swift.Error>: Fetchable {
                         }
                     )
                     .store(in: &cancelBag)
-            }
-            )
+            })
             .store(in: &cancelBag)
         
         return cancelBag
