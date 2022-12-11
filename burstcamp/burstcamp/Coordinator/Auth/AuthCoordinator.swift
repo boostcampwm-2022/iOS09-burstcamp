@@ -14,7 +14,6 @@ protocol AuthCoordinatorProtocol: NormalCoordinator {
     func moveToDomainScreen()
     func moveToIDScreen()
     func moveToBlogScreen()
-    func moveToGithubLogIn()
 }
 
 final class AuthCoordinator: AuthCoordinatorProtocol {
@@ -46,33 +45,12 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
                     self.moveToDomainScreen()
                 case .moveToTabBarScreen:
                     self.moveToTabBarFlow()
-                case .moveToGithubLogIn:
-                    self.moveToGithubLogIn()
                 case .moveToIDScreen, .moveToBlogScreen, .showAlert(_):
                     return
                 }
             }
             .store(in: &cancelBag)
         navigationController.viewControllers = [logInViewController]
-    }
-
-    func moveToGithubLogIn() {
-        let urlString = "https://github.com/login/oauth/authorize"
-
-        guard var urlComponent = URLComponents(string: urlString),
-              let clientID = LogInManager.shared.githubAPIKey?.clientID
-        else {
-            return
-        }
-
-        urlComponent.queryItems = [
-            URLQueryItem(name: "client_id", value: clientID),
-            URLQueryItem(name: "scope", value: "admin:org")
-        ]
-
-        guard let url = urlComponent.url else { return }
-        let safariViewController = SFSafariViewController(url: url)
-        navigationController.present(safariViewController, animated: true)
     }
 
     func moveToTabBarFlow() {

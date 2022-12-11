@@ -6,6 +6,7 @@
 //
 
 import Combine
+import SafariServices
 import UIKit
 
 import SnapKit
@@ -46,6 +47,25 @@ final class LogInViewController: UIViewController {
         logInView.loadingLabel.isHidden = false
     }
 
+    private func moveToGithubLogIn() {
+        let urlString = "https://github.com/login/oauth/authorize"
+
+        guard var urlComponent = URLComponents(string: urlString),
+              let clientID = LogInManager.shared.githubAPIKey?.clientID
+        else {
+            return
+        }
+
+        urlComponent.queryItems = [
+            URLQueryItem(name: "client_id", value: clientID),
+            URLQueryItem(name: "scope", value: "admin:org")
+        ]
+
+        guard let url = urlComponent.url else { return }
+        let safariViewController = SFSafariViewController(url: url)
+        self.present(safariViewController, animated: true)
+    }
+
     private func bind() {
         let input = LogInViewModel.Input(
             logInButtonDidTap: logInView.camperAuthButton.tapPublisher
@@ -55,7 +75,7 @@ final class LogInViewController: UIViewController {
 
         output.openLogInView
             .sink {
-                self.coordinatorPublisher.send(.moveToGithubLogIn)
+                self.moveToGithubLogIn()
             }
             .store(in: &cancelBag)
 
@@ -71,7 +91,7 @@ final class LogInViewController: UIViewController {
                     self.coordinatorPublisher.send(.moveToTabBarScreen)
                 case .showAlert(let message):
                     self.showAlert(message: message)
-                case .moveToBlogScreen, .moveToIDScreen, .moveToGithubLogIn:
+                case .moveToBlogScreen, .moveToIDScreen:
                     return
                 }
             }

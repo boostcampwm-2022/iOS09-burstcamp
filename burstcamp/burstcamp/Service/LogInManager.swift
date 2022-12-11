@@ -20,6 +20,7 @@ final class LogInManager {
 
     var autoLogInPublisher = PassthroughSubject<Bool, Never>()
     var logInPublisher = PassthroughSubject<AuthCoordinatorEvent, Never>()
+    var withdrawalPublisher = PassthroughSubject<Bool, FirebaseAuthError>()
 
     var userUUID: String? {
         return Auth.auth().currentUser?.uid
@@ -31,6 +32,8 @@ final class LogInManager {
     var domain: Domain = .iOS
     var camperID: String = ""
     var blodURL: String = ""
+
+    var isWithdrawal: Bool = false
 
     var githubAPIKey: Github? {
         guard let serviceInfoURL = Bundle.main.url(
@@ -95,8 +98,7 @@ final class LogInManager {
                 )
                 return
             }
-            KeyChainManager.deleteToken()
-            KeyChainManager.save(token: token)
+
             self.isSignedUp(uuid: result.user.uid)
         }
     }
@@ -113,35 +115,38 @@ final class LogInManager {
             .store(in: &cancelBag)
     }
 
-    func signOut() -> AnyPublisher<Bool, FirebaseAuthError> {
-        return Future<Bool, FirebaseAuthError> { promise in
+    func signOut(code: String) {
+        self.requestGithubAccessToken(code: code)
+            .map { $0.accessToken }
+            .sink(receiveCompletion: { result in
+                print(result)
+            }, receiveValue: { token in
+                let credential = GitHubAuthProvider.credential(withToken: token)
 
-            guard let token = KeyChainManager.readToken() else {
-                promise(.failure(.readTokenError))
-                return
-            }
-
-            let credential = GitHubAuthProvider.credential(withToken: token)
-
-            Auth.auth().currentUser?.reauthenticate(with: credential) { _, error in
-                if error != nil {
-                    promise(.failure(.userReAuthError))
-                } else {
-                    Auth.auth().currentUser?.delete { error in
-                        if error != nil {
-                            promise(.failure(.userDeleteError))
-                        } else {
-                            guard (try? Auth.auth().signOut()) != nil else {
-                                promise(.failure(.authSignOutError))
-                                return
+                Auth.auth().currentUser?.reauthenticate(with: credential) { _, error in
+                    if error != nil {
+                        self.withdrawalPublisher.send(completion: .failure(.userReAuthError))
+                    } else {
+                        Auth.auth().currentUser?.delete { error in
+                            if error != nil {
+                                self.withdrawalPublisher.send(
+                                    completion: .failure(.userDeleteError)
+                                )
+                            } else {
+                                guard (try? Auth.auth().signOut()) != nil else {
+                                    self.withdrawalPublisher.send(
+                                        completion: .failure(.authSignOutError)
+                                    )
+                                    return
+                                }
+                                self.isWithdrawal = false
+                                self.withdrawalPublisher.send(true)
                             }
-                            promise(.success(true))
                         }
                     }
                 }
-            }
-        }
-        .eraseToAnyPublisher()
+            })
+            .store(in: &self.cancelBag)
     }
 
     func requestGithubAccessToken(code: String) -> AnyPublisher<GithubToken, GithubError> {

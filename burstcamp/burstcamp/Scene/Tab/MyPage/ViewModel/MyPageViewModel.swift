@@ -54,34 +54,24 @@ final class MyPageViewModel {
             }
             .store(in: &cancelBag)
 
-        input.withdrawDidTap
-            .sink { [weak self] _ in
-                self?.signOut(output: output)
-            }
-            .store(in: &cancelBag)
-
-        return output
-    }
-
-    private func signOut(output: Output) {
-        output.indicatorViewRun.send(true)
-        LogInManager.shared.signOut()
+        LogInManager.shared.withdrawalPublisher
             .sink { completion in
                 if case .failure = completion {
                     output.signOutFailMessage.send("탈퇴에 실패했어요.")
                 }
             } receiveValue: { isSignOut in
+                output.indicatorViewRun.send(true)
                 if isSignOut {
                     self.deleteUserInfos(output: output)
                 }
             }
             .store(in: &cancelBag)
+        return output
     }
 
     private func deleteUserInfos(output: Output) {
         let userUUID = UserManager.shared.user.userUUID
         print(userUUID)
-        KeyChainManager.deleteToken()
         KeyChainManager.deleteUser()
         UserManager.shared.removeUserListener()
         UserManager.shared.deleteUserInfo()
