@@ -11,4 +11,5 @@ public enum Status<FetchingError: Swift.Error> {
     case loading
     case failure(_ error: FetchingError)
     case success
+    case alreadyLatest
 }
