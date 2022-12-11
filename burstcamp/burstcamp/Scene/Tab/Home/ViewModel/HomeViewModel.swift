@@ -22,8 +22,16 @@ final class HomeViewModel {
 
     private var cancelBag = Set<AnyCancellable>()
 
-    private let remoteDataSource = FeedRemoteDataSource()
-    private let localDataSource = FeedLocalDataSource()
+    private let remoteDataSource: FeedRemoteDataSource
+    private let localDataSource: FeedLocalDataSource
+
+    init(
+        localDataSource: FeedLocalDataSource = FeedLocalDataSource.shared,
+        remoteDataSource: FeedRemoteDataSource = FeedRemoteDataSource.shared
+    ) {
+        self.localDataSource = localDataSource
+        self.remoteDataSource = remoteDataSource
+    }
 
     private let reloadData = CurrentValueSubject<Void?, Never>(nil)
     private let hideIndicator = CurrentValueSubject<Void?, Never>(nil)
@@ -76,9 +84,9 @@ final class HomeViewModel {
                     case .failure(let error):
                         self.hideIndicator.send(Void())
                         self.showAlert.send(error)
-                    case .alreadyLatest:
-                        self.hideIndicator.send(Void())
-                        return
+//                    case .alreadyLatest:
+//                        self.hideIndicator.send(Void())
+//                        return
                     }
 
                     self.recommendFeedData = data.recommendFeed
@@ -119,7 +127,8 @@ final class HomeViewModel {
         let firestoreFeedService = BeforeDefaultFirestoreFeedService()
         let feedScrapViewModel = FeedScrapViewModel(
             feedUUID: normalFeedData[index].feedUUID,
-            firestoreFeedService: firestoreFeedService
+            feedLocalDataSource: FeedLocalDataSource.shared,
+            feedRemoteDataSource: FeedRemoteDataSource.shared
         )
 //        feedScrapViewModel.getScrapCountUp
 //            .sink { [weak self] state in
@@ -177,16 +186,16 @@ final class HomeViewModel {
 //    private func fetchRecommendFeeds() async throws -> [Feed] {
 //        try await withThrowingTaskGroup(of: Feed.self, body: { taskGroup in
 //            var recommendFeeds: [Feed] = []
-//            let feedDTODictionary = try await self.firestoreService.fetchRecommendFeedDTOs()
+//            let feedAPIModelDictionary = try await self.firestoreService.fetchRecommendFeedAPIModels()
 //
-//            for feedDTO in feedDTODictionary {
+//            for feedAPIModel in feedAPIModelDictionary {
 //                taskGroup.addTask {
-//                    let feedDTO = FeedDTO(data: feedDTO)
+//                    let feedAPIModel = FeedAPIModel(data: feedAPIModel)
 //                    let feedWriterDictionary = try await self.firestoreFeedService.fetchUser(
-//                        userUUID: feedDTO.writerUUID
+//                        userUUID: feedAPIModel.writerUUID
 //                    )
 //                    let feedWriter = FeedWriter(data: feedWriterDictionary)
-//                    let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
+//                    let feed = Feed(feedAPIModel: feedAPIModel, feedWriter: feedWriter)
 //                    return feed
 //                }
 //            }
@@ -202,20 +211,20 @@ final class HomeViewModel {
 //    private func fetchLastestFeeds() async throws -> [Feed] {
 //        try await withThrowingTaskGroup(of: Feed.self, body: { taskGroup in
 //            var normalFeeds: [Feed] = []
-//            let feedDTODictionary = try await self.firestoreService.fetchLatestFeedDTOs()
+//            let feedAPIModelDictionary = try await self.firestoreService.fetchLatestFeedAPIModels()
 //
-//            for feedDTO in feedDTODictionary {
+//            for feedAPIModel in feedAPIModelDictionary {
 //                taskGroup.addTask {
-//                    let feedDTO = FeedDTO(data: feedDTO)
+//                    let feedAPIModel = FeedAPIModel(data: feedAPIModel)
 //                    let feedWriterDictionary = try await self.firestoreService.fetchUser(
-//                        userUUID: feedDTO.writerUUID
+//                        userUUID: feedAPIModel.writerUUID
 //                    )
 //                    let feedWriter = FeedWriter(data: feedWriterDictionary)
 //                    let scrapCount = try await self.firestoreService.countFeedScarp(
-//                        feedUUID: feedDTO.feedUUID
+//                        feedUUID: feedAPIModel.feedUUID
 //                    )
 //                    let feed = Feed(
-//                        feedDTO: feedDTO,
+//                        feedAPIModel: feedAPIModel,
 //                        feedWriter: feedWriter,
 //                        scrapCount: scrapCount
 //                    )
@@ -236,21 +245,21 @@ final class HomeViewModel {
 //    private func fetchMoreFeeds() async throws -> [Feed] {
 //        try await withThrowingTaskGroup(of: Feed.self, body: { taskGroup in
 //            var normalFeeds: [Feed] = []
-//            let feedDTODictionary = try await self.firestoreFeedService.fetchMoreFeeds()
+//            let feedAPIModelDictionary = try await self.firestoreFeedService.fetchMoreFeeds()
 //
-//            for feedDTO in feedDTODictionary {
+//            for feedAPIModel in feedAPIModelDictionary {
 //                taskGroup.addTask {
-//                    let feedDTO = FeedDTO(data: feedDTO)
-//                    print(feedDTO.writerUUID)
+//                    let feedAPIModel = FeedAPIModel(data: feedAPIModel)
+//                    print(feedAPIModel.writerUUID)
 //                    let feedWriterDictionary = try await self.firestoreFeedService.fetchUser(
-//                        userUUID: feedDTO.writerUUID
+//                        userUUID: feedAPIModel.writerUUID
 //                    )
 //                    let feedWriter = FeedWriter(data: feedWriterDictionary)
 //                    let scrapCount = try await self.firestoreFeedService.countFeedScarp(
-//                        feedUUID: feedDTO.feedUUID
+//                        feedUUID: feedAPIModel.feedUUID
 //                    )
 //                    let feed = Feed(
-//                        feedDTO: feedDTO,
+//                        feedAPIModel: feedAPIModel,
 //                        feedWriter: feedWriter,
 //                        scrapCount: scrapCount
 //                    )

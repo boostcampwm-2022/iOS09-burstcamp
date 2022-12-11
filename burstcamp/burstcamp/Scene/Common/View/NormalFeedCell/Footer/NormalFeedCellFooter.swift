@@ -15,7 +15,7 @@ class NormalFeedCellFooter: UIView {
         offColor: .systemGray4
     )
 
-    private lazy var countLabel = UILabel().then {
+    lazy var countLabel = UILabel().then {
         $0.textColor = UIColor.systemGray2
         $0.font = UIFont.regular12
         $0.text = ""
