@@ -92,6 +92,7 @@
 		B52A7F242927A68F00E271D2 /* Service-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B52A7F232927A68F00E271D2 /* Service-Info.plist */; };
 		B52A7F272927A88F00E271D2 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = B52A7F262927A88F00E271D2 /* Then */; };
 		B52A7F2A2927A89C00E271D2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B52A7F292927A89C00E271D2 /* SnapKit */; };
+		B572EF7A2945D81D00A9413C /* Publisher+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EF792945D81D00A9413C /* Publisher+Extension.swift */; };
 		B597F9552935B94B0022D3E6 /* DefaultToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */; };
 		B59EDAD529408DAF00D451CC /* BCResource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59EDAD429408D8000D451CC /* BCResource.framework */; };
 		B59EDAD629408DAF00D451CC /* BCResource.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B59EDAD429408D8000D451CC /* BCResource.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -283,6 +284,7 @@
 		B52A7F192927A4E300E271D2 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		B52A7F1A2927A4E300E271D2 /* .swiftlint.auto.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.auto.yml; sourceTree = "<group>"; };
 		B52A7F232927A68F00E271D2 /* Service-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Service-Info.plist"; sourceTree = "<group>"; };
+		B572EF792945D81D00A9413C /* Publisher+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Extension.swift"; sourceTree = "<group>"; };
 		B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultToggleButton.swift; sourceTree = "<group>"; };
 		B59EDACF29408D8000D451CC /* BCResource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BCResource.xcodeproj; path = ../../modules/BCResource/BCResource.xcodeproj; sourceTree = "<group>"; };
 		B5BA27862927AEF600BDCE08 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -462,6 +464,7 @@
 			isa = PBXGroup;
 			children = (
 				140E21082944688B00D6E2E5 /* Future+async.swift */,
+				B572EF792945D81D00A9413C /* Publisher+Extension.swift */,
 			);
 			path = Combine;
 			sourceTree = "<group>";

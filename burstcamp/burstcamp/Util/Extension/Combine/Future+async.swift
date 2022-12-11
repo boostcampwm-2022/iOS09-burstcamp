@@ -9,7 +9,20 @@ import Combine
 import Foundation
 
 extension Future where Failure == Error {
-    convenience init(operation: @escaping () async throws -> Output) {
+    convenience init(
+        _ operation: @escaping () async -> Output
+    ) {
+        self.init { promise in
+            Task {
+                let output = await operation()
+                promise(.success(output))
+            }
+        }
+    }
+
+    convenience init(
+        _ operation: @escaping () async throws -> Output
+    ) {
         self.init { promise in
             Task {
                 do {
