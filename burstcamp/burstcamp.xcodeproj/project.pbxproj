@@ -513,15 +513,8 @@
 		142C9340292F51A500F6428E /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				141344C6292F800300187B86 /* UI+ReusableView.swift */,
-				141344CA292F800300187B86 /* UILabel+LineHeight.swift */,
-				141344C7292F800300187B86 /* UINavigationController+configure.swift */,
-				141344C8292F800300187B86 /* UIStackView+addArrangedSubviews.swift */,
-				141344C9292F800300187B86 /* UIView+addSubViews.swift */,
-				D89AE4E52933AEF900446AB3 /* UIImageView+Cache.swift */,
-				D84C8131292F0A1E00C984E8 /* UIViewController+.swift */,
-				1418960129377593005A42D4 /* UIScrollView+.swift */,
-				14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */,
+				14FB962E2945A955009FF077 /* ViewController */,
+				14FB962F2945A95B009FF077 /* View */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -591,13 +584,10 @@
 		143216542935C3320034DE9F /* Error */ = {
 			isa = PBXGroup;
 			children = (
-				D88295EE292A43EB005B4273 /* NetworkError.swift */,
+				14FB962A2945A8F5009FF077 /* Firebase */,
+				14FB962B2945A8F8009FF077 /* Network */,
+				14FB962C2945A8FC009FF077 /* Local */,
 				D89AE4E32933AEE900446AB3 /* ImageCacheError.swift */,
-				D8576F2F293779C4002885FE /* FirestoreError.swift */,
-				D89E48B02939D9AC00744A56 /* FireStorageError.swift */,
-				3B74920C293DCCAC00A4BEA0 /* GithubError.swift */,
-				1496CF222940AEC6008F312F /* ConvertError.swift */,
-				3B7492282942EDCB00A4BEA0 /* FirebaseAuthError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -695,6 +685,119 @@
 				D8095C68293B718C00964537 /* KeyChainManager.swift */,
 			);
 			path = KeyChain;
+			sourceTree = "<group>";
+		};
+		14FB96272945A856009FF077 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				D8494D532927D0DC008157F1 /* User.swift */,
+				D8494D4D2927CE64008157F1 /* Domain.swift */,
+				D89AE5002936221600446AB3 /* ScrapUser.swift */,
+				D89AE4EC2935AA2100446AB3 /* FCMToken.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		14FB96282945A871009FF077 /* Appearance */ = {
+			isa = PBXGroup;
+			children = (
+				D8C38673292B8D82005A2563 /* Appearance.swift */,
+			);
+			path = Appearance;
+			sourceTree = "<group>";
+		};
+		14FB96292945A888009FF077 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				D88295FB292A4452005B4273 /* HTTPMethod.swift */,
+				B50A27A729279F5D00DF3E1F /* APIKey.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		14FB962A2945A8F5009FF077 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				3B7492282942EDCB00A4BEA0 /* FirebaseAuthError.swift */,
+				D8576F2F293779C4002885FE /* FirestoreError.swift */,
+				D89E48B02939D9AC00744A56 /* FireStorageError.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		14FB962B2945A8F8009FF077 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				3B74920C293DCCAC00A4BEA0 /* GithubError.swift */,
+				D88295EE292A43EB005B4273 /* NetworkError.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		14FB962C2945A8FC009FF077 /* Local */ = {
+			isa = PBXGroup;
+			children = (
+				1496CF222940AEC6008F312F /* ConvertError.swift */,
+			);
+			path = Local;
+			sourceTree = "<group>";
+		};
+		14FB962E2945A955009FF077 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D84C8131292F0A1E00C984E8 /* UIViewController+.swift */,
+				141344C7292F800300187B86 /* UINavigationController+configure.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		14FB962F2945A95B009FF077 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				141344CA292F800300187B86 /* UILabel+LineHeight.swift */,
+				141344C6292F800300187B86 /* UI+ReusableView.swift */,
+				141344C8292F800300187B86 /* UIStackView+addArrangedSubviews.swift */,
+				141344C9292F800300187B86 /* UIView+addSubViews.swift */,
+				D89AE4E52933AEF900446AB3 /* UIImageView+Cache.swift */,
+				1418960129377593005A42D4 /* UIScrollView+.swift */,
+				14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		14FB96302945A97C009FF077 /* Badge */ = {
+			isa = PBXGroup;
+			children = (
+				D8494D4F2927CEAA008157F1 /* DefaultBadgeLabel.swift */,
+				D8494D552927D6EB008157F1 /* DefaultBadgeView.swift */,
+			);
+			path = Badge;
+			sourceTree = "<group>";
+		};
+		14FB96312945A989009FF077 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				D8494D4B2927CD6C008157F1 /* DefaultProfileImageView.swift */,
+				D84452F5292CF4BC008E811B /* DefaultImageLabel.swift */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
+		14FB96322945A991009FF077 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */,
+				D8494D492927CBD4008157F1 /* DefaultButton.swift */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
+		14FB96332945A99D009FF077 /* TextField */ = {
+			isa = PBXGroup;
+			children = (
+				D84452F7292CF4E0008E811B /* DefaultTextField.swift */,
+			);
+			path = TextField;
 			sourceTree = "<group>";
 		};
 		3B061FD62928CC4300BFA71D /* Domain */ = {
@@ -930,9 +1033,9 @@
 		B50A27C229279F5D00DF3E1F /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
+				B50A27C929279F5D00DF3E1F /* Base */,
 				140438B9293F6EBE004D035C /* Home */,
 				140438B8293F6EAF004D035C /* ScrapPage */,
-				B50A27C929279F5D00DF3E1F /* Base */,
 				140438AE293F5CBC004D035C /* App */,
 				140438AD293F5C9C004D035C /* Auth */,
 				140438AF293F5CC6004D035C /* TabBar */,
@@ -985,8 +1088,6 @@
 			isa = PBXGroup;
 			children = (
 				B50A278B29279F5D00DF3E1F /* Constant.swift */,
-				D88295FB292A4452005B4273 /* HTTPMethod.swift */,
-				D84C812D292E590300C984E8 /* MyPageEditValidationResult.swift */,
 				D8C3AA2829305C05008EE77C /* HTTPHeader.swift */,
 				D8576F3529378F50002885FE /* URLRegularExpression.swift */,
 				D8E979C9293A6D430092EBF6 /* Alert.swift */,
@@ -998,13 +1099,11 @@
 			isa = PBXGroup;
 			children = (
 				14A93D3E2936EFEE00790034 /* Feed */,
-				B50A27A729279F5D00DF3E1F /* APIKey.swift */,
-				D8494D532927D0DC008157F1 /* User.swift */,
-				D8494D4D2927CE64008157F1 /* Domain.swift */,
-				D8C38673292B8D82005A2563 /* Appearance.swift */,
+				14FB96272945A856009FF077 /* User */,
+				14FB96282945A871009FF077 /* Appearance */,
+				14FB96292945A888009FF077 /* Network */,
 				D84452FB292DB7DE008E811B /* CellIndexPath.swift */,
-				D89AE5002936221600446AB3 /* ScrapUser.swift */,
-				D89AE4EC2935AA2100446AB3 /* FCMToken.swift */,
+				D84C812D292E590300C984E8 /* MyPageEditValidationResult.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1022,15 +1121,12 @@
 			isa = PBXGroup;
 			children = (
 				B50A27AE29279F5D00DF3E1F /* NormalFeedCell */,
-				D8494D492927CBD4008157F1 /* DefaultButton.swift */,
-				D8494D4B2927CD6C008157F1 /* DefaultProfileImageView.swift */,
-				D8494D4F2927CEAA008157F1 /* DefaultBadgeLabel.swift */,
-				D8494D552927D6EB008157F1 /* DefaultBadgeView.swift */,
-				D84452F5292CF4BC008E811B /* DefaultImageLabel.swift */,
-				D84452F7292CF4E0008E811B /* DefaultTextField.swift */,
+				14FB96302945A97C009FF077 /* Badge */,
+				14FB96312945A989009FF077 /* Image */,
+				14FB96322945A991009FF077 /* Button */,
+				14FB96332945A99D009FF077 /* TextField */,
 				B50A27B429279F5D00DF3E1F /* DefaultUserInfoView.swift */,
 				B5DAD680292E58BF00C4A126 /* DefaultMultilLineLabel.swift */,
-				B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
