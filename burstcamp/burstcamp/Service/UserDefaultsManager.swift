@@ -13,6 +13,8 @@ struct UserDefaultsManager {
     private static let fcmTokenKey = "fcmTokenKey"
     private static let isForegroundKey = "isForegroundKey"
     private static let notificationFeedUUIDKey = "notificationFeedUUIDKey"
+    
+    private static var etagKeys: [String] = []
 
     // dark mode
     static func saveAppearance(appearance: Appearance) {
@@ -28,11 +30,18 @@ struct UserDefaultsManager {
 
     // etag
     static func save(etag: String, urlString: String) {
+        etagKeys.append(etag)
         UserDefaults.standard.set(etag, forKey: urlString)
     }
 
     static func etag(urlString: String) -> String? {
         return UserDefaults.standard.string(forKey: urlString)
+    }
+    
+    static func removeAllEtags() {
+        etagKeys.forEach {
+            UserDefaults.standard.removeObject(forKey: $0)
+        }
     }
 
     // TODO: 이미지 메모리 캐시 etag 정보 앱 종료시 모두 삭제 ㅇㅅㅇ..
