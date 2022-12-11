@@ -72,21 +72,21 @@ final class FeedDetailViewModel {
     private func fetchFeed(feedUUID: String) {
         Task { [weak self] in
             do {
-                guard let feedDTODictionary = try await self?.firestoreFeedService.fetchFeedDTO(
+                guard let feedAPIModelDictionary = try await self?.firestoreFeedService.fetchFeedAPIModel(
                     feedUUID: feedUUID
                 ) else {
                     throw ConvertError.dictionaryUnwrappingError
                 }
-                let feedDTO = FeedDTO(data: feedDTODictionary)
+                let feedAPIModel = FeedAPIModel(data: feedAPIModelDictionary)
 
                 guard let feedWriterDictionary = try await self?.firestoreFeedService.fetchUser(
-                    userUUID: feedDTO.writerUUID
+                    userUUID: feedAPIModel.writerUUID
                 ) else {
                     throw ConvertError.dictionaryUnwrappingError
                 }
                 let feedWriter = FeedWriter(data: feedWriterDictionary)
 
-                let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter)
+                let feed = Feed(feedAPIModel: feedAPIModel, feedWriter: feedWriter)
                 self?.feed.send(feed)
             } catch {
                 print(error.localizedDescription)

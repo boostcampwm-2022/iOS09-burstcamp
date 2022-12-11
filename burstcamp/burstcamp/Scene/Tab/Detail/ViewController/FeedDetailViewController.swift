@@ -20,17 +20,17 @@ final class FeedDetailViewController: UIViewController {
     }
 
     private lazy var barButtonStackView = UIStackView().then {
-        $0.addArrangedSubViews([scrapToggleButton, shareButton])
+        $0.addArrangedSubViews([scrapButton, shareButton])
         $0.spacing = Constant.space24.cgFloat
     }
     private lazy var barButtonStackViewItem = UIBarButtonItem(customView: barButtonStackView)
 
-    private let scrapToggleButton = ToggleButton(
+    private let scrapButton = ToggleButton(
         image: UIImage(systemName: "bookmark.fill"),
         onColor: .main,
         offColor: .systemGray4
     )
-    private lazy var scrapBarButtonItem = UIBarButtonItem(customView: scrapToggleButton)
+    private lazy var scrapBarButtonItem = UIBarButtonItem(customView: scrapButton)
 
     private let shareButton = UIButton().then {
         $0.setImage(
@@ -120,21 +120,25 @@ final class FeedDetailViewController: UIViewController {
 
         let feedScrapInput = FeedScrapViewModel.Input(
             viewDidLoad: viewDidLoad,
-            scrapToggleButtonDidTap: scrapToggleButton.statePublisher
+            scrapToggleButtonDidTap: scrapButton.tapPublisher
         )
 
         let feedScrapOutput = feedScrapViewModel.transform(input: feedScrapInput)
 
-        feedScrapOutput.scrapToggleButtonState
+        feedScrapOutput.scrapButtonIsEnabled
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] state in
-                self?.scrapToggleButton.updateView(with: state)
-            }
+            .assign(to: \.isEnabled, on: scrapButton)
             .store(in: &cancelBag)
 
-        feedScrapOutput.scrapToggleButtonIsEnabled
+        feedScrapOutput.scrapButtonState
             .receive(on: DispatchQueue.main)
-            .assign(to: \.isEnabled, on: scrapToggleButton)
+            .assign(to: \.isOn, on: scrapButton)
+            .store(in: &cancelBag)
+
+        feedScrapOutput.showAlert
+            .sink { error in
+                self.showAlert(message: error.localizedDescription)
+            }
             .store(in: &cancelBag)
     }
 }

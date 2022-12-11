@@ -1,5 +1,5 @@
 //
-//  FeedDTO.swift
+//  FeedAPIModel.swift
 //  burstcamp
 //
 //  Created by youtak on 2022/11/30.
@@ -7,9 +7,9 @@
 
 import Foundation
 
-import Firebase
+import class FirebaseFirestore.Timestamp
 
-struct FeedDTO {
+struct FeedAPIModel {
     let feedUUID: String
     let writerUUID: String
     let title: String
@@ -17,7 +17,9 @@ struct FeedDTO {
     let url: String
     let thumbnailURL: String
     let content: String
+}
 
+extension FeedAPIModel {
     init(data: [String: Any]) {
         let feedUUID = data["feedUUID"] as? String ?? ""
         let writerUUID = data["writerUUID"] as? String ?? ""

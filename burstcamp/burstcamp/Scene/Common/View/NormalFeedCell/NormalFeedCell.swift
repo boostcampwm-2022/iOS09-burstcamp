@@ -77,24 +77,29 @@ final class NormalFeedCell: UICollectionViewCell {
 
     private func bind() {
         let scrapButton = footerView.scrapButton
+        let countLabel = footerView.countLabel
 
         let input = FeedScrapViewModel.Input(
             viewDidLoad: Just(Void()).eraseToAnyPublisher(),
-            scrapToggleButtonDidTap: scrapButton.statePublisher
+            scrapToggleButtonDidTap: scrapButton.tapPublisher
         )
 
         let output = feedScrapViewModel.transform(input: input)
 
-        output.scrapToggleButtonState
+        output.scrapButtonState
             .receive(on: DispatchQueue.main)
-            .sink { state in
-                scrapButton.updateView(with: state)
-            }
+            .assign(to: \.isOn, on: scrapButton)
             .store(in: &cancelBag)
 
-        output.scrapToggleButtonIsEnabled
+        output.scrapButtonIsEnabled
             .receive(on: DispatchQueue.main)
             .assign(to: \.isEnabled, on: scrapButton)
+            .store(in: &cancelBag)
+
+        output.scrapButtonCount
+            .receive(on: DispatchQueue.main)
+            .map { "\($0)" }
+            .assign(to: \.text, on: countLabel)
             .store(in: &cancelBag)
     }
 }

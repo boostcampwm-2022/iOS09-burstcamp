@@ -15,10 +15,10 @@ protocol BeforeFirestoreFeedService {
 
     func createLatestQuery() -> Query
     func createPaginateQuery() -> Query?
-    func fetchRecommendFeedDTOs() async throws -> [[String: Any]]
-    func fetchLatestFeedDTOs() async throws -> [[String: Any]]
+    func fetchRecommendFeedAPIModels() async throws -> [[String: Any]]
+    func fetchLatestFeedAPIModels() async throws -> [[String: Any]]
     func fetchMoreFeeds() async throws -> [[String: Any]]
-    func fetchFeedDTO(feedUUID: String) async throws -> [String: Any]
+    func fetchFeedAPIModel(feedUUID: String) async throws -> [String: Any]
     func fetchUser(userUUID: String) async throws -> [String: Any]
     func countFeedScarp(feedUUID: String) async throws -> Int
     func appendUserToFeed(userUUID: String, at feedUUID: String) async throws
@@ -61,7 +61,7 @@ final class BeforeDefaultFirestoreFeedService: BeforeFirestoreFeedService {
     /// - Returns: [[String: Any]] 타입 [Feed] 데이터
     /// @discussion
     /// Firestore - recommendFeed 컬렉션을 호출함
-    func fetchRecommendFeedDTOs() async throws -> [[String: Any]] {
+    func fetchRecommendFeedAPIModels() async throws -> [[String: Any]] {
         try await withCheckedThrowingContinuation({ continuation in
             FirestoreCollection.recommendFeed.reference
                 .getDocuments { querySnapShot, error in
@@ -86,7 +86,7 @@ final class BeforeDefaultFirestoreFeedService: BeforeFirestoreFeedService {
     /// - Returns: [[String: Any]] 타입 [Feed] 데이터
     /// @discussion
     /// Firestore - feed 컬렉션에서 pubDate 기준으로 paginateCount만큼 호출합니다.
-    func fetchLatestFeedDTOs() async throws -> [[String: Any]] {
+    func fetchLatestFeedAPIModels() async throws -> [[String: Any]] {
         try await withCheckedThrowingContinuation({ continuation in
             let feedQuery = createLatestQuery()
 
@@ -118,7 +118,7 @@ final class BeforeDefaultFirestoreFeedService: BeforeFirestoreFeedService {
     /// 최신 피드 이후에 추가적인 피드를 호출해서 2차원 딕셔너리로 리턴함
     /// - Returns: [[String: Any]] 타입 [Feed] 데이터
     /// @discussion
-    /// fetchLatestFeedDTOs() 이후에 호출합니다.
+    /// fetchLatestFeedAPIModels() 이후에 호출합니다.
     /// Firestore - feed 컬렉션에서  pubDate 기준으로 paginateCount만큼 추가 호출합니다.
     func fetchMoreFeeds() async throws -> [[String: Any]] {
         try await withCheckedThrowingContinuation({ continuation in
@@ -158,7 +158,7 @@ final class BeforeDefaultFirestoreFeedService: BeforeFirestoreFeedService {
     ///   - feedUUID: firestore에서 사용하는 feedUUID
     /// - Returns: [String: Any] 타입 Feed 데이터
     /// @discussion
-    func fetchFeedDTO(feedUUID: String) async throws -> [String: Any] {
+    func fetchFeedAPIModel(feedUUID: String) async throws -> [String: Any] {
         try await withCheckedThrowingContinuation({ continuation in
             FirestoreCollection.feed.reference
                 .document(feedUUID)
@@ -168,12 +168,12 @@ final class BeforeDefaultFirestoreFeedService: BeforeFirestoreFeedService {
                         return
                     }
                     guard let snapShot = documentSnapShot,
-                          let feedDTO = snapShot.data()
+                          let feedAPIModel = snapShot.data()
                     else {
                         continuation.resume(throwing: FirestoreError.fetchFeedError)
                         return
                     }
-                    continuation.resume(returning: feedDTO)
+                    continuation.resume(returning: feedAPIModel)
                 }
         })
     }

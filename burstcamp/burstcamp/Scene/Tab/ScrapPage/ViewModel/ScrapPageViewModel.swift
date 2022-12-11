@@ -74,20 +74,21 @@ final class ScrapPageViewModel {
         let firestoreFeedService = BeforeDefaultFirestoreFeedService()
         let feedScrapViewModel = FeedScrapViewModel(
             feedUUID: scrapFeedData[index].feedUUID,
-            firestoreFeedService: firestoreFeedService
+            feedLocalDataSource: FeedLocalDataSource.shared,
+            feedRemoteDataSource: FeedRemoteDataSource.shared
         )
-        feedScrapViewModel.getScrapCountUp
-            .sink { [weak self] state in
-                guard let self = self else { return }
-                if state {
-                    self.scrapFeedData[index].scrapCountUp()
-                } else {
-                    self.scrapFeedData[index].scrapCountDown()
-                }
-                let indexPath = IndexPath(row: index, section: 0)
-                self.cellUpdate.send(indexPath)
-            }
-            .store(in: &cancelBag)
+//        feedScrapViewModel.getScrapCountUp
+//            .sink { [weak self] state in
+//                guard let self = self else { return }
+//                if state {
+//                    self.scrapFeedData[index].scrapCountUp()
+//                } else {
+//                    self.scrapFeedData[index].scrapCountDown()
+//                }
+//                let indexPath = IndexPath(row: index, section: 0)
+//                self.cellUpdate.send(indexPath)
+//            }
+//            .store(in: &cancelBag)
 
         return feedScrapViewModel
     }
@@ -179,14 +180,14 @@ final class ScrapPageViewModel {
     }
 
     private func fetchFeed(feedUUID: String) async throws -> Feed {
-        let feedDTODictionary = try await firestoreFeedService.fetchFeedDTO(feedUUID: feedUUID)
-        let feedDTO = FeedDTO(data: feedDTODictionary)
+        let feedAPIModelDictionary = try await firestoreFeedService.fetchFeedAPIModel(feedUUID: feedUUID)
+        let feedAPIModel = FeedAPIModel(data: feedAPIModelDictionary)
 
-        let feedWriterDictionary = try await firestoreFeedService.fetchUser(userUUID: feedDTO.writerUUID)
+        let feedWriterDictionary = try await firestoreFeedService.fetchUser(userUUID: feedAPIModel.writerUUID)
         let feedWriter = FeedWriter(data: feedWriterDictionary)
 
         let scrapCount = try await firestoreFeedService.countFeedScarp(feedUUID: feedUUID)
-        let feed = Feed(feedDTO: feedDTO, feedWriter: feedWriter, scrapCount: scrapCount)
+        let feed = Feed(feedAPIModel: feedAPIModel, feedWriter: feedWriter, scrapCount: scrapCount)
         return feed
     }
 }
