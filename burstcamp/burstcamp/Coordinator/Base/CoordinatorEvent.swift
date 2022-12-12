@@ -18,6 +18,7 @@ enum AuthCoordinatorEvent {
     case moveToBlogScreen
     case moveToTabBarScreen
     case showAlert(String)
+    case moveToGithubLogIn
 }
 
 enum TabBarCoordinatorEvent {
@@ -38,6 +39,7 @@ enum MyPageCoordinatorEvent {
     case moveToAuthFlow
 
     case moveMyPageEditScreenToBackScreen(toastMessage: String)
+    case moveToGithubLogIn
 }
 
 enum FeedDetailCoordinatorEvent {

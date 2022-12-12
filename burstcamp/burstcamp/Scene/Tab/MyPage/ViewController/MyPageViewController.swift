@@ -145,7 +145,7 @@ final class MyPageViewController: UIViewController {
             title: Alert.yes,
             style: .default) { _ in
                 LogInManager.shared.isWithdrawal = true
-                self.moveToGithubLogIn()
+                self.coordinatorPublisher.send(.moveToGithubLogIn)
             }
         let cancelAction = UIAlertAction(
             title: Alert.no,
@@ -156,25 +156,6 @@ final class MyPageViewController: UIViewController {
             message: Alert.withdrawalMessage,
             alertActions: [okAction, cancelAction]
         )
-    }
-
-    private func moveToGithubLogIn() {
-        let urlString = "https://github.com/login/oauth/authorize"
-
-        guard var urlComponent = URLComponents(string: urlString),
-              let clientID = LogInManager.shared.githubAPIKey?.clientID
-        else {
-            return
-        }
-
-        urlComponent.queryItems = [
-            URLQueryItem(name: "client_id", value: clientID),
-            URLQueryItem(name: "scope", value: "admin:org")
-        ]
-
-        guard let url = urlComponent.url else { return }
-        let safariViewController = SFSafariViewController(url: url)
-        self.present(safariViewController, animated: true)
     }
 }
 

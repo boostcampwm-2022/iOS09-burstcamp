@@ -16,7 +16,7 @@ protocol AuthCoordinatorProtocol: NormalCoordinator {
     func moveToBlogScreen()
 }
 
-final class AuthCoordinator: AuthCoordinatorProtocol {
+final class AuthCoordinator: AuthCoordinatorProtocol, GithubLogInCoordinator {
 
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
@@ -45,6 +45,8 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
                     self.moveToDomainScreen()
                 case .moveToTabBarScreen:
                     self.moveToTabBarFlow()
+                case .moveToGithubLogIn:
+                    self.moveToGithubLogIn()
                 case .moveToIDScreen, .moveToBlogScreen, .showAlert(_):
                     return
                 }
