@@ -110,11 +110,10 @@ final class MyPageViewController: UIViewController {
             }
             .store(in: &cancelBag)
 
-        output.indicatorViewRun
-            .sink { [weak self] isRun in
-                isRun
-                ? self?.myPageView.indicatorView.startAnimating()
-                : self?.myPageView.indicatorView.stopAnimating()
+        output.withdrawalStop
+            .sink { [weak self] _ in
+                self?.setUserInteraction(isEnabled: true)
+                self?.myPageView.indicatorView.stopAnimating()
             }
             .store(in: &cancelBag)
 

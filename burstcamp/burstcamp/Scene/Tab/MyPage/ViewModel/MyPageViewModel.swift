@@ -26,7 +26,7 @@ final class MyPageViewModel {
         )
         var signOutFailMessage = PassthroughSubject<String, Never>()
         var moveToLoginFlow = PassthroughSubject<Void, Never>()
-        var indicatorViewRun = PassthroughSubject<Bool, Never>()
+        var withdrawalStop = PassthroughSubject<Void, Never>()
     }
 
     private var cancelBag = Set<AnyCancellable>()
@@ -47,12 +47,6 @@ final class MyPageViewModel {
             .store(in: &cancelBag)
 
         let output = Output()
-
-        input.withdrawDidTap
-            .sink { _ in
-                output.indicatorViewRun.send(false)
-            }
-            .store(in: &cancelBag)
 
         UserManager.shared.userUpdatePublisher
             .sink { user in
@@ -87,7 +81,7 @@ final class MyPageViewModel {
                 if isFinish {
                     output.moveToLoginFlow.send()
                 } else {
-                    output.indicatorViewRun.send(false)
+                    output.withdrawalStop.send()
                     output.signOutFailMessage.send("탈퇴 정보 삭제에 실패했어요.")
                 }
             }
