@@ -54,7 +54,7 @@ final class MyPageView: UIView, ContainCollectionView {
 
     init() {
         super.init(frame: .zero)
-
+        configureMyPageView()
         configureCollectionView()
         configureUI()
     }
@@ -64,6 +64,9 @@ final class MyPageView: UIView, ContainCollectionView {
     }
 
     // MARK: - Methods
+    private func configureMyPageView() {
+        backgroundColor = .background
+    }
 
     private func configureUI() {
         addSubview(myPageProfileView)
@@ -95,6 +98,7 @@ final class MyPageView: UIView, ContainCollectionView {
     }
 
     private func configureCollectionView() {
+        collectionView.backgroundColor = .clear
         collectionView.isScrollEnabled = false
         let cellRegistration = UICollectionView.CellRegistration(
             handler: cellRegistrationHandler
@@ -263,6 +267,8 @@ extension MyPageView {
         SettingCell.allCases.forEach { cell in
             snapshot.appendItems([cell], toSection: cell.section)
         }
-        settingDataSource.apply(snapshot)
+        DispatchQueue.main.async {
+            self.settingDataSource.apply(snapshot, animatingDifferences: false)
+        }
     }
 }

@@ -28,8 +28,6 @@ extension ScrapPageCoordinator {
             return
         }
 
-        navigationController.viewControllers = [scrapPageViewController]
-
         scrapPageViewController.coordinatorPublisher
             .sink { [weak self] event in
                 switch event {

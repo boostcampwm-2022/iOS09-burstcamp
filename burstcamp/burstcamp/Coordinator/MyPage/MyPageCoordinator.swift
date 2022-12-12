@@ -79,6 +79,7 @@ extension MyPageCoordinator {
         guard let myPageViewController = viewController as? MyPageViewController else {
             return
         }
+
         prepareMyPageViewController(myPageViewController: myPageViewController)
     }
 

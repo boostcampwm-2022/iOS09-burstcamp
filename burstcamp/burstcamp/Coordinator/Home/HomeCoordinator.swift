@@ -30,8 +30,6 @@ extension HomeCoordinator {
             return
         }
 
-        navigationController.viewControllers = [homeViewController]
-
         homeViewController.coordinatorPublisher
             .sink { [weak self] event in
                 switch event {
