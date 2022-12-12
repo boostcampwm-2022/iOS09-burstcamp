@@ -14,6 +14,12 @@ enum ImageCacheError: LocalizedError {
     case unKnownError
 }
 
+extension ImageCacheError: CategorizedError {
+    var category: ErrorCategory {
+        return .nonRetryable
+    }
+}
+
 extension ImageCacheError {
     var errorDescription: String? {
         switch self {

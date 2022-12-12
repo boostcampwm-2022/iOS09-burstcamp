@@ -89,7 +89,7 @@ final class HomeViewController: UIViewController {
                     self?.homeView.endCollectionViewRefreshing()
                     self?.homeView.collectionView.reloadData()
                 case .fetchFail(let error):
-                    print(error)
+                    self?.handleError(error)
                 }
             }
             .store(in: &cancelBag)
@@ -162,7 +162,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
             cell.configure(with: cellViewModel)
             cell.updateFeedCell(with: feed)
-
             return cell
         case .none:
             return UICollectionViewCell()

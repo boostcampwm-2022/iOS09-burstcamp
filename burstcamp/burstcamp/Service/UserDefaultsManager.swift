@@ -13,7 +13,7 @@ struct UserDefaultsManager {
     private static let fcmTokenKey = "fcmTokenKey"
     private static let isForegroundKey = "isForegroundKey"
     private static let notificationFeedUUIDKey = "notificationFeedUUIDKey"
-    
+
     private static var etagKeys: [String] = []
 
     // dark mode
@@ -37,7 +37,7 @@ struct UserDefaultsManager {
     static func etag(urlString: String) -> String? {
         return UserDefaults.standard.string(forKey: urlString)
     }
-    
+
     static func removeAllEtags() {
         etagKeys.forEach {
             UserDefaults.standard.removeObject(forKey: $0)

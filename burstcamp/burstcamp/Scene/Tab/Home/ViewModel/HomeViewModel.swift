@@ -102,7 +102,7 @@ final class HomeViewModel {
                 output.fetchResult.send(.fetchSuccess)
             } catch {
                 canFetchMoreFeed = false
-                debugPrint(error.localizedDescription)
+                output.fetchResult.send(.fetchFail(error: error))
             }
             isFetching = false
         }
@@ -111,7 +111,9 @@ final class HomeViewModel {
     private func paginateFeed(output: Output) {
         Task {
             do {
-                guard !isFetching, canFetchMoreFeed else { return }
+                guard !isFetching, canFetchMoreFeed else {
+                    return
+                }
                 isFetching = true
 
                 let normalFeeds = try await fetchMoreFeeds()
@@ -119,7 +121,7 @@ final class HomeViewModel {
                 output.fetchResult.send(.fetchSuccess)
             } catch {
                 canFetchMoreFeed = false
-                print(error.localizedDescription)
+                output.fetchResult.send(.fetchFail(error: error))
             }
             isFetching = false
         }

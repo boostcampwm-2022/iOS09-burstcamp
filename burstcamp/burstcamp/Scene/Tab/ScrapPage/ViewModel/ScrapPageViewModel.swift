@@ -125,7 +125,8 @@ final class ScrapPageViewModel {
 
                 isFetching = false
             } catch {
-            isFetching = false
+                output.fetchResult.send(.fetchFail(error: error))
+                isFetching = false
             }
         }
     }
@@ -147,7 +148,8 @@ final class ScrapPageViewModel {
 
                 isFetching = false
             } catch {
-            isFetching = false
+                output.fetchResult.send(.fetchFail(error: error))
+                isFetching = false
             }
         }
     }
