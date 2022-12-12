@@ -26,7 +26,7 @@ final class MyPageViewModel {
         )
         var signOutFailMessage = PassthroughSubject<String, Never>()
         var moveToLoginFlow = PassthroughSubject<Void, Never>()
-        var indicatorViewRun = PassthroughSubject<Bool, Never>()
+        var withdrawalStop = PassthroughSubject<Void, Never>()
     }
 
     private var cancelBag = Set<AnyCancellable>()
@@ -54,18 +54,7 @@ final class MyPageViewModel {
             }
             .store(in: &cancelBag)
 
-        input.withdrawDidTap
-            .sink { [weak self] _ in
-                self?.signOut(output: output)
-            }
-            .store(in: &cancelBag)
-
-        return output
-    }
-
-    private func signOut(output: Output) {
-        output.indicatorViewRun.send(true)
-        LogInManager.shared.signOut()
+        LogInManager.shared.withdrawalPublisher
             .sink { completion in
                 if case .failure = completion {
                     output.signOutFailMessage.send("탈퇴에 실패했어요.")
@@ -76,12 +65,13 @@ final class MyPageViewModel {
                 }
             }
             .store(in: &cancelBag)
+
+        return output
     }
 
     private func deleteUserInfos(output: Output) {
         let userUUID = UserManager.shared.user.userUUID
         print(userUUID)
-        KeyChainManager.deleteToken()
         KeyChainManager.deleteUser()
         UserManager.shared.removeUserListener()
         UserManager.shared.deleteUserInfo()
@@ -91,7 +81,7 @@ final class MyPageViewModel {
                 if isFinish {
                     output.moveToLoginFlow.send()
                 } else {
-                    output.indicatorViewRun.send(false)
+                    output.withdrawalStop.send()
                     output.signOutFailMessage.send("탈퇴 정보 삭제에 실패했어요.")
                 }
             }

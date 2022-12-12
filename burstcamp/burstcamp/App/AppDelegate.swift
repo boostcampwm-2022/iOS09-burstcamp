@@ -112,10 +112,10 @@ extension AppDelegate: MessagingDelegate {
 // MARK: - save user in keychain
 // TODO: https://medium.com/cashwalk/ios-background-mode-9bf921f1c55b
 extension AppDelegate {
-    func applicationWillTerminate(_ application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        UserDefaultsManager.removeIsForeground()
+        UserDefaultsManager.removeAllEtags()
         KeyChainManager.deleteUser()
-        // TODO: 삭제
-        print("앱 종료 전에 키체인에 저장될 UserManager에 있는 userUUID", UserManager.shared.user.userUUID)
         KeyChainManager.save(user: UserManager.shared.user)
     }
 }

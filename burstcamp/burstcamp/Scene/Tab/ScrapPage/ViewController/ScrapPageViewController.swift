@@ -78,7 +78,7 @@ final class ScrapPageViewController: UIViewController {
                     self?.scrapPageView.endCollectionViewRefreshing()
                     self?.scrapPageView.collectionView.reloadData()
                 case .fetchFail(let error):
-                    print(error)
+                    self?.handleError(error)
                 }
             }
             .store(in: &cancelBag)

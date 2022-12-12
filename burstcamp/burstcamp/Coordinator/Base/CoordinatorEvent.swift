@@ -39,6 +39,7 @@ enum MyPageCoordinatorEvent {
     case moveToAuthFlow
 
     case moveMyPageEditScreenToBackScreen(toastMessage: String)
+    case moveToGithubLogIn
 }
 
 enum FeedDetailCoordinatorEvent {

@@ -114,7 +114,6 @@ final class FeedScrapViewModel {
                 }
                 self.dbUpdateResult.send(true)
             } catch {
-                debugPrint(error.localizedDescription)
                 self.dbUpdateResult.send(false)
             }
         }

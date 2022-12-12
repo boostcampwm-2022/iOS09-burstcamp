@@ -6,6 +6,7 @@
 //
 
 import Combine
+import SafariServices
 import UIKit
 
 import FirebaseAuth
@@ -109,11 +110,10 @@ final class MyPageViewController: UIViewController {
             }
             .store(in: &cancelBag)
 
-        output.indicatorViewRun
-            .sink { [weak self] isRun in
-                isRun
-                ? self?.myPageView.indicatorView.startAnimating()
-                : self?.myPageView.indicatorView.stopAnimating()
+        output.withdrawalStop
+            .sink { [weak self] _ in
+                self?.setUserInteraction(isEnabled: true)
+                self?.myPageView.indicatorView.stopAnimating()
             }
             .store(in: &cancelBag)
 
@@ -142,9 +142,14 @@ final class MyPageViewController: UIViewController {
     private func showConfirmWithdrawalAlert() {
         let okAction = UIAlertAction(
             title: Alert.yes,
-            style: .default) { _ in
-                self.withdrawalPublisher.send()
-            }
+            style: .default
+        ) { _ in
+            self.setUserInteraction(isEnabled: false)
+            self.myPageView.indicatorView.startAnimating()
+
+            LogInManager.shared.changeIsWithdrawal(bool: true)
+            self.coordinatorPublisher.send(.moveToGithubLogIn)
+        }
         let cancelAction = UIAlertAction(
             title: Alert.no,
             style: .cancel
@@ -154,6 +159,11 @@ final class MyPageViewController: UIViewController {
             message: Alert.withdrawalMessage,
             alertActions: [okAction, cancelAction]
         )
+    }
+
+    private func setUserInteraction(isEnabled: Bool) {
+        view.isUserInteractionEnabled = isEnabled
+        navigationController?.view.isUserInteractionEnabled = isEnabled
     }
 }
 

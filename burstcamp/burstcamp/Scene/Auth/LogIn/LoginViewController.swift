@@ -6,6 +6,7 @@
 //
 
 import Combine
+import SafariServices
 import UIKit
 
 import SnapKit
@@ -54,23 +55,25 @@ final class LogInViewController: UIViewController {
         let output = viewModel.transform(input: input)
 
         output.openLogInView
-            .sink {
-                self.coordinatorPublisher.send(.moveToGithubLogIn)
+            .sink { [weak self] _ in
+                self?.logInView.camperAuthButton.isEnabled = false
+                self?.coordinatorPublisher.send(.moveToGithubLogIn)
             }
             .store(in: &cancelBag)
 
         output.moveToOtherView
-            .sink { logInEvent in
-                self.logInView.activityIndicator.stopAnimating()
-                self.logInView.loadingLabel.isHidden = true
+            .sink { [weak self] logInEvent in
+                self?.logInView.activityIndicator.stopAnimating()
+                self?.logInView.loadingLabel.isHidden = true
+                self?.logInView.camperAuthButton.isEnabled = true
 
                 switch logInEvent {
                 case .moveToDomainScreen:
-                    self.coordinatorPublisher.send(.moveToDomainScreen)
+                    self?.coordinatorPublisher.send(.moveToDomainScreen)
                 case .moveToTabBarScreen:
-                    self.coordinatorPublisher.send(.moveToTabBarScreen)
+                    self?.coordinatorPublisher.send(.moveToTabBarScreen)
                 case .showAlert(let message):
-                    self.showAlert(message: message)
+                    self?.showAlert(message: message)
                 case .moveToBlogScreen, .moveToIDScreen, .moveToGithubLogIn:
                     return
                 }

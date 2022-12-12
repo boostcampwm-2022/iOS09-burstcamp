@@ -22,14 +22,28 @@ export async function updateFeedDB() {
 	parsedRSSList.forEach(parsedRSS => updateFeedDBFromSingleBlog(parsedRSS))
 }
 
+export async function deleteRecommendFeeds() {
+	await recommendFeedRef
+		.get()
+		.then((querySnapshot) => {
+			querySnapshot.docs.forEach(async (doc) => {
+				logger.log('test', doc.data()['feedUUID'])
+				await deleteRecommendFeed(doc.id)
+			})
+		})
+}
+
 export async function updateRecommendFeedDB() {
+	await deleteRecommendFeeds()
+
 	await feedRef
 		.orderBy('pubDate', 'desc')
 		.limit(3)
 		.get()
 		.then((querySnapshot) => {
 			querySnapshot.docs.forEach(async (doc) => {
-				await recommendFeedRef.add(doc.data())
+				const feedUUID = doc.data()['feedUUID']
+				await recommendFeedRef.doc(feedUUID).set(doc.data())
 			})
 		})
 }
@@ -153,6 +167,51 @@ export async function getRecentFeed() {
 		})
 }
 
+export async function deleteRecommendFeed(feedUUID) {
+	logger.log('지울것들', feedUUID)
+	const scrapUsersRef = recommendFeedRef
+		.doc(feedUUID)
+		.collection('scrapUsers')
+
+	const batch  = db.batch();
+	scrapUsersRef
+		.get()
+		.then((querySnapshot) => {
+			querySnapshot.docs.forEach(async (doc) => {
+				logger.log('삭제되는것', doc.id);
+				batch.delete(doc.ref)
+			})
+		})
+	await batch.commit();
+
+	logger.log('스크랩 유저 삭제 후 feed 삭제')
+	await recommendFeedRef
+		.doc(feedUUID)
+		.delete()
+}
+
+export async function deleteFeed(feedUUID) {
+	logger.log('지울것들', feedUUID)
+	const scrapUsersRef = feedRef
+		.doc(feedUUID)
+		.collection('scrapUsers')
+
+	const batch  = db.batch();
+	scrapUsersRef
+		.get()
+		.then((querySnapshot) => {
+			querySnapshot.docs.forEach(async (doc) => {
+				logger.log('삭제되는것', doc.id);
+				batch.delete(doc.ref)
+			})
+		})
+	await batch.commit();
+
+	logger.log('스크랩 유저 삭제 후 feed 삭제')
+	await feedRef
+		.doc(feedUUID)
+		.delete()
+}
 
 // MARK: 탈퇴
 
@@ -227,9 +286,7 @@ export async function deleteFeedsAndUpdateRecommendFeed(feedUUIDs) {
 	logger.log('내가 쓴 글들 삭제 후 recommend 재업데이트')
 	await feedUUIDs
 		.forEach(async (feedUUID) => {
-			await feedRef
-				.doc(feedUUID)
-				.delete()
+			await deleteFeed(feedUUID)
 		})
 	updateRecommendFeedDB()
 }
