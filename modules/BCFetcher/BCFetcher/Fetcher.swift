@@ -20,9 +20,9 @@ where Data: Equatable, FetchingError: Error {
     public var onUpdateLocal: ((Data) -> Void)
     
     public init(
-        onRemoteCombine: @autoclosure @escaping () -> AnyPublisher<Data, FetchingError>,
-        onLocalCombine:@autoclosure @escaping () -> AnyPublisher<Data, FetchingError>,
-        onLocal: @autoclosure @escaping () -> Data,
+        onRemoteCombine: @escaping () -> AnyPublisher<Data, FetchingError>,
+        onLocalCombine: @escaping () -> AnyPublisher<Data, FetchingError>,
+        onLocal: @escaping () -> Data,
         onUpdateLocal: @escaping (Data) -> Void
     ) {
         self.onRemoteCombine = onRemoteCombine
