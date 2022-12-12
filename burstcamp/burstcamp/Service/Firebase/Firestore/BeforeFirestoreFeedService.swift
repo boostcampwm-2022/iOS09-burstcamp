@@ -37,7 +37,7 @@ final class BeforeDefaultFirestoreFeedService: BeforeFirestoreFeedService {
     /// @discussion
     ///
     func createLatestQuery() -> Query {
-        return FirestoreCollection.feed.reference
+        return FirestoreCollection.normalFeed.reference
             .order(by: "pubDate", descending: true)
             .limit(to: paginateCount)
     }
@@ -51,7 +51,7 @@ final class BeforeDefaultFirestoreFeedService: BeforeFirestoreFeedService {
         guard let lastSnapShot = lastSnapShot
         else { return nil }
 
-        return FirestoreCollection.feed.reference
+        return FirestoreCollection.normalFeed.reference
             .order(by: "pubDate", descending: true)
             .limit(to: paginateCount)
             .start(afterDocument: lastSnapShot)
@@ -160,7 +160,7 @@ final class BeforeDefaultFirestoreFeedService: BeforeFirestoreFeedService {
     /// @discussion
     func fetchFeedAPIModel(feedUUID: String) async throws -> [String: Any] {
         try await withCheckedThrowingContinuation({ continuation in
-            FirestoreCollection.feed.reference
+            FirestoreCollection.normalFeed.reference
                 .document(feedUUID)
                 .getDocument { documentSnapShot, error in
                     if let error = error {
@@ -210,7 +210,7 @@ final class BeforeDefaultFirestoreFeedService: BeforeFirestoreFeedService {
     /// @discussion
     /// firestore - feed - `feedUUID` - scrapUser 의 카운트를 세서 리턴해준다.
     func countFeedScarp(feedUUID: String) async throws -> Int {
-        let path = FirestoreCollection.scrapUser(feedUUID: feedUUID).path
+        let path = FirestoreCollection.scrapUsers(feedUUID: feedUUID).path
         let countQuery = Firestore.firestore().collection(path).count
         let collectionCount = try await countQuery.getAggregation(source: .server)
         return Int(truncating: collectionCount.count)
@@ -223,7 +223,7 @@ final class BeforeDefaultFirestoreFeedService: BeforeFirestoreFeedService {
     /// @discussion
     func appendUserToFeed(userUUID: String, at feedUUID: String) async throws {
         try await withCheckedThrowingContinuation { continuation in
-            FirestoreCollection.scrapUser(feedUUID: feedUUID).reference
+            FirestoreCollection.scrapUsers(feedUUID: feedUUID).reference
                 .document(userUUID)
                 .setData([
                     "userUUID": userUUID,
@@ -245,7 +245,7 @@ final class BeforeDefaultFirestoreFeedService: BeforeFirestoreFeedService {
     /// @discussion
     func deleteUserFromFeed(userUUID: String, at feedUUID: String) async throws {
         try await withCheckedThrowingContinuation { continuation in
-            FirestoreCollection.scrapUser(feedUUID: feedUUID).reference
+            FirestoreCollection.scrapUsers(feedUUID: feedUUID).reference
                 .document(userUUID)
                 .delete { error in
                     if let error = error {
