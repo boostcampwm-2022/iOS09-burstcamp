@@ -71,11 +71,12 @@ final class LogInView: UIView {
     }
 
     lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView().then {
-        $0.style = .large
+        $0.style = .medium
     }
 
     lazy var loadingLabel: UILabel = UILabel().then {
         $0.text = "캠퍼 인증 중"
+        $0.font = .bold12
         $0.textColor = .dynamicBlack
         $0.isHidden = true
     }

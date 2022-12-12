@@ -60,7 +60,7 @@ final class SignUpBlogView: UIView {
     }
 
     lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView().then {
-        $0.style = .large
+        $0.style = .medium
     }
 
     lazy var confirmBlogLabel: UILabel = UILabel().then {
@@ -70,6 +70,7 @@ final class SignUpBlogView: UIView {
 
     lazy var signUpLabel: UILabel = UILabel().then {
         $0.text = "가입 중"
+        $0.font = .bold12
         $0.isHidden = true
     }
 

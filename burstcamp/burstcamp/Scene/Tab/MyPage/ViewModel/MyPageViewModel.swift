@@ -48,6 +48,12 @@ final class MyPageViewModel {
 
         let output = Output()
 
+        input.withdrawDidTap
+            .sink { _ in
+                output.indicatorViewRun.send(false)
+            }
+            .store(in: &cancelBag)
+
         UserManager.shared.userUpdatePublisher
             .sink { user in
                 output.updateUserValue.send(user)
@@ -60,12 +66,12 @@ final class MyPageViewModel {
                     output.signOutFailMessage.send("탈퇴에 실패했어요.")
                 }
             } receiveValue: { isSignOut in
-                output.indicatorViewRun.send(true)
                 if isSignOut {
                     self.deleteUserInfos(output: output)
                 }
             }
             .store(in: &cancelBag)
+
         return output
     }
 

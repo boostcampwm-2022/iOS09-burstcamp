@@ -143,10 +143,14 @@ final class MyPageViewController: UIViewController {
     private func showConfirmWithdrawalAlert() {
         let okAction = UIAlertAction(
             title: Alert.yes,
-            style: .default) { _ in
-                LogInManager.shared.changeIsWithdrawal(bool: true)
-                self.coordinatorPublisher.send(.moveToGithubLogIn)
-            }
+            style: .default
+        ) { _ in
+            self.setUserInteraction(isEnabled: false)
+            self.myPageView.indicatorView.startAnimating()
+
+            LogInManager.shared.changeIsWithdrawal(bool: true)
+            self.coordinatorPublisher.send(.moveToGithubLogIn)
+        }
         let cancelAction = UIAlertAction(
             title: Alert.no,
             style: .cancel
@@ -156,6 +160,11 @@ final class MyPageViewController: UIViewController {
             message: Alert.withdrawalMessage,
             alertActions: [okAction, cancelAction]
         )
+    }
+
+    private func setUserInteraction(isEnabled: Bool) {
+        view.isUserInteractionEnabled = isEnabled
+        navigationController?.view.isUserInteractionEnabled = isEnabled
     }
 }
 
