@@ -53,27 +53,27 @@ final class SignUpCamperIDViewController: UIViewController {
         let output = viewModel.transform(input: input)
 
         output.validateCamperID
-            .sink { validate in
-                self.signUpCamperIDView.nextButton.isEnabled = validate
-                self.signUpCamperIDView.nextButton.alpha = validate ? 1.0 : 0.3
+            .sink { [weak self] validate in
+                self?.signUpCamperIDView.nextButton.isEnabled = validate
+                self?.signUpCamperIDView.nextButton.alpha = validate ? 1.0 : 0.3
             }
             .store(in: &cancelBag)
 
         output.moveToBlogView
-            .sink { _ in
-                self.coordinatorPublisher.send(.moveToBlogScreen)
+            .sink { [weak self] _ in
+                self?.coordinatorPublisher.send(.moveToBlogScreen)
             }
             .store(in: &cancelBag)
 
         output.bindDomainText
-            .sink { domain in
-                self.signUpCamperIDView.domainLabel.text = domain
+            .sink { [weak self] domain in
+                self?.signUpCamperIDView.domainLabel.text = domain
             }
             .store(in: &cancelBag)
 
         output.bindRepresentingDomainText
-            .sink { domain in
-                self.signUpCamperIDView.representingDomainLabel.text = domain
+            .sink { [weak self] domain in
+                self?.signUpCamperIDView.representingDomainLabel.text = domain
             }
             .store(in: &cancelBag)
     }

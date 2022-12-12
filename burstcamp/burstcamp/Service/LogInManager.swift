@@ -76,11 +76,15 @@ final class LogInManager {
                 return self.getOrganizationMembership(nickname: nickname, token: self.token)
             }
             .receive(on: DispatchQueue.main)
-            .sink { result in
+            .sink { [weak self] result in
                 if case .failure(let error) = result {
-                    self.logInPublisher.send(.showAlert(error.errorDescription ?? ""))
+                    self?.logInPublisher.send(.showAlert(error.errorDescription ?? ""))
                 }
-            } receiveValue: { _ in
+            } receiveValue: { [weak self] _ in
+                guard let self = self else {
+                    self?.logInPublisher.send(.showAlert("accessToken 접근 실패"))
+                    return
+                }
                 self.signInToFirebase(token: self.token)
             }
             .store(in: &cancelBag)
@@ -105,12 +109,12 @@ final class LogInManager {
 
     func isSignedUp(uuid: String) {
         FirestoreUser.fetch(userUUID: uuid)
-            .sink {  result in
+            .sink { [weak self] result in
                 if case .failure = result {
-                    self.logInPublisher.send(.moveToDomainScreen)
+                    self?.logInPublisher.send(.moveToDomainScreen)
                 }
-            } receiveValue: {  _ in
-                self.logInPublisher.send(.moveToTabBarScreen)
+            } receiveValue: { [weak self] _ in
+                self?.logInPublisher.send(.moveToTabBarScreen)
             }
             .store(in: &cancelBag)
     }
@@ -118,31 +122,32 @@ final class LogInManager {
     func signOut(code: String) {
         self.requestGithubAccessToken(code: code)
             .map { $0.accessToken }
-            .sink(receiveCompletion: { result in
+            .sink(receiveCompletion: { [weak self] result in
+                // TODO: 실패할경우 마이페이지에서 처리해줄 사항 추가
                 print(result)
-            }, receiveValue: { token in
+            }, receiveValue: { [weak self] token in
                 let credential = GitHubAuthProvider.credential(withToken: token)
 
                 Auth.auth().currentUser?.reauthenticate(with: credential) { _, error in
-                    guard error != nil else {
-                        self.withdrawalPublisher.send(completion: .failure(.userReAuthError))
+                    guard error == nil else {
+                        self?.withdrawalPublisher.send(completion: .failure(.userReAuthError))
                         return
                     }
                     Auth.auth().currentUser?.delete { error in
-                        guard error != nil else {
-                            self.withdrawalPublisher.send(
+                        guard error == nil else {
+                            self?.withdrawalPublisher.send(
                                 completion: .failure(.userDeleteError)
                             )
                             return
                         }
                         guard (try? Auth.auth().signOut()) != nil else {
-                            self.withdrawalPublisher.send(
+                            self?.withdrawalPublisher.send(
                                 completion: .failure(.authSignOutError)
                             )
                             return
                         }
-                        self.changeIsWithdrawal(bool: false)
-                        self.withdrawalPublisher.send(true)
+                        self?.changeIsWithdrawal(bool: false)
+                        self?.withdrawalPublisher.send(true)
                     }
                 }
             })
