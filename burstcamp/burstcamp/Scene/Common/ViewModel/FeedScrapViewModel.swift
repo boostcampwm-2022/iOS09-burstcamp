@@ -22,9 +22,9 @@ final class FeedScrapViewModel {
 
     private let feedUUID: String
     private let userUUID: String
-    private let firestoreFeedService: FirestoreFeedService
+    private let firestoreFeedService: BeforeFirestoreFeedService
 
-    init(feedUUID: String, firestoreFeedService: FirestoreFeedService) {
+    init(feedUUID: String, firestoreFeedService: BeforeFirestoreFeedService) {
         self.feedUUID = feedUUID
         self.userUUID = UserManager.shared.user.userUUID
         self.firestoreFeedService = firestoreFeedService

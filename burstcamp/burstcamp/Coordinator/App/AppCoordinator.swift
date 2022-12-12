@@ -11,7 +11,6 @@ import UIKit
 protocol AppCoordinatorProtocol: NormalCoordinator {
     func showAuthFlow()
     func showTabBarFlow()
-    func showTabBarFlowByPushNotification(feedUUID: String)
 }
 
 final class AppCoordinator: AppCoordinatorProtocol {
@@ -22,7 +21,19 @@ final class AppCoordinator: AppCoordinatorProtocol {
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
         configureNavigationBar()
-        addObserver()
+    }
+
+    func dismissNavigationController() {
+        navigationController.dismiss(animated: true)
+    }
+
+    func displayIndicator() {
+        guard let authCoordinator = childCoordinators.first(
+            where: { $0 is AuthCoordinator }) as? AuthCoordinator
+        else {
+            return
+        }
+        authCoordinator.displayIndicator()
     }
 
     func start() {
@@ -71,45 +82,6 @@ final class AppCoordinator: AppCoordinatorProtocol {
             .store(in: &cancelBag)
         childCoordinators.append(tabBarCoordinator)
         tabBarCoordinator.start()
-    }
-
-    func showTabBarFlowByPushNotification(feedUUID: String) {
-        if let tabBarCoordinator = tabBarCoordinator() {
-            moveToFeedDetail(tabBarCoordinator: tabBarCoordinator, feedUUID: feedUUID)
-        } else {
-            showTabBarFlow()
-            if let tabBarCoordinator = tabBarCoordinator() {
-                moveToFeedDetail(tabBarCoordinator: tabBarCoordinator, feedUUID: feedUUID)
-            }
-        }
-    }
-
-    private func moveToFeedDetail(tabBarCoordinator: TabBarCoordinator, feedUUID: String) {
-        let homeCoordinator = tabBarCoordinator.getHomeCoordinator()
-        homeCoordinator?.moveToFeedDetail(feedUUID: feedUUID)
-    }
-
-    private func addObserver() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(receivePushNotification(_:)),
-            name: .Push,
-            object: nil
-        )
-    }
-
-    @objc private func receivePushNotification(_ notification: Notification) {
-        guard let feedUUID = notification.userInfo?[NotificationKey.feedUUID] as? String
-        else { return }
-        showTabBarFlowByPushNotification(feedUUID: feedUUID)
-    }
-
-    private func tabBarCoordinator() -> TabBarCoordinator? {
-        if let childCoordinator = childCoordinators.first(where: { $0 is TabBarCoordinator }),
-           let tabBarCoordinator = childCoordinator as? TabBarCoordinator {
-            return tabBarCoordinator
-        }
-        return nil
     }
 
     private func configureNavigationBar() {

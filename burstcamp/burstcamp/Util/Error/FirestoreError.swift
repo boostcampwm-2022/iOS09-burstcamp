@@ -10,8 +10,6 @@ enum FirestoreError: LocalizedError {
 
     /// 유저
     case fetchUserError
-    case userDeleteError
-    case userSignOutError
     case setDataError
     case noDataError
     case updateError
@@ -35,8 +33,6 @@ extension FirestoreError {
         switch self {
         /// 유저
         case .fetchUserError: return "유저를 불러오던 중 에러가 발생했습니다."
-        case .userDeleteError: return "유저를 삭제하던 중 에러가 발생했습니다."
-        case .userSignOutError: return "로그아웃 하던 중 에러가 발생했습니다."
         case .setDataError: return "유저를 설정하는 중 에러가 발생했습니다."
         case .noDataError: return "응답 데이터가 없습니다."
         case .updateError: return "유저를 업데이트하던 중 에러가 발생합니다."

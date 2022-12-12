@@ -42,6 +42,10 @@ final class MyPageView: UIView, ContainCollectionView {
         $0.textColor = .systemGray2
     }
 
+    lazy var indicatorView = UIActivityIndicatorView().then {
+        $0.style = .medium
+    }
+
     lazy var myInfoEditButtonTapPublisher = myInfoEditButton.tapPublisher
     lazy var darkModeSwitchStatePublisher = darkModeSwitch.statePublisher
     lazy var notificationSwitchStatePublisher = notificationSwitch.statePublisher
@@ -82,6 +86,11 @@ final class MyPageView: UIView, ContainCollectionView {
             make.top.equalTo(myInfoEditButton.snp.bottom).offset(Constant.space24)
             make.horizontalEdges.equalToSuperview().inset(Constant.Padding.horizontal)
             make.bottom.equalToSuperview()
+        }
+
+        addSubview(indicatorView)
+        indicatorView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
     }
 

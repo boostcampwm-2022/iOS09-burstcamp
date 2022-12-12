@@ -11,6 +11,7 @@ import Security
 struct KeyChainManager {
 
     static let userAccount = "userAccount"
+    static let githubToken = "githubToken"
 
     static func save(user: User) {
         guard let data = try? JSONEncoder().encode(user) else { return }

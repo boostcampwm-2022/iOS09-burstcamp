@@ -20,6 +20,7 @@ final class LogInManager {
 
     var autoLogInPublisher = PassthroughSubject<Bool, Never>()
     var logInPublisher = PassthroughSubject<AuthCoordinatorEvent, Never>()
+    var withdrawalPublisher = PassthroughSubject<Bool, FirebaseAuthError>()
 
     var userUUID: String? {
         return Auth.auth().currentUser?.uid
@@ -32,7 +33,9 @@ final class LogInManager {
     var camperID: String = ""
     var blodURL: String = ""
 
-    private var githubAPIKey: Github? {
+    private(set) var isWithdrawal: Bool = false
+
+    var githubAPIKey: Github? {
         guard let serviceInfoURL = Bundle.main.url(
             forResource: "Service-Info",
             withExtension: "plist"
@@ -60,25 +63,6 @@ final class LogInManager {
             .store(in: &cancelBag)
     }
 
-    func openGithubLoginView() {
-        let urlString = "https://github.com/login/oauth/authorize"
-
-        guard var urlComponent = URLComponents(string: urlString),
-              let clientID = githubAPIKey?.clientID
-        else {
-            return
-        }
-
-        urlComponent.queryItems = [
-            URLQueryItem(name: "client_id", value: clientID),
-            URLQueryItem(name: "scope", value: "admin:org")
-        ]
-
-        guard let url = urlComponent.url else { return }
-
-        UIApplication.shared.open(url)
-    }
-
     func logIn(code: String) {
         requestGithubAccessToken(code: code)
             .map { $0.accessToken }
@@ -94,11 +78,11 @@ final class LogInManager {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] result in
                 if case .failure(let error) = result {
-                    self?.handleGithubError(error: error)
+                    self?.logInPublisher.send(.showAlert(error.errorDescription ?? ""))
                 }
             } receiveValue: { [weak self] _ in
                 guard let self = self else {
-                    self?.logInPublisher.send(.showAlert("관리자에게 문의해주세요"))
+                    self?.logInPublisher.send(.showAlert("accessToken 접근 실패"))
                     return
                 }
                 self.signInToFirebase(token: self.token)
@@ -106,40 +90,28 @@ final class LogInManager {
             .store(in: &cancelBag)
     }
 
-    func handleGithubError(error: GithubError) {
-        self.logInPublisher.send(.showAlert(error.errorDescription ?? ""))
-    }
-
-    func handleFirebaseError(error: FirestoreError) {
-        switch error {
-        case .noDataError, .setDataError:
-            self.logInPublisher.send(.moveToDomainScreen)
-        default:
-            return
-        }
-    }
-
     func signInToFirebase(token: String) {
         let credential = GitHubAuthProvider.credential(withToken: token)
 
-        Auth.auth().signIn(with: credential) { [weak self] result, error in
-            guard result != nil,
+        Auth.auth().signIn(with: credential) { result, error in
+            guard let result = result,
                   error == nil
             else {
-                self?.logInPublisher.send(.showAlert("Fail to firebase auth signIn"))
+                self.logInPublisher.send(
+                    .showAlert(FirebaseAuthError.failSignInError.errorDescription ?? "")
+                )
                 return
             }
-            self?.isSignedUp()
+
+            self.isSignedUp(uuid: result.user.uid)
         }
     }
 
-    func isSignedUp() {
-        guard let userUUID = userUUID else { return }
-
-        FirestoreUser.fetch(userUUID: userUUID)
+    func isSignedUp(uuid: String) {
+        FirestoreUser.fetch(userUUID: uuid)
             .sink { [weak self] result in
-                if case .failure(let error) = result {
-                    self?.handleFirebaseError(error: error)
+                if case .failure = result {
+                    self?.logInPublisher.send(.moveToDomainScreen)
                 }
             } receiveValue: { [weak self] _ in
                 self?.logInPublisher.send(.moveToTabBarScreen)
@@ -147,22 +119,44 @@ final class LogInManager {
             .store(in: &cancelBag)
     }
 
-    func signOut() -> AnyPublisher<Bool, FirestoreError> {
-        return Future<Bool, FirestoreError> { promise in
-            Auth.auth().currentUser?.delete { error in
-                if error != nil {
-                    promise(.failure(.userDeleteError))
-                } else {
-                    FirestoreUser.delete(user: UserManager.shared.user)
-                    guard (try? Auth.auth().signOut()) != nil else {
-                        promise(.failure(.userSignOutError))
+    func signOut(code: String) {
+        self.requestGithubAccessToken(code: code)
+            .map { $0.accessToken }
+            .sink(receiveCompletion: { [weak self] result in
+                if case .failure = result {
+                    self?.withdrawalPublisher.send(false)
+                }
+            }, receiveValue: { [weak self] token in
+                let credential = GitHubAuthProvider.credential(withToken: token)
+
+                Auth.auth().currentUser?.reauthenticate(with: credential) { _, error in
+                    guard error == nil else {
+                        self?.withdrawalPublisher.send(completion: .failure(.userReAuthError))
                         return
                     }
-                    promise(.success(true))
+                    Auth.auth().currentUser?.delete { error in
+                        guard error == nil else {
+                            self?.withdrawalPublisher.send(
+                                completion: .failure(.userDeleteError)
+                            )
+                            return
+                        }
+                        guard (try? Auth.auth().signOut()) != nil else {
+                            self?.withdrawalPublisher.send(
+                                completion: .failure(.authSignOutError)
+                            )
+                            return
+                        }
+                        self?.changeIsWithdrawal(bool: false)
+                        self?.withdrawalPublisher.send(true)
+                    }
                 }
-            }
-        }
-        .eraseToAnyPublisher()
+            })
+            .store(in: &self.cancelBag)
+    }
+
+    func changeIsWithdrawal(bool: Bool) {
+        isWithdrawal = bool
     }
 
     func requestGithubAccessToken(code: String) -> AnyPublisher<GithubToken, GithubError> {

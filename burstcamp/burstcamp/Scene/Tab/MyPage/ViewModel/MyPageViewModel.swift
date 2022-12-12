@@ -26,6 +26,7 @@ final class MyPageViewModel {
         )
         var signOutFailMessage = PassthroughSubject<String, Never>()
         var moveToLoginFlow = PassthroughSubject<Void, Never>()
+        var withdrawalStop = PassthroughSubject<Void, Never>()
     }
 
     private var cancelBag = Set<AnyCancellable>()
@@ -33,7 +34,8 @@ final class MyPageViewModel {
     func transform(input: Input) -> Output {
         input.notificationDidSwitch
             .sink { isOn in
-                FirestoreUser.update(userUUID: UserManager.shared.user.userUUID, isPushOn: isOn)
+                let userUUID = UserManager.shared.user.userUUID
+                FirestoreUser.update(userUUID: userUUID, isPushOn: isOn)
             }
             .store(in: &cancelBag)
 
@@ -52,26 +54,35 @@ final class MyPageViewModel {
             }
             .store(in: &cancelBag)
 
-        input.withdrawDidTap
-            .sink { [weak self] _ in
-                self?.signOut(output: output)
-            }
-            .store(in: &cancelBag)
-
-        return output
-    }
-
-    private func signOut(output: Output) {
-        LogInManager.shared.signOut()
+        LogInManager.shared.withdrawalPublisher
             .sink { completion in
                 if case .failure = completion {
                     output.signOutFailMessage.send("탈퇴에 실패했어요.")
                 }
             } receiveValue: { isSignOut in
                 if isSignOut {
-                    KeyChainManager.deleteUser()
-                    UserManager.shared.deleteUserInfo()
+                    self.deleteUserInfos(output: output)
+                }
+            }
+            .store(in: &cancelBag)
+
+        return output
+    }
+
+    private func deleteUserInfos(output: Output) {
+        let userUUID = UserManager.shared.user.userUUID
+        print(userUUID)
+        KeyChainManager.deleteUser()
+        UserManager.shared.removeUserListener()
+        UserManager.shared.deleteUserInfo()
+        FireFunctionsManager.deleteUser(userUUID: userUUID)
+            .sink { _ in
+            } receiveValue: { isFinish in
+                if isFinish {
                     output.moveToLoginFlow.send()
+                } else {
+                    output.withdrawalStop.send()
+                    output.signOutFailMessage.send("탈퇴 정보 삭제에 실패했어요.")
                 }
             }
             .store(in: &cancelBag)

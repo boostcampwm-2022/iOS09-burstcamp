@@ -60,7 +60,18 @@ final class SignUpBlogView: UIView {
     }
 
     lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView().then {
-        $0.style = .large
+        $0.style = .medium
+    }
+
+    lazy var confirmBlogLabel: UILabel = UILabel().then {
+        $0.text = "블로그 주소 검증 중"
+        $0.isHidden = true
+    }
+
+    lazy var signUpLabel: UILabel = UILabel().then {
+        $0.text = "가입 중"
+        $0.font = .bold12
+        $0.isHidden = true
     }
 
     override init(frame: CGRect) {
@@ -74,27 +85,37 @@ final class SignUpBlogView: UIView {
 
     private func configureUI() {
         backgroundColor = .background
+        addViews()
+        configureLayout()
+    }
 
+    private func addViews() {
         addSubview(mainLabel)
+        addSubview(subLabel)
+        addSubview(blogTextField)
+        addSubview(skipButton)
+        addSubview(activityIndicator)
+        addSubview(confirmBlogLabel)
+        addSubview(signUpLabel)
+    }
+
+    private func configureLayout() {
         mainLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().multipliedBy(0.2)
             $0.leading.equalToSuperview().offset(Constant.space16)
         }
 
-        addSubview(subLabel)
         subLabel.snp.makeConstraints {
             $0.top.equalTo(mainLabel.snp.bottom).offset(Constant.space10)
             $0.leading.equalToSuperview().offset(Constant.space16)
         }
 
-        addSubview(blogTextField)
         blogTextField.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(Constant.space24)
             $0.height.equalTo(Constant.TextField.camperIDHeight)
             $0.top.equalTo(subLabel.snp.bottom).offset(Constant.space32)
         }
 
-        addSubview(skipButton)
         skipButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(Constant.space24)
             $0.top.equalTo(blogTextField.snp.bottom).offset(Constant.space8)
@@ -108,9 +129,18 @@ final class SignUpBlogView: UIView {
             $0.height.equalTo(Constant.space48)
         }
 
-        addSubview(activityIndicator)
         activityIndicator.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()
+        }
+
+        confirmBlogLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(activityIndicator.snp.bottom).offset(Constant.space10)
+        }
+
+        signUpLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(activityIndicator.snp.bottom).offset(Constant.space10)
         }
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Combine
+import SafariServices
 import UIKit
 
 protocol AuthCoordinatorProtocol: NormalCoordinator {
@@ -15,7 +16,7 @@ protocol AuthCoordinatorProtocol: NormalCoordinator {
     func moveToBlogScreen()
 }
 
-final class AuthCoordinator: AuthCoordinatorProtocol {
+final class AuthCoordinator: AuthCoordinatorProtocol, GithubLogInCoordinator {
 
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
@@ -24,6 +25,15 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
+    }
+
+    func displayIndicator() {
+        guard let logInViewController = navigationController.viewControllers.first(
+            where: { $0 is LogInViewController }) as? LogInViewController
+        else {
+            return
+        }
+        logInViewController.displayIndicator()
     }
 
     func start() {
@@ -35,6 +45,8 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
                     self.moveToDomainScreen()
                 case .moveToTabBarScreen:
                     self.moveToTabBarFlow()
+                case .moveToGithubLogIn:
+                    self.moveToGithubLogIn()
                 case .moveToIDScreen, .moveToBlogScreen, .showAlert(_):
                     return
                 }

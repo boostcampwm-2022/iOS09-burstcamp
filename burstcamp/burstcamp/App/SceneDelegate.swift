@@ -18,8 +18,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         else {
             return
         }
+        appCoordinator.dismissNavigationController()
 
-        LogInManager.shared.logIn(code: code)
+        if LogInManager.shared.isWithdrawal {
+            LogInManager.shared.signOut(code: code)
+        } else {
+            appCoordinator.displayIndicator()
+            LogInManager.shared.logIn(code: code)
+        }
     }
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {

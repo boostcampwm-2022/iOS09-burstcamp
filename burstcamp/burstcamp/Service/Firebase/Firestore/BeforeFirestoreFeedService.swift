@@ -9,7 +9,7 @@ import Foundation
 
 import FirebaseFirestore
 
-protocol FirestoreFeedService {
+protocol BeforeFirestoreFeedService {
 
     var lastSnapShot: QueryDocumentSnapshot? { get set }
 
@@ -27,7 +27,7 @@ protocol FirestoreFeedService {
     func deleteFeedUUIDFromUser(feedUUID: String, at userUUID: String) async throws
 }
 
-final class DefaultFirestoreFeedService: FirestoreFeedService {
+final class BeforeDefaultFirestoreFeedService: BeforeFirestoreFeedService {
 
     var lastSnapShot: QueryDocumentSnapshot?
     private let paginateCount = 7

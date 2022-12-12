@@ -39,19 +39,21 @@ final class SignUpBlogViewController: UIViewController {
     }
 
     private func bind() {
-        let nextButtonSubject = PassthroughSubject<Bool, Never>()
-        let skipConfirmSubject = PassthroughSubject<Bool, Never>()
+        let nextButtonSubject = PassthroughSubject<Void, Never>()
+        let skipConfirmSubject = PassthroughSubject<Void, Never>()
         let blogTitleConfirmSubject = PassthroughSubject<String, Never>()
         let saveFCMToken = PassthroughSubject<Void, Never>()
 
         signUpBlogView.skipButton.tapPublisher
-            .sink { _ in
+            .sink { [weak self] _ in
                 let confirmAction = UIAlertAction(title: "네", style: .default) { _ in
-                    skipConfirmSubject.send(true)
-                    self.signUpBlogView.activityIndicator.startAnimating()
+                    skipConfirmSubject.send()
+                    self?.signUpBlogView.activityIndicator.startAnimating()
+                    self?.signUpBlogView.signUpLabel.isHidden = false
+                    self?.signUpBlogView.nextButton.isEnabled = false
                 }
                 let cancelAction = UIAlertAction(title: "아니오", style: .destructive)
-                self.showAlert(
+                self?.showAlert(
                     message: "블로그가 없으신가요?",
                     alertActions: [cancelAction, confirmAction]
                 )
@@ -59,9 +61,11 @@ final class SignUpBlogViewController: UIViewController {
             .store(in: &cancelBag)
 
         signUpBlogView.nextButton.tapPublisher
-            .sink { _ in
-                self.signUpBlogView.activityIndicator.startAnimating()
-                nextButtonSubject.send(true)
+            .sink { [weak self] _ in
+                nextButtonSubject.send()
+                self?.signUpBlogView.activityIndicator.startAnimating()
+                self?.signUpBlogView.confirmBlogLabel.isHidden = false
+                self?.signUpBlogView.nextButton.isEnabled = false
             }
             .store(in: &cancelBag)
 
@@ -76,25 +80,29 @@ final class SignUpBlogViewController: UIViewController {
         let output = viewModel.transform(input: input)
 
         output.validateBlogAddress
-            .sink { validate in
-                self.signUpBlogView.nextButton.isEnabled = validate
-                self.signUpBlogView.nextButton.alpha = validate ? 1.0 : 0.3
+            .sink { [weak self] validate in
+                self?.signUpBlogView.nextButton.isEnabled = validate
+                self?.signUpBlogView.nextButton.alpha = validate ? 1.0 : 0.3
             }
             .store(in: &cancelBag)
 
         output.signUpWithNextButton
-            .sink { blogTitle in
-                self.signUpBlogView.activityIndicator.stopAnimating()
+            .sink { [weak self] blogTitle in
+                self?.signUpBlogView.activityIndicator.stopAnimating()
+                self?.signUpBlogView.confirmBlogLabel.isHidden = true
+                self?.signUpBlogView.nextButton.isEnabled = true
 
                 if blogTitle.isEmpty {
-                    self.showAlert(message: "블로그 주소를 확인해주세요")
+                    self?.showAlert(message: "블로그 주소를 확인해주세요")
                 } else {
                     let confirmAction = UIAlertAction(title: "네", style: .default) { _ in
                         blogTitleConfirmSubject.send(blogTitle)
-                        self.signUpBlogView.activityIndicator.startAnimating()
+                        self?.signUpBlogView.activityIndicator.startAnimating()
+                        self?.signUpBlogView.signUpLabel.isHidden = false
+                        self?.signUpBlogView.nextButton.isEnabled = false
                     }
                     let cancelAction = UIAlertAction(title: "아니오", style: .destructive)
-                    self.showAlert(
+                    self?.showAlert(
                         message: "\(blogTitle) 블로그가 맞으신가요??",
                         alertActions: [cancelAction, confirmAction]
                     )
@@ -103,26 +111,30 @@ final class SignUpBlogViewController: UIViewController {
             .store(in: &cancelBag)
 
         output.signUpWithBlogTitle
-            .sink(receiveCompletion: { result in
-                self.signUpBlogView.activityIndicator.stopAnimating()
+            .sink(receiveCompletion: { [weak self] result in
+                self?.signUpBlogView.activityIndicator.stopAnimating()
+                self?.signUpBlogView.signUpLabel.isHidden = true
+                self?.signUpBlogView.nextButton.isEnabled = true
                 if case .failure = result {
-                    self.showAlert(message: "회원가입에 실패했습니다")
+                    self?.showAlert(message: "회원가입에 실패했습니다")
                 }
-            }, receiveValue: { _ in
+            }, receiveValue: { [weak self] _ in
                 saveFCMToken.send()
-                self.coordinatorPublisher.send(.moveToTabBarFlow)
+                self?.coordinatorPublisher.send(.moveToTabBarFlow)
             })
             .store(in: &cancelBag)
 
         output.signUpWithSkipButton
-            .sink(receiveCompletion: { result in
-                self.signUpBlogView.activityIndicator.stopAnimating()
+            .sink(receiveCompletion: { [weak self] result in
+                self?.signUpBlogView.activityIndicator.stopAnimating()
+                self?.signUpBlogView.signUpLabel.isHidden = true
+                self?.signUpBlogView.nextButton.isEnabled = true
                 if case .failure = result {
-                    self.showAlert(message: "회원가입에 실패했습니다")
+                    self?.showAlert(message: "회원가입에 실패했습니다")
                 }
-            }, receiveValue: { _ in
+            }, receiveValue: { [weak self] _ in
                 saveFCMToken.send()
-                self.coordinatorPublisher.send(.moveToTabBarFlow)
+                self?.coordinatorPublisher.send(.moveToTabBarFlow)
             })
             .store(in: &cancelBag)
     }

@@ -206,7 +206,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 extension HomeViewController: UNUserNotificationCenterDelegate {
     private func configurePushNotification() {
         let application = UIApplication.shared
-        UNUserNotificationCenter.current().delegate = self
 
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
         UNUserNotificationCenter.current().requestAuthorization(
@@ -217,7 +216,6 @@ extension HomeViewController: UNUserNotificationCenterDelegate {
                 FirestoreUser.update(userUUID: userUUID, isPushOn: isPushOn)
             }
         }
-
         application.registerForRemoteNotifications()
     }
 }

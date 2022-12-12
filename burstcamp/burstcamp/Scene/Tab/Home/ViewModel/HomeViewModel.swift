@@ -13,14 +13,14 @@ final class HomeViewModel {
     var recommendFeedData: [Feed] = []
     var normalFeedData: [Feed] = []
 
-    private let firestoreFeedService: FirestoreFeedService
+    private let firestoreFeedService: BeforeFirestoreFeedService
     private var cellUpdate = PassthroughSubject<IndexPath, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
     private var isFetching: Bool = false
     private var canFetchMoreFeed: Bool = true
 
-    init(firestoreFeedService: FirestoreFeedService) {
+    init(firestoreFeedService: BeforeFirestoreFeedService) {
         self.firestoreFeedService = firestoreFeedService
     }
 
@@ -67,7 +67,7 @@ final class HomeViewModel {
     }
 
     func dequeueCellViewModel(at index: Int) -> FeedScrapViewModel {
-        let firestoreFeedService = DefaultFirestoreFeedService()
+        let firestoreFeedService = BeforeDefaultFirestoreFeedService()
         let feedScrapViewModel = FeedScrapViewModel(
             feedUUID: normalFeedData[index].feedUUID,
             firestoreFeedService: firestoreFeedService

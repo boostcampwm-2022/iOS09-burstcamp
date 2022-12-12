@@ -15,7 +15,7 @@ final class ScrapPageViewModel {
     var scrapFeedData: [Feed] = []
     private var willRequestFeedID: [String] = []
 
-    private var firestoreFeedService: FirestoreFeedService
+    private var firestoreFeedService: BeforeFirestoreFeedService
 
     private var cellUpdate = PassthroughSubject<IndexPath, Never>()
     var cancelBag = Set<AnyCancellable>()
@@ -24,7 +24,7 @@ final class ScrapPageViewModel {
     private var isFetching: Bool = false
     private var canFetchMoreFeed: Bool = true
 
-    init(firestoreFeedService: FirestoreFeedService) {
+    init(firestoreFeedService: BeforeFirestoreFeedService) {
         self.firestoreFeedService = firestoreFeedService
     }
 
@@ -71,7 +71,7 @@ final class ScrapPageViewModel {
     }
 
     func dequeueCellViewModel(at index: Int) -> FeedScrapViewModel {
-        let firestoreFeedService = DefaultFirestoreFeedService()
+        let firestoreFeedService = BeforeDefaultFirestoreFeedService()
         let feedScrapViewModel = FeedScrapViewModel(
             feedUUID: scrapFeedData[index].feedUUID,
             firestoreFeedService: firestoreFeedService
