@@ -26,7 +26,7 @@ final class MyPageViewModel {
         )
         var signOutFailMessage = PassthroughSubject<String, Never>()
         var moveToLoginFlow = PassthroughSubject<Void, Never>()
-        var indicatorViewRun = PassthroughSubject<Bool, Never>()
+        var withdrawalStop = PassthroughSubject<Void, Never>()
     }
 
     private var cancelBag = Set<AnyCancellable>()
@@ -60,12 +60,12 @@ final class MyPageViewModel {
                     output.signOutFailMessage.send("탈퇴에 실패했어요.")
                 }
             } receiveValue: { isSignOut in
-                output.indicatorViewRun.send(true)
                 if isSignOut {
                     self.deleteUserInfos(output: output)
                 }
             }
             .store(in: &cancelBag)
+
         return output
     }
 
@@ -81,7 +81,7 @@ final class MyPageViewModel {
                 if isFinish {
                     output.moveToLoginFlow.send()
                 } else {
-                    output.indicatorViewRun.send(false)
+                    output.withdrawalStop.send()
                     output.signOutFailMessage.send("탈퇴 정보 삭제에 실패했어요.")
                 }
             }
