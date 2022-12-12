@@ -16,7 +16,7 @@ final class NormalFeedCell: UICollectionViewCell {
     private lazy var mainView = NormalFeedCellMain()
     lazy var footerView = NormalFeedCellFooter()
 
-    private var feedScrapViewModel: FeedScrapViewModel!
+    private var scrapViewModel: ScrapViewModel!
 
     private var cancelBag = Set<AnyCancellable>()
 
@@ -70,36 +70,37 @@ final class NormalFeedCell: UICollectionViewCell {
         }
     }
 
-    func configure(with feedScrapViewModel: FeedScrapViewModel) {
-        self.feedScrapViewModel = feedScrapViewModel
+    func configure(with scrapViewModel: ScrapViewModel) {
+        self.scrapViewModel = scrapViewModel
         bind()
     }
 
     private func bind() {
-        let scrapButton = footerView.scrapButton
-        let countLabel = footerView.countLabel
-
-        let input = FeedScrapViewModel.Input(
-            viewDidLoad: Just(Void()).eraseToAnyPublisher(),
-            scrapToggleButtonDidTap: scrapButton.tapPublisher
+        let input = ScrapViewModel.Input(
+            scrapToggleButtonDidTap: self.footerView.scrapButton.tapPublisher
         )
 
-        let output = feedScrapViewModel.transform(input: input)
+        let output = scrapViewModel.transform(input: input)
 
         output.scrapButtonState
             .receive(on: DispatchQueue.main)
-            .assign(to: \.isOn, on: scrapButton)
+            .sink { [weak self] isOn in
+                self?.footerView.scrapButton.isOn = isOn
+            }
             .store(in: &cancelBag)
 
         output.scrapButtonIsEnabled
             .receive(on: DispatchQueue.main)
-            .assign(to: \.isEnabled, on: scrapButton)
+            .sink { [weak self] isEnabled in
+                self?.footerView.scrapButton.isEnabled = isEnabled
+            }
             .store(in: &cancelBag)
 
         output.scrapButtonCount
             .receive(on: DispatchQueue.main)
-            .map { "\($0)" }
-            .assign(to: \.text, on: countLabel)
+            .sink { [weak self] count in
+                self?.footerView.countLabel.text = "\(count)"
+            }
             .store(in: &cancelBag)
     }
 }

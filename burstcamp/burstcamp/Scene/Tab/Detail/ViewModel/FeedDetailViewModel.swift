@@ -10,26 +10,23 @@ import Foundation
 
 final class FeedDetailViewModel {
 
-    private let firestoreFeedService: BeforeFirestoreFeedService
-
     private let feed = CurrentValueSubject<Feed?, Never>(nil)
-    private let dbUpdateResult = PassthroughSubject<Bool, Never>()
+    private let feedLocalDataSource: FeedLocalDataSource
     private var cancelBag = Set<AnyCancellable>()
 
-    init(firestoreFeedService: BeforeFirestoreFeedService) {
-        self.firestoreFeedService = firestoreFeedService
+    init(feedLocalDataSource: FeedLocalDataSource = FeedLocalDataSource.shared) {
+        self.feedLocalDataSource = feedLocalDataSource
     }
 
     convenience init(feed: Feed) {
-        let firestoreFeedService = BeforeDefaultFirestoreFeedService()
-        self.init(firestoreFeedService: firestoreFeedService)
+        self.init()
         self.feed.send(feed)
     }
 
     convenience init(feedUUID: String) {
-        let firestoreFeedService = BeforeDefaultFirestoreFeedService()
-        self.init(firestoreFeedService: firestoreFeedService)
-        self.fetchFeed(feedUUID: feedUUID)
+        self.init()
+        let feed = FeedLocalDataSource.shared.cachedNormalFeed(feedUUID: feedUUID)
+        self.feed.send(feed)
     }
 
     struct Input {
@@ -45,10 +42,6 @@ final class FeedDetailViewModel {
     }
 
     func transform(input: Input) -> Output {
-        let feedDidUpdate = feed
-            .compactMap { $0 }
-            .eraseToAnyPublisher()
-
         let openBlog = input.blogButtonDidTap
             .compactMap { self.feed.value?.url }
             .compactMap { URL(string: $0) }
@@ -58,39 +51,10 @@ final class FeedDetailViewModel {
             .compactMap { self.feed.value?.url }
             .eraseToAnyPublisher()
 
-        let sharedDBUpdateResult = dbUpdateResult
-            .map { _ in Void() }
-            .share()
-
         return Output(
-            feedDidUpdate: feedDidUpdate,
+            feedDidUpdate: feed.unwrap().eraseToAnyPublisher(),
             openBlog: openBlog,
             openActivityView: openActivityView
         )
-    }
-
-    private func fetchFeed(feedUUID: String) {
-        Task { [weak self] in
-            do {
-                guard let feedAPIModelDictionary = try await self?.firestoreFeedService.fetchFeedAPIModel(
-                    feedUUID: feedUUID
-                ) else {
-                    throw ConvertError.dictionaryUnwrappingError
-                }
-                let feedAPIModel = FeedAPIModel(data: feedAPIModelDictionary)
-
-                guard let feedWriterDictionary = try await self?.firestoreFeedService.fetchUser(
-                    userUUID: feedAPIModel.writerUUID
-                ) else {
-                    throw ConvertError.dictionaryUnwrappingError
-                }
-                let feedWriter = FeedWriter(data: feedWriterDictionary)
-
-                let feed = Feed(feedAPIModel: feedAPIModel, feedWriter: feedWriter)
-                self?.feed.send(feed)
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
     }
 }

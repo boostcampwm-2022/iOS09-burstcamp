@@ -22,8 +22,9 @@ final class HomeViewModel {
 
     private var cancelBag = Set<AnyCancellable>()
 
-    private let remoteDataSource: FeedRemoteDataSource
     private let localDataSource: FeedLocalDataSource
+    private let remoteDataSource: FeedRemoteDataSource
+    private let fetcher: Fetcher<HomeFeedList, FirestoreServiceError>
 
     init(
         localDataSource: FeedLocalDataSource = FeedLocalDataSource.shared,
@@ -31,6 +32,34 @@ final class HomeViewModel {
     ) {
         self.localDataSource = localDataSource
         self.remoteDataSource = remoteDataSource
+
+        let userUUID = UserManager.shared.user.userUUID
+        fetcher = Fetcher<HomeFeedList, FirestoreServiceError>(
+            onRemoteCombine: {
+                remoteDataSource.recommendFeedListPublisher(userUUID: userUUID)
+                    .zip(remoteDataSource.normalFeedListPublisher(userUUID: userUUID)) {
+                        HomeFeedList(recommendFeed: $0, normalFeed: $1)
+                    }
+                    .eraseToAnyPublisher()
+            },
+            onLocalCombine: {
+                localDataSource.recommendFeedListPublisher()
+                    .zip(localDataSource.normalFeedListPublisher()) {
+                        HomeFeedList(recommendFeed: $0, normalFeed: $1)
+                    }
+                    .eraseToAnyPublisher()
+            },
+            onLocal: {
+                HomeFeedList(
+                    recommendFeed: localDataSource.cachedRecommendFeedList(),
+                    normalFeed: localDataSource.cachedNormalFeedList()
+                )
+            },
+            onUpdateLocal: { homeFeedList in
+                localDataSource.updateRecommendFeedListCache(homeFeedList.recommendFeed)
+                localDataSource.updateNormalFeedListCache(homeFeedList.normalFeed)
+            }
+        )
     }
 
     private let reloadData = CurrentValueSubject<Void?, Never>(nil)
@@ -44,37 +73,17 @@ final class HomeViewModel {
     }
 
     struct Output {
-        var reloadData: AnyPublisher<Void, Never>
-        var hideIndicator: AnyPublisher<Void, Never>
-        var showAlert: AnyPublisher<FirestoreServiceError, Never>
+        let reloadData: AnyPublisher<Void, Never>
+        let hideIndicator: AnyPublisher<Void, Never>
+        let showAlert: AnyPublisher<FirestoreServiceError, Never>
     }
 
     func transform(input: Input) -> Output {
-        let fetcher = Fetcher<HomeFeedList, FirestoreServiceError>(
-            onRemoteCombine: self.remoteDataSource.recommendFeedListPublisher()
-                .zip(self.remoteDataSource.normalFeedListPublisher()) {
-                    HomeFeedList(recommendFeed: $0, normalFeed: $1)
-                }
-                .eraseToAnyPublisher(),
-            onLocalCombine: self.localDataSource.recommendFeedListPublisher()
-                .zip(self.localDataSource.normalFeedListPublisher()) {
-                    HomeFeedList(recommendFeed: $0, normalFeed: $1)
-                }
-                .eraseToAnyPublisher(),
-            onLocal: HomeFeedList(
-                recommendFeed: self.localDataSource.cachedRecommendFeedList(),
-                normalFeed: self.localDataSource.cachedNormalFeedList()
-            ),
-            onUpdateLocal: { homeFeedList in
-                self.localDataSource.updateRecommendFeedListCache(homeFeedList.recommendFeed)
-                self.localDataSource.updateNormalFeedListCache(homeFeedList.normalFeed)
-            }
-        )
-
         input.viewDidLoad
             .merge(with: input.viewDidRefresh)
             .sink { _ in
-                fetcher.fetch { status, data in
+                self.fetcher.fetch { status, data in
+//                    print("\(#fileID) | fetcher: \(status)")
                     switch status {
                     case .loading:
                         self.reloadData.send(Void())
@@ -101,179 +110,14 @@ final class HomeViewModel {
             hideIndicator: hideIndicator.unwrap().eraseToAnyPublisher(),
             showAlert: showAlert.unwrap().eraseToAnyPublisher()
         )
-//
-//        input.viewDidLoad
-//            .sink { [weak self] _ in
-//                self?.fetchAllFeed(output: output)
-//            }
-//            .store(in: &cancelBag)
-//
-//        input.viewRefresh
-//            .sink { [weak self] _ in
-//                self?.fetchAllFeed(output: output)
-//            }
-//            .store(in: &cancelBag)
-//
-//        input.pagination
-//            .sink { [weak self] _ in
-//                self?.paginateFeed(output: output)
-//            }
-//            .store(in: &cancelBag)
-//
-//        return output
     }
 
-    func dequeueCellViewModel(at index: Int) -> FeedScrapViewModel {
-        let firestoreFeedService = BeforeDefaultFirestoreFeedService()
-        let feedScrapViewModel = FeedScrapViewModel(
+    func dequeueCellViewModel(at index: Int) -> ScrapViewModel {
+        let scrapViewModel = ScrapViewModel(
             feedUUID: normalFeedData[index].feedUUID,
             feedLocalDataSource: FeedLocalDataSource.shared,
             feedRemoteDataSource: FeedRemoteDataSource.shared
         )
-//        feedScrapViewModel.getScrapCountUp
-//            .sink { [weak self] state in
-//                guard let self = self else { return }
-//                if state {
-//                    self.normalFeedData[index].scrapCountUp()
-//                } else {
-//                    self.normalFeedData[index].scrapCountDown()
-//                }
-//                let indexPath = IndexPath(row: index, section: FeedCellType.normal.index)
-//                self.cellUpdate.send(indexPath)
-//            }
-//            .store(in: &cancelBag)
-
-        return feedScrapViewModel
+        return scrapViewModel
     }
-//
-//    private func fetchAllFeed(output: Output) {
-//        Task {
-//            do {
-//                guard !isFetching else { return }
-//                isFetching = true
-//                canFetchMoreFeed = true
-//
-//                async let recommendFeeds = fetchRecommendFeeds()
-//                async let normalFeeds = fetchLastestFeeds()
-//                self.recommendFeedData = try await recommendFeeds
-//                self.normalFeedData = try await normalFeeds
-//                output.fetchResult.send(.fetchSuccess)
-//            } catch {
-//                canFetchMoreFeed = false
-//                debugPrint(error.localizedDescription)
-//            }
-//            isFetching = false
-//        }
-//    }
-//
-//    private func paginateFeed(output: Output) {
-//        Task {
-//            do {
-//                guard !isFetching, canFetchMoreFeed else { return }
-//                isFetching = true
-//
-//                let normalFeeds = try await fetchMoreFeeds()
-//                self.normalFeedData.append(contentsOf: normalFeeds)
-//                output.fetchResult.send(.fetchSuccess)
-//            } catch {
-//                canFetchMoreFeed = false
-//                print(error.localizedDescription)
-//            }
-//            isFetching = false
-//        }
-//    }
-//
-//    private func fetchRecommendFeeds() async throws -> [Feed] {
-//        try await withThrowingTaskGroup(of: Feed.self, body: { taskGroup in
-//            var recommendFeeds: [Feed] = []
-//            let feedAPIModelDictionary = try await self.firestoreService.fetchRecommendFeedAPIModels()
-//
-//            for feedAPIModel in feedAPIModelDictionary {
-//                taskGroup.addTask {
-//                    let feedAPIModel = FeedAPIModel(data: feedAPIModel)
-//                    let feedWriterDictionary = try await self.firestoreFeedService.fetchUser(
-//                        userUUID: feedAPIModel.writerUUID
-//                    )
-//                    let feedWriter = FeedWriter(data: feedWriterDictionary)
-//                    let feed = Feed(feedAPIModel: feedAPIModel, feedWriter: feedWriter)
-//                    return feed
-//                }
-//            }
-//
-//            for try await feed in taskGroup {
-//                recommendFeeds.append(feed)
-//            }
-//
-//            return recommendFeeds
-//        })
-//    }
-//
-//    private func fetchLastestFeeds() async throws -> [Feed] {
-//        try await withThrowingTaskGroup(of: Feed.self, body: { taskGroup in
-//            var normalFeeds: [Feed] = []
-//            let feedAPIModelDictionary = try await self.firestoreService.fetchLatestFeedAPIModels()
-//
-//            for feedAPIModel in feedAPIModelDictionary {
-//                taskGroup.addTask {
-//                    let feedAPIModel = FeedAPIModel(data: feedAPIModel)
-//                    let feedWriterDictionary = try await self.firestoreService.fetchUser(
-//                        userUUID: feedAPIModel.writerUUID
-//                    )
-//                    let feedWriter = FeedWriter(data: feedWriterDictionary)
-//                    let scrapCount = try await self.firestoreService.countFeedScarp(
-//                        feedUUID: feedAPIModel.feedUUID
-//                    )
-//                    let feed = Feed(
-//                        feedAPIModel: feedAPIModel,
-//                        feedWriter: feedWriter,
-//                        scrapCount: scrapCount
-//                    )
-//                    return feed
-//                }
-//            }
-//
-//            for try await feed in taskGroup {
-//                normalFeeds.append(feed)
-//            }
-//
-//            let result = normalFeeds.sorted { $0.pubDate > $1.pubDate }
-//
-//            return result
-//        })
-//    }
-//
-//    private func fetchMoreFeeds() async throws -> [Feed] {
-//        try await withThrowingTaskGroup(of: Feed.self, body: { taskGroup in
-//            var normalFeeds: [Feed] = []
-//            let feedAPIModelDictionary = try await self.firestoreFeedService.fetchMoreFeeds()
-//
-//            for feedAPIModel in feedAPIModelDictionary {
-//                taskGroup.addTask {
-//                    let feedAPIModel = FeedAPIModel(data: feedAPIModel)
-//                    print(feedAPIModel.writerUUID)
-//                    let feedWriterDictionary = try await self.firestoreFeedService.fetchUser(
-//                        userUUID: feedAPIModel.writerUUID
-//                    )
-//                    let feedWriter = FeedWriter(data: feedWriterDictionary)
-//                    let scrapCount = try await self.firestoreFeedService.countFeedScarp(
-//                        feedUUID: feedAPIModel.feedUUID
-//                    )
-//                    let feed = Feed(
-//                        feedAPIModel: feedAPIModel,
-//                        feedWriter: feedWriter,
-//                        scrapCount: scrapCount
-//                    )
-//                    return feed
-//                }
-//            }
-//
-//            for try await feed in taskGroup {
-//                normalFeeds.append(feed)
-//            }
-//
-//            let result = normalFeeds.sorted { $0.pubDate > $1.pubDate }
-//
-//            return result
-//        })
-//    }
 }

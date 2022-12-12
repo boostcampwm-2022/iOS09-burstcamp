@@ -28,10 +28,10 @@ extension FeedCellType {
         return self.rawValue
     }
 
-    var collectionName: String {
+    var collectionPath: String {
         switch self {
-        case .recommend: return "recommendFeed"
-        case .normal: return "feed"
+        case .recommend: return FirestoreCollection.recommendFeed.path
+        case .normal: return FirestoreCollection.normalFeed.path
         }
     }
 

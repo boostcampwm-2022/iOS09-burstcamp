@@ -102,32 +102,6 @@ final class HomeViewController: UIViewController {
                 self?.homeView.endCollectionViewRefreshing()
             }
             .store(in: &cancelBag)
-
-//        output.fetchResult
-//            .receive(on: DispatchQueue.main)
-//            .sink { [weak self] fetchResult in
-//                switch fetchResult {
-//                case .fetchSuccess:
-//                    self?.homeView.endCollectionViewRefreshing()
-//                    self?.homeView.collectionView.reloadData()
-//                case .fetchFail(let error):
-//                    print(error)
-//                }
-//            }
-//            .store(in: &cancelBag)
-//
-//        output.cellUpdate
-//            .receive(on: DispatchQueue.main)
-//            .sink { [weak self] indexPath in
-//                self?.reloadCollectionView(indexPath: indexPath)
-//            }
-//            .store(in: &cancelBag)
-    }
-
-    private func reloadCollectionView(indexPath: IndexPath) {
-        UIView.performWithoutAnimation {
-            homeView.collectionView.reloadItems(at: [indexPath])
-        }
     }
 
     private func paginateFeed() {
@@ -211,15 +185,19 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         return UICollectionReusableView()
     }
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let feedCellType = FeedCellType(index: indexPath.section)
-        var feed: Feed
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        let feedCellType = FeedCellType(index: indexPath.section) ?? .normal
         switch feedCellType {
-            case .recommend: feed = viewModel.recommendFeedData[indexPath.row]
-            case .normal: feed = viewModel.normalFeedData[indexPath.row]
-            default: return
+        case .recommend:
+            // TODO: 사파리로 보여주기
+            return
+        case .normal:
+            let feed = viewModel.normalFeedData[indexPath.row]
+            coordinatorPublisher.send(.moveToFeedDetail(feed: feed))
         }
-        coordinatorPublisher.send(.moveToFeedDetail(feed: feed))
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
