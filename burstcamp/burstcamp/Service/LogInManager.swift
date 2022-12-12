@@ -124,25 +124,25 @@ final class LogInManager {
                 let credential = GitHubAuthProvider.credential(withToken: token)
 
                 Auth.auth().currentUser?.reauthenticate(with: credential) { _, error in
-                    if error != nil {
+                    guard error != nil else {
                         self.withdrawalPublisher.send(completion: .failure(.userReAuthError))
-                    } else {
-                        Auth.auth().currentUser?.delete { error in
-                            if error != nil {
-                                self.withdrawalPublisher.send(
-                                    completion: .failure(.userDeleteError)
-                                )
-                            } else {
-                                guard (try? Auth.auth().signOut()) != nil else {
-                                    self.withdrawalPublisher.send(
-                                        completion: .failure(.authSignOutError)
-                                    )
-                                    return
-                                }
-                                self.isWithdrawal = false
-                                self.withdrawalPublisher.send(true)
-                            }
+                        return
+                    }
+                    Auth.auth().currentUser?.delete { error in
+                        guard error != nil else {
+                            self.withdrawalPublisher.send(
+                                completion: .failure(.userDeleteError)
+                            )
+                            return
                         }
+                        guard (try? Auth.auth().signOut()) != nil else {
+                            self.withdrawalPublisher.send(
+                                completion: .failure(.authSignOutError)
+                            )
+                            return
+                        }
+                        self.isWithdrawal = false
+                        self.withdrawalPublisher.send(true)
                     }
                 }
             })
