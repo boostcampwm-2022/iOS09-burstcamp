@@ -95,6 +95,10 @@
 		B572EF7A2945D81D00A9413C /* Publisher+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EF792945D81D00A9413C /* Publisher+Extension.swift */; };
 		B572EF812945E19C00A9413C /* Sequence+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EF802945E19C00A9413C /* Sequence+Async.swift */; };
 		B572EF832945E1CA00A9413C /* Publisher+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EF822945E1CA00A9413C /* Publisher+Async.swift */; };
+		B572EF9F294772FB00A9413C /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B572EF9E294772FB00A9413C /* RealmSwift */; };
+		B572EFA129479D1500A9413C /* FeedRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EFA029479D1500A9413C /* FeedRealmModel.swift */; };
+		B572EFA329479FEC00A9413C /* FeedWriterRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EFA229479FEC00A9413C /* FeedWriterRealmModel.swift */; };
+		B572EFA92947A68600A9413C /* RealmConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EFA82947A68600A9413C /* RealmConvertible.swift */; };
 		B597F9552935B94B0022D3E6 /* DefaultToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */; };
 		B59EDAD529408DAF00D451CC /* BCResource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59EDAD429408D8000D451CC /* BCResource.framework */; };
 		B59EDAD629408DAF00D451CC /* BCResource.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B59EDAD429408D8000D451CC /* BCResource.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -291,6 +295,9 @@
 		B572EF792945D81D00A9413C /* Publisher+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Extension.swift"; sourceTree = "<group>"; };
 		B572EF802945E19C00A9413C /* Sequence+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Async.swift"; sourceTree = "<group>"; };
 		B572EF822945E1CA00A9413C /* Publisher+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Async.swift"; sourceTree = "<group>"; };
+		B572EFA029479D1500A9413C /* FeedRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRealmModel.swift; sourceTree = "<group>"; };
+		B572EFA229479FEC00A9413C /* FeedWriterRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedWriterRealmModel.swift; sourceTree = "<group>"; };
+		B572EFA82947A68600A9413C /* RealmConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmConvertible.swift; sourceTree = "<group>"; };
 		B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultToggleButton.swift; sourceTree = "<group>"; };
 		B59EDACF29408D8000D451CC /* BCResource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BCResource.xcodeproj; path = ../../modules/BCResource/BCResource.xcodeproj; sourceTree = "<group>"; };
 		B5BA27862927AEF600BDCE08 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -376,6 +383,7 @@
 				B5BA27852927AEC600BDCE08 /* FirebaseStorage in Frameworks */,
 				B59EDAD529408DAF00D451CC /* BCResource.framework in Frameworks */,
 				B5BA277D2927AEC600BDCE08 /* FirebaseAuth in Frameworks */,
+				B572EF9F294772FB00A9413C /* RealmSwift in Frameworks */,
 				B52A7F2A2927A89C00E271D2 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -620,7 +628,9 @@
 			children = (
 				141344DA292F82BE00187B86 /* Feed.swift */,
 				14A93D3F2936EFF900790034 /* FeedAPIModel.swift */,
+				B572EFA029479D1500A9413C /* FeedRealmModel.swift */,
 				14A93D412936F00F00790034 /* FeedWriter.swift */,
+				B572EFA229479FEC00A9413C /* FeedWriterRealmModel.swift */,
 				1459C3BB2929150200FA885D /* FeedCellType.swift */,
 			);
 			path = Feed;
@@ -737,6 +747,7 @@
 			children = (
 				B50A279729279F5D00DF3E1F /* ReusableView.swift */,
 				143185F7292B5C88008CE459 /* ContainCollectionView.swift */,
+				B572EFA82947A68600A9413C /* RealmConvertible.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -941,8 +952,8 @@
 			isa = PBXGroup;
 			children = (
 				14A93D3E2936EFEE00790034 /* Feed */,
-				B50A27A729279F5D00DF3E1F /* APIKey.swift */,
 				D8494D532927D0DC008157F1 /* User.swift */,
+				B50A27A729279F5D00DF3E1F /* APIKey.swift */,
 				D8494D4D2927CE64008157F1 /* Domain.swift */,
 				D8C38673292B8D82005A2563 /* Appearance.swift */,
 				D84452FB292DB7DE008E811B /* CellIndexPath.swift */,
@@ -1121,6 +1132,7 @@
 				B5BA27802927AEC600BDCE08 /* FirebaseFunctions */,
 				B5BA27822927AEC600BDCE08 /* FirebaseMessaging */,
 				B5BA27842927AEC600BDCE08 /* FirebaseStorage */,
+				B572EF9E294772FB00A9413C /* RealmSwift */,
 			);
 			productName = Eoljuga;
 			productReference = B50A277129279F2600DF3E1F /* burstcamp.app */;
@@ -1158,6 +1170,7 @@
 				B52A7F252927A88F00E271D2 /* XCRemoteSwiftPackageReference "Then" */,
 				B52A7F282927A89C00E271D2 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				B5BA277B2927AEC600BDCE08 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				B572EF9D294772FB00A9413C /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = B50A277229279F2600DF3E1F /* Products */;
 			projectDirPath = "";
@@ -1255,6 +1268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B572EFA329479FEC00A9413C /* FeedWriterRealmModel.swift in Sources */,
 				3B061FE5292A1F1E00BFA71D /* SignUpBlogViewController.swift in Sources */,
 				B5DAD681292E58BF00C4A126 /* DefaultMultilLineLabel.swift in Sources */,
 				3B061FDD2928E8E300BFA71D /* SignUpCamperIDViewController.swift in Sources */,
@@ -1280,6 +1294,7 @@
 				D88295EF292A43EB005B4273 /* NetworkError.swift in Sources */,
 				D84452F0292CA57D008E811B /* MyPageEditViewController.swift in Sources */,
 				D84452FC292DB7DE008E811B /* CellIndexPath.swift in Sources */,
+				B572EFA129479D1500A9413C /* FeedRealmModel.swift in Sources */,
 				D8E979CA293A6D430092EBF6 /* Alert.swift in Sources */,
 				140438BB293F6FD7004D035C /* HomeCoordinator.swift in Sources */,
 				B50A27E429279F5D00DF3E1F /* APIKey.swift in Sources */,
@@ -1373,6 +1388,7 @@
 				1496CF1C2940679C008F312F /* CoordinatorEvent.swift in Sources */,
 				D89AE5012936221600446AB3 /* ScrapUser.swift in Sources */,
 				B50A27E329279F5D00DF3E1F /* LogInViewModel.swift in Sources */,
+				B572EFA92947A68600A9413C /* RealmConvertible.swift in Sources */,
 				B50A27F029279F5D00DF3E1F /* MyPageViewController.swift in Sources */,
 				141344CD292F800300187B86 /* UI+ReusableView.swift in Sources */,
 				14927E202929CCA0001F2E97 /* RecommendFeedHeader.swift in Sources */,
@@ -1679,6 +1695,14 @@
 				version = 5.6.0;
 			};
 		};
+		B572EF9D294772FB00A9413C /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.33.0;
+			};
+		};
 		B5BA277B2927AEC600BDCE08 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -1709,6 +1733,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B52A7F282927A89C00E271D2 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		B572EF9E294772FB00A9413C /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B572EF9D294772FB00A9413C /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		B5BA277C2927AEC600BDCE08 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;

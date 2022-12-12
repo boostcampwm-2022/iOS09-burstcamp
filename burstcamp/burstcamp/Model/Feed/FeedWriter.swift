@@ -19,21 +19,37 @@ struct FeedWriter: Equatable {
 
 extension FeedWriter {
     init(data: [String: Any]) {
-        let userUUID = data["userUUID"] as? String ?? ""
-        let nickname = data["nickname"] as? String ?? ""
-        let camperID = data["camperID"] as? String ?? ""
-        let ordinalNumber = data["ordinalNumber"] as? Int ?? 0
+        self.userUUID = data["userUUID"] as? String ?? ""
+        self.nickname = data["nickname"] as? String ?? ""
+        self.camperID = data["camperID"] as? String ?? ""
+        self.ordinalNumber = data["ordinalNumber"] as? Int ?? 0
         let domainString = data["domain"] as? String ?? ""
-        let domain = Domain(rawValue: domainString) ?? Domain.iOS
-        let profileImageURL = data["profileImageURL"] as? String ?? ""
-        let blogTitle = data["blogTitle"] as? String ?? ""
+        self.domain = Domain(rawValue: domainString) ?? Domain.iOS
+        self.profileImageURL = data["profileImageURL"] as? String ?? ""
+        self.blogTitle = data["blogTitle"] as? String ?? ""
+    }
+}
 
-        self.userUUID = userUUID
-        self.nickname = nickname
-        self.camperID = camperID
-        self.ordinalNumber = ordinalNumber
-        self.domain = domain
-        self.profileImageURL = profileImageURL
-        self.blogTitle = blogTitle
+extension FeedWriter: RealmConvertible {
+    init(realmModel: FeedWriterRealmModel) {
+        self.userUUID = realmModel.userUUID
+        self.nickname = realmModel.nickname
+        self.camperID = realmModel.camperID
+        self.ordinalNumber = realmModel.ordinalNumber
+        self.domain = realmModel.domain
+        self.profileImageURL = realmModel.profileImageURL
+        self.blogTitle = realmModel.blogTitle
+    }
+
+    func realmModel() -> FeedWriterRealmModel {
+        return FeedWriterRealmModel(
+            userUUID: self.userUUID,
+            nickname: self.nickname,
+            camperID: self.camperID,
+            ordinalNumber: self.ordinalNumber,
+            domain: self.domain,
+            profileImageURL: self.profileImageURL,
+            blogTitle: self.blogTitle
+        )
     }
 }

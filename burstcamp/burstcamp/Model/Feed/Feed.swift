@@ -36,7 +36,37 @@ extension Feed {
         self.scrapCount = scrapCount
         self.isScraped = isScraped
     }
+}
 
+extension Feed: RealmConvertible {
+    init(realmModel: FeedRealmModel) {
+        self.feedUUID = realmModel.feedUUID
+        self.writer = FeedWriter(realmModel: realmModel.writer)
+        self.title = realmModel.title
+        self.pubDate = realmModel.pubDate
+        self.url = realmModel.url
+        self.thumbnailURL = realmModel.thumbnailURL
+        self.content = realmModel.content
+        self.scrapCount = realmModel.scrapCount
+        self.isScraped = realmModel.isScraped
+    }
+
+    func realmModel() -> FeedRealmModel {
+        return FeedRealmModel(
+            feedUUID: self.feedUUID,
+            writer: self.writer.realmModel(),
+            title: self.title,
+            pubDate: self.pubDate,
+            url: self.url,
+            thumbnailURL: self.thumbnailURL,
+            content: self.content,
+            scrapCount: self.scrapCount,
+            isScraped: self.isScraped
+        )
+    }
+}
+
+extension Feed {
     mutating func toggleScrap() {
         if isScraped { unScrap() }
         else { scrap() }
