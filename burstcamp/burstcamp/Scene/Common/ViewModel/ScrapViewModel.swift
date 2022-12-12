@@ -14,9 +14,6 @@ final class ScrapViewModel {
 
     private var cancelBag = Set<AnyCancellable>()
 
-    private let feedUUID: String
-    private let userUUID: String
-
     private let feedLocalDataSource: FeedLocalDataSource
     private let feedRemoteDataSource: FeedRemoteDataSource
 
@@ -25,28 +22,48 @@ final class ScrapViewModel {
     private let scrapButtonIsEnabled = CurrentValueSubject<Bool?, Never>(nil)
     private let showAlert = CurrentValueSubject<Error?, Never>(nil)
 
-    private lazy var updater = Updater<Feed, FirestoreServiceError>(
-        onRemoteCombine: {
-            self.feedRemoteDataSource.updateFeedPublisher(
-                feedUUID: self.feedUUID,
-                userUUID: self.userUUID,
-                feed: $0
-            )
-        },
-        onLocalCombine: self.feedLocalDataSource.normalFeedPublisher(feedUUID: self.feedUUID),
-        onLocal: self.feedLocalDataSource.cachedNormalFeed(feedUUID: self.feedUUID),
-        onUpdateLocal: self.feedLocalDataSource.toggleScrapFeed(feedUUID: self.feedUUID)
-    )
+    private let updater: Updater<Feed, FirestoreServiceError>
 
     init(
         feedUUID: String,
         feedLocalDataSource: FeedLocalDataSource,
         feedRemoteDataSource: FeedRemoteDataSource
     ) {
-        self.feedUUID = feedUUID
-        self.userUUID = UserManager.shared.user.userUUID
+        let feedUUID = feedUUID
+        let userUUID = UserManager.shared.user.userUUID
         self.feedLocalDataSource = feedLocalDataSource
         self.feedRemoteDataSource = feedRemoteDataSource
+
+        updater = Updater<Feed, FirestoreServiceError>(
+            onRemoteCombine: { feed in
+                feedRemoteDataSource.updateFeedPublisher(
+                    feedUUID: feedUUID,
+                    userUUID: userUUID,
+                    feed: feed
+                )
+            },
+            onLocalCombine: { feedLocalDataSource.normalFeedPublisher(feedUUID: feedUUID) },
+            onLocal: { feedLocalDataSource.cachedNormalFeed(feedUUID: feedUUID) },
+            onUpdateLocal: { feedLocalDataSource.toggleScrapFeed(feedUUID: feedUUID) }
+        )
+
+        updater.configure { [weak self] status, data in
+            guard let self = self else { return }
+//            print("\(#fileID) | updater: \(status)")
+
+            switch status {
+            case .loading:
+                self.scrapButtonIsEnabled.send(false)
+            case .success:
+                self.scrapButtonState.send(data.isScraped)
+                self.scrapButtonCount.send("\(data.scrapCount)")
+                self.scrapButtonIsEnabled.send(true)
+            case .failure(let error):
+                self.showAlert.send(error)
+                self.scrapButtonIsEnabled.send(true)
+            }
+        }
+        .store(in: &self.cancelBag)
     }
 
     struct Input {
@@ -61,24 +78,9 @@ final class ScrapViewModel {
     }
 
     func transform(input: Input) -> Output {
-        updater.configure { status, data in
-            switch status {
-            case .loading:
-                self.scrapButtonIsEnabled.send(false)
-            case .success:
-                self.scrapButtonState.send(data.isScraped)
-                self.scrapButtonCount.send("\(data.scrapCount)")
-                self.scrapButtonIsEnabled.send(true)
-            case .failure(let error):
-                self.showAlert.send(error)
-                self.scrapButtonIsEnabled.send(true)
-            }
-        }
-        .store(in: &self.cancelBag)
-
         input.scrapToggleButtonDidTap
-            .sink { _ in
-                self.updater.update()
+            .sink { [weak self] _ in
+                self?.updater.update()
             }
             .store(in: &cancelBag)
 

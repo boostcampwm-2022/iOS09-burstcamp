@@ -41,16 +41,16 @@ final class FeedDetailViewController: UIViewController {
     private lazy var shareBarButtonItem = UIBarButtonItem(customView: shareButton)
 
     private let feedDetailViewModel: FeedDetailViewModel
-    private let feedScrapViewModel: FeedScrapViewModel
+    private let scrapViewModel: ScrapViewModel
     let coordinatorPublisher = PassthroughSubject<FeedDetailCoordinatorEvent, Never>()
     private var cancelBag: Set<AnyCancellable> = []
 
     init(
         feedDetailViewModel: FeedDetailViewModel,
-        feedScrapViewModel: FeedScrapViewModel
+        scrapViewModel: ScrapViewModel
     ) {
         self.feedDetailViewModel = feedDetailViewModel
-        self.feedScrapViewModel = feedScrapViewModel
+        self.scrapViewModel = scrapViewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -68,25 +68,18 @@ final class FeedDetailViewController: UIViewController {
         configureNavigationBar()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-
     private func configureNavigationBar() {
         navigationItem.rightBarButtonItems = [barButtonStackViewItem]
     }
 
     private func bind() {
-        let viewDidLoad = Just(Void()).eraseToAnyPublisher()
-
         // MARK: FeedDetailViewModel
 
         let feedDetailInput = FeedDetailViewModel.Input(
-            viewDidLoad: viewDidLoad,
+            viewDidLoad: Just(Void()).eraseToAnyPublisher(),
             blogButtonDidTap: feedDetailView.blogButtonTapPublisher,
             shareButtonDidTap: shareButton.tapPublisher
         )
-
         let feedDetailOutput = feedDetailViewModel.transform(input: feedDetailInput)
 
         feedDetailOutput.feedDidUpdate
@@ -116,26 +109,25 @@ final class FeedDetailViewController: UIViewController {
             }
             .store(in: &cancelBag)
 
-        // MARK: FeedScrapViewModel
+        // MARK: ScrapViewModel
 
-        let feedScrapInput = FeedScrapViewModel.Input(
-            viewDidLoad: viewDidLoad,
+        let scrapInput = ScrapViewModel.Input(
             scrapToggleButtonDidTap: scrapButton.tapPublisher
         )
+        let scrapOutput = scrapViewModel.transform(input: scrapInput)
 
-        let feedScrapOutput = feedScrapViewModel.transform(input: feedScrapInput)
-
-        feedScrapOutput.scrapButtonIsEnabled
+        scrapOutput.scrapButtonIsEnabled
             .receive(on: DispatchQueue.main)
             .assign(to: \.isEnabled, on: scrapButton)
             .store(in: &cancelBag)
 
-        feedScrapOutput.scrapButtonState
+        scrapOutput.scrapButtonState
             .receive(on: DispatchQueue.main)
             .assign(to: \.isOn, on: scrapButton)
             .store(in: &cancelBag)
 
-        feedScrapOutput.showAlert
+        scrapOutput.showAlert
+            .receive(on: DispatchQueue.main)
             .sink { error in
                 self.showAlert(message: error.localizedDescription)
             }

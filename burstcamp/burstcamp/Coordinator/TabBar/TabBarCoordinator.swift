@@ -93,8 +93,7 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
     }
 
     private func scrapPageCoordinatorStart() -> ScrapPageViewController {
-        let firestoreFeedService = BeforeDefaultFirestoreFeedService()
-        let scrapPageViewModel = ScrapPageViewModel(firestoreFeedService: firestoreFeedService)
+        let scrapPageViewModel = ScrapPageViewModel()
         let scrapPageViewController = ScrapPageViewController(viewModel: scrapPageViewModel)
         let scrapCoordinator = ScrapPageCoordinator(navigationController: navigationController)
         scrapCoordinator.start(viewController: scrapPageViewController)

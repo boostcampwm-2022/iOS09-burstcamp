@@ -64,7 +64,7 @@
 		3B74920D293DCCAC00A4BEA0 /* GithubError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B74920C293DCCAC00A4BEA0 /* GithubError.swift */; };
 		3B7492292942EDCB00A4BEA0 /* FirebaseAuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7492282942EDCB00A4BEA0 /* FirebaseAuthError.swift */; };
 		3B7492352946BE3E00A4BEA0 /* GithubLogInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7492342946BE3E00A4BEA0 /* GithubLogInCoordinator.swift */; };
-		B500C9EE293DBA0800EBE39E /* FeedScrapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B500C9ED293DBA0800EBE39E /* FeedScrapViewModel.swift */; };
+		B500C9EE293DBA0800EBE39E /* ScrapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B500C9ED293DBA0800EBE39E /* ScrapViewModel.swift */; };
 		B50A27CF29279F5D00DF3E1F /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A278B29279F5D00DF3E1F /* Constant.swift */; };
 		B50A27DA29279F5D00DF3E1F /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A279729279F5D00DF3E1F /* ReusableView.swift */; };
 		B50A27DE29279F5D00DF3E1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B50A279D29279F5D00DF3E1F /* Assets.xcassets */; };
@@ -260,7 +260,7 @@
 		3B74920C293DCCAC00A4BEA0 /* GithubError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubError.swift; sourceTree = "<group>"; };
 		3B7492282942EDCB00A4BEA0 /* FirebaseAuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthError.swift; sourceTree = "<group>"; };
 		3B7492342946BE3E00A4BEA0 /* GithubLogInCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubLogInCoordinator.swift; sourceTree = "<group>"; };
-		B500C9ED293DBA0800EBE39E /* FeedScrapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedScrapViewModel.swift; sourceTree = "<group>"; };
+		B500C9ED293DBA0800EBE39E /* ScrapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapViewModel.swift; sourceTree = "<group>"; };
 		B50A277129279F2600DF3E1F /* burstcamp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = burstcamp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B50A278B29279F5D00DF3E1F /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		B50A279729279F5D00DF3E1F /* ReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
@@ -533,7 +533,6 @@
 		143185F0292B4D3D008CE459 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1459C3BB2929150200FA885D /* FeedCellType.swift */,
 				1458C6942928FB1B00E00B80 /* HomeView.swift */,
 				1459C3B82929102400FA885D /* RecommendFeedSection */,
 			);
@@ -630,6 +629,7 @@
 				141344DA292F82BE00187B86 /* Feed.swift */,
 				14A93D3F2936EFF900790034 /* FeedAPIModel.swift */,
 				14A93D412936F00F00790034 /* FeedWriter.swift */,
+				1459C3BB2929150200FA885D /* FeedCellType.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -991,7 +991,7 @@
 		B5BA278C2927B08C00BDCE08 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				B500C9ED293DBA0800EBE39E /* FeedScrapViewModel.swift */,
+				B500C9ED293DBA0800EBE39E /* ScrapViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1377,7 +1377,7 @@
 				D8494D4C2927CD6C008157F1 /* DefaultProfileImageView.swift in Sources */,
 				140E21062944519E00D6E2E5 /* BCFirestoreService.swift in Sources */,
 				B5DAD679292E4C6800C4A126 /* FeedDetailViewModel.swift in Sources */,
-				B500C9EE293DBA0800EBE39E /* FeedScrapViewModel.swift in Sources */,
+				B500C9EE293DBA0800EBE39E /* ScrapViewModel.swift in Sources */,
 				1496CF1C2940679C008F312F /* CoordinatorEvent.swift in Sources */,
 				D89AE5012936221600446AB3 /* ScrapUser.swift in Sources */,
 				B50A27E329279F5D00DF3E1F /* LogInViewModel.swift in Sources */,
