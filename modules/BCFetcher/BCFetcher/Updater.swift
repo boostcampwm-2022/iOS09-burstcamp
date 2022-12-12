@@ -21,9 +21,9 @@ where Data: Equatable, Failure: Error {
     
     public init(
         onRemoteCombine: @escaping (Data) -> AnyPublisher<Void, Failure>,
-        onLocalCombine:@autoclosure @escaping () -> AnyPublisher<Data, Failure>,
-        onLocal: @autoclosure @escaping () -> Data,
-        onUpdateLocal: @autoclosure @escaping () -> Void
+        onLocalCombine: @escaping () -> AnyPublisher<Data, Failure>,
+        onLocal: @escaping () -> Data,
+        onUpdateLocal: @escaping () -> Void
     ) {
         self.onRemoteCombine = onRemoteCombine
         self.onLocalCombine = onLocalCombine
@@ -31,20 +31,26 @@ where Data: Equatable, Failure: Error {
         self.onUpdateLocal = onUpdateLocal
     }
 
-    private var updateDidTrigger = PassthroughSubject<Void, Never>()
+    private let updateDidTrigger = PassthroughSubject<Void, Never>()
+
+    private var cancelBag = Set<AnyCancellable>()
 
     public func update() {
+        // 이전의 구독을 초기화
+        cancelBag = Set<AnyCancellable>()
         updateDidTrigger.send(Void())
     }
 
     public func configure(
         _ onNext: @escaping (_ status: Status<Failure>, _ data: Data) -> Void
     ) -> Set<AnyCancellable> {
-        var cancelBag = Set<AnyCancellable>()
-        
+
         onNext(.success, onLocal())
         
-        updateDidTrigger.sink { _ in
+        updateDidTrigger
+            .sink { [weak self] _ in
+            guard let self = self else { return }
+
             onNext(.loading, self.onLocal())
             // local storage에 있는 데이터를 기반으로 업데이트를 진행한다.
             self.onRemoteCombine(self.onLocal())
@@ -63,9 +69,9 @@ where Data: Equatable, Failure: Error {
                         } receiveValue: { data in
                             onNext(.success, data)
                         }
-                        .store(in: &cancelBag)
+                        .store(in: &self.cancelBag)
                 })
-                .store(in: &cancelBag)
+                .store(in: &self.cancelBag)
         }
         .store(in: &cancelBag)
 
