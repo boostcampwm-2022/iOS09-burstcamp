@@ -123,8 +123,9 @@ final class LogInManager {
         self.requestGithubAccessToken(code: code)
             .map { $0.accessToken }
             .sink(receiveCompletion: { [weak self] result in
-                // TODO: 실패할경우 마이페이지에서 처리해줄 사항 추가
-                print(result)
+                if case .failure = result {
+                    self?.withdrawalPublisher.send(false)
+                }
             }, receiveValue: { [weak self] token in
                 let credential = GitHubAuthProvider.credential(withToken: token)
 
