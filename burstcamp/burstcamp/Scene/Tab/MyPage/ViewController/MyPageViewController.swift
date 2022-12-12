@@ -6,6 +6,7 @@
 //
 
 import Combine
+import SafariServices
 import UIKit
 
 import FirebaseAuth
@@ -143,7 +144,8 @@ final class MyPageViewController: UIViewController {
         let okAction = UIAlertAction(
             title: Alert.yes,
             style: .default) { _ in
-                self.withdrawalPublisher.send()
+                LogInManager.shared.changeIsWithdrawal(bool: true)
+                self.coordinatorPublisher.send(.moveToGithubLogIn)
             }
         let cancelAction = UIAlertAction(
             title: Alert.no,

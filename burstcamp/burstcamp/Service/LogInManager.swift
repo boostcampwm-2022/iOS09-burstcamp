@@ -20,6 +20,7 @@ final class LogInManager {
 
     var autoLogInPublisher = PassthroughSubject<Bool, Never>()
     var logInPublisher = PassthroughSubject<AuthCoordinatorEvent, Never>()
+    var withdrawalPublisher = PassthroughSubject<Bool, FirebaseAuthError>()
 
     var userUUID: String? {
         return Auth.auth().currentUser?.uid
@@ -31,6 +32,8 @@ final class LogInManager {
     var domain: Domain = .iOS
     var camperID: String = ""
     var blodURL: String = ""
+
+    private(set) var isWithdrawal: Bool = false
 
     var githubAPIKey: Github? {
         guard let serviceInfoURL = Bundle.main.url(
@@ -73,11 +76,15 @@ final class LogInManager {
                 return self.getOrganizationMembership(nickname: nickname, token: self.token)
             }
             .receive(on: DispatchQueue.main)
-            .sink { result in
+            .sink { [weak self] result in
                 if case .failure(let error) = result {
-                    self.logInPublisher.send(.showAlert(error.errorDescription ?? ""))
+                    self?.logInPublisher.send(.showAlert(error.errorDescription ?? ""))
                 }
-            } receiveValue: { _ in
+            } receiveValue: { [weak self] _ in
+                guard let self = self else {
+                    self?.logInPublisher.send(.showAlert("accessToken 접근 실패"))
+                    return
+                }
                 self.signInToFirebase(token: self.token)
             }
             .store(in: &cancelBag)
@@ -96,52 +103,60 @@ final class LogInManager {
                 return
             }
 
-            KeyChainManager.save(token: token)
             self.isSignedUp(uuid: result.user.uid)
         }
     }
 
     func isSignedUp(uuid: String) {
         FirestoreUser.fetch(userUUID: uuid)
-            .sink {  result in
+            .sink { [weak self] result in
                 if case .failure = result {
-                    self.logInPublisher.send(.moveToDomainScreen)
+                    self?.logInPublisher.send(.moveToDomainScreen)
                 }
-            } receiveValue: {  _ in
-                self.logInPublisher.send(.moveToTabBarScreen)
+            } receiveValue: { [weak self] _ in
+                self?.logInPublisher.send(.moveToTabBarScreen)
             }
             .store(in: &cancelBag)
     }
 
-    func signOut() -> AnyPublisher<Bool, FirebaseAuthError> {
-        return Future<Bool, FirebaseAuthError> { promise in
+    func signOut(code: String) {
+        self.requestGithubAccessToken(code: code)
+            .map { $0.accessToken }
+            .sink(receiveCompletion: { [weak self] result in
+                if case .failure = result {
+                    self?.withdrawalPublisher.send(false)
+                }
+            }, receiveValue: { [weak self] token in
+                let credential = GitHubAuthProvider.credential(withToken: token)
 
-            guard let token = KeyChainManager.readToken() else {
-                promise(.failure(.readTokenError))
-                return
-            }
-
-            let credential = GitHubAuthProvider.credential(withToken: token)
-
-            Auth.auth().currentUser?.reauthenticate(with: credential) { _, error in
-                if error != nil {
-                    promise(.failure(.userReAuthError))
-                } else {
+                Auth.auth().currentUser?.reauthenticate(with: credential) { _, error in
+                    guard error == nil else {
+                        self?.withdrawalPublisher.send(completion: .failure(.userReAuthError))
+                        return
+                    }
                     Auth.auth().currentUser?.delete { error in
-                        if error != nil {
-                            promise(.failure(.userDeleteError))
-                        } else {
-                            guard (try? Auth.auth().signOut()) != nil else {
-                                promise(.failure(.authSignOutError))
-                                return
-                            }
-                            promise(.success(true))
+                        guard error == nil else {
+                            self?.withdrawalPublisher.send(
+                                completion: .failure(.userDeleteError)
+                            )
+                            return
                         }
+                        guard (try? Auth.auth().signOut()) != nil else {
+                            self?.withdrawalPublisher.send(
+                                completion: .failure(.authSignOutError)
+                            )
+                            return
+                        }
+                        self?.changeIsWithdrawal(bool: false)
+                        self?.withdrawalPublisher.send(true)
                     }
                 }
-            }
-        }
-        .eraseToAnyPublisher()
+            })
+            .store(in: &self.cancelBag)
+    }
+
+    func changeIsWithdrawal(bool: Bool) {
+        isWithdrawal = bool
     }
 
     func requestGithubAccessToken(code: String) -> AnyPublisher<GithubToken, GithubError> {

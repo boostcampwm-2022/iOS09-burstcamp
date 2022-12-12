@@ -51,38 +51,38 @@ final class SignUpDomainViewController: UIViewController {
         let output = viewModel.transform(input: input)
 
         output.webButtonChangeColor
-            .sink { domain in
-                self.changeUI(domain: domain)
+            .sink { [weak self] domain in
+                self?.changeUI(domain: domain)
             }
             .store(in: &cancelBag)
 
         output.aosButtonChangeColor
-            .sink { domain in
-                self.changeUI(domain: domain)
+            .sink { [weak self] domain in
+                self?.changeUI(domain: domain)
             }
             .store(in: &cancelBag)
 
         output.iosButtonChangeColor
-            .sink { domain in
-                self.changeUI(domain: domain)
+            .sink { [weak self] domain in
+                self?.changeUI(domain: domain)
             }
             .store(in: &cancelBag)
 
         output.webSelected
-            .sink { _ in
-                self.coordinatorPublisher.send(.moveToIDScreen)
+            .sink { [weak self] _ in
+                self?.coordinatorPublisher.send(.moveToIDScreen)
             }
             .store(in: &cancelBag)
 
         output.aosSelected
-            .sink { _ in
-                self.coordinatorPublisher.send(.moveToIDScreen)
+            .sink { [weak self] _ in
+                self?.coordinatorPublisher.send(.moveToIDScreen)
             }
             .store(in: &cancelBag)
 
         output.iosSelected
-            .sink { _ in
-                self.coordinatorPublisher.send(.moveToIDScreen)
+            .sink { [weak self] _ in
+                self?.coordinatorPublisher.send(.moveToIDScreen)
             }
             .store(in: &cancelBag)
     }

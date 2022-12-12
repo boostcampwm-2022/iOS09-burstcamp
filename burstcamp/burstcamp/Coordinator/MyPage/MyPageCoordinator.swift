@@ -18,7 +18,7 @@ protocol MyPageCoordinatorProtocol: TabBarChildCoordinator {
     )
 }
 
-final class MyPageCoordinator: MyPageCoordinatorProtocol {
+final class MyPageCoordinator: MyPageCoordinatorProtocol, GithubLogInCoordinator {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     var coordinatorPublisher = PassthroughSubject<TabBarCoordinatorEvent, Never>()
@@ -42,6 +42,8 @@ final class MyPageCoordinator: MyPageCoordinatorProtocol {
                     )
                 case .moveToOpenSourceScreen:
                     self?.moveToOpenSourceScreen()
+                case .moveToGithubLogIn:
+                    self?.moveToGithubLogIn()
                 default: break
                 }
             }
