@@ -33,7 +33,7 @@ final class LogInManager {
     var camperID: String = ""
     var blodURL: String = ""
 
-    var isWithdrawal: Bool = false
+    private(set) var isWithdrawal: Bool = false
 
     var githubAPIKey: Github? {
         guard let serviceInfoURL = Bundle.main.url(
@@ -141,12 +141,16 @@ final class LogInManager {
                             )
                             return
                         }
-                        self.isWithdrawal = false
+                        self.changeIsWithdrawal(bool: false)
                         self.withdrawalPublisher.send(true)
                     }
                 }
             })
             .store(in: &self.cancelBag)
+    }
+
+    func changeIsWithdrawal(bool: Bool) {
+        isWithdrawal = bool
     }
 
     func requestGithubAccessToken(code: String) -> AnyPublisher<GithubToken, GithubError> {

@@ -144,7 +144,7 @@ final class MyPageViewController: UIViewController {
         let okAction = UIAlertAction(
             title: Alert.yes,
             style: .default) { _ in
-                LogInManager.shared.isWithdrawal = true
+                LogInManager.shared.changeIsWithdrawal(bool: true)
                 self.coordinatorPublisher.send(.moveToGithubLogIn)
             }
         let cancelAction = UIAlertAction(
