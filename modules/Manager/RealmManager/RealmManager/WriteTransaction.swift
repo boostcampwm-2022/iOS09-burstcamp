@@ -25,15 +25,18 @@ public final class WriteTransaction {
     /// auto Increment를 지원하는 add
     public func add<T: RealmCompatible>(
         _ value: T,
+        autoIncrement: Bool,
         defaultIndex: Int = 0,
         update: Realm.UpdatePolicy = .modified
     ) where T.RealmModel: AutoIncrementable {
-        let maxIndex = realm.objects(T.RealmModel.self)
-            .map(\.autoIndex)
-            .max() ?? defaultIndex
-
         var realmModel = value.realmModel()
-        realmModel.autoIndex = maxIndex + 1
+        if autoIncrement {
+            let maxIndex = realm.objects(T.RealmModel.self)
+                .map(\.autoIndex)
+                .max() ?? defaultIndex
+
+            realmModel.autoIndex = maxIndex + 1
+        }
         realm.add(realmModel, update: update)
     }
 
