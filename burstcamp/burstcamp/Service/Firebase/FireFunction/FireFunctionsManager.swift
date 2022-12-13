@@ -17,6 +17,7 @@ struct FireFunctionsManager {
     private static let fetchBlogTitleFunction = "fetchBlogTitle"
     private static let deleteUserFunction = "deleteUser"
 
+    private static let blogURLField = "blogURL"
     private static let blogTitleField = "blogTitle"
     private static let userUUIDField = "userUUID"
     private static let isFinishField = "isFinish"
@@ -25,7 +26,7 @@ struct FireFunctionsManager {
         return Future<String, NetworkError> { promise in
             functions
                 .httpsCallable(fetchBlogTitleFunction)
-                .call([blogTitleField: link]) { result, error in
+                .call([blogURLField: link]) { result, error in
                     if error != nil {
                         promise(.failure(NetworkError.unknownError))
                     }
