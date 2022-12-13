@@ -5,11 +5,10 @@
 //  Created by SEUNGMIN OH on 2022/12/13.
 //
 
-import Foundation
-import Combine
+import struct Combine.AnyPublisher
 
 import protocol RealmSwift.RealmFetchable
-import RealmSwift
+import struct RealmSwift.Results
 
 extension Container {
     public func publisher<Element: RealmFetchable>(
@@ -18,7 +17,6 @@ extension Container {
         return object(type)
             .collectionPublisher
             .subscribe(on: DispatchQueue.global())
-            .threadSafeReference()
             .eraseToAnyPublisher()
     }
 }

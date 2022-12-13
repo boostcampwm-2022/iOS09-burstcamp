@@ -5,10 +5,10 @@
 //  Created by SEUNGMIN OH on 2022/12/13.
 //
 
-import Foundation
-
-import Realm
-import RealmSwift
+import class Realm.RLMRealmConfiguration
+import struct RealmSwift.Realm
+import struct RealmSwift.Results
+import protocol RealmSwift.RealmFetchable
 
 public final class Container {
     

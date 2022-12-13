@@ -5,9 +5,7 @@
 //  Created by SEUNGMIN OH on 2022/12/13.
 //
 
-import Foundation
-
-import RealmSwift
+import struct RealmSwift.Results
 
 public final class FetchedResults<T: RealmCompatible> {
 

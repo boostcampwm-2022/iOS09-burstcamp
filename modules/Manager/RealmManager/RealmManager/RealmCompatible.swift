@@ -5,7 +5,8 @@
 //  Created by SEUNGMIN OH on 2022/12/13.
 //
 
-import RealmSwift
+import class RealmSwift.Object
+import struct RealmSwift.SortDescriptor
 
 /// 구조체를 RealmSwift에서 사용할 수 있도록 래핑해주는 `protocol`
 public protocol RealmCompatible {
