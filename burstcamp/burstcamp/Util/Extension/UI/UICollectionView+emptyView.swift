@@ -22,12 +22,12 @@ extension UICollectionView {
         }
 
         let imageView = UIImageView().then {
-            $0.image = UIImage(named: "AppIcon")
+            $0.image = UIImage.burstcamper
         }
 
         let descriptionLabel = UILabel().then {
             $0.text = "아직 스크랩한 피드가 없어요"
-            $0.font = .regular14
+            $0.font = .bold14
             $0.textColor = .systemGray2
         }
 
@@ -40,7 +40,7 @@ extension UICollectionView {
 
         descriptionLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(imageView.snp.bottom)
+            make.top.equalTo(imageView.snp.bottom).offset(Constant.space8)
         }
 
         self.backgroundView = emptyView
