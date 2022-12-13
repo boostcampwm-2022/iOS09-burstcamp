@@ -22,6 +22,21 @@ public final class WriteTransaction {
         realm.add(value.realmModel(), update: update)
     }
 
+    /// auto Increment를 지원하는 add
+    public func add<T: RealmCompatible>(
+        _ value: T,
+        defaultIndex: Int = 0,
+        update: Realm.UpdatePolicy = .modified
+    ) where T.RealmModel: AutoIncrementable {
+        let maxIndex = realm.objects(T.RealmModel.self)
+            .map(\.autoIndex)
+            .max() ?? defaultIndex
+
+        var realmModel = value.realmModel()
+        realmModel.autoIndex = maxIndex + 1
+        realm.add(realmModel, update: update)
+    }
+
     public func update<T: RealmCompatible>(
         _ type: T.Type,
         values: [T.PropertyValue]

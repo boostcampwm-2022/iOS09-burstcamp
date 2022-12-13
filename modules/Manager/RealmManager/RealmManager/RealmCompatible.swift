@@ -19,6 +19,11 @@ public protocol RealmCompatible {
     func realmModel() -> RealmModel
 }
 
+/// 자동증가를 지원하기 위한 프로토콜
+public protocol AutoIncrementable {
+    var autoIndex: Int { get set }
+}
+
 /// 데이터를 type-safe 하게 사용할 수 있도록 도와주는 `typealias`
 public typealias PropertyValuePair = (name: String, value: Any)
 
