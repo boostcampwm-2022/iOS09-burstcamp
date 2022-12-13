@@ -28,9 +28,9 @@ extension TabBarPage {
 
     var pageIconTitle: String {
         switch self {
-        case .home: return "house"
-        case .scrapPage: return "bookmark"
-        case .myPage: return "person.circle"
+        case .home: return "house.fill"
+        case .scrapPage: return "bookmark.fill"
+        case .myPage: return "person.fill"
         }
     }
 

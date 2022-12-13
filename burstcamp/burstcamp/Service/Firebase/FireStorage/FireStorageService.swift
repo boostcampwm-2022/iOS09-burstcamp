@@ -15,7 +15,7 @@ final class FireStorageService {
     private static let storagePath = Storage.storage()
 
     static func save(image: UIImage) -> AnyPublisher<String, Error> {
-        guard let imageData = image.jpegData(compressionQuality: 1.0)
+        guard let imageData = image.jpegData(compressionQuality: 0.2)
         else {
             return Fail(error: ConvertError.invalidImageConvert)
                 .eraseToAnyPublisher()

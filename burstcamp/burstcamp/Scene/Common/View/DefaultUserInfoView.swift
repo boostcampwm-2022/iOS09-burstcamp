@@ -20,7 +20,7 @@ class DefaultUserInfoView: UIStackView {
 
     private lazy var nameLabel = UILabel().then {
         $0.textColor = UIColor.systemGray
-        $0.font = UIFont.bold12
+        $0.font = UIFont.extraBold12
         $0.text = ""
     }
 

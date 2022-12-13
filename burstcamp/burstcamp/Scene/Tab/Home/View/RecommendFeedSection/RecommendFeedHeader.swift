@@ -9,10 +9,27 @@ import UIKit
 
 final class RecommendFeedHeader: UICollectionReusableView {
 
+    private let titleText = "이번 주\n캠퍼들의 PICK"
+
+    private lazy var titleAttributeText = NSMutableAttributedString(string: titleText).then {
+        let string = titleText as NSString
+        let length = string.length
+        $0.addAttribute(
+            .font, value: UIFont.extraBold24, range: NSRange(location: 0, length: length)
+        )
+        $0.addAttribute(.foregroundColor, value: UIColor.main, range: string.range(of: "이"))
+        $0.addAttribute(.foregroundColor, value: UIColor.main, range: string.range(of: "P"))
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 12
+        $0.addAttribute(
+            .paragraphStyle,
+            value: paragraphStyle,
+            range: NSRange(location: 0, length: length)
+        )
+    }
+
     private lazy var titleLabel = DefaultMultiLineLabel().then {
-        $0.textColor = .dynamicBlack
-        $0.font = .extraBold24
-        $0.text = "이번 주의\n새로운 글들이에요"
+        $0.attributedText  = titleAttributeText
         $0.numberOfLines = 2
     }
 

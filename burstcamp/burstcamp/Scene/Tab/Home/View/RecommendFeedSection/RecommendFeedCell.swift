@@ -15,7 +15,7 @@ final class RecommendFeedCell: UICollectionViewCell {
         $0.axis = .vertical
         $0.distribution = .equalSpacing
         $0.alignment = .leading
-        $0.spacing = Constant.space12.cgFloat
+        $0.spacing = Constant.space24.cgFloat
     }
 
     private lazy var titleLabel = DefaultMultiLineLabel().then {
@@ -62,5 +62,8 @@ extension RecommendFeedCell {
         titleLabel.text = feed.title
         userView.updateView(feedWriter: feed.writer)
         backgroundColor = feed.writer.domain.brightColor
+        layer.masksToBounds = false
+        layer.shadowOffset = CGSize(width: 2, height: 2)
+        layer.shadowOpacity = 0.3
     }
 }

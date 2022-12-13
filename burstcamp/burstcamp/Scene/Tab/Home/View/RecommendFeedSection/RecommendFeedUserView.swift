@@ -17,12 +17,12 @@ final class RecommendFeedUserView: UIStackView {
     }
 
     private lazy var nicknameLabel = UILabel().then {
-        $0.textColor = .systemGray2
+        $0.textColor = .black
         $0.font = .bold12
     }
 
     private lazy var blogTitleLabel = UILabel().then {
-        $0.textColor = .systemGray2
+        $0.textColor = .black
         $0.font = .regular8
     }
 
