@@ -9,18 +9,25 @@ import Combine
 import UIKit
 
 protocol AppCoordinatorProtocol: NormalCoordinator {
+    var window: UIWindow { get set }
+
     func showAuthFlow()
     func showTabBarFlow()
 }
 
 final class AppCoordinator: AppCoordinatorProtocol {
     var childCoordinators: [Coordinator] = []
+    var window: UIWindow
     var navigationController: UINavigationController
     var cancelBag = Set<AnyCancellable>()
 
-    init(navigationController: UINavigationController) {
+    private var loadingView: LoadingView!
+
+    init(window: UIWindow, navigationController: UINavigationController) {
+        self.window = window
         self.navigationController = navigationController
         configureNavigationBar()
+        configureLoadingView()
     }
 
     func dismissNavigationController() {
@@ -37,6 +44,7 @@ final class AppCoordinator: AppCoordinatorProtocol {
     }
 
     func start() {
+        animateLoadingView()
         LogInManager.shared.autoLogInPublisher
             .sink { [weak self] isLogIn in
                 if isLogIn {
@@ -82,6 +90,26 @@ final class AppCoordinator: AppCoordinatorProtocol {
             .store(in: &cancelBag)
         childCoordinators.append(tabBarCoordinator)
         tabBarCoordinator.start()
+    }
+
+    private func configureLoadingView() {
+        loadingView = LoadingView()
+
+        window.addSubview(loadingView)
+        loadingView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+    }
+
+    private func animateLoadingView() {
+        // swiftlint:disable:next multiline_arguments
+        UIView.animate(withDuration: 1.0) { [weak self] in
+            self?.loadingView.alpha = 0
+        } completion: { [weak self] isFinished in
+            if isFinished {
+                self?.loadingView.removeFromSuperview()
+            }
+        }
     }
 
     private func configureNavigationBar() {

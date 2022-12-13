@@ -7,9 +7,11 @@
 
 import UIKit
 
+import SnapKit
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
-    var window: UIWindow?
+    var window: UIWindow!
     var appCoordinator: AppCoordinator!
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -34,14 +36,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func startApp(windowScene: UIWindowScene) {
-        UserManager.shared.user
         let navigationController = UINavigationController()
         window = UIWindow(windowScene: windowScene)
-        setInitialDarkMode()
-        window?.rootViewController = navigationController
-        window?.makeKeyAndVisible()
 
-        appCoordinator = AppCoordinator(navigationController: navigationController)
+        setInitialDarkMode()
+        window.backgroundColor = .background
+        window.rootViewController = navigationController
+        window.makeKeyAndVisible()
+
+        appCoordinator = AppCoordinator(window: window, navigationController: navigationController)
         appCoordinator.start()
     }
 
