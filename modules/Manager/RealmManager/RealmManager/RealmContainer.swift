@@ -14,12 +14,12 @@ public final class Container {
     
     private let realm: Realm
 
-    public convenience init(_ debug: Bool = false) throws {
+    public convenience init(debug: Bool = false) throws {
         if debug { print("Realm Database 위치 :", RLMRealmConfiguration.default().fileURL) }
         try self.init(realm: Realm())
     }
 
-    init(realm: Realm) {
+    internal init(realm: Realm) {
         self.realm = realm
     }
 
@@ -45,5 +45,9 @@ public final class Container {
         results = results.sorted(by: query.sortDescriptors)
 
         return FetchedResults(results: results)
+    }
+
+    internal func object<Element: RealmFetchable>(_ type: Element.Type) -> Results<Element> {
+        return realm.objects(type)
     }
 }

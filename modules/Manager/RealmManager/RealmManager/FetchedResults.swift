@@ -11,13 +11,13 @@ import RealmSwift
 
 public final class FetchedResults<T: RealmCompatible> {
 
-    let results: Results<T.RealmModel>
+    internal let results: Results<T.RealmModel>
 
     public var count: Int {
         return results.count
     }
 
-    init(results: Results<T.RealmModel>) {
+    internal init(results: Results<T.RealmModel>) {
         self.results = results
     }
 

@@ -13,6 +13,7 @@
 		B572EFF62948637000A9413C /* WriteTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EFF52948637000A9413C /* WriteTransaction.swift */; };
 		B572EFF8294863E800A9413C /* RealmContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EFF7294863E800A9413C /* RealmContainer.swift */; };
 		B572EFFA2948644E00A9413C /* FetchedResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EFF92948644E00A9413C /* FetchedResults.swift */; };
+		B572F022294885F600A9413C /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572F021294885F600A9413C /* Publisher.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		B572EFF52948637000A9413C /* WriteTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteTransaction.swift; sourceTree = "<group>"; };
 		B572EFF7294863E800A9413C /* RealmContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmContainer.swift; sourceTree = "<group>"; };
 		B572EFF92948644E00A9413C /* FetchedResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedResults.swift; sourceTree = "<group>"; };
+		B572F021294885F600A9413C /* Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 				B572EFF52948637000A9413C /* WriteTransaction.swift */,
 				B572EFF7294863E800A9413C /* RealmContainer.swift */,
 				B572EFF92948644E00A9413C /* FetchedResults.swift */,
+				B572F021294885F600A9413C /* Publisher.swift */,
 			);
 			path = RealmManager;
 			sourceTree = "<group>";
@@ -156,6 +159,7 @@
 				B572EFFA2948644E00A9413C /* FetchedResults.swift in Sources */,
 				B572EFF4294861DD00A9413C /* RealmCompatible.swift in Sources */,
 				B572EFF8294863E800A9413C /* RealmContainer.swift in Sources */,
+				B572F022294885F600A9413C /* Publisher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
