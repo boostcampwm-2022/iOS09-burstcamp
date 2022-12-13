@@ -39,30 +39,36 @@ final class ImageCacheManager: NSObject, NSCacheDelegate {
 
     func image(
         urlString: String,
-        isDiskCaching: Bool
-    ) -> AnyPublisher<UIImage?, Never> {
+        isDiskCaching: Bool,
+        imagePublisher: PassthroughSubject<UIImage?, Never>
+    ) {
         // 1. memory cache
         if let image = memoryCachedImage(urlString: urlString) {
+            imagePublisher.send(image)
+
             let etag = UserDefaultsManager.etag(urlString: urlString)
-            return request(urlString: urlString, etag: etag, isDisk: isDiskCaching)
+            request(urlString: urlString, etag: etag, isDisk: isDiskCaching)
                 .catch { _ in Just(image) }
-                .eraseToAnyPublisher()
+                .sink { image in imagePublisher.send(image) }
+                .store(in: &cancelBag)
         }
 
         // 2. disk cache
         if isDiskCaching, let image = diskCachedImage(urlString: urlString) {
+            imagePublisher.send(image)
+
             let etag = UserDefaultsManager.etag(urlString: urlString)
-            return request(urlString: urlString, etag: etag, isDisk: isDiskCaching)
+            request(urlString: urlString, etag: etag, isDisk: isDiskCaching)
                 .catch { _ in Just(image) }
-                .eraseToAnyPublisher()
+                .sink { image in imagePublisher.send(image) }
+                .store(in: &cancelBag)
         }
 
         // 3. network request
-        return request(urlString: urlString, etag: nil, isDisk: isDiskCaching)
-            .catch { _ in
-                Just(nil)
-            }
-            .eraseToAnyPublisher()
+        request(urlString: urlString, etag: nil, isDisk: isDiskCaching)
+            .catch { _ in Just(nil) }
+            .sink { image in imagePublisher.send(image) }
+            .store(in: &cancelBag)
     }
 
     // MARK: Memory
