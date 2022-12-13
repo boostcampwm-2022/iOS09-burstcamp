@@ -6,6 +6,7 @@
 //
 
 import class Realm.RLMRealmConfiguration
+import class RealmSwift.Object
 import struct RealmSwift.Realm
 import struct RealmSwift.Results
 import protocol RealmSwift.RealmFetchable
@@ -28,12 +29,18 @@ public final class Container {
     }
 
     public func write(
-        _ block: (WriteTransaction) throws -> Void
+        _ block: (_ transaction: WriteTransaction) throws -> Void
     ) throws {
         let transaction = WriteTransaction(realm: realm)
         try realm.write {
             try block(transaction)
         }
+    }
+
+    public func values<T: Object>(
+        _ type: T.Type
+    ) -> Results<T> {
+        return realm.objects(type)
     }
 
     public func values<T>(

@@ -6,6 +6,7 @@
 //
 
 import struct RealmSwift.Realm
+import class RealmSwift.Object
 
 public final class WriteTransaction {
     
@@ -22,22 +23,39 @@ public final class WriteTransaction {
         realm.add(value.realmModel(), update: update)
     }
 
-    /// auto Increment를 지원하는 add
+    /// Object Model을 직접 받는 add
+    public func add<T: Object>(
+        _ value: T,
+        update: Realm.UpdatePolicy = .modified
+    ) {
+        realm.add(value, update: update)
+    }
+
+    /// Object Model을 직접 받고 autoIncrement를 지원
+    public func add<T>(
+        _ value: T,
+        autoIncrement: Bool,
+        defaultIndex: Int = 0,
+        update: Realm.UpdatePolicy = .modified
+    ) where T: Object & AutoIncrementable {
+        if autoIncrement {
+            let maxIndex = realm.objects(T.self)
+                .map(\.autoIndex)
+                .max() ?? defaultIndex
+
+            value.autoIndex = maxIndex + 1
+        }
+        realm.add(value, update: update)
+    }
+
+    /// auto Increment를 지원
     public func add<T: RealmCompatible>(
         _ value: T,
         autoIncrement: Bool,
         defaultIndex: Int = 0,
         update: Realm.UpdatePolicy = .modified
     ) where T.RealmModel: AutoIncrementable {
-        var realmModel = value.realmModel()
-        if autoIncrement {
-            let maxIndex = realm.objects(T.RealmModel.self)
-                .map(\.autoIndex)
-                .max() ?? defaultIndex
-
-            realmModel.autoIndex = maxIndex + 1
-        }
-        realm.add(realmModel, update: update)
+        add(value.realmModel(), autoIncrement: autoIncrement)
     }
 
     public func update<T: RealmCompatible>(
