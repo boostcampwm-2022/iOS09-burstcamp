@@ -57,6 +57,7 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
             tabBarController.tabBar.standardAppearance = tabBarAppearance
         }
         navigationController.viewControllers = [tabBarController]
+        checkNotificationFeed()
     }
 
     private func configureTabBarItem(of viewController: UIViewController, with page: TabBarPage) {
@@ -148,5 +149,12 @@ extension TabBarCoordinator: ContainFeedDetailCoordinator {
         let feedDetailViewController = prepareFeedDetailViewController(feedUUID: feedUUID)
         sinkFeedViewController(feedDetailViewController)
         self.navigationController.pushViewController(feedDetailViewController, animated: true)
+    }
+
+    private func checkNotificationFeed() {
+        if !UserDefaultsManager.isForeground(),
+           UserDefaultsManager.notificationFeedUUID() != nil {
+            moveToDetail()
+        }
     }
 }
