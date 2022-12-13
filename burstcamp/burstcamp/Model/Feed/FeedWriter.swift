@@ -29,27 +29,3 @@ extension FeedWriter {
         self.blogTitle = data["blogTitle"] as? String ?? ""
     }
 }
-
-extension FeedWriter: RealmConvertible {
-    init(realmModel: FeedWriterRealmModel) {
-        self.userUUID = realmModel.userUUID
-        self.nickname = realmModel.nickname
-        self.camperID = realmModel.camperID
-        self.ordinalNumber = realmModel.ordinalNumber
-        self.domain = realmModel.domain
-        self.profileImageURL = realmModel.profileImageURL
-        self.blogTitle = realmModel.blogTitle
-    }
-
-    func realmModel() -> FeedWriterRealmModel {
-        return FeedWriterRealmModel(
-            userUUID: self.userUUID,
-            nickname: self.nickname,
-            camperID: self.camperID,
-            ordinalNumber: self.ordinalNumber,
-            domain: self.domain,
-            profileImageURL: self.profileImageURL,
-            blogTitle: self.blogTitle
-        )
-    }
-}

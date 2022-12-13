@@ -18,6 +18,7 @@ class FeedRealmModel: Object {
     @Persisted var content: String
     @Persisted var scrapCount: Int
     @Persisted var isScraped: Bool
+    @Persisted var scrapDate: Date
 
     init(
         feedUUID: String,
@@ -28,7 +29,8 @@ class FeedRealmModel: Object {
         thumbnailURL: String,
         content: String,
         scrapCount: Int,
-        isScraped: Bool
+        isScraped: Bool,
+        scrapDate: Date
     ) {
         self.feedUUID = feedUUID
         self.writer = writer
@@ -39,5 +41,6 @@ class FeedRealmModel: Object {
         self.content = content
         self.scrapCount = scrapCount
         self.isScraped = isScraped
+        self.scrapDate = scrapDate
     }
 }

@@ -33,7 +33,7 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "145FB897292E447E00BA7B3B"
+               BlueprintIdentifier = "143D93A2292E484100C67C27"
                BuildableName = "burstcampTests.xctest"
                BlueprintName = "burstcampTests"
                ReferencedContainer = "container:burstcamp.xcodeproj">

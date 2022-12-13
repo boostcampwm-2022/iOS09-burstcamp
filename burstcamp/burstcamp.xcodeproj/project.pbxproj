@@ -98,9 +98,10 @@
 		B572EF9F294772FB00A9413C /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B572EF9E294772FB00A9413C /* RealmSwift */; };
 		B572EFA129479D1500A9413C /* FeedRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EFA029479D1500A9413C /* FeedRealmModel.swift */; };
 		B572EFA329479FEC00A9413C /* FeedWriterRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EFA229479FEC00A9413C /* FeedWriterRealmModel.swift */; };
-		B572EFA92947A68600A9413C /* RealmConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EFA82947A68600A9413C /* RealmConvertible.swift */; };
 		B572F0192948673700A9413C /* RealmManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B572F0122948670100A9413C /* RealmManager.framework */; };
 		B572F01A2948673700A9413C /* RealmManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B572F0122948670100A9413C /* RealmManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B572F01C2948688000A9413C /* Feed+RealmCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572F01B2948688000A9413C /* Feed+RealmCompatible.swift */; };
+		B572F01E29486C0500A9413C /* FeedWriter+RealmCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572F01D29486C0500A9413C /* FeedWriter+RealmCompatible.swift */; };
 		B597F9552935B94B0022D3E6 /* DefaultToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */; };
 		B59EDAD529408DAF00D451CC /* BCResource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59EDAD429408D8000D451CC /* BCResource.framework */; };
 		B59EDAD629408DAF00D451CC /* BCResource.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B59EDAD429408D8000D451CC /* BCResource.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -307,8 +308,9 @@
 		B572EF822945E1CA00A9413C /* Publisher+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Async.swift"; sourceTree = "<group>"; };
 		B572EFA029479D1500A9413C /* FeedRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRealmModel.swift; sourceTree = "<group>"; };
 		B572EFA229479FEC00A9413C /* FeedWriterRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedWriterRealmModel.swift; sourceTree = "<group>"; };
-		B572EFA82947A68600A9413C /* RealmConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmConvertible.swift; sourceTree = "<group>"; };
 		B572F00D2948670100A9413C /* RealmManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RealmManager.xcodeproj; path = ../../../modules/Manager/RealmManager/RealmManager.xcodeproj; sourceTree = "<group>"; };
+		B572F01B2948688000A9413C /* Feed+RealmCompatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Feed+RealmCompatible.swift"; sourceTree = "<group>"; };
+		B572F01D29486C0500A9413C /* FeedWriter+RealmCompatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedWriter+RealmCompatible.swift"; sourceTree = "<group>"; };
 		B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultToggleButton.swift; sourceTree = "<group>"; };
 		B59EDACF29408D8000D451CC /* BCResource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BCResource.xcodeproj; path = ../../modules/BCResource/BCResource.xcodeproj; sourceTree = "<group>"; };
 		B5BA27862927AEF600BDCE08 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -639,9 +641,11 @@
 			isa = PBXGroup;
 			children = (
 				141344DA292F82BE00187B86 /* Feed.swift */,
+				B572F01B2948688000A9413C /* Feed+RealmCompatible.swift */,
 				14A93D3F2936EFF900790034 /* FeedAPIModel.swift */,
 				B572EFA029479D1500A9413C /* FeedRealmModel.swift */,
 				14A93D412936F00F00790034 /* FeedWriter.swift */,
+				B572F01D29486C0500A9413C /* FeedWriter+RealmCompatible.swift */,
 				B572EFA229479FEC00A9413C /* FeedWriterRealmModel.swift */,
 				1459C3BB2929150200FA885D /* FeedCellType.swift */,
 			);
@@ -759,7 +763,6 @@
 			children = (
 				B50A279729279F5D00DF3E1F /* ReusableView.swift */,
 				143185F7292B5C88008CE459 /* ContainCollectionView.swift */,
-				B572EFA82947A68600A9413C /* RealmConvertible.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -1324,6 +1327,7 @@
 				D8576F3629378F51002885FE /* URLRegularExpression.swift in Sources */,
 				D88295FC292A4452005B4273 /* HTTPMethod.swift in Sources */,
 				D84452F2292CCA80008E811B /* SettingSection.swift in Sources */,
+				B572F01E29486C0500A9413C /* FeedWriter+RealmCompatible.swift in Sources */,
 				B572EF812945E19C00A9413C /* Sequence+Async.swift in Sources */,
 				D8494D502927CEAA008157F1 /* DefaultBadgeLabel.swift in Sources */,
 				B5E0D94A292F631C001727F5 /* MockHTMLString.swift in Sources */,
@@ -1357,6 +1361,7 @@
 				141344D9292F803800187B86 /* UIControl+Combine.swift in Sources */,
 				143185EA292B4A8D008CE459 /* ScrapPageViewController.swift in Sources */,
 				B5DAD67A292E4C6800C4A126 /* FeedDetailView.swift in Sources */,
+				B572F01C2948688000A9413C /* Feed+RealmCompatible.swift in Sources */,
 				3B7491E92938DCCD00A4BEA0 /* SignUpDomainViewModel.swift in Sources */,
 				141344D5292F801100187B86 /* TypeConversion.swift in Sources */,
 				D89AE4E82933AF1E00446AB3 /* ImageCacheManager.swift in Sources */,
@@ -1428,7 +1433,6 @@
 				1496CF1C2940679C008F312F /* CoordinatorEvent.swift in Sources */,
 				D89AE5012936221600446AB3 /* ScrapUser.swift in Sources */,
 				B50A27E329279F5D00DF3E1F /* LogInViewModel.swift in Sources */,
-				B572EFA92947A68600A9413C /* RealmConvertible.swift in Sources */,
 				B50A27F029279F5D00DF3E1F /* MyPageViewController.swift in Sources */,
 				141344CD292F800300187B86 /* UI+ReusableView.swift in Sources */,
 				14927E202929CCA0001F2E97 /* RecommendFeedHeader.swift in Sources */,
