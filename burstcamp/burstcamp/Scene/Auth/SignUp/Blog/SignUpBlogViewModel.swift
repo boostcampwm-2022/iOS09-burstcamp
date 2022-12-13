@@ -101,6 +101,12 @@ final class SignUpBlogViewModel {
             throw FirebaseAuthError.fetchUUIDError
         }
 
+        var blogURL = blogURL
+        if let lastIndex = blogURL.lastIndex(of: "/"),
+           lastIndex == blogURL.index(before: blogURL.endIndex) {
+            blogURL.removeLast()
+        }
+
         return User(
             userUUID: userUUID,
             nickname: LogInManager.shared.nickname,

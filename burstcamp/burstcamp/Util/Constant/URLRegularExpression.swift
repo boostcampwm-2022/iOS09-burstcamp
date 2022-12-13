@@ -8,6 +8,6 @@
 import Foundation
 
 enum URLRegularExpression {
-    static let tistory = #"^https://?[a-z0-9-]{4,32}.tistory.com$"#
+    static let tistory = #"^https://?[a-z0-9-]{4,32}.tistory.com[/]{0,1}$"#
     static let velog = #"^https://velog.io/@?[A-Za-z0-9-_]{3,16}$"#
 }

@@ -99,6 +99,7 @@ async function createFeedDataIfNeeded(docRef, writerUUID, feedUUID, feed) {
  */
 export async function getFeedWriterUUID(blogURL) {
 	// https://stackoverflow.com/questions/46568142/google-firestore-query-on-substring-of-a-property-value-text-search/52715590#52715590
+	logger.log('해당 유저의 blogURL', blogURL)
 	return userRef
 		.where('blogURL', '>=', blogURL.slice(0, -1))
 		.where('blogURL', '<=', blogURL)
