@@ -14,9 +14,13 @@ public final class Container {
     
     private let realm: Realm
 
-    public convenience init(debug: Bool = false) throws {
+    public convenience init(
+        debug: Bool = false,
+        schemaVersion: UInt64 = 0
+    ) throws {
         if debug { print("Realm Database 위치 :", RLMRealmConfiguration.default().fileURL) }
-        try self.init(realm: Realm())
+        let config = Realm.Configuration(schemaVersion: schemaVersion)
+        try self.init(realm: Realm(configuration: config))
     }
 
     internal init(realm: Realm) {

@@ -11,12 +11,11 @@ import protocol RealmSwift.RealmFetchable
 import struct RealmSwift.Results
 
 extension Container {
-    public func publisher<Element: RealmFetchable>(
-        _ type: Element.Type
-    ) -> AnyPublisher<Results<Element>, Error> {
+    public func publisher<T: RealmFetchable>(_ type: T.Type)
+    -> AnyPublisher<Results<T>, Error> {
         return object(type)
             .collectionPublisher
-            .subscribe(on: DispatchQueue.global())
+            .threadSafeReference()
             .eraseToAnyPublisher()
     }
 }
