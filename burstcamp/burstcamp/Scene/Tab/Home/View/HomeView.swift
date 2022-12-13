@@ -51,14 +51,18 @@ final class HomeView: UIView, ContainCollectionView {
     private func configureUI() {
         configureHomeView()
         addSubview(collectionView)
-        collectionView.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
-            $0.leading.trailing.bottom.equalToSuperview()
-        }
+        configureCollectionView()
     }
 
     private func configureHomeView() {
         backgroundColor = .background
+    }
+
+    private func configureCollectionView() {
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
     }
 
     private func createLayout() -> UICollectionViewLayout {

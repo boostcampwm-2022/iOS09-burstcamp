@@ -19,10 +19,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8Gw-zZ-7Ja">
-                                <rect key="frame" x="145" y="353.66666666666669" width="100" height="100"/>
+                                <rect key="frame" x="145" y="372" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="G8R-5N-sSr"/>
-                                    <constraint firstAttribute="width" constant="100" id="PkF-1N-xs2"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="JFa-IC-ScG"/>
                                 </constraints>
                                 <imageReference key="image" image="LaunchScreen" renderingMode="original"/>
                             </imageView>
@@ -30,8 +30,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="LaunchScreenBackground"/>
                         <constraints>
-                            <constraint firstItem="8Gw-zZ-7Ja" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="N7G-2p-qnD"/>
-                            <constraint firstItem="8Gw-zZ-7Ja" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="-25" id="Xn1-Zw-fSE"/>
+                            <constraint firstItem="8Gw-zZ-7Ja" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="LCb-XV-eh1"/>
+                            <constraint firstItem="8Gw-zZ-7Ja" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="W4r-ER-58R"/>
                         </constraints>
                     </view>
                 </viewController>

@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SnapKit
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -40,9 +42,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.backgroundColor = .background
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
-
+        addLoadingView(window: window, navigationController: navigationController)
         appCoordinator = AppCoordinator(navigationController: navigationController)
         appCoordinator.start()
+    }
+
+    private func addLoadingView(window: UIWindow?, navigationController: UINavigationController) {
+        let systemIsDarkMode = navigationController.traitCollection.isDarkMode
+        let loadingView = LoadingView(systemIsDarkMode: systemIsDarkMode)
+        guard let window = window else {
+            return
+        }
+        window.addSubview(loadingView)
+        loadingView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        UIView.animate(withDuration: 1.5, delay: 0) {
+            loadingView.alpha = 0
+        }
+        UIView.animate(withDuration: 1.0) {
+            loadingView.alpha = 0
+        } completion: { isFinished in
+            if isFinished {
+                loadingView.removeFromSuperview()
+            }
+        }
     }
 
     private func setInitialDarkMode() {

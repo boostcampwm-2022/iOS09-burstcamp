@@ -19,6 +19,7 @@ final class HomeViewController: UIViewController {
         }
         return view
     }
+    private var loadingView: LoadingView!
 
     private var viewModel: HomeViewModel
     private var cancelBag = Set<AnyCancellable>()
