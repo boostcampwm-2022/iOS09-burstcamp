@@ -36,11 +36,12 @@ public final class Container {
         }
     }
 
-    public func values<T: RealmCompatible>(
+    public func values<T>(
         _ type: T.Type,
         query: T.Query? = nil,
         sort: T.Sort? = nil
-    ) -> FetchedResults<T> {
+    ) -> FetchedResults<T>
+    where T: RealmCompatible & QuerySupportable & SortSupportable {
         var results = realm.objects(T.RealmModel.self)
 
         if let predicate = query?.predicate {
