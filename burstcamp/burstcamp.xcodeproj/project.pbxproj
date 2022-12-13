@@ -640,13 +640,10 @@
 		14A93D3E2936EFEE00790034 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
+				B5FF711D2948DCA0008E69F2 /* RealmModel */,
 				141344DA292F82BE00187B86 /* Feed.swift */,
-				B572F01B2948688000A9413C /* Feed+RealmCompatible.swift */,
 				14A93D3F2936EFF900790034 /* FeedAPIModel.swift */,
-				B572EFA029479D1500A9413C /* FeedRealmModel.swift */,
 				14A93D412936F00F00790034 /* FeedWriter.swift */,
-				B572F01D29486C0500A9413C /* FeedWriter+RealmCompatible.swift */,
-				B572EFA229479FEC00A9413C /* FeedWriterRealmModel.swift */,
 				1459C3BB2929150200FA885D /* FeedCellType.swift */,
 			);
 			path = Feed;
@@ -1074,6 +1071,18 @@
 				B5DAD678292E4C6800C4A126 /* FeedDetailViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		B5FF711D2948DCA0008E69F2 /* RealmModel */ = {
+			isa = PBXGroup;
+			children = (
+				B572F01B2948688000A9413C /* Feed+RealmCompatible.swift */,
+				B572EFA029479D1500A9413C /* FeedRealmModel.swift */,
+				B572F01D29486C0500A9413C /* FeedWriter+RealmCompatible.swift */,
+				B572EFA229479FEC00A9413C /* FeedWriterRealmModel.swift */,
+				B5FF711B2948CCC9008E69F2 /* FeedType.swift */,
+			);
+			path = RealmModel;
 			sourceTree = "<group>";
 		};
 		D8494D572927E8FB008157F1 /* View */ = {

@@ -6,9 +6,16 @@
 //
 
 import Foundation
-import RealmSwift
 
-class FeedRealmModel: Object {
+import RealmSwift
+import RealmManager
+
+final class NormalFeedRealmModel: FeedRealmModel { }
+final class RecommendFeedRealmModel: FeedRealmModel { }
+final class ScrapFeedRealmModel: FeedRealmModel { }
+
+class FeedRealmModel: Object, AutoIncrementable {
+    @Persisted(primaryKey: true) var autoIndex: Int = 0
     @Persisted var feedUUID: String
     @Persisted var writer: FeedWriterRealmModel
     @Persisted var title: String

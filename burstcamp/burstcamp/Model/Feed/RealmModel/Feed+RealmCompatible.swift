@@ -75,19 +75,4 @@ extension Feed: RealmCompatible {
             }
         }
     }
-
-    enum Query: QueryType {
-        case feedUUID(String)
-
-        var predicate: NSPredicate? {
-            switch self {
-            case .feedUUID(let value):
-                return NSPredicate(format: "feedUUID == %@", value)
-            }
-        }
-
-        var sortDescriptors: [RealmSortDescriptor] {
-            return [RealmSortDescriptor(stringLiteral: "scrapDate")]
-        }
-    }
 }
