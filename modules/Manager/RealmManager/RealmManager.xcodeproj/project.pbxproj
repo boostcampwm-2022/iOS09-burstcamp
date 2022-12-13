@@ -9,12 +9,14 @@
 /* Begin PBXBuildFile section */
 		B572EFE72948606300A9413C /* RealmManager.h in Headers */ = {isa = PBXBuildFile; fileRef = B572EFE62948606300A9413C /* RealmManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B572EFF22948616200A9413C /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B572EFF12948616200A9413C /* RealmSwift */; };
+		B572EFF4294861DD00A9413C /* RealmCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EFF3294861DD00A9413C /* RealmCompatible.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B572EFE32948606300A9413C /* RealmManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RealmManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B572EFE62948606300A9413C /* RealmManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RealmManager.h; sourceTree = "<group>"; };
 		B572EFED2948609300A9413C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		B572EFF3294861DD00A9413C /* RealmCompatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmCompatible.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +52,7 @@
 			children = (
 				B572EFE62948606300A9413C /* RealmManager.h */,
 				B572EFED2948609300A9413C /* README.md */,
+				B572EFF3294861DD00A9413C /* RealmCompatible.swift */,
 			);
 			path = RealmManager;
 			sourceTree = "<group>";
@@ -140,6 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B572EFF4294861DD00A9413C /* RealmCompatible.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
