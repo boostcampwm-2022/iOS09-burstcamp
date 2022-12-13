@@ -67,7 +67,7 @@ final class MyPageProfileView: UIView {
 
     func updateView(user: User) {
         print("얼마나 마이페이지가 업데이트 되나?", #function)
-        profileImageView.setImage(urlString: user.profileImageURL)
+        profileImageView.setImage(urlString: user.profileImageURL, isDiskCaching: true)
         nicknameLabel.text = user.nickname
         badgeView.updateView(user: user)
         blogTitleLabel.updateBlogImageLabel(user: user)
