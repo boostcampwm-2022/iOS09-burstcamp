@@ -16,7 +16,6 @@
 		140E21062944519E00D6E2E5 /* BCFirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E21052944519E00D6E2E5 /* BCFirestoreService.swift */; };
 		140E21092944688B00D6E2E5 /* Future+async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E21082944688B00D6E2E5 /* Future+async.swift */; };
 		1413169229485C4600DEFB1F /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1413169129485C4600DEFB1F /* LoadingView.swift */; };
-		14131694294861A900DEFB1F /* UITraitCollection+isDarkMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14131693294861A900DEFB1F /* UITraitCollection+isDarkMode.swift */; };
 		141344CD292F800300187B86 /* UI+ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C6292F800300187B86 /* UI+ReusableView.swift */; };
 		141344CE292F800300187B86 /* UINavigationController+configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C7292F800300187B86 /* UINavigationController+configure.swift */; };
 		141344CF292F800300187B86 /* UIStackView+addArrangedSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C8292F800300187B86 /* UIStackView+addArrangedSubviews.swift */; };
@@ -199,7 +198,6 @@
 		140E21052944519E00D6E2E5 /* BCFirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCFirestoreService.swift; sourceTree = "<group>"; };
 		140E21082944688B00D6E2E5 /* Future+async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Future+async.swift"; sourceTree = "<group>"; };
 		1413169129485C4600DEFB1F /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
-		14131693294861A900DEFB1F /* UITraitCollection+isDarkMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITraitCollection+isDarkMode.swift"; sourceTree = "<group>"; };
 		141344C6292F800300187B86 /* UI+ReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UI+ReusableView.swift"; sourceTree = "<group>"; };
 		141344C7292F800300187B86 /* UINavigationController+configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+configure.swift"; sourceTree = "<group>"; };
 		141344C8292F800300187B86 /* UIStackView+addArrangedSubviews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+addArrangedSubviews.swift"; sourceTree = "<group>"; };
@@ -484,7 +482,6 @@
 				1418960129377593005A42D4 /* UIScrollView+.swift */,
 				14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */,
 				1481B10C2941D1AB0093E591 /* UIResponder+.swift */,
-				14131693294861A900DEFB1F /* UITraitCollection+isDarkMode.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -515,7 +512,6 @@
 			children = (
 				1459C3BB2929150200FA885D /* FeedCellType.swift */,
 				1458C6942928FB1B00E00B80 /* HomeView.swift */,
-				1413169129485C4600DEFB1F /* LoadingView.swift */,
 				1459C3B82929102400FA885D /* RecommendFeedSection */,
 			);
 			path = View;
@@ -951,6 +947,7 @@
 				B50A27B429279F5D00DF3E1F /* DefaultUserInfoView.swift */,
 				B5DAD680292E58BF00C4A126 /* DefaultMultilLineLabel.swift */,
 				B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */,
+				1413169129485C4600DEFB1F /* LoadingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1296,7 +1293,6 @@
 				B5E0D94C292F750D001727F5 /* FeedContentWebView.swift in Sources */,
 				B50A27E229279F5D00DF3E1F /* LogInManager.swift in Sources */,
 				3B7492292942EDCB00A4BEA0 /* FirebaseAuthError.swift in Sources */,
-				14131694294861A900DEFB1F /* UITraitCollection+isDarkMode.swift in Sources */,
 				B50A27F529279F5D00DF3E1F /* AppCoordinator.swift in Sources */,
 				B50A27F929279F5D00DF3E1F /* TabBarPage.swift in Sources */,
 				3B061FE2292926DA00BFA71D /* SignUpBlogViewModel.swift in Sources */,

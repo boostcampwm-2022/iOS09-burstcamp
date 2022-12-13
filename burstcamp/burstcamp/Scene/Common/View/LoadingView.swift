@@ -17,10 +17,7 @@ final class LoadingView: UIView {
         $0.contentMode = .scaleAspectFill
     }
 
-    private let systemIsDarkMode: Bool
-
-    init(systemIsDarkMode: Bool) {
-        self.systemIsDarkMode = systemIsDarkMode
+    init() {
         super.init(frame: .zero)
         configureUI()
     }
@@ -35,7 +32,7 @@ final class LoadingView: UIView {
     }
 
     private func configureView() {
-        backgroundColor = systemIsDarkMode ? UIColor.black : UIColor.white
+        backgroundColor = .background
     }
 
     private func configureImageView() {
