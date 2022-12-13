@@ -99,6 +99,8 @@
 		B572EFA129479D1500A9413C /* FeedRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EFA029479D1500A9413C /* FeedRealmModel.swift */; };
 		B572EFA329479FEC00A9413C /* FeedWriterRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EFA229479FEC00A9413C /* FeedWriterRealmModel.swift */; };
 		B572EFA92947A68600A9413C /* RealmConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EFA82947A68600A9413C /* RealmConvertible.swift */; };
+		B572F0192948673700A9413C /* RealmManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B572F0122948670100A9413C /* RealmManager.framework */; };
+		B572F01A2948673700A9413C /* RealmManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B572F0122948670100A9413C /* RealmManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B597F9552935B94B0022D3E6 /* DefaultToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */; };
 		B59EDAD529408DAF00D451CC /* BCResource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59EDAD429408D8000D451CC /* BCResource.framework */; };
 		B59EDAD629408DAF00D451CC /* BCResource.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B59EDAD429408D8000D451CC /* BCResource.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -176,6 +178,13 @@
 			remoteGlobalIDString = B50A277029279F2600DF3E1F;
 			remoteInfo = burstcamp;
 		};
+		B572F0112948670100A9413C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B572F00D2948670100A9413C /* RealmManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B572EFE32948606300A9413C;
+			remoteInfo = RealmManager;
+		};
 		B59EDAD329408D8000D451CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B59EDACF29408D8000D451CC /* BCResource.xcodeproj */;
@@ -200,6 +209,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				B59EDAD629408DAF00D451CC /* BCResource.framework in Embed Frameworks */,
+				B572F01A2948673700A9413C /* RealmManager.framework in Embed Frameworks */,
 				B5BC81BB2945BB5D0077BF29 /* BCFetcher.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -298,6 +308,7 @@
 		B572EFA029479D1500A9413C /* FeedRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRealmModel.swift; sourceTree = "<group>"; };
 		B572EFA229479FEC00A9413C /* FeedWriterRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedWriterRealmModel.swift; sourceTree = "<group>"; };
 		B572EFA82947A68600A9413C /* RealmConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmConvertible.swift; sourceTree = "<group>"; };
+		B572F00D2948670100A9413C /* RealmManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RealmManager.xcodeproj; path = ../../../modules/Manager/RealmManager/RealmManager.xcodeproj; sourceTree = "<group>"; };
 		B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultToggleButton.swift; sourceTree = "<group>"; };
 		B59EDACF29408D8000D451CC /* BCResource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BCResource.xcodeproj; path = ../../modules/BCResource/BCResource.xcodeproj; sourceTree = "<group>"; };
 		B5BA27862927AEF600BDCE08 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -379,6 +390,7 @@
 				B52A7F272927A88F00E271D2 /* Then in Frameworks */,
 				B5BC81BA2945BB5D0077BF29 /* BCFetcher.framework in Frameworks */,
 				B5BA277F2927AEC600BDCE08 /* FirebaseFirestore in Frameworks */,
+				B572F0192948673700A9413C /* RealmManager.framework in Frameworks */,
 				B5BA27812927AEC600BDCE08 /* FirebaseFunctions in Frameworks */,
 				B5BA27852927AEC600BDCE08 /* FirebaseStorage in Frameworks */,
 				B59EDAD529408DAF00D451CC /* BCResource.framework in Frameworks */,
@@ -918,9 +930,26 @@
 			path = AsyncCompatible;
 			sourceTree = "<group>";
 		};
+		B572F00C294866D900A9413C /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				B572F00D2948670100A9413C /* RealmManager.xcodeproj */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		B572F00E2948670100A9413C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B572F0122948670100A9413C /* RealmManager.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		B59EDACE29408D5C00D451CC /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				B572F00C294866D900A9413C /* Manager */,
 				B5BC81B42945BB580077BF29 /* BCFetcher.xcodeproj */,
 				B59EDACF29408D8000D451CC /* BCResource.xcodeproj */,
 			);
@@ -1183,6 +1212,10 @@
 					ProductGroup = B59EDAD029408D8000D451CC /* Products */;
 					ProjectRef = B59EDACF29408D8000D451CC /* BCResource.xcodeproj */;
 				},
+				{
+					ProductGroup = B572F00E2948670100A9413C /* Products */;
+					ProjectRef = B572F00D2948670100A9413C /* RealmManager.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -1193,6 +1226,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		B572F0122948670100A9413C /* RealmManager.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = RealmManager.framework;
+			remoteRef = B572F0112948670100A9413C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		B59EDAD429408D8000D451CC /* BCResource.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
