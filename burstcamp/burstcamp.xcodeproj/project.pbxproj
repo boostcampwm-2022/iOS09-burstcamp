@@ -102,6 +102,7 @@
 		B572F01A2948673700A9413C /* RealmManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B572F0122948670100A9413C /* RealmManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B572F01C2948688000A9413C /* Feed+RealmCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572F01B2948688000A9413C /* Feed+RealmCompatible.swift */; };
 		B572F01E29486C0500A9413C /* FeedWriter+RealmCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572F01D29486C0500A9413C /* FeedWriter+RealmCompatible.swift */; };
+		B572F0202948768100A9413C /* FeedRealmDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572F01F2948768100A9413C /* FeedRealmDataSource.swift */; };
 		B597F9552935B94B0022D3E6 /* DefaultToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */; };
 		B59EDAD529408DAF00D451CC /* BCResource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59EDAD429408D8000D451CC /* BCResource.framework */; };
 		B59EDAD629408DAF00D451CC /* BCResource.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B59EDAD429408D8000D451CC /* BCResource.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -311,6 +312,7 @@
 		B572F00D2948670100A9413C /* RealmManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RealmManager.xcodeproj; path = ../../../modules/Manager/RealmManager/RealmManager.xcodeproj; sourceTree = "<group>"; };
 		B572F01B2948688000A9413C /* Feed+RealmCompatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Feed+RealmCompatible.swift"; sourceTree = "<group>"; };
 		B572F01D29486C0500A9413C /* FeedWriter+RealmCompatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedWriter+RealmCompatible.swift"; sourceTree = "<group>"; };
+		B572F01F2948768100A9413C /* FeedRealmDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRealmDataSource.swift; sourceTree = "<group>"; };
 		B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultToggleButton.swift; sourceTree = "<group>"; };
 		B59EDACF29408D8000D451CC /* BCResource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BCResource.xcodeproj; path = ../../modules/BCResource/BCResource.xcodeproj; sourceTree = "<group>"; };
 		B5BA27862927AEF600BDCE08 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -725,6 +727,7 @@
 				B50A279829279F5D00DF3E1F /* Resource */,
 				B50A278829279F5D00DF3E1F /* Util */,
 				B5BC81BC2945BD500077BF29 /* FeedLocalDataSource.swift */,
+				B572F01F2948768100A9413C /* FeedRealmDataSource.swift */,
 				B5BC81BE2945BFA30077BF29 /* FeedRemoteDataSource.swift */,
 			);
 			path = burstcamp;
@@ -1080,7 +1083,6 @@
 				B572EFA029479D1500A9413C /* FeedRealmModel.swift */,
 				B572F01D29486C0500A9413C /* FeedWriter+RealmCompatible.swift */,
 				B572EFA229479FEC00A9413C /* FeedWriterRealmModel.swift */,
-				B5FF711B2948CCC9008E69F2 /* FeedType.swift */,
 			);
 			path = RealmModel;
 			sourceTree = "<group>";
@@ -1433,6 +1435,7 @@
 				D8576F32293779D4002885FE /* UserManager.swift in Sources */,
 				B5F4B036293CC0B300947250 /* FirestoreCollection.swift in Sources */,
 				3B061FD82928CC5600BFA71D /* SignUpDomainViewController.swift in Sources */,
+				B572F0202948768100A9413C /* FeedRealmDataSource.swift in Sources */,
 				B50A27DA29279F5D00DF3E1F /* ReusableView.swift in Sources */,
 				D84C812E292E590300C984E8 /* MyPageEditValidationResult.swift in Sources */,
 				D8494D4C2927CD6C008157F1 /* DefaultProfileImageView.swift in Sources */,

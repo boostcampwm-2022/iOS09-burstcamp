@@ -18,25 +18,14 @@ final class FeedLocalDataSource {
     private var normalFeedListSubject = CurrentValueSubject<[Feed], Failure>([])
     private var recommendFeedListSubject = CurrentValueSubject<[Feed], Failure>([])
     private var scrapFeedListSubject = CurrentValueSubject<[Feed], Failure>([])
-
-    private lazy var sharedNormalFeedListPublisher
-    : AnyPublisher<[Feed], Failure> = normalFeedListSubject
-        .eraseToAnyPublisher()
-
-    private lazy var sharedRecommendFeedListPublisher
-    : AnyPublisher<[Feed], Failure> = recommendFeedListSubject
-        .eraseToAnyPublisher()
-
-    private lazy var sharedScrapFeedListPublisher
-    : AnyPublisher<[Feed], Failure> = scrapFeedListSubject
-        .eraseToAnyPublisher()
 }
 
 extension FeedLocalDataSource {
     // MARK: Normal FeedList
 
     func normalFeedListPublisher() -> AnyPublisher<[Feed], Failure> {
-        return sharedNormalFeedListPublisher
+        return normalFeedListSubject
+            .eraseToAnyPublisher()
     }
 
     func cachedNormalFeedList() -> [Feed] {
@@ -49,7 +38,7 @@ extension FeedLocalDataSource {
 
     // MARK: Normal Feed
     func normalFeedPublisher(feedUUID: String) -> AnyPublisher<Feed, Failure> {
-        return sharedNormalFeedListPublisher
+        return normalFeedListSubject
             .compactMap { $0.feed(feedUUID: feedUUID) }
             .eraseToAnyPublisher()
     }
@@ -63,11 +52,12 @@ extension FeedLocalDataSource {
     // MARK: Recommend FeedList
 
     func recommendFeedListPublisher() -> AnyPublisher<[Feed], Failure> {
-        return sharedRecommendFeedListPublisher
+        return recommendFeedListSubject
+            .eraseToAnyPublisher()
     }
 
     func cachedRecommendFeedList() -> [Feed] {
-        return normalFeedListSubject.value
+        return recommendFeedListSubject.value
     }
 
     func updateRecommendFeedListCache(_ feedList: [Feed]) {
@@ -77,7 +67,7 @@ extension FeedLocalDataSource {
     // MARK: Recommend Feed
 
     func recommendFeedPublisher(feedUUID: String) -> AnyPublisher<Feed, Failure> {
-        return sharedRecommendFeedListPublisher
+        return recommendFeedListSubject
             .compactMap { $0.feed(feedUUID: feedUUID) }
             .eraseToAnyPublisher()
     }
@@ -91,7 +81,8 @@ extension FeedLocalDataSource {
     // MARK: Scrap FeedList
 
     func scrapFeedListPublisher() -> AnyPublisher<[Feed], Failure> {
-        return sharedScrapFeedListPublisher
+        return scrapFeedListSubject
+            .eraseToAnyPublisher()
     }
 
     func cachedScrapFeedList() -> [Feed] {
@@ -105,7 +96,7 @@ extension FeedLocalDataSource {
     // MARK: Scrap Feed
 
     func scrapFeedPublisher(feedUUID: String) -> AnyPublisher<Feed, Failure> {
-        return sharedScrapFeedListPublisher
+        return scrapFeedListSubject
             .compactMap { $0.feed(feedUUID: feedUUID) }
             .eraseToAnyPublisher()
     }

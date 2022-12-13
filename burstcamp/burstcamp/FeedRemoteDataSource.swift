@@ -10,6 +10,8 @@ import Foundation
 
 // TODO: firestore 메서드 분리해서 없애야함
 import class FirebaseFirestore.Timestamp
+import class FirebaseFirestore.Query
+import class FirebaseFirestore.CollectionReference
 
 final class FeedRemoteDataSource {
 
@@ -35,7 +37,7 @@ final class FeedRemoteDataSource {
 
     func scrapFeedListPublisher(userUUID: String) -> AnyPublisher<[Feed], Failure> {
         let path = FirestoreCollection.scrapFeeds(userUUID: userUUID).path
-        return feedListPublisher(path)
+        return feedListPublisher(path, orderBy: "scrapDate", descending: true)
     }
 
     func updateFeedPublisher(
@@ -92,7 +94,9 @@ final class FeedRemoteDataSource {
 
     private func feedListPublisher(
         _ collectionPath: String,
-        userUUID: String = UserManager.shared.user.userUUID
+        userUUID: String = UserManager.shared.user.userUUID,
+        orderBy: String? = nil,
+        descending: Bool = false
     ) -> AnyPublisher<[Feed], Failure> {
         return Future {
             try await self.firestoreService.getCollection(collectionPath)

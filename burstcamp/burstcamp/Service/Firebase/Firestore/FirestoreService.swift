@@ -73,6 +73,27 @@ final class FirestoreService {
         }
     }
 
+    public func getCollection(
+        _ collectionPath: String,
+        _ makeQuery: (_ collection: CollectionReference) -> Query
+    ) async throws -> [FirestoreData] {
+        try await withCheckedThrowingContinuation { continuation in
+            makeQuery(database.collection(collectionPath))
+                .getDocuments(completion: { querySnapshot, error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    guard let querySnapShot = querySnapshot else {
+                        continuation.resume(throwing: FirestoreServiceError.getCollection)
+                        return
+                    }
+                    let collectionData = querySnapShot.documents.map { $0.data() }
+                    continuation.resume(returning: collectionData)
+                })
+        }
+    }
+
     public func getCollection(query: Query) async throws -> (
         collectionData: [FirestoreData],
         lastSnapshot: QueryDocumentSnapshot?
