@@ -13,6 +13,7 @@ public protocol RealmCompatible {
     associatedtype RealmModel: RealmSwift.Object
     associatedtype PropertyValue: PropertyValueType
     associatedtype Query: QueryType
+    associatedtype Sort: SortingType
 
     init(realmModel: RealmModel)
     func realmModel() -> RealmModel
@@ -35,5 +36,7 @@ public typealias RealmSortDescriptor = RealmSwift.SortDescriptor
 /// Query를 사용할 수 있도록 도와주는 protocol
 public protocol QueryType {
     var predicate: NSPredicate? { get }
+}
+public protocol SortingType {
     var sortDescriptors: [RealmSortDescriptor] { get }
 }
