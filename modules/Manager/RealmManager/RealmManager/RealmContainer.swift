@@ -11,29 +11,34 @@ import struct RealmSwift.Realm
 import struct RealmSwift.Results
 import protocol RealmSwift.RealmFetchable
 
+///
+///@discussion
+/// * Realm 은 항상 serial Queue에서 동작해야 합니다.
+/// * Realm 의 transaction은 항상 같은 thread에서 동작해야합니다.
 public final class Container {
     
     private let realm: Realm
+    public let serialQueue: DispatchQueue
 
-    public convenience init(
+    public init(
         debug: Bool = false,
-        schemaVersion: UInt64 = 0
+        schemaVersion: UInt64 = 0,
+        queue: DispatchQueue
     ) throws {
         if debug { print("Realm Database 위치 :", RLMRealmConfiguration.default().fileURL) }
         let config = Realm.Configuration(schemaVersion: schemaVersion)
-        try self.init(realm: Realm(configuration: config))
-    }
-
-    internal init(realm: Realm) {
-        self.realm = realm
+        self.serialQueue = queue
+        self.realm = try Realm(configuration: config, queue: queue)
     }
 
     public func write(
-        _ block: (_ transaction: WriteTransaction) throws -> Void
-    ) throws {
-        let transaction = WriteTransaction(realm: realm)
-        try realm.write {
-            try block(transaction)
+        _ block: @escaping (_ transaction: WriteTransaction) throws -> Void
+    ) {
+        serialQueue.async {
+            let transaction = WriteTransaction(realm: self.realm)
+            try! self.realm.write {
+                try! block(transaction)
+            }
         }
     }
 

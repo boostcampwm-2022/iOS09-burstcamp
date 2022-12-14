@@ -15,6 +15,7 @@ extension Container {
     -> AnyPublisher<Results<T>, Error> {
         return object(type)
             .collectionPublisher
+            .subscribe(on: serialQueue)
             .threadSafeReference()
             .eraseToAnyPublisher()
     }

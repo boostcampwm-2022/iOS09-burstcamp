@@ -18,17 +18,21 @@ where Data: Equatable, Failure: Error {
     public var onLocalCombine: (() -> AnyPublisher<Data, Failure>)
     public var onLocal: (() -> Data)
     public var onUpdateLocal: (() -> Void)
+
+    private let queue: DispatchQueue
     
     public init(
         onRemoteCombine: @escaping (Data) -> AnyPublisher<Void, Failure>,
         onLocalCombine: @escaping () -> AnyPublisher<Data, Failure>,
         onLocal: @escaping () -> Data,
-        onUpdateLocal: @escaping () -> Void
+        onUpdateLocal: @escaping () -> Void,
+        queue: DispatchQueue
     ) {
         self.onRemoteCombine = onRemoteCombine
         self.onLocalCombine = onLocalCombine
         self.onLocal = onLocal
         self.onUpdateLocal = onUpdateLocal
+        self.queue = queue
     }
 
     private let updateDidTrigger = PassthroughSubject<Void, Never>()
@@ -48,12 +52,14 @@ where Data: Equatable, Failure: Error {
         onNext(.success, onLocal())
         
         updateDidTrigger
+            .receive(on: self.queue)
             .sink { [weak self] _ in
             guard let self = self else { return }
 
             onNext(.loading, self.onLocal())
             // local storage에 있는 데이터를 기반으로 업데이트를 진행한다.
             self.onRemoteCombine(self.onLocal())
+                .receive(on: self.queue)
                 .sink(receiveCompletion: { response in
                     if case let .failure(error) = response {
                         onNext(.failure(error), self.onLocal())
@@ -72,7 +78,7 @@ where Data: Equatable, Failure: Error {
                         .store(in: &self.cancelBag)
                 })
                 .store(in: &self.cancelBag)
-        }
+            }
         .store(in: &cancelBag)
 
         return cancelBag

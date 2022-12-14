@@ -19,12 +19,15 @@ public protocol Fetchable {
     var onLocalCombine: (() -> AnyPublisher<Data, FetchingError>) { get }
     var onLocal: (() -> Data) { get }
     var onUpdateLocal: ((Data) -> Void) { get }
+
+    var queue: DispatchQueue { get }
     
     init(
         onRemoteCombine: @autoclosure @escaping () -> AnyPublisher<Data, FetchingError>,
         onLocalCombine:@autoclosure @escaping () -> AnyPublisher<Data, FetchingError>,
         onLocal: @autoclosure @escaping () -> Data,
-        onUpdateLocal: @escaping (Data) -> Void
+        onUpdateLocal: @escaping (Data) -> Void,
+        queue: DispatchQueue
     )
     
     func fetch(_ onNext: @escaping (Status<FetchingError>, Data) -> Void) -> Set<AnyCancellable>
