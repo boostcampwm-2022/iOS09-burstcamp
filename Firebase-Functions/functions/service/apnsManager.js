@@ -22,10 +22,11 @@ export async function sendNotification() {
         userUUIDs.map(userUUID => {
         return getFCMToken(userUUID)
     }))
+    const validTokens = tokens.filter(fcmToken => fcmToken != '')
 
-    logger.log('보낼 토큰들을 만들었어요', tokens)
+    logger.log('보낼 토큰들을 만들었어요', validTokens)
 
-    sendMessage(tokens, recentFeed, writer)
+    sendMessage(validTokens, recentFeed, writer)
 }
 
 
