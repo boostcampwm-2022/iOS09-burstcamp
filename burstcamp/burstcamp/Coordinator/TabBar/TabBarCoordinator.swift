@@ -152,8 +152,7 @@ extension TabBarCoordinator: ContainFeedDetailCoordinator {
     }
 
     private func checkNotificationFeed() {
-        if !UserDefaultsManager.isForeground(),
-           UserDefaultsManager.notificationFeedUUID() != nil {
+        if UserDefaultsManager.notificationFeedUUID() != nil {
             moveToDetail()
         }
     }
