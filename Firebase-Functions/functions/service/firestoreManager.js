@@ -136,7 +136,11 @@ export async function getFCMToken(userUUID) {
 		.doc(userUUID)
 		.get()
 		.then((doc) => {
-			return doc.data()['fcmToken'] 
+			if (doc.exists) {
+				return doc.data()['fcmToken'] 
+			} else {
+				return ''
+			}
 		})
 }
 

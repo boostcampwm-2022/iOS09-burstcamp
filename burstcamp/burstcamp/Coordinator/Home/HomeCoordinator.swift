@@ -38,8 +38,6 @@ extension HomeCoordinator {
                 }
             }
             .store(in: &cancelBag)
-
-        checkNotificationFeed()
     }
 
     func moveToFeedDetail(feed: Feed) {
@@ -52,17 +50,5 @@ extension HomeCoordinator {
         let feedDetailViewController = prepareFeedDetailViewController(feedUUID: feedUUID)
         sinkFeedViewController(feedDetailViewController)
         self.navigationController.pushViewController(feedDetailViewController, animated: true)
-    }
-}
-
-// MARK: - handle push notification
-
-extension HomeCoordinator {
-    private func checkNotificationFeed() {
-        if !UserDefaultsManager.isForeground(),
-           let feedUUID = UserDefaultsManager.notificationFeedUUID() {
-            UserDefaultsManager.removeNotificationFeedUUID()
-            moveToFeedDetail(feedUUID: feedUUID)
-        }
     }
 }
