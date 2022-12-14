@@ -22,13 +22,22 @@ public final class Container {
 
     public init(
         debug: Bool = false,
+        initialize: Bool = false,
         schemaVersion: UInt64 = 0,
         queue: DispatchQueue
     ) throws {
         if debug { print("Realm Database 위치 :", RLMRealmConfiguration.default().fileURL) }
-        let config = Realm.Configuration(schemaVersion: schemaVersion)
         self.serialQueue = queue
-        self.realm = try Realm(configuration: config, queue: queue)
+        if initialize {
+            let config = Realm.Configuration(schemaVersion: UInt64.max - 1)
+            self.realm = try Realm(configuration: config, queue: queue)
+            try realm.write {
+                realm.deleteAll()
+            }
+        } else {
+            let config = Realm.Configuration(schemaVersion: schemaVersion)
+            self.realm = try Realm(configuration: config, queue: queue)
+        }
     }
 
     public func write(
