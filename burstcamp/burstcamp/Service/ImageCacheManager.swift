@@ -210,7 +210,9 @@ final class ImageCacheManager: NSObject, NSCacheDelegate {
         switch max {
         case 0...300: return max
         case 301...600: return ImageCacheManager.thumnailMaxPixel
-        default: return max / 2
+        case 601...1000: return max / 2
+        case 1001...1500: return max / 3
+        default: return max / 4
         }
     }
 }

@@ -28,9 +28,5 @@ extension UIImageView {
             isDiskCaching: isDiskCaching,
             imagePublisher: imagePublisher
         )
-//            .map { image in image == nil ? defaultImage : image }
-//            .receive(on: DispatchQueue.main)
-//            .assign(to: \.image, on: self)
-//            .store(in: &ImageCacheManager.shared.cancelBag)
     }
 }
