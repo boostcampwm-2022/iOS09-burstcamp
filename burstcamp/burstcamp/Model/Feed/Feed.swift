@@ -57,3 +57,18 @@ extension Feed {
         isScraped = false
     }
 }
+
+extension Feed {
+    /// Mock Init
+    init() {
+        self.feedUUID = ""
+        self.writer = FeedWriter()
+        self.title = ""
+        self.pubDate = Date(timeIntervalSince1970: 0)
+        self.url = ""
+        self.thumbnailURL = ""
+        self.content = ""
+        self.scrapCount = -1
+        self.isScraped = false
+    }
+}

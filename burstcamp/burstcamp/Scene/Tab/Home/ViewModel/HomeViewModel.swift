@@ -24,47 +24,18 @@ final class HomeViewModel {
 
     private let localDataSource: FeedLocalDataSource
     private let remoteDataSource: FeedRemoteDataSource
-    private let fetcher: Fetcher<HomeFeedList, FirestoreServiceError>
 
     init(
-        localDataSource: FeedLocalDataSource = FeedLocalDataSource.shared,
+        localDataSource: FeedLocalDataSource = FeedRealmDataSource.shared,
         remoteDataSource: FeedRemoteDataSource = FeedRemoteDataSource.shared
     ) {
         self.localDataSource = localDataSource
         self.remoteDataSource = remoteDataSource
-
-        let userUUID = UserManager.shared.user.userUUID
-        fetcher = Fetcher<HomeFeedList, FirestoreServiceError>(
-            onRemoteCombine: {
-                remoteDataSource.recommendFeedListPublisher(userUUID: userUUID)
-                    .zip(remoteDataSource.normalFeedListPublisher(userUUID: userUUID)) {
-                        HomeFeedList(recommendFeed: $0, normalFeed: $1)
-                    }
-                    .eraseToAnyPublisher()
-            },
-            onLocalCombine: {
-                localDataSource.recommendFeedListPublisher()
-                    .zip(localDataSource.normalFeedListPublisher()) {
-                        HomeFeedList(recommendFeed: $0, normalFeed: $1)
-                    }
-                    .eraseToAnyPublisher()
-            },
-            onLocal: {
-                HomeFeedList(
-                    recommendFeed: localDataSource.cachedRecommendFeedList(),
-                    normalFeed: localDataSource.cachedNormalFeedList()
-                )
-            },
-            onUpdateLocal: { homeFeedList in
-                localDataSource.updateRecommendFeedListCache(homeFeedList.recommendFeed)
-                localDataSource.updateNormalFeedListCache(homeFeedList.normalFeed)
-            }
-        )
     }
 
     private let reloadData = CurrentValueSubject<Void?, Never>(nil)
     private let hideIndicator = CurrentValueSubject<Void?, Never>(nil)
-    private let showAlert = CurrentValueSubject<FirestoreServiceError?, Never>(nil)
+    private let showAlert = CurrentValueSubject<Error?, Never>(nil)
 
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
@@ -75,15 +46,48 @@ final class HomeViewModel {
     struct Output {
         let reloadData: AnyPublisher<Void, Never>
         let hideIndicator: AnyPublisher<Void, Never>
-        let showAlert: AnyPublisher<FirestoreServiceError, Never>
+        let showAlert: AnyPublisher<Error, Never>
     }
 
     func transform(input: Input) -> Output {
         input.viewDidLoad
             .merge(with: input.viewDidRefresh)
+            .receive(on: RealmConfig.serialQueue)
             .sink { _ in
-                self.fetcher.fetch { status, data in
-//                    print("\(#fileID) | fetcher: \(status)")
+                let userUUID = UserManager.shared.user.userUUID
+                let fetcher = Fetcher<HomeFeedList, Error>(
+                    onRemoteCombine: {
+                        return self.remoteDataSource.recommendFeedListPublisher(userUUID: userUUID)
+                            .zip(self.remoteDataSource.normalFeedListPublisher(userUUID: userUUID)) {
+                                HomeFeedList(recommendFeed: $0, normalFeed: $1)
+                            }
+                            .eraseToAnyPublisher()
+                    },
+                    onLocalCombine: {
+                        print("onLocalCombine")
+                        return self.localDataSource.recommendFeedListPublisher()
+                            .zip(self.localDataSource.normalFeedListPublisher()) {
+                                HomeFeedList(recommendFeed: $0, normalFeed: $1)
+                            }
+                            .eraseToAnyPublisher()
+                    },
+                    onLocal: {
+                        print("onLocal")
+                        return HomeFeedList(
+                            recommendFeed: self.localDataSource.cachedRecommendFeedList(),
+                            normalFeed: self.localDataSource.cachedNormalFeedList()
+                        )
+                    },
+                    onUpdateLocal: { homeFeedList in
+                        print("onUpdateLocal")
+                        self.localDataSource.updateRecommendFeedListCache(homeFeedList.recommendFeed)
+                        self.localDataSource.updateNormalFeedListCache(homeFeedList.normalFeed)
+                    },
+                    queue: RealmConfig.serialQueue
+                )
+
+                fetcher.fetch { status, data in
+                    print("\(#fileID) | fetcher: \(status)")
                     switch status {
                     case .loading:
                         self.reloadData.send(Void())
@@ -93,9 +97,6 @@ final class HomeViewModel {
                     case .failure(let error):
                         self.hideIndicator.send(Void())
                         self.showAlert.send(error)
-//                    case .alreadyLatest:
-//                        self.hideIndicator.send(Void())
-//                        return
                     }
 
                     self.recommendFeedData = data.recommendFeed
@@ -115,7 +116,7 @@ final class HomeViewModel {
     func dequeueCellViewModel(at index: Int) -> ScrapViewModel {
         let scrapViewModel = ScrapViewModel(
             feedUUID: normalFeedData[index].feedUUID,
-            feedLocalDataSource: FeedLocalDataSource.shared,
+            feedLocalDataSource: FeedRealmDataSource.shared,
             feedRemoteDataSource: FeedRemoteDataSource.shared
         )
         return scrapViewModel

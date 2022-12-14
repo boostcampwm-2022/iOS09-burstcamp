@@ -29,3 +29,16 @@ extension FeedWriter {
         self.blogTitle = data["blogTitle"] as? String ?? ""
     }
 }
+
+extension FeedWriter {
+    /// Mock Init
+    init() {
+        self.userUUID = ""
+        self.nickname = ""
+        self.camperID = ""
+        self.ordinalNumber = 0
+        self.domain = .iOS
+        self.profileImageURL = ""
+        self.blogTitle = ""
+    }
+}

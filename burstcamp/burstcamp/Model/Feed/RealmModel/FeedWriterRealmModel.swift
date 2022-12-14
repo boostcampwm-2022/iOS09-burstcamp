@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 
 class FeedWriterRealmModel: Object {
-    @Persisted var userUUID: String
+    @Persisted(primaryKey: true) var userUUID: String
     @Persisted var nickname: String
     @Persisted var camperID: String
     @Persisted var ordinalNumber: Int
@@ -18,7 +18,7 @@ class FeedWriterRealmModel: Object {
     @Persisted var profileImageURL: String
     @Persisted var blogTitle: String
 
-    init(
+    convenience init(
         userUUID: String,
         nickname: String,
         camperID: String,
@@ -27,6 +27,8 @@ class FeedWriterRealmModel: Object {
         profileImageURL: String,
         blogTitle: String
     ) {
+        self.init()
+
         self.userUUID = userUUID
         self.nickname = nickname
         self.camperID = camperID

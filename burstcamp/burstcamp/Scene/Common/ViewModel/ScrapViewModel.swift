@@ -22,7 +22,7 @@ final class ScrapViewModel {
     private let scrapButtonIsEnabled = CurrentValueSubject<Bool?, Never>(nil)
     private let showAlert = CurrentValueSubject<Error?, Never>(nil)
 
-    private let updater: Updater<Feed, FirestoreServiceError>
+    private let updater: Updater<Feed, Error>
 
     init(
         feedUUID: String,
@@ -34,7 +34,7 @@ final class ScrapViewModel {
         self.feedLocalDataSource = feedLocalDataSource
         self.feedRemoteDataSource = feedRemoteDataSource
 
-        updater = Updater<Feed, FirestoreServiceError>(
+        updater = Updater<Feed, Error>(
             onRemoteCombine: { feed in
                 feedRemoteDataSource.updateFeedPublisher(
                     feedUUID: feedUUID,
@@ -44,7 +44,8 @@ final class ScrapViewModel {
             },
             onLocalCombine: { feedLocalDataSource.normalFeedPublisher(feedUUID: feedUUID) },
             onLocal: { feedLocalDataSource.cachedNormalFeed(feedUUID: feedUUID) },
-            onUpdateLocal: { feedLocalDataSource.toggleScrapFeed(feedUUID: feedUUID) }
+            onUpdateLocal: { feedLocalDataSource.toggleScrapFeed(feedUUID: feedUUID) },
+            queue: RealmConfig.serialQueue
         )
 
         updater.configure { [weak self] status, data in

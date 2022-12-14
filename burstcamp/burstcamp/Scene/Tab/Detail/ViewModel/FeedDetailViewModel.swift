@@ -14,7 +14,7 @@ final class FeedDetailViewModel {
     private let feedLocalDataSource: FeedLocalDataSource
     private var cancelBag = Set<AnyCancellable>()
 
-    init(feedLocalDataSource: FeedLocalDataSource = FeedLocalDataSource.shared) {
+    init(feedLocalDataSource: FeedLocalDataSource = FeedRealmDataSource.shared) {
         self.feedLocalDataSource = feedLocalDataSource
     }
 
@@ -25,7 +25,7 @@ final class FeedDetailViewModel {
 
     convenience init(feedUUID: String) {
         self.init()
-        let feed = FeedLocalDataSource.shared.cachedNormalFeed(feedUUID: feedUUID)
+        let feed = FeedRealmDataSource.shared.cachedNormalFeed(feedUUID: feedUUID)
         self.feed.send(feed)
     }
 

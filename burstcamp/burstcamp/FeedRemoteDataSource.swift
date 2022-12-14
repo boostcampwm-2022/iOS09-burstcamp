@@ -15,8 +15,6 @@ import class FirebaseFirestore.CollectionReference
 
 final class FeedRemoteDataSource {
 
-    typealias Failure = FirestoreServiceError
-
     static let shared = FeedRemoteDataSource()
 
     private let firestoreService: FirestoreService
@@ -25,17 +23,17 @@ final class FeedRemoteDataSource {
         self.firestoreService = firestoreService
     }
 
-    func normalFeedListPublisher(userUUID: String) -> AnyPublisher<[Feed], Failure> {
+    func normalFeedListPublisher(userUUID: String) -> AnyPublisher<[Feed], Error> {
         let path = FirestoreCollection.normalFeed.path
         return feedListPublisher(path)
     }
 
-    func recommendFeedListPublisher(userUUID: String) -> AnyPublisher<[Feed], Failure> {
+    func recommendFeedListPublisher(userUUID: String) -> AnyPublisher<[Feed], Error> {
         let path = FirestoreCollection.recommendFeed.path
         return feedListPublisher(path)
     }
 
-    func scrapFeedListPublisher(userUUID: String) -> AnyPublisher<[Feed], Failure> {
+    func scrapFeedListPublisher(userUUID: String) -> AnyPublisher<[Feed], Error> {
         let path = FirestoreCollection.scrapFeeds(userUUID: userUUID).path
         return feedListPublisher(path, orderBy: "scrapDate", descending: true)
     }
@@ -44,7 +42,7 @@ final class FeedRemoteDataSource {
         feedUUID: String,
         userUUID: String,
         feed: Feed
-    ) -> AnyPublisher<Void, FirestoreServiceError> {
+    ) -> AnyPublisher<Void, Error> {
         return Future {
             switch feed.isScraped {
             case true:
@@ -83,11 +81,6 @@ final class FeedRemoteDataSource {
                 )
             }
         }
-        .mapError { error in
-            return error as?
-            FirestoreServiceError ??
-            FirestoreServiceError.errorCastingFail(message: "file: \(#file), line: \(#line)")
-        }
         .share()
         .eraseToAnyPublisher()
     }
@@ -97,7 +90,7 @@ final class FeedRemoteDataSource {
         userUUID: String = UserManager.shared.user.userUUID,
         orderBy: String? = nil,
         descending: Bool = false
-    ) -> AnyPublisher<[Feed], Failure> {
+    ) -> AnyPublisher<[Feed], Error> {
         return Future {
             try await self.firestoreService.getCollection(collectionPath)
                 .asyncMap { feedData -> Feed in
@@ -123,11 +116,6 @@ final class FeedRemoteDataSource {
                     )
                     return feed
                 }
-        }
-        .mapError { error in
-            return error as?
-            FirestoreServiceError ??
-            FirestoreServiceError.errorCastingFail(message: "file: \(#file), line: \(#line)")
         }
         .eraseToAnyPublisher()
     }

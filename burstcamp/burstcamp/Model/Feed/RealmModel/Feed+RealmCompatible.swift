@@ -12,7 +12,7 @@ import RealmManager
 extension Feed: RealmCompatible {
     init(realmModel: FeedRealmModel) {
         self.feedUUID = realmModel.feedUUID
-        self.writer = FeedWriter(realmModel: realmModel.writer)
+        self.writer = realmModel.writer.flatMap(FeedWriter.init(realmModel:)) ?? FeedWriter()
         self.title = realmModel.title
         self.pubDate = realmModel.pubDate
         self.url = realmModel.url
@@ -24,18 +24,18 @@ extension Feed: RealmCompatible {
     }
 
     func realmModel() -> FeedRealmModel {
-        return FeedRealmModel(
-            feedUUID: self.feedUUID,
-            writer: self.writer.realmModel(),
-            title: self.title,
-            pubDate: self.pubDate,
-            url: self.url,
-            thumbnailURL: self.thumbnailURL,
-            content: self.content,
-            scrapCount: self.scrapCount,
-            isScraped: self.isScraped,
-            scrapDate: self.scrapDate ?? Date()
-        )
+        let feedRealmModel = FeedRealmModel()
+        feedRealmModel.feedUUID = self.feedUUID
+        feedRealmModel.writer = self.writer.realmModel()
+        feedRealmModel.title = self.title
+        feedRealmModel.pubDate = self.pubDate
+        feedRealmModel.url = self.url
+        feedRealmModel.thumbnailURL = self.thumbnailURL
+        feedRealmModel.content = self.content
+        feedRealmModel.scrapCount = self.scrapCount
+        feedRealmModel.isScraped = self.isScraped
+        feedRealmModel.scrapDate = self.scrapDate ?? Date()
+        return feedRealmModel
     }
 
     enum PropertyValue: PropertyValueType {

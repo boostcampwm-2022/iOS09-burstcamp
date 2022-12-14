@@ -7,17 +7,19 @@
 
 import Foundation
 
-import RealmSwift
 import RealmManager
+import RealmSwift
 
 final class NormalFeedRealmModel: FeedRealmModel { }
+
 final class RecommendFeedRealmModel: FeedRealmModel { }
+
 final class ScrapFeedRealmModel: FeedRealmModel { }
 
 class FeedRealmModel: Object, AutoIncrementable {
-    @Persisted(primaryKey: true) var autoIndex: Int = 0
-    @Persisted var feedUUID: String
-    @Persisted var writer: FeedWriterRealmModel
+    @Persisted var autoIndex: Int
+    @Persisted(primaryKey: true) var feedUUID: String
+    @Persisted var writer: FeedWriterRealmModel?
     @Persisted var title: String
     @Persisted var pubDate: Date
     @Persisted var url: String
@@ -27,27 +29,16 @@ class FeedRealmModel: Object, AutoIncrementable {
     @Persisted var isScraped: Bool
     @Persisted var scrapDate: Date
 
-    init(
-        feedUUID: String,
-        writer: FeedWriterRealmModel,
-        title: String,
-        pubDate: Date,
-        url: String,
-        thumbnailURL: String,
-        content: String,
-        scrapCount: Int,
-        isScraped: Bool,
-        scrapDate: Date
-    ) {
-        self.feedUUID = feedUUID
-        self.writer = writer
-        self.title = title
-        self.pubDate = pubDate
-        self.url = url
-        self.thumbnailURL = thumbnailURL
-        self.content = content
-        self.scrapCount = scrapCount
-        self.isScraped = isScraped
-        self.scrapDate = scrapDate
+    func configure(model: Feed) {
+        self.feedUUID = model.feedUUID
+        self.writer = model.writer.realmModel()
+        self.title = model.title
+        self.pubDate = model.pubDate
+        self.url = model.url
+        self.thumbnailURL = model.thumbnailURL
+        self.content = model.content
+        self.scrapCount = model.scrapCount
+        self.isScraped = model.isScraped
+        self.scrapDate = model.scrapDate ?? Date()
     }
 }
