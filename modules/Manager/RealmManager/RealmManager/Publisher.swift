@@ -23,6 +23,7 @@ extension Container {
 
     /// Collection의 변경사항들을 방출하는 publisher
     ///
+    /// @discussion
     /// 변경사항들을 insertion, deletion, modification으로 분류해 반영해야 할 때 사용.
     ///
     /// - SeeAlso:
@@ -50,6 +51,7 @@ extension Container {
     ///         }
     ///         .store(in: &cancelBag)
     /// ```
+    /// 출처 : [MongoDB - Object Change Listener](https://www.mongodb.com/docs/realm/sdk/swift/react-to-changes/#register-an-object-change-listener)
 
 
     public func publisher<T: RealmFetchable>(_ type: T.Type)
