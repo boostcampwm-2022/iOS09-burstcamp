@@ -24,7 +24,11 @@ final class FeedRealmDataSource: FeedLocalDataSource {
             .sink { response in
                 self.normalFeedListSubject.send(completion: response)
             } receiveValue: { realmModel in
-                self.normalFeedListSubject.send(realmModel.map { Feed(realmModel: $0) })
+                self.normalFeedListSubject.send(
+                    realmModel
+                        .sorted(by: \.pubDate, ascending: false)
+                        .map { Feed(realmModel: $0) }
+                )
             }
             .store(in: &cancelBag)
 
@@ -72,6 +76,7 @@ final class FeedRealmDataSource: FeedLocalDataSource {
 
     func cachedNormalFeedList() -> [Feed] {
         return container.values(NormalFeedRealmModel.self)
+            .sorted(by: \.pubDate, ascending: false)
             .map { Feed(realmModel: $0) }
     }
 
@@ -165,10 +170,11 @@ final class FeedRealmDataSource: FeedLocalDataSource {
 
     func cachedScrapFeedList() -> [Feed] {
         return container.values(ScrapFeedRealmModel.self)
+            .sorted(by: \.scrapDate, ascending: false)
             .map { Feed(realmModel: $0) }
     }
 
-    /// deprecated
+    @available(*, deprecated, message: "대신 updateScrapFeed()를 사용해주세요")
     func updateScrapFeedListCache(_ feedList: [Feed]) {
         let diff = feedList.difference(from: cachedScrapFeedList())
         print(diff)
