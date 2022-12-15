@@ -16,7 +16,7 @@ import protocol RealmSwift.RealmFetchable
 /// * Realm 은 항상 serial Queue에서 동작해야 합니다.
 /// * Realm 의 transaction은 항상 같은 thread에서 동작해야합니다.
 public final class Container {
-    
+
     private let realm: Realm
     public let serialQueue: DispatchQueue
 

@@ -24,18 +24,20 @@ final class ScrapViewModel {
 
     private let updater: Updater<Feed, Error>
 
+    private let feedUUID: String
+
     init(
         feedUUID: String,
         feedLocalDataSource: FeedLocalDataSource,
         feedRemoteDataSource: FeedRemoteDataSource
     ) {
-        let feedUUID = feedUUID
+        self.feedUUID = feedUUID
         let userUUID = UserManager.shared.user.userUUID
         self.feedLocalDataSource = feedLocalDataSource
         self.feedRemoteDataSource = feedRemoteDataSource
 
         updater = Updater<Feed, Error>(
-            onRemoteCombine: { feed in
+            onUpdateRemoteCombine: { feed in
                 feedRemoteDataSource.updateFeedPublisher(
                     feedUUID: feedUUID,
                     userUUID: userUUID,
@@ -44,13 +46,13 @@ final class ScrapViewModel {
             },
             onLocalCombine: { feedLocalDataSource.normalFeedPublisher(feedUUID: feedUUID) },
             onLocal: { feedLocalDataSource.cachedNormalFeed(feedUUID: feedUUID) },
-            onUpdateLocal: { feedLocalDataSource.toggleScrapFeed(feedUUID: feedUUID) },
+            onUpdateLocal: { feedLocalDataSource.toggleScrapFeed(modifiedFeed: $0) },
             queue: RealmConfig.serialQueue
         )
 
         updater.configure { [weak self] status, data in
             guard let self = self else { return }
-//            print("\(#fileID) | updater: \(status)")
+            print("\(#fileID) | updater: \(status)(\(self.feedUUID))")
 
             switch status {
             case .loading:
@@ -64,7 +66,7 @@ final class ScrapViewModel {
                 self.scrapButtonIsEnabled.send(true)
             }
         }
-        .store(in: &self.cancelBag)
+//        .store(in: &self.cancelBag)
     }
 
     struct Input {

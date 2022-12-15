@@ -48,6 +48,7 @@ extension Feed {
     mutating func scrap() {
         scrapCount += 1
         isScraped = true
+        scrapDate = Date()
     }
 
     mutating func unScrap() {
@@ -55,6 +56,7 @@ extension Feed {
             scrapCount -= 1
         }
         isScraped = false
+        scrapDate = nil
     }
 }
 

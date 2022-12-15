@@ -57,6 +57,7 @@ final class HomeViewModel {
                 let userUUID = UserManager.shared.user.userUUID
                 let fetcher = Fetcher<HomeFeedList, Error>(
                     onRemoteCombine: {
+                        print("onRemoteCombine")
                         return self.remoteDataSource.recommendFeedListPublisher(userUUID: userUUID)
                             .zip(self.remoteDataSource.normalFeedListPublisher(userUUID: userUUID)) {
                                 HomeFeedList(recommendFeed: $0, normalFeed: $1)

@@ -16,8 +16,7 @@ final class RecommendFeedRealmModel: FeedRealmModel { }
 
 final class ScrapFeedRealmModel: FeedRealmModel { }
 
-class FeedRealmModel: Object, AutoIncrementable {
-    @Persisted var autoIndex: Int
+class FeedRealmModel: Object {
     @Persisted(primaryKey: true) var feedUUID: String
     @Persisted var writer: FeedWriterRealmModel?
     @Persisted var title: String
@@ -27,7 +26,7 @@ class FeedRealmModel: Object, AutoIncrementable {
     @Persisted var content: String
     @Persisted var scrapCount: Int
     @Persisted var isScraped: Bool
-    @Persisted var scrapDate: Date
+    @Persisted var scrapDate: Date?
 
     func configure(model: Feed) {
         self.feedUUID = model.feedUUID
@@ -39,6 +38,6 @@ class FeedRealmModel: Object, AutoIncrementable {
         self.content = model.content
         self.scrapCount = model.scrapCount
         self.isScraped = model.isScraped
-        self.scrapDate = model.scrapDate ?? Date()
+        self.scrapDate = model.scrapDate
     }
 }

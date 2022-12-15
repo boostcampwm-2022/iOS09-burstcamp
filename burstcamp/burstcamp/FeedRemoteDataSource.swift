@@ -35,15 +35,22 @@ final class FeedRemoteDataSource {
 
     func scrapFeedListPublisher(userUUID: String) -> AnyPublisher<[Feed], Error> {
         let path = FirestoreCollection.scrapFeeds(userUUID: userUUID).path
-        return feedListPublisher(path, orderBy: "scrapDate", descending: true)
+        return feedListPublisher(path)
     }
 
+    /// - Parameters:
+    ///   - feed: 현재 Local에 있는 Feed
     func updateFeedPublisher(
         feedUUID: String,
         userUUID: String,
         feed: Feed
-    ) -> AnyPublisher<Void, Error> {
+    ) -> AnyPublisher<Feed, Error> {
+        print(#function)
         return Future {
+            // feed의 스크랩 상태를 변경 해준다.
+            var newFeed = feed
+            newFeed.toggleScrap()
+
             switch feed.isScraped {
             case true:
                 try await self.firestoreService.deleteDocument(
@@ -55,14 +62,13 @@ final class FeedRemoteDataSource {
                     document: feedUUID
                 )
             case false:
-                let scrapDate = Timestamp(date: Date())
                 try await self.firestoreService.createDocument(
                     FirestoreCollection.scrapUsers(feedUUID: feedUUID).path,
                     document: userUUID,
                     data: [
                         "userUUID": userUUID,
                         // TODO: TimeStamp 분리 필요
-                        "scrapDate": scrapDate
+                        "scrapDate": Timestamp(date: newFeed.scrapDate ?? Date())
                     ]
                 )
                 try await self.firestoreService.createDocument(
@@ -76,10 +82,12 @@ final class FeedRemoteDataSource {
                         "url": feed.url,
                         "thumbnailURL": feed.thumbnailURL,
                         "content": feed.content,
-                        "scrapDate": scrapDate
+                        "scrapDate": Timestamp(date: newFeed.scrapDate ?? Date())
                     ]
                 )
             }
+            // 상태가 바뀐 피드를 리턴한다.
+            return newFeed
         }
         .share()
         .eraseToAnyPublisher()
@@ -87,10 +95,9 @@ final class FeedRemoteDataSource {
 
     private func feedListPublisher(
         _ collectionPath: String,
-        userUUID: String = UserManager.shared.user.userUUID,
-        orderBy: String? = nil,
-        descending: Bool = false
+        userUUID: String = UserManager.shared.user.userUUID
     ) -> AnyPublisher<[Feed], Error> {
+        print(#function, collectionPath)
         return Future {
             try await self.firestoreService.getCollection(collectionPath)
                 .asyncMap { feedData -> Feed in

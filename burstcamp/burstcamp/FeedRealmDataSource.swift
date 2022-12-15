@@ -53,15 +53,15 @@ final class FeedRealmDataSource: FeedLocalDataSource {
     private var cancelBag = Set<AnyCancellable>()
 
     // swiftlint:disable:next force_try
-    private let container = try! Container(debug: true, initialize: false, queue: RealmConfig.serialQueue)
+    private let container = try! Container(debug: true, initialize: true, queue: RealmConfig.serialQueue)
 
     private let normalFeedListSubject = CurrentValueSubject<[Feed], Error>([])
     private let recommendFeedListSubject = CurrentValueSubject<[Feed], Error>([])
     private let scrapFeedListSubject = CurrentValueSubject<[Feed], Error>([])
 
-    private lazy var normalRealmPublisher = container.publisher(NormalFeedRealmModel.self)
-    private lazy var recommendRealmPublisher = container.publisher(RecommendFeedRealmModel.self)
-    private lazy var scrapRealmPublisher = container.publisher(ScrapFeedRealmModel.self)
+    private lazy var normalRealmPublisher = container.collectionPublisher(NormalFeedRealmModel.self)
+    private lazy var recommendRealmPublisher = container.collectionPublisher(RecommendFeedRealmModel.self)
+    private lazy var scrapRealmPublisher = container.collectionPublisher(ScrapFeedRealmModel.self)
 
     // MARK: Normal FeedList
 
@@ -71,7 +71,8 @@ final class FeedRealmDataSource: FeedLocalDataSource {
     }
 
     func cachedNormalFeedList() -> [Feed] {
-        return normalFeedListSubject.value
+        return container.values(NormalFeedRealmModel.self)
+            .map { Feed(realmModel: $0) }
     }
 
     func updateNormalFeedListCache(_ feedList: [Feed]) {
@@ -80,7 +81,7 @@ final class FeedRealmDataSource: FeedLocalDataSource {
                 feedList.forEach { feed in
                     let realmModel = NormalFeedRealmModel()
                     realmModel.configure(model: feed)
-                    transaction.add(realmModel, autoIncrement: true)
+                    transaction.add(realmModel)
                 }
             }
         }
@@ -103,6 +104,16 @@ final class FeedRealmDataSource: FeedLocalDataSource {
         return feed
     }
 
+    func updateNormalFeed(modifiedFeed: Feed) {
+//        container.serialQueue.async {
+            self.container.write { transaction in
+                let realmModel = NormalFeedRealmModel()
+                realmModel.configure(model: modifiedFeed)
+                transaction.add(realmModel, update: .modified)
+            }
+//        }
+    }
+
     // MARK: Recommend FeedList
 
     func recommendFeedListPublisher() -> AnyPublisher<[Feed], Failure> {
@@ -111,19 +122,20 @@ final class FeedRealmDataSource: FeedLocalDataSource {
     }
 
     func cachedRecommendFeedList() -> [Feed] {
-        return recommendFeedListSubject.value
+        return container.values(RecommendFeedRealmModel.self)
+            .map { Feed(realmModel: $0) }
     }
 
     func updateRecommendFeedListCache(_ feedList: [Feed]) {
-        RealmConfig.serialQueue.async {
+//        RealmConfig.serialQueue.async {
             self.container.write { transaction in
                 feedList.forEach { feed in
                     let realmModel = RecommendFeedRealmModel()
                     realmModel.configure(model: feed)
-                    transaction.add(realmModel, autoIncrement: true)
+                    transaction.add(realmModel)
                 }
             }
-        }
+//        }
     }
 
     // MARK: Recommend Feed
@@ -152,18 +164,32 @@ final class FeedRealmDataSource: FeedLocalDataSource {
     }
 
     func cachedScrapFeedList() -> [Feed] {
-        return scrapFeedListSubject.value
+        return container.values(ScrapFeedRealmModel.self)
+            .map { Feed(realmModel: $0) }
     }
 
+    /// deprecated
     func updateScrapFeedListCache(_ feedList: [Feed]) {
-        RealmConfig.serialQueue.async {
+        let diff = feedList.difference(from: cachedScrapFeedList())
+        print(diff)
+//        RealmConfig.serialQueue.async {
             self.container.write { transaction in
-                feedList.forEach { feed in
-                    let realmModel = ScrapFeedRealmModel()
-                    realmModel.configure(model: feed)
-                    transaction.add(realmModel, autoIncrement: true, update: .all)
+                diff.forEach { change in
+                    switch change {
+                    case let .remove(_, newFeed, _):
+                        guard let oldRealmModel = self.container.values(ScrapFeedRealmModel.self)
+                            .first(where: { feed in
+                                newFeed.feedUUID == feed.feedUUID
+                            })
+                        else { return }
+                        transaction.delete(oldRealmModel)
+                    case let .insert(_, feed, _):
+                        let realmModel = ScrapFeedRealmModel()
+                        realmModel.configure(model: feed)
+                        transaction.add(realmModel, update: .modified)
+                    }
                 }
-            }
+//            }
         }
     }
 
@@ -183,5 +209,63 @@ final class FeedRealmDataSource: FeedLocalDataSource {
             return Feed()
         }
         return feed
+    }
+
+    func updateScrapFeed(modifiedFeed: Feed) {
+        if modifiedFeed.isScraped {
+            let realmModel = ScrapFeedRealmModel()
+            realmModel.configure(model: modifiedFeed)
+            container.write { transaction in
+                transaction.add(realmModel, update: .modified)
+            }
+        } else {
+            if let oldRealmModel = container.values(ScrapFeedRealmModel.self).first(where: { oldFeed in
+                oldFeed.feedUUID == modifiedFeed.feedUUID
+            }) {
+                container.write { transaction in
+                    transaction.delete(oldRealmModel)
+                }
+            }
+        }
+    }
+}
+
+extension FeedRealmDataSource {
+    /// 스크랩 상태가 변경된 feed가 들어옴
+    func toggleScrapFeed(modifiedFeed: Feed) {
+        // Normal Feed의 isScrap, scrapDate 상태 반영
+        updateNormalFeed(modifiedFeed: modifiedFeed)
+        // ScrapFeedList의 Diff를 반영
+        updateScrapFeed(modifiedFeed: modifiedFeed)
+    }
+
+    func updateScrapFeedList(changedFeed feed: Feed) {
+        var newFeedList = cachedScrapFeedList()
+
+        if feed.isScraped {
+            // 방금 스크랩이 됐다면, 리스트에도 추가한다.
+            newFeedList.append(feed)
+        } else {
+            // 방금 스크랩이 해제 됐다면, 리스트에서 제거한다.
+            newFeedList.removeAll { $0.feedUUID == feed.feedUUID }
+        }
+
+        // 모아보기 리스트를 갱신한다.
+        updateScrapFeedListCache(newFeedList)
+    }
+
+    func updateFeed(feedUUID: String, _ update: (Feed) -> Feed) {
+        // 업데이트할 피드가 normal에 있다면, `update`로직을 수행한 뒤, 목록도 업데이트한다.
+        var updateNormalFeed = false
+        let newNormalFeedList = cachedNormalFeedList()
+            .map { feed in
+                if feed.feedUUID == feedUUID {
+                    updateNormalFeed = true
+                    return update(feed)
+                } else {
+                    return feed
+                }
+            }
+        if updateNormalFeed { updateNormalFeedListCache(newNormalFeedList) }
     }
 }
