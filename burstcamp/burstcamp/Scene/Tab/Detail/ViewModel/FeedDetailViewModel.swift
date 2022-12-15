@@ -23,8 +23,10 @@ final class FeedDetailViewModel {
         self.feed.send(feed)
     }
 
+    /// DeepLink를 통해서 진입할 때 호출하는 initializer
     convenience init(feedUUID: String) {
         self.init()
+        // TODO: Cache에 데이터가 없을 수 있기 때문에 Remote에서 불러와야 한다.
         let feed = FeedRealmDataSource.shared.cachedNormalFeed(feedUUID: feedUUID)
         self.feed.send(feed)
     }
