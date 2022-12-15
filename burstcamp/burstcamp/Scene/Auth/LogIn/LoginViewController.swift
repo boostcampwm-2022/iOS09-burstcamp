@@ -45,6 +45,7 @@ final class LogInViewController: UIViewController {
     func displayIndicator() {
         logInView.activityIndicator.startAnimating()
         logInView.loadingLabel.isHidden = false
+        logInView.camperAuthButton.isEnabled = false
     }
 
     private func bind() {
@@ -56,7 +57,6 @@ final class LogInViewController: UIViewController {
 
         output.openLogInView
             .sink { [weak self] _ in
-                self?.logInView.camperAuthButton.isEnabled = false
                 self?.coordinatorPublisher.send(.moveToGithubLogIn)
             }
             .store(in: &cancelBag)
