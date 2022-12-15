@@ -10,7 +10,6 @@ import Foundation
 
 enum RealmConfig {
     static let serialQueue = DispatchQueue(label: "RealmQueue")
-//    static let serialQueue = DispatchQueue.main
 }
 
 protocol FeedLocalDataSource {
@@ -32,11 +31,6 @@ protocol FeedLocalDataSource {
     func cachedRecommendFeedList() -> [Feed]
     func updateRecommendFeedListCache(_ feedList: [Feed])
 
-    // MARK: RecommendFeed
-
-    func recommendFeedPublisher(feedUUID: String) -> AnyPublisher<Feed, Error>
-    func cachedRecommendFeed(feedUUID: String) -> Feed
-
     // MARK: ScrapFeedList
 
     func scrapFeedListPublisher() -> AnyPublisher<[Feed], Error>
@@ -46,7 +40,6 @@ protocol FeedLocalDataSource {
     // MARK: ScrapFeed
 
     func scrapFeedPublisher(feedUUID: String) -> AnyPublisher<Feed, Error>
-    func cachedScrapFeed(feedUUID: String) -> Feed
 
     // MARK: Scrap 기능
 

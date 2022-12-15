@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B528AA65294B72B8001796CF /* SortingPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528AA64294B72B8001796CF /* SortingPolicy.swift */; };
 		B572EFE72948606300A9413C /* RealmManager.h in Headers */ = {isa = PBXBuildFile; fileRef = B572EFE62948606300A9413C /* RealmManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B572EFF22948616200A9413C /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B572EFF12948616200A9413C /* RealmSwift */; };
 		B572EFF4294861DD00A9413C /* RealmCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EFF3294861DD00A9413C /* RealmCompatible.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B528AA64294B72B8001796CF /* SortingPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingPolicy.swift; sourceTree = "<group>"; };
 		B572EFE32948606300A9413C /* RealmManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RealmManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B572EFE62948606300A9413C /* RealmManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RealmManager.h; sourceTree = "<group>"; };
 		B572EFED2948609300A9413C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 				B572EFF7294863E800A9413C /* RealmContainer.swift */,
 				B572EFF92948644E00A9413C /* FetchedResults.swift */,
 				B572F021294885F600A9413C /* Publisher.swift */,
+				B528AA64294B72B8001796CF /* SortingPolicy.swift */,
 			);
 			path = RealmManager;
 			sourceTree = "<group>";
@@ -177,6 +180,7 @@
 				B572EFF4294861DD00A9413C /* RealmCompatible.swift in Sources */,
 				B572EFF8294863E800A9413C /* RealmContainer.swift in Sources */,
 				B5FF71132948C654008E69F2 /* AutoIncrementable.swift in Sources */,
+				B528AA65294B72B8001796CF /* SortingPolicy.swift in Sources */,
 				B5FF710E2948C5AA008E69F2 /* QuerySupportable.swift in Sources */,
 				B5FF71102948C5C9008E69F2 /* SortSupportable.swift in Sources */,
 				B572F022294885F600A9413C /* Publisher.swift in Sources */,
