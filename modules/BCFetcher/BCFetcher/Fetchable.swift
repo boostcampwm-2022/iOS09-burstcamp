@@ -10,7 +10,7 @@ import Foundation
 
 public protocol Fetchable {
     associatedtype Data
-    associatedtype FetchingError: Swift.Error
+    associatedtype FetchingError: Error
     
     // Remote
     var onRemoteCombine: (() -> AnyPublisher<Data, FetchingError>) { get }

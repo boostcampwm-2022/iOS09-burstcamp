@@ -43,7 +43,7 @@ extension FeedLocalDataSource {
         return normalFeedListSubject.value
     }
 
-    func updateNormalFeedListCache(_ feedList: [Feed]) {
+    func updateNormalFeedListOnCache(_ feedList: [Feed]) {
         normalFeedListSubject.send(feedList)
     }
 
@@ -70,7 +70,7 @@ extension FeedLocalDataSource {
         return normalFeedListSubject.value
     }
 
-    func updateRecommendFeedListCache(_ feedList: [Feed]) {
+    func updateRecommendFeedListOnCache(_ feedList: [Feed]) {
         recommendFeedListSubject.send(feedList)
     }
 
@@ -98,7 +98,7 @@ extension FeedLocalDataSource {
         return scrapFeedListSubject.value
     }
 
-    func updateScrapFeedListCache(_ feedList: [Feed]) {
+    func updateScrapFeedListOnCache(_ feedList: [Feed]) {
         scrapFeedListSubject.send(feedList)
     }
 
@@ -137,11 +137,13 @@ extension FeedLocalDataSource {
             newFeedList.append(feed)
         } else {
             // 방금 스크랩이 해제 됐다면, 리스트에서 제거한다.
-            newFeedList.removeAll { $0.feedUUID == feed.feedUUID }
+            if let removeIndex = newFeedList.firstIndex(where: { $0.feedUUID == feed.feedUUID }) {
+                newFeedList.remove(at: removeIndex)
+            }
         }
 
         // 모아보기 리스트를 갱신한다.
-        updateScrapFeedListCache(newFeedList)
+        updateScrapFeedListOnCache(newFeedList)
     }
 
     private func updateFeed(feedUUID: String, _ update: (Feed) -> Feed) {
@@ -156,7 +158,7 @@ extension FeedLocalDataSource {
                     return feed
                 }
             }
-        if updateNormalFeed { updateNormalFeedListCache(newNormalFeedList) }
+        if updateNormalFeed { updateNormalFeedListOnCache(newNormalFeedList) }
     }
 }
 

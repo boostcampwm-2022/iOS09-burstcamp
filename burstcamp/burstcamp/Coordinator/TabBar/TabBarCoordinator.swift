@@ -83,7 +83,6 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
     }
 
     private func homeCoordinatorStart() -> HomeViewController {
-        let firestoreService = FirestoreService()
         let homeViewModel = HomeViewModel()
         let homeViewController = HomeViewController(viewModel: homeViewModel)
         let homeCoordinator = HomeCoordinator(navigationController: navigationController)
