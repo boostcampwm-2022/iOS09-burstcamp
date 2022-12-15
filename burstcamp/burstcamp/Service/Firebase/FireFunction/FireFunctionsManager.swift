@@ -50,8 +50,9 @@ struct FireFunctionsManager {
                     if let data = result?.data as? [String: Any],
                        let isFinish = data[isFinishField] as? Bool {
                         promise(.success(isFinish))
+                    } else {
+                        promise(.success(false))
                     }
-                    promise(.success(false))
                 }
         }
         .eraseToAnyPublisher()
