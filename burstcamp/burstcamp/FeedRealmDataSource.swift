@@ -53,7 +53,7 @@ final class FeedRealmDataSource: FeedLocalDataSource {
     private var cancelBag = Set<AnyCancellable>()
 
     // swiftlint:disable:next force_try
-    private let container = try! Container(debug: true, initialize: true, queue: RealmConfig.serialQueue)
+    private let container = try! Container(debug: false, initialize: false, queue: RealmConfig.serialQueue)
 
     private let normalFeedListSubject = CurrentValueSubject<[Feed], Error>([])
     private let recommendFeedListSubject = CurrentValueSubject<[Feed], Error>([])

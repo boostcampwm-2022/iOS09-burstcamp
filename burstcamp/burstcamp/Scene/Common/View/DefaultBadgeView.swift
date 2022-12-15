@@ -66,4 +66,10 @@ extension DefaultBadgeView {
         numberLabel.updateView(text: number)
         camperIDLabel.updateView(text: feedWriter.camperID)
     }
+
+    func reset() {
+        domainLabel.text = nil
+        numberLabel.text = nil
+        camperIDLabel.text = nil
+    }
 }
