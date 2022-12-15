@@ -29,7 +29,8 @@ public final class Container {
         if debug { print("Realm Database 위치 :", RLMRealmConfiguration.default().fileURL) }
         self.serialQueue = queue
         if initialize {
-            let config = Realm.Configuration(schemaVersion: UInt64.max - 1)
+            let schemaVersion = UInt64(Date().timeIntervalSince1970 - 1671003416) % UInt64.max
+            let config = Realm.Configuration(schemaVersion: schemaVersion)
             self.realm = try Realm(configuration: config, queue: queue)
             try realm.write {
                 realm.deleteAll()

@@ -70,4 +70,11 @@ public final class WriteTransaction {
 
         realm.create(T.RealmModel.self, value: dictionary, update: .modified)
     }
+
+    /// Object Model을 직접 받고 autoIncrement를 지원
+    public func delete<T>(
+        _ value: T
+    ) where T: Object {
+        realm.delete(value)
+    }
 }
