@@ -38,7 +38,7 @@ final class ScrapPageViewModel {
                     .eraseToAnyPublisher() },
             onLocalCombine: { localDataSource.scrapFeedListPublisher() },
             onLocal: { localDataSource.cachedScrapFeedList() },
-            onUpdateLocal: { localDataSource.updateScrapFeedListCache($0) }
+            onUpdateLocal: { localDataSource.updateScrapFeedListOnCache($0) }
         )
     }
 

@@ -56,8 +56,8 @@ final class HomeViewModel {
                 )
             },
             onUpdateLocal: { homeFeedList in
-                localDataSource.updateRecommendFeedListCache(homeFeedList.recommendFeed)
-                localDataSource.updateNormalFeedListCache(homeFeedList.normalFeed)
+                localDataSource.updateRecommendFeedListOnCache(homeFeedList.recommendFeed)
+                localDataSource.updateNormalFeedListOnCache(homeFeedList.normalFeed)
             }
         )
     }

@@ -63,7 +63,7 @@ final class ScrapViewModel {
                 self.scrapButtonIsEnabled.send(true)
             }
         }
-        .store(in: &self.cancelBag)
+        .store(in: &cancelBag)
     }
 
     struct Input {
