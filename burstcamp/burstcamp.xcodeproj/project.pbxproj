@@ -91,6 +91,7 @@
 		B52A7F242927A68F00E271D2 /* Service-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B52A7F232927A68F00E271D2 /* Service-Info.plist */; };
 		B52A7F272927A88F00E271D2 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = B52A7F262927A88F00E271D2 /* Then */; };
 		B52A7F2A2927A89C00E271D2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B52A7F292927A89C00E271D2 /* SnapKit */; };
+		B532892F294F3FCE007D0389 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B532892E294F3FCE007D0389 /* LoadingView.swift */; };
 		B572EF7A2945D81D00A9413C /* Publisher+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EF792945D81D00A9413C /* Publisher+Extension.swift */; };
 		B572EF812945E19C00A9413C /* Sequence+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EF802945E19C00A9413C /* Sequence+Async.swift */; };
 		B572EF832945E1CA00A9413C /* Publisher+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EF822945E1CA00A9413C /* Publisher+Async.swift */; };
@@ -211,7 +212,6 @@
 		140E210329443E6300D6E2E5 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		140E21052944519E00D6E2E5 /* BCFirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCFirestoreService.swift; sourceTree = "<group>"; };
 		140E21082944688B00D6E2E5 /* Future+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Future+Async.swift"; sourceTree = "<group>"; };
-		1413169129485C4600DEFB1F /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		141344C6292F800300187B86 /* UI+ReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UI+ReusableView.swift"; sourceTree = "<group>"; };
 		141344C7292F800300187B86 /* UINavigationController+configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+configure.swift"; sourceTree = "<group>"; };
 		141344C8292F800300187B86 /* UIStackView+addArrangedSubviews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+addArrangedSubviews.swift"; sourceTree = "<group>"; };
@@ -287,6 +287,7 @@
 		B52A7F192927A4E300E271D2 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		B52A7F1A2927A4E300E271D2 /* .swiftlint.auto.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.auto.yml; sourceTree = "<group>"; };
 		B52A7F232927A68F00E271D2 /* Service-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Service-Info.plist"; sourceTree = "<group>"; };
+		B532892E294F3FCE007D0389 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		B572EF792945D81D00A9413C /* Publisher+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Extension.swift"; sourceTree = "<group>"; };
 		B572EF802945E19C00A9413C /* Sequence+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Async.swift"; sourceTree = "<group>"; };
 		B572EF822945E1CA00A9413C /* Publisher+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Async.swift"; sourceTree = "<group>"; };
@@ -474,13 +475,6 @@
 				141344D8292F803800187B86 /* UIControl+Combine.swift */,
 			);
 			path = Combine;
-			sourceTree = "<group>";
-		};
-		14131695294868F200DEFB1F /* NavigationController */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = NavigationController;
 			sourceTree = "<group>";
 		};
 		142C9340292F51A500F6428E /* UI */ = {
@@ -954,7 +948,6 @@
 		B5BA278A2927B08100BDCE08 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				14131695294868F200DEFB1F /* NavigationController */,
 				B5BA278B2927B08800BDCE08 /* View */,
 				B5BA278C2927B08C00BDCE08 /* ViewModel */,
 			);
@@ -974,7 +967,7 @@
 				B50A27B429279F5D00DF3E1F /* DefaultUserInfoView.swift */,
 				B5DAD680292E58BF00C4A126 /* DefaultMultilLineLabel.swift */,
 				B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */,
-				1413169129485C4600DEFB1F /* LoadingView.swift */,
+				B532892E294F3FCE007D0389 /* LoadingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1262,6 +1255,7 @@
 				B50A27EE29279F5D00DF3E1F /* HomeViewController.swift in Sources */,
 				B50A27E629279F5D00DF3E1F /* LogInViewController.swift in Sources */,
 				141344CE292F800300187B86 /* UINavigationController+configure.swift in Sources */,
+				B532892F294F3FCE007D0389 /* LoadingView.swift in Sources */,
 				B50A27EB29279F5D00DF3E1F /* DefaultUserInfoView.swift in Sources */,
 				D84452EE292CA569008E811B /* MyPageEditViewModel.swift in Sources */,
 				D89AE4E62933AEF900446AB3 /* UIImageView+Cache.swift in Sources */,
