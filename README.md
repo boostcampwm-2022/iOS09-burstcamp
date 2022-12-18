@@ -80,9 +80,9 @@
 
 ### <a href ="https://boostcamp-wm.notion.site/RSS-30f8c8bd882d4855a07120ab3a8adfb7">📮 RSS로 블로그 글 가져오기 </a> 
 
-### <a href ="https://boostcamp-wm.notion.site/Combine-8864bb5fe4e2490787405ca17e3f8f62">🚜 Swift Combine로 비동기 이벤트 처리하기</a> 
+### <a href ="https://boostcamp-wm.notion.site/Combine-8864bb5fe4e2490787405ca17e3f8f62">🚜 Swift Combine으로 비동기 이벤트 처리하기</a> 
 
-### <a href ="https://luen.tistory.com/210">🏞️ 메모리 관리를 위한 이미지 캐싱과 다운 샘플링</a> 
+### <a href ="https://luen.tistory.com/210">🏞️ 이미지 캐싱과 다운 샘플링으로 메모리 관리하기</a> 
 
 ### <a href ="https://boostcamp-wm.notion.site/Firebase-a5b2f270903844c58d3570ab7a11be4f">🔥 No 서버, Yes Firebase</a> 
 
