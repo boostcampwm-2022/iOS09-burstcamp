@@ -55,19 +55,6 @@ struct UserDefaultsManager {
         return UserDefaults.standard.string(forKey: fcmTokenKey)
     }
 
-    // isBackground
-    static func save(isForeground: Bool) {
-        UserDefaults.standard.set(isForeground, forKey: isForegroundKey)
-    }
-
-    static func isForeground() -> Bool {
-        return UserDefaults.standard.bool(forKey: isForegroundKey)
-    }
-
-    static func removeIsForeground() {
-        UserDefaults.standard.removeObject(forKey: isForegroundKey)
-    }
-
     // notificationFeedUUID
     static func save(notificationFeedUUID: String) {
         UserDefaults.standard.set(notificationFeedUUID, forKey: notificationFeedUUIDKey)

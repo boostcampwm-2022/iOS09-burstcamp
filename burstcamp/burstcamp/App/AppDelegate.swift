@@ -37,7 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func configurePushNotification(_ application: UIApplication) {
         UNUserNotificationCenter.current().delegate = self
-        UserDefaultsManager.removeIsForeground()
         application.registerForRemoteNotifications()
     }
 }
@@ -53,7 +52,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             UNNotificationPresentationOptions
         ) -> Void
     ) {
-        UserDefaultsManager.save(isForeground: true)
         completionHandler([.banner, .badge, .sound])
     }
 
@@ -62,15 +60,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
-        guard let feedUUID = response.notification.request.content.userInfo[
-            NotificationKey.feedUUID
-        ] as? String
-        else { return }
-
+        let userInfo = response.notification.request.content.userInfo
+        guard let feedUUID = userInfo[NotificationKey.feedUUID] as? String else { return }
         UserDefaultsManager.save(notificationFeedUUID: feedUUID)
-        if UserDefaultsManager.isForeground() {
-            NotificationCenter.default.post(name: .Push, object: nil)
-        }
+        NotificationCenter.default.post(name: .Push, object: nil, userInfo: userInfo)
     }
 }
 
@@ -113,7 +106,6 @@ extension AppDelegate: MessagingDelegate {
 // TODO: https://medium.com/cashwalk/ios-background-mode-9bf921f1c55b
 extension AppDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
-        UserDefaultsManager.removeIsForeground()
         UserDefaultsManager.removeAllEtags()
         KeyChainManager.deleteUser()
         KeyChainManager.save(user: UserManager.shared.user)

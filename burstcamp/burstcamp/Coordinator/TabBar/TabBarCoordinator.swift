@@ -38,6 +38,7 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
             .map { prepareTabController($0) }
 
         configureTabBarController(with: controllers)
+        checkNotification()
     }
 
     func selectPage(_ page: TabBarPage) {
@@ -57,7 +58,6 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
             tabBarController.tabBar.standardAppearance = tabBarAppearance
         }
         navigationController.viewControllers = [tabBarController]
-        checkNotificationFeed()
     }
 
     private func configureTabBarItem(of viewController: UIViewController, with page: TabBarPage) {
@@ -142,18 +142,25 @@ extension TabBarCoordinator: ContainFeedDetailCoordinator {
         )
     }
 
-    @objc func moveToDetail() {
-        guard let feedUUID = UserDefaultsManager.notificationFeedUUID() else { return }
-        UserDefaultsManager.removeIsForeground()
+    @objc func moveToDetail(_ notification: Notification) {
+        guard let feedUUID = notification.userInfo?[NotificationKey.feedUUID] as? String
+        else { return }
         UserDefaultsManager.removeNotificationFeedUUID()
         let feedDetailViewController = prepareFeedDetailViewController(feedUUID: feedUUID)
         sinkFeedViewController(feedDetailViewController)
         self.navigationController.pushViewController(feedDetailViewController, animated: true)
     }
 
-    private func checkNotificationFeed() {
-        if UserDefaultsManager.notificationFeedUUID() != nil {
-            moveToDetail()
+    private func checkNotification() {
+        if let feedUUID = UserDefaultsManager.notificationFeedUUID() {
+            UserDefaultsManager.removeNotificationFeedUUID()
+            moveToFeedDetail(feedUUID: feedUUID)
         }
+    }
+
+    private func moveToFeedDetail(feedUUID: String) {
+        let feedDetailViewController = prepareFeedDetailViewController(feedUUID: feedUUID)
+        sinkFeedViewController(feedDetailViewController)
+        self.navigationController.pushViewController(feedDetailViewController, animated: true)
     }
 }
