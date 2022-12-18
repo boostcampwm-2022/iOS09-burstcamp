@@ -45,7 +45,6 @@ final class FeedRemoteDataSource {
         userUUID: String,
         feed: Feed
     ) -> AnyPublisher<Feed, Error> {
-        print(#function)
         return Future {
             // feed의 스크랩 상태를 변경 해준다.
             var newFeed = feed
@@ -97,7 +96,6 @@ final class FeedRemoteDataSource {
         _ collectionPath: String,
         userUUID: String = UserManager.shared.user.userUUID
     ) -> AnyPublisher<[Feed], Error> {
-        print(#function, collectionPath)
         return Future {
             try await self.firestoreService.getCollection(collectionPath)
                 .asyncMap { feedData -> Feed in

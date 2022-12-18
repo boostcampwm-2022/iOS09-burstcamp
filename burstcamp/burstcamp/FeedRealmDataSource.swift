@@ -158,7 +158,6 @@ final class FeedRealmDataSource: FeedLocalDataSource {
 
     func updateScrapFeedListCache(_ feedList: [Feed]) {
         let diff = feedList.difference(from: cachedScrapFeedList())
-        print(diff)
         container.write { transaction in
             diff.forEach { change in
                 switch change {

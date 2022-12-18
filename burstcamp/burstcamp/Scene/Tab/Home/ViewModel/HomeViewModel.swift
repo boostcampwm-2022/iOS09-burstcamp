@@ -57,7 +57,6 @@ final class HomeViewModel {
                 let userUUID = UserManager.shared.user.userUUID
                 let fetcher = Fetcher<HomeFeedList, Error>(
                     onRemoteCombine: {
-                        print("onRemoteCombine")
                         return self.remoteDataSource.recommendFeedListPublisher(userUUID: userUUID)
                             .zip(self.remoteDataSource.normalFeedListPublisher(userUUID: userUUID)) {
                                 HomeFeedList(recommendFeed: $0, normalFeed: $1)
@@ -65,7 +64,6 @@ final class HomeViewModel {
                             .eraseToAnyPublisher()
                     },
                     onLocalCombine: {
-                        print("onLocalCombine")
                         return self.localDataSource.recommendFeedListPublisher()
                             .zip(self.localDataSource.normalFeedListPublisher()) {
                                 HomeFeedList(recommendFeed: $0, normalFeed: $1)
@@ -73,14 +71,12 @@ final class HomeViewModel {
                             .eraseToAnyPublisher()
                     },
                     onLocal: {
-                        print("onLocal")
                         return HomeFeedList(
                             recommendFeed: self.localDataSource.cachedRecommendFeedList(),
                             normalFeed: self.localDataSource.cachedNormalFeedList()
                         )
                     },
                     onUpdateLocal: { homeFeedList in
-                        print("onUpdateLocal")
                         self.localDataSource.updateRecommendFeedListCache(homeFeedList.recommendFeed)
                         self.localDataSource.updateNormalFeedListCache(homeFeedList.normalFeed)
                     },
@@ -88,7 +84,6 @@ final class HomeViewModel {
                 )
 
                 fetcher.fetch { status, data in
-                    print("\(#fileID) | fetcher: \(status)")
                     switch status {
                     case .loading:
                         self.reloadData.send(Void())

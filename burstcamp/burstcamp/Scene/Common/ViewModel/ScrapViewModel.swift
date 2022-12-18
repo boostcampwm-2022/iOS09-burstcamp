@@ -52,7 +52,6 @@ final class ScrapViewModel {
 
         updater.configure { [weak self] status, data in
             guard let self = self else { return }
-            print("\(#fileID) | updater: \(status)(\(self.feedUUID))")
 
             switch status {
             case .loading:

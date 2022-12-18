@@ -74,7 +74,6 @@ final class ScrapPageViewModel {
                 guard let self = self else { return }
 
                 self.fetcher.fetch { status, data in
-//                    print("\(#fileID) | fetcher: \(status)")
                     self.scrapFeedData = data
 
                     switch status {
