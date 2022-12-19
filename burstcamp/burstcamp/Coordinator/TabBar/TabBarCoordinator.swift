@@ -38,7 +38,7 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
             .map { prepareTabController($0) }
 
         configureTabBarController(with: controllers)
-        checkNotification()
+        moveToFeedDetail()
     }
 
     func selectPage(_ page: TabBarPage) {
@@ -136,31 +136,18 @@ extension TabBarCoordinator: ContainFeedDetailCoordinator {
     private func addObserver() {
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(moveToDetail),
+            selector: #selector(moveToFeedDetail),
             name: .Push,
             object: nil
         )
     }
 
-    @objc func moveToDetail(_ notification: Notification) {
-        guard let feedUUID = notification.userInfo?[NotificationKey.feedUUID] as? String
-        else { return }
-        UserDefaultsManager.removeNotificationFeedUUID()
-        let feedDetailViewController = prepareFeedDetailViewController(feedUUID: feedUUID)
-        sinkFeedViewController(feedDetailViewController)
-        self.navigationController.pushViewController(feedDetailViewController, animated: true)
-    }
-
-    private func checkNotification() {
+    @objc func moveToFeedDetail() {
         if let feedUUID = UserDefaultsManager.notificationFeedUUID() {
             UserDefaultsManager.removeNotificationFeedUUID()
-            moveToFeedDetail(feedUUID: feedUUID)
+            let feedDetailViewController = prepareFeedDetailViewController(feedUUID: feedUUID)
+            sinkFeedViewController(feedDetailViewController)
+            navigationController.pushViewController(feedDetailViewController, animated: true)
         }
-    }
-
-    private func moveToFeedDetail(feedUUID: String) {
-        let feedDetailViewController = prepareFeedDetailViewController(feedUUID: feedUUID)
-        sinkFeedViewController(feedDetailViewController)
-        self.navigationController.pushViewController(feedDetailViewController, animated: true)
     }
 }
