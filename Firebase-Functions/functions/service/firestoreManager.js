@@ -1,6 +1,6 @@
 import { initializeApp, getApps } from 'firebase-admin/app';
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
-import { fetchContent, fetchParsedRSSList } from './feedAPI.js';
+import { fetchContent, fetchParsedRSS, fetchParsedRSSList } from './feedAPI.js';
 import { logger } from 'firebase-functions';
 import { convertURL } from '../util.js';
 
@@ -13,13 +13,14 @@ const fcmTokenRef = db.collection('fcmToken')
 
 export async function updateFeedDB() {
 	const userSnapshot = await userRef.get()
-	const rssURLList = userSnapshot.docs.map(doc => {
-		const blogURL = doc.data()['blogURL']
-		const rssURL = convertURL(blogURL)
-		return rssURL
+	userSnapshot.docs.map(async (doc) => {
+		const user = doc.data();
+		const blogURL = user['blogURL'];
+		if (blogURL === '') { return }
+		const rssURL = convertURL(blogURL);
+		const parsedRss = await fetchParsedRSS(rssURL);
+		await updateFeedDBFromSingleBlog(parsedRss, user);
 	})
-	const parsedRSSList = await fetchParsedRSSList(rssURLList)
-	parsedRSSList.forEach(parsedRSS => updateFeedDBFromSingleBlog(parsedRSS))
 }
 
 export async function deleteRecommendFeeds() {
@@ -51,10 +52,11 @@ export async function updateRecommendFeedDB() {
 /**
  * 한 블로그의 RSS에 담겨있는 feed들을 DB에 저장한다.
  * @param {JSON} parsedRSS 
+ * @param {User} writer
  */
-async function updateFeedDBFromSingleBlog(parsedRSS) {
-	const blogURL = parsedRSS.feed.link
-	const writerUUID = await getFeedWriterUUID(blogURL)
+async function updateFeedDBFromSingleBlog(parsedRSS, writer) {
+	logger.log(writer['nickname'])
+	logger.log(writer['blogURL'])
 	await parsedRSS.items.forEach(async (item) => {
 		const feedUUID = item.link.hashCode()
 		const docRef = feedRef.doc(feedUUID);
@@ -64,7 +66,7 @@ async function updateFeedDBFromSingleBlog(parsedRSS) {
 					logger.log(item.link, 'is already exist')
 					return
 				}
-				createFeedDataIfNeeded(docRef, writerUUID, feedUUID, item)
+				createFeedDataIfNeeded(docRef, writer, feedUUID, item)
 				logger.log(item.link, 'is created')
 			})
 	})
@@ -73,22 +75,28 @@ async function updateFeedDBFromSingleBlog(parsedRSS) {
 /**
  * DB에 한 포스트에 대한 정보를 저장한다.
  * @param {FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>} docRef feedData가 담길 Firestore의 doc 레퍼런스
- * @param {String} writerUUID 작성자의 UUID 값
+ * @param {User} writer 작성자
  * @param {string} feedUUID feedURL을 hashing한 값
  * @param {JSON} feed RSS를 JSON으로 파싱한 정보
  */
-async function createFeedDataIfNeeded(docRef, writerUUID, feedUUID, feed) {
+async function createFeedDataIfNeeded(docRef, writer, feedUUID, feed) {
 	const content = await fetchContent(feed.link)
 	docRef.set({
 		// TODO: User db에서 UUID를 찾아 대입해주기
 		feedUUID: feedUUID,
-		writerUUID: writerUUID,
 		title: feed.title,
+		pubDate: Timestamp.fromDate(new Date(feed.pubDate)),
+		regDate: Timestamp.now(),
 		url: feed.link,
 		thumbnail: feed.thumbnail,
 		content: content,
-		pubDate: Timestamp.fromDate(new Date(feed.pubDate)),
-		regDate: Timestamp.now(),
+		scrapCount: 0,
+		writerUUID: writer['userUUID'],
+		writerNickname: writer['nickname'],
+		writerDomain: writer['domain'],
+		writerOrdinalNumber: writer['ordinalNumber'],
+		writerCamperID: writer['camperID'],
+		writerProfileImageURL: writer['profileImageURL'],
 	})
 }
 
