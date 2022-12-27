@@ -16,7 +16,7 @@ final class NormalFeedCell: UICollectionViewCell {
     private lazy var mainView = NormalFeedCellMain()
     lazy var footerView = NormalFeedCellFooter()
 
-    private var feedScrapViewModel: FeedScrapViewModel!
+    private var scrapViewModel: ScrapViewModel!
 
     private var cancelBag = Set<AnyCancellable>()
 
@@ -70,31 +70,32 @@ final class NormalFeedCell: UICollectionViewCell {
         }
     }
 
-    func configure(with feedScrapViewModel: FeedScrapViewModel) {
-        self.feedScrapViewModel = feedScrapViewModel
+    func configure(with scrapViewModel: ScrapViewModel) {
+        self.scrapViewModel = scrapViewModel
         bind()
     }
 
     private func bind() {
-        let scrapButton = footerView.scrapButton
-
-        let input = FeedScrapViewModel.Input(
-            viewDidLoad: Just(Void()).eraseToAnyPublisher(),
-            scrapToggleButtonDidTap: scrapButton.statePublisher
+        let input = ScrapViewModel.Input(
+            scrapToggleButtonDidTap: self.footerView.scrapButton.tapPublisher
         )
 
-        let output = feedScrapViewModel.transform(input: input)
+        let output = scrapViewModel.transform(input: input)
 
-        output.scrapToggleButtonState
+        output.scrapButtonState
             .receive(on: DispatchQueue.main)
-            .sink { state in
-                scrapButton.updateView(with: state)
-            }
+            .weakAssign(to: \.isOn, on: footerView.scrapButton)
             .store(in: &cancelBag)
 
-        output.scrapToggleButtonIsEnabled
+        output.scrapButtonIsEnabled
             .receive(on: DispatchQueue.main)
-            .assign(to: \.isEnabled, on: scrapButton)
+            .weakAssign(to: \.isEnabled, on: footerView.scrapButton)
+            .store(in: &cancelBag)
+
+        output.scrapButtonCount
+            .receive(on: DispatchQueue.main)
+            .map { "\($0)" }
+            .weakAssign(to: \.text, on: footerView.countLabel)
             .store(in: &cancelBag)
     }
 }

@@ -25,12 +25,17 @@ extension FeedCellType {
     }
 
     var index: Int {
+        return self.rawValue
+    }
+
+    var collectionPath: String {
         switch self {
-        case .recommend: return 0
-        case .normal: return 1
+        case .recommend: return FirestoreCollection.recommendFeed.path
+        case .normal: return FirestoreCollection.normalFeed.path
         }
     }
+
     static var count: Int {
-        return FeedCellType.allCases.count
+        return Self.allCases.count
     }
 }

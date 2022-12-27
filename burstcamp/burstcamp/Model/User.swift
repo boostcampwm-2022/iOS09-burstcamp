@@ -63,6 +63,7 @@ struct User: Codable {
 
     var toFeedWriter: FeedWriter {
         return FeedWriter(
+            userUUID: self.userUUID,
             nickname: self.nickname,
             camperID: self.camperID,
             ordinalNumber: self.ordinalNumber,

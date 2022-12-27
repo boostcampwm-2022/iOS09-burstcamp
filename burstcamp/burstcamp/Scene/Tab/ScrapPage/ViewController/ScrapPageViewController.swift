@@ -19,9 +19,12 @@ final class ScrapPageViewController: UIViewController {
         return view
     }
 
-    private var viewModel: ScrapPageViewModel
-    private var cancelBag = Set<AnyCancellable>()
     let coordinatorPublisher = PassthroughSubject<ScrapPageCoordinatorEvent, Never>()
+    private let viewModel: ScrapPageViewModel
+    private var cancelBag = Set<AnyCancellable>()
+
+    private let viewWillAppearPublisher = PassthroughSubject<Void, Never>()
+    private let viewWillDisappearPublisher = PassthroughSubject<Void, Never>()
     private let paginationPublisher = PassthroughSubject<Void, Never>()
 
     // MARK: - Initializer
@@ -42,7 +45,6 @@ final class ScrapPageViewController: UIViewController {
     }
 
     override func viewDidLoad() {
-        configureUI()
         bind()
         collectionViewDelegate()
     }
@@ -50,43 +52,47 @@ final class ScrapPageViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureNavigationBar()
+        viewWillAppearPublisher.send(Void())
     }
-    // MARK: - Methods
 
-    private func configureUI() {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        viewWillDisappearPublisher.send(Void())
     }
+
+    // MARK: - Methods
 
     private func bind() {
         guard let refreshControl = scrapPageView.collectionView.refreshControl
         else { return }
 
-        let viewDidLoadJust = Just(Void()).eraseToAnyPublisher()
-
         let input = ScrapPageViewModel.Input(
-            viewDidLoad: viewDidLoadJust,
-            viewRefresh: refreshControl.isRefreshPublisher,
+            viewWillAppear: viewWillAppearPublisher.eraseToAnyPublisher(),
+            viewWillDisappear: viewWillDisappearPublisher.eraseToAnyPublisher(),
+            viewDidRefresh: refreshControl.refreshPublisher,
             pagination: paginationPublisher.eraseToAnyPublisher()
         )
 
         let output = viewModel.transform(input: input)
 
-        output.fetchResult
+        output.reloadData
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] fetchResult in
-                switch fetchResult {
-                case .fetchSuccess:
-                    self?.scrapPageView.endCollectionViewRefreshing()
-                    self?.scrapPageView.collectionView.reloadData()
-                case .fetchFail(let error):
-                    self?.handleError(error)
-                }
+            .sink { [weak self] _ in
+                self?.scrapPageView.collectionView.reloadData()
             }
             .store(in: &cancelBag)
 
-        output.cellUpdate
+        output.showAlert
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] indexPath in
-                self?.reloadCollectionView(indexPath: indexPath)
+            .sink { [weak self] error in
+                self?.showAlert(message: error.localizedDescription)
+            }
+            .store(in: &cancelBag)
+
+        output.hideIndicator
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.scrapPageView.endCollectionViewRefreshing()
             }
             .store(in: &cancelBag)
     }
@@ -102,12 +108,6 @@ final class ScrapPageViewController: UIViewController {
 
     private func paginateFeed() {
         paginationPublisher.send(Void())
-    }
-
-    private func reloadCollectionView(indexPath: IndexPath) {
-        UIView.performWithoutAnimation {
-            scrapPageView.collectionView.reloadItems(at: [indexPath])
-        }
     }
 }
 

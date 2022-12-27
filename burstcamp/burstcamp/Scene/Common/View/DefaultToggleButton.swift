@@ -12,7 +12,7 @@ final class ToggleButton: UIButton {
     private let onImage: UIImage?
     private let offImage: UIImage?
 
-    private(set) var isOn: Bool = false {
+    var isOn: Bool = false {
         didSet {
             configure()
         }
@@ -73,13 +73,5 @@ extension ToggleButton {
             .compactMap { $0 as? ToggleButton }
             .map { $0.isOn }
             .eraseToAnyPublisher()
-    }
-
-    func toggle() {
-        isOn.toggle()
-    }
-
-    func updateView(with state: Bool) {
-        isOn = state
     }
 }

@@ -76,37 +76,32 @@ final class HomeViewController: UIViewController {
 
         let input = HomeViewModel.Input(
             viewDidLoad: viewDidLoadJust,
-            viewRefresh: refreshControl.isRefreshPublisher,
+            viewDidRefresh: refreshControl.refreshPublisher,
             pagination: paginationPublisher.eraseToAnyPublisher()
         )
 
         let output = viewModel.transform(input: input)
 
-        output.fetchResult
+        output.reloadData
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] fetchResult in
-                switch fetchResult {
-                case .fetchSuccess:
-                    self?.homeView.endCollectionViewRefreshing()
-                    self?.homeView.collectionView.reloadData()
-                case .fetchFail(let error):
-                    self?.handleError(error)
-                }
+            .sink { [weak self] _ in
+                self?.homeView.collectionView.reloadData()
             }
             .store(in: &cancelBag)
 
-        output.cellUpdate
+        output.showAlert
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] indexPath in
-                self?.reloadCollectionView(indexPath: indexPath)
+            .sink { [weak self] error in
+                self?.showAlert(message: error.localizedDescription)
             }
             .store(in: &cancelBag)
-    }
 
-    private func reloadCollectionView(indexPath: IndexPath) {
-        UIView.performWithoutAnimation {
-            homeView.collectionView.reloadItems(at: [indexPath])
-        }
+        output.hideIndicator
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.homeView.endCollectionViewRefreshing()
+            }
+            .store(in: &cancelBag)
     }
 
     private func paginateFeed() {
@@ -118,6 +113,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return FeedCellType.count
     }
+
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
@@ -189,10 +185,19 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         return UICollectionReusableView()
     }
 
-    // FeedDetail Test용
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let feed = viewModel.normalFeedData[indexPath.row]
-        coordinatorPublisher.send(.moveToFeedDetail(feed: feed))
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        let feedCellType = FeedCellType(index: indexPath.section) ?? .normal
+        switch feedCellType {
+        case .recommend:
+            // TODO: 사파리로 보여주기
+            return
+        case .normal:
+            let feed = viewModel.normalFeedData[indexPath.row]
+            coordinatorPublisher.send(.moveToFeedDetail(feed: feed))
+        }
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

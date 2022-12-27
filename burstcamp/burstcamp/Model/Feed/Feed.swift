@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Feed {
+struct Feed: Equatable {
     let feedUUID: String
     let writer: FeedWriter
     let title: String
@@ -16,25 +16,41 @@ struct Feed {
     let thumbnailURL: String
     let content: String
     var scrapCount: Int
+    var isScraped: Bool
+}
 
-    init(feedDTO: FeedDTO, feedWriter: FeedWriter, scrapCount: Int = 0) {
-        self.feedUUID = feedDTO.feedUUID
+extension Feed {
+    init(
+        feedAPIModel: FeedAPIModel,
+        feedWriter: FeedWriter,
+        scrapCount: Int = 0,
+        isScraped: Bool = false
+    ) {
+        self.feedUUID = feedAPIModel.feedUUID
         self.writer = feedWriter
-        self.title = feedDTO.title
-        self.pubDate = feedDTO.pubDate
-        self.url = feedDTO.url
-        self.thumbnailURL = feedDTO.thumbnailURL
-        self.content = feedDTO.content
+        self.title = feedAPIModel.title
+        self.pubDate = feedAPIModel.pubDate
+        self.url = feedAPIModel.url
+        self.thumbnailURL = feedAPIModel.thumbnailURL
+        self.content = feedAPIModel.content
         self.scrapCount = scrapCount
+        self.isScraped = isScraped
     }
 
-    mutating func scrapCountUp() {
+    mutating func toggleScrap() {
+        if isScraped { unScrap() }
+        else { scrap() }
+    }
+
+    mutating func scrap() {
         scrapCount += 1
+        isScraped = true
     }
 
-    mutating func scrapCountDown() {
+    mutating func unScrap() {
         if scrapCount > 0 {
             scrapCount -= 1
         }
+        isScraped = false
     }
 }

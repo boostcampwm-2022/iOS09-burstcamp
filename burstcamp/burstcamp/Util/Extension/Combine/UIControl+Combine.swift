@@ -73,13 +73,13 @@ extension UITextField {
 extension UIButton {
     var tapPublisher: AnyPublisher<Void, Never> {
         controlPublisher(for: .touchUpInside)
-            .map { _ in }
+            .mapToVoid()
             .eraseToAnyPublisher()
     }
 
     var touchDownPublisher: AnyPublisher<Void, Never> {
         controlPublisher(for: .touchDown)
-            .map { _ in }
+            .mapToVoid()
             .eraseToAnyPublisher()
     }
 }
@@ -94,10 +94,11 @@ extension UISwitch {
 }
 
 extension UIRefreshControl {
-    var isRefreshPublisher: AnyPublisher<Bool, Never> {
+    var refreshPublisher: AnyPublisher<Void, Never> {
         controlPublisher(for: .valueChanged)
             .compactMap { $0 as? UIRefreshControl }
-            .map { $0.isRefreshing }
+            .filter { $0.isRefreshing == true }
+            .mapToVoid()
             .eraseToAnyPublisher()
     }
 }

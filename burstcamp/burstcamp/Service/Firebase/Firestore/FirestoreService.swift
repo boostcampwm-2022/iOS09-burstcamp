@@ -13,7 +13,8 @@ enum FirestoreServiceError: Error {
     case getCollection
     case getDocument
     case lastCollectionError
-    case addListnerFail
+    case addListenerFail
+    case errorCastingFail(message: String)
 }
 
 typealias FirestoreData = [String: Any]
@@ -32,7 +33,7 @@ final class FirestoreService {
     }
 
     public func createPaginateQuery(
-        collectionPath: String,
+        _ collectionPath: String,
         field: String,
         count: Int,
         lastSnapShot: QueryDocumentSnapshot?
@@ -51,10 +52,12 @@ final class FirestoreService {
         }
     }
 
-    public func getCollection(collection: String) async throws -> [FirestoreData] {
+    public func getCollection(
+        _ collectionPath: String
+    ) async throws -> [FirestoreData] {
         try await withCheckedThrowingContinuation { continuation in
             database
-                .collection(collection)
+                .collection(collectionPath)
                 .getDocuments { querySnapshot, error in
                     if let error = error {
                         continuation.resume(throwing: error)
@@ -98,14 +101,25 @@ final class FirestoreService {
         }
     }
 
-    public func countCollection(collectionPath: String) async throws -> Int {
+    public func countCollection(
+        _ collectionPath: String
+    ) async throws -> Int {
         let countQuery = database.collection(collectionPath).count
         let collectionCount = try await countQuery.getAggregation(source: .server).count
         return Int(truncating: collectionCount)
     }
 
+    public func countCollection(
+        _ collectionPath: String,
+        _ makeQuery: (_ collection: CollectionReference) -> Query
+    ) async throws -> Int {
+        let countQuery = makeQuery(database.collection(collectionPath)).count
+        let collectionCount = try await countQuery.getAggregation(source: .server).count
+        return Int(truncating: collectionCount)
+    }
+
     public func getDocument(
-        collectionPath: String,
+        _ collectionPath: String,
         document: String
     ) async throws -> FirestoreData {
         try await withCheckedThrowingContinuation { continuation in
@@ -129,15 +143,15 @@ final class FirestoreService {
     }
 
     public func createDocument(
-        collectionPath: String,
+        _ collectionPath: String,
         document: String,
-        value: FirestoreData
+        data: FirestoreData
     ) async throws {
         try await withCheckedThrowingContinuation { continuation in
             database
                 .collection(collectionPath)
                 .document(document)
-                .setData(value) { error in
+                .setData(data) { error in
                     if let error = error {
                         continuation.resume(throwing: error)
                         return
@@ -149,7 +163,7 @@ final class FirestoreService {
     }
 
     public func updateDocument(
-        collectionPath: String,
+        _ collectionPath: String,
         document: String,
         data: FirestoreData
     )  async throws {
@@ -169,7 +183,7 @@ final class FirestoreService {
     }
 
     public func deleteDocument(
-        collectionPath: String,
+        _ collectionPath: String,
         document: String
     ) async throws {
         try await withCheckedThrowingContinuation { continuation in
@@ -187,7 +201,7 @@ final class FirestoreService {
     }
 
     public func addListenerToDocument(
-        collectionPath: String,
+        _ collectionPath: String,
         document: String
     ) async throws -> FirestoreData {
         try await withCheckedThrowingContinuation { continuation in
@@ -202,7 +216,7 @@ final class FirestoreService {
                     guard let documentSnapshot = documentSnapshot,
                           let data = documentSnapshot.data()
                     else {
-                        continuation.resume(throwing: FirestoreServiceError.addListnerFail)
+                        continuation.resume(throwing: FirestoreServiceError.addListenerFail)
                         return
                     }
                     continuation.resume(returning: data)
@@ -211,17 +225,17 @@ final class FirestoreService {
     }
 
     public func appendDocumentArrayField(
-        collectionPath: String,
+        _ collectionPath: String,
         document: String,
         arrayName: String,
-        value: String
+        data: String
     ) async throws {
         try await withCheckedThrowingContinuation { continuation in
             database
                 .collection(collectionPath)
                 .document(document)
                 .updateData([
-                    arrayName: FieldValue.arrayUnion([value])
+                    arrayName: FieldValue.arrayUnion([data])
                 ]) { error in
                     if let error = error {
                         continuation.resume(throwing: error)
@@ -233,17 +247,17 @@ final class FirestoreService {
     }
 
     public func deleteDocumentArrayField(
-        collectionPath: String,
+        _ collectionPath: String,
         document: String,
         arrayName: String,
-        value: String
+        data: String
     ) async throws {
         try await withCheckedThrowingContinuation { continuation in
             database
                 .collection(collectionPath)
                 .document(document)
                 .updateData([
-                    arrayName: FieldValue.arrayRemove([value])
+                    arrayName: FieldValue.arrayRemove([data])
                 ]) { error in
                     if let error = error {
                         continuation.resume(throwing: error)
