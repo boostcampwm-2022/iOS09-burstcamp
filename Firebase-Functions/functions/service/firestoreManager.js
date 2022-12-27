@@ -88,7 +88,7 @@ async function createFeedDataIfNeeded(docRef, writer, feedUUID, feed) {
 		pubDate: Timestamp.fromDate(new Date(feed.pubDate)),
 		regDate: Timestamp.now(),
 		url: feed.link,
-		thumbnail: feed.thumbnail,
+		thumbnailURL: feed.thumbnail,
 		content: content,
 		scrapCount: 0,
 		writerUUID: writer['userUUID'],
