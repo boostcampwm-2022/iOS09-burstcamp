@@ -32,7 +32,7 @@ extension FeedSingletonDataSource {
         return normalFeedListSubject.value
     }
 
-    func updateNormalFeedListCache(_ feedList: [Feed]) {
+    func updateNormalFeedListOnCache(_ feedList: [Feed]) {
         normalFeedListSubject.send(feedList)
     }
 
@@ -60,7 +60,7 @@ extension FeedSingletonDataSource {
         return recommendFeedListSubject.value
     }
 
-    func updateRecommendFeedListCache(_ feedList: [Feed]) {
+    func updateRecommendFeedListOnCache(_ feedList: [Feed]) {
         recommendFeedListSubject.send(feedList)
     }
 
@@ -89,7 +89,7 @@ extension FeedSingletonDataSource {
         return scrapFeedListSubject.value
     }
 
-    func updateScrapFeedListCache(_ feedList: [Feed]) {
+    func updateScrapFeedListOnCache(_ feedList: [Feed]) {
         scrapFeedListSubject.send(feedList)
     }
 
@@ -130,7 +130,7 @@ extension FeedSingletonDataSource {
         }
 
         // 모아보기 리스트를 갱신한다.
-        updateScrapFeedListCache(newFeedList)
+        updateScrapFeedListOnCache(newFeedList)
     }
 
     func updateFeed(feedUUID: String, _ update: (Feed) -> Feed) {
@@ -145,7 +145,7 @@ extension FeedSingletonDataSource {
                     return feed
                 }
             }
-        if updateNormalFeed { updateNormalFeedListCache(newNormalFeedList) }
+        if updateNormalFeed { updateNormalFeedListOnCache(newNormalFeedList) }
     }
 }
 

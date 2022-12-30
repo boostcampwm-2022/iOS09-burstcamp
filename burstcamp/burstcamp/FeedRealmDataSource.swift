@@ -11,6 +11,10 @@ import Foundation
 import RealmManager
 import RealmSwift
 
+enum RealmConfig {
+    static let serialQueue = DispatchQueue(label: "RealmQueue")
+}
+
 final class FeedRealmDataSource: FeedLocalDataSource {
 
     typealias Failure = Error
@@ -86,7 +90,7 @@ final class FeedRealmDataSource: FeedLocalDataSource {
             .map { Feed(realmModel: $0) }
     }
 
-    func updateNormalFeedListCache(_ feedList: [Feed]) {
+    func updateNormalFeedListOnCache(_ feedList: [Feed]) {
         container.write { transaction in
             feedList.forEach { feed in
                 let realmModel = NormalFeedRealmModel()
@@ -133,7 +137,7 @@ final class FeedRealmDataSource: FeedLocalDataSource {
             .map { Feed(realmModel: $0) }
     }
 
-    func updateRecommendFeedListCache(_ feedList: [Feed]) {
+    func updateRecommendFeedListOnCache(_ feedList: [Feed]) {
         container.write { transaction in
             feedList.forEach { feed in
                 let realmModel = RecommendFeedRealmModel()
@@ -156,7 +160,7 @@ final class FeedRealmDataSource: FeedLocalDataSource {
             .map { Feed(realmModel: $0) }
     }
 
-    func updateScrapFeedListCache(_ feedList: [Feed]) {
+    func updateScrapFeedListOnCache(_ feedList: [Feed]) {
         let diff = feedList.difference(from: cachedScrapFeedList())
         container.write { transaction in
             diff.forEach { change in

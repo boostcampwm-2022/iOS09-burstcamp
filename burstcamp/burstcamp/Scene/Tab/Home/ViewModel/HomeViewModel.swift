@@ -77,8 +77,8 @@ final class HomeViewModel {
                         )
                     },
                     onUpdateLocal: { homeFeedList in
-                        self.localDataSource.updateRecommendFeedListCache(homeFeedList.recommendFeed)
-                        self.localDataSource.updateNormalFeedListCache(homeFeedList.normalFeed)
+                        self.localDataSource.updateRecommendFeedListOnCache(homeFeedList.recommendFeed)
+                        self.localDataSource.updateNormalFeedListOnCache(homeFeedList.normalFeed)
                     },
                     queue: RealmConfig.serialQueue
                 )

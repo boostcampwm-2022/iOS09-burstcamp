@@ -8,17 +8,13 @@
 import Combine
 import Foundation
 
-enum RealmConfig {
-    static let serialQueue = DispatchQueue(label: "RealmQueue")
-}
-
 protocol FeedLocalDataSource {
 
     // MARK: NormalFeedList
 
     func normalFeedListPublisher() -> AnyPublisher<[Feed], Error>
     func cachedNormalFeedList() -> [Feed]
-    func updateNormalFeedListCache(_ feedList: [Feed])
+    func updateNormalFeedListOnCache(_ feedList: [Feed])
 
     // MARK: NormalFeed
 
@@ -29,13 +25,13 @@ protocol FeedLocalDataSource {
 
     func recommendFeedListPublisher() -> AnyPublisher<[Feed], Error>
     func cachedRecommendFeedList() -> [Feed]
-    func updateRecommendFeedListCache(_ feedList: [Feed])
+    func updateRecommendFeedListOnCache(_ feedList: [Feed])
 
     // MARK: ScrapFeedList
 
     func scrapFeedListPublisher() -> AnyPublisher<[Feed], Error>
     func cachedScrapFeedList() -> [Feed]
-    func updateScrapFeedListCache(_ feedList: [Feed])
+    func updateScrapFeedListOnCache(_ feedList: [Feed])
 
     // MARK: ScrapFeed
 
