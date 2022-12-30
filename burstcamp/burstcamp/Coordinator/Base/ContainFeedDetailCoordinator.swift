@@ -33,8 +33,8 @@ extension ContainFeedDetailCoordinator {
         let feedDetailViewModel = FeedDetailViewModel(feed: feed)
         let scrapViewModel = ScrapViewModel(
             feedUUID: feed.feedUUID,
-            feedRemoteDataSource: FeedRemoteDataSource.shared
             feedLocalDataSource: FeedRealmDataSource.shared,
+            feedRemoteDataSource: FeedRemoteDataSource.shared
         )
         let feedDetailViewController = FeedDetailViewController(
             feedDetailViewModel: feedDetailViewModel,

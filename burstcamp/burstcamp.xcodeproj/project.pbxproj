@@ -119,7 +119,6 @@
 		B5DAD67A292E4C6800C4A126 /* FeedDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD676292E4C6800C4A126 /* FeedDetailView.swift */; };
 		B5DAD67B292E4C6800C4A126 /* FeedDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD678292E4C6800C4A126 /* FeedDetailViewController.swift */; };
 		B5DAD681292E58BF00C4A126 /* DefaultMultilLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD680292E58BF00C4A126 /* DefaultMultilLineLabel.swift */; };
-		B5E0D94A292F631C001727F5 /* MockHTMLString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E0D949292F631C001727F5 /* MockHTMLString.swift */; };
 		B5E0D94C292F750D001727F5 /* FeedContentWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E0D94B292F750D001727F5 /* FeedContentWebView.swift */; };
 		B5F4B036293CC0B300947250 /* FirestoreCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F4B035293CC0B300947250 /* FirestoreCollection.swift */; };
 		B5FF71462948EDB8008E69F2 /* FeedLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FF71452948EDB8008E69F2 /* FeedLocalDataSource.swift */; };
@@ -323,7 +322,6 @@
 		B5DAD676292E4C6800C4A126 /* FeedDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailView.swift; sourceTree = "<group>"; };
 		B5DAD678292E4C6800C4A126 /* FeedDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailViewController.swift; sourceTree = "<group>"; };
 		B5DAD680292E58BF00C4A126 /* DefaultMultilLineLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMultilLineLabel.swift; sourceTree = "<group>"; };
-		B5E0D949292F631C001727F5 /* MockHTMLString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHTMLString.swift; sourceTree = "<group>"; };
 		B5E0D94B292F750D001727F5 /* FeedContentWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedContentWebView.swift; sourceTree = "<group>"; };
 		B5F4B035293CC0B300947250 /* FirestoreCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreCollection.swift; sourceTree = "<group>"; };
 		B5FF71452948EDB8008E69F2 /* FeedLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLocalDataSource.swift; sourceTree = "<group>"; };
@@ -1056,7 +1054,6 @@
 				B5DAD676292E4C6800C4A126 /* FeedDetailView.swift */,
 				140438AB293F4285004D035C /* FeedInfoStackView.swift */,
 				B5E0D94B292F750D001727F5 /* FeedContentWebView.swift */,
-				B5E0D949292F631C001727F5 /* MockHTMLString.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1335,7 +1332,6 @@
 				B572F01E29486C0500A9413C /* FeedWriter+RealmCompatible.swift in Sources */,
 				B572EF812945E19C00A9413C /* Sequence+Async.swift in Sources */,
 				D8494D502927CEAA008157F1 /* DefaultBadgeLabel.swift in Sources */,
-				B5E0D94A292F631C001727F5 /* MockHTMLString.swift in Sources */,
 				14927E1E2929C71C001F2E97 /* RecommendFeedUserView.swift in Sources */,
 				B5BC81BD2945BD500077BF29 /* FeedSingletonDataSource.swift in Sources */,
 				14A93D402936EFF900790034 /* FeedAPIModel.swift in Sources */,
