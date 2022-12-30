@@ -23,7 +23,7 @@ excluded:
   - ${TARGETNAME}Tests/
   - ${TARGETNAME}UITests/
 
-line_length: 100
+line_length: 130
 
 file_length:
   warning: 700
