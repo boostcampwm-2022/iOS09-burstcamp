@@ -55,6 +55,7 @@ final class DefaultBadgeView: UIView {
 extension DefaultBadgeView {
     func updateView(user: User) {
         domainLabel.updateView(text: user.domain.rawValue)
+        domainLabel.textColor = user.domain.color
         let number = "\(user.ordinalNumber)기"
         numberLabel.updateView(text: number)
         camperIDLabel.updateView(text: user.camperID)
@@ -62,6 +63,7 @@ extension DefaultBadgeView {
 
     func updateView(feedWriter: FeedWriter) {
         domainLabel.updateView(text: feedWriter.domain.rawValue)
+        domainLabel.textColor = feedWriter.domain.color
         let number = "\(feedWriter.ordinalNumber)기"
         numberLabel.updateView(text: number)
         camperIDLabel.updateView(text: feedWriter.camperID)

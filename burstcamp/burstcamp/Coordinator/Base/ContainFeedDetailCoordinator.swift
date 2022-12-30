@@ -31,11 +31,10 @@ extension ContainFeedDetailCoordinator {
 
     func prepareFeedDetailViewController(feed: Feed) -> FeedDetailViewController {
         let feedDetailViewModel = FeedDetailViewModel(feed: feed)
-        let firestoreFeedService = BeforeDefaultFirestoreFeedService()
         let scrapViewModel = ScrapViewModel(
             feedUUID: feed.feedUUID,
-            feedLocalDataSource: FeedRealmDataSource.shared,
             feedRemoteDataSource: FeedRemoteDataSource.shared
+            feedLocalDataSource: FeedRealmDataSource.shared,
         )
         let feedDetailViewController = FeedDetailViewController(
             feedDetailViewModel: feedDetailViewModel,

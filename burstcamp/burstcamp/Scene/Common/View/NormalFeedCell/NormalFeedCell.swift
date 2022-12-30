@@ -85,23 +85,18 @@ final class NormalFeedCell: UICollectionViewCell {
 
         output.scrapButtonState
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] isOn in
-                self?.footerView.scrapButton.isOn = isOn
-            }
+            .weakAssign(to: \.isOn, on: footerView.scrapButton)
             .store(in: &cancelBag)
 
         output.scrapButtonIsEnabled
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] isEnabled in
-                self?.footerView.scrapButton.isEnabled = isEnabled
-            }
+            .weakAssign(to: \.isEnabled, on: footerView.scrapButton)
             .store(in: &cancelBag)
 
         output.scrapButtonCount
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] count in
-                self?.footerView.countLabel.text = "\(count)"
-            }
+            .map { "\($0)" }
+            .weakAssign(to: \.text, on: footerView.countLabel)
             .store(in: &cancelBag)
     }
 }

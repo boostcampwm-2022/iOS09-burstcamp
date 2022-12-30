@@ -16,6 +16,10 @@ export const scheduledUpdateRecommendFeedDB = pubsub.schedule('every monday 00:0
 	updateRecommendFeedDB()
 })
 
+export const updateFeedDBWhenSignup = https.onCall(async (context) => {
+	updateFeedDB()
+})
+
 export const fetchBlogTitle = https.onCall(async (data, context) => {
 	const blogTitle = await getBlogTitle(data.blogURL)
 	return {
