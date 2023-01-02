@@ -38,6 +38,7 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
             .map { prepareTabController($0) }
 
         configureTabBarController(with: controllers)
+        moveToFeedDetail()
     }
 
     func selectPage(_ page: TabBarPage) {
@@ -57,7 +58,6 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
             tabBarController.tabBar.standardAppearance = tabBarAppearance
         }
         navigationController.viewControllers = [tabBarController]
-        checkNotificationFeed()
     }
 
     private func configureTabBarItem(of viewController: UIViewController, with page: TabBarPage) {
@@ -134,25 +134,18 @@ extension TabBarCoordinator: ContainFeedDetailCoordinator {
     private func addObserver() {
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(moveToDetail),
+            selector: #selector(moveToFeedDetail),
             name: .Push,
             object: nil
         )
     }
 
-    @objc func moveToDetail() {
-        guard let feedUUID = UserDefaultsManager.notificationFeedUUID() else { return }
-        UserDefaultsManager.removeIsForeground()
-        UserDefaultsManager.removeNotificationFeedUUID()
-        let feedDetailViewController = prepareFeedDetailViewController(feedUUID: feedUUID)
-        sinkFeedViewController(feedDetailViewController)
-        self.navigationController.pushViewController(feedDetailViewController, animated: true)
-    }
-
-    private func checkNotificationFeed() {
-        if !UserDefaultsManager.isForeground(),
-           UserDefaultsManager.notificationFeedUUID() != nil {
-            moveToDetail()
+    @objc func moveToFeedDetail() {
+        if let feedUUID = UserDefaultsManager.notificationFeedUUID() {
+            UserDefaultsManager.removeNotificationFeedUUID()
+            let feedDetailViewController = prepareFeedDetailViewController(feedUUID: feedUUID)
+            sinkFeedViewController(feedDetailViewController)
+            navigationController.pushViewController(feedDetailViewController, animated: true)
         }
     }
 }
