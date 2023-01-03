@@ -133,7 +133,7 @@ final class MyPageEditView: UIView {
     }
 
     func updateCurrentUserInfo(user: User) {
-        profileImageView.setImage(urlString: user.profileImageURL)
+        profileImageView.setImage(urlString: user.profileImageURL, isDiskCaching: true)
         nickNameTextField.text = user.nickname
         blogLinkTextField.text = user.blogURL
         blogTitleImageLabel = DefaultImageLabel(
