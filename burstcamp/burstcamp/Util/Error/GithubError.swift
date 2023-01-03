@@ -15,12 +15,6 @@ enum GithubError: LocalizedError {
     case encodingError
 }
 
-extension GithubError: CategorizedError {
-    var category: ErrorCategory {
-        return .retryable
-    }
-}
-
 extension GithubError {
     var errorDescription: String? {
         switch self {

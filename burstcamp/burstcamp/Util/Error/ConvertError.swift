@@ -12,12 +12,6 @@ enum ConvertError: LocalizedError {
     case invalidImageConvert
 }
 
-extension ConvertError: CategorizedError {
-    var category: ErrorCategory {
-        return .nonRetryable
-    }
-}
-
 extension ConvertError {
     var errorDescription: String? {
         switch self {

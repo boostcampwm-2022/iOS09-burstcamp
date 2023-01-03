@@ -31,7 +31,7 @@ final class SignUpBlogViewModel {
         let validateBlogAddress = input.blogAddressTextFieldDidEdit
             .map { address in
                 LogInManager.shared.blodURL = address
-                return Validation.validate(blogLink: address) ? true : false
+                return Validator.validate(blogLink: address) ? true : false
             }
             .eraseToAnyPublisher()
 
