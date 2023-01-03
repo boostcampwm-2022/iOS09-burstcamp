@@ -11,6 +11,8 @@ import Foundation
 public protocol Fetchable {
     associatedtype Data
     associatedtype FetchingError: Error
+
+    var queue: DispatchQueue { get }
     
     // Remote
     var onRemoteCombine: (() -> AnyPublisher<Data, FetchingError>) { get }
@@ -21,10 +23,11 @@ public protocol Fetchable {
     var onUpdateLocal: ((Data) -> Void) { get }
     
     init(
-        onRemoteCombine: @autoclosure @escaping () -> AnyPublisher<Data, FetchingError>,
-        onLocalCombine:@autoclosure @escaping () -> AnyPublisher<Data, FetchingError>,
-        onLocal: @autoclosure @escaping () -> Data,
-        onUpdateLocal: @escaping (Data) -> Void
+        onRemoteCombine: @escaping () -> AnyPublisher<Data, FetchingError>,
+        onLocalCombine: @escaping () -> AnyPublisher<Data, FetchingError>,
+        onLocal: @escaping () -> Data,
+        onUpdateLocal: @escaping (Data) -> Void,
+        queue: DispatchQueue
     )
     
     func fetch(_ onNext: @escaping (Status<FetchingError>, Data) -> Void) -> Set<AnyCancellable>

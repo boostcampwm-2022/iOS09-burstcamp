@@ -22,20 +22,22 @@ final class ScrapViewModel {
     private let scrapButtonIsEnabled = CurrentValueSubject<Bool?, Never>(nil)
     private let showAlert = CurrentValueSubject<Error?, Never>(nil)
 
-    private let updater: Updater<Feed, FirestoreServiceError>
+    private let updater: Updater<Feed, Error>
+
+    private let feedUUID: String
 
     init(
         feedUUID: String,
         feedLocalDataSource: FeedLocalDataSource,
         feedRemoteDataSource: FeedRemoteDataSource
     ) {
-        let feedUUID = feedUUID
+        self.feedUUID = feedUUID
         let userUUID = UserManager.shared.user.userUUID
         self.feedLocalDataSource = feedLocalDataSource
         self.feedRemoteDataSource = feedRemoteDataSource
 
-        updater = Updater<Feed, FirestoreServiceError>(
-            onRemoteCombine: { feed in
+        updater = Updater<Feed, Error>(
+            onUpdateRemoteCombine: { feed in
                 feedRemoteDataSource.updateFeedPublisher(
                     feedUUID: feedUUID,
                     userUUID: userUUID,
@@ -44,12 +46,12 @@ final class ScrapViewModel {
             },
             onLocalCombine: { feedLocalDataSource.normalFeedPublisher(feedUUID: feedUUID) },
             onLocal: { feedLocalDataSource.cachedNormalFeed(feedUUID: feedUUID) },
-            onUpdateLocal: { feedLocalDataSource.toggleScrapFeed(feedUUID: feedUUID) }
+            onUpdateLocal: { feedLocalDataSource.toggleScrapFeed(modifiedFeed: $0) },
+            queue: RealmConfig.serialQueue
         )
 
         updater.configure { [weak self] status, data in
             guard let self = self else { return }
-//            print("\(#fileID) | updater: \(status)")
 
             switch status {
             case .loading:
@@ -63,7 +65,7 @@ final class ScrapViewModel {
                 self.scrapButtonIsEnabled.send(true)
             }
         }
-        .store(in: &cancelBag)
+//        .store(in: &self.cancelBag)
     }
 
     struct Input {

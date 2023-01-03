@@ -21,21 +21,13 @@ struct FeedAPIModel {
 
 extension FeedAPIModel {
     init(data: [String: Any]) {
-        let feedUUID = data["feedUUID"] as? String ?? ""
-        let writerUUID = data["writerUUID"] as? String ?? ""
-        let title = data["title"] as? String ?? ""
+        self.feedUUID = data["feedUUID"] as? String ?? ""
+        self.writerUUID = data["writerUUID"] as? String ?? ""
+        self.title = data["title"] as? String ?? ""
         let timeStampDate = data["pubDate"] as? Timestamp ?? Timestamp()
-        let pubDate = timeStampDate.dateValue()
-        let url = data["url"] as? String ?? ""
-        let thumbnailURL = data["thumbnail"] as? String ?? ""
-        let content = data["content"] as? String ?? ""
-
-        self.feedUUID = feedUUID
-        self.writerUUID = writerUUID
-        self.title = title
-        self.pubDate = pubDate
-        self.url = url
-        self.thumbnailURL = thumbnailURL
-        self.content = content
+        self.pubDate = timeStampDate.dateValue()
+        self.url = data["url"] as? String ?? ""
+        self.thumbnailURL = data["thumbnail"] as? String ?? ""
+        self.content = data["content"] as? String ?? ""
     }
 }

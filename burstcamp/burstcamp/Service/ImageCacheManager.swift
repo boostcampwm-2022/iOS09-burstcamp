@@ -6,8 +6,8 @@
 //
 
 import Combine
-import UIKit
 import ImageIO
+import UIKit
 
 final class ImageCacheManager: NSObject, NSCacheDelegate {
 

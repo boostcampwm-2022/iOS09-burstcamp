@@ -31,6 +31,7 @@ final class NormalFeedCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        userInfoView.reset()
         cancelBag = Set<AnyCancellable>()
     }
 

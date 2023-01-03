@@ -10,10 +10,10 @@ import Foundation
 
 // TODO: firestore 메서드 분리해서 없애야함
 import class FirebaseFirestore.Timestamp
+import class FirebaseFirestore.Query
+import class FirebaseFirestore.CollectionReference
 
 final class FeedRemoteDataSource {
-
-    typealias Failure = FirestoreServiceError
 
     static let shared = FeedRemoteDataSource()
 
@@ -23,27 +23,33 @@ final class FeedRemoteDataSource {
         self.firestoreService = firestoreService
     }
 
-    func normalFeedListPublisher(userUUID: String) -> AnyPublisher<[Feed], Failure> {
+    func normalFeedListPublisher(userUUID: String) -> AnyPublisher<[Feed], Error> {
         let path = FirestoreCollection.normalFeed.path
         return feedListPublisher(path)
     }
 
-    func recommendFeedListPublisher(userUUID: String) -> AnyPublisher<[Feed], Failure> {
+    func recommendFeedListPublisher(userUUID: String) -> AnyPublisher<[Feed], Error> {
         let path = FirestoreCollection.recommendFeed.path
         return feedListPublisher(path)
     }
 
-    func scrapFeedListPublisher(userUUID: String) -> AnyPublisher<[Feed], Failure> {
+    func scrapFeedListPublisher(userUUID: String) -> AnyPublisher<[Feed], Error> {
         let path = FirestoreCollection.scrapFeeds(userUUID: userUUID).path
         return feedListPublisher(path)
     }
 
+    /// - Parameters:
+    ///   - feed: 현재 Local에 있는 Feed
     func updateFeedPublisher(
         feedUUID: String,
         userUUID: String,
         feed: Feed
-    ) -> AnyPublisher<Void, FirestoreServiceError> {
+    ) -> AnyPublisher<Feed, Error> {
         return Future {
+            // feed의 스크랩 상태를 변경 해준다.
+            var newFeed = feed
+            newFeed.toggleScrap()
+
             switch feed.isScraped {
             case true:
                 try await self.firestoreService.deleteDocument(
@@ -55,14 +61,13 @@ final class FeedRemoteDataSource {
                     document: feedUUID
                 )
             case false:
-                let scrapDate = Timestamp(date: Date())
                 try await self.firestoreService.createDocument(
                     FirestoreCollection.scrapUsers(feedUUID: feedUUID).path,
                     document: userUUID,
                     data: [
                         "userUUID": userUUID,
                         // TODO: TimeStamp 분리 필요
-                        "scrapDate": scrapDate
+                        "scrapDate": Timestamp(date: newFeed.scrapDate ?? Date())
                     ]
                 )
                 try await self.firestoreService.createDocument(
@@ -76,15 +81,12 @@ final class FeedRemoteDataSource {
                         "url": feed.url,
                         "thumbnailURL": feed.thumbnailURL,
                         "content": feed.content,
-                        "scrapDate": scrapDate
+                        "scrapDate": Timestamp(date: newFeed.scrapDate ?? Date())
                     ]
                 )
             }
-        }
-        .mapError { error in
-            return error as?
-            FirestoreServiceError ??
-            FirestoreServiceError.errorCastingFail(message: "file: \(#file), line: \(#line)")
+            // 상태가 바뀐 피드를 리턴한다.
+            return newFeed
         }
         .share()
         .eraseToAnyPublisher()
@@ -93,7 +95,7 @@ final class FeedRemoteDataSource {
     private func feedListPublisher(
         _ collectionPath: String,
         userUUID: String = UserManager.shared.user.userUUID
-    ) -> AnyPublisher<[Feed], Failure> {
+    ) -> AnyPublisher<[Feed], Error> {
         return Future {
             try await self.firestoreService.getCollection(collectionPath)
                 .asyncMap { feedData -> Feed in
@@ -119,11 +121,6 @@ final class FeedRemoteDataSource {
                     )
                     return feed
                 }
-        }
-        .mapError { error in
-            return error as?
-            FirestoreServiceError ??
-            FirestoreServiceError.errorCastingFail(message: "file: \(#file), line: \(#line)")
         }
         .eraseToAnyPublisher()
     }

@@ -17,6 +17,7 @@ struct Feed: Equatable {
     let content: String
     var scrapCount: Int
     var isScraped: Bool
+    var scrapDate: Date?
 }
 
 extension Feed {
@@ -36,7 +37,9 @@ extension Feed {
         self.scrapCount = scrapCount
         self.isScraped = isScraped
     }
+}
 
+extension Feed {
     mutating func toggleScrap() {
         if isScraped { unScrap() }
         else { scrap() }
@@ -45,6 +48,7 @@ extension Feed {
     mutating func scrap() {
         scrapCount += 1
         isScraped = true
+        scrapDate = Date()
     }
 
     mutating func unScrap() {
@@ -52,5 +56,21 @@ extension Feed {
             scrapCount -= 1
         }
         isScraped = false
+        scrapDate = nil
+    }
+}
+
+extension Feed {
+    /// Mock Init
+    init() {
+        self.feedUUID = ""
+        self.writer = FeedWriter()
+        self.title = ""
+        self.pubDate = Date(timeIntervalSince1970: 0)
+        self.url = ""
+        self.thumbnailURL = ""
+        self.content = ""
+        self.scrapCount = -1
+        self.isScraped = false
     }
 }

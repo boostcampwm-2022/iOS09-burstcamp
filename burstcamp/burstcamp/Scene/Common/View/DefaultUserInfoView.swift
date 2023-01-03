@@ -73,4 +73,12 @@ extension DefaultUserInfoView {
         profileImageView.setImage(urlString: feedWriter.profileImageURL)
         badgeStackView.updateView(feedWriter: feedWriter)
     }
+
+    func reset() {
+        DispatchQueue.main.async {
+            self.nameLabel.text = ""
+            self.profileImageView.image = nil
+            self.badgeStackView.reset()
+        }
+    }
 }

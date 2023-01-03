@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Home에서 CellType을 분류할 때 사용되는 `enum`
 enum FeedCellType: Int, CaseIterable {
     case recommend
     case normal
