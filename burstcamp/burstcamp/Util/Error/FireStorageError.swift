@@ -12,12 +12,6 @@ enum FireStorageError: LocalizedError {
     case URLDownloadError
 }
 
-extension FireStorageError: CategorizedError {
-    var category: ErrorCategory {
-        return .retryable
-    }
-}
-
 extension FireStorageError {
     var errorDescription: String? {
         switch self {

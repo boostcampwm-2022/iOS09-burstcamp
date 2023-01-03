@@ -27,12 +27,6 @@ enum NetworkError: Int, LocalizedError {
     case invalidServiceError = 503
 }
 
-extension NetworkError: CategorizedError {
-    var category: ErrorCategory {
-        return .nonRetryable
-    }
-}
-
 extension NetworkError {
     var errorDescription: String {
         switch self {

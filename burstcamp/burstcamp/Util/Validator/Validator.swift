@@ -1,5 +1,5 @@
 //
-//  Validation.swift
+//  Validator.swift
 //  burstcamp
 //
 //  Created by neuli on 2022/11/29.
@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-struct Validation {
+struct Validator {
     static func validate(nickname: String) -> Bool {
         return nickname.isEmpty ? false : true
     }
