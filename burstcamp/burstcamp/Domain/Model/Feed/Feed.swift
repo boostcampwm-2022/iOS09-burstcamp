@@ -23,18 +23,16 @@ struct Feed: Equatable {
 extension Feed {
     init(
         feedAPIModel: FeedAPIModel,
-        feedWriter: FeedWriter,
-        scrapCount: Int = 0,
         isScraped: Bool = false
     ) {
         self.feedUUID = feedAPIModel.feedUUID
-        self.writer = feedWriter
+        self.writer = feedAPIModel.feedWriter()
         self.title = feedAPIModel.title
         self.pubDate = feedAPIModel.pubDate
         self.url = feedAPIModel.url
         self.thumbnailURL = feedAPIModel.thumbnailURL
         self.content = feedAPIModel.content
-        self.scrapCount = scrapCount
+        self.scrapCount = feedAPIModel.scrapCount
         self.isScraped = isScraped
     }
 }

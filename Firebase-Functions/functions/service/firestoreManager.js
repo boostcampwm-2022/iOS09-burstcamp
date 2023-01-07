@@ -97,6 +97,7 @@ async function createFeedDataIfNeeded(docRef, writer, feedUUID, feed) {
 		writerOrdinalNumber: writer['ordinalNumber'],
 		writerCamperID: writer['camperID'],
 		writerProfileImageURL: writer['profileImageURL'],
+		writerBlogTitle: writer['blogTitle'],
 	})
 }
 
