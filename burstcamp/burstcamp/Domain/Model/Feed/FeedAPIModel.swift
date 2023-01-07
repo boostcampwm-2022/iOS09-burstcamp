@@ -16,6 +16,7 @@ struct FeedAPIModel {
     let url: String
     let thumbnailURL: String
     let content: String
+    let scrapCount: Int
     let writerCamperID: String
     let writerDomain: String
     let writerNickname: String
@@ -33,6 +34,7 @@ extension FeedAPIModel {
         self.url = data["url"] as? String ?? ""
         self.thumbnailURL = data["thumbnailURL"] as? String ?? ""
         self.content = data["content"] as? String ?? ""
+        self.scrapCount = data["scrapCount"] as? Int ?? 0
         self.writerCamperID = data["writerCamperID"] as? String ?? ""
         self.writerDomain = data["writerDomain"] as? String ?? ""
         self.writerNickname = data["writerNickname"] as? String ?? ""
