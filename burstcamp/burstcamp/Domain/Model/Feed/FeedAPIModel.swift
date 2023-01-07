@@ -23,6 +23,7 @@ struct FeedAPIModel {
     let writerOrdinalNumber: Int
     let writerProfileImageURL: String
     let writerUUID: String
+    let writerBlogTitle: String
 }
 
 extension FeedAPIModel {
@@ -41,5 +42,18 @@ extension FeedAPIModel {
         self.writerOrdinalNumber = data["writerOrdinalNumber"] as? Int ?? 7
         self.writerProfileImageURL = data["writerProfileImageURL"] as? String ?? ""
         self.writerUUID = data["writerUUID"] as? String ?? ""
+        self.writerBlogTitle = data["writerBlogTitle"] as? String ?? ""
+    }
+
+    func feedWriter() -> FeedWriter {
+        return FeedWriter(
+            userUUID: self.writerUUID,
+            nickname: self.writerNickname,
+            camperID: self.writerCamperID,
+            ordinalNumber: self.writerOrdinalNumber,
+            domain: Domain(rawValue: self.writerDomain) ?? .iOS,
+            profileImageURL: self.writerProfileImageURL,
+            blogTitle: self.writerBlogTitle
+        )
     }
 }

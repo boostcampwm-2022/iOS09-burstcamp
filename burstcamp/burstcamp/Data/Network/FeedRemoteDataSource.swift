@@ -100,23 +100,15 @@ final class FeedRemoteDataSource {
             try await self.firestoreService.getCollection(collectionPath)
                 .asyncMap { feedData -> Feed in
                     let feedAPIModel = FeedAPIModel(data: feedData)
-                    let writerData = try await self.firestoreService.getDocument(
-                        FirestoreCollection.user.path,
-                        document: feedAPIModel.writerUUID
-                    )
                     let scrapUsers = try await self.firestoreService.getCollection(
                         FirestoreCollection.scrapUsers(feedUUID: feedAPIModel.feedUUID).path
                     )
-                    let scrapCount = scrapUsers.count
                     let isScraped = scrapUsers.contains(where: { dict in
                         let userUUIDData = dict["userUUID"] as? String
                         return userUUIDData == userUUID
                     })
-                    let feedWriter = FeedWriter(data: writerData)
                     let feed = Feed(
                         feedAPIModel: feedAPIModel,
-                        feedWriter: feedWriter,
-                        scrapCount: scrapCount,
                         isScraped: isScraped
                     )
                     return feed
