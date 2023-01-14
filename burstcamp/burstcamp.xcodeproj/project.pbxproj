@@ -41,6 +41,20 @@
 		1481B10D2941D1AB0093E591 /* UIResponder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481B10C2941D1AB0093E591 /* UIResponder+.swift */; };
 		1481B1112941E0C50093E591 /* HomeViewController+handleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481B1102941E0C50093E591 /* HomeViewController+handleError.swift */; };
 		148A05442972F3DA00664CCB /* DependencyFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A05432972F3DA00664CCB /* DependencyFactoryProtocol.swift */; };
+		148A05462972F51C00664CCB /* DependencyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A05452972F51C00664CCB /* DependencyFactory.swift */; };
+		148A054B2972F5CC00664CCB /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A054A2972F5CC00664CCB /* LoginUseCase.swift */; };
+		148A054D2972F5FF00664CCB /* DefaultLoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A054C2972F5FF00664CCB /* DefaultLoginUseCase.swift */; };
+		148A054F2972F62600664CCB /* SignUpUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A054E2972F62600664CCB /* SignUpUseCase.swift */; };
+		148A05512972F63D00664CCB /* DefaultSignUpUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A05502972F63D00664CCB /* DefaultSignUpUseCase.swift */; };
+		148A05572972F6DE00664CCB /* FeedDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A05562972F6DE00664CCB /* FeedDetailUseCase.swift */; };
+		148A05592972F75C00664CCB /* DefaultFeedDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A05582972F75C00664CCB /* DefaultFeedDetailUseCase.swift */; };
+		148A055B2972F77C00664CCB /* DefaultHomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A055A2972F77C00664CCB /* DefaultHomeUseCase.swift */; };
+		148A055D2972F79000664CCB /* ScrapPageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A055C2972F79000664CCB /* ScrapPageUseCase.swift */; };
+		148A055F2972F79A00664CCB /* DefaultScrapPageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A055E2972F79A00664CCB /* DefaultScrapPageUseCase.swift */; };
+		148A05622972F7B900664CCB /* MyPageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A05612972F7B900664CCB /* MyPageUseCase.swift */; };
+		148A05642972F7C600664CCB /* DefaultMyPageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A05632972F7C600664CCB /* DefaultMyPageUseCase.swift */; };
+		148A05672972F84100664CCB /* MyPageEditUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A05662972F84100664CCB /* MyPageEditUseCase.swift */; };
+		148A05692972F84E00664CCB /* DefaultMyPageEditUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A05682972F84E00664CCB /* DefaultMyPageEditUseCase.swift */; };
 		14927E1E2929C71C001F2E97 /* RecommendFeedUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14927E1D2929C71C001F2E97 /* RecommendFeedUserView.swift */; };
 		14927E202929CCA0001F2E97 /* RecommendFeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */; };
 		149304A82963F1D500B9BC71 /* HomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149304A72963F1D500B9BC71 /* HomeUseCase.swift */; };
@@ -254,6 +268,20 @@
 		1481B10C2941D1AB0093E591 /* UIResponder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+.swift"; sourceTree = "<group>"; };
 		1481B1102941E0C50093E591 /* HomeViewController+handleError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+handleError.swift"; sourceTree = "<group>"; };
 		148A05432972F3DA00664CCB /* DependencyFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyFactoryProtocol.swift; sourceTree = "<group>"; };
+		148A05452972F51C00664CCB /* DependencyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyFactory.swift; sourceTree = "<group>"; };
+		148A054A2972F5CC00664CCB /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
+		148A054C2972F5FF00664CCB /* DefaultLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoginUseCase.swift; sourceTree = "<group>"; };
+		148A054E2972F62600664CCB /* SignUpUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUseCase.swift; sourceTree = "<group>"; };
+		148A05502972F63D00664CCB /* DefaultSignUpUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSignUpUseCase.swift; sourceTree = "<group>"; };
+		148A05562972F6DE00664CCB /* FeedDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailUseCase.swift; sourceTree = "<group>"; };
+		148A05582972F75C00664CCB /* DefaultFeedDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFeedDetailUseCase.swift; sourceTree = "<group>"; };
+		148A055A2972F77C00664CCB /* DefaultHomeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultHomeUseCase.swift; sourceTree = "<group>"; };
+		148A055C2972F79000664CCB /* ScrapPageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageUseCase.swift; sourceTree = "<group>"; };
+		148A055E2972F79A00664CCB /* DefaultScrapPageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultScrapPageUseCase.swift; sourceTree = "<group>"; };
+		148A05612972F7B900664CCB /* MyPageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageUseCase.swift; sourceTree = "<group>"; };
+		148A05632972F7C600664CCB /* DefaultMyPageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMyPageUseCase.swift; sourceTree = "<group>"; };
+		148A05662972F84100664CCB /* MyPageEditUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditUseCase.swift; sourceTree = "<group>"; };
+		148A05682972F84E00664CCB /* DefaultMyPageEditUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMyPageEditUseCase.swift; sourceTree = "<group>"; };
 		14927E1D2929C71C001F2E97 /* RecommendFeedUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedUserView.swift; sourceTree = "<group>"; };
 		14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedHeader.swift; sourceTree = "<group>"; };
 		149304A72963F1D500B9BC71 /* HomeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUseCase.swift; sourceTree = "<group>"; };
@@ -618,8 +646,84 @@
 			isa = PBXGroup;
 			children = (
 				148A05432972F3DA00664CCB /* DependencyFactoryProtocol.swift */,
+				148A05452972F51C00664CCB /* DependencyFactory.swift */,
 			);
 			path = Factory;
+			sourceTree = "<group>";
+		};
+		148A05472972F5B300664CCB /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				148A05482972F5BD00664CCB /* Login */,
+				148A05492972F5C000664CCB /* SignUp */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		148A05482972F5BD00664CCB /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				148A054A2972F5CC00664CCB /* LoginUseCase.swift */,
+				148A054C2972F5FF00664CCB /* DefaultLoginUseCase.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		148A05492972F5C000664CCB /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				148A054E2972F62600664CCB /* SignUpUseCase.swift */,
+				148A05502972F63D00664CCB /* DefaultSignUpUseCase.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
+		148A05522972F65700664CCB /* Tab */ = {
+			isa = PBXGroup;
+			children = (
+				148A05552972F67400664CCB /* Detail */,
+				149304A62963F1C900B9BC71 /* Home */,
+				148A05542972F66F00664CCB /* ScrapPage */,
+				148A05532972F66B00664CCB /* MyPage */,
+			);
+			path = Tab;
+			sourceTree = "<group>";
+		};
+		148A05532972F66B00664CCB /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				148A05602972F7AD00664CCB /* MyPageEdit */,
+				148A05612972F7B900664CCB /* MyPageUseCase.swift */,
+				148A05632972F7C600664CCB /* DefaultMyPageUseCase.swift */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
+		148A05542972F66F00664CCB /* ScrapPage */ = {
+			isa = PBXGroup;
+			children = (
+				148A055C2972F79000664CCB /* ScrapPageUseCase.swift */,
+				148A055E2972F79A00664CCB /* DefaultScrapPageUseCase.swift */,
+			);
+			path = ScrapPage;
+			sourceTree = "<group>";
+		};
+		148A05552972F67400664CCB /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				148A05562972F6DE00664CCB /* FeedDetailUseCase.swift */,
+				148A05582972F75C00664CCB /* DefaultFeedDetailUseCase.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		148A05602972F7AD00664CCB /* MyPageEdit */ = {
+			isa = PBXGroup;
+			children = (
+				148A05662972F84100664CCB /* MyPageEditUseCase.swift */,
+				148A05682972F84E00664CCB /* DefaultMyPageEditUseCase.swift */,
+			);
+			path = MyPageEdit;
 			sourceTree = "<group>";
 		};
 		149304882963EB8300B9BC71 /* Presentation */ = {
@@ -657,7 +761,8 @@
 		1493048B2963EBEB00B9BC71 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				149304A62963F1C900B9BC71 /* Home */,
+				148A05472972F5B300664CCB /* Auth */,
+				148A05522972F65700664CCB /* Tab */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -858,6 +963,7 @@
 			isa = PBXGroup;
 			children = (
 				149304A72963F1D500B9BC71 /* HomeUseCase.swift */,
+				148A055A2972F77C00664CCB /* DefaultHomeUseCase.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1535,6 +1641,7 @@
 			files = (
 				B572EFA329479FEC00A9413C /* FeedWriterRealmModel.swift in Sources */,
 				3B061FE5292A1F1E00BFA71D /* SignUpBlogViewController.swift in Sources */,
+				148A05622972F7B900664CCB /* MyPageUseCase.swift in Sources */,
 				B5DAD681292E58BF00C4A126 /* DefaultMultilLineLabel.swift in Sources */,
 				3B061FDD2928E8E300BFA71D /* SignUpCamperIDViewController.swift in Sources */,
 				1496CF1E294070A3008F312F /* ContainFeedDetailCoordinator.swift in Sources */,
@@ -1552,6 +1659,7 @@
 				D84452F2292CCA80008E811B /* SettingSection.swift in Sources */,
 				B5FF71462948EDB8008E69F2 /* FeedLocalDataSource.swift in Sources */,
 				B572F01E29486C0500A9413C /* FeedWriter+RealmCompatible.swift in Sources */,
+				148A05672972F84100664CCB /* MyPageEditUseCase.swift in Sources */,
 				B572EF812945E19C00A9413C /* Sequence+Async.swift in Sources */,
 				D8494D502927CEAA008157F1 /* DefaultBadgeLabel.swift in Sources */,
 				14927E1E2929C71C001F2E97 /* RecommendFeedUserView.swift in Sources */,
@@ -1572,7 +1680,9 @@
 				141344D6292F801100187B86 /* Date+FormatString.swift in Sources */,
 				D89AE4FD2935F5AE00446AB3 /* FireFunctionsManager.swift in Sources */,
 				D8494D462927C97E008157F1 /* MyPageView.swift in Sources */,
+				148A055F2972F79A00664CCB /* DefaultScrapPageUseCase.swift in Sources */,
 				1496CF2129408176008F312F /* BeforeFirestoreFeedService.swift in Sources */,
+				148A05692972F84E00664CCB /* DefaultMyPageEditUseCase.swift in Sources */,
 				D89E48AF2939D99300744A56 /* FireStorageService.swift in Sources */,
 				D8494D562927D6EB008157F1 /* DefaultBadgeView.swift in Sources */,
 				1496CF232940AEC6008F312F /* ConvertError.swift in Sources */,
@@ -1580,12 +1690,15 @@
 				D88295FE292A4459005B4273 /* URLSessionService.swift in Sources */,
 				D89AE4F12935AE7800446AB3 /* Encodable+dictionary.swift in Sources */,
 				D8C38674292B8D82005A2563 /* Appearance.swift in Sources */,
+				148A05512972F63D00664CCB /* DefaultSignUpUseCase.swift in Sources */,
 				B5BC81BF2945BFA30077BF29 /* FeedRemoteDataSource.swift in Sources */,
 				B50A27F729279F5D00DF3E1F /* TabBarCoordinator.swift in Sources */,
 				141344D9292F803800187B86 /* UIControl+Combine.swift in Sources */,
 				143185EA292B4A8D008CE459 /* ScrapPageViewController.swift in Sources */,
 				B5DAD67A292E4C6800C4A126 /* FeedDetailView.swift in Sources */,
+				148A05572972F6DE00664CCB /* FeedDetailUseCase.swift in Sources */,
 				B572F01C2948688000A9413C /* Feed+RealmCompatible.swift in Sources */,
+				148A054F2972F62600664CCB /* SignUpUseCase.swift in Sources */,
 				3B7491E92938DCCD00A4BEA0 /* SignUpDomainViewModel.swift in Sources */,
 				141344D5292F801100187B86 /* TypeConversion.swift in Sources */,
 				D89AE4E82933AF1E00446AB3 /* ImageCacheManager.swift in Sources */,
@@ -1608,6 +1721,7 @@
 				B50A27F429279F5D00DF3E1F /* SceneDelegate.swift in Sources */,
 				143185EC292B4AB8008CE459 /* ScrapPageViewModel.swift in Sources */,
 				D89AE4ED2935AA2100446AB3 /* FCMToken.swift in Sources */,
+				148A05592972F75C00664CCB /* DefaultFeedDetailUseCase.swift in Sources */,
 				D89AE4E42933AEE900446AB3 /* ImageCacheError.swift in Sources */,
 				B50A27E929279F5D00DF3E1F /* NormalFeedCellFooter.swift in Sources */,
 				143185F8292B5C88008CE459 /* ContainCollectionView.swift in Sources */,
@@ -1617,6 +1731,7 @@
 				140E210429443E6300D6E2E5 /* FirestoreService.swift in Sources */,
 				D89E48B12939D9AC00744A56 /* FireStorageError.swift in Sources */,
 				D8494D522927D086008157F1 /* MyPageProfileView.swift in Sources */,
+				148A055B2972F77C00664CCB /* DefaultHomeUseCase.swift in Sources */,
 				141344DB292F82BE00187B86 /* Feed.swift in Sources */,
 				3B061FDF2928E90400BFA71D /* SignUpCamperIDView.swift in Sources */,
 				3B7492352946BE3E00A4BEA0 /* GithubLogInCoordinator.swift in Sources */,
@@ -1624,6 +1739,7 @@
 				D8494D542927D0DC008157F1 /* User.swift in Sources */,
 				B50A27EA29279F5D00DF3E1F /* NormalFeedCellMain.swift in Sources */,
 				141344D0292F800300187B86 /* UIView+addSubViews.swift in Sources */,
+				148A054D2972F5FF00664CCB /* DefaultLoginUseCase.swift in Sources */,
 				149304A82963F1D500B9BC71 /* HomeUseCase.swift in Sources */,
 				B5E0D94C292F750D001727F5 /* FeedContentWebView.swift in Sources */,
 				B50A27E229279F5D00DF3E1F /* LogInManager.swift in Sources */,
@@ -1635,6 +1751,7 @@
 				14A93D422936F00F00790034 /* FeedWriter.swift in Sources */,
 				140438AC293F4285004D035C /* FeedInfoStackView.swift in Sources */,
 				D84452F8292CF4E0008E811B /* DefaultTextField.swift in Sources */,
+				148A054B2972F5CC00664CCB /* LoginUseCase.swift in Sources */,
 				D8C3866C292B4B0B005A2563 /* OpenSourceLicenseView.swift in Sources */,
 				D89AE4EF2935AC9C00446AB3 /* FirestoreFCMToken.swift in Sources */,
 				140438BD293F6FDF004D035C /* ScrapPageCoordinator.swift in Sources */,
@@ -1647,9 +1764,11 @@
 				3B7491EB2938F12600A4BEA0 /* SignUpCamperIDViewModel.swift in Sources */,
 				141344D1292F800300187B86 /* UILabel+LineHeight.swift in Sources */,
 				D8576F32293779D4002885FE /* UserManager.swift in Sources */,
+				148A05642972F7C600664CCB /* DefaultMyPageUseCase.swift in Sources */,
 				149304AD2963F22600B9BC71 /* FeedRepository.swift in Sources */,
 				B5F4B036293CC0B300947250 /* FirestoreCollection.swift in Sources */,
 				3B061FD82928CC5600BFA71D /* SignUpDomainViewController.swift in Sources */,
+				148A05462972F51C00664CCB /* DependencyFactory.swift in Sources */,
 				B572F0202948768100A9413C /* FeedRealmDataSource.swift in Sources */,
 				B50A27DA29279F5D00DF3E1F /* ReusableView.swift in Sources */,
 				D84C812E292E590300C984E8 /* MyPageEditValidationResult.swift in Sources */,
@@ -1661,6 +1780,7 @@
 				D89AE5012936221600446AB3 /* ScrapUser.swift in Sources */,
 				B50A27E329279F5D00DF3E1F /* LogInViewModel.swift in Sources */,
 				B50A27F029279F5D00DF3E1F /* MyPageViewController.swift in Sources */,
+				148A055D2972F79000664CCB /* ScrapPageUseCase.swift in Sources */,
 				141344CD292F800300187B86 /* UI+ReusableView.swift in Sources */,
 				14927E202929CCA0001F2E97 /* RecommendFeedHeader.swift in Sources */,
 				D89AE4F92935EC6E00446AB3 /* Validator.swift in Sources */,
