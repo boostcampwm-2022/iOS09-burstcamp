@@ -11,23 +11,49 @@ import class FirebaseFirestore.Timestamp
 
 struct FeedAPIModel {
     let feedUUID: String
-    let writerUUID: String
     let title: String
     let pubDate: Date
     let url: String
     let thumbnailURL: String
     let content: String
+    let scrapCount: Int
+    let writerCamperID: String
+    let writerDomain: String
+    let writerNickname: String
+    let writerOrdinalNumber: Int
+    let writerProfileImageURL: String
+    let writerUUID: String
+    let writerBlogTitle: String
 }
 
 extension FeedAPIModel {
     init(data: [String: Any]) {
         self.feedUUID = data["feedUUID"] as? String ?? ""
-        self.writerUUID = data["writerUUID"] as? String ?? ""
         self.title = data["title"] as? String ?? ""
         let timeStampDate = data["pubDate"] as? Timestamp ?? Timestamp()
         self.pubDate = timeStampDate.dateValue()
         self.url = data["url"] as? String ?? ""
-        self.thumbnailURL = data["thumbnail"] as? String ?? ""
+        self.thumbnailURL = data["thumbnailURL"] as? String ?? ""
         self.content = data["content"] as? String ?? ""
+        self.scrapCount = data["scrapCount"] as? Int ?? 0
+        self.writerCamperID = data["writerCamperID"] as? String ?? ""
+        self.writerDomain = data["writerDomain"] as? String ?? ""
+        self.writerNickname = data["writerNickname"] as? String ?? ""
+        self.writerOrdinalNumber = data["writerOrdinalNumber"] as? Int ?? 7
+        self.writerProfileImageURL = data["writerProfileImageURL"] as? String ?? ""
+        self.writerUUID = data["writerUUID"] as? String ?? ""
+        self.writerBlogTitle = data["writerBlogTitle"] as? String ?? ""
+    }
+
+    func feedWriter() -> FeedWriter {
+        return FeedWriter(
+            userUUID: self.writerUUID,
+            nickname: self.writerNickname,
+            camperID: self.writerCamperID,
+            ordinalNumber: self.writerOrdinalNumber,
+            domain: Domain(rawValue: self.writerDomain) ?? .iOS,
+            profileImageURL: self.writerProfileImageURL,
+            blogTitle: self.writerBlogTitle
+        )
     }
 }
