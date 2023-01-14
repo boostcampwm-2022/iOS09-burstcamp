@@ -10,6 +10,12 @@ import Foundation
 
 final class LogInViewModel {
 
+    private let loginUseCase: LoginUseCase
+
+    init(loginUseCase: LoginUseCase) {
+        self.loginUseCase = loginUseCase
+    }
+
     struct Input {
         let logInButtonDidTap: AnyPublisher<Void, Never>
     }

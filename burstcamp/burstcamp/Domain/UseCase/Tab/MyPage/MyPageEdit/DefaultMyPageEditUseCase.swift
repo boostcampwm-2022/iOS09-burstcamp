@@ -7,5 +7,5 @@
 
 import Foundation
 
-final class DefaultMyPageEditUseCase: MyPageUseCase {
+final class DefaultMyPageEditUseCase: MyPageEditUseCase {
 }

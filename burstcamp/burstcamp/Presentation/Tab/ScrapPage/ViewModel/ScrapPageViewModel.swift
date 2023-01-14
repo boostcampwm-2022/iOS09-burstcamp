@@ -20,15 +20,18 @@ final class ScrapPageViewModel {
     private var temporaryCancelBag = Set<AnyCancellable>()
 
     private let userUUID: String
+    private let scrapPageUseCase: ScrapPageUseCase
     private let localDataSource: FeedLocalDataSource
     private let remoteDataSource: FeedRemoteDataSource
     private let fetcher: Fetcher<[Feed], Error>
 
     init(
+        scrapPageUseCase: ScrapPageUseCase,
         userUUID: String = UserManager.shared.user.userUUID,
         localDataSource: FeedLocalDataSource = FeedRealmDataSource.shared,
         remoteDataSource: FeedRemoteDataSource = FeedRemoteDataSource.shared
     ) {
+        self.scrapPageUseCase = scrapPageUseCase
         self.localDataSource = localDataSource
         self.remoteDataSource = remoteDataSource
         self.userUUID = userUUID

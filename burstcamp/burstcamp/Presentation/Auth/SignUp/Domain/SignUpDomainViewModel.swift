@@ -10,6 +10,12 @@ import Foundation
 
 final class SignUpDomainViewModel {
 
+    private let signUpUseCase: SignUpUseCase
+
+    init(signUpUseCase: SignUpUseCase) {
+        self.signUpUseCase = signUpUseCase
+    }
+
     struct Input {
         let webButtonTouchDown: AnyPublisher<Void, Never>
         let aosButtonTouchDown: AnyPublisher<Void, Never>

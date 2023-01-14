@@ -18,9 +18,11 @@ final class HomeCoordinator: HomeCoordinatorProtocol, ContainFeedDetailCoordinat
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     var cancelBag = Set<AnyCancellable>()
+    var dependencyFactory: DependencyFactoryProtocol
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, dependencyFactory: DependencyFactoryProtocol) {
         self.navigationController = navigationController
+        self.dependencyFactory = dependencyFactory
     }
 }
 

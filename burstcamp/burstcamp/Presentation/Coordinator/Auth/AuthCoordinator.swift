@@ -22,9 +22,11 @@ final class AuthCoordinator: AuthCoordinatorProtocol, GithubLogInCoordinator {
     var navigationController: UINavigationController
     var coordinatorPublisher = PassthroughSubject<AppCoordinatorEvent, Never>()
     var cancelBag = Set<AnyCancellable>()
+    var dependencyFactory: DependencyFactoryProtocol
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, dependencyFactory: DependencyFactoryProtocol) {
         self.navigationController = navigationController
+        self.dependencyFactory = dependencyFactory
     }
 
     func displayIndicator() {
@@ -37,7 +39,8 @@ final class AuthCoordinator: AuthCoordinatorProtocol, GithubLogInCoordinator {
     }
 
     func start() {
-        let logInViewController = LogInViewController(viewModel: LogInViewModel())
+        let loginViewModel = dependencyFactory.createLoginViewModel()
+        let logInViewController = LogInViewController(viewModel: loginViewModel)
         logInViewController.coordinatorPublisher
             .sink { coordinatorEvent in
                 switch coordinatorEvent {
@@ -61,7 +64,7 @@ final class AuthCoordinator: AuthCoordinatorProtocol, GithubLogInCoordinator {
     }
 
     func moveToDomainScreen() {
-        let viewModel = SignUpDomainViewModel()
+        let viewModel = dependencyFactory.createSignUpDomainViewModel()
         let sighUpDomainViewController = SignUpDomainViewController(viewModel: viewModel)
         sighUpDomainViewController.coordinatorPublisher
             .sink { coordinatorEvent in
@@ -77,7 +80,7 @@ final class AuthCoordinator: AuthCoordinatorProtocol, GithubLogInCoordinator {
     }
 
     func moveToIDScreen() {
-        let viewModel = SignUpCamperIDViewModel()
+        let viewModel = dependencyFactory.createSignUpCamperIDViewModel()
         let signUpCamperIDViewController = SignUpCamperIDViewController(viewModel: viewModel)
         signUpCamperIDViewController.coordinatorPublisher
             .sink { coordinatorEvent in
@@ -93,7 +96,7 @@ final class AuthCoordinator: AuthCoordinatorProtocol, GithubLogInCoordinator {
     }
 
     func moveToBlogScreen() {
-        let viewModel = SignUpBlogViewModel()
+        let viewModel = dependencyFactory.createSignUpBlogViewModel()
         let signUpBlogViewController = SignUpBlogViewController(viewModel: viewModel)
         signUpBlogViewController.coordinatorPublisher
             .sink { coordinatorEvent in

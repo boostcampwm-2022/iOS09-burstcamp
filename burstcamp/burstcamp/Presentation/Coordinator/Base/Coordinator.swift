@@ -12,6 +12,7 @@ protocol Coordinator: AnyObject {
     var childCoordinators: [Coordinator] { get set }
     var navigationController: UINavigationController { get set }
     var cancelBag: Set<AnyCancellable> { get set }
+    var dependencyFactory: DependencyFactoryProtocol { get set }
 }
 
 extension Coordinator {

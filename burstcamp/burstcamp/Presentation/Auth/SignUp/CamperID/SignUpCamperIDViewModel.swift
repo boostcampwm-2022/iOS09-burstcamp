@@ -10,6 +10,12 @@ import Foundation
 
 final class SignUpCamperIDViewModel {
 
+    private let signUpUseCase: SignUpUseCase
+
+    init(signUpUseCase: SignUpUseCase) {
+        self.signUpUseCase = signUpUseCase
+    }
+
     var camperID: String = ""
 
     struct Input {

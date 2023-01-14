@@ -14,7 +14,8 @@ protocol DependencyFactoryProtocol {
     func createSignUpBlogViewModel() -> SignUpBlogViewModel
     func createHomeViewModel() -> HomeViewModel
     func createScrapPageViewModel() -> ScrapPageViewModel
-    func createFeedDetailViewModel() -> FeedDetailViewModel
+    func createFeedDetailViewModel(feed: Feed) -> FeedDetailViewModel
+    func createFeedDetailViewModel(feedUUID: String) -> FeedDetailViewModel
     func createMyPageViewModel() -> MyPageViewModel
     func createMyPageEditViewModel() -> MyPageEditViewModel
 }
