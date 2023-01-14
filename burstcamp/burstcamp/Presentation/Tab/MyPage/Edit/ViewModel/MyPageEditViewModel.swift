@@ -11,10 +11,15 @@ import UIKit.UIImage
 
 final class MyPageEditViewModel {
 
+    private let myPageEditUseCase: MyPageEditUseCase
     private var profileImage: UIImage?
     private var nickname = UserManager.shared.user.nickname
     private var blogURL = UserManager.shared.user.blogURL
     private var cancelBag = Set<AnyCancellable>()
+
+    init(myPageEditUseCase: MyPageEditUseCase) {
+        self.myPageEditUseCase = myPageEditUseCase
+    }
 
     struct Input {
         let imagePickerPublisher: PassthroughSubject<UIImage?, Never>

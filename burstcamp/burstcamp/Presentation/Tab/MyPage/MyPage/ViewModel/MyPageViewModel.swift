@@ -12,6 +12,12 @@ import FirebaseAuth
 
 final class MyPageViewModel {
 
+    private let myPageUseCase: MyPageUseCase
+
+    init(myPageUseCase: MyPageUseCase) {
+        self.myPageUseCase = myPageUseCase
+    }
+
     struct Input {
         let notificationDidSwitch: AnyPublisher<Bool, Never>
         let darkModeDidSwitch: AnyPublisher<Bool, Never>

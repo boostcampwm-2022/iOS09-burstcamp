@@ -16,16 +16,19 @@ protocol AppCoordinatorProtocol: NormalCoordinator {
 }
 
 final class AppCoordinator: AppCoordinatorProtocol {
+
     var childCoordinators: [Coordinator] = []
     var window: UIWindow
     var navigationController: UINavigationController
     var cancelBag = Set<AnyCancellable>()
+    var dependencyFactory: DependencyFactoryProtocol
 
     private var loadingView: LoadingView!
 
-    init(window: UIWindow, navigationController: UINavigationController) {
+    init(window: UIWindow, navigationController: UINavigationController, dependencyFactory: DependencyFactoryProtocol) {
         self.window = window
         self.navigationController = navigationController
+        self.dependencyFactory = dependencyFactory
         configureNavigationBar()
         configureLoadingView()
     }
@@ -58,7 +61,7 @@ final class AppCoordinator: AppCoordinatorProtocol {
     }
 
     func showAuthFlow() {
-        let authCoordinator = AuthCoordinator(navigationController: navigationController)
+        let authCoordinator = AuthCoordinator(navigationController: navigationController, dependencyFactory: dependencyFactory)
         authCoordinator.coordinatorPublisher
             .sink { coordinatorEvent in
                 switch coordinatorEvent {
@@ -76,7 +79,7 @@ final class AppCoordinator: AppCoordinatorProtocol {
 
     func showTabBarFlow() {
         UserManager.shared.addListener()
-        let tabBarCoordinator = TabBarCoordinator(navigationController: navigationController)
+        let tabBarCoordinator = TabBarCoordinator(navigationController: navigationController, dependencyFactory: dependencyFactory)
         tabBarCoordinator.coordinatorPublisher
             .sink { coordinatorEvent in
                 switch coordinatorEvent {

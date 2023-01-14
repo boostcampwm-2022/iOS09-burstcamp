@@ -10,6 +10,12 @@ import Foundation
 
 final class SignUpBlogViewModel {
 
+    private let signUpUseCase: SignUpUseCase
+
+    init(signUpUseCase: SignUpUseCase) {
+        self.signUpUseCase = signUpUseCase
+    }
+
     struct Input {
         let blogAddressTextFieldDidEdit: AnyPublisher<String, Never>
         let nextButtonDidTap: PassthroughSubject<Void, Never>

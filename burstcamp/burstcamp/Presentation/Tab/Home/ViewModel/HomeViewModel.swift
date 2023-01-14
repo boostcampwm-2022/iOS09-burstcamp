@@ -22,15 +22,14 @@ final class HomeViewModel {
 
     private var cancelBag = Set<AnyCancellable>()
 
+    private let homeUseCase: HomeUseCase
     private let localDataSource: FeedLocalDataSource
     private let remoteDataSource: FeedRemoteDataSource
 
-    init(
-        localDataSource: FeedLocalDataSource = FeedRealmDataSource.shared,
-        remoteDataSource: FeedRemoteDataSource = FeedRemoteDataSource.shared
-    ) {
-        self.localDataSource = localDataSource
-        self.remoteDataSource = remoteDataSource
+    init(homeUseCase: HomeUseCase) {
+        self.homeUseCase = homeUseCase
+        self.localDataSource = FeedRealmDataSource.shared
+        self.remoteDataSource = FeedRemoteDataSource.shared
     }
 
     private let reloadData = CurrentValueSubject<Void?, Never>(nil)

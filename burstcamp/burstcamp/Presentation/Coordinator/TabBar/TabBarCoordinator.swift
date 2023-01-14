@@ -22,13 +22,15 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
     var tabBarController = UITabBarController()
     var coordinatorPublisher = PassthroughSubject<AppCoordinatorEvent, Never>()
     var cancelBag = Set<AnyCancellable>()
+    var dependencyFactory: DependencyFactoryProtocol
 
     var currentPage: TabBarPage? {
         return TabBarPage.init(index: tabBarController.selectedIndex)
     }
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, dependencyFactory: DependencyFactoryProtocol) {
         self.navigationController = navigationController
+        self.dependencyFactory = dependencyFactory
         addObserver()
     }
 
@@ -83,27 +85,33 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
     }
 
     private func homeCoordinatorStart() -> HomeViewController {
-        let homeViewModel = HomeViewModel()
+        let homeViewModel = dependencyFactory.createHomeViewModel()
         let homeViewController = HomeViewController(viewModel: homeViewModel)
-        let homeCoordinator = HomeCoordinator(navigationController: navigationController)
+        let homeCoordinator = HomeCoordinator(navigationController: navigationController, dependencyFactory: dependencyFactory)
         homeCoordinator.start(viewController: homeViewController)
         childCoordinators.append(homeCoordinator)
         return homeViewController
     }
 
     private func scrapPageCoordinatorStart() -> ScrapPageViewController {
-        let scrapPageViewModel = ScrapPageViewModel()
+        let scrapPageViewModel = dependencyFactory.createScrapPageViewModel()
         let scrapPageViewController = ScrapPageViewController(viewModel: scrapPageViewModel)
-        let scrapCoordinator = ScrapPageCoordinator(navigationController: navigationController)
+        let scrapCoordinator = ScrapPageCoordinator(
+            navigationController: navigationController,
+            dependencyFactory: dependencyFactory
+        )
         scrapCoordinator.start(viewController: scrapPageViewController)
         childCoordinators.append(scrapCoordinator)
         return scrapPageViewController
     }
 
     private func myPageCoordinatorStart() -> MyPageViewController {
-        let myPageViewModel = MyPageViewModel()
+        let myPageViewModel = dependencyFactory.createMyPageViewModel()
         let myPageViewController = MyPageViewController(viewModel: myPageViewModel)
-        let myPageCoordinator = MyPageCoordinator(navigationController: navigationController)
+        let myPageCoordinator = MyPageCoordinator(
+            navigationController: navigationController,
+            dependencyFactory: dependencyFactory
+        )
         myPageCoordinator.coordinatorPublisher
             .sink { tabBarEvent in
                 switch tabBarEvent {

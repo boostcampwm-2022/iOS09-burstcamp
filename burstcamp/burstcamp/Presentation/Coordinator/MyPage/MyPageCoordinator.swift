@@ -23,9 +23,11 @@ final class MyPageCoordinator: MyPageCoordinatorProtocol, GithubLogInCoordinator
     var navigationController: UINavigationController
     var coordinatorPublisher = PassthroughSubject<TabBarCoordinatorEvent, Never>()
     var cancelBag = Set<AnyCancellable>()
+    var dependencyFactory: DependencyFactoryProtocol
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, dependencyFactory: DependencyFactoryProtocol) {
         self.navigationController = navigationController
+        self.dependencyFactory = dependencyFactory
     }
 
     private func prepareMyPageViewController(
@@ -53,7 +55,7 @@ final class MyPageCoordinator: MyPageCoordinatorProtocol, GithubLogInCoordinator
     private func prepareMyPageEditViewController(
         myPageViewController: MyPageViewController
     ) -> MyPageEditViewController {
-        let viewModel = MyPageEditViewModel()
+        let viewModel = dependencyFactory.createMyPageEditViewModel()
         let myPageEditViewController = MyPageEditViewController(viewModel: viewModel)
 
         myPageEditViewController.coordinatorPublisher
