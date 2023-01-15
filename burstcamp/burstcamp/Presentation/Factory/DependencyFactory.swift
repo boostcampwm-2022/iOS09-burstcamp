@@ -11,6 +11,16 @@ final class DependencyFactory: DependencyFactoryProtocol {
 
     private var signUpUseCase: SignUpUseCase?
 
+    private func createDefaultSignUpUseCase() -> SignUpUseCase {
+        return DefaultSignUpUseCase(
+            signUpRepository: DefaultSignUpRepository(),
+            userRepository: DefaultUserRepository(),
+            blogRepository: DefaultBlogRepository()
+        )
+    }
+}
+
+extension DependencyFactory {
     func createLoginViewModel() -> LogInViewModel {
         let loginUseCase = DefaultLoginUseCase()
         return LogInViewModel(loginUseCase: loginUseCase)
@@ -20,7 +30,7 @@ final class DependencyFactory: DependencyFactoryProtocol {
         if let signUpUseCase = signUpUseCase {
             return SignUpDomainViewModel(signUpUseCase: signUpUseCase)
         } else {
-            let signUpUseCase = DefaultSignUpUseCase()
+            let signUpUseCase = createDefaultSignUpUseCase()
             self.signUpUseCase = signUpUseCase
             return SignUpDomainViewModel(signUpUseCase: signUpUseCase)
         }
@@ -30,7 +40,7 @@ final class DependencyFactory: DependencyFactoryProtocol {
         if let signUpUseCase = signUpUseCase {
             return SignUpCamperIDViewModel(signUpUseCase: signUpUseCase)
         } else {
-            let signUpUseCase = DefaultSignUpUseCase()
+            let signUpUseCase = createDefaultSignUpUseCase()
             self.signUpUseCase = signUpUseCase
             return SignUpCamperIDViewModel(signUpUseCase: signUpUseCase)
         }
@@ -40,7 +50,7 @@ final class DependencyFactory: DependencyFactoryProtocol {
         if let signUpUseCase = signUpUseCase {
             return SignUpBlogViewModel(signUpUseCase: signUpUseCase)
         } else {
-            let signUpUseCase = DefaultSignUpUseCase()
+            let signUpUseCase = createDefaultSignUpUseCase()
             self.signUpUseCase = signUpUseCase
             return SignUpBlogViewModel(signUpUseCase: signUpUseCase)
         }

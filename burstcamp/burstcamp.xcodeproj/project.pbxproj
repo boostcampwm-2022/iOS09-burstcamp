@@ -71,6 +71,13 @@
 		1496CF232940AEC6008F312F /* ConvertError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF222940AEC6008F312F /* ConvertError.swift */; };
 		14A34D3A297417FD00501A66 /* GithubAPIKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D39297417FD00501A66 /* GithubAPIKeyManager.swift */; };
 		14A34D3C2974192800501A66 /* GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D3B2974192800501A66 /* GithubAPI.swift */; };
+		14A34D3E29743B7300501A66 /* SignUpUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D3D29743B7300501A66 /* SignUpUser.swift */; };
+		14A34D4129743E0F00501A66 /* SignUpRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D4029743E0F00501A66 /* SignUpRepository.swift */; };
+		14A34D4429743E2100501A66 /* DefaultSignUpRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D4329743E2100501A66 /* DefaultSignUpRepository.swift */; };
+		14A34D4729743E8B00501A66 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D4629743E8B00501A66 /* UserRepository.swift */; };
+		14A34D4A29743E9F00501A66 /* BlogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D4929743E9F00501A66 /* BlogRepository.swift */; };
+		14A34D4D29743F1100501A66 /* DefaultUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D4C29743F1100501A66 /* DefaultUserRepository.swift */; };
+		14A34D5029743F2A00501A66 /* DefaultBlogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D4F29743F2A00501A66 /* DefaultBlogRepository.swift */; };
 		14A93D402936EFF900790034 /* FeedAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D3F2936EFF900790034 /* FeedAPIModel.swift */; };
 		14A93D422936F00F00790034 /* FeedWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D412936F00F00790034 /* FeedWriter.swift */; };
 		14F94BE62939E16D0058A79A /* UICollectionView+emptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */; };
@@ -303,6 +310,13 @@
 		1496CF222940AEC6008F312F /* ConvertError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertError.swift; sourceTree = "<group>"; };
 		14A34D39297417FD00501A66 /* GithubAPIKeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPIKeyManager.swift; sourceTree = "<group>"; };
 		14A34D3B2974192800501A66 /* GithubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPI.swift; sourceTree = "<group>"; };
+		14A34D3D29743B7300501A66 /* SignUpUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUser.swift; sourceTree = "<group>"; };
+		14A34D4029743E0F00501A66 /* SignUpRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRepository.swift; sourceTree = "<group>"; };
+		14A34D4329743E2100501A66 /* DefaultSignUpRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSignUpRepository.swift; sourceTree = "<group>"; };
+		14A34D4629743E8B00501A66 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		14A34D4929743E9F00501A66 /* BlogRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogRepository.swift; sourceTree = "<group>"; };
+		14A34D4C29743F1100501A66 /* DefaultUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserRepository.swift; sourceTree = "<group>"; };
+		14A34D4F29743F2A00501A66 /* DefaultBlogRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBlogRepository.swift; sourceTree = "<group>"; };
 		14A93D3F2936EFF900790034 /* FeedAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAPIModel.swift; sourceTree = "<group>"; };
 		14A93D412936F00F00790034 /* FeedWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedWriter.swift; sourceTree = "<group>"; };
 		14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+emptyView.swift"; sourceTree = "<group>"; };
@@ -830,6 +844,9 @@
 		1493048C2963EBF100B9BC71 /* Interfaces */ = {
 			isa = PBXGroup;
 			children = (
+				14A34D4829743E9200501A66 /* BlogRepository */,
+				14A34D4529743E8300501A66 /* UserRepository */,
+				14A34D3F29743DF600501A66 /* SignUpRepository */,
 				14755A492973FA640036B71D /* LoginRepository */,
 				149304A52963F0BC00B9BC71 /* FeedRepository */,
 			);
@@ -839,6 +856,9 @@
 		1493048E2963EC1400B9BC71 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				14A34D4E29743F1D00501A66 /* BlogRepository */,
+				14A34D4B29743F0500501A66 /* UserRepository */,
+				14A34D4229743E1800501A66 /* SignUpRepository */,
 				14755A482973FA520036B71D /* LoginRepository */,
 				149304A32963F08000B9BC71 /* FeedRepository */,
 			);
@@ -1037,6 +1057,7 @@
 				D89AE5002936221600446AB3 /* ScrapUser.swift */,
 				D8494D532927D0DC008157F1 /* User.swift */,
 				D8494D4D2927CE64008157F1 /* Domain.swift */,
+				14A34D3D29743B7300501A66 /* SignUpUser.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1069,6 +1090,54 @@
 				14A34D39297417FD00501A66 /* GithubAPIKeyManager.swift */,
 			);
 			path = GithubAPIKey;
+			sourceTree = "<group>";
+		};
+		14A34D3F29743DF600501A66 /* SignUpRepository */ = {
+			isa = PBXGroup;
+			children = (
+				14A34D4029743E0F00501A66 /* SignUpRepository.swift */,
+			);
+			path = SignUpRepository;
+			sourceTree = "<group>";
+		};
+		14A34D4229743E1800501A66 /* SignUpRepository */ = {
+			isa = PBXGroup;
+			children = (
+				14A34D4329743E2100501A66 /* DefaultSignUpRepository.swift */,
+			);
+			path = SignUpRepository;
+			sourceTree = "<group>";
+		};
+		14A34D4529743E8300501A66 /* UserRepository */ = {
+			isa = PBXGroup;
+			children = (
+				14A34D4629743E8B00501A66 /* UserRepository.swift */,
+			);
+			path = UserRepository;
+			sourceTree = "<group>";
+		};
+		14A34D4829743E9200501A66 /* BlogRepository */ = {
+			isa = PBXGroup;
+			children = (
+				14A34D4929743E9F00501A66 /* BlogRepository.swift */,
+			);
+			path = BlogRepository;
+			sourceTree = "<group>";
+		};
+		14A34D4B29743F0500501A66 /* UserRepository */ = {
+			isa = PBXGroup;
+			children = (
+				14A34D4C29743F1100501A66 /* DefaultUserRepository.swift */,
+			);
+			path = UserRepository;
+			sourceTree = "<group>";
+		};
+		14A34D4E29743F1D00501A66 /* BlogRepository */ = {
+			isa = PBXGroup;
+			children = (
+				14A34D4F29743F2A00501A66 /* DefaultBlogRepository.swift */,
+			);
+			path = BlogRepository;
 			sourceTree = "<group>";
 		};
 		14A93D3E2936EFEE00790034 /* Feed */ = {
@@ -1740,6 +1809,7 @@
 				D84C8132292F0A1E00C984E8 /* UIViewController+.swift in Sources */,
 				D88295EF292A43EB005B4273 /* NetworkError.swift in Sources */,
 				D84452F0292CA57D008E811B /* MyPageEditViewController.swift in Sources */,
+				14A34D4729743E8B00501A66 /* UserRepository.swift in Sources */,
 				D84452FC292DB7DE008E811B /* CellIndexPath.swift in Sources */,
 				B572EFA129479D1500A9413C /* FeedRealmModel.swift in Sources */,
 				D8E979CA293A6D430092EBF6 /* Alert.swift in Sources */,
@@ -1758,6 +1828,7 @@
 				D89E48AF2939D99300744A56 /* FireStorageService.swift in Sources */,
 				D8494D562927D6EB008157F1 /* DefaultBadgeView.swift in Sources */,
 				14755A382973C9B00036B71D /* UserAPIModel.swift in Sources */,
+				14A34D4A29743E9F00501A66 /* BlogRepository.swift in Sources */,
 				1496CF232940AEC6008F312F /* ConvertError.swift in Sources */,
 				3B061FE7292A1F9600BFA71D /* SignUpBlogView.swift in Sources */,
 				D88295FE292A4459005B4273 /* URLSessionService.swift in Sources */,
@@ -1770,6 +1841,7 @@
 				143185EA292B4A8D008CE459 /* ScrapPageViewController.swift in Sources */,
 				B5DAD67A292E4C6800C4A126 /* FeedDetailView.swift in Sources */,
 				148A05572972F6DE00664CCB /* FeedDetailUseCase.swift in Sources */,
+				14A34D4D29743F1100501A66 /* DefaultUserRepository.swift in Sources */,
 				B572F01C2948688000A9413C /* Feed+RealmCompatible.swift in Sources */,
 				148A054F2972F62600664CCB /* SignUpUseCase.swift in Sources */,
 				3B7491E92938DCCD00A4BEA0 /* SignUpDomainViewModel.swift in Sources */,
@@ -1807,6 +1879,7 @@
 				D8494D522927D086008157F1 /* MyPageProfileView.swift in Sources */,
 				148A055B2972F77C00664CCB /* DefaultHomeUseCase.swift in Sources */,
 				141344DB292F82BE00187B86 /* Feed.swift in Sources */,
+				14A34D5029743F2A00501A66 /* DefaultBlogRepository.swift in Sources */,
 				3B061FDF2928E90400BFA71D /* SignUpCamperIDView.swift in Sources */,
 				3B7492352946BE3E00A4BEA0 /* GithubLogInCoordinator.swift in Sources */,
 				B50A27F629279F5D00DF3E1F /* AuthCoordinator.swift in Sources */,
@@ -1819,7 +1892,9 @@
 				B50A27E229279F5D00DF3E1F /* LogInManager.swift in Sources */,
 				3B7492292942EDCB00A4BEA0 /* FirebaseAuthError.swift in Sources */,
 				148A05442972F3DA00664CCB /* DependencyFactoryProtocol.swift in Sources */,
+				14A34D4129743E0F00501A66 /* SignUpRepository.swift in Sources */,
 				B50A27F529279F5D00DF3E1F /* AppCoordinator.swift in Sources */,
+				14A34D3E29743B7300501A66 /* SignUpUser.swift in Sources */,
 				B50A27F929279F5D00DF3E1F /* TabBarPage.swift in Sources */,
 				3B061FE2292926DA00BFA71D /* SignUpBlogViewModel.swift in Sources */,
 				14A93D422936F00F00790034 /* FeedWriter.swift in Sources */,
@@ -1866,6 +1941,7 @@
 				B597F9552935B94B0022D3E6 /* DefaultToggleButton.swift in Sources */,
 				B50A27F229279F5D00DF3E1F /* AppDelegate.swift in Sources */,
 				141344CF292F800300187B86 /* UIStackView+addArrangedSubviews.swift in Sources */,
+				14A34D4429743E2100501A66 /* DefaultSignUpRepository.swift in Sources */,
 				1418960229377593005A42D4 /* UIScrollView+.swift in Sources */,
 				3B74920D293DCCAC00A4BEA0 /* GithubError.swift in Sources */,
 				143185EE292B4ABC008CE459 /* ScrapPageView.swift in Sources */,
