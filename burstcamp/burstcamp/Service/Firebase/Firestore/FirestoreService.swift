@@ -9,14 +9,6 @@ import Foundation
 
 import FirebaseFirestore
 
-enum FirestoreServiceError: Error {
-    case getCollection
-    case getDocument
-    case lastCollectionError
-    case addListenerFail
-    case errorCastingFail(message: String)
-}
-
 typealias FirestoreData = [String: Any]
 
 final class FirestoreService {
