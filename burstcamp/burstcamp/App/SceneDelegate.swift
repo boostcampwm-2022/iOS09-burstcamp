@@ -22,11 +22,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         appCoordinator.dismissNavigationController()
 
+        let loginUseCase = DefaultLoginUseCase()
+
         if LogInManager.shared.isWithdrawal {
             LogInManager.shared.signOut(code: code)
+            // TODO: 탈퇴
         } else {
             appCoordinator.displayIndicator()
             LogInManager.shared.logIn(code: code)
+            loginUseCase.login(code: code)
         }
     }
 

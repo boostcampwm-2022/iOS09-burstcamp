@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LoginRepository {
-    func authorizeBoostcamp() throws
+    func authorizeBoostcamp(code: String) throws
     func isLoggedIn() throws -> Bool
     func login() throws
     func withDrawal() throws

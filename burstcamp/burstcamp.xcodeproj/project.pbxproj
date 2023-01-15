@@ -69,6 +69,8 @@
 		1496CF1C2940679C008F312F /* CoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF1B2940679C008F312F /* CoordinatorEvent.swift */; };
 		1496CF1E294070A3008F312F /* ContainFeedDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF1D294070A3008F312F /* ContainFeedDetailCoordinator.swift */; };
 		1496CF232940AEC6008F312F /* ConvertError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF222940AEC6008F312F /* ConvertError.swift */; };
+		14A34D3A297417FD00501A66 /* GithubAPIKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D39297417FD00501A66 /* GithubAPIKeyManager.swift */; };
+		14A34D3C2974192800501A66 /* GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D3B2974192800501A66 /* GithubAPI.swift */; };
 		14A93D402936EFF900790034 /* FeedAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D3F2936EFF900790034 /* FeedAPIModel.swift */; };
 		14A93D422936F00F00790034 /* FeedWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D412936F00F00790034 /* FeedWriter.swift */; };
 		14F94BE62939E16D0058A79A /* UICollectionView+emptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */; };
@@ -90,7 +92,7 @@
 		B50A27DE29279F5D00DF3E1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B50A279D29279F5D00DF3E1F /* Assets.xcassets */; };
 		B50A27E229279F5D00DF3E1F /* LogInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27A429279F5D00DF3E1F /* LogInManager.swift */; };
 		B50A27E329279F5D00DF3E1F /* LogInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27A629279F5D00DF3E1F /* LogInViewModel.swift */; };
-		B50A27E429279F5D00DF3E1F /* GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27A729279F5D00DF3E1F /* GithubAPI.swift */; };
+		B50A27E429279F5D00DF3E1F /* GithubLoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27A729279F5D00DF3E1F /* GithubLoginModel.swift */; };
 		B50A27E529279F5D00DF3E1F /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27A829279F5D00DF3E1F /* LogInView.swift */; };
 		B50A27E629279F5D00DF3E1F /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27A929279F5D00DF3E1F /* LogInViewController.swift */; };
 		B50A27E929279F5D00DF3E1F /* NormalFeedCellFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27B029279F5D00DF3E1F /* NormalFeedCellFooter.swift */; };
@@ -299,6 +301,8 @@
 		1496CF1B2940679C008F312F /* CoordinatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorEvent.swift; sourceTree = "<group>"; };
 		1496CF1D294070A3008F312F /* ContainFeedDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainFeedDetailCoordinator.swift; sourceTree = "<group>"; };
 		1496CF222940AEC6008F312F /* ConvertError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertError.swift; sourceTree = "<group>"; };
+		14A34D39297417FD00501A66 /* GithubAPIKeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPIKeyManager.swift; sourceTree = "<group>"; };
+		14A34D3B2974192800501A66 /* GithubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPI.swift; sourceTree = "<group>"; };
 		14A93D3F2936EFF900790034 /* FeedAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAPIModel.swift; sourceTree = "<group>"; };
 		14A93D412936F00F00790034 /* FeedWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedWriter.swift; sourceTree = "<group>"; };
 		14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+emptyView.swift"; sourceTree = "<group>"; };
@@ -321,7 +325,7 @@
 		B50A279D29279F5D00DF3E1F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B50A27A429279F5D00DF3E1F /* LogInManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInManager.swift; sourceTree = "<group>"; };
 		B50A27A629279F5D00DF3E1F /* LogInViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewModel.swift; sourceTree = "<group>"; };
-		B50A27A729279F5D00DF3E1F /* GithubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubAPI.swift; sourceTree = "<group>"; };
+		B50A27A729279F5D00DF3E1F /* GithubLoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubLoginModel.swift; sourceTree = "<group>"; };
 		B50A27A829279F5D00DF3E1F /* LogInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
 		B50A27A929279F5D00DF3E1F /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		B50A27B029279F5D00DF3E1F /* NormalFeedCellFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalFeedCellFooter.swift; sourceTree = "<group>"; };
@@ -677,7 +681,7 @@
 			isa = PBXGroup;
 			children = (
 				14755A462973FA3A0036B71D /* GithubLoginDatasource.swift */,
-				B50A27A729279F5D00DF3E1F /* GithubAPI.swift */,
+				B50A27A729279F5D00DF3E1F /* GithubLoginModel.swift */,
 			);
 			path = GithubLogin;
 			sourceTree = "<group>";
@@ -1042,6 +1046,7 @@
 			children = (
 				D88295FB292A4452005B4273 /* HTTPMethod.swift */,
 				D8C3AA2829305C05008EE77C /* HTTPHeader.swift */,
+				14A34D3B2974192800501A66 /* GithubAPI.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1056,6 +1061,14 @@
 				140E210029443D2200D6E2E5 /* Firestore */,
 			);
 			path = Firebase;
+			sourceTree = "<group>";
+		};
+		14A34D38297417E400501A66 /* GithubAPIKey */ = {
+			isa = PBXGroup;
+			children = (
+				14A34D39297417FD00501A66 /* GithubAPIKeyManager.swift */,
+			);
+			path = GithubAPIKey;
 			sourceTree = "<group>";
 		};
 		14A93D3E2936EFEE00790034 /* Feed */ = {
@@ -1317,6 +1330,7 @@
 			isa = PBXGroup;
 			children = (
 				1496CF1F294080E6008F312F /* Firebase */,
+				14A34D38297417E400501A66 /* GithubAPIKey */,
 				D88295FD292A4459005B4273 /* URLSessionService.swift */,
 				B50A27A429279F5D00DF3E1F /* LogInManager.swift */,
 				D8C38671292B88DE005A2563 /* UserDefaultsManager.swift */,
@@ -1730,7 +1744,7 @@
 				B572EFA129479D1500A9413C /* FeedRealmModel.swift in Sources */,
 				D8E979CA293A6D430092EBF6 /* Alert.swift in Sources */,
 				140438BB293F6FD7004D035C /* HomeCoordinator.swift in Sources */,
-				B50A27E429279F5D00DF3E1F /* GithubAPI.swift in Sources */,
+				B50A27E429279F5D00DF3E1F /* GithubLoginModel.swift in Sources */,
 				B50A27ED29279F5D00DF3E1F /* NormalFeedCell.swift in Sources */,
 				14F94BE62939E16D0058A79A /* UICollectionView+emptyView.swift in Sources */,
 				D8C3AA2929305C05008EE77C /* HTTPHeader.swift in Sources */,
@@ -1767,6 +1781,7 @@
 				D8494D4E2927CE64008157F1 /* Domain.swift in Sources */,
 				3B061FDA2928CF7E00BFA71D /* SighUpDomainView.swift in Sources */,
 				D8494D482927C9E8008157F1 /* MyPageViewModel.swift in Sources */,
+				14A34D3C2974192800501A66 /* GithubAPI.swift in Sources */,
 				141344D7292F801100187B86 /* TimeInterval+.swift in Sources */,
 				D8494D4A2927CBD4008157F1 /* DefaultButton.swift in Sources */,
 				D89AE4F32935AFE100446AB3 /* Notification+.swift in Sources */,
@@ -1812,6 +1827,7 @@
 				D84452F8292CF4E0008E811B /* DefaultTextField.swift in Sources */,
 				148A054B2972F5CC00664CCB /* LoginUseCase.swift in Sources */,
 				D8C3866C292B4B0B005A2563 /* OpenSourceLicenseView.swift in Sources */,
+				14A34D3A297417FD00501A66 /* GithubAPIKeyManager.swift in Sources */,
 				140438BD293F6FDF004D035C /* ScrapPageCoordinator.swift in Sources */,
 				D84452F6292CF4BC008E811B /* DefaultImageLabel.swift in Sources */,
 				D8C38672292B88DE005A2563 /* UserDefaultsManager.swift in Sources */,
