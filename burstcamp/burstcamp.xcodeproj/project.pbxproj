@@ -39,6 +39,7 @@
 		1459C3BA292910B300FA885D /* RecommendFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3B9292910B300FA885D /* RecommendFeedCell.swift */; };
 		1459C3BC2929150200FA885D /* FeedCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3BB2929150200FA885D /* FeedCellType.swift */; };
 		14755A352973BA340036B71D /* FirestoreServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14755A342973BA340036B71D /* FirestoreServiceError.swift */; };
+		14755A382973C9B00036B71D /* UserAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14755A372973C9B00036B71D /* UserAPIModel.swift */; };
 		1481B10D2941D1AB0093E591 /* UIResponder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481B10C2941D1AB0093E591 /* UIResponder+.swift */; };
 		1481B1112941E0C50093E591 /* HomeViewController+handleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481B1102941E0C50093E591 /* HomeViewController+handleError.swift */; };
 		148A05442972F3DA00664CCB /* DependencyFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A05432972F3DA00664CCB /* DependencyFactoryProtocol.swift */; };
@@ -264,6 +265,7 @@
 		1459C3B9292910B300FA885D /* RecommendFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedCell.swift; sourceTree = "<group>"; };
 		1459C3BB2929150200FA885D /* FeedCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellType.swift; sourceTree = "<group>"; };
 		14755A342973BA340036B71D /* FirestoreServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreServiceError.swift; sourceTree = "<group>"; };
+		14755A372973C9B00036B71D /* UserAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAPIModel.swift; sourceTree = "<group>"; };
 		1481B10C2941D1AB0093E591 /* UIResponder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+.swift"; sourceTree = "<group>"; };
 		1481B1102941E0C50093E591 /* HomeViewController+handleError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+handleError.swift"; sourceTree = "<group>"; };
 		148A05432972F3DA00664CCB /* DependencyFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyFactoryProtocol.swift; sourceTree = "<group>"; };
@@ -497,7 +499,6 @@
 				140E210329443E6300D6E2E5 /* FirestoreService.swift */,
 				B5F4B035293CC0B300947250 /* FirestoreCollection.swift */,
 				140E21052944519E00D6E2E5 /* BCFirestoreService.swift */,
-				D89AE4EC2935AA2100446AB3 /* FCMToken.swift */,
 			);
 			path = Firestore;
 			sourceTree = "<group>";
@@ -636,6 +637,16 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		14755A362973C99C0036B71D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D89AE4EC2935AA2100446AB3 /* FCMToken.swift */,
+				14A93D3F2936EFF900790034 /* FeedAPIModel.swift */,
+				14755A372973C9B00036B71D /* UserAPIModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		148A05422972E74C00664CCB /* Factory */ = {
@@ -987,6 +998,7 @@
 		1496CF1F294080E6008F312F /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
+				14755A362973C99C0036B71D /* Model */,
 				140E210229443D2A00D6E2E5 /* FireFunction */,
 				140E210129443D2600D6E2E5 /* FireStorage */,
 				140E210029443D2200D6E2E5 /* Firestore */,
@@ -999,7 +1011,6 @@
 			children = (
 				B5FF711D2948DCA0008E69F2 /* RealmModel */,
 				141344DA292F82BE00187B86 /* Feed.swift */,
-				14A93D3F2936EFF900790034 /* FeedAPIModel.swift */,
 				14A93D412936F00F00790034 /* FeedWriter.swift */,
 				1459C3BB2929150200FA885D /* FeedCellType.swift */,
 			);
@@ -1678,6 +1689,7 @@
 				148A05692972F84E00664CCB /* DefaultMyPageEditUseCase.swift in Sources */,
 				D89E48AF2939D99300744A56 /* FireStorageService.swift in Sources */,
 				D8494D562927D6EB008157F1 /* DefaultBadgeView.swift in Sources */,
+				14755A382973C9B00036B71D /* UserAPIModel.swift in Sources */,
 				1496CF232940AEC6008F312F /* ConvertError.swift in Sources */,
 				3B061FE7292A1F9600BFA71D /* SignUpBlogView.swift in Sources */,
 				D88295FE292A4459005B4273 /* URLSessionService.swift in Sources */,

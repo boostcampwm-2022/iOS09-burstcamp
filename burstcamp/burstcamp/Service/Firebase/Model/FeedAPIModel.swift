@@ -27,7 +27,7 @@ struct FeedAPIModel {
 }
 
 extension FeedAPIModel {
-    init(data: [String: Any]) {
+    init(data: FirestoreData) {
         self.feedUUID = data["feedUUID"] as? String ?? ""
         self.title = data["title"] as? String ?? ""
         let timeStampDate = data["pubDate"] as? Timestamp ?? Timestamp()
@@ -43,17 +43,5 @@ extension FeedAPIModel {
         self.writerProfileImageURL = data["writerProfileImageURL"] as? String ?? ""
         self.writerUUID = data["writerUUID"] as? String ?? ""
         self.writerBlogTitle = data["writerBlogTitle"] as? String ?? ""
-    }
-
-    func feedWriter() -> FeedWriter {
-        return FeedWriter(
-            userUUID: self.writerUUID,
-            nickname: self.writerNickname,
-            camperID: self.writerCamperID,
-            ordinalNumber: self.writerOrdinalNumber,
-            domain: Domain(rawValue: self.writerDomain) ?? .iOS,
-            profileImageURL: self.writerProfileImageURL,
-            blogTitle: self.writerBlogTitle
-        )
     }
 }
