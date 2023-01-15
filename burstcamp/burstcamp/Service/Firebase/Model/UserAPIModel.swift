@@ -18,6 +18,7 @@ struct UserAPIModel {
     let ordinalNumber: Int
     let blogURL: String
     let blogTitle: String
+    // TODO: 지워야됨
     var scrapFeedUUIDs: [String]
     let signupDate: Date
     let isPushOn: Bool
@@ -33,9 +34,25 @@ extension UserAPIModel {
         self.ordinalNumber = data["ordinalNumber"] as? Int ?? 7
         self.blogURL = data["blogURL"] as? String ?? ""
         self.blogTitle = data["blogTitle"] as? String ?? ""
-        self.scrapFeedUUIDs = data["scrapFeedUUIDs"] as? [String] ?? []
         let timeStampDate = data["signupDate"] as? Timestamp ?? Timestamp()
+        // TODO: 지워야됨
+        self.scrapFeedUUIDs = data["scrapFeedUUIDs"] as? [String] ?? []
         self.signupDate = timeStampDate.dateValue()
         self.isPushOn = data["isPushOn"] as? Bool ?? false
+    }
+
+    func toFirestoreData() -> FirestoreData {
+        return [
+            "userUUID": userUUID,
+            "nickname": nickname,
+            "profileImageURL": profileImageURL,
+            "domain": domain,
+            "camperID": camperID,
+            "ordinalNumber": ordinalNumber,
+            "blogURL": blogURL,
+            "blogTitle": blogTitle,
+            "signupDate": Timestamp(date: signupDate),
+            "isPushOn": isPushOn
+        ]
     }
 }

@@ -42,9 +42,8 @@ final class MyPageViewModel {
         input.notificationDidSwitch
             .sink { isOn in
                 let userUUID = UserManager.shared.user.userUUID
-                let pushData = ["isPushOn": isOn]
                 Task { [weak self] in
-                    try await self?.bcFirestoreService.updateUser(userUUID: userUUID, data: pushData)
+                    try await self?.bcFirestoreService.updateUserPushState(userUUID: userUUID, isPushOn: isOn)
                 }
             }
             .store(in: &cancelBag)
