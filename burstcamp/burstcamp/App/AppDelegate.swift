@@ -15,13 +15,14 @@ import FirebaseCore
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    private let bcFireStoreService = BCFirestoreService()
+    private var bcFireStoreService: BCFirestoreService!
 
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         FirebaseApp.configure()
+        bcFireStoreService = BCFirestoreService()
         RealmConfig.serialQueue.async {
             FeedRealmDataSource.shared.configure()
         }

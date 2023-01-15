@@ -13,4 +13,5 @@ enum FirestoreServiceError: Error {
     case lastCollectionError
     case addListenerFail
     case errorCastingFail(message: String)
+    case batchError
 }

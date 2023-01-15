@@ -22,7 +22,7 @@ protocol BCFirestoreServiceProtocol {
     func addListenerToUser(userUUID: String) async throws -> UserAPIModel
     func countFeedScrap(feedUUID: String) async throws -> Int
     func scrapFeed(_ feed: FeedAPIModel, with userUUID: String) async throws
-    func unScrapFeed(_ feedUUID: String, with userUUID: String) async throws
+    func unScrapFeed(_ feed: FeedAPIModel, with userUUID: String) async throws
     func addScrapUser(userUUID: String, at feedUUID: String) async throws
     func deleteScrapUser(userUUID: String, from feedUUID: String) async throws
     func addFeed(_ feed: FeedAPIModel, at userUUID: String) async throws
@@ -130,9 +130,63 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
     }
 
     func scrapFeed(_ feed: FeedAPIModel, with userUUID: String) async throws {
+        let batch = firestoreService.getDatabaseBatch()
+        let feedUUID = feed.feedUUID
+
+        // feed - scrapUser에 userUUID 추가
+        let scrapUserPath = firestoreService.getDocumentPath(
+            collection: FirestoreCollection.scrapUsers(feedUUID: feedUUID).path,
+            document: userUUID
+        )
+        let scrapUserData: [String: Any] = [
+            "userUUID": userUUID,
+            "scrapDate": Timestamp(date: Date())
+        ]
+        batch.setData(scrapUserData, forDocument: scrapUserPath)
+
+        // user - feed에 feed 데이터 추가
+        let scrapFeedPath = firestoreService.getDocumentPath(
+            collection: FirestoreCollection.scrapFeeds(userUUID: userUUID).path,
+            document: feedUUID
+        )
+        batch.setData(feed.toScrapFirestoreData(), forDocument: scrapFeedPath)
+
+        // feed - scrapCount+1
+        let feedPath = firestoreService.getDocumentPath(
+            collection: FirestoreCollection.normalFeed.path,
+            document: feedUUID
+        )
+        batch.updateData(["scrapCount": feed.scrapCount + 1], forDocument: feedPath)
+
+        try await batch.commit()
     }
 
-    func unScrapFeed(_ feedUUID: String, with userUUID: String) async throws {
+    func unScrapFeed(_ feed: FeedAPIModel, with userUUID: String) async throws {
+        let batch = firestoreService.getDatabaseBatch()
+        let feedUUID = feed.feedUUID
+
+        // feed - scrapUser에 userUUID 삭제
+        let scrapUserPath = firestoreService.getDocumentPath(
+            collection: FirestoreCollection.scrapUsers(feedUUID: feedUUID).path,
+            document: userUUID
+        )
+        batch.deleteDocument(scrapUserPath)
+
+        // user - feed에 feed 데이터 삭제
+        let scrapFeedPath = firestoreService.getDocumentPath(
+            collection: FirestoreCollection.scrapFeeds(userUUID: userUUID).path,
+            document: feedUUID
+        )
+        batch.deleteDocument(scrapFeedPath)
+
+        // feed - scrapCount-1
+        let feedPath = firestoreService.getDocumentPath(
+            collection: FirestoreCollection.normalFeed.path,
+            document: feedUUID
+        )
+        batch.updateData(["scrapCount": feed.scrapCount - 1], forDocument: feedPath)
+
+        try await batch.commit()
     }
 
     func addScrapUser(userUUID: String, at feedUUID: String) async throws {

@@ -237,47 +237,11 @@ final class FirestoreService {
         }
     }
 
-    public func appendDocumentArrayField(
-        _ collectionPath: String,
-        document: String,
-        arrayName: String,
-        data: String
-    ) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            database
-                .collection(collectionPath)
-                .document(document)
-                .updateData([
-                    arrayName: FieldValue.arrayUnion([data])
-                ]) { error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    continuation.resume()
-                }
-        } as Void
+    public func getDatabaseBatch() -> WriteBatch {
+        return database.batch()
     }
 
-    public func deleteDocumentArrayField(
-        _ collectionPath: String,
-        document: String,
-        arrayName: String,
-        data: String
-    ) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            database
-                .collection(collectionPath)
-                .document(document)
-                .updateData([
-                    arrayName: FieldValue.arrayRemove([data])
-                ]) { error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    continuation.resume()
-                }
-        } as Void
+    public func getDocumentPath(collection: String, document: String) -> DocumentReference {
+        return database.collection(collection).document(document)
     }
 }

@@ -18,6 +18,8 @@ final class FeedRemoteDataSource {
     static let shared = FeedRemoteDataSource()
 
     private let firestoreService: FirestoreService
+    // TODO: 의존성 주입
+    private let bcFirestoreService = BCFirestoreService()
 
     init(firestoreService: FirestoreService = FirestoreService()) {
         self.firestoreService = firestoreService
@@ -52,38 +54,9 @@ final class FeedRemoteDataSource {
 
             switch feed.isScraped {
             case true:
-                try await self.firestoreService.deleteDocument(
-                    FirestoreCollection.scrapUsers(feedUUID: feedUUID).path,
-                    document: userUUID
-                )
-                try await self.firestoreService.deleteDocument(
-                    FirestoreCollection.scrapFeeds(userUUID: userUUID).path,
-                    document: feedUUID
-                )
+                try await self.bcFirestoreService.unScrapFeed(FeedAPIModel(feed: feed), with: userUUID)
             case false:
-                try await self.firestoreService.createDocument(
-                    FirestoreCollection.scrapUsers(feedUUID: feedUUID).path,
-                    document: userUUID,
-                    data: [
-                        "userUUID": userUUID,
-                        // TODO: TimeStamp 분리 필요
-                        "scrapDate": Timestamp(date: newFeed.scrapDate ?? Date())
-                    ]
-                )
-                try await self.firestoreService.createDocument(
-                    FirestoreCollection.scrapFeeds(userUUID: userUUID).path,
-                    document: feedUUID,
-                    data: [
-                        "feedUUID": feedUUID,
-                        "writerUUID": feed.writer.userUUID,
-                        "title": feed.title,
-                        "pubDate": Timestamp(date: feed.pubDate),
-                        "url": feed.url,
-                        "thumbnailURL": feed.thumbnailURL,
-                        "content": feed.content,
-                        "scrapDate": Timestamp(date: newFeed.scrapDate ?? Date())
-                    ]
-                )
+                try await self.bcFirestoreService.scrapFeed(FeedAPIModel(feed: feed), with: userUUID)
             }
             // 상태가 바뀐 피드를 리턴한다.
             return newFeed
