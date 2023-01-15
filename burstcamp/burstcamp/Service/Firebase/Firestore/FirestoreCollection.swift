@@ -20,7 +20,7 @@ enum FirestoreCollection {
 }
 
 extension FirestoreCollection {
-    // TODO: BeforeFirestore과 함께 삭제
+
     private static let database = Firestore.firestore()
 
     var path: String {
@@ -30,7 +30,6 @@ extension FirestoreCollection {
         case .user: return "user"
         case .scrapUsers(let feedUUID): return "feed/\(feedUUID)/scrapUsers"
         case .scrapFeeds: return "user/\(UserManager.shared.user.userUUID)/scrapFeeds"
-//        case .scrapFeeds(let userUUID): return "user/\(userUUID)/scrapFeeds"
         case .admin: return "admin"
         case .fcmToken: return "fcmToken"
         }
