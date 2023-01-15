@@ -23,10 +23,6 @@ protocol BCFirestoreServiceProtocol {
     func countFeedScrap(feedUUID: String) async throws -> Int
     func scrapFeed(_ feed: FeedAPIModel, with userUUID: String) async throws
     func unScrapFeed(_ feed: FeedAPIModel, with userUUID: String) async throws
-    func addScrapUser(userUUID: String, at feedUUID: String) async throws
-    func deleteScrapUser(userUUID: String, from feedUUID: String) async throws
-    func addFeed(_ feed: FeedAPIModel, at userUUID: String) async throws
-    func deleteFeed(_ feedUUID: String, from userUUID: String) async throws
     func saveFCMToken(_ fcmToken: String, to userUUID: String) async throws
 }
 
@@ -45,7 +41,7 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
         )
     }
 
-    init(firestoreService: FirestoreService,paginateCount: Int) {
+    init(firestoreService: FirestoreService, paginateCount: Int) {
         self.firestoreService = firestoreService
         self.paginateCount = paginateCount
     }
@@ -187,42 +183,6 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
         batch.updateData(["scrapCount": feed.scrapCount - 1], forDocument: feedPath)
 
         try await batch.commit()
-    }
-
-    func addScrapUser(userUUID: String, at feedUUID: String) async throws {
-        let scrapUsersPath = FirestoreCollection.scrapUsers(feedUUID: feedUUID).path
-        let data: [String: Any] = [
-            "userUUID": userUUID,
-            "scrapDate": Timestamp(date: Date())
-        ]
-
-        try await firestoreService.createDocument(scrapUsersPath, document: userUUID, data: data)
-    }
-
-    func deleteScrapUser(userUUID: String, from feedUUID: String) async throws {
-        let scrapUsersPath = FirestoreCollection.scrapUsers(feedUUID: feedUUID).path
-
-        try await firestoreService.deleteDocument(scrapUsersPath, document: userUUID)
-    }
-
-    func addFeed(_ feed: FeedAPIModel, at userUUID: String) async throws {
-        let userPath = FirestoreCollection.user.path
-
-//        try await firestoreService.deleteDocumentArrayField(
-//            userPath,
-//            document: userUUID,
-//            arrayName: arrayName
-//            data: feedUUID
-//        )
-    }
-
-    func deleteFeed(_ feedUUID: String, from userUUID: String) async throws {
-        let feedScrapUserPath = FirestoreCollection.scrapFeeds(userUUID: userUUID).path
-
-        try await firestoreService.deleteDocument(
-            feedScrapUserPath,
-            document: feedUUID
-        )
     }
 
     func saveFCMToken(_ fcmToken: String, to userUUID: String) async throws {
