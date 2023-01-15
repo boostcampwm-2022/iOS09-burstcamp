@@ -99,19 +99,20 @@ final class MyPageEditViewModel {
     }
 
     private func saveUser() {
-        FireFunctionsManager
-            .blogTitle(link: blogURL)
-            .catch { _ in Just("") }
-            .combineLatest(profilemageURL())
-            .sink { blogTitle, profileImageURL in
-                FirestoreUser.update(
-                    userUUID: UserManager.shared.user.userUUID,
-                    nickname: self.nickname,
-                    profileImageURL: profileImageURL,
-                    blogURL: self.blogURL,
-                    blogTitle: blogTitle
-                )
-            }
-            .store(in: &cancelBag)
+        // TODO: 유저 데이터 변경 시 function으로 업데이트
+//        FireFunctionsManager
+//            .blogTitle(link: blogURL)
+//            .catch { _ in Just("") }
+//            .combineLatest(profilemageURL())
+//            .sink { blogTitle, profileImageURL in
+//                FirestoreUser.update(
+//                    userUUID: UserManager.shared.user.userUUID,
+//                    nickname: self.nickname,
+//                    profileImageURL: profileImageURL,
+//                    blogURL: self.blogURL,
+//                    blogTitle: blogTitle
+//                )
+//            }
+//            .store(in: &cancelBag)
     }
 }

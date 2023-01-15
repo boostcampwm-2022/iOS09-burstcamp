@@ -13,6 +13,7 @@ import FirebaseAuth
 final class MyPageViewModel {
 
     private let myPageUseCase: MyPageUseCase
+    private let bcFirestoreService = BCFirestoreService()
 
     init(myPageUseCase: MyPageUseCase) {
         self.myPageUseCase = myPageUseCase
@@ -41,7 +42,10 @@ final class MyPageViewModel {
         input.notificationDidSwitch
             .sink { isOn in
                 let userUUID = UserManager.shared.user.userUUID
-                FirestoreUser.update(userUUID: userUUID, isPushOn: isOn)
+                let pushData = ["isPushOn": isOn]
+                Task { [weak self] in
+                    try await self?.bcFirestoreService.updateUser(userUUID: userUUID, data: pushData)
+                }
             }
             .store(in: &cancelBag)
 
@@ -79,7 +83,8 @@ final class MyPageViewModel {
         let userUUID = UserManager.shared.user.userUUID
         print(userUUID)
         KeyChainManager.deleteUser()
-        UserManager.shared.removeUserListener()
+        //TODO: Listener 처리
+//        UserManager.shared.removeUserListener()
         UserManager.shared.deleteUserInfo()
         FireFunctionsManager.deleteUser(userUUID: userUUID)
             .sink { _ in

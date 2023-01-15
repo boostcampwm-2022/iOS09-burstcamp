@@ -9,7 +9,7 @@ import Foundation
 
 import FirebaseFirestore
 
-protocol BCFirestoreService {
+protocol BCFirestoreServiceProtocol {
     func fetchRecommendFeed() async throws -> [FirestoreData]
     func fetchLatestNormalFeeds() async throws -> [FirestoreData]
     func fetchMoreNormalFeeds() async throws -> [FirestoreData]
@@ -20,13 +20,14 @@ protocol BCFirestoreService {
     func deleteUser(userUUID: String) async throws
     func addListenerToUser(userUUID: String) async throws -> FirestoreData
     func countFeedScrap(feedUUID: String) async throws -> Int
-    func appendScrapUser(userUUID: String, at feedUUID: String) async throws
+    func addScrapUser(userUUID: String, at feedUUID: String) async throws
     func deleteScrapUser(userUUID: String, from feedUUID: String) async throws
-    func appendFeedUUID(_ feedUUID: String, at userUUID: String) async throws
-    func deleteFeedUUID(_ feedUUID: String, from userUUID: String) async throws
+    func addFeed(_ feed: FirestoreData, at userUUID: String) async throws
+    func deleteFeed(_ feedUUID: String, from userUUID: String) async throws
+    func saveFCMToken(_ fcmToken: String, to userUUID: String) async throws
 }
 
-final class DefaultBCFirestoreService: BCFirestoreService {
+final class BCFirestoreService: BCFirestoreServiceProtocol {
 
     private let firestoreService: FirestoreService
     private var lastSnapShot: QueryDocumentSnapshot?
@@ -41,7 +42,7 @@ final class DefaultBCFirestoreService: BCFirestoreService {
         )
     }
 
-    init(firestoreService: FirestoreService, paginateCount: Int) {
+    init(firestoreService: FirestoreService,paginateCount: Int) {
         self.firestoreService = firestoreService
         self.paginateCount = paginateCount
     }
@@ -118,7 +119,7 @@ final class DefaultBCFirestoreService: BCFirestoreService {
         return scrapCount
     }
 
-    func appendScrapUser(userUUID: String, at feedUUID: String) async throws {
+    func addScrapUser(userUUID: String, at feedUUID: String) async throws {
         let scrapUsersPath = FirestoreCollection.scrapUsers(feedUUID: feedUUID).path
         let data: [String: Any] = [
             "userUUID": userUUID,
@@ -134,27 +135,34 @@ final class DefaultBCFirestoreService: BCFirestoreService {
         try await firestoreService.deleteDocument(scrapUsersPath, document: userUUID)
     }
 
-    func appendFeedUUID(_ feedUUID: String, at userUUID: String) async throws {
+    func addFeed(_ feed: FirestoreData, at userUUID: String) async throws {
         let userPath = FirestoreCollection.user.path
         let arrayName = "scrapFeedUUIDs"
 
-        try await firestoreService.deleteDocumentArrayField(
-            userPath,
-            document: userUUID,
-            arrayName: arrayName,
-            data: feedUUID
+//        try await firestoreService.deleteDocumentArrayField(
+//            userPath,
+//            document: userUUID,
+//            arrayName: arrayName
+//            data: feedUUID
+//        )
+    }
+
+    func deleteFeed(_ feedUUID: String, from userUUID: String) async throws {
+        let feedScrapUserPath = FirestoreCollection.scrapFeeds(userUUID: userUUID).path
+
+        try await firestoreService.deleteDocument(
+            feedScrapUserPath,
+            document: feedUUID
         )
     }
 
-    func deleteFeedUUID(_ feedUUID: String, from userUUID: String) async throws {
-        let userPath = FirestoreCollection.user.path
-        let arrayName = "scrapFeedUUIDs"
+    func saveFCMToken(_ fcmToken: String, to userUUID: String) async throws {
+        let fcmToken = FCMToken(fcmToken: fcmToken)
+        guard let data = fcmToken.asDictionary else {
+            throw FirestoreServiceError.getCollection
+        }
+        let path = FirestoreCollection.fcmToken.path
 
-        try await firestoreService.deleteDocumentArrayField(
-            userPath,
-            document: userUUID,
-            arrayName: arrayName,
-            data: feedUUID
-        )
+        try await firestoreService.createDocument(path, document: userUUID, data: data)
     }
 }

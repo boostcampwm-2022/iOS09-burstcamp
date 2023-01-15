@@ -52,15 +52,16 @@ final class LogInManager {
             return
         }
 
-        FirestoreUser.fetch(userUUID: userUUID)
-            .sink { [weak self] result in
-                if case .failure = result {
-                    self?.autoLogInPublisher.send(false)
-                }
-            } receiveValue: { [weak self] _ in
-                self?.autoLogInPublisher.send(true)
-            }
-            .store(in: &cancelBag)
+        // TODO: User 받아오기
+//        FirestoreUser.fetch(userUUID: userUUID)
+//            .sink { [weak self] result in
+//                if case .failure = result {
+//                    self?.autoLogInPublisher.send(false)
+//                }
+//            } receiveValue: { [weak self] _ in
+//                self?.autoLogInPublisher.send(true)
+//            }
+//            .store(in: &cancelBag)
     }
 
     func logIn(code: String) {
@@ -108,15 +109,16 @@ final class LogInManager {
     }
 
     func isSignedUp(uuid: String) {
-        FirestoreUser.fetch(userUUID: uuid)
-            .sink { [weak self] result in
-                if case .failure = result {
-                    self?.logInPublisher.send(.moveToDomainScreen)
-                }
-            } receiveValue: { [weak self] _ in
-                self?.logInPublisher.send(.moveToTabBarScreen)
-            }
-            .store(in: &cancelBag)
+        // TODO: User 받아오기
+//        FirestoreUser.fetch(userUUID: uuid)
+//            .sink { [weak self] result in
+//                if case .failure = result {
+//                    self?.logInPublisher.send(.moveToDomainScreen)
+//                }
+//            } receiveValue: { [weak self] _ in
+//                self?.logInPublisher.send(.moveToTabBarScreen)
+//            }
+//            .store(in: &cancelBag)
     }
 
     func signOut(code: String) {

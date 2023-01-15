@@ -11,6 +11,7 @@ import Foundation
 final class SignUpBlogViewModel {
 
     private let signUpUseCase: SignUpUseCase
+    private let bcFireStoreService = BCFirestoreService()
 
     init(signUpUseCase: SignUpUseCase) {
         self.signUpUseCase = signUpUseCase
@@ -68,9 +69,10 @@ final class SignUpBlogViewModel {
                 }
                 .eraseToAnyPublisher()
             }
-            .flatMap { user in
-                return FirestoreUser.save(user: user).eraseToAnyPublisher()
-            }
+            // TODO: 유저 저장 후 완료 됐다는 메시지 전달
+//            .flatMap { user in
+//                return FirestoreUser.save(user: user).eraseToAnyPublisher()
+//            }
             .eraseToAnyPublisher()
 
         let signUpWithSkipButton = input.skipConfirmDidTap
@@ -85,9 +87,10 @@ final class SignUpBlogViewModel {
                 }
                 .eraseToAnyPublisher()
             }
-            .flatMap { user -> AnyPublisher<User, Error> in
-                return FirestoreUser.save(user: user).eraseToAnyPublisher()
-            }
+            // TODO: 유저 저장 후 완료 됐다는 메시지 전달
+//            .flatMap { user -> AnyPublisher<User, Error> in
+//                return FirestoreUser.save(user: user).eraseToAnyPublisher()
+//            }
             .eraseToAnyPublisher()
 
         input.saveFCMToken
@@ -131,6 +134,8 @@ final class SignUpBlogViewModel {
     private func saveFCMToken() {
         guard let fcmToken = UserDefaultsManager.fcmToken() else { return }
         let userUUID = UserManager.shared.user.userUUID
-        FirebaseFCMToken.save(fcmToken: fcmToken, to: userUUID)
+        Task { [weak self] in
+            try await self?.bcFireStoreService.saveFCMToken(fcmToken, to: userUUID)
+        }
     }
 }
