@@ -8,8 +8,6 @@
 import Combine
 import Foundation
 
-import FirebaseAuth
-
 final class MyPageViewModel {
 
     private let myPageUseCase: MyPageUseCase

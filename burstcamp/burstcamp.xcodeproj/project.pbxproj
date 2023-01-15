@@ -40,6 +40,7 @@
 		1459C3BC2929150200FA885D /* FeedCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3BB2929150200FA885D /* FeedCellType.swift */; };
 		14755A352973BA340036B71D /* FirestoreServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14755A342973BA340036B71D /* FirestoreServiceError.swift */; };
 		14755A382973C9B00036B71D /* UserAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14755A372973C9B00036B71D /* UserAPIModel.swift */; };
+		14755A432973F28C0036B71D /* BCFirebaseAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14755A422973F28C0036B71D /* BCFirebaseAuthService.swift */; };
 		1481B10D2941D1AB0093E591 /* UIResponder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481B10C2941D1AB0093E591 /* UIResponder+.swift */; };
 		1481B1112941E0C50093E591 /* HomeViewController+handleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481B1102941E0C50093E591 /* HomeViewController+handleError.swift */; };
 		148A05442972F3DA00664CCB /* DependencyFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A05432972F3DA00664CCB /* DependencyFactoryProtocol.swift */; };
@@ -266,6 +267,7 @@
 		1459C3BB2929150200FA885D /* FeedCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellType.swift; sourceTree = "<group>"; };
 		14755A342973BA340036B71D /* FirestoreServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreServiceError.swift; sourceTree = "<group>"; };
 		14755A372973C9B00036B71D /* UserAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAPIModel.swift; sourceTree = "<group>"; };
+		14755A422973F28C0036B71D /* BCFirebaseAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCFirebaseAuthService.swift; sourceTree = "<group>"; };
 		1481B10C2941D1AB0093E591 /* UIResponder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+.swift"; sourceTree = "<group>"; };
 		1481B1102941E0C50093E591 /* HomeViewController+handleError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+handleError.swift"; sourceTree = "<group>"; };
 		148A05432972F3DA00664CCB /* DependencyFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyFactoryProtocol.swift; sourceTree = "<group>"; };
@@ -604,7 +606,6 @@
 			children = (
 				D88295EE292A43EB005B4273 /* NetworkError.swift */,
 				D89AE4E32933AEE900446AB3 /* ImageCacheError.swift */,
-				3B7492282942EDCB00A4BEA0 /* FirebaseAuthError.swift */,
 				D8576F2F293779C4002885FE /* FirestoreError.swift */,
 				D89E48B02939D9AC00744A56 /* FireStorageError.swift */,
 				3B74920C293DCCAC00A4BEA0 /* GithubError.swift */,
@@ -647,6 +648,15 @@
 				14755A372973C9B00036B71D /* UserAPIModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		14755A412973F26C0036B71D /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				3B7492282942EDCB00A4BEA0 /* FirebaseAuthError.swift */,
+				14755A422973F28C0036B71D /* BCFirebaseAuthService.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		148A05422972E74C00664CCB /* Factory */ = {
@@ -999,6 +1009,7 @@
 			isa = PBXGroup;
 			children = (
 				14755A362973C99C0036B71D /* Model */,
+				14755A412973F26C0036B71D /* Auth */,
 				140E210229443D2A00D6E2E5 /* FireFunction */,
 				140E210129443D2600D6E2E5 /* FireStorage */,
 				140E210029443D2200D6E2E5 /* Firestore */,
@@ -1685,6 +1696,7 @@
 				141344D6292F801100187B86 /* Date+FormatString.swift in Sources */,
 				D89AE4FD2935F5AE00446AB3 /* FireFunctionsManager.swift in Sources */,
 				D8494D462927C97E008157F1 /* MyPageView.swift in Sources */,
+				14755A432973F28C0036B71D /* BCFirebaseAuthService.swift in Sources */,
 				148A055F2972F79A00664CCB /* DefaultScrapPageUseCase.swift in Sources */,
 				148A05692972F84E00664CCB /* DefaultMyPageEditUseCase.swift in Sources */,
 				D89E48AF2939D99300744A56 /* FireStorageService.swift in Sources */,

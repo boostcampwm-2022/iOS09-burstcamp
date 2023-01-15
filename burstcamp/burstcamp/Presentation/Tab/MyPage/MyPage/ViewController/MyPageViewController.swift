@@ -9,8 +9,6 @@ import Combine
 import SafariServices
 import UIKit
 
-import FirebaseAuth
-
 final class MyPageViewController: UIViewController {
 
     // MARK: - Properties
