@@ -8,4 +8,7 @@
 import Foundation
 
 final class DefaultBlogRepository: BlogRepository {
+    func checkBlogTitle() async throws -> String {
+        return "BLog다 "
+    }
 }

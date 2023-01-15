@@ -7,4 +7,10 @@
 
 import Foundation
 
-protocol SignUpRepository {}
+protocol SignUpRepository {
+    func getSignUpUser() -> SignUpUser
+    func setUserNickname(_ nickname: String)
+    func setUserDomain(_ domain: Domain)
+    func setUserCamperID(_ camperID: String)
+    func setUserBlogURL(_ blogURL: String)
+}

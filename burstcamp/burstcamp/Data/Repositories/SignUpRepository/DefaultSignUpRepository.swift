@@ -11,6 +11,10 @@ final class DefaultSignUpRepository: SignUpRepository {
 
     private var signUpUser = SignUpUser()
 
+    func getSignUpUser() -> SignUpUser {
+        return signUpUser
+    }
+
     func setUserNickname(_ nickName: String) {
         signUpUser.setNickname(nickName)
     }

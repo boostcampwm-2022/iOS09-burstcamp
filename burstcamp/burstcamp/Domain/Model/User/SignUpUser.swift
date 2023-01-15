@@ -13,6 +13,22 @@ struct SignUpUser {
     private var camperID: String?
     private var blogURL: String = ""
 
+    func getNickname() -> String? {
+        return nickname
+    }
+
+    func getDomain() -> Domain? {
+        return domain
+    }
+
+    func getCamperID() -> String? {
+        return camperID
+    }
+
+    func getBlogURL() -> String {
+        return blogURL
+    }
+
     mutating func setNickname(_ nickname: String) {
         self.nickname = nickname
     }

@@ -8,4 +8,5 @@
 import Foundation
 
 protocol BlogRepository {
+    func checkBlogTitle() async throws -> String
 }
