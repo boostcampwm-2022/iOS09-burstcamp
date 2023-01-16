@@ -49,14 +49,10 @@ final class AppCoordinator: AppCoordinatorProtocol {
     func start() {
         animateLoadingView()
         let loginUseCase = dependencyFactory.createLoginUseCase()
-        do {
-            if try loginUseCase.isLoggedIn() {
-                showTabBarFlow()
-            } else {
-                showAuthFlow()
-            }
-        } catch {
-            print(error)
+        if loginUseCase.isLoggedIn() {
+            showTabBarFlow()
+        } else {
+            showAuthFlow()
         }
     }
 

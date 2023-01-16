@@ -31,11 +31,11 @@ final class DefaultLoginRepository: LoginRepository {
         }
     }
 
-    func login(code: String) async throws -> String {
+    func login(code: String) async throws ->  (userNickname: String, userUUID: String) {
         let (userNickname, token) = try await authorizeBoostcamp(code: code)
         // auth로 로그인
-        try await bcFirebaseAuthService.signInToFirebase(token: token)
-        return userNickname
+        let userUUID = try await bcFirebaseAuthService.signInToFirebase(token: token)
+        return (userNickname, userUUID)
     }
 
     func withdrawal(code: String) async throws -> Bool {

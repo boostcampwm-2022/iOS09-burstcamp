@@ -53,11 +53,13 @@ extension DependencyFactory {
         return LogInViewModel(loginUseCase: loginUseCase)
     }
 
-    func createSignUpDomainViewModel() -> SignUpDomainViewModel {
+    func createSignUpDomainViewModel(userNickname: String) -> SignUpDomainViewModel {
         if let signUpUseCase = signUpUseCase {
+            signUpUseCase.setUserNickname(userNickname)
             return SignUpDomainViewModel(signUpUseCase: signUpUseCase)
         } else {
             let signUpUseCase = createDefaultSignUpUseCase()
+            signUpUseCase.setUserNickname(userNickname)
             self.signUpUseCase = signUpUseCase
             return SignUpDomainViewModel(signUpUseCase: signUpUseCase)
         }

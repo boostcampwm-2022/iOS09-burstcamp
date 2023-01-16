@@ -8,6 +8,7 @@
 import UIKit
 
 import SnapKit
+import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -50,6 +51,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.makeKeyAndVisible()
 
         let dependencyFactory = DependencyFactory()
+
+        try? Auth.auth().signOut()
+
         appCoordinator = AppCoordinator(
             window: window,
             navigationController: navigationController,

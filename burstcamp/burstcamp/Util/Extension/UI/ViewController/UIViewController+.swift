@@ -46,7 +46,9 @@ extension UIViewController {
         toastMessageLabel.layer.cornerRadius = Constant.CornerRadius.radius8.cgFloat
         toastMessageLabel.clipsToBounds = true
 
-        view.addSubview(toastMessageLabel)
+        DispatchQueue.main.async {
+            self.view.addSubview(toastMessageLabel)
+        }
         // https://github.com/realm/SwiftLint/issues/3581
         // swiftlint:disable:next multiline_arguments
         UIView.animate(withDuration: 2.0, delay: 1.0, options: [.curveEaseOut]) {

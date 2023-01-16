@@ -92,6 +92,7 @@ final class SignUpBlogViewModel {
                     let blogTitle = try await self.signUpUseCase.getBlogTitle(blogURL: blogURL)
                     promise(.success(blogTitle))
                 } catch {
+                    print(error)
                     promise(.failure(error))
                 }
             }
@@ -113,6 +114,7 @@ final class SignUpBlogViewModel {
                     try await self?.signUpUseCase.signUp(user)
                     promise(.success(user))
                 } catch {
+                    print(error)
                     promise(.failure(error))
                 }
             }

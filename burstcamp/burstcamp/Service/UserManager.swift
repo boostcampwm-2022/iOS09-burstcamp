@@ -16,7 +16,6 @@ final class UserManager {
     static let shared = UserManager()
 
     private(set) var user = User(dictionary: [:])
-//    private let userPath = FirestoreCollection.user.reference
 //    private var listenerRegistration: ListenerRegistration?
     let userUpdatePublisher = PassthroughSubject<User, Never>()
 
@@ -59,4 +58,8 @@ final class UserManager {
 //    func removeUserListener() {
 //        listenerRegistration?.remove()
 //    }
+
+    func setUserUUID(_ userUUID: String) {
+        user = User(dictionary: ["userUUID": userUUID])
+    }
 }

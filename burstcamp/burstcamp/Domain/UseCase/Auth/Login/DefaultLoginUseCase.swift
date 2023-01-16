@@ -19,7 +19,7 @@ final class DefaultLoginUseCase: LoginUseCase {
         return loginRepository.isLoggedIn()
     }
 
-    func login(code: String) async throws -> String {
+    func login(code: String) async throws ->  (userNickname: String, userUUID: String) {
         return try await loginRepository.login(code: code)
     }
 }

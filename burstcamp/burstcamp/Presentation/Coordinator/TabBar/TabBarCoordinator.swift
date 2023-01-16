@@ -39,7 +39,9 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
             .sorted { $0.index < $1.index }
             .map { prepareTabController($0) }
 
-        configureTabBarController(with: controllers)
+        DispatchQueue.main.async {
+            self.configureTabBarController(with: controllers)
+        }
         moveToFeedDetail()
     }
 

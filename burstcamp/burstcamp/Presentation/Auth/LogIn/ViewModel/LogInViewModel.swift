@@ -43,9 +43,10 @@ final class LogInViewModel {
 
     func login(code: String) throws {
         Task { [weak self] in
-            guard let userNickname = try await self?.loginUseCase.login(code: code) else {
+            guard let (userNickname, userUUID) = try await self?.loginUseCase.login(code: code) else {
                 throw LoginViewModelError.login
             }
+            UserManager.shared.setUserUUID(userUUID)
             logInPublisher.send(.moveToDomainScreen(userNickname: userNickname))
         }
     }
