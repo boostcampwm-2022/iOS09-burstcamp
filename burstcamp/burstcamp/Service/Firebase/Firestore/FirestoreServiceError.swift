@@ -10,8 +10,9 @@ import Foundation
 enum FirestoreServiceError: Error {
     case getCollection
     case getDocument
-    case lastCollectionError
+    case lastCollection
     case addListenerFail
     case errorCastingFail(message: String)
-    case batchError
+    case batch
+    case lastFetch
 }

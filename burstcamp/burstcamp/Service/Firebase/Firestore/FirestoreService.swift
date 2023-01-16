@@ -103,7 +103,7 @@ final class FirestoreService {
                     }
                     let lastSnapshot = querySnapshot.documents.last
                     if lastSnapshot == nil {
-                        continuation.resume(throwing: FirestoreServiceError.lastCollectionError)
+                        continuation.resume(throwing: FirestoreServiceError.lastCollection)
                         return
                     }
 

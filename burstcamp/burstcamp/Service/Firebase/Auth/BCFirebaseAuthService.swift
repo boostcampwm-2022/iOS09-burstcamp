@@ -33,7 +33,7 @@ final class BCFirebaseAuthService: BCFirebaseAuthServiceProtocol {
 
             auth.signIn(with: credential) { result, error in
                 guard let result = result, error == nil else {
-                    continuation.resume(throwing: FirebaseAuthError.failSignInError)
+                    continuation.resume(throwing: FirebaseAuthError.failSignIn)
                     return
                 }
                 continuation.resume(returning: result.user.uid)
