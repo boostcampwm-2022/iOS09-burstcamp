@@ -201,3 +201,9 @@ extension MyPageViewController {
         coordinatorPublisher.send(.moveToAuthFlow)
     }
 }
+
+extension MyPageViewController {
+    func withDrawal() {
+        print("탈퇴하기")
+    }
+}

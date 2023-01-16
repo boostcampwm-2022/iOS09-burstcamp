@@ -24,9 +24,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         if let loginViewController = window.rootViewController?.children.first as? LogInViewController { // 로그인
             loginViewController.login(code: code)
-        } else { // 탈퇴
-            // TODO: MyPageViewController 캐스팅 후 signOut 호출
-        } // else 문 설정해서 해당 안되면 fatal Error
+        } else if let tabBarController = window.rootViewController?.children.first as? UITabBarController,
+                  let myPageViewController = tabBarController.children.first(where: {
+                      $0 as? MyPageViewController != nil
+                  }) as? MyPageViewController {
+            myPageViewController.withDrawal()
+        }
+        else { // 탈퇴
+            fatalError("로그인, 로그아웃 불가능")
+        }
     }
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
