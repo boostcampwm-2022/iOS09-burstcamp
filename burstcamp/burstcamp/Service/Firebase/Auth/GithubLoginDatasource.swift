@@ -10,6 +10,7 @@ import Foundation
 final class GithubLoginDatasource {
 
     private let githubAPIKeyManager: GithubAPIKeyManager
+    private let decoder = JSONDecoder()
 
     init(githubAPIKeyManager: GithubAPIKeyManager) {
         self.githubAPIKeyManager = githubAPIKeyManager
@@ -20,15 +21,70 @@ final class GithubLoginDatasource {
     }
 
     func requestGithubToken(code: String) async throws -> GithubToken {
+        let urlString = "https://github.com/login/oauth/access_token"
 
-        return GithubToken(accessToken: "", scope: "", tokenType: "")
+        guard let githubAPIKey = githubAPIKeyManager.githubAPIKey
+        else {
+            throw GithubLoginDataSourceError.noAPIKey
+        }
+
+        let bodyInfos: [String: String] = [
+            "client_id": githubAPIKey.clientID,
+            "client_secret": githubAPIKey.clientSecret,
+            "code": code
+        ]
+
+        guard let bodyData = try? JSONSerialization.data(withJSONObject: bodyInfos)
+        else { throw GithubLoginDataSourceError.bodyEncode }
+
+        let httpHeaders = [
+            HTTPHeader.contentTypeApplicationJSON.keyValue,
+            HTTPHeader.acceptApplicationJSON.keyValue
+        ]
+
+        let responseData = try await URLSessionService.request(
+            urlString: urlString,
+            httpMethod: .POST,
+            httpHeaders: httpHeaders,
+            httpBody: bodyData
+        )
+
+        return try decoder.decode(GithubToken.self, from: responseData)
     }
 
     func getGithubUserInfo(token: String) async throws -> GithubUser {
-        return GithubUser(login: "")
+        let urlString = "https:/api.github.com/user"
+
+        let httpHeaders = [
+            HTTPHeader.contentTypeApplicationJSON.keyValue,
+            HTTPHeader.acceptApplicationVNDGithubJSON.keyValue,
+            HTTPHeader.authorizationBearer(token: token).keyValue
+        ]
+
+        let responseData = try await URLSessionService.request(
+            urlString: urlString,
+            httpMethod: .GET,
+            httpHeaders: httpHeaders
+        )
+
+        return try decoder.decode(GithubUser.self, from: responseData)
     }
 
     func getOrganizationMembership(nickname: String, token: String) async throws -> GithubMembership {
-        return GithubMembership(role: "", user: MembershipUser(login: "", id: 0, nodeID: "", htmlURL: "", type: ""))
+        let urlString = "https://api.github.com/orgs/boostcampwm-2022/memberships/\(nickname)"
+
+        let httpHeaders = [
+            HTTPHeader.contentTypeApplicationJSON.keyValue,
+            HTTPHeader.acceptApplicationVNDGithubJSON.keyValue,
+            HTTPHeader.authorizationBearer(token: token).keyValue
+        ]
+
+        let responseData = try await URLSessionService.request(
+            urlString: urlString,
+            httpMethod: .GET,
+            httpHeaders: httpHeaders
+        )
+
+        return try decoder.decode(GithubMembership.self, from: responseData)
     }
 }

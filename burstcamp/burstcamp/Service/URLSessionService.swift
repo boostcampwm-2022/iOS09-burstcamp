@@ -75,6 +75,31 @@ final class URLSessionService {
             .eraseToAnyPublisher()
     }
 
+    static func request(
+        urlString: String,
+        httpMethod: HttpMethod,
+        httpHeaders: [(key: String, value: String)]? = nil,
+        queryItems: [URLQueryItem] = [],
+        httpBody: Data? = nil
+    ) async throws -> Data {
+        guard let request = try? makeRequest(
+            urlString: urlString,
+            httpMethod: httpMethod,
+            httpHeaders: httpHeaders,
+            queryItems: queryItems,
+            httpBody: httpBody
+        )
+        else {
+            throw URLSessionServiceError.makeRequest
+        }
+
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse, 200..<300 ~= httpResponse.statusCode else {
+            throw URLSessionServiceError.responseCode
+        }
+        return data
+    }
+
     private static func makeNetworkError(errorCode: Int) -> NetworkError {
         return .init(rawValue: errorCode) ?? .unknownError
     }
