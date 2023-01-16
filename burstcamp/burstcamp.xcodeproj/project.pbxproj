@@ -79,8 +79,6 @@
 		14A34D3A297417FD00501A66 /* GithubAPIKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D39297417FD00501A66 /* GithubAPIKeyManager.swift */; };
 		14A34D3C2974192800501A66 /* GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D3B2974192800501A66 /* GithubAPI.swift */; };
 		14A34D3E29743B7300501A66 /* SignUpUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D3D29743B7300501A66 /* SignUpUser.swift */; };
-		14A34D4129743E0F00501A66 /* SignUpRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D4029743E0F00501A66 /* SignUpRepository.swift */; };
-		14A34D4429743E2100501A66 /* DefaultSignUpRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D4329743E2100501A66 /* DefaultSignUpRepository.swift */; };
 		14A34D4729743E8B00501A66 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D4629743E8B00501A66 /* UserRepository.swift */; };
 		14A34D4A29743E9F00501A66 /* BlogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D4929743E9F00501A66 /* BlogRepository.swift */; };
 		14A34D4D29743F1100501A66 /* DefaultUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D4C29743F1100501A66 /* DefaultUserRepository.swift */; };
@@ -326,8 +324,6 @@
 		14A34D39297417FD00501A66 /* GithubAPIKeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPIKeyManager.swift; sourceTree = "<group>"; };
 		14A34D3B2974192800501A66 /* GithubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPI.swift; sourceTree = "<group>"; };
 		14A34D3D29743B7300501A66 /* SignUpUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUser.swift; sourceTree = "<group>"; };
-		14A34D4029743E0F00501A66 /* SignUpRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRepository.swift; sourceTree = "<group>"; };
-		14A34D4329743E2100501A66 /* DefaultSignUpRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSignUpRepository.swift; sourceTree = "<group>"; };
 		14A34D4629743E8B00501A66 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		14A34D4929743E9F00501A66 /* BlogRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogRepository.swift; sourceTree = "<group>"; };
 		14A34D4C29743F1100501A66 /* DefaultUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserRepository.swift; sourceTree = "<group>"; };
@@ -893,7 +889,6 @@
 			children = (
 				14A34D4829743E9200501A66 /* BlogRepository */,
 				14A34D4529743E8300501A66 /* UserRepository */,
-				14A34D3F29743DF600501A66 /* SignUpRepository */,
 				14755A492973FA640036B71D /* LoginRepository */,
 				149304A52963F0BC00B9BC71 /* FeedRepository */,
 			);
@@ -905,7 +900,6 @@
 			children = (
 				14A34D4E29743F1D00501A66 /* BlogRepository */,
 				14A34D4B29743F0500501A66 /* UserRepository */,
-				14A34D4229743E1800501A66 /* SignUpRepository */,
 				14755A482973FA520036B71D /* LoginRepository */,
 				149304A32963F08000B9BC71 /* FeedRepository */,
 			);
@@ -1137,22 +1131,6 @@
 				14A34D39297417FD00501A66 /* GithubAPIKeyManager.swift */,
 			);
 			path = GithubAPIKey;
-			sourceTree = "<group>";
-		};
-		14A34D3F29743DF600501A66 /* SignUpRepository */ = {
-			isa = PBXGroup;
-			children = (
-				14A34D4029743E0F00501A66 /* SignUpRepository.swift */,
-			);
-			path = SignUpRepository;
-			sourceTree = "<group>";
-		};
-		14A34D4229743E1800501A66 /* SignUpRepository */ = {
-			isa = PBXGroup;
-			children = (
-				14A34D4329743E2100501A66 /* DefaultSignUpRepository.swift */,
-			);
-			path = SignUpRepository;
 			sourceTree = "<group>";
 		};
 		14A34D4529743E8300501A66 /* UserRepository */ = {
@@ -1952,7 +1930,6 @@
 				3B7492292942EDCB00A4BEA0 /* FirebaseAuthError.swift in Sources */,
 				140FBEF429756A3D006B7857 /* SignUpBlogViewModelError.swift in Sources */,
 				148A05442972F3DA00664CCB /* DependencyFactoryProtocol.swift in Sources */,
-				14A34D4129743E0F00501A66 /* SignUpRepository.swift in Sources */,
 				B50A27F529279F5D00DF3E1F /* AppCoordinator.swift in Sources */,
 				14A34D3E29743B7300501A66 /* SignUpUser.swift in Sources */,
 				B50A27F929279F5D00DF3E1F /* TabBarPage.swift in Sources */,
@@ -2005,7 +1982,6 @@
 				B50A27F229279F5D00DF3E1F /* AppDelegate.swift in Sources */,
 				141344CF292F800300187B86 /* UIStackView+addArrangedSubviews.swift in Sources */,
 				140FBEEB297511DB006B7857 /* URLSessionServiceError.swift in Sources */,
-				14A34D4429743E2100501A66 /* DefaultSignUpRepository.swift in Sources */,
 				1418960229377593005A42D4 /* UIScrollView+.swift in Sources */,
 				3B74920D293DCCAC00A4BEA0 /* GithubError.swift in Sources */,
 				143185EE292B4ABC008CE459 /* ScrapPageView.swift in Sources */,

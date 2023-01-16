@@ -13,10 +13,10 @@ final class DependencyFactory: DependencyFactoryProtocol {
 
     // MARK: - UseCase
     private func createDefaultSignUpUseCase() -> SignUpUseCase {
+        let userRepository = DefaultUserRepository(bcFirestoreService: BCFirestoreService())
         let blogRepository = createBlogRepository()
         return DefaultSignUpUseCase(
-            signUpRepository: DefaultSignUpRepository(),
-            userRepository: DefaultUserRepository(),
+            userRepository: userRepository,
             blogRepository: blogRepository
         )
     }

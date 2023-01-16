@@ -9,41 +9,41 @@ import Foundation
 
 final class DefaultSignUpUseCase: SignUpUseCase {
 
-    private let signUpRepository: SignUpRepository
+    private var signUpUser: SignUpUser
     private let userRepository: UserRepository
     private let blogRepository: BlogRepository
 
-    init(signUpRepository: SignUpRepository, userRepository: UserRepository, blogRepository: BlogRepository) {
-        self.signUpRepository = signUpRepository
+    init(userRepository: UserRepository, blogRepository: BlogRepository) {
+        self.signUpUser = SignUpUser()
         self.userRepository = userRepository
         self.blogRepository = blogRepository
     }
 
     func setUserNickname(_ nickname: String) {
-        signUpRepository.setUserNickname(nickname)
+        signUpUser.setNickname(nickname)
     }
 
     func setUserDomain(_ domain: Domain) {
-        signUpRepository.setUserDomain(domain)
+        signUpUser.setDomain(domain)
     }
 
     func setUserCamperID(_ camperID: String) {
-        signUpRepository.setUserCamperID(camperID)
+        signUpUser.setCamperID(camperID)
     }
 
     func setUserBlogURL(_ blogURL: String) {
-        signUpRepository.setUserBlogURL(blogURL)
+        signUpUser.setBlogURL(blogURL)
     }
 
     func getUserDomain() -> Domain {
-        if let domain = signUpRepository.getSignUpUser().getDomain() {
+        if let domain = signUpUser.getDomain() {
             return domain
         }
         fatalError("캠퍼 ID 선택하는데 도메인이 없음")
     }
 
     func getUserBlogURL() -> String {
-        return signUpRepository.getSignUpUser().getBlogURL()
+        return signUpUser.getBlogURL()
     }
 
     func getBlogTitle(blogURL: String) async throws -> String {
@@ -51,8 +51,8 @@ final class DefaultSignUpUseCase: SignUpUseCase {
     }
 
     func getUser(userUUID: String, blogTitle: String = "") throws -> User {
-        if blogTitle.isEmpty { signUpRepository.initUserBlogURL() }
-        let signUpUser = signUpRepository.getSignUpUser()
+        if blogTitle.isEmpty { signUpUser.initBlogURL() }
+        let signUpUser = signUpUser
         if let user = User(userUUID: userUUID, signUpUser: signUpUser, blogTitle: blogTitle) {
             return user
         } else {

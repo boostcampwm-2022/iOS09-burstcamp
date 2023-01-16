@@ -8,13 +8,13 @@
 import Foundation
 
 final class DefaultUserRepository: UserRepository {
-    
+
     private let bcFirestoreService: BCFirestoreService
-    
+
     init(bcFirestoreService: BCFirestoreService) {
         self.bcFirestoreService = bcFirestoreService
     }
-    
+
     func saveUser(_ user: User) async throws {
         let userAPIModel = userToAPIModel(user)
         try await bcFirestoreService.saveUser(userUUID: user.userUUID, user: userAPIModel)
@@ -32,7 +32,7 @@ final class DefaultUserRepository: UserRepository {
     func saveFCMToken(_ token: String, to userUUID: String) async throws {
         try await bcFirestoreService.saveFCMToken(token, to: userUUID)
     }
-    
+
     private func userToAPIModel(_ user: User) -> UserAPIModel {
         return UserAPIModel(
             userUUID: user.userUUID,
