@@ -44,9 +44,7 @@ final class FirestoreService {
         }
     }
 
-    public func getCollection(
-        _ collectionPath: String
-    ) async throws -> [FirestoreData] {
+    public func getCollection(_ collectionPath: String) async throws -> [FirestoreData] {
         try await withCheckedThrowingContinuation { continuation in
             database
                 .collection(collectionPath)
@@ -114,9 +112,7 @@ final class FirestoreService {
         }
     }
 
-    public func countCollection(
-        _ collectionPath: String
-    ) async throws -> Int {
+    public func countCollection(_ collectionPath: String) async throws -> Int {
         let countQuery = database.collection(collectionPath).count
         let collectionCount = try await countQuery.getAggregation(source: .server).count
         return Int(truncating: collectionCount)
@@ -131,10 +127,7 @@ final class FirestoreService {
         return Int(truncating: collectionCount)
     }
 
-    public func getDocument(
-        _ collectionPath: String,
-        document: String
-    ) async throws -> FirestoreData {
+    public func getDocument(_ collectionPath: String, document: String) async throws -> FirestoreData {
         try await withCheckedThrowingContinuation { continuation in
             database
                 .collection(collectionPath)
@@ -195,10 +188,7 @@ final class FirestoreService {
         as Void
     }
 
-    public func deleteDocument(
-        _ collectionPath: String,
-        document: String
-    ) async throws {
+    public func deleteDocument(_ collectionPath: String, document: String) async throws {
         try await withCheckedThrowingContinuation { continuation in
             database
                 .collection(collectionPath)
@@ -213,10 +203,7 @@ final class FirestoreService {
         } as Void
     }
 
-    public func addListenerToDocument(
-        _ collectionPath: String,
-        document: String
-    ) async throws -> FirestoreData {
+    public func addListenerToDocument(_ collectionPath: String, document: String) async throws -> FirestoreData {
         try await withCheckedThrowingContinuation { continuation in
             database
                 .collection(collectionPath)
