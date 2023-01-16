@@ -19,7 +19,7 @@ protocol TabBarCoordinatorProtocol: NormalCoordinator {
 final class TabBarCoordinator: TabBarCoordinatorProtocol {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
-    var tabBarController = UITabBarController()
+    var tabBarController: UITabBarController
     var coordinatorPublisher = PassthroughSubject<AppCoordinatorEvent, Never>()
     var cancelBag = Set<AnyCancellable>()
     var dependencyFactory: DependencyFactoryProtocol
@@ -28,8 +28,13 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
         return TabBarPage.init(index: tabBarController.selectedIndex)
     }
 
-    init(navigationController: UINavigationController, dependencyFactory: DependencyFactoryProtocol) {
+    init(
+        navigationController: UINavigationController,
+        dependencyFactory: DependencyFactoryProtocol,
+        tabBarController: UITabBarController = UITabBarController()
+    ) {
         self.navigationController = navigationController
+        self.tabBarController = tabBarController
         self.dependencyFactory = dependencyFactory
         addObserver()
     }

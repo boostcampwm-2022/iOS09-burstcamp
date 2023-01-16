@@ -63,12 +63,7 @@ final class SignUpBlogView: UIView {
         $0.style = .medium
     }
 
-    lazy var confirmBlogLabel: UILabel = UILabel().then {
-        $0.text = "블로그 주소 검증 중"
-        $0.isHidden = true
-    }
-
-    lazy var signUpLabel: UILabel = UILabel().then {
+    lazy var indicatorLabel: UILabel = UILabel().then {
         $0.text = "가입 중"
         $0.font = .bold12
         $0.isHidden = true
@@ -95,8 +90,7 @@ final class SignUpBlogView: UIView {
         addSubview(blogTextField)
         addSubview(skipButton)
         addSubview(activityIndicator)
-        addSubview(confirmBlogLabel)
-        addSubview(signUpLabel)
+        addSubview(indicatorLabel)
     }
 
     private func configureLayout() {
@@ -133,12 +127,7 @@ final class SignUpBlogView: UIView {
             $0.centerX.centerY.equalToSuperview()
         }
 
-        confirmBlogLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(activityIndicator.snp.bottom).offset(Constant.space10)
-        }
-
-        signUpLabel.snp.makeConstraints {
+        indicatorLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(activityIndicator.snp.bottom).offset(Constant.space10)
         }
