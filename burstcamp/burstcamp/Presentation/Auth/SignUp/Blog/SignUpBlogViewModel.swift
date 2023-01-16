@@ -36,15 +36,18 @@ final class SignUpBlogViewModel {
 
     func transform(input: Input) -> Output {
         let validateBlogAddress = input.blogAddressTextFieldDidEdit
-            .map { address in
-                LogInManager.shared.blodURL = address
+            .map { [weak self] address in
+                // input 받아서 signUpUser에 address 저장
+                // useCase에서 유효성 검사
+                self?.signUpUseCase.setUserBlogURL(address)
                 return Validator.validate(blogLink: address) ? true : false
             }
             .eraseToAnyPublisher()
 
         let signUpWithNextButton = input.nextButtonDidTap
             .throttle(for: 1, scheduler: DispatchQueue.main, latest: false)
-            .flatMap { _ in
+            .flatMap { [weak self] _ in
+                // useCase에서 "블로그 이름 확인" 함수 호출
                 return FireFunctionsManager.blogTitle(
                     link: LogInManager.shared.blodURL
                 )
@@ -58,6 +61,7 @@ final class SignUpBlogViewModel {
         let signUpWithBlogTitle = input.blogTitleConfirmDidTap
             .flatMap { title -> AnyPublisher<User, Error> in
                 return Future<User, Error> { promise in
+                    // useCase에서 FireStore에 유저 생성 요청
                     guard let user = try? self.createUser(
                         blogURL: LogInManager.shared.blodURL,
                         blogTitle: title
@@ -69,7 +73,7 @@ final class SignUpBlogViewModel {
                 }
                 .eraseToAnyPublisher()
             }
-            // TODO: 유저 저장 후 완료 됐다는 메시지 전달
+            //
 //            .flatMap { user in
 //                return FirestoreUser.save(user: user).eraseToAnyPublisher()
 //            }
@@ -79,6 +83,7 @@ final class SignUpBlogViewModel {
             .throttle(for: 1, scheduler: DispatchQueue.main, latest: false)
             .flatMap { _ -> AnyPublisher<User, Error> in
                 return Future<User, Error> { promise in
+                    // useCase에서 FireStore에 유저 생성 요청
                     guard let user = try? self.createUser(blogURL: "", blogTitle: "") else {
                         promise(.failure(FirebaseAuthError.fetchUUIDError))
                         return
@@ -93,6 +98,7 @@ final class SignUpBlogViewModel {
 //            }
             .eraseToAnyPublisher()
 
+        // useCase에서 fcmToken에 저장
         input.saveFCMToken
             .sink { _ in self.saveFCMToken() }
             .store(in: &cancelBag)

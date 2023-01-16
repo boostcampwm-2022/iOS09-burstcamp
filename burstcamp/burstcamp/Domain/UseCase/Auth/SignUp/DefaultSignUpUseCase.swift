@@ -35,7 +35,15 @@ final class DefaultSignUpUseCase: SignUpUseCase {
         signUpRepository.setUserBlogURL(blogURL)
     }
 
+    func getUserDomain() -> Domain {
+        if let domain = signUpRepository.getSignUpUser().getDomain() {
+            return domain
+        }
+        fatalError("캠퍼 ID 선택하는데 도메인이 없음")
+    }
+
     func checkBlogTitle(blogURL: String) -> String {
+        // 펑션으로 호출
         return "목업"
     }
 

@@ -55,21 +55,21 @@ final class SignUpDomainViewModel {
 
         let webSelected = input.webButtonDidTap
             .map { _ -> Domain in
-                LogInManager.shared.domain = .web
+                self.signUpUseCase.setUserDomain(.web)
                 return .web
             }
             .eraseToAnyPublisher()
 
         let aosSelected = input.aosButtonDidTap
             .map { _ -> Domain in
-                LogInManager.shared.domain = .android
+                self.signUpUseCase.setUserDomain(.android)
                 return .android
             }
             .eraseToAnyPublisher()
 
         let iosSelected = input.iosButtonDidTap
             .map { _ -> Domain in
-                LogInManager.shared.domain = .iOS
+                self.signUpUseCase.setUserDomain(.iOS)
                 return .iOS
             }
             .eraseToAnyPublisher()
