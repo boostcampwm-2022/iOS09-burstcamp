@@ -23,17 +23,7 @@ final class DefaultLoginUseCase: LoginUseCase {
         return false
     }
 
-    func login(code: String) throws {
-        // Firebase 로그인
-
-        // 로그인 안 됨 -> 부캠 인증
-    }
-
-    func signOut(code: String) throws {
-    }
-
-    func authorizeBoostcamp(code: String) throws -> Bool {
-
-        return false
+    func login(code: String) async throws {
+        try await loginRepository.authorizeBoostcamp(code: code)
     }
 }

@@ -11,8 +11,8 @@ import FirebaseAuth
 
 protocol BCFirebaseAuthServiceProtocol {
     func getCurrentUserUid() throws -> String
-    func signInToFirebase(token: String) throws
-    func withdrawal(token: String) throws
+    func signInToFirebase(token: String) async throws -> String
+    func withdrawal(token: String) async throws
 }
 
 final class BCFirebaseAuthService: BCFirebaseAuthServiceProtocol {
@@ -26,13 +26,24 @@ final class BCFirebaseAuthService: BCFirebaseAuthServiceProtocol {
         throw FirebaseAuthError.currentUserNil
     }
 
-    func signInToFirebase(token: String) throws {
+    func signInToFirebase(token: String) async throws -> String {
+        try await withCheckedThrowingContinuation({ continuation in
+            let credential = GitHubAuthProvider.credential(withToken: token)
+
+            auth.signIn(with: credential) { result, error in
+                guard let result = result, error == nil else {
+                    continuation.resume(throwing: FirebaseAuthError.failSignInError)
+                    return
+                }
+                continuation.resume(returning: result.user.uid)
+            }
+        })
     }
 
-    func withdrawal(token: String) throws {
+    func withdrawal(token: String) async throws {
         let credential = GitHubAuthProvider.credential(withToken: token)
-        auth.currentUser?.reauthenticate(with: credential, completion: { _, error in
-            print(error)
-        })
+        try await auth.currentUser?.reauthenticate(with: credential)
+        try await auth.currentUser?.delete()
+        try auth.signOut()
     }
 }

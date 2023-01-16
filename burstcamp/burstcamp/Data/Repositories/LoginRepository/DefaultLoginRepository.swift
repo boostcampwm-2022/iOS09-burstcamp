@@ -15,20 +15,14 @@ final class DefaultLoginRepository: LoginRepository {
         self.githubLoginDataSource = githubLoginDataSource
     }
 
-    func authorizeBoostcamp(code: String) throws {
-        Task {
-            do {
-                let githubToken = try await githubLoginDataSource.requestGithubToken(code: code)
-                let githubUser = try await githubLoginDataSource.getGithubUserInfo(token: githubToken.accessToken)
-                let githubMembership = try await githubLoginDataSource.getOrganizationMembership(
-                    nickname: githubUser.login,
-                    token: githubToken.accessToken
-                )
-                // githubMemebership 있으면 성공
-//                return true
-            } catch {
-            }
-        }
+    func authorizeBoostcamp(code: String) async throws -> GithubMembership {
+        let githubToken = try await githubLoginDataSource.requestGithubToken(code: code)
+        let githubUser = try await githubLoginDataSource.getGithubUserInfo(token: githubToken.accessToken)
+        let githubMembership = try await githubLoginDataSource.getOrganizationMembership(
+            nickname: githubUser.login,
+            token: githubToken.accessToken
+        )
+        return githubMembership
     }
 
     func isLoggedIn() throws -> Bool {
