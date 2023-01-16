@@ -42,12 +42,13 @@ final class DefaultSignUpUseCase: SignUpUseCase {
         fatalError("캠퍼 ID 선택하는데 도메인이 없음")
     }
 
-    func checkBlogTitle(blogURL: String) -> String {
+    func getBlogTitle(blogURL: String) -> String {
         // 펑션으로 호출
         return "목업"
     }
 
-    private func getUser(userUUID: String, blogTitle: String) throws -> User {
+    func getUser(userUUID: String, blogTitle: String = "") throws -> User {
+        if blogTitle.isEmpty { signUpRepository.initUserBlogURL() }
         let signUpUser = signUpRepository.getSignUpUser()
         if let user = User(userUUID: userUUID, signUpUser: signUpUser, blogTitle: blogTitle) {
             return user
@@ -56,16 +57,16 @@ final class DefaultSignUpUseCase: SignUpUseCase {
         }
     }
 
-    func signUp(_ user: User) {
+    func signUp(_ user: User) async throws {
+        // fireStore에 저장
     }
 
-    func signUp(_ user: User, blogURL: String) {
-    }
-
-    func saveFCMToken(_ token: String) {
+    func saveFCMToken(_ token: String, to userUUID: String) async throws {
+        // fireStore에 저장
     }
 
     func isValidateBlogURL(_ blogURL: String) -> Bool {
+        // blog 레포지토리에서 유효성 확인
         return false
     }
 }

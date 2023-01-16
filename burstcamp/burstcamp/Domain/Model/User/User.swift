@@ -38,7 +38,7 @@ extension User {
         self.isPushOn = dictionary["isPushOn"] as? Bool ?? false
     }
 
-    init?( userUUID: String, signUpUser: SignUpUser, blogTitle: String) {
+    init?(userUUID: String, signUpUser: SignUpUser, blogTitle: String) {
         self.userUUID = userUUID
 
         if let nickname = signUpUser.getNickname(),

@@ -8,5 +8,6 @@
 import Foundation
 
 protocol BlogRepository {
-    func checkBlogTitle() async throws -> String
+    func checkBlogTitle(link: String) async throws -> String
+    func isValidateLink(_ link: String) -> Bool
 }

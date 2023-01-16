@@ -44,4 +44,17 @@ struct SignUpUser {
     mutating func setBlogURL(_ blogURL: String) {
         self.blogURL = blogURL
     }
+
+    mutating func initBlogURL() {
+        self.blogURL = ""
+    }
+
+    mutating func removeBlogURLLastSlash() {
+        var blogURL = blogURL
+        if let lastIndex = blogURL.lastIndex(of: "/"),
+           lastIndex == blogURL.index(before: blogURL.endIndex) {
+            blogURL.removeLast()
+            setBlogURL(blogURL)
+        }
+    }
 }

@@ -13,4 +13,5 @@ protocol SignUpRepository {
     func setUserDomain(_ domain: Domain)
     func setUserCamperID(_ camperID: String)
     func setUserBlogURL(_ blogURL: String)
+    func initUserBlogURL()
 }

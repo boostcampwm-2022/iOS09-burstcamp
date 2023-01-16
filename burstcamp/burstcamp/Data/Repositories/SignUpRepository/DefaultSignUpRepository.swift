@@ -12,6 +12,7 @@ final class DefaultSignUpRepository: SignUpRepository {
     private var signUpUser = SignUpUser()
 
     func getSignUpUser() -> SignUpUser {
+        signUpUser.removeBlogURLLastSlash()
         return signUpUser
     }
 
@@ -29,5 +30,9 @@ final class DefaultSignUpRepository: SignUpRepository {
 
     func setUserBlogURL(_ blogURL: String) {
         signUpUser.setBlogURL(blogURL)
+    }
+
+    func initUserBlogURL() {
+        signUpUser.initBlogURL()
     }
 }

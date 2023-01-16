@@ -15,8 +15,9 @@ protocol SignUpUseCase {
     func getUserDomain() -> Domain
 
     func isValidateBlogURL(_ blogURL: String) -> Bool
-    func checkBlogTitle(blogURL: String) -> String
-    func signUp(_ user: User)
-    func signUp(_ user: User, blogURL: String)
-    func saveFCMToken(_ token: String)
+    func getBlogTitle(blogURL: String) -> String
+    func getUser(userUUID: String, blogTitle: String) throws -> User
+
+    func signUp(_ user: User) async throws
+    func saveFCMToken(_ token: String, to userUUID: String) async throws
 }
