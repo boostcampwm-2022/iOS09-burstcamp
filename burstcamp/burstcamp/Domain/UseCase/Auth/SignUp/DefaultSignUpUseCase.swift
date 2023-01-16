@@ -47,7 +47,6 @@ final class DefaultSignUpUseCase: SignUpUseCase {
     }
 
     func getBlogTitle(blogURL: String) async throws -> String {
-        // 펑션으로 호출
         return try await blogRepository.checkBlogTitle(link: blogURL)
     }
 
@@ -62,15 +61,14 @@ final class DefaultSignUpUseCase: SignUpUseCase {
     }
 
     func signUp(_ user: User) async throws {
-        // fireStore에 저장
+        try await userRepository.saveUser(user)
     }
 
     func saveFCMToken(_ token: String, to userUUID: String) async throws {
-        // fireStore에 저장
+        try await userRepository.saveFCMToken(token, to: userUUID)
     }
 
     func isValidateBlogURL(_ blogURL: String) -> Bool {
-        // blog 레포지토리에서 유효성 확인
-        return false
+        return blogRepository.isValidateLink(blogURL)
     }
 }
