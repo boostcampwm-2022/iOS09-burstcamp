@@ -39,4 +39,8 @@ final class LogInViewModel {
             moveToOtherView: moveToOtherView
         )
     }
+
+    func login(code: String) throws {
+        try loginUseCase.login(code: code)
+    }
 }

@@ -48,6 +48,15 @@ final class LogInViewController: UIViewController {
         logInView.camperAuthButton.isEnabled = false
     }
 
+    func login(code: String) {
+        do {
+            try viewModel.login(code: code)
+        } catch {
+            // TODO: Alert
+            print(error)
+        }
+    }
+
     private func bind() {
         let input = LogInViewModel.Input(
             logInButtonDidTap: logInView.camperAuthButton.tapPublisher

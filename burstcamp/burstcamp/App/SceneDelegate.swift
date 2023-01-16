@@ -22,19 +22,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         appCoordinator.dismissNavigationController()
 
-        let dependencyFactory = DependencyFactory()
-        let loginUseCase = dependencyFactory.createLoginUseCase()
-
-        do {
-            if try loginUseCase.isLoggedIn() {
-                try loginUseCase.signOut(code: code)
-            } else {
-                appCoordinator.displayIndicator()
-                try loginUseCase.login(code: code)
-            }
-        } catch {
-            print(error)
-        }
+        if let loginViewController = window.rootViewController?.children.first as? LogInViewController { // 로그인
+            loginViewController.login(code: code)
+        } else { // 탈퇴
+            // TODO: MyPageViewController 캐스팅 후 signOut 호출
+        } // else 문 설정해서 해당 안되면 fatal Error
     }
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {

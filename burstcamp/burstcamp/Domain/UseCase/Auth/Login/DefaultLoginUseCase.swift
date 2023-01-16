@@ -20,6 +20,7 @@ final class DefaultLoginUseCase: LoginUseCase {
     }
 
     func autoLogin() throws -> Bool {
+        return false
     }
 
     func login(code: String) throws {
