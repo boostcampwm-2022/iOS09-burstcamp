@@ -35,7 +35,7 @@ final class AuthCoordinator: AuthCoordinatorProtocol, GithubLogInCoordinator {
         else {
             return
         }
-        logInViewController.displayIndicator()
+        logInViewController.showIndicator()
     }
 
     func start() {

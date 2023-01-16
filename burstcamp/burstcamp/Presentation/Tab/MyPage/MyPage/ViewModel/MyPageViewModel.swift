@@ -67,7 +67,6 @@ final class MyPageViewModel {
     func deleteUserInfo(code: String) async throws {
         do {
             try await myPageUseCase.withdrawal(code: code)
-            output.moveToLoginFlow.send()
         } catch {
             print(error.localizedDescription)
             output.withdrawalStop.send()

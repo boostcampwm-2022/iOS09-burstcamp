@@ -42,17 +42,33 @@ final class LogInViewController: UIViewController {
         bind()
     }
 
-    func displayIndicator() {
-        logInView.activityIndicator.startAnimating()
-        logInView.loadingLabel.isHidden = false
-        logInView.camperAuthButton.isEnabled = false
+    func showIndicator() {
+        DispatchQueue.main.async {
+            self.logInView.activityIndicator.startAnimating()
+            self.logInView.loadingLabel.isHidden = false
+            self.logInView.camperAuthButton.isEnabled = false
+            self.setUserInteraction(isEnabled: false)
+        }
+    }
+
+    func hideIndicator() {
+        DispatchQueue.main.async {
+            self.logInView.activityIndicator.stopAnimating()
+            self.logInView.loadingLabel.isHidden = true
+            self.logInView.camperAuthButton.isEnabled = true
+            self.setUserInteraction(isEnabled: true)
+        }
     }
 
     func login(code: String) {
-        do {
-            try viewModel.login(code: code)
-        } catch {
-            showAlert(message: error.localizedDescription)
+        Task { [weak self] in
+            self?.showIndicator()
+            do {
+                try await self?.viewModel.login(code: code)
+            } catch {
+                self?.showAlert(message: error.localizedDescription)
+            }
+            self?.hideIndicator()
         }
     }
 

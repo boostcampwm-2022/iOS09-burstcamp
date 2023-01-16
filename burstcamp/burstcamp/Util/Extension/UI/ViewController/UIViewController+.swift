@@ -78,4 +78,9 @@ extension UIViewController {
             self.present(sheet, animated: true)
         }
     }
+
+    func setUserInteraction(isEnabled: Bool) {
+        view.isUserInteractionEnabled = isEnabled
+        navigationController?.view.isUserInteractionEnabled = isEnabled
+    }
 }
