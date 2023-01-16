@@ -8,6 +8,7 @@
 import Foundation
 
 protocol LoginRepository {
-    func isLoggedIn() throws -> Bool
+    func isLoggedIn() -> Bool
     func login(code: String) async throws -> String
+    func withdrawal(code: String) async throws -> Bool
 }

@@ -10,20 +10,41 @@ import Foundation
 final class DefaultLoginRepository: LoginRepository {
 
     private let bcFirebaseAuthService: BCFirebaseAuthService
+    private let bcFirebaseFunctionService: BCFirebaseFunctionService
     private let githubLoginDataSource: GithubLoginDatasource
 
-    init(bcFirebaseAuthService: BCFirebaseAuthService, githubLoginDataSource: GithubLoginDatasource) {
+    init(
+        bcFirebaseAuthService: BCFirebaseAuthService,
+        bcFirebaseFunctionService: BCFirebaseFunctionService,
+        githubLoginDataSource: GithubLoginDatasource
+    ) {
         self.bcFirebaseAuthService = bcFirebaseAuthService
+        self.bcFirebaseFunctionService = bcFirebaseFunctionService
         self.githubLoginDataSource = githubLoginDataSource
     }
 
-    func isLoggedIn() throws -> Bool {
-        return try !bcFirebaseAuthService.getCurrentUserUid().isEmpty
+    func isLoggedIn() -> Bool {
+        do {
+            return try !bcFirebaseAuthService.getCurrentUserUid().isEmpty
+        } catch {
+            return false
+        }
     }
 
     func login(code: String) async throws -> String {
         let userNickname = try await authorizeBoostcamp(code: code)
         return userNickname
+    }
+
+    func withdrawal(code: String) async throws -> Bool {
+        let githubToken = try await githubLoginDataSource.requestGithubToken(code: code)
+        try await bcFirebaseAuthService.withdrawal(token: githubToken.accessToken)
+
+        KeyChainManager.deleteUser()
+        let userUUID = UserManager.shared.user.userUUID
+        // TODO: Listener 처리 -> 원래는 리스너 제거 있었음
+        UserManager.shared.deleteUserInfo()
+        return try await bcFirebaseFunctionService.deleteUser(userUUID: userUUID)
     }
 
     private func authorizeBoostcamp(code: String) async throws -> String {

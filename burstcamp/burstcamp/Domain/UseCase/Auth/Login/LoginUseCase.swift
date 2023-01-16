@@ -8,6 +8,6 @@
 import Foundation
 
 protocol LoginUseCase {
-    func isLoggedIn() throws -> Bool
+    func isLoggedIn() -> Bool
     func login(code: String) async throws -> String
 }

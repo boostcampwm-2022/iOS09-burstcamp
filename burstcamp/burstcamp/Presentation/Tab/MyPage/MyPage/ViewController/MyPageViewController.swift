@@ -111,7 +111,9 @@ final class MyPageViewController: UIViewController {
         output.withdrawalStop
             .sink { [weak self] _ in
                 self?.setUserInteraction(isEnabled: true)
-                self?.myPageView.indicatorView.stopAnimating()
+                DispatchQueue.main.async {
+                    self?.myPageView.indicatorView.stopAnimating()
+                }
             }
             .store(in: &cancelBag)
 
@@ -160,8 +162,10 @@ final class MyPageViewController: UIViewController {
     }
 
     private func setUserInteraction(isEnabled: Bool) {
-        view.isUserInteractionEnabled = isEnabled
-        navigationController?.view.isUserInteractionEnabled = isEnabled
+        DispatchQueue.main.async {
+            self.view.isUserInteractionEnabled = isEnabled
+            self.navigationController?.view.isUserInteractionEnabled = isEnabled
+        }
     }
 }
 
@@ -203,7 +207,14 @@ extension MyPageViewController {
 }
 
 extension MyPageViewController {
-    func withDrawal() {
-        print("탈퇴하기")
+    func withDrawal(code: String) {
+        Task {
+            do {
+                print("탈퇴하기")
+                try await viewModel.deleteUserInfo(code: code)
+            } catch {
+                showAlert(message: error.localizedDescription)
+            }
+        }
     }
 }

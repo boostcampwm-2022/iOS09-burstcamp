@@ -18,6 +18,9 @@
 		140FBEE529750D0B006B7857 /* LoginViewModelError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140FBEE429750D0B006B7857 /* LoginViewModelError.swift */; };
 		140FBEE82975112B006B7857 /* GithubLoginDataSourceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140FBEE72975112B006B7857 /* GithubLoginDataSourceError.swift */; };
 		140FBEEB297511DB006B7857 /* URLSessionServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140FBEEA297511DB006B7857 /* URLSessionServiceError.swift */; };
+		140FBEED29751C63006B7857 /* BCFirebaseFunctionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140FBEEC29751C63006B7857 /* BCFirebaseFunctionService.swift */; };
+		140FBEF029751E63006B7857 /* FirebaseFunctionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140FBEEF29751E63006B7857 /* FirebaseFunctionError.swift */; };
+		140FBEF2297521A3006B7857 /* MyPageUseCaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140FBEF1297521A3006B7857 /* MyPageUseCaseError.swift */; };
 		141344CD292F800300187B86 /* UI+ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C6292F800300187B86 /* UI+ReusableView.swift */; };
 		141344CE292F800300187B86 /* UINavigationController+configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C7292F800300187B86 /* UINavigationController+configure.swift */; };
 		141344CF292F800300187B86 /* UIStackView+addArrangedSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C8292F800300187B86 /* UIStackView+addArrangedSubviews.swift */; };
@@ -262,6 +265,9 @@
 		140FBEE429750D0B006B7857 /* LoginViewModelError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelError.swift; sourceTree = "<group>"; };
 		140FBEE72975112B006B7857 /* GithubLoginDataSourceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubLoginDataSourceError.swift; sourceTree = "<group>"; };
 		140FBEEA297511DB006B7857 /* URLSessionServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionServiceError.swift; sourceTree = "<group>"; };
+		140FBEEC29751C63006B7857 /* BCFirebaseFunctionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCFirebaseFunctionService.swift; sourceTree = "<group>"; };
+		140FBEEF29751E63006B7857 /* FirebaseFunctionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseFunctionError.swift; sourceTree = "<group>"; };
+		140FBEF1297521A3006B7857 /* MyPageUseCaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageUseCaseError.swift; sourceTree = "<group>"; };
 		141344C6292F800300187B86 /* UI+ReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UI+ReusableView.swift"; sourceTree = "<group>"; };
 		141344C7292F800300187B86 /* UINavigationController+configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+configure.swift"; sourceTree = "<group>"; };
 		141344C8292F800300187B86 /* UIStackView+addArrangedSubviews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+addArrangedSubviews.swift"; sourceTree = "<group>"; };
@@ -549,6 +555,8 @@
 			isa = PBXGroup;
 			children = (
 				D89AE4FC2935F5AE00446AB3 /* FireFunctionsManager.swift */,
+				140FBEEC29751C63006B7857 /* BCFirebaseFunctionService.swift */,
+				140FBEEF29751E63006B7857 /* FirebaseFunctionError.swift */,
 			);
 			path = FireFunction;
 			sourceTree = "<group>";
@@ -1180,6 +1188,7 @@
 			isa = PBXGroup;
 			children = (
 				14A34D54297444F000501A66 /* SignUpUseCaseError.swift */,
+				140FBEF1297521A3006B7857 /* MyPageUseCaseError.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -1864,6 +1873,7 @@
 				14F94BE62939E16D0058A79A /* UICollectionView+emptyView.swift in Sources */,
 				D8C3AA2929305C05008EE77C /* HTTPHeader.swift in Sources */,
 				149304AF2963F24B00B9BC71 /* DefaultFeedRepository.swift in Sources */,
+				140FBEF2297521A3006B7857 /* MyPageUseCaseError.swift in Sources */,
 				141344D6292F801100187B86 /* Date+FormatString.swift in Sources */,
 				D89AE4FD2935F5AE00446AB3 /* FireFunctionsManager.swift in Sources */,
 				D8494D462927C97E008157F1 /* MyPageView.swift in Sources */,
@@ -1964,6 +1974,7 @@
 				148A05642972F7C600664CCB /* DefaultMyPageUseCase.swift in Sources */,
 				149304AD2963F22600B9BC71 /* FeedRepository.swift in Sources */,
 				B5F4B036293CC0B300947250 /* FirestoreCollection.swift in Sources */,
+				140FBEF029751E63006B7857 /* FirebaseFunctionError.swift in Sources */,
 				3B061FD82928CC5600BFA71D /* SignUpDomainViewController.swift in Sources */,
 				14A34D55297444F000501A66 /* SignUpUseCaseError.swift in Sources */,
 				148A05462972F51C00664CCB /* DependencyFactory.swift in Sources */,
@@ -1974,6 +1985,7 @@
 				140E21062944519E00D6E2E5 /* BCFirestoreService.swift in Sources */,
 				B5DAD679292E4C6800C4A126 /* FeedDetailViewModel.swift in Sources */,
 				B500C9EE293DBA0800EBE39E /* ScrapViewModel.swift in Sources */,
+				140FBEED29751C63006B7857 /* BCFirebaseFunctionService.swift in Sources */,
 				1496CF1C2940679C008F312F /* CoordinatorEvent.swift in Sources */,
 				D89AE5012936221600446AB3 /* ScrapUser.swift in Sources */,
 				B50A27E329279F5D00DF3E1F /* LogInViewModel.swift in Sources */,

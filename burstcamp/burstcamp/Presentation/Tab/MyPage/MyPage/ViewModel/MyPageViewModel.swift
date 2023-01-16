@@ -13,6 +13,8 @@ final class MyPageViewModel {
     private let myPageUseCase: MyPageUseCase
     private let bcFirestoreService = BCFirestoreService()
 
+    private var output = Output()
+
     init(myPageUseCase: MyPageUseCase) {
         self.myPageUseCase = myPageUseCase
     }
@@ -53,46 +55,23 @@ final class MyPageViewModel {
             }
             .store(in: &cancelBag)
 
-        let output = Output()
-
         UserManager.shared.userUpdatePublisher
-            .sink { user in
-                output.updateUserValue.send(user)
-            }
-            .store(in: &cancelBag)
-
-        LogInManager.shared.withdrawalPublisher
-            .sink { completion in
-                if case .failure = completion {
-                    output.signOutFailMessage.send("탈퇴에 실패했어요.")
-                }
-            } receiveValue: { isSignOut in
-                if isSignOut {
-                    self.deleteUserInfos(output: output)
-                }
+            .sink { [weak self] user in
+                self?.output.updateUserValue.send(user)
             }
             .store(in: &cancelBag)
 
         return output
     }
 
-    private func deleteUserInfos(output: Output) {
-        let userUUID = UserManager.shared.user.userUUID
-        print(userUUID)
-        KeyChainManager.deleteUser()
-        //TODO: Listener 처리
-//        UserManager.shared.removeUserListener()
-        UserManager.shared.deleteUserInfo()
-        FireFunctionsManager.deleteUser(userUUID: userUUID)
-            .sink { _ in
-            } receiveValue: { isFinish in
-                if isFinish {
-                    output.moveToLoginFlow.send()
-                } else {
-                    output.withdrawalStop.send()
-                    output.signOutFailMessage.send("탈퇴 정보 삭제에 실패했어요.")
-                }
-            }
-            .store(in: &cancelBag)
+    func deleteUserInfo(code: String) async throws {
+        do {
+            try await myPageUseCase.withdrawal(code: code)
+            output.moveToLoginFlow.send()
+        } catch {
+            print(error.localizedDescription)
+            output.withdrawalStop.send()
+            output.signOutFailMessage.send("탈퇴에 실패했어요.")
+        }
     }
 }

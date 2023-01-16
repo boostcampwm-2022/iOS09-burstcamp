@@ -15,8 +15,8 @@ final class DefaultLoginUseCase: LoginUseCase {
         self.loginRepository = loginRepository
     }
 
-    func isLoggedIn() throws -> Bool {
-        return try loginRepository.isLoggedIn()
+    func isLoggedIn() -> Bool {
+        return loginRepository.isLoggedIn()
     }
 
     func login(code: String) async throws -> String {

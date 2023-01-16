@@ -11,6 +11,7 @@ final class DependencyFactory: DependencyFactoryProtocol {
 
     private var signUpUseCase: SignUpUseCase?
 
+    // MARK: - UseCase
     private func createDefaultSignUpUseCase() -> SignUpUseCase {
         return DefaultSignUpUseCase(
             signUpRepository: DefaultSignUpRepository(),
@@ -18,19 +19,27 @@ final class DependencyFactory: DependencyFactoryProtocol {
             blogRepository: DefaultBlogRepository()
         )
     }
+
+    // MARK: - Repository
+    private func createLoginRepository() -> LoginRepository {
+        let bcFirebaseAuthService = BCFirebaseAuthService()
+        let bcFirebaseFunctionService = BCFirebaseFunctionService()
+        let githubLoginDataSource = GithubLoginDatasource()
+        return DefaultLoginRepository(
+            bcFirebaseAuthService: bcFirebaseAuthService,
+            bcFirebaseFunctionService: bcFirebaseFunctionService,
+            githubLoginDataSource: githubLoginDataSource
+        )
+    }
 }
 
 extension DependencyFactory {
     func createLoginUseCase() -> LoginUseCase {
-        let bcFirebaseAuthService = BCFirebaseAuthService()
-        let githubLoginDataSource = GithubLoginDatasource()
-        let loginRepository = DefaultLoginRepository(
-            bcFirebaseAuthService: bcFirebaseAuthService,
-            githubLoginDataSource: githubLoginDataSource
-        )
+        let loginRepository = createLoginRepository()
         return DefaultLoginUseCase(loginRepository: loginRepository)
     }
 
+    // MARK: - ViewModel
     func createLoginViewModel() -> LogInViewModel {
         let loginUseCase = createLoginUseCase()
         return LogInViewModel(loginUseCase: loginUseCase)
@@ -87,7 +96,8 @@ extension DependencyFactory {
     }
 
     func createMyPageViewModel() -> MyPageViewModel {
-        let myPageUseCase = DefaultMyPageUseCase()
+        let loginRepository = createLoginRepository()
+        let myPageUseCase = DefaultMyPageUseCase(loginRepository: loginRepository)
         return MyPageViewModel(myPageUseCase: myPageUseCase)
     }
 
