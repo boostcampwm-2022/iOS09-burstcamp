@@ -22,15 +22,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         appCoordinator.dismissNavigationController()
 
-        let loginUseCase = DefaultLoginUseCase()
+        let dependencyFactory = DependencyFactory()
+        let loginUseCase = dependencyFactory.createLoginUseCase()
 
-        if LogInManager.shared.isWithdrawal {
-            LogInManager.shared.signOut(code: code)
-            // TODO: 탈퇴
-        } else {
-            appCoordinator.displayIndicator()
-            LogInManager.shared.logIn(code: code)
-            loginUseCase.login(code: code)
+        do {
+            if try loginUseCase.isLoggedIn() {
+                try loginUseCase.signOut(code: code)
+            } else {
+                appCoordinator.displayIndicator()
+                try loginUseCase.login(code: code)
+            }
+        } catch {
+            print(error)
         }
     }
 

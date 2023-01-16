@@ -21,8 +21,14 @@ final class DependencyFactory: DependencyFactoryProtocol {
 }
 
 extension DependencyFactory {
+    func createLoginUseCase() -> LoginUseCase {
+        let githubLoginDataSource = GithubLoginDatasource()
+        let loginRepository = DefaultLoginRepository(githubLoginDataSource: githubLoginDataSource)
+        return DefaultLoginUseCase(loginRepository: loginRepository)
+    }
+
     func createLoginViewModel() -> LogInViewModel {
-        let loginUseCase = DefaultLoginUseCase()
+        let loginUseCase = createLoginUseCase()
         return LogInViewModel(loginUseCase: loginUseCase)
     }
 

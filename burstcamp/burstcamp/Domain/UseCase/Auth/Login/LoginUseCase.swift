@@ -8,4 +8,9 @@
 import Foundation
 
 protocol LoginUseCase {
+    func isLoggedIn() throws -> Bool
+    func autoLogin() throws
+    func login(code: String) throws
+    func signOut(code: String) throws
+    func authorizeBoostcamp(code: String) throws -> Bool
 }
