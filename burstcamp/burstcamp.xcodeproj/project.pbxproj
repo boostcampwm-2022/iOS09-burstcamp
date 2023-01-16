@@ -103,7 +103,6 @@
 		B50A27CF29279F5D00DF3E1F /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A278B29279F5D00DF3E1F /* Constant.swift */; };
 		B50A27DA29279F5D00DF3E1F /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A279729279F5D00DF3E1F /* ReusableView.swift */; };
 		B50A27DE29279F5D00DF3E1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B50A279D29279F5D00DF3E1F /* Assets.xcassets */; };
-		B50A27E229279F5D00DF3E1F /* LogInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27A429279F5D00DF3E1F /* LogInManager.swift */; };
 		B50A27E329279F5D00DF3E1F /* LogInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27A629279F5D00DF3E1F /* LogInViewModel.swift */; };
 		B50A27E429279F5D00DF3E1F /* GithubLoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27A729279F5D00DF3E1F /* GithubLoginModel.swift */; };
 		B50A27E529279F5D00DF3E1F /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A27A829279F5D00DF3E1F /* LogInView.swift */; };
@@ -348,7 +347,6 @@
 		B50A278B29279F5D00DF3E1F /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		B50A279729279F5D00DF3E1F /* ReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
 		B50A279D29279F5D00DF3E1F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B50A27A429279F5D00DF3E1F /* LogInManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInManager.swift; sourceTree = "<group>"; };
 		B50A27A629279F5D00DF3E1F /* LogInViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewModel.swift; sourceTree = "<group>"; };
 		B50A27A729279F5D00DF3E1F /* GithubLoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubLoginModel.swift; sourceTree = "<group>"; };
 		B50A27A829279F5D00DF3E1F /* LogInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
@@ -1432,7 +1430,6 @@
 				1496CF1F294080E6008F312F /* Firebase */,
 				14A34D38297417E400501A66 /* GithubAPIKey */,
 				D88295FD292A4459005B4273 /* URLSessionService.swift */,
-				B50A27A429279F5D00DF3E1F /* LogInManager.swift */,
 				D8C38671292B88DE005A2563 /* UserDefaultsManager.swift */,
 				D8C38675292B8DB6005A2563 /* DarkmodeManager.swift */,
 				D89AE4E72933AF1E00446AB3 /* ImageCacheManager.swift */,
@@ -1922,7 +1919,6 @@
 				148A054D2972F5FF00664CCB /* DefaultLoginUseCase.swift in Sources */,
 				149304A82963F1D500B9BC71 /* HomeUseCase.swift in Sources */,
 				B5E0D94C292F750D001727F5 /* FeedContentWebView.swift in Sources */,
-				B50A27E229279F5D00DF3E1F /* LogInManager.swift in Sources */,
 				3B7492292942EDCB00A4BEA0 /* FirebaseAuthError.swift in Sources */,
 				140FBEF429756A3D006B7857 /* SignUpBlogViewModelError.swift in Sources */,
 				148A05442972F3DA00664CCB /* DependencyFactoryProtocol.swift in Sources */,
