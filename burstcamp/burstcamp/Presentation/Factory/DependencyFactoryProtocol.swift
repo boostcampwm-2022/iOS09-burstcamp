@@ -8,6 +8,8 @@
 import Foundation
 
 protocol DependencyFactoryProtocol {
+    func createLoginUseCase() -> LoginUseCase
+
     func createLoginViewModel() -> LogInViewModel
     func createSignUpDomainViewModel() -> SignUpDomainViewModel
     func createSignUpCamperIDViewModel() -> SignUpCamperIDViewModel

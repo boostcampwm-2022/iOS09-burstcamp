@@ -19,7 +19,7 @@ final class DefaultLoginUseCase: LoginUseCase {
         return try loginRepository.isLoggedIn()
     }
 
-    func autoLogin() throws {
+    func autoLogin() throws -> Bool {
     }
 
     func login(code: String) throws {
