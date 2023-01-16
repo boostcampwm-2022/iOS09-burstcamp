@@ -9,29 +9,30 @@ import Foundation
 
 final class DefaultLoginRepository: LoginRepository {
 
+    private let bcFirebaseAuthService: BCFirebaseAuthService
     private let githubLoginDataSource: GithubLoginDatasource
 
-    init(githubLoginDataSource: GithubLoginDatasource) {
+    init(bcFirebaseAuthService: BCFirebaseAuthService, githubLoginDataSource: GithubLoginDatasource) {
+        self.bcFirebaseAuthService = bcFirebaseAuthService
         self.githubLoginDataSource = githubLoginDataSource
     }
 
-    func authorizeBoostcamp(code: String) async throws -> GithubMembership {
+    func isLoggedIn() throws -> Bool {
+        return try !bcFirebaseAuthService.getCurrentUserUid().isEmpty
+    }
+
+    func login(code: String) async throws -> String {
+        let userNickname = try await authorizeBoostcamp(code: code)
+        return userNickname
+    }
+
+    private func authorizeBoostcamp(code: String) async throws -> String {
         let githubToken = try await githubLoginDataSource.requestGithubToken(code: code)
         let githubUser = try await githubLoginDataSource.getGithubUserInfo(token: githubToken.accessToken)
-        let githubMembership = try await githubLoginDataSource.getOrganizationMembership(
+        _ = try await githubLoginDataSource.getOrganizationMembership(
             nickname: githubUser.login,
             token: githubToken.accessToken
         )
-        return githubMembership
-    }
-
-    func isLoggedIn() throws -> Bool {
-        return false
-    }
-
-    func login() throws {
-    }
-
-    func withDrawal() throws {
+        return githubUser.login
     }
 }

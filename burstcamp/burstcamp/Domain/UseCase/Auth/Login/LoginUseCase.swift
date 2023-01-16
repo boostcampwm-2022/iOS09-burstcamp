@@ -9,6 +9,5 @@ import Foundation
 
 protocol LoginUseCase {
     func isLoggedIn() throws -> Bool
-    func autoLogin() throws -> Bool
-    func login(code: String) async throws
+    func login(code: String) async throws -> String
 }

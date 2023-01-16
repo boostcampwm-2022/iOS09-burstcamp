@@ -13,7 +13,7 @@ enum AppCoordinatorEvent {
 }
 
 enum AuthCoordinatorEvent {
-    case moveToDomainScreen
+    case moveToDomainScreen(userNickname: String)
     case moveToIDScreen
     case moveToBlogScreen
     case moveToTabBarScreen

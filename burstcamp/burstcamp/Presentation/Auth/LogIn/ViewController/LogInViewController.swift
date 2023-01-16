@@ -52,8 +52,7 @@ final class LogInViewController: UIViewController {
         do {
             try viewModel.login(code: code)
         } catch {
-            // TODO: Alert
-            print(error)
+            showAlert(message: error.localizedDescription)
         }
     }
 
@@ -77,8 +76,8 @@ final class LogInViewController: UIViewController {
                 self?.logInView.camperAuthButton.isEnabled = true
 
                 switch logInEvent {
-                case .moveToDomainScreen:
-                    self?.coordinatorPublisher.send(.moveToDomainScreen)
+                case .moveToDomainScreen(let userNickname):
+                    self?.coordinatorPublisher.send(.moveToDomainScreen(userNickname: userNickname))
                 case .moveToTabBarScreen:
                     self?.coordinatorPublisher.send(.moveToTabBarScreen)
                 case .showAlert(let message):

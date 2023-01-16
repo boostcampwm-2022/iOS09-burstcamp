@@ -8,8 +8,6 @@
 import Foundation
 
 protocol LoginRepository {
-    func authorizeBoostcamp(code: String) async throws -> GithubMembership
     func isLoggedIn() throws -> Bool
-    func login() throws
-    func withDrawal() throws
+    func login(code: String) async throws -> String
 }

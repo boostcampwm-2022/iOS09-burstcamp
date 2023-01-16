@@ -19,11 +19,7 @@ final class DefaultLoginUseCase: LoginUseCase {
         return try loginRepository.isLoggedIn()
     }
 
-    func autoLogin() throws -> Bool {
-        return false
-    }
-
-    func login(code: String) async throws {
-        try await loginRepository.authorizeBoostcamp(code: code)
+    func login(code: String) async throws -> String {
+        return try await loginRepository.login(code: code)
     }
 }

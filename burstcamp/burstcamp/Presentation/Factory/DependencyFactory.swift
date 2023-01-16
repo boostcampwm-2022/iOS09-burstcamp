@@ -22,8 +22,12 @@ final class DependencyFactory: DependencyFactoryProtocol {
 
 extension DependencyFactory {
     func createLoginUseCase() -> LoginUseCase {
+        let bcFirebaseAuthService = BCFirebaseAuthService()
         let githubLoginDataSource = GithubLoginDatasource()
-        let loginRepository = DefaultLoginRepository(githubLoginDataSource: githubLoginDataSource)
+        let loginRepository = DefaultLoginRepository(
+            bcFirebaseAuthService: bcFirebaseAuthService,
+            githubLoginDataSource: githubLoginDataSource
+        )
         return DefaultLoginUseCase(loginRepository: loginRepository)
     }
 

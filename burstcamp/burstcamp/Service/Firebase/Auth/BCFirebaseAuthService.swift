@@ -21,6 +21,7 @@ final class BCFirebaseAuthService: BCFirebaseAuthServiceProtocol {
 
     func getCurrentUserUid() throws -> String {
         if let user = auth.currentUser {
+            debugPrint("BCFirebaseAuth \(user.uid)")
             return user.uid
         }
         throw FirebaseAuthError.currentUserNil

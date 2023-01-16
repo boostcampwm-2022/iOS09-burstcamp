@@ -15,6 +15,7 @@
 		140E210429443E6300D6E2E5 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E210329443E6300D6E2E5 /* FirestoreService.swift */; };
 		140E21062944519E00D6E2E5 /* BCFirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E21052944519E00D6E2E5 /* BCFirestoreService.swift */; };
 		140E21092944688B00D6E2E5 /* Future+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E21082944688B00D6E2E5 /* Future+Async.swift */; };
+		140FBEE529750D0B006B7857 /* LoginViewModelError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140FBEE429750D0B006B7857 /* LoginViewModelError.swift */; };
 		141344CD292F800300187B86 /* UI+ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C6292F800300187B86 /* UI+ReusableView.swift */; };
 		141344CE292F800300187B86 /* UINavigationController+configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C7292F800300187B86 /* UINavigationController+configure.swift */; };
 		141344CF292F800300187B86 /* UIStackView+addArrangedSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C8292F800300187B86 /* UIStackView+addArrangedSubviews.swift */; };
@@ -256,6 +257,7 @@
 		140E210329443E6300D6E2E5 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		140E21052944519E00D6E2E5 /* BCFirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCFirestoreService.swift; sourceTree = "<group>"; };
 		140E21082944688B00D6E2E5 /* Future+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Future+Async.swift"; sourceTree = "<group>"; };
+		140FBEE429750D0B006B7857 /* LoginViewModelError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelError.swift; sourceTree = "<group>"; };
 		141344C6292F800300187B86 /* UI+ReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UI+ReusableView.swift"; sourceTree = "<group>"; };
 		141344C7292F800300187B86 /* UINavigationController+configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+configure.swift"; sourceTree = "<group>"; };
 		141344C8292F800300187B86 /* UIStackView+addArrangedSubviews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+addArrangedSubviews.swift"; sourceTree = "<group>"; };
@@ -556,6 +558,14 @@
 			path = Combine;
 			sourceTree = "<group>";
 		};
+		140FBEE329750D04006B7857 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				140FBEE429750D0B006B7857 /* LoginViewModelError.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		142C9340292F51A500F6428E /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -630,6 +640,7 @@
 		143216542935C3320034DE9F /* Error */ = {
 			isa = PBXGroup;
 			children = (
+				140FBEE329750D04006B7857 /* ViewModel */,
 				14A34D51297444D700501A66 /* UseCase */,
 				D88295EE292A43EB005B4273 /* NetworkError.swift */,
 				D89AE4E32933AEE900446AB3 /* ImageCacheError.swift */,
@@ -1797,6 +1808,7 @@
 				3B061FDD2928E8E300BFA71D /* SignUpCamperIDViewController.swift in Sources */,
 				1496CF1E294070A3008F312F /* ContainFeedDetailCoordinator.swift in Sources */,
 				140438C0293F77DD004D035C /* Factory.swift in Sources */,
+				140FBEE529750D0B006B7857 /* LoginViewModelError.swift in Sources */,
 				B50A27EE29279F5D00DF3E1F /* HomeViewController.swift in Sources */,
 				B50A27E629279F5D00DF3E1F /* LogInViewController.swift in Sources */,
 				141344CE292F800300187B86 /* UINavigationController+configure.swift in Sources */,

@@ -50,7 +50,7 @@ final class AppCoordinator: AppCoordinatorProtocol {
         animateLoadingView()
         let loginUseCase = dependencyFactory.createLoginUseCase()
         do {
-            if try loginUseCase.autoLogin() {
+            if try loginUseCase.isLoggedIn() {
                 showTabBarFlow()
             } else {
                 showAuthFlow()
