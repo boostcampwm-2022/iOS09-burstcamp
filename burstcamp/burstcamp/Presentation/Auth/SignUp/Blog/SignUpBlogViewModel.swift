@@ -45,9 +45,7 @@ final class SignUpBlogViewModel {
         let signUpWithNextButton = input.nextButtonDidTap
             .throttle(for: 1, scheduler: DispatchQueue.main, latest: false)
             .flatMap { _ in
-                return Future<String, Error> { promise in
-                }
-                .eraseToAnyPublisher()
+                self.getBlogTitle()
             }
             .catch { _ in
                 return Just("").eraseToAnyPublisher()
@@ -83,12 +81,24 @@ final class SignUpBlogViewModel {
         )
     }
 
-//    private func getBlogTitle() -> AnyPublisher<String, Error> {
-//        return Future<User, Error> { promise in
-//            let
-//        }.eraseToAnyPublisher()
-//    }
-    
+    private func getBlogTitle() -> AnyPublisher<String, Error> {
+        return Future<String, Error> { promise in
+            Task { [weak self] in
+                do {
+                    guard let self = self else {
+                        throw SignUpBlogViewModelError.getBlogTitle
+                    }
+                    let blogURL = self.signUpUseCase.getUserBlogURL()
+                    let blogTitle = try await self.signUpUseCase.getBlogTitle(blogURL: blogURL)
+                    promise(.success(blogTitle))
+                } catch {
+                    promise(.failure(error))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+
     private func signUp(blogTitle: String = "") -> AnyPublisher<User, Error> {
         return Future<User, Error> { promise in
             Task { [weak self] in

@@ -42,9 +42,13 @@ final class DefaultSignUpUseCase: SignUpUseCase {
         fatalError("캠퍼 ID 선택하는데 도메인이 없음")
     }
 
-    func getBlogTitle(blogURL: String) -> String {
+    func getUserBlogURL() -> String {
+        return signUpRepository.getSignUpUser().getBlogURL()
+    }
+
+    func getBlogTitle(blogURL: String) async throws -> String {
         // 펑션으로 호출
-        return "목업"
+        return try await blogRepository.checkBlogTitle(link: blogURL)
     }
 
     func getUser(userUUID: String, blogTitle: String = "") throws -> User {

@@ -9,4 +9,5 @@ import Foundation
 
 enum SignUpBlogViewModelError: Error {
     case createUser
+    case getBlogTitle
 }

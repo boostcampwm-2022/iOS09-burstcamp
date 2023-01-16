@@ -13,9 +13,10 @@ protocol SignUpUseCase {
     func setUserCamperID(_ camperID: String)
     func setUserBlogURL(_ blogURL: String)
     func getUserDomain() -> Domain
+    func getUserBlogURL() -> String
 
     func isValidateBlogURL(_ blogURL: String) -> Bool
-    func getBlogTitle(blogURL: String) -> String
+    func getBlogTitle(blogURL: String) async throws -> String
     func getUser(userUUID: String, blogTitle: String) throws -> User
 
     func signUp(_ user: User) async throws
