@@ -88,35 +88,39 @@ final class SignUpBlogViewController: UIViewController {
 
         output.signUpWithNextButton
             .sink { [weak self] blogTitle in
-                self?.signUpBlogView.activityIndicator.stopAnimating()
-                self?.signUpBlogView.confirmBlogLabel.isHidden = true
-                self?.signUpBlogView.nextButton.isEnabled = true
+                DispatchQueue.main.async {
+                    self?.signUpBlogView.activityIndicator.stopAnimating()
+                    self?.signUpBlogView.confirmBlogLabel.isHidden = true
+                    self?.signUpBlogView.nextButton.isEnabled = true
 
-                if blogTitle.isEmpty {
-                    self?.showAlert(message: "블로그 주소를 확인해주세요.")
-                } else {
-                    let confirmAction = UIAlertAction(title: "네", style: .default) { _ in
-                        blogTitleConfirmSubject.send(blogTitle)
-                        self?.signUpBlogView.activityIndicator.startAnimating()
-                        self?.signUpBlogView.signUpLabel.isHidden = false
-                        self?.signUpBlogView.nextButton.isEnabled = false
+                    if blogTitle.isEmpty {
+                        self?.showAlert(message: "블로그 주소를 확인해주세요.")
+                    } else {
+                        let confirmAction = UIAlertAction(title: "네", style: .default) { _ in
+                            blogTitleConfirmSubject.send(blogTitle)
+                            self?.signUpBlogView.activityIndicator.startAnimating()
+                            self?.signUpBlogView.signUpLabel.isHidden = false
+                            self?.signUpBlogView.nextButton.isEnabled = false
+                        }
+                        let cancelAction = UIAlertAction(title: "아니오", style: .destructive)
+                        self?.showAlert(
+                            message: "\(blogTitle) 블로그가 맞나요?",
+                            alertActions: [cancelAction, confirmAction]
+                        )
                     }
-                    let cancelAction = UIAlertAction(title: "아니오", style: .destructive)
-                    self?.showAlert(
-                        message: "\(blogTitle) 블로그가 맞나요?",
-                        alertActions: [cancelAction, confirmAction]
-                    )
                 }
             }
             .store(in: &cancelBag)
 
         output.signUpWithBlogTitle
             .sink(receiveCompletion: { [weak self] result in
-                self?.signUpBlogView.activityIndicator.stopAnimating()
-                self?.signUpBlogView.signUpLabel.isHidden = true
-                self?.signUpBlogView.nextButton.isEnabled = true
-                if case .failure = result {
-                    self?.showAlert(message: "회원가입에 실패했습니다.")
+                DispatchQueue.main.async {
+                    self?.signUpBlogView.activityIndicator.stopAnimating()
+                    self?.signUpBlogView.signUpLabel.isHidden = true
+                    self?.signUpBlogView.nextButton.isEnabled = true
+                    if case .failure = result {
+                        self?.showAlert(message: "회원가입에 실패했습니다.")
+                    }
                 }
             }, receiveValue: { [weak self] _ in
                 saveFCMToken.send()
@@ -126,11 +130,13 @@ final class SignUpBlogViewController: UIViewController {
 
         output.signUpWithSkipButton
             .sink(receiveCompletion: { [weak self] result in
-                self?.signUpBlogView.activityIndicator.stopAnimating()
-                self?.signUpBlogView.signUpLabel.isHidden = true
-                self?.signUpBlogView.nextButton.isEnabled = true
-                if case .failure = result {
-                    self?.showAlert(message: "회원가입에 실패했습니다.")
+                DispatchQueue.main.async {
+                    self?.signUpBlogView.activityIndicator.stopAnimating()
+                    self?.signUpBlogView.signUpLabel.isHidden = true
+                    self?.signUpBlogView.nextButton.isEnabled = true
+                    if case .failure = result {
+                        self?.showAlert(message: "회원가입에 실패했습니다.")
+                    }
                 }
             }, receiveValue: { [weak self] _ in
                 saveFCMToken.send()

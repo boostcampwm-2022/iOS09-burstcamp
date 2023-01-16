@@ -72,6 +72,8 @@ extension UIViewController {
             }
         }
 
-        present(sheet, animated: true)
+        DispatchQueue.main.async {
+            self.present(sheet, animated: true)
+        }
     }
 }

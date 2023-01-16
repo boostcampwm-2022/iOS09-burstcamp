@@ -32,7 +32,9 @@ final class DefaultLoginRepository: LoginRepository {
     }
 
     func login(code: String) async throws -> String {
-        let userNickname = try await authorizeBoostcamp(code: code)
+        let (userNickname, token) = try await authorizeBoostcamp(code: code)
+        // auth로 로그인
+        try await bcFirebaseAuthService.signInToFirebase(token: token)
         return userNickname
     }
 
@@ -47,13 +49,13 @@ final class DefaultLoginRepository: LoginRepository {
         return try await bcFirebaseFunctionService.deleteUser(userUUID: userUUID)
     }
 
-    private func authorizeBoostcamp(code: String) async throws -> String {
+    private func authorizeBoostcamp(code: String) async throws -> (userNickname: String, token: String) {
         let githubToken = try await githubLoginDataSource.requestGithubToken(code: code)
         let githubUser = try await githubLoginDataSource.getGithubUserInfo(token: githubToken.accessToken)
         _ = try await githubLoginDataSource.getOrganizationMembership(
             nickname: githubUser.login,
             token: githubToken.accessToken
         )
-        return githubUser.login
+        return (githubUser.login, githubToken.accessToken)
     }
 }
