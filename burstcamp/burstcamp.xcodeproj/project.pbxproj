@@ -192,7 +192,6 @@
 		D89AE4F32935AFE100446AB3 /* Notification+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE4F22935AFE100446AB3 /* Notification+.swift */; };
 		D89AE4F92935EC6E00446AB3 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE4F82935EC6E00446AB3 /* Validator.swift */; };
 		D89AE4FB2935F1BE00446AB3 /* ValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE4FA2935F1BD00446AB3 /* ValidationTest.swift */; };
-		D89AE4FD2935F5AE00446AB3 /* FireFunctionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE4FC2935F5AE00446AB3 /* FireFunctionsManager.swift */; };
 		D89AE5012936221600446AB3 /* ScrapUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89AE5002936221600446AB3 /* ScrapUser.swift */; };
 		D89E48AF2939D99300744A56 /* FireStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89E48AE2939D99300744A56 /* FireStorageService.swift */; };
 		D89E48B12939D9AC00744A56 /* FireStorageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89E48B02939D9AC00744A56 /* FireStorageError.swift */; };
@@ -430,7 +429,6 @@
 		D89AE4F22935AFE100446AB3 /* Notification+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+.swift"; sourceTree = "<group>"; };
 		D89AE4F82935EC6E00446AB3 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 		D89AE4FA2935F1BD00446AB3 /* ValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationTest.swift; sourceTree = "<group>"; };
-		D89AE4FC2935F5AE00446AB3 /* FireFunctionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireFunctionsManager.swift; sourceTree = "<group>"; };
 		D89AE5002936221600446AB3 /* ScrapUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapUser.swift; sourceTree = "<group>"; };
 		D89E48AE2939D99300744A56 /* FireStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStorageService.swift; sourceTree = "<group>"; };
 		D89E48B02939D9AC00744A56 /* FireStorageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStorageError.swift; sourceTree = "<group>"; };
@@ -552,7 +550,6 @@
 		140E210229443D2A00D6E2E5 /* FireFunction */ = {
 			isa = PBXGroup;
 			children = (
-				D89AE4FC2935F5AE00446AB3 /* FireFunctionsManager.swift */,
 				140FBEEC29751C63006B7857 /* BCFirebaseFunctionService.swift */,
 				140FBEEF29751E63006B7857 /* FirebaseFunctionError.swift */,
 			);
@@ -1856,7 +1853,6 @@
 				149304AF2963F24B00B9BC71 /* DefaultFeedRepository.swift in Sources */,
 				140FBEF2297521A3006B7857 /* MyPageUseCaseError.swift in Sources */,
 				141344D6292F801100187B86 /* Date+FormatString.swift in Sources */,
-				D89AE4FD2935F5AE00446AB3 /* FireFunctionsManager.swift in Sources */,
 				D8494D462927C97E008157F1 /* MyPageView.swift in Sources */,
 				14755A432973F28C0036B71D /* BCFirebaseAuthService.swift in Sources */,
 				148A055F2972F79A00664CCB /* DefaultScrapPageUseCase.swift in Sources */,
