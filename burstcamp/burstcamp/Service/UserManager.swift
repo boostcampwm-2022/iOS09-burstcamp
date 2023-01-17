@@ -37,8 +37,8 @@ final class UserManager {
                 let userUUID = try self.bcFirebaseAuthService.getCurrentUserUid()
                 let userAPIModel = try await self.bcFirestoreService.addListenerToUser(userUUID: userUUID)
                 let user = User(userAPIModel: userAPIModel)
-                debugPrint("유저 매니저", user)
                 self.user = user
+                debugPrint("유저 매니저", self.user)
                 self.userUpdatePublisher.send(user)
             } catch {
                 debugPrint(error)

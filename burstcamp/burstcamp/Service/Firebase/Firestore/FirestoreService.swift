@@ -14,7 +14,6 @@ typealias FirestoreData = [String: Any]
 final class FirestoreService {
 
     private let database: Firestore
-    private var listener: ListenerRegistration?
 
     init(database: Firestore) {
         self.database = database
@@ -204,30 +203,10 @@ final class FirestoreService {
         } as Void
     }
 
-    public func addListenerToDocument(_ collectionPath: String, document: String) async throws -> FirestoreData {
-        try await withCheckedThrowingContinuation { continuation in
-            listener = database
-                .collection(collectionPath)
-                .document(document)
-                .addSnapshotListener { documentSnapshot, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    guard let documentSnapshot = documentSnapshot,
-                          let data = documentSnapshot.data()
-                    else {
-                        continuation.resume(throwing: FirestoreServiceError.addListenerFail)
-                        return
-                    }
-                    continuation.resume(returning: data)
-                }
-        }
-    }
-
-    public func removeListener() {
-        listener?.remove()
-        debugPrint("리스너 삭제")
+    public func getDocumentReference(_ collectionPath: String, document: String) -> DocumentReference {
+        return database
+            .collection(collectionPath)
+            .document(document)
     }
 
     public func getDatabaseBatch() -> WriteBatch {

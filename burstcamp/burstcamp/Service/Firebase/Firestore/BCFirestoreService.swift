@@ -33,6 +33,7 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
 
     private let firestoreService: FirestoreService
     private var lastSnapShot: QueryDocumentSnapshot?
+    private var userListener: ListenerRegistration?
     private let paginateCount: Int
 
     private var feedQuery: Query {
@@ -115,14 +116,40 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
     }
 
     func addListenerToUser(userUUID: String) async throws -> UserAPIModel {
-        let userPath = FirestoreCollection.user.path
-        let userData = try await firestoreService.addListenerToDocument(userPath, document: userUUID)
+        let lock = NSLock()
 
-        return UserAPIModel(data: userData)
+        return try await withCheckedThrowingContinuation { continuation in
+
+            var nillableContinuation: CheckedContinuation<UserAPIModel, Error>? = continuation
+
+            let userPath = FirestoreCollection.user.path
+            let documentReference = firestoreService.getDocumentReference(userPath, document: userUUID)
+
+            self.userListener = documentReference.addSnapshotListener { documentSnapshot, error in
+                lock.lock()
+                defer { lock.unlock() }
+
+                if let error = error {
+                    nillableContinuation?.resume(throwing: error)
+                    nillableContinuation = nil
+                    return
+                }
+                guard let documentSnapshot = documentSnapshot,
+                      let data = documentSnapshot.data()
+                else {
+                    nillableContinuation?.resume(throwing: FirestoreServiceError.addListenerFail)
+                    nillableContinuation = nil
+                    return
+                }
+                let userAPIModel = UserAPIModel(data: data)
+                nillableContinuation?.resume(returning: userAPIModel)
+                nillableContinuation = nil
+            }
+        }
     }
 
     func removeUserListener() {
-        firestoreService.removeListener()
+        userListener?.remove()
     }
 
     func countFeedScrap(feedUUID: String) async throws -> Int {

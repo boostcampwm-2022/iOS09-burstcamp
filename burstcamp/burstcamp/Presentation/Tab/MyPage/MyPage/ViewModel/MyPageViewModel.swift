@@ -13,7 +13,7 @@ final class MyPageViewModel {
     private let myPageUseCase: MyPageUseCase
     private let bcFirestoreService = BCFirestoreService()
 
-    var updateUserValue = CurrentValueSubject<User, Never>(UserManager.shared.user)
+    private var updateUserValue = CurrentValueSubject<User, Never>(UserManager.shared.user)
     private var withdrawalStop = PassthroughSubject<Void, Never>()
     private var signOutFailMessage = PassthroughSubject<String, Never>()
 
@@ -57,6 +57,12 @@ final class MyPageViewModel {
             }
             .store(in: &cancelBag)
 
+        let output = Output(
+            updateUserValue: updateUserValue,
+            signOutFailMessage: signOutFailMessage,
+            withdrawalStop: withdrawalStop
+        )
+
         UserManager.shared.userUpdatePublisher
             .sink { [weak self] user in
                 debugPrint("viewModel", user)
@@ -64,11 +70,9 @@ final class MyPageViewModel {
             }
             .store(in: &cancelBag)
 
-        return Output(
-            updateUserValue: updateUserValue,
-            signOutFailMessage: signOutFailMessage,
-            withdrawalStop: withdrawalStop
-        )
+        debugPrint("ViewModel에서 직접 접근 - ", UserManager.shared.user)
+
+        return output
     }
 
     func deleteUserInfo(code: String) async throws {
