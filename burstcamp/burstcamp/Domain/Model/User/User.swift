@@ -19,32 +19,9 @@ struct User: Codable {
     var scrapFeedUUIDs: [String]
     let signupDate: Date
     let isPushOn: Bool
+}
 
-    init(
-        userUUID: String,
-        nickname: String,
-        profileImageURL: String,
-        domain: Domain,
-        camperID: String,
-        ordinalNumber: Int,
-        blogURL: String,
-        blogTitle: String,
-        scrapFeedUUIDs: [String],
-        signupDate: Date,
-        isPushOn: Bool
-    ) {
-        self.userUUID = userUUID
-        self.nickname = nickname
-        self.profileImageURL = profileImageURL
-        self.domain = domain
-        self.camperID = camperID
-        self.ordinalNumber = ordinalNumber
-        self.blogURL = blogURL
-        self.blogTitle = blogTitle
-        self.scrapFeedUUIDs = scrapFeedUUIDs
-        self.signupDate = signupDate
-        self.isPushOn = isPushOn
-    }
+extension User {
 
     init(dictionary: [String: Any]) {
         self.userUUID = dictionary["userUUID"] as? String ?? ""
@@ -59,6 +36,42 @@ struct User: Codable {
         self.scrapFeedUUIDs = dictionary["scrapFeedUUIDs"] as? [String] ?? []
         self.signupDate = dictionary["signupDate"] as? Date ?? Date()
         self.isPushOn = dictionary["isPushOn"] as? Bool ?? false
+    }
+
+    init?(userUUID: String, signUpUser: SignUpUser, blogTitle: String) {
+        self.userUUID = userUUID
+
+        if let nickname = signUpUser.getNickname(),
+           let domain = signUpUser.getDomain(),
+           let camperID = signUpUser.getCamperID() {
+            self.nickname = nickname
+            self.profileImageURL = "https://github.com/\(nickname).png"
+            self.domain = domain
+            self.camperID = camperID
+        } else {
+            return nil
+        }
+
+        self.ordinalNumber = 7
+        self.blogURL = signUpUser.getBlogURL()
+        self.blogTitle = blogTitle
+        self.scrapFeedUUIDs = []
+        self.signupDate = Date()
+        self.isPushOn = false
+    }
+
+    init(userAPIModel: UserAPIModel) {
+        self.userUUID = userAPIModel.userUUID
+        self.nickname = userAPIModel.nickname
+        self.profileImageURL = userAPIModel.profileImageURL
+        self.domain = Domain(rawValue: userAPIModel.domain) ?? .iOS
+        self.camperID = userAPIModel.camperID
+        self.ordinalNumber = userAPIModel.ordinalNumber
+        self.blogURL = userAPIModel.blogURL
+        self.blogTitle = userAPIModel.blogTitle
+        self.scrapFeedUUIDs = userAPIModel.scrapFeedUUIDs
+        self.signupDate = userAPIModel.signupDate
+        self.isPushOn = userAPIModel.isPushOn
     }
 
     var toFeedWriter: FeedWriter {

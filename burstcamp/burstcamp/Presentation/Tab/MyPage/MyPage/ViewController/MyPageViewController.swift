@@ -9,8 +9,6 @@ import Combine
 import SafariServices
 import UIKit
 
-import FirebaseAuth
-
 final class MyPageViewController: UIViewController {
 
     // MARK: - Properties
@@ -112,8 +110,7 @@ final class MyPageViewController: UIViewController {
 
         output.withdrawalStop
             .sink { [weak self] _ in
-                self?.setUserInteraction(isEnabled: true)
-                self?.myPageView.indicatorView.stopAnimating()
+                self?.hideIndicator()
             }
             .store(in: &cancelBag)
 
@@ -144,10 +141,7 @@ final class MyPageViewController: UIViewController {
             title: Alert.yes,
             style: .default
         ) { _ in
-            self.setUserInteraction(isEnabled: false)
-            self.myPageView.indicatorView.startAnimating()
-
-            LogInManager.shared.changeIsWithdrawal(bool: true)
+            self.showIndicator()
             self.coordinatorPublisher.send(.moveToGithubLogIn)
         }
         let cancelAction = UIAlertAction(
@@ -161,9 +155,20 @@ final class MyPageViewController: UIViewController {
         )
     }
 
-    private func setUserInteraction(isEnabled: Bool) {
-        view.isUserInteractionEnabled = isEnabled
-        navigationController?.view.isUserInteractionEnabled = isEnabled
+    private func showIndicator() {
+        DispatchQueue.main.async {
+            self.myPageView.indicatorView.startAnimating()
+            self.myPageView.loadingLabel.isHidden = false
+            self.setUserInteraction(isEnabled: false)
+        }
+    }
+
+    private func hideIndicator() {
+        DispatchQueue.main.async {
+            self.myPageView.indicatorView.stopAnimating()
+            self.myPageView.loadingLabel.isHidden = true
+            self.setUserInteraction(isEnabled: true)
+        }
     }
 }
 
@@ -201,5 +206,20 @@ extension MyPageViewController {
 
     private func moveToAuthFlow() {
         coordinatorPublisher.send(.moveToAuthFlow)
+    }
+}
+
+extension MyPageViewController {
+    func withDrawal(code: String) {
+        Task {
+            do {
+                print("탈퇴하기")
+                try await viewModel.deleteUserInfo(code: code)
+                self.moveToAuthFlow()
+            } catch {
+                debugPrint(error.localizedDescription)
+                showAlert(message: error.localizedDescription)
+            }
+        }
     }
 }

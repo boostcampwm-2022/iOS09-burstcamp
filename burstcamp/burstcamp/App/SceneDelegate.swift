@@ -22,11 +22,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         appCoordinator.dismissNavigationController()
 
-        if LogInManager.shared.isWithdrawal {
-            LogInManager.shared.signOut(code: code)
-        } else {
-            appCoordinator.displayIndicator()
-            LogInManager.shared.logIn(code: code)
+        if let loginViewController = window.rootViewController?.children.first as? LogInViewController { // 로그인
+            loginViewController.login(code: code)
+        } else if let tabBarController = window.rootViewController?.children.first as? UITabBarController,
+                  let myPageViewController = tabBarController.children.first(where: {
+                      $0 as? MyPageViewController != nil
+                  }) as? MyPageViewController {
+            myPageViewController.withDrawal(code: code)
+        }
+        else { // 탈퇴
+            fatalError("로그인, 로그아웃 불가능")
         }
     }
 
@@ -45,6 +50,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.makeKeyAndVisible()
 
         let dependencyFactory = DependencyFactory()
+
         appCoordinator = AppCoordinator(
             window: window,
             navigationController: navigationController,

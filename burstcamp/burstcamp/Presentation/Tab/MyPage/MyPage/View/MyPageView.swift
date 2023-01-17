@@ -46,6 +46,13 @@ final class MyPageView: UIView, ContainCollectionView {
         $0.style = .medium
     }
 
+    lazy var loadingLabel: UILabel = UILabel().then {
+        $0.text = "유저 정보 삭제 중"
+        $0.font = .bold12
+        $0.textColor = .dynamicBlack
+        $0.isHidden = true
+    }
+
     lazy var myInfoEditButtonTapPublisher = myInfoEditButton.tapPublisher
     lazy var darkModeSwitchStatePublisher = darkModeSwitch.statePublisher
     lazy var notificationSwitchStatePublisher = notificationSwitch.statePublisher
@@ -94,6 +101,12 @@ final class MyPageView: UIView, ContainCollectionView {
         addSubview(indicatorView)
         indicatorView.snp.makeConstraints { make in
             make.center.equalToSuperview()
+        }
+
+        addSubview(loadingLabel)
+        loadingLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(indicatorView.snp.bottom).offset(Constant.space10)
         }
     }
 

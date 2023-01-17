@@ -26,7 +26,7 @@ extension Feed {
         isScraped: Bool = false
     ) {
         self.feedUUID = feedAPIModel.feedUUID
-        self.writer = feedAPIModel.feedWriter()
+        self.writer = FeedWriter(feedAPIModel: feedAPIModel)
         self.title = feedAPIModel.title
         self.pubDate = feedAPIModel.pubDate
         self.url = feedAPIModel.url
@@ -39,8 +39,7 @@ extension Feed {
 
 extension Feed {
     mutating func toggleScrap() {
-        if isScraped { unScrap() }
-        else { scrap() }
+        isScraped ? unScrap() : scrap()
     }
 
     mutating func scrap() {

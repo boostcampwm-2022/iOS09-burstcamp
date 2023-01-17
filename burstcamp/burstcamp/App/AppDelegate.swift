@@ -15,11 +15,14 @@ import FirebaseCore
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    private var bcFireStoreService: BCFirestoreService!
+
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         FirebaseApp.configure()
+        bcFireStoreService = BCFirestoreService()
         RealmConfig.serialQueue.async {
             FeedRealmDataSource.shared.configure()
         }
@@ -84,7 +87,9 @@ extension AppDelegate: MessagingDelegate {
                 print("의 토큰 값: ", token)
                 print("저장되어있던 토큰 값: ", savedToken)
                 UserDefaultsManager.save(fcmToken: token)
-                FirebaseFCMToken.save(fcmToken: token, to: UserManager.shared.user.userUUID)
+                Task { [weak self] in
+                    try await self?.bcFireStoreService.saveFCMToken(token, to: UserManager.shared.user.userUUID)
+                }
             }
         }
     }
@@ -99,7 +104,9 @@ extension AppDelegate: MessagingDelegate {
             if UserManager.shared.user.userUUID.isEmpty {
                 UserDefaultsManager.save(fcmToken: fcmToken)
             } else {
-                FirebaseFCMToken.save(fcmToken: fcmToken, to: UserManager.shared.user.userUUID)
+                Task { [weak self] in
+                    try await self?.bcFireStoreService.saveFCMToken(fcmToken, to: UserManager.shared.user.userUUID)
+                }
             }
         }
     }

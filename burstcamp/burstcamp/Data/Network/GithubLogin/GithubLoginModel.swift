@@ -7,15 +7,6 @@
 
 import Foundation
 
-struct APIKey: Codable {
-    let github: Github
-}
-
-struct Github: Codable {
-    let clientID: String
-    let clientSecret: String
-}
-
 struct GithubToken: Codable {
     let accessToken: String
     let scope: String

@@ -13,9 +13,10 @@ protocol GithubLogInCoordinator: Coordinator { }
 extension GithubLogInCoordinator {
     func moveToGithubLogIn() {
         let urlString = "https://github.com/login/oauth/authorize"
+        let githubAPIKeyManager = GithubAPIKeyManager()
 
         guard var urlComponent = URLComponents(string: urlString),
-              let clientID = LogInManager.shared.githubAPIKey?.clientID
+              let clientID = githubAPIKeyManager.githubAPIKey?.clientID
         else {
             return
         }

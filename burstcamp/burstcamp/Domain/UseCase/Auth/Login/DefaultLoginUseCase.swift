@@ -8,4 +8,18 @@
 import Foundation
 
 final class DefaultLoginUseCase: LoginUseCase {
+
+    private let loginRepository: LoginRepository
+
+    init(loginRepository: LoginRepository) {
+        self.loginRepository = loginRepository
+    }
+
+    func isLoggedIn() -> Bool {
+        return loginRepository.isLoggedIn()
+    }
+
+    func login(code: String) async throws ->  (userNickname: String, userUUID: String) {
+        return try await loginRepository.login(code: code)
+    }
 }

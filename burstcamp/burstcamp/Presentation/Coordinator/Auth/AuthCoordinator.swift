@@ -11,7 +11,7 @@ import UIKit
 
 protocol AuthCoordinatorProtocol: NormalCoordinator {
     func moveToTabBarFlow()
-    func moveToDomainScreen()
+    func moveToDomainScreen(userNickname: String)
     func moveToIDScreen()
     func moveToBlogScreen()
 }
@@ -35,7 +35,7 @@ final class AuthCoordinator: AuthCoordinatorProtocol, GithubLogInCoordinator {
         else {
             return
         }
-        logInViewController.displayIndicator()
+        logInViewController.showIndicator()
     }
 
     func start() {
@@ -44,8 +44,8 @@ final class AuthCoordinator: AuthCoordinatorProtocol, GithubLogInCoordinator {
         logInViewController.coordinatorPublisher
             .sink { coordinatorEvent in
                 switch coordinatorEvent {
-                case .moveToDomainScreen:
-                    self.moveToDomainScreen()
+                case .moveToDomainScreen(let userNickname):
+                    self.moveToDomainScreen(userNickname: userNickname)
                 case .moveToTabBarScreen:
                     self.moveToTabBarFlow()
                 case .moveToGithubLogIn:
@@ -63,8 +63,8 @@ final class AuthCoordinator: AuthCoordinatorProtocol, GithubLogInCoordinator {
         finish()
     }
 
-    func moveToDomainScreen() {
-        let viewModel = dependencyFactory.createSignUpDomainViewModel()
+    func moveToDomainScreen(userNickname: String) {
+        let viewModel = dependencyFactory.createSignUpDomainViewModel(userNickname: userNickname)
         let sighUpDomainViewController = SignUpDomainViewController(viewModel: viewModel)
         sighUpDomainViewController.coordinatorPublisher
             .sink { coordinatorEvent in

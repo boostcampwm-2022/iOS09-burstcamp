@@ -11,6 +11,7 @@ import Foundation
 final class LogInViewModel {
 
     private let loginUseCase: LoginUseCase
+    private var logInPublisher = PassthroughSubject<AuthCoordinatorEvent, Never>()
 
     init(loginUseCase: LoginUseCase) {
         self.loginUseCase = loginUseCase
@@ -30,7 +31,7 @@ final class LogInViewModel {
             .throttle(for: 1, scheduler: DispatchQueue.main, latest: false)
             .eraseToAnyPublisher()
 
-        let moveToOtherView = LogInManager.shared.logInPublisher
+        let moveToOtherView = logInPublisher
             .throttle(for: 1, scheduler: DispatchQueue.main, latest: false)
             .eraseToAnyPublisher()
 
@@ -38,5 +39,11 @@ final class LogInViewModel {
             openLogInView: openLogInView,
             moveToOtherView: moveToOtherView
         )
+    }
+
+    func login(code: String) async throws {
+        let (userNickname, userUUID) = try await loginUseCase.login(code: code)
+        UserManager.shared.setUserUUID(userUUID)
+        logInPublisher.send(.moveToDomainScreen(userNickname: userNickname))
     }
 }

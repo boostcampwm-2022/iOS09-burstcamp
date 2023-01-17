@@ -9,27 +9,28 @@ import Foundation
 
 import FirebaseFirestore
 
-protocol BCFirestoreService {
-    func fetchRecommendFeed() async throws -> [FirestoreData]
-    func fetchLatestNormalFeeds() async throws -> [FirestoreData]
-    func fetchMoreNormalFeeds() async throws -> [FirestoreData]
-    func fetchFeed(feedUUID: String) async throws -> FirestoreData
-    func fetchUser(userUUID: String) async throws -> FirestoreData
-    func saveUser(userUUID: String, user: FirestoreData) async throws
-    func updateUser(userUUID: String, data: FirestoreData) async throws
+protocol BCFirestoreServiceProtocol {
+    func fetchRecommendFeed() async throws -> [FeedAPIModel]
+    func fetchLatestNormalFeeds() async throws -> [FeedAPIModel]
+    func fetchMoreNormalFeeds() async throws -> [FeedAPIModel]
+    func fetchFeed(feedUUID: String) async throws -> FeedAPIModel
+    func fetchUser(userUUID: String) async throws -> UserAPIModel
+    func saveUser(userUUID: String, user: UserAPIModel) async throws
+    func updateUser(userUUID: String, user: UserAPIModel) async throws
+    func updateUserPushState(userUUID: String, isPushOn: Bool) async throws
     func deleteUser(userUUID: String) async throws
-    func addListenerToUser(userUUID: String) async throws -> FirestoreData
+
     func countFeedScrap(feedUUID: String) async throws -> Int
-    func appendScrapUser(userUUID: String, at feedUUID: String) async throws
-    func deleteScrapUser(userUUID: String, from feedUUID: String) async throws
-    func appendFeedUUID(_ feedUUID: String, at userUUID: String) async throws
-    func deleteFeedUUID(_ feedUUID: String, from userUUID: String) async throws
+    func scrapFeed(_ feed: FeedAPIModel, with userUUID: String) async throws
+    func unScrapFeed(_ feed: FeedAPIModel, with userUUID: String) async throws
+    func saveFCMToken(_ fcmToken: String, to userUUID: String) async throws
 }
 
-final class DefaultBCFirestoreService: BCFirestoreService {
+final class BCFirestoreService: BCFirestoreServiceProtocol {
 
     private let firestoreService: FirestoreService
     private var lastSnapShot: QueryDocumentSnapshot?
+
     private let paginateCount: Int
 
     private var feedQuery: Query {
@@ -55,60 +56,60 @@ final class DefaultBCFirestoreService: BCFirestoreService {
         self.lastSnapShot = nil
     }
 
-    func fetchRecommendFeed() async throws -> [FirestoreData] {
+    func fetchRecommendFeed() async throws -> [FeedAPIModel] {
         let recommendFeedPath = FirestoreCollection.recommendFeed.path
-        return try await firestoreService.getCollection(recommendFeedPath)
+        let feedFirestoreData = try await firestoreService.getCollection(recommendFeedPath)
+        return feedFirestoreData.map { FeedAPIModel(data: $0) }
     }
 
-    func fetchLatestNormalFeeds() async throws -> [FirestoreData] {
+    func fetchLatestNormalFeeds() async throws -> [FeedAPIModel] {
         initFeedQuery()
         let result = try await firestoreService.getCollection(query: feedQuery)
         self.lastSnapShot = result.lastSnapshot
 
-        return result.collectionData
+        return result.collectionData.map { FeedAPIModel(data: $0) }
     }
 
-    func fetchMoreNormalFeeds() async throws -> [FirestoreData] {
+    func fetchMoreNormalFeeds() async throws -> [FeedAPIModel] {
         let result = try await firestoreService.getCollection(query: feedQuery)
         self.lastSnapShot = result.lastSnapshot
 
-        return result.collectionData
+        return result.collectionData.map { FeedAPIModel(data: $0) }
     }
 
-    func fetchFeed(feedUUID: String) async throws -> FirestoreData {
+    func fetchFeed(feedUUID: String) async throws -> FeedAPIModel {
         let feedPath = FirestoreCollection.normalFeed.path
-        let feed = try await firestoreService.getDocument(feedPath, document: feedUUID)
+        let feedFirestoreData = try await firestoreService.getDocument(feedPath, document: feedUUID)
 
-        return feed
+        return FeedAPIModel(data: feedFirestoreData)
     }
 
-    func fetchUser(userUUID: String) async throws -> FirestoreData {
+    func fetchUser(userUUID: String) async throws -> UserAPIModel {
         let userPath = FirestoreCollection.user.path
-        let user = try await firestoreService.getDocument(userPath, document: userUUID)
+        let userFirestoreData = try await firestoreService.getDocument(userPath, document: userUUID)
 
-        return user
+        return UserAPIModel(data: userFirestoreData)
     }
 
-    func saveUser(userUUID: String, user: FirestoreData) async throws {
+    func saveUser(userUUID: String, user: UserAPIModel) async throws {
         let userPath = FirestoreCollection.user.path
-        try await firestoreService.createDocument(userPath, document: userUUID, data: user)
+        try await firestoreService.createDocument(userPath, document: userUUID, data: user.toFirestoreData())
     }
 
-    func updateUser(userUUID: String, data: FirestoreData) async throws {
+    func updateUser(userUUID: String, user: UserAPIModel) async throws {
         let userPath = FirestoreCollection.user.path
-        try await firestoreService.updateDocument(userPath, document: userUUID, data: data)
+        try await firestoreService.updateDocument(userPath, document: userUUID, data: user.toFirestoreData())
+    }
+
+    func updateUserPushState(userUUID: String, isPushOn: Bool) async throws {
+        let userPath = FirestoreCollection.user.path
+
+        try await firestoreService.updateDocument(userPath, document: userUUID, data: ["isPushOnField": isPushOn])
     }
 
     func deleteUser(userUUID: String) async throws {
         let userPath = FirestoreCollection.user.path
         try await firestoreService.deleteDocument(userPath, document: userUUID)
-    }
-
-    func addListenerToUser(userUUID: String) async throws -> FirestoreData {
-        let userPath = FirestoreCollection.user.path
-        let userData = try await firestoreService.addListenerToDocument(userPath, document: userUUID)
-
-        return userData
     }
 
     func countFeedScrap(feedUUID: String) async throws -> Int {
@@ -118,43 +119,73 @@ final class DefaultBCFirestoreService: BCFirestoreService {
         return scrapCount
     }
 
-    func appendScrapUser(userUUID: String, at feedUUID: String) async throws {
-        let scrapUsersPath = FirestoreCollection.scrapUsers(feedUUID: feedUUID).path
-        let data: [String: Any] = [
+    func scrapFeed(_ feed: FeedAPIModel, with userUUID: String) async throws {
+        let batch = firestoreService.getDatabaseBatch()
+        let feedUUID = feed.feedUUID
+
+        // feed - scrapUser에 userUUID 추가
+        let scrapUserPath = firestoreService.getDocumentPath(
+            collection: FirestoreCollection.scrapUsers(feedUUID: feedUUID).path,
+            document: userUUID
+        )
+        let scrapUserData: [String: Any] = [
             "userUUID": userUUID,
             "scrapDate": Timestamp(date: Date())
         ]
+        batch.setData(scrapUserData, forDocument: scrapUserPath)
 
-        try await firestoreService.createDocument(scrapUsersPath, document: userUUID, data: data)
-    }
-
-    func deleteScrapUser(userUUID: String, from feedUUID: String) async throws {
-        let scrapUsersPath = FirestoreCollection.scrapUsers(feedUUID: feedUUID).path
-
-        try await firestoreService.deleteDocument(scrapUsersPath, document: userUUID)
-    }
-
-    func appendFeedUUID(_ feedUUID: String, at userUUID: String) async throws {
-        let userPath = FirestoreCollection.user.path
-        let arrayName = "scrapFeedUUIDs"
-
-        try await firestoreService.deleteDocumentArrayField(
-            userPath,
-            document: userUUID,
-            arrayName: arrayName,
-            data: feedUUID
+        // user - feed에 feed 데이터 추가
+        let scrapFeedPath = firestoreService.getDocumentPath(
+            collection: FirestoreCollection.scrapFeeds(userUUID: userUUID).path,
+            document: feedUUID
         )
+        batch.setData(feed.toScrapFirestoreData(), forDocument: scrapFeedPath)
+
+        // feed - scrapCount+1
+        let feedPath = firestoreService.getDocumentPath(
+            collection: FirestoreCollection.normalFeed.path,
+            document: feedUUID
+        )
+        batch.updateData(["scrapCount": feed.scrapCount + 1], forDocument: feedPath)
+
+        try await batch.commit()
     }
 
-    func deleteFeedUUID(_ feedUUID: String, from userUUID: String) async throws {
-        let userPath = FirestoreCollection.user.path
-        let arrayName = "scrapFeedUUIDs"
+    func unScrapFeed(_ feed: FeedAPIModel, with userUUID: String) async throws {
+        let batch = firestoreService.getDatabaseBatch()
+        let feedUUID = feed.feedUUID
 
-        try await firestoreService.deleteDocumentArrayField(
-            userPath,
-            document: userUUID,
-            arrayName: arrayName,
-            data: feedUUID
+        // feed - scrapUser에 userUUID 삭제
+        let scrapUserPath = firestoreService.getDocumentPath(
+            collection: FirestoreCollection.scrapUsers(feedUUID: feedUUID).path,
+            document: userUUID
         )
+        batch.deleteDocument(scrapUserPath)
+
+        // user - feed에 feed 데이터 삭제
+        let scrapFeedPath = firestoreService.getDocumentPath(
+            collection: FirestoreCollection.scrapFeeds(userUUID: userUUID).path,
+            document: feedUUID
+        )
+        batch.deleteDocument(scrapFeedPath)
+
+        // feed - scrapCount-1
+        let feedPath = firestoreService.getDocumentPath(
+            collection: FirestoreCollection.normalFeed.path,
+            document: feedUUID
+        )
+        batch.updateData(["scrapCount": feed.scrapCount - 1], forDocument: feedPath)
+
+        try await batch.commit()
+    }
+
+    func saveFCMToken(_ fcmToken: String, to userUUID: String) async throws {
+        let fcmToken = FCMToken(fcmToken: fcmToken)
+        guard let data = fcmToken.asDictionary else {
+            throw FirestoreServiceError.getCollection
+        }
+        let path = FirestoreCollection.fcmToken.path
+
+        try await firestoreService.createDocument(path, document: userUUID, data: data)
     }
 }

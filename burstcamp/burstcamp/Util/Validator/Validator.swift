@@ -13,10 +13,6 @@ struct Validator {
         return nickname.isEmpty ? false : true
     }
 
-    static func validate(camperID: String) -> Bool {
-        return camperID.count == 3 ? true : false
-    }
-
     static func validate(blogLink: String) -> Bool {
         if blogLink.range(
             of: URLRegularExpression.tistory,

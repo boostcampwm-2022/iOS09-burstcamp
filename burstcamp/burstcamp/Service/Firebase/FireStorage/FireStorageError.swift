@@ -8,15 +8,15 @@
 import Foundation
 
 enum FireStorageError: LocalizedError {
-    case dataUploadError
-    case URLDownloadError
+    case dataUpload
+    case URLDownload
 }
 
 extension FireStorageError {
     var errorDescription: String? {
         switch self {
-        case .dataUploadError: return "데이터 업로드 중 에러가 발생했습니다."
-        case .URLDownloadError: return "서버에서 URL을 받아오던 중 에러가 발생했습니다."
+        case .dataUpload: return "데이터 업로드 중 에러가 발생했습니다."
+        case .URLDownload: return "서버에서 URL을 받아오던 중 에러가 발생했습니다."
         }
     }
 }

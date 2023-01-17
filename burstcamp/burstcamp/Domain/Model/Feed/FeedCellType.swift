@@ -29,13 +29,6 @@ extension FeedCellType {
         return self.rawValue
     }
 
-    var collectionPath: String {
-        switch self {
-        case .recommend: return FirestoreCollection.recommendFeed.path
-        case .normal: return FirestoreCollection.normalFeed.path
-        }
-    }
-
     static var count: Int {
         return Self.allCases.count
     }

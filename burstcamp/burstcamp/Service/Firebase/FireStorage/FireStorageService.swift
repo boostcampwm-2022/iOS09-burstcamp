@@ -27,17 +27,17 @@ final class FireStorageService {
         return Future<String, Error> { promise in
             ref.putData(imageData) { _, error in
                 if error != nil {
-                    promise(.failure(FireStorageError.dataUploadError))
+                    promise(.failure(FireStorageError.dataUpload))
                 }
                 ref.downloadURL { url, error in
                     if error != nil {
-                        promise(.failure(FireStorageError.URLDownloadError))
+                        promise(.failure(FireStorageError.URLDownload))
                     }
                     if let url = url {
                         let imageURL = url.absoluteString
                         promise(.success(imageURL))
                     } else {
-                        promise(.failure(FireStorageError.URLDownloadError))
+                        promise(.failure(FireStorageError.URLDownload))
                     }
                 }
             }

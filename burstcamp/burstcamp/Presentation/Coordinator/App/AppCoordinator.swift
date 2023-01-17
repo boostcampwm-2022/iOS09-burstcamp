@@ -48,16 +48,12 @@ final class AppCoordinator: AppCoordinatorProtocol {
 
     func start() {
         animateLoadingView()
-        LogInManager.shared.autoLogInPublisher
-            .sink { [weak self] isLogIn in
-                if isLogIn {
-                    self?.showTabBarFlow()
-                } else {
-                    self?.showAuthFlow()
-                }
-            }
-            .store(in: &cancelBag)
-        LogInManager.shared.isLoggedIn()
+        let loginUseCase = dependencyFactory.createLoginUseCase()
+        if loginUseCase.isLoggedIn() {
+            showTabBarFlow()
+        } else {
+            showAuthFlow()
+        }
     }
 
     func showAuthFlow() {
@@ -78,8 +74,11 @@ final class AppCoordinator: AppCoordinatorProtocol {
     }
 
     func showTabBarFlow() {
-        UserManager.shared.addListener()
-        let tabBarCoordinator = TabBarCoordinator(navigationController: navigationController, dependencyFactory: dependencyFactory)
+        UserManager.shared.addUserListener()
+        let tabBarCoordinator = TabBarCoordinator(
+            navigationController: navigationController,
+            dependencyFactory: dependencyFactory
+        )
         tabBarCoordinator.coordinatorPublisher
             .sink { coordinatorEvent in
                 switch coordinatorEvent {

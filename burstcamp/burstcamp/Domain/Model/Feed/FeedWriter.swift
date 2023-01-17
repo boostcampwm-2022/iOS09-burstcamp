@@ -28,6 +28,17 @@ extension FeedWriter {
         self.profileImageURL = data["profileImageURL"] as? String ?? ""
         self.blogTitle = data["blogTitle"] as? String ?? ""
     }
+
+    init(feedAPIModel: FeedAPIModel) {
+        self.userUUID = feedAPIModel.writerUUID
+        self.nickname = feedAPIModel.writerNickname
+        self.camperID = feedAPIModel.writerCamperID
+        self.ordinalNumber = feedAPIModel.writerOrdinalNumber
+        let domainString = feedAPIModel.writerDomain
+        self.domain = Domain(rawValue: domainString) ?? Domain.iOS
+        self.profileImageURL = feedAPIModel.writerProfileImageURL
+        self.blogTitle = feedAPIModel.writerBlogTitle
+    }
 }
 
 extension FeedWriter {

@@ -14,8 +14,10 @@ final class SignUpCamperIDViewModel {
 
     init(signUpUseCase: SignUpUseCase) {
         self.signUpUseCase = signUpUseCase
+        self.camperDomain = signUpUseCase.getUserDomain()
     }
 
+    let camperDomain: Domain
     var camperID: String = ""
 
     struct Input {
@@ -34,16 +36,17 @@ final class SignUpCamperIDViewModel {
         let validateCamperID = input.camperIDTextFieldDidEdit
             .map { id in
                 self.camperID = id
-                LogInManager.shared.camperID = "\(LogInManager.shared.domain.representing)" + id
+                let fullCamperID = "\(self.camperDomain.representing)" + id
+                self.signUpUseCase.setUserCamperID(fullCamperID)
                 return id.count == 3 && id.allSatisfy { $0.isNumber } ? true : false
             }
             .eraseToAnyPublisher()
 
         let moveToBlogView = input.nextButtonDidTap
 
-        let domainText = Just(LogInManager.shared.domain.rawValue)
+        let domainText = Just(camperDomain.rawValue)
 
-        let representingDomainText = Just(LogInManager.shared.domain.representing)
+        let representingDomainText = Just(camperDomain.representing)
 
         return Output(
             validateCamperID: validateCamperID,

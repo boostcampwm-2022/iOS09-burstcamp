@@ -42,10 +42,34 @@ final class LogInViewController: UIViewController {
         bind()
     }
 
-    func displayIndicator() {
-        logInView.activityIndicator.startAnimating()
-        logInView.loadingLabel.isHidden = false
-        logInView.camperAuthButton.isEnabled = false
+    func showIndicator() {
+        DispatchQueue.main.async {
+            self.logInView.activityIndicator.startAnimating()
+            self.logInView.loadingLabel.isHidden = false
+            self.logInView.camperAuthButton.isEnabled = false
+            self.setUserInteraction(isEnabled: false)
+        }
+    }
+
+    func hideIndicator() {
+        DispatchQueue.main.async {
+            self.logInView.activityIndicator.stopAnimating()
+            self.logInView.loadingLabel.isHidden = true
+            self.logInView.camperAuthButton.isEnabled = true
+            self.setUserInteraction(isEnabled: true)
+        }
+    }
+
+    func login(code: String) {
+        Task { [weak self] in
+            self?.showIndicator()
+            do {
+                try await self?.viewModel.login(code: code)
+            } catch {
+                self?.showAlert(message: error.localizedDescription)
+            }
+            self?.hideIndicator()
+        }
     }
 
     private func bind() {
@@ -68,8 +92,8 @@ final class LogInViewController: UIViewController {
                 self?.logInView.camperAuthButton.isEnabled = true
 
                 switch logInEvent {
-                case .moveToDomainScreen:
-                    self?.coordinatorPublisher.send(.moveToDomainScreen)
+                case .moveToDomainScreen(let userNickname):
+                    self?.coordinatorPublisher.send(.moveToDomainScreen(userNickname: userNickname))
                 case .moveToTabBarScreen:
                     self?.coordinatorPublisher.send(.moveToTabBarScreen)
                 case .showAlert(let message):

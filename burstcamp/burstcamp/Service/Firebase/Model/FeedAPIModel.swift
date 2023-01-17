@@ -27,7 +27,7 @@ struct FeedAPIModel {
 }
 
 extension FeedAPIModel {
-    init(data: [String: Any]) {
+    init(data: FirestoreData) {
         self.feedUUID = data["feedUUID"] as? String ?? ""
         self.title = data["title"] as? String ?? ""
         let timeStampDate = data["pubDate"] as? Timestamp ?? Timestamp()
@@ -45,15 +45,40 @@ extension FeedAPIModel {
         self.writerBlogTitle = data["writerBlogTitle"] as? String ?? ""
     }
 
-    func feedWriter() -> FeedWriter {
-        return FeedWriter(
-            userUUID: self.writerUUID,
-            nickname: self.writerNickname,
-            camperID: self.writerCamperID,
-            ordinalNumber: self.writerOrdinalNumber,
-            domain: Domain(rawValue: self.writerDomain) ?? .iOS,
-            profileImageURL: self.writerProfileImageURL,
-            blogTitle: self.writerBlogTitle
-        )
+    init(feed: Feed) {
+        self.feedUUID = feed.feedUUID
+        self.title = feed.title
+        self.pubDate = feed.pubDate
+        self.url = feed.url
+        self.thumbnailURL = feed.thumbnailURL
+        self.content = feed.content
+        self.scrapCount = feed.scrapCount
+        self.writerCamperID = feed.writer.camperID
+        self.writerDomain = feed.writer.domain.rawValue
+        self.writerNickname = feed.writer.nickname
+        self.writerOrdinalNumber = feed.writer.ordinalNumber
+        self.writerProfileImageURL = feed.writer.profileImageURL
+        self.writerUUID = feed.writer.userUUID
+        self.writerBlogTitle = feed.writer.blogTitle
+    }
+
+    func toScrapFirestoreData() -> FirestoreData {
+        return [
+            "feedUUID": feedUUID,
+            "title": title,
+            "pubDate": pubDate,
+            "scrapDate": Timestamp(date: Date()),
+            "url": url,
+            "thumbnailURL": thumbnailURL,
+            "content": content,
+            "scrapCount": scrapCount,
+            "writerCamperID": writerCamperID,
+            "writerDomain": writerDomain,
+            "writerNickname": writerNickname,
+            "writerOrdinalNumber": writerOrdinalNumber,
+            "writerProfileImageURL": writerProfileImageURL,
+            "writerUUID": writerUUID,
+            "writerBlogTitle": writerBlogTitle
+        ]
     }
 }

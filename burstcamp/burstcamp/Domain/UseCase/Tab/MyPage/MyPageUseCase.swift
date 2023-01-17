@@ -8,4 +8,5 @@
 import Foundation
 
 protocol MyPageUseCase {
+    func withdrawal(code: String) async throws
 }

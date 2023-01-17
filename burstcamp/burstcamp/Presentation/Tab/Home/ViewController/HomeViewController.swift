@@ -219,7 +219,8 @@ extension HomeViewController: UNUserNotificationCenterDelegate {
         ) { isPushOn, _ in
             let userUUID = UserManager.shared.user.userUUID
             if !userUUID.isEmpty {
-                FirestoreUser.update(userUUID: userUUID, isPushOn: isPushOn)
+                // TODO: push 상태 업데이트
+//                FirestoreUser.update(userUUID: userUUID, isPushOn: isPushOn)
             }
         }
         application.registerForRemoteNotifications()
