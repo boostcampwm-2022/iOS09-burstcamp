@@ -93,6 +93,7 @@ final class MyPageEditViewModel {
         guard let profileImage = profileImage else {
             return Just(UserManager.shared.user.profileImageURL).eraseToAnyPublisher()
         }
+        // TODO: FireStorageService imageRepository로 이동
         return FireStorageService.save(image: profileImage)
             .catch { _ in Just(UserManager.shared.user.profileImageURL) }
             .eraseToAnyPublisher()
