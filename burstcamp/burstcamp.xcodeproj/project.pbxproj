@@ -593,6 +593,19 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
+		14129970297660F000159C02 /* Singleton */ = {
+			isa = PBXGroup;
+			children = (
+				D88295FD292A4459005B4273 /* URLSessionService.swift */,
+				D8C38671292B88DE005A2563 /* UserDefaultsManager.swift */,
+				D8C38675292B8DB6005A2563 /* DarkmodeManager.swift */,
+				D89AE4E72933AF1E00446AB3 /* ImageCacheManager.swift */,
+				D8576F31293779D4002885FE /* UserManager.swift */,
+				D8095C68293B718C00964537 /* KeyChainManager.swift */,
+			);
+			path = Singleton;
+			sourceTree = "<group>";
+		};
 		142C9340292F51A500F6428E /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -1432,12 +1445,7 @@
 			children = (
 				1496CF1F294080E6008F312F /* Firebase */,
 				14A34D38297417E400501A66 /* GithubAPIKey */,
-				D88295FD292A4459005B4273 /* URLSessionService.swift */,
-				D8C38671292B88DE005A2563 /* UserDefaultsManager.swift */,
-				D8C38675292B8DB6005A2563 /* DarkmodeManager.swift */,
-				D89AE4E72933AF1E00446AB3 /* ImageCacheManager.swift */,
-				D8576F31293779D4002885FE /* UserManager.swift */,
-				D8095C68293B718C00964537 /* KeyChainManager.swift */,
+				14129970297660F000159C02 /* Singleton */,
 			);
 			path = Service;
 			sourceTree = "<group>";
