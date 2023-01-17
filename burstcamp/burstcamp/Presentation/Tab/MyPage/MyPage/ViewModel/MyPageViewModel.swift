@@ -65,12 +65,9 @@ final class MyPageViewModel {
 
         UserManager.shared.userUpdatePublisher
             .sink { [weak self] user in
-                debugPrint("viewModel", user)
                 self?.updateUserValue.send(user)
             }
             .store(in: &cancelBag)
-
-        debugPrint("ViewModel에서 직접 접근 - ", UserManager.shared.user)
 
         return output
     }

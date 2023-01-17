@@ -13,9 +13,11 @@ final class UserManager {
     static let shared = UserManager()
 
     private(set) var user = User(dictionary: [:])
-    private let bcFirestoreService = BCFirestoreService()
+    private let bCFirestoreUserListener = BCFirestoreUserListener()
     private let bcFirebaseAuthService = BCFirebaseAuthService()
     let userUpdatePublisher = PassthroughSubject<User, Never>()
+
+    private var cancelBag = Set<AnyCancellable>()
 
     private init() {}
 
@@ -33,24 +35,21 @@ final class UserManager {
     func setUser(_ user: User) {
         self.user = user
     }
+
     func addUserListener() {
-        Task { [weak self] in
-            do {
-                guard let self = self else { throw UserManagerError.weakSelfIsNil }
-                let userUUID = try self.bcFirebaseAuthService.getCurrentUserUid()
-                let userAPIModel = try await self.bcFirestoreService.addListenerToUser(userUUID: userUUID)
+        if user.userUUID.isEmpty { fatalError("Listenr를 위한 UserUUID가 없음")}
+        bCFirestoreUserListener.userPublisher(userUUID: user.userUUID)
+            .sink { error in
+                fatalError("유저 정보를 불러오는데 실패 \(error)")
+            } receiveValue: { userAPIModel in
                 let user = User(userAPIModel: userAPIModel)
-                self.user = user
-                debugPrint("유저 매니저", self.user)
                 self.userUpdatePublisher.send(user)
-            } catch {
-                debugPrint(error)
             }
-        }
+            .store(in: &cancelBag)
     }
 
     func removeUserListener() {
-        bcFirestoreService.removeUserListener()
+        bCFirestoreUserListener.removeUserListener()
     }
 
     func deleteUserInfo() {

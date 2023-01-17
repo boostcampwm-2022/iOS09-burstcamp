@@ -20,9 +20,6 @@ protocol BCFirestoreServiceProtocol {
     func updateUserPushState(userUUID: String, isPushOn: Bool) async throws
     func deleteUser(userUUID: String) async throws
 
-    func addListenerToUser(userUUID: String) async throws -> UserAPIModel
-    func removeUserListener()
-
     func countFeedScrap(feedUUID: String) async throws -> Int
     func scrapFeed(_ feed: FeedAPIModel, with userUUID: String) async throws
     func unScrapFeed(_ feed: FeedAPIModel, with userUUID: String) async throws
@@ -33,7 +30,7 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
 
     private let firestoreService: FirestoreService
     private var lastSnapShot: QueryDocumentSnapshot?
-    private var userListener: ListenerRegistration?
+
     private let paginateCount: Int
 
     private var feedQuery: Query {
@@ -113,43 +110,6 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
     func deleteUser(userUUID: String) async throws {
         let userPath = FirestoreCollection.user.path
         try await firestoreService.deleteDocument(userPath, document: userUUID)
-    }
-
-    func addListenerToUser(userUUID: String) async throws -> UserAPIModel {
-        let lock = NSLock()
-
-        return try await withCheckedThrowingContinuation { continuation in
-
-            var nillableContinuation: CheckedContinuation<UserAPIModel, Error>? = continuation
-
-            let userPath = FirestoreCollection.user.path
-            let documentReference = firestoreService.getDocumentReference(userPath, document: userUUID)
-
-            self.userListener = documentReference.addSnapshotListener { documentSnapshot, error in
-                lock.lock()
-                defer { lock.unlock() }
-
-                if let error = error {
-                    nillableContinuation?.resume(throwing: error)
-                    nillableContinuation = nil
-                    return
-                }
-                guard let documentSnapshot = documentSnapshot,
-                      let data = documentSnapshot.data()
-                else {
-                    nillableContinuation?.resume(throwing: FirestoreServiceError.addListenerFail)
-                    nillableContinuation = nil
-                    return
-                }
-                let userAPIModel = UserAPIModel(data: data)
-                nillableContinuation?.resume(returning: userAPIModel)
-                nillableContinuation = nil
-            }
-        }
-    }
-
-    func removeUserListener() {
-        userListener?.remove()
     }
 
     func countFeedScrap(feedUUID: String) async throws -> Int {

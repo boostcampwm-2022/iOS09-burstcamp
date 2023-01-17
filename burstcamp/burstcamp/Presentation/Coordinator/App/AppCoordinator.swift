@@ -74,9 +74,11 @@ final class AppCoordinator: AppCoordinatorProtocol {
     }
 
     func showTabBarFlow() {
-        // TODO: Listener 처리
         UserManager.shared.addUserListener()
-        let tabBarCoordinator = TabBarCoordinator(navigationController: navigationController, dependencyFactory: dependencyFactory)
+        let tabBarCoordinator = TabBarCoordinator(
+            navigationController: navigationController,
+            dependencyFactory: dependencyFactory
+        )
         tabBarCoordinator.coordinatorPublisher
             .sink { coordinatorEvent in
                 switch coordinatorEvent {

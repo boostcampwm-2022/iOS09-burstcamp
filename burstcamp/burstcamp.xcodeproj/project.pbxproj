@@ -23,6 +23,7 @@
 		140FBEF2297521A3006B7857 /* MyPageUseCaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140FBEF1297521A3006B7857 /* MyPageUseCaseError.swift */; };
 		140FBEF429756A3D006B7857 /* SignUpBlogViewModelError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140FBEF329756A3D006B7857 /* SignUpBlogViewModelError.swift */; };
 		141299542976376500159C02 /* UserManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141299532976376500159C02 /* UserManagerError.swift */; };
+		1412996F29765AC300159C02 /* BCFirestoreUserListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1412996E29765AC300159C02 /* BCFirestoreUserListener.swift */; };
 		141344CD292F800300187B86 /* UI+ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C6292F800300187B86 /* UI+ReusableView.swift */; };
 		141344CE292F800300187B86 /* UINavigationController+configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C7292F800300187B86 /* UINavigationController+configure.swift */; };
 		141344CF292F800300187B86 /* UIStackView+addArrangedSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C8292F800300187B86 /* UIStackView+addArrangedSubviews.swift */; };
@@ -267,6 +268,7 @@
 		140FBEF1297521A3006B7857 /* MyPageUseCaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageUseCaseError.swift; sourceTree = "<group>"; };
 		140FBEF329756A3D006B7857 /* SignUpBlogViewModelError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBlogViewModelError.swift; sourceTree = "<group>"; };
 		141299532976376500159C02 /* UserManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManagerError.swift; sourceTree = "<group>"; };
+		1412996E29765AC300159C02 /* BCFirestoreUserListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCFirestoreUserListener.swift; sourceTree = "<group>"; };
 		141344C6292F800300187B86 /* UI+ReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UI+ReusableView.swift"; sourceTree = "<group>"; };
 		141344C7292F800300187B86 /* UINavigationController+configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+configure.swift"; sourceTree = "<group>"; };
 		141344C8292F800300187B86 /* UIStackView+addArrangedSubviews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+addArrangedSubviews.swift"; sourceTree = "<group>"; };
@@ -533,6 +535,7 @@
 				140E210329443E6300D6E2E5 /* FirestoreService.swift */,
 				B5F4B035293CC0B300947250 /* FirestoreCollection.swift */,
 				140E21052944519E00D6E2E5 /* BCFirestoreService.swift */,
+				1412996E29765AC300159C02 /* BCFirestoreUserListener.swift */,
 			);
 			path = Firestore;
 			sourceTree = "<group>";
@@ -1828,6 +1831,7 @@
 				D88295FC292A4452005B4273 /* HTTPMethod.swift in Sources */,
 				D84452F2292CCA80008E811B /* SettingSection.swift in Sources */,
 				B5FF71462948EDB8008E69F2 /* FeedLocalDataSource.swift in Sources */,
+				1412996F29765AC300159C02 /* BCFirestoreUserListener.swift in Sources */,
 				B572F01E29486C0500A9413C /* FeedWriter+RealmCompatible.swift in Sources */,
 				148A05672972F84100664CCB /* MyPageEditUseCase.swift in Sources */,
 				B572EF812945E19C00A9413C /* Sequence+Async.swift in Sources */,

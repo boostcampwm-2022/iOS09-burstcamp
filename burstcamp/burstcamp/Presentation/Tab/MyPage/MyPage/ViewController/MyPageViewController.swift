@@ -75,12 +75,8 @@ final class MyPageViewController: UIViewController {
 
         let output = viewModel.transform(input: input)
 
-        debugPrint("ViewController에서 직접 접근 - ", UserManager.shared.user)
-
         output.updateUserValue
             .sink { [weak self] user in
-                debugPrint("뷰컨", UserManager.shared.user)
-                debugPrint("viewController", user)
                 self?.myPageView.updateView(user: user)
             }
             .store(in: &cancelBag)
