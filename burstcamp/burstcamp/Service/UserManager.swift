@@ -30,6 +30,9 @@ final class UserManager {
         userByKeyChain()
     }
 
+    func setUser(_ user: User) {
+        self.user = user
+    }
     func addUserListener() {
         Task { [weak self] in
             do {
