@@ -60,6 +60,20 @@ extension User {
         self.isPushOn = false
     }
 
+    init(userAPIModel: UserAPIModel) {
+        self.userUUID = userAPIModel.userUUID
+        self.nickname = userAPIModel.nickname
+        self.profileImageURL = userAPIModel.profileImageURL
+        self.domain = Domain(rawValue: userAPIModel.domain) ?? .iOS
+        self.camperID = userAPIModel.camperID
+        self.ordinalNumber = userAPIModel.ordinalNumber
+        self.blogURL = userAPIModel.blogURL
+        self.blogTitle = userAPIModel.blogTitle
+        self.scrapFeedUUIDs = userAPIModel.scrapFeedUUIDs
+        self.signupDate = userAPIModel.signupDate
+        self.isPushOn = userAPIModel.isPushOn
+    }
+
     var toFeedWriter: FeedWriter {
         return FeedWriter(
             userUUID: self.userUUID,

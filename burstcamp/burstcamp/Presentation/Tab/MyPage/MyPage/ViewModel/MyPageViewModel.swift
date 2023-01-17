@@ -13,7 +13,9 @@ final class MyPageViewModel {
     private let myPageUseCase: MyPageUseCase
     private let bcFirestoreService = BCFirestoreService()
 
-    private var output = Output()
+    var updateUserValue = CurrentValueSubject<User, Never>(UserManager.shared.user)
+    private var withdrawalStop = PassthroughSubject<Void, Never>()
+    private var signOutFailMessage = PassthroughSubject<String, Never>()
 
     init(myPageUseCase: MyPageUseCase) {
         self.myPageUseCase = myPageUseCase
@@ -57,11 +59,16 @@ final class MyPageViewModel {
 
         UserManager.shared.userUpdatePublisher
             .sink { [weak self] user in
-                self?.output.updateUserValue.send(user)
+                debugPrint("viewModel", user)
+                self?.updateUserValue.send(user)
             }
             .store(in: &cancelBag)
 
-        return output
+        return Output(
+            updateUserValue: updateUserValue,
+            signOutFailMessage: signOutFailMessage,
+            withdrawalStop: withdrawalStop
+        )
     }
 
     func deleteUserInfo(code: String) async throws {
@@ -69,8 +76,8 @@ final class MyPageViewModel {
             try await myPageUseCase.withdrawal(code: code)
         } catch {
             print(error.localizedDescription)
-            output.withdrawalStop.send()
-            output.signOutFailMessage.send("탈퇴에 실패했어요.")
+            withdrawalStop.send()
+            signOutFailMessage.send("탈퇴에 실패했어요.")
         }
     }
 }

@@ -8,15 +8,13 @@
 import Combine
 import Foundation
 
-import FirebaseAuth
-import FirebaseFirestore
-
 final class UserManager {
 
     static let shared = UserManager()
 
     private(set) var user = User(dictionary: [:])
-//    private var listenerRegistration: ListenerRegistration?
+    private let bcFirestoreService = BCFirestoreService()
+    private let bcFirebaseAuthService = BCFirebaseAuthService()
     let userUpdatePublisher = PassthroughSubject<User, Never>()
 
     private init() {}
@@ -24,40 +22,37 @@ final class UserManager {
     private func userByKeyChain() {
         if let user = KeyChainManager.readUser() {
             self.user = user
-            print(user)
+            print("키체인 매니저", user)
         }
     }
-
-//    private func addUserListener() {
-//        guard let userUUID = Auth.auth().currentUser?.uid else { return }
-//        listenerRegistration = userPath.document(userUUID)
-//            .addSnapshotListener { snapshot, error in
-//                if let error = error {
-//                    print("user 업데이트 실패 \(error.localizedDescription)")
-//                    return
-//                }
-//                guard let dictionary = snapshot?.data() else { return }
-//                let user = User(dictionary: dictionary)
-//                self.user = user
-//                self.userUpdatePublisher.send(user)
-//            }
-//    }
 
     func appStart() {
         userByKeyChain()
     }
 
-//    func addListener() {
-//        addUserListener()
-//    }
+    func addUserListener() {
+        Task { [weak self] in
+            do {
+                guard let self = self else { throw UserManagerError.weakSelfIsNil }
+                let userUUID = try self.bcFirebaseAuthService.getCurrentUserUid()
+                let userAPIModel = try await self.bcFirestoreService.addListenerToUser(userUUID: userUUID)
+                let user = User(userAPIModel: userAPIModel)
+                debugPrint("유저 매니저", user)
+                self.user = user
+                self.userUpdatePublisher.send(user)
+            } catch {
+                debugPrint(error)
+            }
+        }
+    }
+
+    func removeUserListener() {
+        bcFirestoreService.removeUserListener()
+    }
 
     func deleteUserInfo() {
         user = User(dictionary: [:])
     }
-
-//    func removeUserListener() {
-//        listenerRegistration?.remove()
-//    }
 
     func setUserUUID(_ userUUID: String) {
         user = User(dictionary: ["userUUID": userUUID])

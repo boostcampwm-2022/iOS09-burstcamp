@@ -77,6 +77,7 @@ final class MyPageViewController: UIViewController {
 
         output.updateUserValue
             .sink { [weak self] user in
+                debugPrint("viewController", user)
                 self?.myPageView.updateView(user: user)
             }
             .store(in: &cancelBag)

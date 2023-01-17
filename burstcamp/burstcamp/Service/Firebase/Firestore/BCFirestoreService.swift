@@ -19,7 +19,10 @@ protocol BCFirestoreServiceProtocol {
     func updateUser(userUUID: String, user: UserAPIModel) async throws
     func updateUserPushState(userUUID: String, isPushOn: Bool) async throws
     func deleteUser(userUUID: String) async throws
+
     func addListenerToUser(userUUID: String) async throws -> UserAPIModel
+    func removeUserListener()
+
     func countFeedScrap(feedUUID: String) async throws -> Int
     func scrapFeed(_ feed: FeedAPIModel, with userUUID: String) async throws
     func unScrapFeed(_ feed: FeedAPIModel, with userUUID: String) async throws
@@ -116,6 +119,10 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
         let userData = try await firestoreService.addListenerToDocument(userPath, document: userUUID)
 
         return UserAPIModel(data: userData)
+    }
+
+    func removeUserListener() {
+        firestoreService.removeListener()
     }
 
     func countFeedScrap(feedUUID: String) async throws -> Int {

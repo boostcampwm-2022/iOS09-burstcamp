@@ -44,7 +44,8 @@ final class DefaultLoginRepository: LoginRepository {
 
         KeyChainManager.deleteUser()
         let userUUID = UserManager.shared.user.userUUID
-        // TODO: Listener 처리 -> 원래는 리스너 제거 있었음
+        // TODO: Listener 제거
+        UserManager.shared.removeUserListener()
         UserManager.shared.deleteUserInfo()
         return try await bcFirebaseFunctionService.deleteUser(userUUID: userUUID)
     }

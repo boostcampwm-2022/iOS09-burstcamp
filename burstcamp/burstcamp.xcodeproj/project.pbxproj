@@ -22,6 +22,7 @@
 		140FBEF029751E63006B7857 /* FirebaseFunctionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140FBEEF29751E63006B7857 /* FirebaseFunctionError.swift */; };
 		140FBEF2297521A3006B7857 /* MyPageUseCaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140FBEF1297521A3006B7857 /* MyPageUseCaseError.swift */; };
 		140FBEF429756A3D006B7857 /* SignUpBlogViewModelError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140FBEF329756A3D006B7857 /* SignUpBlogViewModelError.swift */; };
+		141299542976376500159C02 /* UserManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141299532976376500159C02 /* UserManagerError.swift */; };
 		141344CD292F800300187B86 /* UI+ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C6292F800300187B86 /* UI+ReusableView.swift */; };
 		141344CE292F800300187B86 /* UINavigationController+configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C7292F800300187B86 /* UINavigationController+configure.swift */; };
 		141344CF292F800300187B86 /* UIStackView+addArrangedSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344C8292F800300187B86 /* UIStackView+addArrangedSubviews.swift */; };
@@ -265,6 +266,7 @@
 		140FBEEF29751E63006B7857 /* FirebaseFunctionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseFunctionError.swift; sourceTree = "<group>"; };
 		140FBEF1297521A3006B7857 /* MyPageUseCaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageUseCaseError.swift; sourceTree = "<group>"; };
 		140FBEF329756A3D006B7857 /* SignUpBlogViewModelError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBlogViewModelError.swift; sourceTree = "<group>"; };
+		141299532976376500159C02 /* UserManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManagerError.swift; sourceTree = "<group>"; };
 		141344C6292F800300187B86 /* UI+ReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UI+ReusableView.swift"; sourceTree = "<group>"; };
 		141344C7292F800300187B86 /* UINavigationController+configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+configure.swift"; sourceTree = "<group>"; };
 		141344C8292F800300187B86 /* UIStackView+addArrangedSubviews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+addArrangedSubviews.swift"; sourceTree = "<group>"; };
@@ -583,6 +585,7 @@
 			isa = PBXGroup;
 			children = (
 				140FBEEA297511DB006B7857 /* URLSessionServiceError.swift */,
+				141299532976376500159C02 /* UserManagerError.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1882,6 +1885,7 @@
 				D8494D482927C9E8008157F1 /* MyPageViewModel.swift in Sources */,
 				14A34D3C2974192800501A66 /* GithubAPI.swift in Sources */,
 				141344D7292F801100187B86 /* TimeInterval+.swift in Sources */,
+				141299542976376500159C02 /* UserManagerError.swift in Sources */,
 				D8494D4A2927CBD4008157F1 /* DefaultButton.swift in Sources */,
 				D89AE4F32935AFE100446AB3 /* Notification+.swift in Sources */,
 				1458C6952928FB1B00E00B80 /* HomeView.swift in Sources */,

@@ -62,6 +62,7 @@ final class DefaultSignUpUseCase: SignUpUseCase {
 
     func signUp(_ user: User) async throws {
         try await userRepository.saveUser(user)
+        KeyChainManager.save(user: user)
     }
 
     func saveFCMToken(_ token: String, to userUUID: String) async throws {

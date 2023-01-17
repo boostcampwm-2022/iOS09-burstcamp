@@ -39,8 +39,7 @@ extension Feed {
 
 extension Feed {
     mutating func toggleScrap() {
-        if isScraped { unScrap() }
-        else { scrap() }
+        isScraped ? unScrap() : scrap()
     }
 
     mutating func scrap() {
