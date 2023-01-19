@@ -23,6 +23,7 @@ final class DefaultMyPageUseCase: MyPageUseCase {
     }
 
     func updateUserPushState(userUUID: String, isPushOn: Bool) async throws {
+        try await userRepository.updateUserPushState(userUUID: userUUID, isPushOn: isPushOn)
     }
 
     func updateUserDarkModeState(appearance: Appearance) {

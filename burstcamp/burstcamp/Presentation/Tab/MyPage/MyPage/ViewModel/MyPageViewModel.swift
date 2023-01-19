@@ -45,7 +45,7 @@ final class MyPageViewModel {
             .sink { isOn in
                 let userUUID = UserManager.shared.user.userUUID
                 Task { [weak self] in
-                    try await self?.bcFirestoreService.updateUserPushState(userUUID: userUUID, isPushOn: isOn)
+                    try await self?.myPageUseCase.updateUserPushState(userUUID: userUUID, isPushOn: isOn)
                 }
             }
             .store(in: &cancelBag)

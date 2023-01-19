@@ -104,7 +104,7 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
     func updateUserPushState(userUUID: String, isPushOn: Bool) async throws {
         let userPath = FirestoreCollection.user.path
 
-        try await firestoreService.updateDocument(userPath, document: userUUID, data: ["isPushOnField": isPushOn])
+        try await firestoreService.updateDocument(userPath, document: userUUID, data: ["isPushOn": isPushOn])
     }
 
     func deleteUser(userUUID: String) async throws {

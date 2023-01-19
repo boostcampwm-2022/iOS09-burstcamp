@@ -15,6 +15,8 @@ final class DefaultUserRepository: UserRepository {
         self.bcFirestoreService = bcFirestoreService
     }
 
+    // MARK: User
+
     func saveUser(_ user: User) async throws {
         let userAPIModel = userToAPIModel(user)
         try await bcFirestoreService.saveUser(userUUID: user.userUUID, user: userAPIModel)
@@ -25,9 +27,15 @@ final class DefaultUserRepository: UserRepository {
         try await bcFirestoreService.saveUser(userUUID: user.userUUID, user: userAPIModel)
     }
 
+    func updateUserPushState(userUUID: String, isPushOn: Bool) async throws {
+        try await bcFirestoreService.updateUserPushState(userUUID: userUUID, isPushOn: isPushOn)
+    }
+
     func removeUser(_ user: User) async throws {
         try await bcFirestoreService.deleteUser(userUUID: user.userUUID)
     }
+
+    // MARK: Token
 
     func saveFCMToken(_ token: String, to userUUID: String) async throws {
         try await bcFirestoreService.saveFCMToken(token, to: userUUID)
