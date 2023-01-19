@@ -8,4 +8,47 @@
 import Foundation
 
 final class DefaultMyPageEditUseCase: MyPageEditUseCase {
+
+    private var imageData: Data?
+    private var beforeUser: User
+    private var editedUser: User
+
+    init(beforeUser: User, editedUser: User) {
+        self.beforeUser = beforeUser
+        self.editedUser = editedUser
+    }
+
+    convenience init() {
+        let user = UserManager.shared.user
+        self.init(beforeUser: user, editedUser: user)
+    }
+
+    func setUserNickname(_ nickname: String) {
+    }
+
+    func setUserBlogURL(_ blogURL: String) {
+    }
+
+    func isValidateEdit() -> Bool {
+        // user & beforeUser 비교
+        return false
+    }
+
+    func updateUser() {
+        // isUserBlogURLChanged
+        // update FirestorageImage
+    }
+
+    private func isUserChanged() -> Bool {
+        return false
+    }
+
+    private func isUserBlogURLChanged() -> Bool {
+        return false
+    }
+
+    private func updateFirestorageImage(_ image: Data) {
+        // 기존 이미지가 있다면 삭제 (깃헙 링크의 경우 이미지가 없으므로 해당 x) -> github Image를 가입할 때 스토리지에 저장해야 할 듯
+        // 새로운 이미지 업로드
+    }
 }
