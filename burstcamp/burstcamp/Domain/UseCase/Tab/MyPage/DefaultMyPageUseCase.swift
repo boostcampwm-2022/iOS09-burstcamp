@@ -29,4 +29,8 @@ final class DefaultMyPageUseCase: MyPageUseCase {
     func updateUserDarkModeState(appearance: Appearance) {
         DarkModeManager.setAppearance(appearance)
     }
+
+    func updateLocalUser(_ user: User) {
+        KeyChainManager.save(user: user)
+    }
 }

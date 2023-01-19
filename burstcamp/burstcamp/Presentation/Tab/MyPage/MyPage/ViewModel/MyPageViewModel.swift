@@ -11,7 +11,6 @@ import Foundation
 final class MyPageViewModel {
 
     private let myPageUseCase: MyPageUseCase
-    private let bcFirestoreService = BCFirestoreService()
 
     private var updateUserValue = CurrentValueSubject<User, Never>(UserManager.shared.user)
     private var withdrawalStop = PassthroughSubject<Void, Never>()
@@ -65,7 +64,7 @@ final class MyPageViewModel {
 
         UserManager.shared.userUpdatePublisher
             .sink { [weak self] user in
-                KeyChainManager.save(user: user)
+                self?.myPageUseCase.updateLocalUser(user)
                 self?.updateUserValue.send(user)
             }
             .store(in: &cancelBag)
