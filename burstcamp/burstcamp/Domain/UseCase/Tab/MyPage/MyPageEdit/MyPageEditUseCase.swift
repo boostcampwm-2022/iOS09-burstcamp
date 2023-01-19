@@ -10,6 +10,6 @@ import Foundation
 protocol MyPageEditUseCase {
     func setUserNickname(_ nickname: String)
     func setUserBlogURL(_ blogURL: String)
-    func isValidateEdit() -> Bool
+    func validateResult() -> MyPageEditValidationResult
     func updateUser() async throws
 }

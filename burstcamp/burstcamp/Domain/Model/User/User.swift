@@ -7,22 +7,33 @@
 
 import Foundation
 
-struct User: Codable {
+struct User: Codable, Equatable {
     let userUUID: String
-    let nickname: String
-    let profileImageURL: String
+    private(set) var nickname: String
+    private(set) var profileImageURL: String
     let domain: Domain
     let camperID: String
     let ordinalNumber: Int
-    let blogURL: String
+    private(set) var blogURL: String
     let blogTitle: String
-    var scrapFeedUUIDs: [String]
+    private(set) var scrapFeedUUIDs: [String]
     let signupDate: Date
     let isPushOn: Bool
+
+    mutating func setNickname(_ nickname: String) {
+        self.nickname = nickname
+    }
+
+    mutating func setProfileImageURL(_ profileImageURL: String) {
+        self.profileImageURL = profileImageURL
+    }
+
+    mutating func setBlogURL(_ blogURL: String) {
+        self.blogURL = blogURL
+    }
 }
 
 extension User {
-
     init(dictionary: [String: Any]) {
         self.userUUID = dictionary["userUUID"] as? String ?? ""
         self.nickname = dictionary["nickname"] as? String ?? ""
@@ -73,7 +84,7 @@ extension User {
         self.signupDate = userAPIModel.signupDate
         self.isPushOn = userAPIModel.isPushOn
     }
-    
+
     var toFeedWriter: FeedWriter {
         return FeedWriter(
             userUUID: self.userUUID,
@@ -83,22 +94,6 @@ extension User {
             domain: self.domain,
             profileImageURL: self.profileImageURL,
             blogTitle: self.blogTitle
-        )
-    }
-
-    func newUser(profileImageURL: String) -> User {
-        return User(
-            userUUID: self.userUUID,
-            nickname: self.nickname,
-            profileImageURL: profileImageURL,
-            domain: self.domain,
-            camperID: self.camperID,
-            ordinalNumber: self.ordinalNumber,
-            blogURL: self.blogURL,
-            blogTitle: self.blogTitle,
-            scrapFeedUUIDs: self.scrapFeedUUIDs,
-            signupDate: self.signupDate,
-            isPushOn: self.isPushOn
         )
     }
 }

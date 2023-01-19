@@ -28,37 +28,47 @@ final class DefaultMyPageEditUseCase: MyPageEditUseCase {
     }
 
     func setUserNickname(_ nickname: String) {
+        editedUser.setNickname(nickname)
     }
 
     func setUserBlogURL(_ blogURL: String) {
+        editedUser.setBlogURL(blogURL)
     }
 
-    func isValidateEdit() -> Bool {
-        // user & beforeUser 비교
-        return false
+    func validateResult() -> MyPageEditValidationResult {
+        let nicknameValidation = Validator.validate(nickname: editedUser.nickname)
+        let blogLinkValidation = Validator.validateIsEmpty(blogLink: editedUser.blogURL)
+        if nicknameValidation && blogLinkValidation {
+            return .validationOK
+        } else if nicknameValidation {
+            return .blogLinkError
+        } else {
+            return .nicknameError
+        }
     }
 
-    func updateUser() async throws{
+    func updateUser() async throws {
+        try await updateFirestorageImage(imageData)
+        try await userRepository.updateUser(editedUser)
+    }
+
+    private func isUserChanged() -> Bool {
+        return editedUser != beforeUser
+    }
+
+    private func isUserBlogURLChanged() -> Bool {
+        return editedUser.blogURL != beforeUser.blogURL
+    }
+
+    private func updateFirestorageImage(_ imageData: Data?) async throws {
+        // 기존 이미지가 있다면 삭제 (깃헙 링크의 경우 이미지가 없으므로 해당 x) -> github Image를 가입할 때 스토리지에 저장해야 할 듯
+        // 새로운 이미지 업로드
         if let imageData = imageData {
             let newProfileImageURL = try await imageRepository.saveProfileImage(
                 imageData: imageData,
                 userUUID: editedUser.userUUID
             )
-            editedUser = editedUser.newUser(profileImageURL: newProfileImageURL)
+            editedUser.setProfileImageURL(newProfileImageURL)
         }
-        try await userRepository.updateUser(editedUser)
-    }
-
-    private func isUserChanged() -> Bool {
-        return false
-    }
-
-    private func isUserBlogURLChanged() -> Bool {
-        return false
-    }
-
-    private func updateFirestorageImage(_ image: Data) {
-        // 기존 이미지가 있다면 삭제 (깃헙 링크의 경우 이미지가 없으므로 해당 x) -> github Image를 가입할 때 스토리지에 저장해야 할 듯
-        // 새로운 이미지 업로드
     }
 }

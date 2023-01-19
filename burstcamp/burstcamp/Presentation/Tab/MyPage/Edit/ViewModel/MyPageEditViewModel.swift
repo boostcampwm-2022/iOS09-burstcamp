@@ -77,7 +77,7 @@ final class MyPageEditViewModel {
         return output
     }
 
-    private func validate() -> MyPageEditValidationResult {
+    func validate() -> MyPageEditValidationResult {
         let nicknameValidation = Validator.validate(nickname: nickname)
         let blogLinkValidation = Validator.validateIsEmpty(blogLink: blogURL)
         if nicknameValidation && blogLinkValidation {
