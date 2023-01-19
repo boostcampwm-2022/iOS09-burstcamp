@@ -10,13 +10,27 @@ import Foundation
 final class DefaultMyPageUseCase: MyPageUseCase {
 
     private let loginRepository: LoginRepository
+    private let userRepository: UserRepository
 
-    init(loginRepository: LoginRepository) {
+    init(loginRepository: LoginRepository, userRepository: UserRepository) {
         self.loginRepository = loginRepository
+        self.userRepository = userRepository
     }
 
     func withdrawal(code: String) async throws {
         let isSuccess = try await loginRepository.withdrawal(code: code)
         if !isSuccess { throw MyPageUseCaseError.withdrawal }
+    }
+
+    func updateUserPushState(userUUID: String, isPushOn: Bool) async throws {
+        try await userRepository.updateUserPushState(userUUID: userUUID, isPushOn: isPushOn)
+    }
+
+    func updateUserDarkModeState(appearance: Appearance) {
+        DarkModeManager.setAppearance(appearance)
+    }
+
+    func updateLocalUser(_ user: User) {
+        KeyChainManager.save(user: user)
     }
 }

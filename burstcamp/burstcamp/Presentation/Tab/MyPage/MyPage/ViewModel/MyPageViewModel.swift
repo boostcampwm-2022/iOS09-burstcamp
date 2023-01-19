@@ -11,7 +11,6 @@ import Foundation
 final class MyPageViewModel {
 
     private let myPageUseCase: MyPageUseCase
-    private let bcFirestoreService = BCFirestoreService()
 
     private var updateUserValue = CurrentValueSubject<User, Never>(UserManager.shared.user)
     private var withdrawalStop = PassthroughSubject<Void, Never>()
@@ -45,7 +44,7 @@ final class MyPageViewModel {
             .sink { isOn in
                 let userUUID = UserManager.shared.user.userUUID
                 Task { [weak self] in
-                    try await self?.bcFirestoreService.updateUserPushState(userUUID: userUUID, isPushOn: isOn)
+                    try await self?.myPageUseCase.updateUserPushState(userUUID: userUUID, isPushOn: isOn)
                 }
             }
             .store(in: &cancelBag)
@@ -53,7 +52,7 @@ final class MyPageViewModel {
         input.darkModeDidSwitch
             .compactMap { Appearance.appearance(isOn: $0) }
             .sink { appearance in
-                DarkModeManager.currentAppearance = appearance
+                self.myPageUseCase.updateUserDarkModeState(appearance: appearance)
             }
             .store(in: &cancelBag)
 
@@ -65,6 +64,7 @@ final class MyPageViewModel {
 
         UserManager.shared.userUpdatePublisher
             .sink { [weak self] user in
+                self?.myPageUseCase.updateLocalUser(user)
                 self?.updateUserValue.send(user)
             }
             .store(in: &cancelBag)

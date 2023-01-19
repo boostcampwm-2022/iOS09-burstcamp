@@ -16,6 +16,7 @@ struct KeyChainManager {
     static func save(user: User) {
         guard let data = try? JSONEncoder().encode(user) else { return }
 
+        deleteUser()
         let query = saveUserQuery(data: data)
         SecItemAdd(query, nil)
     }
