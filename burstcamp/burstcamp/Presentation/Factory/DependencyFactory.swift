@@ -117,7 +117,12 @@ extension DependencyFactory {
     func createMyPageViewModel() -> MyPageViewModel {
         let loginRepository = createLoginRepository()
         let userRepository = createUserRepository()
-        let myPageUseCase = DefaultMyPageUseCase(loginRepository: loginRepository, userRepository: userRepository)
+        let imageRepository = DefaultImageRepository(bcFirestorageService: BCFireStorageService())
+        let myPageUseCase = DefaultMyPageUseCase(
+            loginRepository: loginRepository,
+            userRepository: userRepository,
+            imageRepository: imageRepository
+        )
         return MyPageViewModel(myPageUseCase: myPageUseCase)
     }
 

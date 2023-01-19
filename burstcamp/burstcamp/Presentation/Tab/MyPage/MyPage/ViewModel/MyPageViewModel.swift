@@ -74,7 +74,7 @@ final class MyPageViewModel {
 
     func deleteUserInfo(code: String) async throws {
         do {
-            try await myPageUseCase.withdrawal(code: code)
+            try await myPageUseCase.withdrawal(code: code, userUUID: UserManager.shared.user.userUUID)
         } catch {
             print(error.localizedDescription)
             withdrawalStop.send()

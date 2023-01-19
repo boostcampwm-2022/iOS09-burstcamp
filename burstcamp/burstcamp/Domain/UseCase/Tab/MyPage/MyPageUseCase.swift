@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MyPageUseCase {
-    func withdrawal(code: String) async throws
+    func withdrawal(code: String, userUUID: String) async throws
     func updateUserPushState(userUUID: String, isPushOn: Bool) async throws
     func updateUserDarkModeState(appearance: Appearance)
     func updateLocalUser(_ user: User)

@@ -65,8 +65,7 @@ final class DefaultMyPageEditUseCase: MyPageEditUseCase {
     }
 
     private func updateFirestorageImage(_ imageData: Data?) async throws {
-        // 기존 이미지가 있다면 삭제 (깃헙 링크의 경우 이미지가 없으므로 해당 x) -> github Image를 가입할 때 스토리지에 저장해야 할 듯
-        // 새로운 이미지 업로드
+        // 새로운 이미지 업로드하면 기존 이미지는 덮어씌여짐. 굳이 삭제할 필요가 없음
         if let imageData = imageData {
             let newProfileImageURL = try await imageRepository.saveProfileImage(
                 imageData: imageData,

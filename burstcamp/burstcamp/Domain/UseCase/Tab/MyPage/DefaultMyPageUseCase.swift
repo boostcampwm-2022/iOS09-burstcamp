@@ -11,14 +11,17 @@ final class DefaultMyPageUseCase: MyPageUseCase {
 
     private let loginRepository: LoginRepository
     private let userRepository: UserRepository
+    private let imageRepository: ImageRepository
 
-    init(loginRepository: LoginRepository, userRepository: UserRepository) {
+    init(loginRepository: LoginRepository, userRepository: UserRepository, imageRepository: ImageRepository) {
         self.loginRepository = loginRepository
         self.userRepository = userRepository
+        self.imageRepository = imageRepository
     }
 
-    func withdrawal(code: String) async throws {
+    func withdrawal(code: String, userUUID: String) async throws {
         let isSuccess = try await loginRepository.withdrawal(code: code)
+        try await imageRepository.deleteProfileImage(userUUID: userUUID)
         if !isSuccess { throw MyPageUseCaseError.withdrawal }
     }
 

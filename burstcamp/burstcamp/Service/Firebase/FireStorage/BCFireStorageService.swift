@@ -26,7 +26,7 @@ final class BCFireStorageService {
         let ref = storagePath.reference(withPath: "images/profile/\(userUUID)")
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpeg"
-        
+
         _ = try await ref.putDataAsync(imageData, metadata: metadata)
         let imageURL = try await ref.downloadURL().absoluteString
         return imageURL
