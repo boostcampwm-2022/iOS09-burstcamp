@@ -65,6 +65,7 @@ final class MyPageViewModel {
 
         UserManager.shared.userUpdatePublisher
             .sink { [weak self] user in
+                KeyChainManager.save(user: user)
                 self?.updateUserValue.send(user)
             }
             .store(in: &cancelBag)
