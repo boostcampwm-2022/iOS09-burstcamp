@@ -12,36 +12,39 @@ import FirebaseStorage
 
 final class FireStorageService {
 
-    private static let storagePath = Storage.storage()
+    private let storagePath: Storage
 
-    static func save(image: UIImage) -> AnyPublisher<String, Error> {
-        guard let imageData = image.jpegData(compressionQuality: 0.2)
-        else {
-            return Fail(error: ConvertError.invalidImageConvert)
-                .eraseToAnyPublisher()
+    init(storagePath: Storage) {
+        self.storagePath = storagePath
+    }
+
+    convenience init() {
+        self.init(storagePath: Storage.storage())
+    }
+
+    func save(imageData: Data, to userUUID: String) async throws -> String {
+        let ref = storagePath.reference(withPath: "/images/\(userUUID)")
+
+        do {
+            _ = try await ref.putDataAsync(imageData)
+        } catch {
+            throw FireStorageError.dataUpload
         }
 
-        let filename = UserManager.shared.user.userUUID
-        let ref = storagePath.reference(withPath: "/images/\(filename)")
-
-        return Future<String, Error> { promise in
-            ref.putData(imageData) { _, error in
-                if error != nil {
-                    promise(.failure(FireStorageError.dataUpload))
-                }
-                ref.downloadURL { url, error in
-                    if error != nil {
-                        promise(.failure(FireStorageError.URLDownload))
-                    }
-                    if let url = url {
-                        let imageURL = url.absoluteString
-                        promise(.success(imageURL))
-                    } else {
-                        promise(.failure(FireStorageError.URLDownload))
-                    }
-                }
-            }
+        do {
+            let imageURL = try await ref.downloadURL().absoluteString
+            return imageURL
+        } catch {
+            throw FireStorageError.URLDownload
         }
-        .eraseToAnyPublisher()
+    }
+
+    func deleteProfileImage(userUUID: String) async throws {
+        let ref = storagePath.reference(withPath: "/images/\(userUUID)")
+        do {
+            try await ref.delete()
+        } catch {
+            throw FireStorageError.deleteError
+        }
     }
 }

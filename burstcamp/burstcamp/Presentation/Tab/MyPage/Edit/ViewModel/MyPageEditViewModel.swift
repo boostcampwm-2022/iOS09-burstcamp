@@ -89,14 +89,14 @@ final class MyPageEditViewModel {
         }
     }
 
-    private func profilemageURL() -> AnyPublisher<String, Never> {
-        guard let profileImage = profileImage else {
-            return Just(UserManager.shared.user.profileImageURL).eraseToAnyPublisher()
-        }
+    private func profilemageURL() {
+//        guard let profileImage = profileImage else {
+//            return Just(UserManager.shared.user.profileImageURL).eraseToAnyPublisher()
+//        }
         // TODO: FireStorageService imageRepository로 이동
-        return FireStorageService.save(image: profileImage)
-            .catch { _ in Just(UserManager.shared.user.profileImageURL) }
-            .eraseToAnyPublisher()
+//        return FireStorageService.save(image: profileImage)
+//            .catch { _ in Just(UserManager.shared.user.profileImageURL) }
+//            .eraseToAnyPublisher()
     }
 
     private func saveUser() {
