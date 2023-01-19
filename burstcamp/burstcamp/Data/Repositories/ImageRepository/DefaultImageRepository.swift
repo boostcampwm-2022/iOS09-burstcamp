@@ -8,17 +8,17 @@
 import Foundation
 
 final class DefaultImageRepository: ImageRepository {
-    
+
     private let bcFirestorageService: BCFireStorageService
-    
+
     init(bcFirestorageService: BCFireStorageService) {
         self.bcFirestorageService = bcFirestorageService
     }
-    
+
     func saveProfileImage(imageData: Data, userUUID: String) async throws -> String {
         return try await bcFirestorageService.saveProfileImage(imageData: imageData, to: userUUID)
     }
-    
+
     func deleteProfileImage(userUUID: String) async throws {
         try await bcFirestorageService.deleteProfileImage(userUUID: userUUID)
     }

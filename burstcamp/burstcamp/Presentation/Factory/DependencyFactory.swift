@@ -13,7 +13,7 @@ final class DependencyFactory: DependencyFactoryProtocol {
 
     // MARK: - UseCase
     private func createDefaultSignUpUseCase() -> SignUpUseCase {
-        let userRepository = DefaultUserRepository(bcFirestoreService: BCFirestoreService())
+        let userRepository = createUserRepository()
         let blogRepository = createBlogRepository()
         return DefaultSignUpUseCase(
             userRepository: userRepository,
@@ -36,6 +36,15 @@ final class DependencyFactory: DependencyFactoryProtocol {
     private func createBlogRepository() -> BlogRepository {
         let bcFirebaseFunctionService = BCFirebaseFunctionService()
         return DefaultBlogRepository(
+            bcFirebaseFunctionService: bcFirebaseFunctionService
+        )
+    }
+
+    private func createUserRepository() -> UserRepository {
+        let bcFirestoreService = BCFirestoreService()
+        let bcFirebaseFunctionService = BCFirebaseFunctionService()
+        return DefaultUserRepository(
+            bcFirestoreService: bcFirestoreService,
             bcFirebaseFunctionService: bcFirebaseFunctionService
         )
     }
@@ -107,13 +116,18 @@ extension DependencyFactory {
 
     func createMyPageViewModel() -> MyPageViewModel {
         let loginRepository = createLoginRepository()
-        let userRepository = DefaultUserRepository(bcFirestoreService: BCFirestoreService())
+        let userRepository = createUserRepository()
         let myPageUseCase = DefaultMyPageUseCase(loginRepository: loginRepository, userRepository: userRepository)
         return MyPageViewModel(myPageUseCase: myPageUseCase)
     }
 
     func createMyPageEditViewModel() -> MyPageEditViewModel {
-        let myPageEditUseCase = DefaultMyPageEditUseCase()
+        let imageRepository = DefaultImageRepository(bcFirestorageService: BCFireStorageService())
+        let userRepository = createUserRepository()
+        let myPageEditUseCase = DefaultMyPageEditUseCase(
+            imageRepository: imageRepository,
+            userRepository: userRepository
+        )
         return MyPageEditViewModel(myPageEditUseCase: myPageEditUseCase)
     }
 }

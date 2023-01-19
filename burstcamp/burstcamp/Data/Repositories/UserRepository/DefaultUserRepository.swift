@@ -10,11 +10,12 @@ import Foundation
 final class DefaultUserRepository: UserRepository {
 
     private let bcFirestoreService: BCFirestoreService
+    private let bcFirebaseFunctionService: BCFirebaseFunctionService
 
-    init(bcFirestoreService: BCFirestoreService) {
+    init(bcFirestoreService: BCFirestoreService, bcFirebaseFunctionService: BCFirebaseFunctionService) {
         self.bcFirestoreService = bcFirestoreService
+        self.bcFirebaseFunctionService = bcFirebaseFunctionService
     }
-
     // MARK: User
 
     func saveUser(_ user: User) async throws {
@@ -25,6 +26,7 @@ final class DefaultUserRepository: UserRepository {
     func updateUser(_ user: User) async throws {
         let userAPIModel = userToAPIModel(user)
         try await bcFirestoreService.saveUser(userUUID: user.userUUID, user: userAPIModel)
+        try await bcFirebaseFunctionService.updateUserDB(user: userAPIModel)
     }
 
     func updateUserPushState(userUUID: String, isPushOn: Bool) async throws {

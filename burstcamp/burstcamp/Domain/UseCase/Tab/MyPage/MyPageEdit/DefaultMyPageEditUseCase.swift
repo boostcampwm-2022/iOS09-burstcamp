@@ -12,15 +12,19 @@ final class DefaultMyPageEditUseCase: MyPageEditUseCase {
     private var imageData: Data?
     private var beforeUser: User
     private var editedUser: User
+    private let imageRepository: ImageRepository
+    private let userRepository: UserRepository
 
-    init(beforeUser: User, editedUser: User) {
+    init(beforeUser: User, editedUser: User, imageRepository: ImageRepository, userRepository: UserRepository) {
         self.beforeUser = beforeUser
         self.editedUser = editedUser
+        self.imageRepository = imageRepository
+        self.userRepository = userRepository
     }
 
-    convenience init() {
+    convenience init(imageRepository: ImageRepository, userRepository: UserRepository) {
         let user = UserManager.shared.user
-        self.init(beforeUser: user, editedUser: user)
+        self.init(beforeUser: user, editedUser: user, imageRepository: imageRepository, userRepository: userRepository)
     }
 
     func setUserNickname(_ nickname: String) {

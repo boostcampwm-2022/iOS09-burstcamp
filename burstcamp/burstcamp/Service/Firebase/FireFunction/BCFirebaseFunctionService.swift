@@ -42,6 +42,11 @@ final class BCFirebaseFunctionService {
             throw FirebaseFunctionError.deleteUser
         }
     }
+
+    func updateUserDB(user: UserAPIModel) async throws {
+        // TODO: 유저 업데이트 함수 호출
+        debugPrint("유저 DB 업데이트 팡숀")
+    }
 }
 
 extension BCFirebaseFunctionService {
