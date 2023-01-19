@@ -53,7 +53,7 @@ final class MyPageViewModel {
         input.darkModeDidSwitch
             .compactMap { Appearance.appearance(isOn: $0) }
             .sink { appearance in
-                DarkModeManager.currentAppearance = appearance
+                self.myPageUseCase.updateUserDarkModeState(appearance: appearance)
             }
             .store(in: &cancelBag)
 

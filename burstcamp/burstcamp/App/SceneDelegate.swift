@@ -60,6 +60,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func setInitialDarkMode() {
-        DarkModeManager.currentAppearance = UserDefaultsManager.currentAppearance()
+        let currentAppearance = UserDefaultsManager.currentAppearance()
+        DarkModeManager.setAppearance(currentAppearance)
     }
 }

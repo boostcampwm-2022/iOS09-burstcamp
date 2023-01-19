@@ -26,5 +26,6 @@ final class DefaultMyPageUseCase: MyPageUseCase {
     }
 
     func updateUserDarkModeState(appearance: Appearance) {
+        DarkModeManager.setAppearance(appearance)
     }
 }

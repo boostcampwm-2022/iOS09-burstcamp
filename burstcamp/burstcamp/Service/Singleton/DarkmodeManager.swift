@@ -8,13 +8,9 @@
 import UIKit
 
 struct DarkModeManager {
-    static var currentAppearance: Appearance = UserDefaultsManager.currentAppearance() {
-        didSet {
-            setAppearance(currentAppearance)
-        }
-    }
+    static private(set) var currentAppearance: Appearance = UserDefaultsManager.currentAppearance()
 
-    private static func setAppearance(_ appearance: Appearance) {
+    static func setAppearance(_ appearance: Appearance) {
         UserDefaultsManager.saveAppearance(appearance: appearance)
         setWindowAppearance(appearance: appearance)
     }
