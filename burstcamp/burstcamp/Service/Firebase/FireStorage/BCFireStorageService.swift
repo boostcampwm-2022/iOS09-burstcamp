@@ -10,7 +10,7 @@ import UIKit
 
 import FirebaseStorage
 
-final class FireStorageService {
+final class BCFireStorageService {
 
     private let storagePath: Storage
 
@@ -22,8 +22,8 @@ final class FireStorageService {
         self.init(storagePath: Storage.storage())
     }
 
-    func save(imageData: Data, to userUUID: String) async throws -> String {
-        let ref = storagePath.reference(withPath: "/images/\(userUUID)")
+    func saveProfileImage(imageData: Data, to userUUID: String) async throws -> String {
+        let ref = storagePath.reference(withPath: "/images/profile/\(userUUID)")
 
         do {
             _ = try await ref.putDataAsync(imageData)
@@ -40,7 +40,7 @@ final class FireStorageService {
     }
 
     func deleteProfileImage(userUUID: String) async throws {
-        let ref = storagePath.reference(withPath: "/images/\(userUUID)")
+        let ref = storagePath.reference(withPath: "/images/profile/\(userUUID)")
         do {
             try await ref.delete()
         } catch {
