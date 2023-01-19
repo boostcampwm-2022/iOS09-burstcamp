@@ -23,28 +23,17 @@ final class BCFireStorageService {
     }
 
     func saveProfileImage(imageData: Data, to userUUID: String) async throws -> String {
-        let ref = storagePath.reference(withPath: "/images/profile/\(userUUID)")
-
-        do {
-            _ = try await ref.putDataAsync(imageData)
-        } catch {
-            throw FireStorageError.dataUpload
-        }
-
-        do {
-            let imageURL = try await ref.downloadURL().absoluteString
-            return imageURL
-        } catch {
-            throw FireStorageError.URLDownload
-        }
+        let ref = storagePath.reference(withPath: "images/profile/\(userUUID)")
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        
+        _ = try await ref.putDataAsync(imageData, metadata: metadata)
+        let imageURL = try await ref.downloadURL().absoluteString
+        return imageURL
     }
 
     func deleteProfileImage(userUUID: String) async throws {
-        let ref = storagePath.reference(withPath: "/images/profile/\(userUUID)")
-        do {
-            try await ref.delete()
-        } catch {
-            throw FireStorageError.deleteError
-        }
+        let ref = storagePath.reference(withPath: "images/profile/\(userUUID)")
+        try await ref.delete()
     }
 }

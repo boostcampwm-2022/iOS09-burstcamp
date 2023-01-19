@@ -28,7 +28,7 @@ final class MyPageEditViewController: UIViewController {
     private var cancelBag = Set<AnyCancellable>()
 
     var coordinatorPublisher = PassthroughSubject<MyPageCoordinatorEvent, Never>()
-    var imagePickerPublisher = PassthroughSubject<UIImage?, Never>()
+    var imagePickerPublisher = PassthroughSubject<Data?, Never>()
 
     private lazy var phpickerConfiguration: PHPickerConfiguration = {
         var configuration = PHPickerConfiguration()
@@ -129,7 +129,8 @@ extension MyPageEditViewController: PHPickerViewControllerDelegate {
                 DispatchQueue.main.async {
                     let image = image as? UIImage
                     self.myPageEditView.profileImageView.image = image
-                    self.imagePickerPublisher.send(image)
+                    let imageData = image?.jpegData(compressionQuality: 0.2)
+                    self.imagePickerPublisher.send(imageData)
                 }
             }
         }

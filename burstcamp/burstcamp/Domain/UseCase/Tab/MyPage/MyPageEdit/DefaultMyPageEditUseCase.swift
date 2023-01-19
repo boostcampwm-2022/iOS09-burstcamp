@@ -35,6 +35,10 @@ final class DefaultMyPageEditUseCase: MyPageEditUseCase {
         editedUser.setBlogURL(blogURL)
     }
 
+    func setImageData(_ imageData: Data?) {
+        self.imageData = imageData
+    }
+
     func validateResult() -> MyPageEditValidationResult {
         let nicknameValidation = Validator.validate(nickname: editedUser.nickname)
         let blogLinkValidation = Validator.validateIsEmpty(blogLink: editedUser.blogURL)
