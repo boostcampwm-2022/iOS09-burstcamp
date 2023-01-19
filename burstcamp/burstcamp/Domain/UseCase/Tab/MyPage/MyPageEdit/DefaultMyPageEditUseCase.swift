@@ -38,9 +38,15 @@ final class DefaultMyPageEditUseCase: MyPageEditUseCase {
         return false
     }
 
-    func updateUser() {
-        // isUserBlogURLChanged
-        // update FirestorageImage
+    func updateUser() async throws{
+        if let imageData = imageData {
+            let newProfileImageURL = try await imageRepository.saveProfileImage(
+                imageData: imageData,
+                userUUID: editedUser.userUUID
+            )
+            editedUser = editedUser.newUser(profileImageURL: newProfileImageURL)
+        }
+        try await userRepository.updateUser(editedUser)
     }
 
     private func isUserChanged() -> Bool {

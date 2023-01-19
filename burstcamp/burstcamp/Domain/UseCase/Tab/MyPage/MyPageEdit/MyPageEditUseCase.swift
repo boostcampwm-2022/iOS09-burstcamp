@@ -11,5 +11,5 @@ protocol MyPageEditUseCase {
     func setUserNickname(_ nickname: String)
     func setUserBlogURL(_ blogURL: String)
     func isValidateEdit() -> Bool
-    func updateUser()
+    func updateUser() async throws
 }

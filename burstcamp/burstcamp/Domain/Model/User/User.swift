@@ -73,7 +73,7 @@ extension User {
         self.signupDate = userAPIModel.signupDate
         self.isPushOn = userAPIModel.isPushOn
     }
-
+    
     var toFeedWriter: FeedWriter {
         return FeedWriter(
             userUUID: self.userUUID,
@@ -83,6 +83,22 @@ extension User {
             domain: self.domain,
             profileImageURL: self.profileImageURL,
             blogTitle: self.blogTitle
+        )
+    }
+
+    func newUser(profileImageURL: String) -> User {
+        return User(
+            userUUID: self.userUUID,
+            nickname: self.nickname,
+            profileImageURL: profileImageURL,
+            domain: self.domain,
+            camperID: self.camperID,
+            ordinalNumber: self.ordinalNumber,
+            blogURL: self.blogURL,
+            blogTitle: self.blogTitle,
+            scrapFeedUUIDs: self.scrapFeedUUIDs,
+            signupDate: self.signupDate,
+            isPushOn: self.isPushOn
         )
     }
 }
