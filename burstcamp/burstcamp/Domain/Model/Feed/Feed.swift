@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Feed: Equatable {
+struct Feed: Hashable {
     let feedUUID: String
     let writer: FeedWriter
     let title: String
