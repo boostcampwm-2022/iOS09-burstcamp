@@ -8,4 +8,8 @@
 import Foundation
 
 protocol HomeUseCase {
+    func fetchRecentHomeFeedList() async throws -> HomeFeedList
+    func fetchMoreNormalFeed() async throws -> [Feed]
+    func scrapFeed(_ feed: Feed, userUUID: String) async throws
+    func unScrapFeed(_ feed: Feed, userUUID: String) async throws
 }

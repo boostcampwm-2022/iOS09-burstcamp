@@ -199,6 +199,7 @@ final class HomeViewController: UIViewController {
     }
 
     private func paginateFeed() {
+        print("---- paginagte -----")
         paginationPublisher.send(Void())
     }
 }
