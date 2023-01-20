@@ -10,7 +10,7 @@ import Foundation
 
 import BCFetcher
 
-private struct HomeFeedList: Equatable {
+struct HomeFeedList: Equatable {
     let recommendFeed: [Feed]
     let normalFeed: [Feed]
 }
@@ -32,7 +32,8 @@ final class HomeViewModel {
         self.remoteDataSource = FeedRemoteDataSource.shared
     }
 
-    private let reloadData = CurrentValueSubject<Void?, Never>(nil)
+    private let recentFeed = CurrentValueSubject<HomeFeedList?, Never>(nil)
+    private let moreFeed = CurrentValueSubject<[Feed]?, Never>(nil)
     private let hideIndicator = CurrentValueSubject<Void?, Never>(nil)
     private let showAlert = CurrentValueSubject<Error?, Never>(nil)
 
@@ -43,7 +44,8 @@ final class HomeViewModel {
     }
 
     struct Output {
-        let reloadData: AnyPublisher<Void, Never>
+        let recentFeed: AnyPublisher<HomeFeedList, Never>
+        let moreFeed: AnyPublisher<[Feed], Never>
         let hideIndicator: AnyPublisher<Void, Never>
         let showAlert: AnyPublisher<Error, Never>
     }
@@ -85,10 +87,10 @@ final class HomeViewModel {
                 fetcher.fetch { status, data in
                     switch status {
                     case .loading:
-                        self.reloadData.send(Void())
+                        self.recentFeed.send(data)
                     case .success:
                         self.hideIndicator.send(Void())
-                        self.reloadData.send(Void())
+                        self.recentFeed.send(data)
                     case .failure(let error):
                         self.hideIndicator.send(Void())
                         self.showAlert.send(error)
@@ -102,7 +104,8 @@ final class HomeViewModel {
             .store(in: &cancelBag)
 
         return Output(
-            reloadData: reloadData.unwrap().eraseToAnyPublisher(),
+            recentFeed: recentFeed.unwrap().eraseToAnyPublisher(),
+            moreFeed: moreFeed.unwrap().eraseToAnyPublisher(),
             hideIndicator: hideIndicator.unwrap().eraseToAnyPublisher(),
             showAlert: showAlert.unwrap().eraseToAnyPublisher()
         )
