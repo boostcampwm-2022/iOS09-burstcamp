@@ -21,6 +21,9 @@ final class HomeViewController: UIViewController {
     }
     private var loadingView: LoadingView!
 
+    private var dataSource: UICollectionViewDiffableDataSource<FeedCellType, Feed>!
+    private var collectionViewSnapShot: NSDiffableDataSourceSnapshot<FeedCellType, Feed>!
+
     private var viewModel: HomeViewModel
     private var cancelBag = Set<AnyCancellable>()
     let coordinatorPublisher = PassthroughSubject<HomeCoordinatorEvent, Never>()
@@ -43,6 +46,7 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         collectionViewDelegate()
+        configureDataSource()
         bind()
         configurePushNotification()
     }
@@ -64,6 +68,80 @@ final class HomeViewController: UIViewController {
         homeView.collectionViewDelegate(viewController: self)
     }
 
+    private func configureDataSource() {
+        dataSource = UICollectionViewDiffableDataSource(
+            collectionView: homeView.collectionView,
+            cellProvider: { collectionView, indexPath, _ in
+                let feedCellType = FeedCellType(index: indexPath.section)
+
+                switch feedCellType {
+                case .recommend:
+                    guard let cell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: RecommendFeedCell.identifier,
+                        for: indexPath
+                    ) as? RecommendFeedCell
+                    else {
+                        return UICollectionViewCell()
+                    }
+                    let index = indexPath.row % 3
+                    let feed = self.viewModel.recommendFeedData[index]
+                    cell.updateView(with: feed)
+                    return cell
+                case .normal:
+                    guard let cell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: NormalFeedCell.identifier,
+                        for: indexPath
+                    ) as? NormalFeedCell
+                    else {
+                        return UICollectionViewCell()
+                    }
+                    let index = indexPath.row
+                    let feed = self.viewModel.normalFeedData[index]
+                    let cellViewModel = self.viewModel.dequeueCellViewModel(at: index)
+
+                    cell.configure(with: cellViewModel)
+                    cell.updateFeedCell(with: feed)
+                    return cell
+                case .none:
+                    return UICollectionViewCell()
+                }
+            })
+
+        dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
+            return self?.dataSourceSupplementary(collectionView: collectionView, kind: kind, indexPath: indexPath)
+        }
+
+        collectionViewSnapShot = NSDiffableDataSourceSnapshot<FeedCellType, Feed>()
+        collectionViewSnapShot.appendSections([.recommend, .normal])
+    }
+
+    private func dataSourceSupplementary(
+        collectionView: UICollectionView,
+        kind: String,
+        indexPath: IndexPath
+    ) -> UICollectionReusableView? {
+        switch  FeedCellType(index: indexPath.section) {
+        case .recommend:
+            guard let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: UICollectionView.elementKindSectionHeader,
+                withReuseIdentifier: RecommendFeedHeader.identifier,
+                for: indexPath
+            ) as? RecommendFeedHeader else {
+                return UICollectionReusableView()
+            }
+
+            return header
+        default:
+            return nil
+        }
+    }
+
+    private func applySnapshot(homeFeedList: HomeFeedList) {
+        collectionViewSnapShot.appendItems(homeFeedList.recommendFeed, toSection: .recommend)
+        collectionViewSnapShot.appendItems(homeFeedList.normalFeed, toSection: .normal)
+        dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
+    }
+
     @objc private func scrollToTop() {
         homeView.collectionViewScrollToTop()
     }
@@ -82,10 +160,17 @@ final class HomeViewController: UIViewController {
 
         let output = viewModel.transform(input: input)
 
-        output.reloadData
+        output.recentFeed
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.homeView.collectionView.reloadData()
+            .sink { [weak self] homeFeedList in
+                self?.applySnapshot(homeFeedList: homeFeedList)
+            }
+            .store(in: &cancelBag)
+
+        output.moreFeed
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] feed in
+                // 피드 스냅샷
             }
             .store(in: &cancelBag)
 
@@ -109,10 +194,7 @@ final class HomeViewController: UIViewController {
     }
 }
 
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return FeedCellType.count
-    }
+extension HomeViewController: UICollectionViewDelegate {
 
     func collectionView(
         _ collectionView: UICollectionView,
@@ -124,65 +206,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         case .normal: return viewModel.normalFeedData.count
         case .none: return 0
         }
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        let feedCellType = FeedCellType(index: indexPath.section)
-
-        switch feedCellType {
-        case .recommend:
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: RecommendFeedCell.identifier,
-                for: indexPath
-            ) as? RecommendFeedCell
-            else {
-                return UICollectionViewCell()
-            }
-            let index = indexPath.row % 3
-            let feed = viewModel.recommendFeedData[index]
-            cell.updateView(with: feed)
-            return cell
-        case .normal:
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: NormalFeedCell.identifier,
-                for: indexPath
-            ) as? NormalFeedCell
-            else {
-                return UICollectionViewCell()
-            }
-            let index = indexPath.row
-            let feed = viewModel.normalFeedData[index]
-            let cellViewModel = viewModel.dequeueCellViewModel(at: index)
-
-            cell.configure(with: cellViewModel)
-            cell.updateFeedCell(with: feed)
-            return cell
-        case .none:
-            return UICollectionViewCell()
-        }
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        viewForSupplementaryElementOfKind kind: String,
-        at indexPath: IndexPath
-    ) -> UICollectionReusableView {
-        if kind == UICollectionView.elementKindSectionHeader
-            && FeedCellType(index: indexPath.section) == .recommend {
-            guard let header = collectionView.dequeueReusableSupplementaryView(
-                ofKind: UICollectionView.elementKindSectionHeader,
-                withReuseIdentifier: RecommendFeedHeader.identifier,
-                for: indexPath
-            ) as? RecommendFeedHeader else {
-                return UICollectionReusableView()
-            }
-
-            return header
-        }
-        return UICollectionReusableView()
     }
 
     func collectionView(
