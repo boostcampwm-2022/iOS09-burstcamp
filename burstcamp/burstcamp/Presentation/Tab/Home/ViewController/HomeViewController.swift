@@ -113,6 +113,9 @@ final class HomeViewController: UIViewController {
 
         collectionViewSnapShot = NSDiffableDataSourceSnapshot<FeedCellType, Feed>()
         collectionViewSnapShot.appendSections([.recommend, .normal])
+        collectionViewSnapShot.appendItems(viewModel.recommendFeedData, toSection: .recommend)
+        collectionViewSnapShot.appendItems(viewModel.normalFeedData, toSection: .normal)
+        dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
     }
 
     private func dataSourceSupplementary(
@@ -136,7 +139,13 @@ final class HomeViewController: UIViewController {
         }
     }
 
-    private func applySnapshot(homeFeedList: HomeFeedList) {
+    private func reloadSnapshot(homeFeedList: HomeFeedList) {
+        let previousRecommendFeedData = collectionViewSnapShot.itemIdentifiers(inSection: .recommend)
+        let previousNormalFeedData = collectionViewSnapShot.itemIdentifiers(inSection: .normal)
+        collectionViewSnapShot.deleteItems(previousRecommendFeedData)
+        collectionViewSnapShot.deleteItems(previousNormalFeedData)
+
+        print(collectionViewSnapShot.sectionIdentifiers)
         collectionViewSnapShot.appendItems(homeFeedList.recommendFeed, toSection: .recommend)
         collectionViewSnapShot.appendItems(homeFeedList.normalFeed, toSection: .normal)
         dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
@@ -163,7 +172,7 @@ final class HomeViewController: UIViewController {
         output.recentFeed
             .receive(on: DispatchQueue.main)
             .sink { [weak self] homeFeedList in
-                self?.applySnapshot(homeFeedList: homeFeedList)
+                self?.reloadSnapshot(homeFeedList: homeFeedList)
             }
             .store(in: &cancelBag)
 
