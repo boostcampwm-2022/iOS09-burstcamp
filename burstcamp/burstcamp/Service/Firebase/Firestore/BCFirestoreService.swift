@@ -134,9 +134,11 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
         ]
         batch.setData(scrapUserData, forDocument: scrapUserPath)
 
-        // user - scrapFeedUUIDs 에 추가
+        // user - scrapFeedUUIDs 배열에 feedUUID 추가
+        let userPath = firestoreService.getDocumentPath(collection: FirestoreCollection.user.path, document: userUUID)
+        batch.updateData([FirestoreCollection.scrapFeedUUIDs: FieldValue.arrayUnion([feedUUID])], forDocument: userPath)
 
-        // user - feed에 feed 데이터 추가
+        // user - feed 컬렉션에 feed 데이터 추가
         let scrapFeedPath = firestoreService.getDocumentPath(
             collection: FirestoreCollection.scrapFeeds(userUUID: userUUID).path,
             document: feedUUID
@@ -163,6 +165,10 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
             document: userUUID
         )
         batch.deleteDocument(scrapUserPath)
+
+        // user - scrapFeedUUIDs 배열에 feedUUID 추가
+        let userPath = firestoreService.getDocumentPath(collection: FirestoreCollection.user.path, document: userUUID)
+        batch.updateData([FirestoreCollection.scrapFeedUUIDs: FieldValue.arrayRemove([feedUUID])], forDocument: userPath)
 
         // user - feed에 feed 데이터 삭제
         let scrapFeedPath = firestoreService.getDocumentPath(
