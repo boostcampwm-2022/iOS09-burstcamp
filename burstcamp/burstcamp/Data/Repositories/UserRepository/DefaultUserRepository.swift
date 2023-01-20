@@ -37,10 +37,6 @@ final class DefaultUserRepository: UserRepository {
         try await bcFirestoreService.deleteUser(userUUID: user.userUUID)
     }
 
-    // MARK: Feed Scrap
-    func saveScrapFeedUUID(_ scrapFeedUUID: String, to user: User) async throws {
-    }
-
     // MARK: Token
 
     func saveFCMToken(_ token: String, to userUUID: String) async throws {

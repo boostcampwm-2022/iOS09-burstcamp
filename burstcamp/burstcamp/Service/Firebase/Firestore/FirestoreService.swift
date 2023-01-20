@@ -188,6 +188,34 @@ final class FirestoreService {
         as Void
     }
 
+    public func updateDocumentArrayElement(
+        _ collectionPath: String,
+        document: String,
+        field: String,
+        element: Any
+    ) async throws {
+        try await database
+            .collection(collectionPath)
+            .document(document)
+            .updateData([
+                field: FieldValue.arrayUnion([element])
+            ])
+    }
+
+    public func removeDocumentArrayElement(
+        _ collectionPath: String,
+        document: String,
+        field: String,
+        element: Any
+    ) async throws {
+        try await database
+            .collection(collectionPath)
+            .document(document)
+            .updateData([
+                field: FieldValue.arrayRemove([element])
+            ])
+    }
+
     public func deleteDocument(_ collectionPath: String, document: String) async throws {
         try await withCheckedThrowingContinuation { continuation in
             database

@@ -134,6 +134,8 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
         ]
         batch.setData(scrapUserData, forDocument: scrapUserPath)
 
+        // user - scrapFeedUUIDs 에 추가
+
         // user - feed에 feed 데이터 추가
         let scrapFeedPath = firestoreService.getDocumentPath(
             collection: FirestoreCollection.scrapFeeds(userUUID: userUUID).path,
