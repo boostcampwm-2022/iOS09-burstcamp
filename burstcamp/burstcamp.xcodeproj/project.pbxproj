@@ -715,6 +715,13 @@
 			path = RecommendFeedSection;
 			sourceTree = "<group>";
 		};
+		145F21FF297AE6EE0081C489 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		145FB8A1292E44B800BA7B3B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1468,6 +1475,7 @@
 				1496CF1F294080E6008F312F /* Firebase */,
 				14A34D38297417E400501A66 /* GithubAPIKey */,
 				14129970297660F000159C02 /* Singleton */,
+				145F21FF297AE6EE0081C489 /* Network */,
 			);
 			path = Service;
 			sourceTree = "<group>";

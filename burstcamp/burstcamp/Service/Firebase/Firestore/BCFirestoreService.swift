@@ -73,6 +73,9 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
     func fetchMoreNormalFeeds() async throws -> [FeedAPIModel] {
         let result = try await firestoreService.getCollection(query: feedQuery)
         self.lastSnapShot = result.lastSnapshot
+        if self.lastSnapShot == nil {
+            throw FirestoreServiceError.lastFetch
+        }
 
         return result.collectionData.map { FeedAPIModel(data: $0) }
     }

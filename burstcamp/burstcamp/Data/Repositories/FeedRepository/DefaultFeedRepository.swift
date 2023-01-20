@@ -25,7 +25,7 @@ final class DefaultFeedRepository: FeedRepository {
     }
 
     func fetchMoreNormalFeed() async throws -> [Feed] {
-        return try await bcFirestoreService.fetchMoreNormalFeeds().map { Feed(feedAPIModel: $0) }
+        return try await bcFirestoreService.fetchMoreNormalFeeds().map { Feed(feedAPIModel: $0)}
     }
 
     func scrapFeed(_ feed: Feed, userUUID: String) async throws {
