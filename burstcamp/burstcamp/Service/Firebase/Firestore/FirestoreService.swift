@@ -45,71 +45,27 @@ final class FirestoreService {
     }
 
     public func getCollection(_ collectionPath: String) async throws -> [FirestoreData] {
-        try await withCheckedThrowingContinuation { continuation in
-            database
-                .collection(collectionPath)
-                .getDocuments { querySnapshot, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    guard let querySnapShot = querySnapshot else {
-                        continuation.resume(throwing: FirestoreServiceError.getCollection)
-                        return
-                    }
-                    let collectionData = querySnapShot.documents.map { $0.data() }
-                    continuation.resume(returning: collectionData)
-                }
-        }
+        let querySnapshot = try await database.collection(collectionPath).getDocuments()
+        return querySnapshot.documents.map { $0.data() }
     }
 
     public func getCollection(
         _ collectionPath: String,
         _ makeQuery: (_ collection: CollectionReference) -> Query
     ) async throws -> [FirestoreData] {
-        try await withCheckedThrowingContinuation { continuation in
-            makeQuery(database.collection(collectionPath))
-                .getDocuments(completion: { querySnapshot, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    guard let querySnapShot = querySnapshot else {
-                        continuation.resume(throwing: FirestoreServiceError.getCollection)
-                        return
-                    }
-                    let collectionData = querySnapShot.documents.map { $0.data() }
-                    continuation.resume(returning: collectionData)
-                })
-        }
+        let querySnapshot = try await makeQuery(database.collection(collectionPath)).getDocuments()
+        return querySnapshot.documents.map { $0.data() }
     }
 
     public func getCollection(query: Query) async throws -> (
         collectionData: [FirestoreData],
         lastSnapshot: QueryDocumentSnapshot?
     ) {
-        try await withCheckedThrowingContinuation { continuation in
-            query
-                .getDocuments { querySnapshot, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    guard let querySnapshot = querySnapshot else {
-                        continuation.resume(throwing: FirestoreServiceError.getCollection)
-                        return
-                    }
-                    let lastSnapshot = querySnapshot.documents.last
-                    if lastSnapshot == nil {
-                        continuation.resume(throwing: FirestoreServiceError.lastCollection)
-                        return
-                    }
+        let querySnapshot = try await query.getDocuments()
+        let lastSnapshot = querySnapshot.documents.last
+        let collectionData = querySnapshot.documents.map { $0.data() }
 
-                    let collectionData = querySnapshot.documents.map { $0.data() }
-                    let result = (collectionData, lastSnapshot)
-                    continuation.resume(returning: result)
-                }
-        }
+        return(collectionData, lastSnapshot)
     }
 
     public func countCollection(_ collectionPath: String) async throws -> Int {
@@ -128,24 +84,11 @@ final class FirestoreService {
     }
 
     public func getDocument(_ collectionPath: String, document: String) async throws -> FirestoreData {
-        try await withCheckedThrowingContinuation { continuation in
-            database
-                .collection(collectionPath)
-                .document(document)
-                .getDocument { documentSnapshot, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    guard let documentSnapshot = documentSnapshot,
-                          let documentData = documentSnapshot.data()
-                    else {
-                        continuation.resume(throwing: FirestoreServiceError.getDocument)
-                        return
-                    }
-                    continuation.resume(returning: documentData)
-                }
+        let documentSnapshot = try await database.collection(collectionPath).document(document).getDocument()
+        guard let documentData = documentSnapshot.data() else {
+            throw FirestoreServiceError.getDocument
         }
+        return documentData
     }
 
     public func createDocument(
@@ -153,19 +96,7 @@ final class FirestoreService {
         document: String,
         data: FirestoreData
     ) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            database
-                .collection(collectionPath)
-                .document(document)
-                .setData(data) { error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    continuation.resume()
-                }
-        }
-        as Void
+        try await database.collection(collectionPath).document(document).setData(data)
     }
 
     public func updateDocument(
@@ -173,19 +104,7 @@ final class FirestoreService {
         document: String,
         data: FirestoreData
     )  async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            database
-                .collection(collectionPath)
-                .document(document)
-                .updateData(data) { error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    continuation.resume()
-                }
-        }
-        as Void
+        try await database.collection(collectionPath).document(document).updateData(data)
     }
 
     public func updateDocumentArrayElement(
@@ -194,10 +113,7 @@ final class FirestoreService {
         field: String,
         element: Any
     ) async throws {
-        try await database
-            .collection(collectionPath)
-            .document(document)
-            .updateData([
+        try await database.collection(collectionPath).document(document).updateData([
                 field: FieldValue.arrayUnion([element])
             ])
     }
@@ -208,33 +124,17 @@ final class FirestoreService {
         field: String,
         element: Any
     ) async throws {
-        try await database
-            .collection(collectionPath)
-            .document(document)
-            .updateData([
+        try await database.collection(collectionPath).document(document).updateData([
                 field: FieldValue.arrayRemove([element])
             ])
     }
 
     public func deleteDocument(_ collectionPath: String, document: String) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            database
-                .collection(collectionPath)
-                .document(document)
-                .delete { error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                    continuation.resume()
-                }
-        } as Void
+        try await database.collection(collectionPath).document(document).delete()
     }
 
     public func getDocumentReference(_ collectionPath: String, document: String) -> DocumentReference {
-        return database
-            .collection(collectionPath)
-            .document(document)
+        return database.collection(collectionPath).document(document)
     }
 
     public func getDatabaseBatch() -> WriteBatch {
