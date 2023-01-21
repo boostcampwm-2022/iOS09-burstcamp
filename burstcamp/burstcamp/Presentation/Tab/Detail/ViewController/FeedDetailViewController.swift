@@ -70,6 +70,10 @@ final class FeedDetailViewController: UIViewController {
         configureNavigationBar()
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
+
     private func configureNavigationBar() {
         navigationItem.rightBarButtonItems = [barButtonStackViewItem]
     }
@@ -120,18 +124,18 @@ final class FeedDetailViewController: UIViewController {
 
         scrapOutput.scrapButtonIsEnabled
             .receive(on: DispatchQueue.main)
-            .assign(to: \.isEnabled, on: scrapButton)
+            .weakAssign(to: \.isEnabled, on: scrapButton)
             .store(in: &cancelBag)
 
         scrapOutput.scrapButtonState
             .receive(on: DispatchQueue.main)
-            .assign(to: \.isOn, on: scrapButton)
+            .weakAssign(to: \.isOn, on: scrapButton)
             .store(in: &cancelBag)
 
         scrapOutput.showAlert
             .receive(on: DispatchQueue.main)
-            .sink { error in
-                self.showAlert(message: error.localizedDescription)
+            .sink { [weak self] error in
+                self?.showAlert(message: error.localizedDescription)
             }
             .store(in: &cancelBag)
 

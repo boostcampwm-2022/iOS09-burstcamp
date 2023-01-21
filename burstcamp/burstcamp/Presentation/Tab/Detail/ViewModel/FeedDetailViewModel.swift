@@ -45,12 +45,16 @@ final class FeedDetailViewModel {
 
     func transform(input: Input) -> Output {
         let openBlog = input.blogButtonDidTap
-            .compactMap { self.feed.value?.url }
+            .compactMap { [weak self] in
+                self?.feed.value?.url
+            }
             .compactMap { URL(string: $0) }
             .eraseToAnyPublisher()
 
         let openActivityView = input.shareButtonDidTap
-            .compactMap { self.feed.value?.url }
+            .compactMap { [weak self] in
+                self?.feed.value?.url
+            }
             .eraseToAnyPublisher()
 
         return Output(

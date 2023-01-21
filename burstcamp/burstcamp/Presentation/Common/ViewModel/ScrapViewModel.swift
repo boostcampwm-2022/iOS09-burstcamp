@@ -63,9 +63,10 @@ final class ScrapViewModel {
             .sink { [weak self] _ in
                 // button State - false
                 // useCase 에서 scrap 호출
+                print("ddddd")
+                self?.scrapSuccess.send(Void())
                 // output에서 결과 send, error는 catch해서 showAlert과 isEnabled
                 // button State - true
-//                self?.updater.update()
             }
             .store(in: &cancelBag)
 

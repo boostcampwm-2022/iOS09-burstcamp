@@ -276,10 +276,10 @@ extension HomeViewController: UNUserNotificationCenterDelegate {
 
 extension HomeViewController {
     func configure(scrapUpdatePublisher: AnyPublisher<Feed, Never>) {
-        scrapUpdatePublisher
-            .sink { feed in
-                print(feed)
-            }
-            .store(in: &cancelBag)
+//        scrapUpdatePublisher
+//            .sink { feed in
+//                print(feed)
+//            }
+//            .store(in: &cancelBag)
     }
 }
