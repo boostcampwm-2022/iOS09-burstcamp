@@ -62,12 +62,12 @@ extension FeedAPIModel {
         self.writerBlogTitle = feed.writer.blogTitle
     }
 
-    func toScrapFirestoreData() -> FirestoreData {
+    func toScrapFirestoreData(scrapDate: Date) -> FirestoreData {
         return [
             "feedUUID": feedUUID,
             "title": title,
             "pubDate": pubDate,
-            "scrapDate": Timestamp(date: Date()),
+            "scrapDate": Timestamp(date: scrapDate),
             "url": url,
             "thumbnailURL": thumbnailURL,
             "content": content,

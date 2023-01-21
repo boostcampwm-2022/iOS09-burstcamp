@@ -36,7 +36,9 @@ extension ContainFeedDetailCoordinator {
 
     func prepareFeedDetailViewController(feed: Feed) -> FeedDetailViewController {
         let feedDetailViewModel = dependencyFactory.createFeedDetailViewModel(feed: feed)
+        let scrapUseCase = DefaultScrapUseCase(feedRepository: DefaultFeedRepository(bcFirestoreService: BCFirestoreService()))
         let scrapViewModel = ScrapViewModel(
+            scrapUseCase: scrapUseCase,
             feedUUID: feed.feedUUID
         )
         let feedDetailViewController = FeedDetailViewController(
@@ -48,7 +50,9 @@ extension ContainFeedDetailCoordinator {
 
     func prepareFeedDetailViewController(feedUUID: String) -> FeedDetailViewController {
         let feedDetailViewModel = dependencyFactory.createFeedDetailViewModel(feedUUID: feedUUID)
+        let scrapUseCase = DefaultScrapUseCase(feedRepository: DefaultFeedRepository(bcFirestoreService: BCFirestoreService()))
         let scrapViewModel = ScrapViewModel(
+            scrapUseCase: scrapUseCase,
             feedUUID: feedUUID
         )
         let feedDetailViewController = FeedDetailViewController(

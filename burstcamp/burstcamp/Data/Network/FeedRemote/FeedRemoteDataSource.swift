@@ -56,7 +56,7 @@ final class FeedRemoteDataSource {
             case true:
                 try await self.bcFirestoreService.unScrapFeed(FeedAPIModel(feed: feed), with: userUUID)
             case false:
-                try await self.bcFirestoreService.scrapFeed(FeedAPIModel(feed: feed), with: userUUID)
+                try await self.bcFirestoreService.scrapFeed(ScrapFeedAPIModel(feed: feed), with: userUUID)
             }
             // 상태가 바뀐 피드를 리턴한다.
             return newFeed

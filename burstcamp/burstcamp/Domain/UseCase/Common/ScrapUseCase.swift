@@ -8,6 +8,6 @@
 import Foundation
 
 protocol ScrapUseCase {
-    func scrapFeed(_ feed: Feed, userUUID: String) async throws
-    func unScrapFeed(_ feed: Feed, userUUID: String) async throws
+    func scrapFeed(_ feed: Feed, userUUID: String) async throws -> Feed
+    func unScrapFeed(_ feed: Feed, userUUID: String) async throws -> Feed
 }

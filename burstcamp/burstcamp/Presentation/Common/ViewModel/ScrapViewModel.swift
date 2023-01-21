@@ -12,7 +12,8 @@ import BCFetcher
 
 final class ScrapViewModel {
 
-    private var cancelBag = Set<AnyCancellable>()
+    private let scrapUseCase: ScrapUseCase
+    private let feedUUID: String
 
     private let scrapButtonState = CurrentValueSubject<Bool?, Never>(nil)
     private let scrapButtonCount = CurrentValueSubject<String?, Never>(nil)
@@ -20,30 +21,11 @@ final class ScrapViewModel {
     private let showAlert = CurrentValueSubject<Error?, Never>(nil)
     private let scrapSuccess = CurrentValueSubject<Void?, Never>(nil)
 
-    private let feedUUID: String
+    private var cancelBag = Set<AnyCancellable>()
 
-    init(
-        feedUUID: String
-    ) {
+    init(scrapUseCase: ScrapUseCase, feedUUID: String) {
+        self.scrapUseCase = scrapUseCase
         self.feedUUID = feedUUID
-        let userUUID = UserManager.shared.user.userUUID
-
-        // updater 구독
-//        updater.configure { [weak self] status, data in
-//            guard let self = self else { return }
-//
-//            switch status {
-//            case .loading:
-//                self.scrapButtonIsEnabled.send(false)
-//            case .success:
-//                self.scrapButtonState.send(data.isScraped)
-//                self.scrapButtonCount.send("\(data.scrapCount)")
-//                self.scrapButtonIsEnabled.send(true)
-//            case .failure(let error):
-//                self.showAlert.send(error)
-//                self.scrapButtonIsEnabled.send(true)
-//            }
-//        }
     }
 
     struct Input {
@@ -78,4 +60,28 @@ final class ScrapViewModel {
             scrapSuccess: scrapSuccess.unwrap().eraseToAnyPublisher()
         )
     }
+
+    func scrapButtonTouched() {
+        Task { [weak self] in
+            self?.scrapButtonState.send(false)
+//            self?.scrapUseCase.scrapFeed(<#T##feed: Feed##Feed#>, userUUID: <#T##String#>)
+            self?.scrapButtonState.send(true)
+        }
+    }
 }
+
+//        updater.configure { [weak self] status, data in
+//            guard let self = self else { return }
+//
+//            switch status {
+//            case .loading:
+//                self.scrapButtonIsEnabled.send(false)
+//            case .success:
+//                self.scrapButtonState.send(data.isScraped)
+//                self.scrapButtonCount.send("\(data.scrapCount)")
+//                self.scrapButtonIsEnabled.send(true)
+//            case .failure(let error):
+//                self.showAlert.send(error)
+//                self.scrapButtonIsEnabled.send(true)
+//            }
+//        }

@@ -15,11 +15,11 @@ final class DefaultScrapUseCase: ScrapUseCase {
         self.feedRepository = feedRepository
     }
 
-    func scrapFeed(_ feed: Feed, userUUID: String) async throws {
-        try await feedRepository.scrapFeed(feed, userUUID: userUUID)
+    func scrapFeed(_ feed: Feed, userUUID: String) async throws -> Feed {
+        return try await feedRepository.scrapFeed(feed, userUUID: userUUID)
     }
 
-    func unScrapFeed(_ feed: Feed, userUUID: String) async throws {
-        try await feedRepository.scrapFeed(feed, userUUID: userUUID)
+    func unScrapFeed(_ feed: Feed, userUUID: String) async throws -> Feed {
+        return try await feedRepository.scrapFeed(feed, userUUID: userUUID)
     }
 }
