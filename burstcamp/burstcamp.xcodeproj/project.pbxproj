@@ -54,7 +54,6 @@
 		14755A4C2973FA8C0036B71D /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14755A4B2973FA8C0036B71D /* LoginRepository.swift */; };
 		14755A4E2973FAA50036B71D /* DefaultLoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14755A4D2973FAA50036B71D /* DefaultLoginRepository.swift */; };
 		1481B10D2941D1AB0093E591 /* UIResponder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481B10C2941D1AB0093E591 /* UIResponder+.swift */; };
-		1481B1112941E0C50093E591 /* HomeViewController+handleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481B1102941E0C50093E591 /* HomeViewController+handleError.swift */; };
 		148A05442972F3DA00664CCB /* DependencyFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A05432972F3DA00664CCB /* DependencyFactoryProtocol.swift */; };
 		148A05462972F51C00664CCB /* DependencyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A05452972F51C00664CCB /* DependencyFactory.swift */; };
 		148A054B2972F5CC00664CCB /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A054A2972F5CC00664CCB /* LoginUseCase.swift */; };
@@ -91,8 +90,6 @@
 		14A93D402936EFF900790034 /* FeedAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D3F2936EFF900790034 /* FeedAPIModel.swift */; };
 		14A93D422936F00F00790034 /* FeedWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D412936F00F00790034 /* FeedWriter.swift */; };
 		14D8C4B6297B7E6300DFE71F /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C4B5297B7E6300DFE71F /* Updater.swift */; };
-		14D8C4B9297B832000DFE71F /* ScrapUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C4B8297B832000DFE71F /* ScrapUseCase.swift */; };
-		14D8C4BB297B837800DFE71F /* DefaultScrapUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C4BA297B837800DFE71F /* DefaultScrapUseCase.swift */; };
 		14D8C4BD297BCC3B00DFE71F /* ScrapFeedAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C4BC297BCC3B00DFE71F /* ScrapFeedAPIModel.swift */; };
 		14D8C4C6297BEDB900DFE71F /* HomeViewModelError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C4C5297BEDB900DFE71F /* HomeViewModelError.swift */; };
 		14F94BE62939E16D0058A79A /* UICollectionView+emptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */; };
@@ -305,7 +302,6 @@
 		14755A4B2973FA8C0036B71D /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
 		14755A4D2973FAA50036B71D /* DefaultLoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoginRepository.swift; sourceTree = "<group>"; };
 		1481B10C2941D1AB0093E591 /* UIResponder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+.swift"; sourceTree = "<group>"; };
-		1481B1102941E0C50093E591 /* HomeViewController+handleError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+handleError.swift"; sourceTree = "<group>"; };
 		148A05432972F3DA00664CCB /* DependencyFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyFactoryProtocol.swift; sourceTree = "<group>"; };
 		148A05452972F51C00664CCB /* DependencyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyFactory.swift; sourceTree = "<group>"; };
 		148A054A2972F5CC00664CCB /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
@@ -342,8 +338,6 @@
 		14A93D3F2936EFF900790034 /* FeedAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAPIModel.swift; sourceTree = "<group>"; };
 		14A93D412936F00F00790034 /* FeedWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedWriter.swift; sourceTree = "<group>"; };
 		14D8C4B5297B7E6300DFE71F /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
-		14D8C4B8297B832000DFE71F /* ScrapUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapUseCase.swift; sourceTree = "<group>"; };
-		14D8C4BA297B837800DFE71F /* DefaultScrapUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultScrapUseCase.swift; sourceTree = "<group>"; };
 		14D8C4BC297BCC3B00DFE71F /* ScrapFeedAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapFeedAPIModel.swift; sourceTree = "<group>"; };
 		14D8C4C5297BEDB900DFE71F /* HomeViewModelError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelError.swift; sourceTree = "<group>"; };
 		14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+emptyView.swift"; sourceTree = "<group>"; };
@@ -646,7 +640,6 @@
 			isa = PBXGroup;
 			children = (
 				B50A27B729279F5D00DF3E1F /* HomeViewController.swift */,
-				1481B1102941E0C50093E591 /* HomeViewController+handleError.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -928,7 +921,6 @@
 		1493048B2963EBEB00B9BC71 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				14D8C4B7297B831600DFE71F /* Common */,
 				148A05472972F5B300664CCB /* Auth */,
 				148A05522972F65700664CCB /* Tab */,
 			);
@@ -1236,15 +1228,6 @@
 				1459C3BB2929150200FA885D /* FeedCellType.swift */,
 			);
 			path = Feed;
-			sourceTree = "<group>";
-		};
-		14D8C4B7297B831600DFE71F /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				14D8C4B8297B832000DFE71F /* ScrapUseCase.swift */,
-				14D8C4BA297B837800DFE71F /* DefaultScrapUseCase.swift */,
-			);
-			path = Common;
 			sourceTree = "<group>";
 		};
 		3B061FD62928CC4300BFA71D /* Domain */ = {
@@ -1946,7 +1929,6 @@
 				1459C3BA292910B300FA885D /* RecommendFeedCell.swift in Sources */,
 				B50A27E529279F5D00DF3E1F /* LogInView.swift in Sources */,
 				148EF12C29791B0F00190471 /* DefaultImageRepository.swift in Sources */,
-				1481B1112941E0C50093E591 /* HomeViewController+handleError.swift in Sources */,
 				D8494D4E2927CE64008157F1 /* Domain.swift in Sources */,
 				3B061FDA2928CF7E00BFA71D /* SighUpDomainView.swift in Sources */,
 				D8494D482927C9E8008157F1 /* MyPageViewModel.swift in Sources */,
@@ -1977,13 +1959,11 @@
 				D8494D522927D086008157F1 /* MyPageProfileView.swift in Sources */,
 				148A055B2972F77C00664CCB /* DefaultHomeUseCase.swift in Sources */,
 				141344DB292F82BE00187B86 /* Feed.swift in Sources */,
-				14D8C4BB297B837800DFE71F /* DefaultScrapUseCase.swift in Sources */,
 				14A34D5029743F2A00501A66 /* DefaultBlogRepository.swift in Sources */,
 				3B061FDF2928E90400BFA71D /* SignUpCamperIDView.swift in Sources */,
 				3B7492352946BE3E00A4BEA0 /* GithubLogInCoordinator.swift in Sources */,
 				B50A27F629279F5D00DF3E1F /* AuthCoordinator.swift in Sources */,
 				D8494D542927D0DC008157F1 /* User.swift in Sources */,
-				14D8C4B9297B832000DFE71F /* ScrapUseCase.swift in Sources */,
 				B50A27EA29279F5D00DF3E1F /* NormalFeedCellMain.swift in Sources */,
 				141344D0292F800300187B86 /* UIView+addSubViews.swift in Sources */,
 				148A054D2972F5FF00664CCB /* DefaultLoginUseCase.swift in Sources */,

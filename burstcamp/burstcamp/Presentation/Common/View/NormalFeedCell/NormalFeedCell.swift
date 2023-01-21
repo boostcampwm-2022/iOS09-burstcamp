@@ -16,7 +16,6 @@ final class NormalFeedCell: UICollectionViewCell {
     private lazy var mainView = NormalFeedCellMain()
     lazy var footerView = NormalFeedCellFooter()
 
-    private var scrapViewModel: ScrapViewModel!
     var cancelBag = Set<AnyCancellable>()
 
     override init(frame: CGRect) {

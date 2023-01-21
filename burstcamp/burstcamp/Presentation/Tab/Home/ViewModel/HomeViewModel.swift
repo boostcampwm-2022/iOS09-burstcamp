@@ -85,15 +85,6 @@ final class HomeViewModel {
         )
     }
 
-    func dequeueCellViewModel(at index: Int) -> ScrapViewModel {
-        let scrapUseCase = DefaultScrapUseCase(feedRepository: DefaultFeedRepository(bcFirestoreService: BCFirestoreService()))
-        let scrapViewModel = ScrapViewModel(
-            scrapUseCase: scrapUseCase,
-            feedUUID: normalFeedData[index].feedUUID
-        )
-        return scrapViewModel
-    }
-
     func transform(cellInput: CellInput, cellCancelBag: inout Set<AnyCancellable>) -> CellOutput {
         cellInput.scrapButtonDidTap
             .sink { [weak self] normalFeedIndex in

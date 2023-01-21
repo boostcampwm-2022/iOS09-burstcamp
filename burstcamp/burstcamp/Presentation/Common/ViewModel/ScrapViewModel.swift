@@ -12,7 +12,6 @@ import BCFetcher
 
 final class ScrapViewModel {
 
-    private let scrapUseCase: ScrapUseCase
     private let feedUUID: String
 
     private let scrapButtonState = CurrentValueSubject<Bool?, Never>(nil)
@@ -23,8 +22,7 @@ final class ScrapViewModel {
 
     private var cancelBag = Set<AnyCancellable>()
 
-    init(scrapUseCase: ScrapUseCase, feedUUID: String) {
-        self.scrapUseCase = scrapUseCase
+    init(feedUUID: String) {
         self.feedUUID = feedUUID
     }
 

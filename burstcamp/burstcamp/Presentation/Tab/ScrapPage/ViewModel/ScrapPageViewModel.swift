@@ -102,9 +102,7 @@ final class ScrapPageViewModel {
     }
 
     func dequeueCellViewModel(at index: Int) -> ScrapViewModel {
-        let scrapUseCase = DefaultScrapUseCase(feedRepository: DefaultFeedRepository(bcFirestoreService: BCFirestoreService()))
         let scrapViewModel = ScrapViewModel(
-            scrapUseCase: scrapUseCase,
             feedUUID: scrapFeedData[index].feedUUID
         )
         return scrapViewModel
