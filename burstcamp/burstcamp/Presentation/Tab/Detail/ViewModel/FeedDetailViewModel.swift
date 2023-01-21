@@ -12,12 +12,10 @@ final class FeedDetailViewModel {
 
     private let feedDetailUseCase: FeedDetailUseCase
     private let feed = CurrentValueSubject<Feed?, Never>(nil)
-    private let feedLocalDataSource: FeedLocalDataSource
     private var cancelBag = Set<AnyCancellable>()
 
     init(feedDetailUseCase: FeedDetailUseCase) {
         self.feedDetailUseCase = feedDetailUseCase
-        self.feedLocalDataSource = FeedRealmDataSource.shared
     }
 
     convenience init(feedDetailUseCase: FeedDetailUseCase, feed: Feed) {
@@ -47,12 +45,16 @@ final class FeedDetailViewModel {
 
     func transform(input: Input) -> Output {
         let openBlog = input.blogButtonDidTap
-            .compactMap { self.feed.value?.url }
+            .compactMap { [weak self] in
+                self?.feed.value?.url
+            }
             .compactMap { URL(string: $0) }
             .eraseToAnyPublisher()
 
         let openActivityView = input.shareButtonDidTap
-            .compactMap { self.feed.value?.url }
+            .compactMap { [weak self] in
+                self?.feed.value?.url
+            }
             .eraseToAnyPublisher()
 
         return Output(
@@ -60,5 +62,9 @@ final class FeedDetailViewModel {
             openBlog: openBlog,
             openActivityView: openActivityView
         )
+    }
+
+    func getFeed() -> Feed? {
+        return feed.value
     }
 }

@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 protocol HomeCoordinatorProtocol: TabBarChildCoordinator {
-    func moveToFeedDetail(feed: Feed)
+//    func moveToFeedDetail(feed: Feed)
     func moveToFeedDetail(feedUUID: String)
     func moveToBlogSafari(url: URL)
 }
@@ -36,15 +36,16 @@ extension HomeCoordinator {
             .sink { [weak self] event in
                 switch event {
                 case .moveToFeedDetail(let feed):
-                    self?.moveToFeedDetail(feed: feed)
+                    self?.moveToFeedDetail(feed: feed, homeViewController: homeViewController)
                 }
             }
             .store(in: &cancelBag)
     }
 
-    func moveToFeedDetail(feed: Feed) {
+    func moveToFeedDetail(feed: Feed, homeViewController: HomeViewController) {
         let feedDetailViewController = prepareFeedDetailViewController(feed: feed)
         sinkFeedViewController(feedDetailViewController)
+        sink(feedDetailViewController, homeViewController: homeViewController)
         self.navigationController.pushViewController(feedDetailViewController, animated: true)
     }
 

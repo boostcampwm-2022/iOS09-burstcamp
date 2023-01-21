@@ -103,9 +103,7 @@ final class ScrapPageViewModel {
 
     func dequeueCellViewModel(at index: Int) -> ScrapViewModel {
         let scrapViewModel = ScrapViewModel(
-            feedUUID: scrapFeedData[index].feedUUID,
-            feedLocalDataSource: FeedRealmDataSource.shared,
-            feedRemoteDataSource: FeedRemoteDataSource.shared
+            feedUUID: scrapFeedData[index].feedUUID
         )
         return scrapViewModel
     }

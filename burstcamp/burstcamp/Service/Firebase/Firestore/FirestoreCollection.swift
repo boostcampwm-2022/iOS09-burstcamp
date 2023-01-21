@@ -17,6 +17,8 @@ enum FirestoreCollection {
     case scrapFeeds(userUUID: String)
     case admin
     case fcmToken
+
+    static let scrapFeedUUIDs = "scrapFeedUUIDs"
 }
 
 extension FirestoreCollection {

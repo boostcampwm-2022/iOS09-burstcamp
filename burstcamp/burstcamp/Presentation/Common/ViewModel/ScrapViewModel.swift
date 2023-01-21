@@ -12,60 +12,18 @@ import BCFetcher
 
 final class ScrapViewModel {
 
-    private var cancelBag = Set<AnyCancellable>()
-
-    private let feedLocalDataSource: FeedLocalDataSource
-    private let feedRemoteDataSource: FeedRemoteDataSource
+    private let feedUUID: String
 
     private let scrapButtonState = CurrentValueSubject<Bool?, Never>(nil)
     private let scrapButtonCount = CurrentValueSubject<String?, Never>(nil)
     private let scrapButtonIsEnabled = CurrentValueSubject<Bool?, Never>(nil)
     private let showAlert = CurrentValueSubject<Error?, Never>(nil)
+    private let scrapSuccess = CurrentValueSubject<Void?, Never>(nil)
 
-    private let updater: Updater<Feed, Error>
+    private var cancelBag = Set<AnyCancellable>()
 
-    private let feedUUID: String
-
-    init(
-        feedUUID: String,
-        feedLocalDataSource: FeedLocalDataSource,
-        feedRemoteDataSource: FeedRemoteDataSource
-    ) {
+    init(feedUUID: String) {
         self.feedUUID = feedUUID
-        let userUUID = UserManager.shared.user.userUUID
-        self.feedLocalDataSource = feedLocalDataSource
-        self.feedRemoteDataSource = feedRemoteDataSource
-
-        updater = Updater<Feed, Error>(
-            onUpdateRemoteCombine: { feed in
-                feedRemoteDataSource.updateFeedPublisher(
-                    feedUUID: feedUUID,
-                    userUUID: userUUID,
-                    feed: feed
-                )
-            },
-            onLocalCombine: { feedLocalDataSource.normalFeedPublisher(feedUUID: feedUUID) },
-            onLocal: { feedLocalDataSource.cachedNormalFeed(feedUUID: feedUUID) },
-            onUpdateLocal: { feedLocalDataSource.toggleScrapFeed(modifiedFeed: $0) },
-            queue: RealmConfig.serialQueue
-        )
-
-        updater.configure { [weak self] status, data in
-            guard let self = self else { return }
-
-            switch status {
-            case .loading:
-                self.scrapButtonIsEnabled.send(false)
-            case .success:
-                self.scrapButtonState.send(data.isScraped)
-                self.scrapButtonCount.send("\(data.scrapCount)")
-                self.scrapButtonIsEnabled.send(true)
-            case .failure(let error):
-                self.showAlert.send(error)
-                self.scrapButtonIsEnabled.send(true)
-            }
-        }
-//        .store(in: &self.cancelBag)
     }
 
     struct Input {
@@ -77,12 +35,18 @@ final class ScrapViewModel {
         let scrapButtonCount: AnyPublisher<String, Never>
         let scrapButtonIsEnabled: AnyPublisher<Bool, Never>
         let showAlert: AnyPublisher<Error, Never>
+        let scrapSuccess: AnyPublisher<Void, Never>
     }
 
     func transform(input: Input) -> Output {
         input.scrapToggleButtonDidTap
             .sink { [weak self] _ in
-                self?.updater.update()
+                // button State - false
+                // useCase 에서 scrap 호출
+                print("ddddd")
+                self?.scrapSuccess.send(Void())
+                // output에서 결과 send, error는 catch해서 showAlert과 isEnabled
+                // button State - true
             }
             .store(in: &cancelBag)
 
@@ -90,7 +54,32 @@ final class ScrapViewModel {
             scrapButtonState: scrapButtonState.unwrap().eraseToAnyPublisher(),
             scrapButtonCount: scrapButtonCount.unwrap().eraseToAnyPublisher(),
             scrapButtonIsEnabled: scrapButtonIsEnabled.unwrap().eraseToAnyPublisher(),
-            showAlert: showAlert.unwrap().eraseToAnyPublisher()
+            showAlert: showAlert.unwrap().eraseToAnyPublisher(),
+            scrapSuccess: scrapSuccess.unwrap().eraseToAnyPublisher()
         )
     }
+
+    func scrapButtonTouched() {
+        Task { [weak self] in
+            self?.scrapButtonState.send(false)
+//            self?.scrapUseCase.scrapFeed(<#T##feed: Feed##Feed#>, userUUID: <#T##String#>)
+            self?.scrapButtonState.send(true)
+        }
+    }
 }
+
+//        updater.configure { [weak self] status, data in
+//            guard let self = self else { return }
+//
+//            switch status {
+//            case .loading:
+//                self.scrapButtonIsEnabled.send(false)
+//            case .success:
+//                self.scrapButtonState.send(data.isScraped)
+//                self.scrapButtonCount.send("\(data.scrapCount)")
+//                self.scrapButtonIsEnabled.send(true)
+//            case .failure(let error):
+//                self.showAlert.send(error)
+//                self.scrapButtonIsEnabled.send(true)
+//            }
+//        }

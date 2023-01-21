@@ -42,7 +42,9 @@ final class FeedDetailViewController: UIViewController {
 
     private let feedDetailViewModel: FeedDetailViewModel
     private let scrapViewModel: ScrapViewModel
+
     let coordinatorPublisher = PassthroughSubject<FeedDetailCoordinatorEvent, Never>()
+    private var updateFeedPublisher = PassthroughSubject<Feed, Never>()
     private var cancelBag: Set<AnyCancellable> = []
 
     init(
@@ -66,6 +68,10 @@ final class FeedDetailViewController: UIViewController {
         super.viewDidLoad()
         bind()
         configureNavigationBar()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
     }
 
     private func configureNavigationBar() {
@@ -118,19 +124,42 @@ final class FeedDetailViewController: UIViewController {
 
         scrapOutput.scrapButtonIsEnabled
             .receive(on: DispatchQueue.main)
-            .assign(to: \.isEnabled, on: scrapButton)
+            .weakAssign(to: \.isEnabled, on: scrapButton)
             .store(in: &cancelBag)
 
         scrapOutput.scrapButtonState
             .receive(on: DispatchQueue.main)
-            .assign(to: \.isOn, on: scrapButton)
+            .weakAssign(to: \.isOn, on: scrapButton)
             .store(in: &cancelBag)
 
         scrapOutput.showAlert
             .receive(on: DispatchQueue.main)
-            .sink { error in
-                self.showAlert(message: error.localizedDescription)
+            .sink { [weak self] error in
+                self?.showAlert(message: error.localizedDescription)
             }
             .store(in: &cancelBag)
+
+        scrapOutput.scrapSuccess
+            .sink { [weak self] _ in
+                self?.publishUpdateFeed()
+            }
+            .store(in: &cancelBag)
+    }
+
+    private func publishUpdateFeed() {
+        guard let feed = feedDetailViewModel.getFeed() else {
+            showAlert(message: "Feed를 불러올 수 없습니다.")
+            return
+        }
+        // feedDetailViewModel에 있는 feed를 Coordinator에 보내줌
+        // Coordinator에서 받아서 HomeViewController로 전달
+        // HomeViewController의 Feed 업데이트
+        updateFeedPublisher.send(feed)
+    }
+}
+
+extension FeedDetailViewController {
+    func getUpdateFeedPublisher() -> AnyPublisher<Feed, Never> {
+        return updateFeedPublisher.eraseToAnyPublisher()
     }
 }

@@ -54,7 +54,6 @@
 		14755A4C2973FA8C0036B71D /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14755A4B2973FA8C0036B71D /* LoginRepository.swift */; };
 		14755A4E2973FAA50036B71D /* DefaultLoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14755A4D2973FAA50036B71D /* DefaultLoginRepository.swift */; };
 		1481B10D2941D1AB0093E591 /* UIResponder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481B10C2941D1AB0093E591 /* UIResponder+.swift */; };
-		1481B1112941E0C50093E591 /* HomeViewController+handleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481B1102941E0C50093E591 /* HomeViewController+handleError.swift */; };
 		148A05442972F3DA00664CCB /* DependencyFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A05432972F3DA00664CCB /* DependencyFactoryProtocol.swift */; };
 		148A05462972F51C00664CCB /* DependencyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A05452972F51C00664CCB /* DependencyFactory.swift */; };
 		148A054B2972F5CC00664CCB /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A054A2972F5CC00664CCB /* LoginUseCase.swift */; };
@@ -90,6 +89,9 @@
 		14A34D55297444F000501A66 /* SignUpUseCaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D54297444F000501A66 /* SignUpUseCaseError.swift */; };
 		14A93D402936EFF900790034 /* FeedAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D3F2936EFF900790034 /* FeedAPIModel.swift */; };
 		14A93D422936F00F00790034 /* FeedWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D412936F00F00790034 /* FeedWriter.swift */; };
+		14D8C4B6297B7E6300DFE71F /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C4B5297B7E6300DFE71F /* Updater.swift */; };
+		14D8C4BD297BCC3B00DFE71F /* ScrapFeedAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C4BC297BCC3B00DFE71F /* ScrapFeedAPIModel.swift */; };
+		14D8C4C6297BEDB900DFE71F /* HomeViewModelError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C4C5297BEDB900DFE71F /* HomeViewModelError.swift */; };
 		14F94BE62939E16D0058A79A /* UICollectionView+emptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */; };
 		3B061FD82928CC5600BFA71D /* SignUpDomainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FD72928CC5600BFA71D /* SignUpDomainViewController.swift */; };
 		3B061FDA2928CF7E00BFA71D /* SighUpDomainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FD92928CF7E00BFA71D /* SighUpDomainView.swift */; };
@@ -300,7 +302,6 @@
 		14755A4B2973FA8C0036B71D /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
 		14755A4D2973FAA50036B71D /* DefaultLoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoginRepository.swift; sourceTree = "<group>"; };
 		1481B10C2941D1AB0093E591 /* UIResponder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+.swift"; sourceTree = "<group>"; };
-		1481B1102941E0C50093E591 /* HomeViewController+handleError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+handleError.swift"; sourceTree = "<group>"; };
 		148A05432972F3DA00664CCB /* DependencyFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyFactoryProtocol.swift; sourceTree = "<group>"; };
 		148A05452972F51C00664CCB /* DependencyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyFactory.swift; sourceTree = "<group>"; };
 		148A054A2972F5CC00664CCB /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
@@ -336,6 +337,9 @@
 		14A34D54297444F000501A66 /* SignUpUseCaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUseCaseError.swift; sourceTree = "<group>"; };
 		14A93D3F2936EFF900790034 /* FeedAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAPIModel.swift; sourceTree = "<group>"; };
 		14A93D412936F00F00790034 /* FeedWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedWriter.swift; sourceTree = "<group>"; };
+		14D8C4B5297B7E6300DFE71F /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
+		14D8C4BC297BCC3B00DFE71F /* ScrapFeedAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapFeedAPIModel.swift; sourceTree = "<group>"; };
+		14D8C4C5297BEDB900DFE71F /* HomeViewModelError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelError.swift; sourceTree = "<group>"; };
 		14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+emptyView.swift"; sourceTree = "<group>"; };
 		3B061FD72928CC5600BFA71D /* SignUpDomainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDomainViewController.swift; sourceTree = "<group>"; };
 		3B061FD92928CF7E00BFA71D /* SighUpDomainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SighUpDomainView.swift; sourceTree = "<group>"; };
@@ -575,6 +579,7 @@
 			isa = PBXGroup;
 			children = (
 				140FBEE429750D0B006B7857 /* LoginViewModelError.swift */,
+				14D8C4C5297BEDB900DFE71F /* HomeViewModelError.swift */,
 				140FBEF329756A3D006B7857 /* SignUpBlogViewModelError.swift */,
 			);
 			path = ViewModel;
@@ -635,7 +640,6 @@
 			isa = PBXGroup;
 			children = (
 				B50A27B729279F5D00DF3E1F /* HomeViewController.swift */,
-				1481B1102941E0C50093E591 /* HomeViewController+handleError.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -715,6 +719,13 @@
 			path = RecommendFeedSection;
 			sourceTree = "<group>";
 		};
+		145F21FF297AE6EE0081C489 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		145FB8A1292E44B800BA7B3B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -727,6 +738,7 @@
 			children = (
 				D89AE4EC2935AA2100446AB3 /* FCMToken.swift */,
 				14A93D3F2936EFF900790034 /* FeedAPIModel.swift */,
+				14D8C4BC297BCC3B00DFE71F /* ScrapFeedAPIModel.swift */,
 				14755A372973C9B00036B71D /* UserAPIModel.swift */,
 			);
 			path = Model;
@@ -1468,6 +1480,7 @@
 				1496CF1F294080E6008F312F /* Firebase */,
 				14A34D38297417E400501A66 /* GithubAPIKey */,
 				14129970297660F000159C02 /* Singleton */,
+				145F21FF297AE6EE0081C489 /* Network */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1543,6 +1556,7 @@
 			children = (
 				B5BA278B2927B08800BDCE08 /* View */,
 				B5BA278C2927B08C00BDCE08 /* ViewModel */,
+				14D8C4B5297B7E6300DFE71F /* Updater.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1915,7 +1929,6 @@
 				1459C3BA292910B300FA885D /* RecommendFeedCell.swift in Sources */,
 				B50A27E529279F5D00DF3E1F /* LogInView.swift in Sources */,
 				148EF12C29791B0F00190471 /* DefaultImageRepository.swift in Sources */,
-				1481B1112941E0C50093E591 /* HomeViewController+handleError.swift in Sources */,
 				D8494D4E2927CE64008157F1 /* Domain.swift in Sources */,
 				3B061FDA2928CF7E00BFA71D /* SighUpDomainView.swift in Sources */,
 				D8494D482927C9E8008157F1 /* MyPageViewModel.swift in Sources */,
@@ -1969,6 +1982,7 @@
 				148A054B2972F5CC00664CCB /* LoginUseCase.swift in Sources */,
 				D8C3866C292B4B0B005A2563 /* OpenSourceLicenseView.swift in Sources */,
 				14A34D3A297417FD00501A66 /* GithubAPIKeyManager.swift in Sources */,
+				14D8C4B6297B7E6300DFE71F /* Updater.swift in Sources */,
 				140438BD293F6FDF004D035C /* ScrapPageCoordinator.swift in Sources */,
 				D84452F6292CF4BC008E811B /* DefaultImageLabel.swift in Sources */,
 				D8C38672292B88DE005A2563 /* UserDefaultsManager.swift in Sources */,
@@ -1977,6 +1991,7 @@
 				1459C3BC2929150200FA885D /* FeedCellType.swift in Sources */,
 				D8C3866A292B4AEF005A2563 /* OpenSourceLicenseViewController.swift in Sources */,
 				3B7491EB2938F12600A4BEA0 /* SignUpCamperIDViewModel.swift in Sources */,
+				14D8C4BD297BCC3B00DFE71F /* ScrapFeedAPIModel.swift in Sources */,
 				141344D1292F800300187B86 /* UILabel+LineHeight.swift in Sources */,
 				D8576F32293779D4002885FE /* UserManager.swift in Sources */,
 				14755A352973BA340036B71D /* FirestoreServiceError.swift in Sources */,
@@ -2010,6 +2025,7 @@
 				B50A27F229279F5D00DF3E1F /* AppDelegate.swift in Sources */,
 				141344CF292F800300187B86 /* UIStackView+addArrangedSubviews.swift in Sources */,
 				140FBEEB297511DB006B7857 /* URLSessionServiceError.swift in Sources */,
+				14D8C4C6297BEDB900DFE71F /* HomeViewModelError.swift in Sources */,
 				1418960229377593005A42D4 /* UIScrollView+.swift in Sources */,
 				3B74920D293DCCAC00A4BEA0 /* GithubError.swift in Sources */,
 				143185EE292B4ABC008CE459 /* ScrapPageView.swift in Sources */,

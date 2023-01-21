@@ -68,6 +68,129 @@ final class HomeViewController: UIViewController {
         homeView.collectionViewDelegate(viewController: self)
     }
 
+    @objc private func scrollToTop() {
+        homeView.collectionViewScrollToTop()
+    }
+
+    private func bind() {
+        guard let refreshControl = homeView.collectionView.refreshControl
+        else { return }
+
+        let viewDidLoadJust = Just(Void()).eraseToAnyPublisher()
+
+        let input = HomeViewModel.Input(
+            viewDidLoad: viewDidLoadJust,
+            viewDidRefresh: refreshControl.refreshPublisher,
+            pagination: paginationPublisher.eraseToAnyPublisher()
+        )
+
+        let output = viewModel.transform(input: input)
+
+        output.recentFeed
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] homeFeedList in
+                self?.reloadSnapshot(homeFeedList: homeFeedList)
+            }
+            .store(in: &cancelBag)
+
+        output.moreFeed
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] normalFeed in
+                self?.reloadSnapshot(normalFeedList: normalFeed)
+            }
+            .store(in: &cancelBag)
+
+        output.showAlert
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                self?.showAlert(message: error.localizedDescription)
+            }
+            .store(in: &cancelBag)
+
+        output.hideIndicator
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.homeView.endCollectionViewRefreshing()
+            }
+            .store(in: &cancelBag)
+
+        output.showToast
+            .receive(on: DispatchQueue.main)
+            .sink { message in
+                self.showToastMessage(text: message)
+            }
+            .store(in: &cancelBag)
+    }
+
+    private func bindNormalFeedCell(_ cell: NormalFeedCell, index: Int, feedUUID: String) {
+
+        let scrapButtonDidTap = cell.getButtonTapPublisher()
+            .map { _  in
+                return index
+            }
+            .eraseToAnyPublisher()
+
+        let cellInput = HomeViewModel.CellInput(
+            scrapButtonDidTap: scrapButtonDidTap
+        )
+
+        let output = viewModel.transform(cellInput: cellInput, cellCancelBag: &cell.cancelBag)
+
+        output.scrapSuccess
+            .receive(on: DispatchQueue.main)
+            .sink { updatedFeed in
+                if feedUUID == updatedFeed.feedUUID {
+                    cell.footerView.countLabel.text = updatedFeed.scrapCount.description
+                    cell.footerView.scrapButton.isOn = updatedFeed.isScraped
+                    cell.footerView.scrapButton.isEnabled = true
+                }
+            }
+            .store(in: &cell.cancelBag)
+    }
+
+    private func paginateFeed() {
+        paginationPublisher.send(Void())
+    }
+}
+
+extension HomeViewController: UICollectionViewDelegate {
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+        let feedCellType = FeedCellType(index: section)
+        switch feedCellType {
+        case .recommend: return viewModel.recommendFeedData.count * 3
+        case .normal: return viewModel.normalFeedData.count
+        case .none: return 0
+        }
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        let feedCellType = FeedCellType(index: indexPath.section) ?? .normal
+        switch feedCellType {
+        case .recommend:
+            // TODO: 사파리로 보여주기
+            return
+        case .normal:
+            let feed = viewModel.normalFeedData[indexPath.row]
+            coordinatorPublisher.send(.moveToFeedDetail(feed: feed))
+        }
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.isOverTarget() {
+            paginateFeed()
+        }
+    }
+}
+
+// MARK: - DataSource
+extension HomeViewController {
     private func configureDataSource() {
         dataSource = UICollectionViewDiffableDataSource(
             collectionView: homeView.collectionView,
@@ -97,9 +220,8 @@ final class HomeViewController: UIViewController {
                     }
                     let index = indexPath.row
                     let feed = self.viewModel.normalFeedData[index]
-                    let cellViewModel = self.viewModel.dequeueCellViewModel(at: index)
 
-                    cell.configure(with: cellViewModel)
+                    self.bindNormalFeedCell(cell, index: index, feedUUID: feed.feedUUID)
                     cell.updateFeedCell(with: feed)
                     return cell
                 case .none:
@@ -145,97 +267,20 @@ final class HomeViewController: UIViewController {
         collectionViewSnapShot.deleteItems(previousRecommendFeedData)
         collectionViewSnapShot.deleteItems(previousNormalFeedData)
 
-        print(collectionViewSnapShot.sectionIdentifiers)
-        collectionViewSnapShot.appendItems(homeFeedList.recommendFeed, toSection: .recommend)
+        // TODO: Recommend Feed
+//        collectionViewSnapShot.appendItems(homeFeedList.recommendFeed, toSection: .recommend)
         collectionViewSnapShot.appendItems(homeFeedList.normalFeed, toSection: .normal)
         dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
     }
 
-    @objc private func scrollToTop() {
-        homeView.collectionViewScrollToTop()
+    private func reloadSnapshot(normalFeedList: [Feed]) {
+        collectionViewSnapShot.appendItems(normalFeedList, toSection: .normal)
+        dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
     }
 
-    private func bind() {
-        guard let refreshControl = homeView.collectionView.refreshControl
-        else { return }
-
-        let viewDidLoadJust = Just(Void()).eraseToAnyPublisher()
-
-        let input = HomeViewModel.Input(
-            viewDidLoad: viewDidLoadJust,
-            viewDidRefresh: refreshControl.refreshPublisher,
-            pagination: paginationPublisher.eraseToAnyPublisher()
-        )
-
-        let output = viewModel.transform(input: input)
-
-        output.recentFeed
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] homeFeedList in
-                self?.reloadSnapshot(homeFeedList: homeFeedList)
-            }
-            .store(in: &cancelBag)
-
-        output.moreFeed
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] feed in
-                // 피드 스냅샷
-            }
-            .store(in: &cancelBag)
-
-        output.showAlert
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] error in
-                self?.showAlert(message: error.localizedDescription)
-            }
-            .store(in: &cancelBag)
-
-        output.hideIndicator
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.homeView.endCollectionViewRefreshing()
-            }
-            .store(in: &cancelBag)
-    }
-
-    private func paginateFeed() {
-        paginationPublisher.send(Void())
-    }
-}
-
-extension HomeViewController: UICollectionViewDelegate {
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        numberOfItemsInSection section: Int
-    ) -> Int {
-        let feedCellType = FeedCellType(index: section)
-        switch feedCellType {
-        case .recommend: return viewModel.recommendFeedData.count * 3
-        case .normal: return viewModel.normalFeedData.count
-        case .none: return 0
-        }
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        didSelectItemAt indexPath: IndexPath
-    ) {
-        let feedCellType = FeedCellType(index: indexPath.section) ?? .normal
-        switch feedCellType {
-        case .recommend:
-            // TODO: 사파리로 보여주기
-            return
-        case .normal:
-            let feed = viewModel.normalFeedData[indexPath.row]
-            coordinatorPublisher.send(.moveToFeedDetail(feed: feed))
-        }
-    }
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.isOverTarget() {
-            paginateFeed()
-        }
+    private func reloadNormalFeedSection() {
+        collectionViewSnapShot.reloadSections([.normal])
+        dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
     }
 }
 
@@ -256,5 +301,17 @@ extension HomeViewController: UNUserNotificationCenterDelegate {
             }
         }
         application.registerForRemoteNotifications()
+    }
+}
+
+extension HomeViewController {
+    func configure(scrapUpdatePublisher: AnyPublisher<Feed, Never>) {
+        scrapUpdatePublisher
+            .sink { [weak self] feed in
+                // TODO: Feed Detail에서 스크랩 이후 refresh 안해도 되면 제거
+//                self?.reloadNormalFeedSection()
+                self?.viewModel.updateNormalFeed(feed)
+            }
+            .store(in: &cancelBag)
     }
 }
