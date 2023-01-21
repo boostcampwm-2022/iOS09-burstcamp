@@ -37,9 +37,7 @@ final class HomeViewModel {
     private let showAlert = CurrentValueSubject<Error?, Never>(nil)
     private let showToast = CurrentValueSubject<String?, Never>(nil)
 
-    private let scrapButtonState = CurrentValueSubject<Bool?, Never>(nil)
-    private let scrapButtonCount = CurrentValueSubject<String?, Never>(nil)
-    private let scrapButtonIsEnabled = CurrentValueSubject<Bool?, Never>(nil)
+    private let scrapSuccess = CurrentValueSubject<Feed?, Never>(nil)
 
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
@@ -60,9 +58,7 @@ final class HomeViewModel {
     }
 
     struct CellOutput {
-        let scrapButtonState: AnyPublisher<Bool, Never>
-        let scrapButtonCount: AnyPublisher<String, Never>
-        let scrapButtonIsEnabled: AnyPublisher<Bool, Never>
+        let scrapSuccess: AnyPublisher<Feed, Never>
     }
 
     func transform(input: Input) -> Output {
@@ -106,9 +102,7 @@ final class HomeViewModel {
             .store(in: &cellCancelBag)
 
         return CellOutput(
-            scrapButtonState: scrapButtonState.unwrap().eraseToAnyPublisher(),
-            scrapButtonCount: scrapButtonCount.unwrap().eraseToAnyPublisher(),
-            scrapButtonIsEnabled: scrapButtonIsEnabled.unwrap().eraseToAnyPublisher()
+            scrapSuccess: scrapSuccess.unwrap().eraseToAnyPublisher()
         )
     }
 
@@ -167,17 +161,11 @@ final class HomeViewModel {
                 }
                 let updatedFeed = try await self.homeUseCase.scrapFeed(feed, userUUID: userUUID)
                 self.updateNormalFeed(updatedFeed)
-                self.publishUpdateFeed(updatedFeed)
+                self.scrapSuccess.send(updatedFeed)
             }
         } else {
             showAlert.send(HomeViewModelError.feedIndex)
         }
-    }
-
-    func publishUpdateFeed(_ feed: Feed) {
-        self.scrapButtonState.send(feed.isScraped)
-        self.scrapButtonCount.send("\(feed.scrapCount)")
-        self.scrapButtonIsEnabled.send(true)
     }
 }
 

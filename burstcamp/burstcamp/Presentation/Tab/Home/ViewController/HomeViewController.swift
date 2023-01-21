@@ -122,7 +122,7 @@ final class HomeViewController: UIViewController {
             .store(in: &cancelBag)
     }
 
-    private func bindNormalFeedCell(_ cell: NormalFeedCell, index: Int) {
+    private func bindNormalFeedCell(_ cell: NormalFeedCell, index: Int, feedUUID: String) {
 
         let scrapButtonDidTap = cell.getButtonTapPublisher()
             .map { _  in
@@ -136,20 +136,15 @@ final class HomeViewController: UIViewController {
 
         let output = viewModel.transform(cellInput: cellInput, cellCancelBag: &cell.cancelBag)
 
-        output.scrapButtonState
+        output.scrapSuccess
             .receive(on: DispatchQueue.main)
-            .weakAssign(to: \.isOn, on: cell.footerView.scrapButton)
-            .store(in: &cell.cancelBag)
-
-        output.scrapButtonIsEnabled
-            .receive(on: DispatchQueue.main)
-            .weakAssign(to: \.isEnabled, on: cell.footerView.scrapButton)
-            .store(in: &cell.cancelBag)
-
-        output.scrapButtonCount
-            .receive(on: DispatchQueue.main)
-            .map { "\($0)" }
-            .weakAssign(to: \.text, on: cell.footerView.countLabel)
+            .sink { updatedFeed in
+                if feedUUID == updatedFeed.feedUUID {
+                    cell.footerView.countLabel.text = updatedFeed.scrapCount.description
+                    cell.footerView.scrapButton.isOn = updatedFeed.isScraped
+                    cell.footerView.scrapButton.isEnabled = true
+                }
+            }
             .store(in: &cell.cancelBag)
     }
 
@@ -227,7 +222,7 @@ extension HomeViewController {
                     let feed = self.viewModel.normalFeedData[index]
 
                     print("Cancel Bag count", self.cancelBag.count)
-                    self.bindNormalFeedCell(cell, index: index)
+                    self.bindNormalFeedCell(cell, index: index, feedUUID: feed.feedUUID)
                     cell.updateFeedCell(with: feed)
                     return cell
                 case .none:
