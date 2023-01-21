@@ -13,6 +13,7 @@ final class FeedDetailViewModel {
     private let feedDetailUseCase: FeedDetailUseCase
     private let feedPublisher = CurrentValueSubject<Feed?, Never>(nil)
     private let scrapPublisher = CurrentValueSubject<Feed?, Never>(nil)
+    private let showAlertPublisher = CurrentValueSubject<Error?, Never>(nil)
     private var cancelBag = Set<AnyCancellable>()
 
     init(feedDetailUseCase: FeedDetailUseCase) {
@@ -44,12 +45,13 @@ final class FeedDetailViewModel {
         let openBlog: AnyPublisher<URL, Never>
         let openActivityView: AnyPublisher<String, Never>
         let scrapUpdate: AnyPublisher<Feed, Never>
+        let showAlertPublisher: AnyPublisher<Error, Never>
     }
 
     func transform(input: Input) -> Output {
         input.scrapButtonDidTap
             .sink { [weak self] _ in
-                self?.scrapPublisher.send(nil)
+                self?.scrapFeed()
             }
             .store(in: &cancelBag)
 
@@ -70,11 +72,26 @@ final class FeedDetailViewModel {
             feedDidUpdate: feedPublisher.unwrap().eraseToAnyPublisher(),
             openBlog: openBlog,
             openActivityView: openActivityView,
-            scrapUpdate: scrapPublisher.unwrap().eraseToAnyPublisher()
+            scrapUpdate: scrapPublisher.unwrap().eraseToAnyPublisher(),
+            showAlertPublisher: showAlertPublisher.unwrap().eraseToAnyPublisher()
         )
     }
 
     func getFeed() -> Feed? {
         return feedPublisher.value
+    }
+
+    private func scrapFeed() {
+        guard let feed = getFeed() else {
+            showAlertPublisher.send(FeedDetailViewModelError.feedIsNil)
+            return
+        }
+        let userUUID = UserManager.shared.user.userUUID
+        Task { [weak self] in
+            let updatedFeed = try await feedDetailUseCase.scrapFeed(feed, userUUID: userUUID)
+            print(updatedFeed)
+            self?.feedPublisher.value = updatedFeed
+            self?.scrapPublisher.send(updatedFeed)
+        }
     }
 }

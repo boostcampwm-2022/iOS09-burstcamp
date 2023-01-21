@@ -126,6 +126,7 @@ final class HomeViewController: UIViewController {
 
         let scrapButtonDidTap = cell.getButtonTapPublisher()
             .map { _  in
+                cell.footerView.scrapButton.isEnabled = false
                 return index
             }
             .eraseToAnyPublisher()

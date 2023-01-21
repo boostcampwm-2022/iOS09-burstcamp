@@ -106,12 +106,14 @@ extension DependencyFactory {
     }
 
     func createFeedDetailViewModel(feed: Feed) -> FeedDetailViewModel {
-        let feedDetailUseCase = DefaultFeedDetailUseCase()
+        let feedRepository = DefaultFeedRepository(bcFirestoreService: BCFirestoreService())
+        let feedDetailUseCase = DefaultFeedDetailUseCase(feedRepository: feedRepository)
         return FeedDetailViewModel(feedDetailUseCase: feedDetailUseCase, feed: feed)
     }
 
     func createFeedDetailViewModel(feedUUID: String) -> FeedDetailViewModel {
-        let feedDetailUseCase = DefaultFeedDetailUseCase()
+        let feedRepository = DefaultFeedRepository(bcFirestoreService: BCFirestoreService())
+        let feedDetailUseCase = DefaultFeedDetailUseCase(feedRepository: feedRepository)
         return FeedDetailViewModel(feedDetailUseCase: feedDetailUseCase, feedUUID: feedUUID)
     }
 

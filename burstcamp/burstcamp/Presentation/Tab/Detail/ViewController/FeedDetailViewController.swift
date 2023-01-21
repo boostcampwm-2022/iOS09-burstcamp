@@ -81,11 +81,18 @@ final class FeedDetailViewController: UIViewController {
     private func bind() {
         // MARK: FeedDetailViewModel
 
+        let scrapButtonDidTap = scrapButton.tapPublisher
+            .map { [weak self] _ in
+                self?.scrapButton.isEnabled = false
+                return
+            }
+            .eraseToAnyPublisher()
+
         let feedDetailInput = FeedDetailViewModel.Input(
             viewDidLoad: Just(Void()).eraseToAnyPublisher(),
             blogButtonDidTap: feedDetailView.blogButtonTapPublisher,
             shareButtonDidTap: shareButton.tapPublisher,
-            scrapButtonDidTap: scrapButton.tapPublisher.eraseToAnyPublisher()
+            scrapButtonDidTap: scrapButtonDidTap
         )
         let feedDetailOutput = feedDetailViewModel.transform(input: feedDetailInput)
 
@@ -115,20 +122,29 @@ final class FeedDetailViewController: UIViewController {
                 self?.present(shareViewController, animated: true)
             }
             .store(in: &cancelBag)
-        
+
         feedDetailOutput.scrapUpdate
             .receive(on: DispatchQueue.main)
-            .sink { feed in
-                print(feed)
+            .sink { [weak self] feed in
+                self?.updateFeedScrap(feed)
             }
+            .store(in: &cancelBag)
+
+        feedDetailOutput.showAlertPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                self?.showAlert(message: error.localizedDescription)
+            }
+            .store(in: &cancelBag)
     }
 
-    private func publishUpdateFeed() {
-        guard let feed = feedDetailViewModel.getFeed() else {
-            showAlert(message: "Feed를 불러올 수 없습니다.")
-            return
-        }
-        // HomeViewController로 보내서 업데이트
+    private func updateFeedScrap(_ feed: Feed) {
+        scrapButton.isOn = feed.isScraped
+        publishUpdateFeed(feed)
+        scrapButton.isEnabled = true
+    }
+
+    private func publishUpdateFeed(_ feed: Feed) {
         updateFeedPublisher.send(feed)
     }
 }
