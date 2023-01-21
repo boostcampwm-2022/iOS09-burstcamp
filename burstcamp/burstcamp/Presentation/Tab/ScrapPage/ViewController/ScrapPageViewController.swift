@@ -139,7 +139,6 @@ extension ScrapPageViewController: UICollectionViewDelegateFlowLayout, UICollect
         let feed = viewModel.scrapFeedData[index]
         let cellViewModel = viewModel.dequeueCellViewModel(at: index)
 
-        cell.configure(with: cellViewModel)
         cell.updateFeedCell(with: feed)
 
         return cell

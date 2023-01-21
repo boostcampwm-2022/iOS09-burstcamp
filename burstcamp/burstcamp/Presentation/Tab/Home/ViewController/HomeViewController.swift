@@ -134,23 +134,23 @@ final class HomeViewController: UIViewController {
             scrapButtonDidTap: scrapButtonDidTap
         )
 
-        let output = viewModel.transform(cellInput: cellInput)
+        let output = viewModel.transform(cellInput: cellInput, cellCancelBag: &cell.cancelBag)
 
         output.scrapButtonState
             .receive(on: DispatchQueue.main)
             .weakAssign(to: \.isOn, on: cell.footerView.scrapButton)
-            .store(in: &cancelBag)
+            .store(in: &cell.cancelBag)
 
         output.scrapButtonIsEnabled
             .receive(on: DispatchQueue.main)
             .weakAssign(to: \.isEnabled, on: cell.footerView.scrapButton)
-            .store(in: &cancelBag)
+            .store(in: &cell.cancelBag)
 
         output.scrapButtonCount
             .receive(on: DispatchQueue.main)
             .map { "\($0)" }
             .weakAssign(to: \.text, on: cell.footerView.countLabel)
-            .store(in: &cancelBag)
+            .store(in: &cell.cancelBag)
     }
 
     private func paginateFeed() {

@@ -98,12 +98,12 @@ final class HomeViewModel {
         return scrapViewModel
     }
 
-    func transform(cellInput: CellInput) -> CellOutput {
+    func transform(cellInput: CellInput, cellCancelBag: inout Set<AnyCancellable>) -> CellOutput {
         cellInput.scrapButtonDidTap
             .sink { [weak self] normalFeedIndex in
                 self?.scrapFeed(index: normalFeedIndex)
             }
-            .store(in: &cancelBag)
+            .store(in: &cellCancelBag)
 
         return CellOutput(
             scrapButtonState: scrapButtonState.unwrap().eraseToAnyPublisher(),
