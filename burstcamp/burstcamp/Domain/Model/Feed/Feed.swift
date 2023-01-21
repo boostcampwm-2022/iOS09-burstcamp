@@ -38,6 +38,38 @@ extension Feed {
 }
 
 extension Feed {
+    func getScrapFeed() -> Feed {
+        let newScrapCount = scrapCount + 1
+        return Feed(
+            feedUUID: self.feedUUID,
+            writer: self.writer,
+            title: self.title,
+            pubDate: self.pubDate,
+            url: self.url,
+            thumbnailURL: self.thumbnailURL,
+            content: self.content,
+            scrapCount: newScrapCount,
+            isScraped: true,
+            scrapDate: Date()
+        )
+    }
+
+    func getUnScrapFeed() -> Feed {
+        let newScrapCount = scrapCount - 1
+        return Feed(
+            feedUUID: self.feedUUID,
+            writer: self.writer,
+            title: self.title,
+            pubDate: self.pubDate,
+            url: self.url,
+            thumbnailURL: self.thumbnailURL,
+            content: self.content,
+            scrapCount: newScrapCount,
+            isScraped: false,
+            scrapDate: nil
+        )
+    }
+
     mutating func toggleScrap() {
         isScraped ? unScrap() : scrap()
     }

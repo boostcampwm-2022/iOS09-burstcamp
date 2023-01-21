@@ -124,4 +124,14 @@ final class HomeViewModel {
             }
         }
     }
+
+    func updateNormalFeed(_ updatedFeed: Feed) {
+        normalFeedData = normalFeedData.map { feed in
+            if feed.feedUUID == updatedFeed.feedUUID {
+                return updatedFeed
+            } else {
+                return feed
+            }
+        }
+    }
 }

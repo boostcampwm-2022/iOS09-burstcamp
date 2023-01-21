@@ -96,7 +96,7 @@ final class HomeViewController: UIViewController {
         output.moreFeed
             .receive(on: DispatchQueue.main)
             .sink { [weak self] normalFeed in
-                self?.reloadSnapshot(normalFeed: normalFeed)
+                self?.reloadSnapshot(normalFeedList: normalFeed)
             }
             .store(in: &cancelBag)
 
@@ -248,8 +248,13 @@ extension HomeViewController {
         dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
     }
 
-    private func reloadSnapshot(normalFeed: [Feed]) {
-        collectionViewSnapShot.appendItems(normalFeed, toSection: .normal)
+    private func reloadSnapshot(normalFeedList: [Feed]) {
+        collectionViewSnapShot.appendItems(normalFeedList, toSection: .normal)
+        dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
+    }
+
+    private func reloadNormalFeedSection() {
+        collectionViewSnapShot.reloadSections([.normal])
         dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
     }
 }
@@ -276,10 +281,11 @@ extension HomeViewController: UNUserNotificationCenterDelegate {
 
 extension HomeViewController {
     func configure(scrapUpdatePublisher: AnyPublisher<Feed, Never>) {
-//        scrapUpdatePublisher
-//            .sink { feed in
-//                print(feed)
-//            }
-//            .store(in: &cancelBag)
+        scrapUpdatePublisher
+            .sink { [weak self] feed in
+                self?.reloadNormalFeedSection()
+                self?.viewModel.updateNormalFeed(feed)
+            }
+            .store(in: &cancelBag)
     }
 }

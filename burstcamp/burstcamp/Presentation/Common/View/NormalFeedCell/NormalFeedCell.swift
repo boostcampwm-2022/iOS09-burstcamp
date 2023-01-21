@@ -18,6 +18,7 @@ final class NormalFeedCell: UICollectionViewCell {
 
     private var scrapViewModel: ScrapViewModel!
 
+    private var updateFeedPublisher = PassthroughSubject<Feed, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
     override init(frame: CGRect) {
@@ -99,6 +100,18 @@ final class NormalFeedCell: UICollectionViewCell {
             .map { "\($0)" }
             .weakAssign(to: \.text, on: footerView.countLabel)
             .store(in: &cancelBag)
+
+        output.scrapSuccess
+            .sink { [weak self] _ in
+            }
+    }
+
+    private func publishUpdateFeed() {
+//        guard let feed = feedDetailViewModel.getFeed() else {
+//            showAlert(message: "Feed를 불러올 수 없습니다.")
+//            return
+//        }
+//        updateFeedPublisher.send(feed)
     }
 }
 

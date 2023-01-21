@@ -28,11 +28,13 @@ final class DefaultFeedRepository: FeedRepository {
         return try await bcFirestoreService.fetchMoreNormalFeeds().map { Feed(feedAPIModel: $0)}
     }
 
-    func scrapFeed(_ feed: Feed, userUUID: String) async throws {
+    func scrapFeed(_ feed: Feed, userUUID: String) async throws -> Feed {
         try await bcFirestoreService.scrapFeed(FeedAPIModel(feed: feed), with: userUUID)
+        return feed.getScrapFeed()
     }
 
-    func unScrapFeed(_ feed: Feed, userUUID: String) async throws {
+    func unScrapFeed(_ feed: Feed, userUUID: String) async throws -> Feed {
         try await bcFirestoreService.unScrapFeed(FeedAPIModel(feed: feed), with: userUUID)
+        return feed.getUnScrapFeed()
     }
 }
