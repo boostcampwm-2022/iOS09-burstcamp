@@ -36,24 +36,16 @@ extension ContainFeedDetailCoordinator {
 
     func prepareFeedDetailViewController(feed: Feed) -> FeedDetailViewController {
         let feedDetailViewModel = dependencyFactory.createFeedDetailViewModel(feed: feed)
-        let scrapViewModel = ScrapViewModel(
-            feedUUID: feed.feedUUID
-        )
         let feedDetailViewController = FeedDetailViewController(
-            feedDetailViewModel: feedDetailViewModel,
-            scrapViewModel: scrapViewModel
+            feedDetailViewModel: feedDetailViewModel
         )
         return feedDetailViewController
     }
 
     func prepareFeedDetailViewController(feedUUID: String) -> FeedDetailViewController {
         let feedDetailViewModel = dependencyFactory.createFeedDetailViewModel(feedUUID: feedUUID)
-        let scrapViewModel = ScrapViewModel(
-            feedUUID: feedUUID
-        )
         let feedDetailViewController = FeedDetailViewController(
-            feedDetailViewModel: feedDetailViewModel,
-            scrapViewModel: scrapViewModel
+            feedDetailViewModel: feedDetailViewModel
         )
         return feedDetailViewController
     }

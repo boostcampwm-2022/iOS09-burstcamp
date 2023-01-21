@@ -41,18 +41,15 @@ final class FeedDetailViewController: UIViewController {
     private lazy var shareBarButtonItem = UIBarButtonItem(customView: shareButton)
 
     private let feedDetailViewModel: FeedDetailViewModel
-    private let scrapViewModel: ScrapViewModel
 
     let coordinatorPublisher = PassthroughSubject<FeedDetailCoordinatorEvent, Never>()
     private var updateFeedPublisher = PassthroughSubject<Feed, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
     init(
-        feedDetailViewModel: FeedDetailViewModel,
-        scrapViewModel: ScrapViewModel
+        feedDetailViewModel: FeedDetailViewModel
     ) {
         self.feedDetailViewModel = feedDetailViewModel
-        self.scrapViewModel = scrapViewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -99,6 +96,7 @@ final class FeedDetailViewController: UIViewController {
         feedDetailOutput.feedDidUpdate
             .receive(on: DispatchQueue.main)
             .sink { [weak self] feed in
+                self?.scrapButton.isOn = feed.isScraped
                 self?.feedDetailView.configure(with: feed)
             }
             .store(in: &cancelBag)
