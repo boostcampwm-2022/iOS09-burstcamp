@@ -29,9 +29,18 @@ extension ContainFeedDetailCoordinator {
             .store(in: &cancelBag)
     }
 
-    func sink(_ feedDetailViewController: FeedDetailViewController, homeViewController: HomeViewController) {
+    func sink(_ feedDetailViewController: FeedDetailViewController, parentViewController: ContainFeedDetailViewController) {
+        feedDetailViewController.coordinatorPublisher
+            .sink { [weak self] event in
+                switch event {
+                case .moveToBlogSafari(let url):
+                    self?.moveToBlogSafari(url: url)
+                }
+            }
+            .store(in: &cancelBag)
+
         let updateFeedPublisher = feedDetailViewController.getUpdateFeedPublisher()
-        homeViewController.configure(scrapUpdatePublisher: updateFeedPublisher)
+        parentViewController.configure(scrapUpdatePublisher: updateFeedPublisher)
     }
 
     func prepareFeedDetailViewController(feed: Feed) -> FeedDetailViewController {

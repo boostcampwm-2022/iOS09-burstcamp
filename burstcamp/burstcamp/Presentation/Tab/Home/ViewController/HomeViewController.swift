@@ -305,7 +305,7 @@ extension HomeViewController: UNUserNotificationCenterDelegate {
     }
 }
 
-extension HomeViewController {
+extension HomeViewController: ContainFeedDetailViewController {
     func configure(scrapUpdatePublisher: AnyPublisher<Feed, Never>) {
         scrapUpdatePublisher
             .sink { [weak self] feed in
