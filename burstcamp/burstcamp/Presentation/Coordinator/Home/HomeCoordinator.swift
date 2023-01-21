@@ -44,14 +44,14 @@ extension HomeCoordinator {
 
     func moveToFeedDetail(feed: Feed, homeViewController: HomeViewController) {
         let feedDetailViewController = prepareFeedDetailViewController(feed: feed)
-//        sinkFeedViewController(feedDetailViewController)
-//        sink(feedDetailViewController, homeViewController: homeViewController)
+        sinkFeedViewController(feedDetailViewController)
+        sink(feedDetailViewController, homeViewController: homeViewController)
         self.navigationController.pushViewController(feedDetailViewController, animated: true)
     }
 
     func moveToFeedDetail(feedUUID: String) {
         let feedDetailViewController = prepareFeedDetailViewController(feedUUID: feedUUID)
-//        sinkFeedViewController(feedDetailViewController)
+        sinkFeedViewController(feedDetailViewController)
         self.navigationController.pushViewController(feedDetailViewController, animated: true)
     }
 }

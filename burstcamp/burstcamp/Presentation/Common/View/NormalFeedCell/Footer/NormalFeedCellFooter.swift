@@ -74,6 +74,7 @@ extension NormalFeedCellFooter {
         DispatchQueue.main.async {
             self.countLabel.text = feed.scrapCount.description
             self.timeLabel.text = timeString
+            self.scrapButton.isOn = feed.isScraped
         }
     }
 }

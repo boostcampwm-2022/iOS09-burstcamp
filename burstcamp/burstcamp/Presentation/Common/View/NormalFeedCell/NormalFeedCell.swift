@@ -90,6 +90,7 @@ final class NormalFeedCell: UICollectionViewCell {
 
         output.scrapButtonIsEnabled
             .receive(on: DispatchQueue.main)
+
             .weakAssign(to: \.isEnabled, on: footerView.scrapButton)
             .store(in: &cancelBag)
 
