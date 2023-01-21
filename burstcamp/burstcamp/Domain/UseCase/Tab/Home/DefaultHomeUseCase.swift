@@ -16,7 +16,16 @@ final class DefaultHomeUseCase: HomeUseCase {
     }
 
     func fetchRecentHomeFeedList() async throws -> HomeFeedList {
-        return try await feedRepository.fetchRecentHomeFeedList()
+        let userScrapFeedUUIDs = UserManager.shared.user.scrapFeedUUIDs
+        let homeFeedList = try await feedRepository.fetchRecentHomeFeedList()
+        let normalFeed = homeFeedList.normalFeed.map({ feed in
+            if userScrapFeedUUIDs.contains(feed.feedUUID) {
+                return feed.setIsScraped(true)
+            } else {
+                return feed
+            }
+        })
+        return HomeFeedList(recommendFeed: homeFeedList.recommendFeed, normalFeed: normalFeed)
     }
 
     func fetchMoreNormalFeed() async throws -> [Feed] {

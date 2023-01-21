@@ -111,8 +111,7 @@ final class FeedRealmDataSource: FeedLocalDataSource {
         guard let feed = normalFeedListSubject.value
             .first(where: { $0.feedUUID == feedUUID })
         else {
-            print("존재하지 않는 피드에 접근했습니다(\(feedUUID))")
-            return Feed()
+            fatalError("존재하지 않는 피드에 접근했습니다(\(feedUUID))")
         }
         return feed
     }
