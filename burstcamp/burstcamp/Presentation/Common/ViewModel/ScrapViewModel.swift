@@ -13,11 +13,12 @@ import BCFetcher
 final class ScrapViewModel {
 
     private var cancelBag = Set<AnyCancellable>()
-    
+
     private let scrapButtonState = CurrentValueSubject<Bool?, Never>(nil)
     private let scrapButtonCount = CurrentValueSubject<String?, Never>(nil)
     private let scrapButtonIsEnabled = CurrentValueSubject<Bool?, Never>(nil)
     private let showAlert = CurrentValueSubject<Error?, Never>(nil)
+    private let scrapSuccess = CurrentValueSubject<Void?, Never>(nil)
 
     private let feedUUID: String
 
@@ -54,11 +55,16 @@ final class ScrapViewModel {
         let scrapButtonCount: AnyPublisher<String, Never>
         let scrapButtonIsEnabled: AnyPublisher<Bool, Never>
         let showAlert: AnyPublisher<Error, Never>
+        let scrapSuccess: AnyPublisher<Void, Never>
     }
 
     func transform(input: Input) -> Output {
         input.scrapToggleButtonDidTap
             .sink { [weak self] _ in
+                // button State - false
+                // useCase 에서 scrap 호출
+                // output에서 결과 send, error는 catch해서 showAlert과 isEnabled
+                // button State - true
 //                self?.updater.update()
             }
             .store(in: &cancelBag)
@@ -67,7 +73,8 @@ final class ScrapViewModel {
             scrapButtonState: scrapButtonState.unwrap().eraseToAnyPublisher(),
             scrapButtonCount: scrapButtonCount.unwrap().eraseToAnyPublisher(),
             scrapButtonIsEnabled: scrapButtonIsEnabled.unwrap().eraseToAnyPublisher(),
-            showAlert: showAlert.unwrap().eraseToAnyPublisher()
+            showAlert: showAlert.unwrap().eraseToAnyPublisher(),
+            scrapSuccess: scrapSuccess.unwrap().eraseToAnyPublisher()
         )
     }
 }

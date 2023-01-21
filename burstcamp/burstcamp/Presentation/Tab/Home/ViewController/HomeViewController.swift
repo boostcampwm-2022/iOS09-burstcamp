@@ -273,3 +273,13 @@ extension HomeViewController: UNUserNotificationCenterDelegate {
         application.registerForRemoteNotifications()
     }
 }
+
+extension HomeViewController {
+    func configure(scrapUpdatePublisher: AnyPublisher<Feed, Never>) {
+        scrapUpdatePublisher
+            .sink { feed in
+                print(feed)
+            }
+            .store(in: &cancelBag)
+    }
+}

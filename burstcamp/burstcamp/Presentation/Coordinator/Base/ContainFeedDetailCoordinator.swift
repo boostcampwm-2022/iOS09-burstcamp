@@ -29,6 +29,11 @@ extension ContainFeedDetailCoordinator {
             .store(in: &cancelBag)
     }
 
+    func sink(_ feedDetailViewController: FeedDetailViewController, homeViewController: HomeViewController) {
+        let updateFeedPublisher = feedDetailViewController.getUpdateFeedPublisher()
+        homeViewController.configure(scrapUpdatePublisher: updateFeedPublisher)
+    }
+
     func prepareFeedDetailViewController(feed: Feed) -> FeedDetailViewController {
         let feedDetailViewModel = dependencyFactory.createFeedDetailViewModel(feed: feed)
         let scrapViewModel = ScrapViewModel(
