@@ -18,7 +18,11 @@ final class NormalFeedCell: UICollectionViewCell {
 
     private var scrapViewModel: ScrapViewModel!
 
-    private var updateFeedPublisher = PassthroughSubject<Feed, Never>()
+    private let scrapButtonState = CurrentValueSubject<Bool?, Never>(nil)
+    private let scrapButtonCount = CurrentValueSubject<String?, Never>(nil)
+    private let scrapButtonIsEnabled = CurrentValueSubject<Bool?, Never>(nil)
+    private let showAlert = CurrentValueSubject<Error?, Never>(nil)
+    private let scrapSuccess = CurrentValueSubject<Void?, Never>(nil)
     private var cancelBag = Set<AnyCancellable>()
 
     override init(frame: CGRect) {
@@ -78,6 +82,7 @@ final class NormalFeedCell: UICollectionViewCell {
     }
 
     private func bind() {
+
         let input = ScrapViewModel.Input(
             scrapToggleButtonDidTap: self.footerView.scrapButton.tapPublisher
         )
@@ -91,7 +96,6 @@ final class NormalFeedCell: UICollectionViewCell {
 
         output.scrapButtonIsEnabled
             .receive(on: DispatchQueue.main)
-
             .weakAssign(to: \.isEnabled, on: footerView.scrapButton)
             .store(in: &cancelBag)
 
@@ -100,18 +104,10 @@ final class NormalFeedCell: UICollectionViewCell {
             .map { "\($0)" }
             .weakAssign(to: \.text, on: footerView.countLabel)
             .store(in: &cancelBag)
-
-        output.scrapSuccess
-            .sink { [weak self] _ in
-            }
     }
 
-    private func publishUpdateFeed() {
-//        guard let feed = feedDetailViewModel.getFeed() else {
-//            showAlert(message: "Feed를 불러올 수 없습니다.")
-//            return
-//        }
-//        updateFeedPublisher.send(feed)
+    func getButtonTapPublisher() -> AnyPublisher<Void, Never> {
+        return footerView.scrapButton.tapPublisher
     }
 }
 

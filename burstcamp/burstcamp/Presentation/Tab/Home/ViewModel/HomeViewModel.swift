@@ -37,10 +37,18 @@ final class HomeViewModel {
     private let showAlert = CurrentValueSubject<Error?, Never>(nil)
     private let showToast = CurrentValueSubject<String?, Never>(nil)
 
+    private let scrapButtonState = CurrentValueSubject<Bool?, Never>(nil)
+    private let scrapButtonCount = CurrentValueSubject<String?, Never>(nil)
+    private let scrapButtonIsEnabled = CurrentValueSubject<Bool?, Never>(nil)
+
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
         let viewDidRefresh: AnyPublisher<Void, Never>
         let pagination: AnyPublisher<Void, Never>
+    }
+
+    struct CellInput {
+        let scrapButtonDidTap: AnyPublisher<Int, Never>
     }
 
     struct Output {
@@ -49,6 +57,12 @@ final class HomeViewModel {
         let hideIndicator: AnyPublisher<Void, Never>
         let showAlert: AnyPublisher<Error, Never>
         let showToast: AnyPublisher<String, Never>
+    }
+
+    struct CellOutput {
+        let scrapButtonState: AnyPublisher<Bool, Never>
+        let scrapButtonCount: AnyPublisher<String, Never>
+        let scrapButtonIsEnabled: AnyPublisher<Bool, Never>
     }
 
     func transform(input: Input) -> Output {
@@ -84,7 +98,21 @@ final class HomeViewModel {
         return scrapViewModel
     }
 
-    func fetchHomeFeedList() {
+    func transform(cellInput: CellInput) -> CellOutput {
+        cellInput.scrapButtonDidTap
+            .sink { [weak self] normalFeedIndex in
+                self?.scrapFeed(index: normalFeedIndex)
+            }
+            .store(in: &cancelBag)
+
+        return CellOutput(
+            scrapButtonState: scrapButtonState.unwrap().eraseToAnyPublisher(),
+            scrapButtonCount: scrapButtonCount.unwrap().eraseToAnyPublisher(),
+            scrapButtonIsEnabled: scrapButtonIsEnabled.unwrap().eraseToAnyPublisher()
+        )
+    }
+
+    private func fetchHomeFeedList() {
         Task { [weak self] in
             self?.isLastFetch = false
             if !isFetching {
@@ -102,7 +130,7 @@ final class HomeViewModel {
         }
     }
 
-    func paginateNormalFeed() {
+    private func paginateNormalFeed() {
         Task { [weak self] in
             if !isFetching && !isLastFetch {
                 isFetching = true
@@ -127,6 +155,39 @@ final class HomeViewModel {
         }
     }
 
+    private func scrapFeed(index: Int) {
+        if index < normalFeedData.count {
+            let feed = normalFeedData[index]
+            let userUUID = UserManager.shared.user.userUUID
+            Task { [weak self] in
+                guard let self = self else {
+                    showAlert.send(HomeViewModelError.feedUpdate)
+                    return
+                }
+                if feed.isScraped {
+                    let updatedFeed = try await self.homeUseCase.unScrapFeed(feed, userUUID: userUUID)
+                    self.updateNormalFeed(updatedFeed)
+                    self.publishUpdateFeed(updatedFeed)
+                } else {
+                    let updatedFeed = try await self.homeUseCase.scrapFeed(feed, userUUID: userUUID)
+                    self.updateNormalFeed(updatedFeed)
+                    self.publishUpdateFeed(updatedFeed)
+                }
+            }
+        } else {
+            showAlert.send(HomeViewModelError.feedIndex)
+        }
+    }
+
+    func publishUpdateFeed(_ feed: Feed) {
+        self.scrapButtonState.send(feed.isScraped)
+        self.scrapButtonCount.send("\(feed.scrapCount)")
+        self.scrapButtonIsEnabled.send(true)
+    }
+}
+
+// FeedDetail에서 변경된 Feed 업데이트
+extension HomeViewModel {
     func updateNormalFeed(_ updatedFeed: Feed) {
         normalFeedData = normalFeedData.map { feed in
             if feed.feedUUID == updatedFeed.feedUUID {

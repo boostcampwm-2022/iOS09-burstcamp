@@ -32,11 +32,11 @@ final class DefaultHomeUseCase: HomeUseCase {
         return try await feedRepository.fetchMoreNormalFeed()
     }
 
-    func scrapFeed(_ feed: Feed, userUUID: String) async throws {
-        try await feedRepository.scrapFeed(feed, userUUID: userUUID)
+    func scrapFeed(_ feed: Feed, userUUID: String) async throws -> Feed {
+        return try await feedRepository.scrapFeed(feed, userUUID: userUUID)
     }
 
-    func unScrapFeed(_ feed: Feed, userUUID: String) async throws {
-        try await feedRepository.scrapFeed(feed, userUUID: userUUID)
+    func unScrapFeed(_ feed: Feed, userUUID: String) async throws -> Feed {
+        return try await feedRepository.scrapFeed(feed, userUUID: userUUID)
     }
 }

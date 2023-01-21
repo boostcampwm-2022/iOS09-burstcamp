@@ -122,6 +122,37 @@ final class HomeViewController: UIViewController {
             .store(in: &cancelBag)
     }
 
+    private func bindNormalFeedCell(_ cell: NormalFeedCell, index: Int) {
+
+        let scrapButtonDidTap = cell.getButtonTapPublisher()
+            .map { _  in
+                return index
+            }
+            .eraseToAnyPublisher()
+
+        let cellInput = HomeViewModel.CellInput(
+            scrapButtonDidTap: scrapButtonDidTap
+        )
+
+        let output = viewModel.transform(cellInput: cellInput)
+
+        output.scrapButtonState
+            .receive(on: DispatchQueue.main)
+            .weakAssign(to: \.isOn, on: cell.footerView.scrapButton)
+            .store(in: &cancelBag)
+
+        output.scrapButtonIsEnabled
+            .receive(on: DispatchQueue.main)
+            .weakAssign(to: \.isEnabled, on: cell.footerView.scrapButton)
+            .store(in: &cancelBag)
+
+        output.scrapButtonCount
+            .receive(on: DispatchQueue.main)
+            .map { "\($0)" }
+            .weakAssign(to: \.text, on: cell.footerView.countLabel)
+            .store(in: &cancelBag)
+    }
+
     private func paginateFeed() {
         paginationPublisher.send(Void())
     }
@@ -194,9 +225,9 @@ extension HomeViewController {
                     }
                     let index = indexPath.row
                     let feed = self.viewModel.normalFeedData[index]
-                    let cellViewModel = self.viewModel.dequeueCellViewModel(at: index)
 
-                    cell.configure(with: cellViewModel)
+                    print("Cancel Bag count", self.cancelBag.count)
+                    self.bindNormalFeedCell(cell, index: index)
                     cell.updateFeedCell(with: feed)
                     return cell
                 case .none:
