@@ -45,7 +45,7 @@ final class FeedDetailViewController: UIViewController {
 
     let coordinatorPublisher = PassthroughSubject<FeedDetailCoordinatorEvent, Never>()
     private var updateFeedPublisher = PassthroughSubject<Feed, Never>()
-    private var cancelBag: Set<AnyCancellable> = []
+    private var cancelBag = Set<AnyCancellable>()
 
     init(
         feedDetailViewModel: FeedDetailViewModel,
@@ -84,7 +84,8 @@ final class FeedDetailViewController: UIViewController {
         let feedDetailInput = FeedDetailViewModel.Input(
             viewDidLoad: Just(Void()).eraseToAnyPublisher(),
             blogButtonDidTap: feedDetailView.blogButtonTapPublisher,
-            shareButtonDidTap: shareButton.tapPublisher
+            shareButtonDidTap: shareButton.tapPublisher,
+            scrapButtonDidTap: scrapButton.tapPublisher.eraseToAnyPublisher()
         )
         let feedDetailOutput = feedDetailViewModel.transform(input: feedDetailInput)
 
@@ -114,36 +115,12 @@ final class FeedDetailViewController: UIViewController {
                 self?.present(shareViewController, animated: true)
             }
             .store(in: &cancelBag)
-
-        // MARK: ScrapViewModel
-
-        let scrapInput = ScrapViewModel.Input(
-            scrapToggleButtonDidTap: scrapButton.tapPublisher
-        )
-        let scrapOutput = scrapViewModel.transform(input: scrapInput)
-
-        scrapOutput.scrapButtonIsEnabled
+        
+        feedDetailOutput.scrapUpdate
             .receive(on: DispatchQueue.main)
-            .weakAssign(to: \.isEnabled, on: scrapButton)
-            .store(in: &cancelBag)
-
-        scrapOutput.scrapButtonState
-            .receive(on: DispatchQueue.main)
-            .weakAssign(to: \.isOn, on: scrapButton)
-            .store(in: &cancelBag)
-
-        scrapOutput.showAlert
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] error in
-                self?.showAlert(message: error.localizedDescription)
+            .sink { feed in
+                print(feed)
             }
-            .store(in: &cancelBag)
-
-        scrapOutput.scrapSuccess
-            .sink { [weak self] _ in
-                self?.publishUpdateFeed()
-            }
-            .store(in: &cancelBag)
     }
 
     private func publishUpdateFeed() {
@@ -151,9 +128,7 @@ final class FeedDetailViewController: UIViewController {
             showAlert(message: "Feed를 불러올 수 없습니다.")
             return
         }
-        // feedDetailViewModel에 있는 feed를 Coordinator에 보내줌
-        // Coordinator에서 받아서 HomeViewController로 전달
-        // HomeViewController의 Feed 업데이트
+        // HomeViewController로 보내서 업데이트
         updateFeedPublisher.send(feed)
     }
 }

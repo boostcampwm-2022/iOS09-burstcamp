@@ -8,4 +8,5 @@
 import Foundation
 
 protocol FeedDetailUseCase {
+    func scrapFeed(_ feed: Feed, userUUID: String) async throws -> Feed
 }
