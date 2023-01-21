@@ -90,6 +90,9 @@
 		14A34D55297444F000501A66 /* SignUpUseCaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D54297444F000501A66 /* SignUpUseCaseError.swift */; };
 		14A93D402936EFF900790034 /* FeedAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D3F2936EFF900790034 /* FeedAPIModel.swift */; };
 		14A93D422936F00F00790034 /* FeedWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D412936F00F00790034 /* FeedWriter.swift */; };
+		14D8C4B6297B7E6300DFE71F /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C4B5297B7E6300DFE71F /* Updater.swift */; };
+		14D8C4B9297B832000DFE71F /* ScrapUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C4B8297B832000DFE71F /* ScrapUseCase.swift */; };
+		14D8C4BB297B837800DFE71F /* DefaultScrapUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C4BA297B837800DFE71F /* DefaultScrapUseCase.swift */; };
 		14F94BE62939E16D0058A79A /* UICollectionView+emptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */; };
 		3B061FD82928CC5600BFA71D /* SignUpDomainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FD72928CC5600BFA71D /* SignUpDomainViewController.swift */; };
 		3B061FDA2928CF7E00BFA71D /* SighUpDomainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FD92928CF7E00BFA71D /* SighUpDomainView.swift */; };
@@ -336,6 +339,9 @@
 		14A34D54297444F000501A66 /* SignUpUseCaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUseCaseError.swift; sourceTree = "<group>"; };
 		14A93D3F2936EFF900790034 /* FeedAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAPIModel.swift; sourceTree = "<group>"; };
 		14A93D412936F00F00790034 /* FeedWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedWriter.swift; sourceTree = "<group>"; };
+		14D8C4B5297B7E6300DFE71F /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
+		14D8C4B8297B832000DFE71F /* ScrapUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapUseCase.swift; sourceTree = "<group>"; };
+		14D8C4BA297B837800DFE71F /* DefaultScrapUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultScrapUseCase.swift; sourceTree = "<group>"; };
 		14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+emptyView.swift"; sourceTree = "<group>"; };
 		3B061FD72928CC5600BFA71D /* SignUpDomainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDomainViewController.swift; sourceTree = "<group>"; };
 		3B061FD92928CF7E00BFA71D /* SighUpDomainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SighUpDomainView.swift; sourceTree = "<group>"; };
@@ -916,6 +922,7 @@
 		1493048B2963EBEB00B9BC71 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				14D8C4B7297B831600DFE71F /* Common */,
 				148A05472972F5B300664CCB /* Auth */,
 				148A05522972F65700664CCB /* Tab */,
 			);
@@ -1223,6 +1230,15 @@
 				1459C3BB2929150200FA885D /* FeedCellType.swift */,
 			);
 			path = Feed;
+			sourceTree = "<group>";
+		};
+		14D8C4B7297B831600DFE71F /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				14D8C4B8297B832000DFE71F /* ScrapUseCase.swift */,
+				14D8C4BA297B837800DFE71F /* DefaultScrapUseCase.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		3B061FD62928CC4300BFA71D /* Domain */ = {
@@ -1551,6 +1567,7 @@
 			children = (
 				B5BA278B2927B08800BDCE08 /* View */,
 				B5BA278C2927B08C00BDCE08 /* ViewModel */,
+				14D8C4B5297B7E6300DFE71F /* Updater.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1954,11 +1971,13 @@
 				D8494D522927D086008157F1 /* MyPageProfileView.swift in Sources */,
 				148A055B2972F77C00664CCB /* DefaultHomeUseCase.swift in Sources */,
 				141344DB292F82BE00187B86 /* Feed.swift in Sources */,
+				14D8C4BB297B837800DFE71F /* DefaultScrapUseCase.swift in Sources */,
 				14A34D5029743F2A00501A66 /* DefaultBlogRepository.swift in Sources */,
 				3B061FDF2928E90400BFA71D /* SignUpCamperIDView.swift in Sources */,
 				3B7492352946BE3E00A4BEA0 /* GithubLogInCoordinator.swift in Sources */,
 				B50A27F629279F5D00DF3E1F /* AuthCoordinator.swift in Sources */,
 				D8494D542927D0DC008157F1 /* User.swift in Sources */,
+				14D8C4B9297B832000DFE71F /* ScrapUseCase.swift in Sources */,
 				B50A27EA29279F5D00DF3E1F /* NormalFeedCellMain.swift in Sources */,
 				141344D0292F800300187B86 /* UIView+addSubViews.swift in Sources */,
 				148A054D2972F5FF00664CCB /* DefaultLoginUseCase.swift in Sources */,
@@ -1977,6 +1996,7 @@
 				148A054B2972F5CC00664CCB /* LoginUseCase.swift in Sources */,
 				D8C3866C292B4B0B005A2563 /* OpenSourceLicenseView.swift in Sources */,
 				14A34D3A297417FD00501A66 /* GithubAPIKeyManager.swift in Sources */,
+				14D8C4B6297B7E6300DFE71F /* Updater.swift in Sources */,
 				140438BD293F6FDF004D035C /* ScrapPageCoordinator.swift in Sources */,
 				D84452F6292CF4BC008E811B /* DefaultImageLabel.swift in Sources */,
 				D8C38672292B88DE005A2563 /* UserDefaultsManager.swift in Sources */,

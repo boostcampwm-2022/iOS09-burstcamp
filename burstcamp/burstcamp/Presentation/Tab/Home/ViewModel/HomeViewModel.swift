@@ -77,9 +77,7 @@ final class HomeViewModel {
 
     func dequeueCellViewModel(at index: Int) -> ScrapViewModel {
         let scrapViewModel = ScrapViewModel(
-            feedUUID: normalFeedData[index].feedUUID,
-            feedLocalDataSource: FeedRealmDataSource.shared,
-            feedRemoteDataSource: FeedRemoteDataSource.shared
+            feedUUID: normalFeedData[index].feedUUID
         )
         return scrapViewModel
     }
