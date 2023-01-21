@@ -29,31 +29,32 @@ extension ContainFeedDetailCoordinator {
             .store(in: &cancelBag)
     }
 
-    func sink(_ feedDetailViewController: FeedDetailViewController, homeViewController: HomeViewController) {
+    func sink(_ feedDetailViewController: FeedDetailViewController, parentViewController: ContainFeedDetailViewController) {
+        feedDetailViewController.coordinatorPublisher
+            .sink { [weak self] event in
+                switch event {
+                case .moveToBlogSafari(let url):
+                    self?.moveToBlogSafari(url: url)
+                }
+            }
+            .store(in: &cancelBag)
+
         let updateFeedPublisher = feedDetailViewController.getUpdateFeedPublisher()
-        homeViewController.configure(scrapUpdatePublisher: updateFeedPublisher)
+        parentViewController.configure(scrapUpdatePublisher: updateFeedPublisher)
     }
 
     func prepareFeedDetailViewController(feed: Feed) -> FeedDetailViewController {
         let feedDetailViewModel = dependencyFactory.createFeedDetailViewModel(feed: feed)
-        let scrapViewModel = ScrapViewModel(
-            feedUUID: feed.feedUUID
-        )
         let feedDetailViewController = FeedDetailViewController(
-            feedDetailViewModel: feedDetailViewModel,
-            scrapViewModel: scrapViewModel
+            feedDetailViewModel: feedDetailViewModel
         )
         return feedDetailViewController
     }
 
     func prepareFeedDetailViewController(feedUUID: String) -> FeedDetailViewController {
         let feedDetailViewModel = dependencyFactory.createFeedDetailViewModel(feedUUID: feedUUID)
-        let scrapViewModel = ScrapViewModel(
-            feedUUID: feedUUID
-        )
         let feedDetailViewController = FeedDetailViewController(
-            feedDetailViewModel: feedDetailViewModel,
-            scrapViewModel: scrapViewModel
+            feedDetailViewModel: feedDetailViewModel
         )
         return feedDetailViewController
     }

@@ -126,6 +126,7 @@ final class HomeViewController: UIViewController {
 
         let scrapButtonDidTap = cell.getButtonTapPublisher()
             .map { _  in
+                cell.footerView.scrapButton.isEnabled = false
                 return index
             }
             .eraseToAnyPublisher()
@@ -304,12 +305,11 @@ extension HomeViewController: UNUserNotificationCenterDelegate {
     }
 }
 
-extension HomeViewController {
+extension HomeViewController: ContainFeedDetailViewController {
     func configure(scrapUpdatePublisher: AnyPublisher<Feed, Never>) {
         scrapUpdatePublisher
             .sink { [weak self] feed in
-                // TODO: Feed Detail에서 스크랩 이후 refresh 안해도 되면 제거
-//                self?.reloadNormalFeedSection()
+                self?.reloadNormalFeedSection()
                 self?.viewModel.updateNormalFeed(feed)
             }
             .store(in: &cancelBag)

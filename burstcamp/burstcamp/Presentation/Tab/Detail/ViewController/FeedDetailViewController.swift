@@ -41,18 +41,15 @@ final class FeedDetailViewController: UIViewController {
     private lazy var shareBarButtonItem = UIBarButtonItem(customView: shareButton)
 
     private let feedDetailViewModel: FeedDetailViewModel
-    private let scrapViewModel: ScrapViewModel
 
     let coordinatorPublisher = PassthroughSubject<FeedDetailCoordinatorEvent, Never>()
     private var updateFeedPublisher = PassthroughSubject<Feed, Never>()
-    private var cancelBag: Set<AnyCancellable> = []
+    private var cancelBag = Set<AnyCancellable>()
 
     init(
-        feedDetailViewModel: FeedDetailViewModel,
-        scrapViewModel: ScrapViewModel
+        feedDetailViewModel: FeedDetailViewModel
     ) {
         self.feedDetailViewModel = feedDetailViewModel
-        self.scrapViewModel = scrapViewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -81,16 +78,25 @@ final class FeedDetailViewController: UIViewController {
     private func bind() {
         // MARK: FeedDetailViewModel
 
+        let scrapButtonDidTap = scrapButton.tapPublisher
+            .map { [weak self] _ in
+                self?.scrapButton.isEnabled = false
+                return
+            }
+            .eraseToAnyPublisher()
+
         let feedDetailInput = FeedDetailViewModel.Input(
             viewDidLoad: Just(Void()).eraseToAnyPublisher(),
             blogButtonDidTap: feedDetailView.blogButtonTapPublisher,
-            shareButtonDidTap: shareButton.tapPublisher
+            shareButtonDidTap: shareButton.tapPublisher,
+            scrapButtonDidTap: scrapButtonDidTap
         )
         let feedDetailOutput = feedDetailViewModel.transform(input: feedDetailInput)
 
         feedDetailOutput.feedDidUpdate
             .receive(on: DispatchQueue.main)
             .sink { [weak self] feed in
+                self?.scrapButton.isOn = feed.isScraped
                 self?.feedDetailView.configure(with: feed)
             }
             .store(in: &cancelBag)
@@ -115,45 +121,28 @@ final class FeedDetailViewController: UIViewController {
             }
             .store(in: &cancelBag)
 
-        // MARK: ScrapViewModel
-
-        let scrapInput = ScrapViewModel.Input(
-            scrapToggleButtonDidTap: scrapButton.tapPublisher
-        )
-        let scrapOutput = scrapViewModel.transform(input: scrapInput)
-
-        scrapOutput.scrapButtonIsEnabled
+        feedDetailOutput.scrapUpdate
             .receive(on: DispatchQueue.main)
-            .weakAssign(to: \.isEnabled, on: scrapButton)
+            .sink { [weak self] feed in
+                self?.updateFeedScrap(feed)
+            }
             .store(in: &cancelBag)
 
-        scrapOutput.scrapButtonState
-            .receive(on: DispatchQueue.main)
-            .weakAssign(to: \.isOn, on: scrapButton)
-            .store(in: &cancelBag)
-
-        scrapOutput.showAlert
+        feedDetailOutput.showAlertPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
                 self?.showAlert(message: error.localizedDescription)
             }
             .store(in: &cancelBag)
-
-        scrapOutput.scrapSuccess
-            .sink { [weak self] _ in
-                self?.publishUpdateFeed()
-            }
-            .store(in: &cancelBag)
     }
 
-    private func publishUpdateFeed() {
-        guard let feed = feedDetailViewModel.getFeed() else {
-            showAlert(message: "Feed를 불러올 수 없습니다.")
-            return
-        }
-        // feedDetailViewModel에 있는 feed를 Coordinator에 보내줌
-        // Coordinator에서 받아서 HomeViewController로 전달
-        // HomeViewController의 Feed 업데이트
+    private func updateFeedScrap(_ feed: Feed) {
+        scrapButton.isOn = feed.isScraped
+        publishUpdateFeed(feed)
+        scrapButton.isEnabled = true
+    }
+
+    private func publishUpdateFeed(_ feed: Feed) {
         updateFeedPublisher.send(feed)
     }
 }
