@@ -33,10 +33,8 @@ final class DefaultHomeUseCase: HomeUseCase {
     }
 
     func scrapFeed(_ feed: Feed, userUUID: String) async throws -> Feed {
-        return try await feedRepository.scrapFeed(feed, userUUID: userUUID)
-    }
-
-    func unScrapFeed(_ feed: Feed, userUUID: String) async throws -> Feed {
-        return try await feedRepository.scrapFeed(feed, userUUID: userUUID)
+        return feed.isScraped
+        ? try await feedRepository.unScrapFeed(feed, userUUID: userUUID)
+        : try await feedRepository.scrapFeed(feed, userUUID: userUUID)
     }
 }

@@ -158,21 +158,16 @@ final class HomeViewModel {
     private func scrapFeed(index: Int) {
         if index < normalFeedData.count {
             let feed = normalFeedData[index]
+            print(feed)
             let userUUID = UserManager.shared.user.userUUID
             Task { [weak self] in
                 guard let self = self else {
                     showAlert.send(HomeViewModelError.feedUpdate)
                     return
                 }
-                if feed.isScraped {
-                    let updatedFeed = try await self.homeUseCase.unScrapFeed(feed, userUUID: userUUID)
-                    self.updateNormalFeed(updatedFeed)
-                    self.publishUpdateFeed(updatedFeed)
-                } else {
-                    let updatedFeed = try await self.homeUseCase.scrapFeed(feed, userUUID: userUUID)
-                    self.updateNormalFeed(updatedFeed)
-                    self.publishUpdateFeed(updatedFeed)
-                }
+                let updatedFeed = try await self.homeUseCase.scrapFeed(feed, userUUID: userUUID)
+                self.updateNormalFeed(updatedFeed)
+                self.publishUpdateFeed(updatedFeed)
             }
         } else {
             showAlert.send(HomeViewModelError.feedIndex)
