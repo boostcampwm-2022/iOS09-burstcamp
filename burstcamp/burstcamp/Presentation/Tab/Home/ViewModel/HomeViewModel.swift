@@ -150,7 +150,7 @@ final class HomeViewModel {
                     return
                 }
                 let updatedFeed = try await self.homeUseCase.scrapFeed(feed, userUUID: userUUID)
-                self.updateNormalFeed(updatedFeed)
+                _ = self.updateNormalFeed(updatedFeed)
                 self.scrapSuccess.send(updatedFeed)
             }
         } else {

@@ -21,6 +21,10 @@ final class DefaultHomeUseCase: HomeUseCase {
         let normalFeed = homeFeedList.normalFeed.map({ feed in
             return userScrapFeedUUIDs.contains(feed.feedUUID) ? feed.setIsScraped(true) : feed
         })
+        print("스크랩 배열", userScrapFeedUUIDs)
+        normalFeed.forEach { feed in
+            print("Use 케이스에서 출력", feed.title, feed.isScraped)
+        }
         return HomeFeedList(recommendFeed: homeFeedList.recommendFeed, normalFeed: normalFeed)
     }
 

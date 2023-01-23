@@ -46,7 +46,7 @@ final class ScrapPageViewModel {
     }
 
     struct CellInput {
-        let scrapButtonDidTap: AnyPublisher<Int, Never>
+        let scrapButtonDidTap: AnyPublisher<String, Never>
     }
 
     struct Output {
@@ -88,8 +88,8 @@ final class ScrapPageViewModel {
 
     func transform(cellInput: CellInput, cellCancelBag: inout Set<AnyCancellable>) -> CellOutput {
         cellInput.scrapButtonDidTap
-            .sink { [weak self] normalFeedIndex in
-                self?.scrapFeed(index: normalFeedIndex)
+            .sink { [weak self] feedUUID in
+                self?.scrapFeed(feedUUID: feedUUID)
             }
             .store(in: &cellCancelBag)
 
@@ -98,21 +98,20 @@ final class ScrapPageViewModel {
         )
     }
 
-    private func scrapFeed(index: Int) {
-        if index < scrapFeedList.count {
-            let feed = scrapFeedList[index]
-            let userUUID = UserManager.shared.user.userUUID
-            Task { [weak self] in
-                guard let self = self else {
-                    showAlert.send(HomeViewModelError.feedUpdate)
-                    return
-                }
-                let updatedFeed = try await self.scrapPageUseCase.scrapFeed(feed, userUUID: userUUID)
-                self.updateScrapFeed(updatedFeed)
-                self.scrapSuccess.send(updatedFeed)
+    private func scrapFeed(feedUUID: String) {
+        guard let feed = scrapFeedList.first(where: { $0.feedUUID == feedUUID }) else {
+            showAlert.send(ScrapPageViewModelError.scrapFeed)
+            return
+        }
+        let userUUID = UserManager.shared.user.userUUID
+        Task { [weak self] in
+            guard let self = self else {
+                showAlert.send(HomeViewModelError.feedUpdate)
+                return
             }
-        } else {
-            showAlert.send(HomeViewModelError.feedIndex)
+            let updatedFeed = try await self.scrapPageUseCase.scrapFeed(feed, userUUID: userUUID)
+            _ = self.updateScrapFeed(updatedFeed)
+            self.scrapSuccess.send(updatedFeed)
         }
     }
 

@@ -117,12 +117,12 @@ final class ScrapPageViewController: UIViewController {
             .store(in: &cancelBag)
     }
 
-    private func bindNormalFeedCell(_ cell: NormalFeedCell, index: Int, feedUUID: String) {
+    private func bindNormalFeedCell(_ cell: NormalFeedCell, feedUUID: String) {
 
         let scrapButtonDidTap = cell.getButtonTapPublisher()
             .map { _  in
                 cell.footerView.scrapButton.isEnabled = false
-                return index
+                return feedUUID
             }
             .eraseToAnyPublisher()
 
@@ -178,8 +178,8 @@ extension ScrapPageViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - DataSource
 extension ScrapPageViewController {
     private func configureDataSource() {
-        let cellRegistration = UICollectionView.CellRegistration<NormalFeedCell, Feed> { cell, indexPath, feed in
-            self.bindNormalFeedCell(cell, index: indexPath.row, feedUUID: feed.feedUUID)
+        let cellRegistration = UICollectionView.CellRegistration<NormalFeedCell, Feed> { cell, _ , feed in
+            self.bindNormalFeedCell(cell, feedUUID: feed.feedUUID)
             cell.updateFeedCell(with: feed)
         }
         dataSource = UICollectionViewDiffableDataSource(
