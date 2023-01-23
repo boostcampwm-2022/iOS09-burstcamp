@@ -120,13 +120,25 @@ final class ScrapPageViewModel {
             self?.isLastFetch = false
             if !isFetching {
                 isFetching = true
-                let scrapFeed = try await self?.scrapPageUseCase.fetchRecentScrapFeed()
-                guard let scrapFeed = scrapFeed else {
-                    debugPrint("scrapFeedList 언래핑 에러")
-                    return
+
+                do {
+                    let scrapFeed = try await self?.scrapPageUseCase.fetchRecentScrapFeed()
+                    guard let scrapFeed = scrapFeed else {
+                        print("scrapFeedList 언래핑 에러")
+                        isFetching = false
+                        return
+                    }
+                    self?.scrapFeedList = scrapFeed
+                    self?.recentScrapFeed.send(scrapFeed)
+                } catch {
+                    self?.recentScrapFeed.send([])
+                    if let error = error as? FirestoreServiceError, error == .lastFetch {
+                        showToast.send("스크랩 피드를 모두 불러왔어요")
+                        isLastFetch = true
+                    } else {
+                        showAlert.send(error)
+                    }
                 }
-                self?.scrapFeedList = scrapFeed
-                self?.recentScrapFeed.send(scrapFeed)
                 isFetching = false
             }
         }
@@ -140,6 +152,7 @@ final class ScrapPageViewModel {
                     let scrapFeed = try await self?.scrapPageUseCase.fetchMoreScrapFeed()
                     guard let scrapFeed = scrapFeed else {
                         debugPrint("normalFeed 페이지네이션 언래핑 에러")
+                        isFetching = false
                         return
                     }
                     self?.scrapFeedList.append(contentsOf: scrapFeed)

@@ -265,9 +265,6 @@ extension HomeViewController {
         // TODO: Recommend Feed
 //        collectionViewSnapShot.appendItems(homeFeedList.recommendFeed, toSection: .recommend)
         collectionViewSnapShot.appendItems(homeFeedList.normalFeed, toSection: .normal)
-        homeFeedList.normalFeed.forEach { feed in
-            print(feed.title, feed.isScraped)
-        }
         dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
     }
 

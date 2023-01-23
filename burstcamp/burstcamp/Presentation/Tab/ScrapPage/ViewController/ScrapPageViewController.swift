@@ -178,7 +178,7 @@ extension ScrapPageViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - DataSource
 extension ScrapPageViewController {
     private func configureDataSource() {
-        let cellRegistration = UICollectionView.CellRegistration<NormalFeedCell, Feed> { cell, _ , feed in
+        let cellRegistration = UICollectionView.CellRegistration<NormalFeedCell, Feed> { cell, _, feed in
             self.bindNormalFeedCell(cell, feedUUID: feed.feedUUID)
             cell.updateFeedCell(with: feed)
         }
@@ -195,6 +195,8 @@ extension ScrapPageViewController {
     }
 
     private func refreshScrapFeedList(scrapFeedList: [Feed]) {
+        configureEmptyView()
+
         let previousScrapFeedData = collectionViewSnapshot.itemIdentifiers(inSection: .normal)
         collectionViewSnapshot.deleteItems(previousScrapFeedData)
 
@@ -207,9 +209,12 @@ extension ScrapPageViewController {
         dataSource.apply(collectionViewSnapshot, animatingDifferences: false)
     }
 
-    private func reloadScrapFeedSection() {
-        collectionViewSnapshot.reloadSections([.normal])
-        dataSource.apply(collectionViewSnapshot, animatingDifferences: false)
+    private func configureEmptyView() {
+        if viewModel.scrapFeedList.isEmpty {
+            scrapPageView.collectionView.configureEmptyView()
+        } else {
+            scrapPageView.collectionView.resetEmptyView()
+        }
     }
 }
 
