@@ -14,7 +14,9 @@ typealias FeedWithOrder = (order: Int, feed: Feed)
 
 final class ScrapPageViewModel {
 
-    var scrapFeedData: [Feed] = []
+    var scrapFeedList: [Feed] = []
+    var isLastFetch: Bool = false
+    var isFetching: Bool = false
 
     private let userUUID: String
     private let scrapPageUseCase: ScrapPageUseCase
@@ -27,16 +29,18 @@ final class ScrapPageViewModel {
         self.userUUID = userUUID
     }
 
-    private let reloadData = CurrentValueSubject<Void?, Never>(nil)
+    private let recentScrapFeed = CurrentValueSubject<[Feed]?, Never>(nil)
+    private let moreFeed = CurrentValueSubject<[Feed]?, Never>(nil)
     private let hideIndicator = CurrentValueSubject<Void?, Never>(nil)
     private let showAlert = CurrentValueSubject<Error?, Never>(nil)
+    private let showToast = CurrentValueSubject<String?, Never>(nil)
 
     private let scrapSuccess = CurrentValueSubject<Feed?, Never>(nil)
 
     private var cancelBag = Set<AnyCancellable>()
 
     struct Input {
-        let viewWillAppear: AnyPublisher<Void, Never>
+        let viewDidLoad: AnyPublisher<Void, Never>
         let viewDidRefresh: AnyPublisher<Void, Never>
         let pagination: AnyPublisher<Void, Never>
     }
@@ -46,9 +50,11 @@ final class ScrapPageViewModel {
     }
 
     struct Output {
-        let reloadData: AnyPublisher<Void, Never>
+        let recentScrapFeed: AnyPublisher<[Feed], Never>
+        let moreFeed: AnyPublisher<[Feed], Never>
         let hideIndicator: AnyPublisher<Void, Never>
         let showAlert: AnyPublisher<Error, Never>
+        let showToast: AnyPublisher<String, Never>
     }
 
     struct CellOutput {
@@ -56,40 +62,27 @@ final class ScrapPageViewModel {
     }
 
     func transform(input: Input) -> Output {
-//        input.viewWillDisappear
-//            .sink { [weak self] _ in
-//                guard let self = self else { return }
-//                self.temporaryCancelBag = Set<AnyCancellable>()
-//            }
-//            .store(in: &cancelBag)
 
-        input.viewWillAppear
+        input.viewDidLoad
             .merge(with: input.viewDidRefresh)
             .sink { [weak self] _ in
-                guard let self = self else { return }
+                self?.fetchRecentScrapFeed()
+                self?.hideIndicator.send(Void())
+            }
+            .store(in: &cancelBag)
 
-//                self.fetcher.fetch { status, data in
-//                    self.scrapFeedData = data
-//
-//                    switch status {
-//                    case .loading:
-//                        self.reloadData.send(Void())
-//                    case .success:
-//                        self.hideIndicator.send(Void())
-//                        self.reloadData.send(Void())
-//                    case .failure(let error):
-//                        self.hideIndicator.send(Void())
-//                        self.showAlert.send(error)
-//                    }
-//                }
-//                .store(in: &self.temporaryCancelBag)
+        input.pagination
+            .sink { [weak self] _ in
+                self?.paginateScrapFeed()
             }
             .store(in: &cancelBag)
 
         return Output(
-            reloadData: reloadData.unwrap().eraseToAnyPublisher(),
+            recentScrapFeed: recentScrapFeed.unwrap().eraseToAnyPublisher(),
+            moreFeed: moreFeed.unwrap().eraseToAnyPublisher(),
             hideIndicator: hideIndicator.unwrap().eraseToAnyPublisher(),
-            showAlert: showAlert.unwrap().eraseToAnyPublisher()
+            showAlert: showAlert.unwrap().eraseToAnyPublisher(),
+            showToast: showToast.unwrap().eraseToAnyPublisher()
         )
     }
 
@@ -106,20 +99,70 @@ final class ScrapPageViewModel {
     }
 
     private func scrapFeed(index: Int) {
-        if index < scrapFeedData.count {
-            let feed = scrapFeedData[index]
+        if index < scrapFeedList.count {
+            let feed = scrapFeedList[index]
             let userUUID = UserManager.shared.user.userUUID
             Task { [weak self] in
                 guard let self = self else {
                     showAlert.send(HomeViewModelError.feedUpdate)
                     return
                 }
-//                let updatedFeed = try await self.scrapPageUseCase.scrapFeed(feed, userUUID: userUUID)
-//                self.updateNormalFeed(updatedFeed)
-//                self.scrapSuccess.send(updatedFeed)
+                let updatedFeed = try await self.scrapPageUseCase.scrapFeed(feed, userUUID: userUUID)
+                self.updateScrapFeed(updatedFeed)
+                self.scrapSuccess.send(updatedFeed)
             }
         } else {
             showAlert.send(HomeViewModelError.feedIndex)
+        }
+    }
+
+    private func fetchRecentScrapFeed() {
+        Task { [weak self] in
+            self?.isLastFetch = false
+            if !isFetching {
+                isFetching = true
+                let scrapFeed = try await self?.scrapPageUseCase.fetchRecentScrapFeed()
+                guard let scrapFeed = scrapFeed else {
+                    debugPrint("scrapFeedList 언래핑 에러")
+                    return
+                }
+                self?.scrapFeedList = scrapFeed
+                self?.recentScrapFeed.send(scrapFeed)
+                isFetching = false
+            }
+        }
+    }
+
+    private func paginateScrapFeed() {
+        Task { [weak self] in
+            if !isFetching && !isLastFetch {
+                isFetching = true
+                do {
+                    let scrapFeed = try await self?.scrapPageUseCase.fetchMoreScrapFeed()
+                    guard let scrapFeed = scrapFeed else {
+                        debugPrint("normalFeed 페이지네이션 언래핑 에러")
+                        return
+                    }
+                    self?.scrapFeedList.append(contentsOf: scrapFeed)
+                    self?.moreFeed.send(scrapFeed)
+                } catch {
+                    if let error = error as? FirestoreServiceError, error == .lastFetch {
+                        showToast.send("스크랩 피드를 모두 불러왔어요")
+                        isLastFetch = true
+                    } else {
+                        showAlert.send(error)
+                    }
+                }
+                isFetching = false
+            }
+        }
+    }
+}
+
+extension ScrapPageViewModel {
+    func updateScrapFeed(_ updatedScrapFeed: Feed) {
+        scrapFeedList = scrapFeedList.map { feed in
+            return feed.feedUUID == updatedScrapFeed.feedUUID ? updatedScrapFeed : feed
         }
     }
 }

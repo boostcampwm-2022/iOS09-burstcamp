@@ -129,7 +129,7 @@ final class HomeViewModel {
                     self?.moreFeed.send(normalFeed)
                 } catch {
                     if let error = error as? FirestoreServiceError, error == .lastFetch {
-                        showToast.send("모든 피드를 불러왔습니다.")
+                        showToast.send("모든 피드를 불러왔어요")
                         isLastFetch = true
                     } else {
                         showAlert.send(error)

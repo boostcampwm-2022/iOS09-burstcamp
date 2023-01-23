@@ -25,7 +25,6 @@ final class ScrapPageViewController: UIViewController {
     private let viewModel: ScrapPageViewModel
 
     let coordinatorPublisher = PassthroughSubject<ScrapPageCoordinatorEvent, Never>()
-    private let viewWillAppearPublisher = PassthroughSubject<Void, Never>()
     private let paginationPublisher = PassthroughSubject<Void, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
@@ -47,15 +46,14 @@ final class ScrapPageViewController: UIViewController {
     }
 
     override func viewDidLoad() {
+        collectionViewDelegate()
         configureDataSource()
         bind()
-        collectionViewDelegate()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureNavigationBar()
-        viewWillAppearPublisher.send(Void())
     }
 
     private func collectionViewDelegate() {
@@ -73,18 +71,27 @@ final class ScrapPageViewController: UIViewController {
         guard let refreshControl = scrapPageView.collectionView.refreshControl
         else { return }
 
+        let viewDidLoadJust = Just(Void()).eraseToAnyPublisher()
+
         let input = ScrapPageViewModel.Input(
-            viewWillAppear: viewWillAppearPublisher.eraseToAnyPublisher(),
+            viewDidLoad: viewDidLoadJust,
             viewDidRefresh: refreshControl.refreshPublisher,
             pagination: paginationPublisher.eraseToAnyPublisher()
         )
 
         let output = viewModel.transform(input: input)
 
-        output.reloadData
+        output.recentScrapFeed
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.scrapPageView.collectionView.reloadData()
+            .sink { [weak self] scrapFeedList in
+                self?.refreshSnapshot(scrapFeedList: scrapFeedList)
+            }
+            .store(in: &cancelBag)
+
+        output.moreFeed
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] scrapFeedList in
+                self?.reloadSnapshot(additional: scrapFeedList)
             }
             .store(in: &cancelBag)
 
@@ -99,6 +106,13 @@ final class ScrapPageViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.scrapPageView.endCollectionViewRefreshing()
+            }
+            .store(in: &cancelBag)
+
+        output.showToast
+            .receive(on: DispatchQueue.main)
+            .sink { message in
+                self.showToastMessage(text: message)
             }
             .store(in: &cancelBag)
     }
@@ -131,8 +145,7 @@ final class ScrapPageViewController: UIViewController {
     }
 
     private func paginateFeed() {
-        print("스크롤")
-//        paginationPublisher.send(Void())
+        paginationPublisher.send(Void())
     }
 }
 
@@ -141,12 +154,12 @@ extension ScrapPageViewController: UICollectionViewDelegateFlowLayout {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        if viewModel.scrapFeedData.isEmpty {
+        if viewModel.scrapFeedList.isEmpty {
             collectionView.configureEmptyView()
         } else {
             collectionView.resetEmptyView()
         }
-        return viewModel.scrapFeedData.count
+        return viewModel.scrapFeedList.count
     }
 
     func collectionView(
@@ -168,7 +181,7 @@ extension ScrapPageViewController: UICollectionViewDelegateFlowLayout {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        let feed = viewModel.scrapFeedData[indexPath.row]
+        let feed = viewModel.scrapFeedList[indexPath.row]
         coordinatorPublisher.send(.moveToFeedDetail(feed: feed))
     }
 }
@@ -187,7 +200,7 @@ extension ScrapPageViewController {
                     return UICollectionViewCell()
                 }
                 let index = indexPath.row
-                let feed = self.viewModel.scrapFeedData[index]
+                let feed = self.viewModel.scrapFeedList[index]
                 self.bindNormalFeedCell(cell, index: index, feedUUID: feed.feedUUID)
                 cell.updateFeedCell(with: feed)
                 return cell
@@ -195,20 +208,20 @@ extension ScrapPageViewController {
 
         collectionViewSnapshot = NSDiffableDataSourceSnapshot<FeedCellType, Feed>()
         collectionViewSnapshot.appendSections([.normal])
-        collectionViewSnapshot.appendItems(viewModel.scrapFeedData, toSection: .normal)
+        collectionViewSnapshot.appendItems(viewModel.scrapFeedList, toSection: .normal)
         dataSource.apply(collectionViewSnapshot, animatingDifferences: false)
     }
 
-    private func refreshSnapshot(scrapFeedData: [Feed]) {
+    private func refreshSnapshot(scrapFeedList: [Feed]) {
         let previousScrapFeedData = collectionViewSnapshot.itemIdentifiers(inSection: .normal)
         collectionViewSnapshot.deleteItems(previousScrapFeedData)
 
-        collectionViewSnapshot.appendItems(scrapFeedData, toSection: .normal)
+        collectionViewSnapshot.appendItems(scrapFeedList, toSection: .normal)
         dataSource.apply(collectionViewSnapshot, animatingDifferences: false)
     }
 
-    private func reloadSnapshot(scrapFeedData: [Feed]) {
-        collectionViewSnapshot.appendItems(scrapFeedData, toSection: .normal)
+    private func reloadSnapshot(additional scrapFeedList: [Feed]) {
+        collectionViewSnapshot.appendItems(scrapFeedList, toSection: .normal)
         dataSource.apply(collectionViewSnapshot, animatingDifferences: false)
     }
 }
