@@ -160,9 +160,10 @@ final class ScrapPageViewModel {
 }
 
 extension ScrapPageViewModel {
-    func updateScrapFeed(_ updatedScrapFeed: Feed) {
+    func updateScrapFeed(_ updatedScrapFeed: Feed) -> [Feed] {
         scrapFeedList = scrapFeedList.map { feed in
             return feed.feedUUID == updatedScrapFeed.feedUUID ? updatedScrapFeed : feed
         }
+        return scrapFeedList
     }
 }

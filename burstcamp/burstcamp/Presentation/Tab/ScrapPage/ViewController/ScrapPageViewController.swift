@@ -217,8 +217,11 @@ extension ScrapPageViewController: ContainFeedDetailViewController {
     func configure(scrapUpdatePublisher: AnyPublisher<Feed, Never>) {
         scrapUpdatePublisher
             .sink { [weak self] feed in
-                self?.viewModel.updateScrapFeed(feed)
-                self?.reloadScrapFeedSection()
+                guard let feedList = self?.viewModel.updateScrapFeed(feed) else {
+                    self?.showAlert(message: "피드 업데이트 중 에러가 발생했습니다.")
+                    return
+                }
+                self?.refreshScrapFeedList(scrapFeedList: feedList)
             }
             .store(in: &cancelBag)
     }
