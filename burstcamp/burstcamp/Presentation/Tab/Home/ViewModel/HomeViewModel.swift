@@ -161,7 +161,7 @@ final class HomeViewModel {
 
 // FeedDetail에서 변경된 Feed 업데이트
 extension HomeViewModel {
-    func updateNormalFeed(_ updatedFeed: Feed) {
+    func updateNormalFeed(_ updatedFeed: Feed) -> [Feed] {
         normalFeedData = normalFeedData.map { feed in
             if feed.feedUUID == updatedFeed.feedUUID {
                 return updatedFeed
@@ -169,5 +169,6 @@ extension HomeViewModel {
                 return feed
             }
         }
+        return normalFeedData
     }
 }
