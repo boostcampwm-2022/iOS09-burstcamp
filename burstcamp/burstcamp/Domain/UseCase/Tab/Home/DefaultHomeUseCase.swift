@@ -29,6 +29,7 @@ final class DefaultHomeUseCase: HomeUseCase {
     }
 
     func fetchMoreNormalFeed() async throws -> [Feed] {
+        // TODO: scrap 여부
         return try await feedRepository.fetchMoreNormalFeed()
     }
 

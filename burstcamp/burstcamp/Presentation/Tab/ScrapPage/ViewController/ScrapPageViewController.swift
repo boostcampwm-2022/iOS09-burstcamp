@@ -178,7 +178,7 @@ extension ScrapPageViewController {
     private func configureDataSource() {
         dataSource = UICollectionViewDiffableDataSource(
             collectionView: scrapPageView.collectionView,
-            cellProvider: { collectionView, indexPath, itemIdentifier in
+            cellProvider: { collectionView, indexPath, _ in
                 guard let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: NormalFeedCell.identifier,
                     for: indexPath

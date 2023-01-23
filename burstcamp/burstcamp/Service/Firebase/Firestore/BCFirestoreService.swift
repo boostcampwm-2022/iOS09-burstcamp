@@ -13,14 +13,18 @@ protocol BCFirestoreServiceProtocol {
     func fetchRecommendFeed() async throws -> [FeedAPIModel]
     func fetchLatestNormalFeeds() async throws -> [FeedAPIModel]
     func fetchMoreNormalFeeds() async throws -> [FeedAPIModel]
+
+    func fetchLatestScrapFeeds(userUUID: String) async throws -> [FeedAPIModel]
+    func fetchMoreScrapFeeds(userUUID: String) async throws -> [FeedAPIModel]
+
     func fetchFeed(feedUUID: String) async throws -> FeedAPIModel
+
     func fetchUser(userUUID: String) async throws -> UserAPIModel
     func saveUser(userUUID: String, user: UserAPIModel) async throws
     func updateUser(userUUID: String, user: UserAPIModel) async throws
     func updateUserPushState(userUUID: String, isPushOn: Bool) async throws
     func deleteUser(userUUID: String) async throws
 
-    func countFeedScrap(feedUUID: String) async throws -> Int
     func scrapFeed(_ feed: ScrapFeedAPIModel, with userUUID: String) async throws
     func unScrapFeed(_ feed: FeedAPIModel, with userUUID: String) async throws
     func saveFCMToken(_ fcmToken: String, to userUUID: String) async throws
@@ -29,16 +33,26 @@ protocol BCFirestoreServiceProtocol {
 final class BCFirestoreService: BCFirestoreServiceProtocol {
 
     private let firestoreService: FirestoreService
-    private var lastSnapShot: QueryDocumentSnapshot?
+    private var homeLastSnapshot: QueryDocumentSnapshot?
+    private var scrapPageLastSnapshot: QueryDocumentSnapshot?
 
     private let paginateCount: Int
 
-    private var feedQuery: Query {
+    private var homeFeedQuery: Query {
         return firestoreService.createPaginateQuery(
             FirestoreCollection.normalFeed.path,
             field: "pubDate",
             count: paginateCount,
-            lastSnapShot: lastSnapShot
+            lastSnapShot: homeLastSnapshot
+        )
+    }
+
+    private func scrapPageFeedQuery(userUUID: String) -> Query {
+        return firestoreService.createPaginateQuery(
+            FirestoreCollection.scrapFeeds(userUUID: userUUID).path,
+            field: "scrapDate",
+            count: paginateCount,
+            lastSnapShot: scrapPageLastSnapshot
         )
     }
 
@@ -52,10 +66,15 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
         self.init(firestoreService: firestoreService, paginateCount: paginateCount)
     }
 
-    private func initFeedQuery() {
-        self.lastSnapShot = nil
+    private func initHomeFeedQuery() {
+        self.homeLastSnapshot = nil
     }
 
+    private func initScrapPageFeedQuery() {
+        self.scrapPageLastSnapshot = nil
+    }
+
+    // MARK: - Home 피드 요청
     func fetchRecommendFeed() async throws -> [FeedAPIModel] {
         let recommendFeedPath = FirestoreCollection.recommendFeed.path
         let feedFirestoreData = try await firestoreService.getCollection(recommendFeedPath)
@@ -63,22 +82,53 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
     }
 
     func fetchLatestNormalFeeds() async throws -> [FeedAPIModel] {
-        initFeedQuery()
-        let result = try await firestoreService.getCollection(query: feedQuery)
-        self.lastSnapShot = result.lastSnapshot
-
-        return result.collectionData.map { FeedAPIModel(data: $0) }
-    }
-
-    func fetchMoreNormalFeeds() async throws -> [FeedAPIModel] {
-        let result = try await firestoreService.getCollection(query: feedQuery)
-        self.lastSnapShot = result.lastSnapshot
-        if self.lastSnapShot == nil {
+        initHomeFeedQuery()
+        let result = try await firestoreService.getCollection(query: homeFeedQuery)
+        self.homeLastSnapshot = result.lastSnapshot
+        if self.homeLastSnapshot == nil {
             throw FirestoreServiceError.lastFetch
         }
 
         return result.collectionData.map { FeedAPIModel(data: $0) }
     }
+
+    func fetchMoreNormalFeeds() async throws -> [FeedAPIModel] {
+        let result = try await firestoreService.getCollection(query: homeFeedQuery)
+        self.homeLastSnapshot = result.lastSnapshot
+        if self.homeLastSnapshot == nil {
+            throw FirestoreServiceError.lastFetch
+        }
+
+        return result.collectionData.map { FeedAPIModel(data: $0) }
+    }
+
+    // MARK: - Scrap Page Feed 요청
+    func fetchLatestScrapFeeds(userUUID: String) async throws -> [FeedAPIModel] {
+        initScrapPageFeedQuery()
+        let query = scrapPageFeedQuery(userUUID: userUUID)
+
+        let result = try await firestoreService.getCollection(query: query)
+        self.scrapPageLastSnapshot = result.lastSnapshot
+        if self.scrapPageLastSnapshot == nil {
+            throw FirestoreServiceError.lastFetch
+        }
+
+        return result.collectionData.map { FeedAPIModel(data: $0) }
+    }
+
+    func fetchMoreScrapFeeds(userUUID: String) async throws -> [FeedAPIModel] {
+        let query = scrapPageFeedQuery(userUUID: userUUID)
+
+        let result = try await firestoreService.getCollection(query: query)
+        self.scrapPageLastSnapshot = result.lastSnapshot
+        if self.scrapPageLastSnapshot == nil {
+            throw FirestoreServiceError.lastFetch
+        }
+
+        return result.collectionData.map { FeedAPIModel(data: $0) }
+    }
+
+    // MARK: - 단일 피드
 
     func fetchFeed(feedUUID: String) async throws -> FeedAPIModel {
         let feedPath = FirestoreCollection.normalFeed.path
@@ -86,6 +136,8 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
 
         return FeedAPIModel(data: feedFirestoreData)
     }
+
+    // MARK: - 유저
 
     func fetchUser(userUUID: String) async throws -> UserAPIModel {
         let userPath = FirestoreCollection.user.path
@@ -115,12 +167,7 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
         try await firestoreService.deleteDocument(userPath, document: userUUID)
     }
 
-    func countFeedScrap(feedUUID: String) async throws -> Int {
-        let scrapUsersPath = FirestoreCollection.scrapUsers(feedUUID: feedUUID).path
-        let scrapCount = try await firestoreService.countCollection(scrapUsersPath)
-
-        return scrapCount
-    }
+    // MARK: - 피드 스크랩
 
     func scrapFeed(_ feed: ScrapFeedAPIModel, with userUUID: String) async throws {
         let batch = firestoreService.getDatabaseBatch()
@@ -189,6 +236,8 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
 
         try await batch.commit()
     }
+
+    // MARK: 토큰 저장
 
     func saveFCMToken(_ fcmToken: String, to userUUID: String) async throws {
         let fcmToken = FCMToken(fcmToken: fcmToken)
