@@ -84,14 +84,14 @@ final class ScrapPageViewController: UIViewController {
         output.recentScrapFeed
             .receive(on: DispatchQueue.main)
             .sink { [weak self] scrapFeedList in
-                self?.refreshSnapshot(scrapFeedList: scrapFeedList)
+                self?.refreshScrapFeedList(scrapFeedList: scrapFeedList)
             }
             .store(in: &cancelBag)
 
         output.moreFeed
             .receive(on: DispatchQueue.main)
             .sink { [weak self] scrapFeedList in
-                self?.reloadSnapshot(additional: scrapFeedList)
+                self?.reloadScrapFeedList(additional: scrapFeedList)
             }
             .store(in: &cancelBag)
 
@@ -150,17 +150,6 @@ final class ScrapPageViewController: UIViewController {
 }
 
 extension ScrapPageViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        numberOfItemsInSection section: Int
-    ) -> Int {
-        if viewModel.scrapFeedList.isEmpty {
-            collectionView.configureEmptyView()
-        } else {
-            collectionView.resetEmptyView()
-        }
-        return viewModel.scrapFeedList.count
-    }
 
     func collectionView(
         _ collectionView: UICollectionView,
@@ -189,21 +178,14 @@ extension ScrapPageViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - DataSource
 extension ScrapPageViewController {
     private func configureDataSource() {
+        let cellRegistration = UICollectionView.CellRegistration<NormalFeedCell, Feed> { cell, indexPath, feed in
+            self.bindNormalFeedCell(cell, index: indexPath.row, feedUUID: feed.feedUUID)
+            cell.updateFeedCell(with: feed)
+        }
         dataSource = UICollectionViewDiffableDataSource(
             collectionView: scrapPageView.collectionView,
-            cellProvider: { collectionView, indexPath, _ in
-                guard let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: NormalFeedCell.identifier,
-                    for: indexPath
-                ) as? NormalFeedCell
-                else {
-                    return UICollectionViewCell()
-                }
-                let index = indexPath.row
-                let feed = self.viewModel.scrapFeedList[index]
-                self.bindNormalFeedCell(cell, index: index, feedUUID: feed.feedUUID)
-                cell.updateFeedCell(with: feed)
-                return cell
+            cellProvider: { collectionView, indexPath, feed in
+                return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: feed)
             })
 
         collectionViewSnapshot = NSDiffableDataSourceSnapshot<FeedCellType, Feed>()
@@ -212,7 +194,7 @@ extension ScrapPageViewController {
         dataSource.apply(collectionViewSnapshot, animatingDifferences: false)
     }
 
-    private func refreshSnapshot(scrapFeedList: [Feed]) {
+    private func refreshScrapFeedList(scrapFeedList: [Feed]) {
         let previousScrapFeedData = collectionViewSnapshot.itemIdentifiers(inSection: .normal)
         collectionViewSnapshot.deleteItems(previousScrapFeedData)
 
@@ -220,8 +202,24 @@ extension ScrapPageViewController {
         dataSource.apply(collectionViewSnapshot, animatingDifferences: false)
     }
 
-    private func reloadSnapshot(additional scrapFeedList: [Feed]) {
+    private func reloadScrapFeedList(additional scrapFeedList: [Feed]) {
         collectionViewSnapshot.appendItems(scrapFeedList, toSection: .normal)
         dataSource.apply(collectionViewSnapshot, animatingDifferences: false)
+    }
+
+    private func reloadScrapFeedSection() {
+        collectionViewSnapshot.reloadSections([.normal])
+        dataSource.apply(collectionViewSnapshot, animatingDifferences: false)
+    }
+}
+
+extension ScrapPageViewController: ContainFeedDetailViewController {
+    func configure(scrapUpdatePublisher: AnyPublisher<Feed, Never>) {
+        scrapUpdatePublisher
+            .sink { [weak self] feed in
+                self?.viewModel.updateScrapFeed(feed)
+                self?.reloadScrapFeedSection()
+            }
+            .store(in: &cancelBag)
     }
 }

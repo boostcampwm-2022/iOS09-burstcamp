@@ -309,8 +309,8 @@ extension HomeViewController: ContainFeedDetailViewController {
     func configure(scrapUpdatePublisher: AnyPublisher<Feed, Never>) {
         scrapUpdatePublisher
             .sink { [weak self] feed in
-                self?.reloadNormalFeedSection()
                 self?.viewModel.updateNormalFeed(feed)
+                self?.reloadNormalFeedSection()
             }
             .store(in: &cancelBag)
     }
