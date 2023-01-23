@@ -51,7 +51,7 @@ final class DefaultFeedRepository: FeedRepository {
 
     func unScrapFeed(_ feed: Feed, userUUID: String) async throws -> Feed {
         let unScrapedFeed = feed.getUnScrapFeed()
-        try await bcFirestoreService.unScrapFeed(FeedAPIModel(feed: feed), with: userUUID)
+        try await bcFirestoreService.unScrapFeed(FeedAPIModel(feed: unScrapedFeed), with: userUUID)
         return unScrapedFeed
     }
 }
