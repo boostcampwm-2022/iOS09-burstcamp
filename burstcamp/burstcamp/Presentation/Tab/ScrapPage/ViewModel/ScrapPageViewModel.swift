@@ -131,16 +131,25 @@ final class ScrapPageViewModel {
                     self?.scrapFeedList = scrapFeed
                     self?.recentScrapFeed.send(scrapFeed)
                 } catch {
-                    self?.recentScrapFeed.send([])
-                    if let error = error as? FirestoreServiceError, error == .lastFetch {
-                        showToast.send("스크랩 피드를 모두 불러왔어요")
-                        isLastFetch = true
+                    if let error = error as? FirestoreServiceError {
+                        self?.handleFirestoreServiceError(error)
                     } else {
                         showAlert.send(error)
                     }
                 }
                 isFetching = false
             }
+        }
+    }
+
+    private func handleFirestoreServiceError(_ error: FirestoreServiceError) {
+        if error == .scrapIsEmpty {
+            self.scrapFeedList = []
+            self.recentScrapFeed.send([])
+            isLastFetch = true
+        } else if error == .lastFetch {
+            showToast.send("스크랩 피드를 모두 불러왔어요")
+            isLastFetch = true
         }
     }
 

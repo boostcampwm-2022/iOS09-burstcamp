@@ -109,6 +109,10 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
 
         let result = try await firestoreService.getCollection(query: query)
         self.scrapPageLastSnapshot = result.lastSnapshot
+        if result.collectionData.isEmpty {
+            throw FirestoreServiceError.scrapIsEmpty
+        }
+
         if self.scrapPageLastSnapshot == nil {
             throw FirestoreServiceError.lastFetch
         }

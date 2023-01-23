@@ -195,13 +195,12 @@ extension ScrapPageViewController {
     }
 
     private func refreshScrapFeedList(scrapFeedList: [Feed]) {
-        configureEmptyView()
-
         let previousScrapFeedData = collectionViewSnapshot.itemIdentifiers(inSection: .normal)
         collectionViewSnapshot.deleteItems(previousScrapFeedData)
 
         collectionViewSnapshot.appendItems(scrapFeedList, toSection: .normal)
         dataSource.apply(collectionViewSnapshot, animatingDifferences: false)
+        configureEmptyView()
     }
 
     private func reloadScrapFeedList(additional scrapFeedList: [Feed]) {
