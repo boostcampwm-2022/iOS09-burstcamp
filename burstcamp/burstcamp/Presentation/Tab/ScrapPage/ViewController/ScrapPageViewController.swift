@@ -26,7 +26,6 @@ final class ScrapPageViewController: UIViewController {
 
     let coordinatorPublisher = PassthroughSubject<ScrapPageCoordinatorEvent, Never>()
     private let viewWillAppearPublisher = PassthroughSubject<Void, Never>()
-    private let viewWillDisappearPublisher = PassthroughSubject<Void, Never>()
     private let paginationPublisher = PassthroughSubject<Void, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
@@ -59,11 +58,6 @@ final class ScrapPageViewController: UIViewController {
         viewWillAppearPublisher.send(Void())
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        viewWillDisappearPublisher.send(Void())
-    }
-
     private func collectionViewDelegate() {
         scrapPageView.collectionViewDelegate(viewController: self)
     }
@@ -81,7 +75,6 @@ final class ScrapPageViewController: UIViewController {
 
         let input = ScrapPageViewModel.Input(
             viewWillAppear: viewWillAppearPublisher.eraseToAnyPublisher(),
-            viewWillDisappear: viewWillDisappearPublisher.eraseToAnyPublisher(),
             viewDidRefresh: refreshControl.refreshPublisher,
             pagination: paginationPublisher.eraseToAnyPublisher()
         )
