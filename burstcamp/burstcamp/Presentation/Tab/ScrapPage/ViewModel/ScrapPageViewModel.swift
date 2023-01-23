@@ -124,7 +124,7 @@ final class ScrapPageViewModel {
                 do {
                     let scrapFeed = try await self?.scrapPageUseCase.fetchRecentScrapFeed()
                     guard let scrapFeed = scrapFeed else {
-                        print("scrapFeedList 언래핑 에러")
+                        debugPrint("scrapFeedList 언래핑 에러")
                         isFetching = false
                         return
                     }
