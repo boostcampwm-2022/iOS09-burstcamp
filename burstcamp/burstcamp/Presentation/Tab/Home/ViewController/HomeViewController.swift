@@ -193,38 +193,32 @@ extension HomeViewController: UICollectionViewDelegate {
 // MARK: - DataSource
 extension HomeViewController {
     private func configureDataSource() {
+        let recommendFeedCellRegistration = UICollectionView.CellRegistration<RecommendFeedCell, Feed> { cell, _, feed in
+            cell.updateFeedCell(with: feed)
+        }
+
+        let normalFeedCellRegistration = UICollectionView.CellRegistration<NormalFeedCell, Feed> { cell, indexPath, feed in
+            self.bindNormalFeedCell(cell, index: indexPath.row, feedUUID: feed.feedUUID)
+            cell.updateFeedCell(with: feed)
+        }
+
         dataSource = UICollectionViewDiffableDataSource(
             collectionView: homeView.collectionView,
-            cellProvider: { collectionView, indexPath, _ in
+            cellProvider: { collectionView, indexPath, feed in
                 let feedCellType = FeedCellType(index: indexPath.section)
-
                 switch feedCellType {
                 case .recommend:
-                    guard let cell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: RecommendFeedCell.identifier,
-                        for: indexPath
-                    ) as? RecommendFeedCell
-                    else {
-                        return UICollectionViewCell()
-                    }
-                    let index = indexPath.row % 3
-                    let feed = self.viewModel.recommendFeedData[index]
-                    cell.updateView(with: feed)
-                    return cell
+                    return collectionView.dequeueConfiguredReusableCell(
+                        using: recommendFeedCellRegistration,
+                        for: indexPath,
+                        item: feed
+                    )
                 case .normal:
-                    guard let cell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: NormalFeedCell.identifier,
-                        for: indexPath
-                    ) as? NormalFeedCell
-                    else {
-                        return UICollectionViewCell()
-                    }
-                    let index = indexPath.row
-                    let feed = self.viewModel.normalFeedData[index]
-
-                    self.bindNormalFeedCell(cell, index: index, feedUUID: feed.feedUUID)
-                    cell.updateFeedCell(with: feed)
-                    return cell
+                    return collectionView.dequeueConfiguredReusableCell(
+                        using: normalFeedCellRegistration,
+                        for: indexPath,
+                        item: feed
+                    )
                 case .none:
                     return UICollectionViewCell()
                 }

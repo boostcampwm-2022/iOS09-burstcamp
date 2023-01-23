@@ -620,6 +620,13 @@
 			path = Singleton;
 			sourceTree = "<group>";
 		};
+		141A7A6E297E4D75003DD926 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		142C9340292F51A500F6428E /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -1570,6 +1577,7 @@
 		B5BA278B2927B08800BDCE08 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				141A7A6E297E4D75003DD926 /* Cell */,
 				B50A27AE29279F5D00DF3E1F /* NormalFeedCell */,
 				D8494D492927CBD4008157F1 /* DefaultButton.swift */,
 				D8494D4B2927CD6C008157F1 /* DefaultProfileImageView.swift */,
