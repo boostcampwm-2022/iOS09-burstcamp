@@ -129,7 +129,7 @@ final class HomeViewModel {
                     self?.moreFeed.send(normalFeed)
                 } catch {
                     if let error = error as? FirestoreServiceError, error == .lastFetch {
-                        showToast.send("모든 피드를 불러왔습니다.")
+                        showToast.send("모든 피드를 불러왔어요")
                         isLastFetch = true
                     } else {
                         showAlert.send(error)
@@ -150,7 +150,7 @@ final class HomeViewModel {
                     return
                 }
                 let updatedFeed = try await self.homeUseCase.scrapFeed(feed, userUUID: userUUID)
-                self.updateNormalFeed(updatedFeed)
+                _ = self.updateNormalFeed(updatedFeed)
                 self.scrapSuccess.send(updatedFeed)
             }
         } else {
@@ -161,7 +161,7 @@ final class HomeViewModel {
 
 // FeedDetail에서 변경된 Feed 업데이트
 extension HomeViewModel {
-    func updateNormalFeed(_ updatedFeed: Feed) {
+    func updateNormalFeed(_ updatedFeed: Feed) -> [Feed] {
         normalFeedData = normalFeedData.map { feed in
             if feed.feedUUID == updatedFeed.feedUUID {
                 return updatedFeed
@@ -169,5 +169,6 @@ extension HomeViewModel {
                 return feed
             }
         }
+        return normalFeedData
     }
 }

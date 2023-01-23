@@ -41,9 +41,10 @@ final class UserManager {
         bCFirestoreUserListener.userPublisher(userUUID: user.userUUID)
             .sink { error in
                 fatalError("유저 정보를 불러오는데 실패 \(error)")
-            } receiveValue: { userAPIModel in
+            } receiveValue: { [weak self] userAPIModel in
                 let user = User(userAPIModel: userAPIModel)
-                self.userUpdatePublisher.send(user)
+                self?.user = user
+                self?.userUpdatePublisher.send(user)
             }
             .store(in: &cancelBag)
     }

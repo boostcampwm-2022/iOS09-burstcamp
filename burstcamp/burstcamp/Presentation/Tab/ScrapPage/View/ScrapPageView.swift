@@ -20,7 +20,6 @@ class ScrapPageView: UIView, ContainCollectionView {
         $0.collectionViewLayout = layout
         $0.showsVerticalScrollIndicator = false
         $0.backgroundColor = .clear
-        $0.register(NormalFeedCell.self, forCellWithReuseIdentifier: NormalFeedCell.identifier)
     }
 
     override init(frame: CGRect) {

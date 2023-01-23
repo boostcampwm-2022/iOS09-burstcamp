@@ -19,13 +19,14 @@ final class ScrapPageViewController: UIViewController {
         return view
     }
 
-    let coordinatorPublisher = PassthroughSubject<ScrapPageCoordinatorEvent, Never>()
-    private let viewModel: ScrapPageViewModel
-    private var cancelBag = Set<AnyCancellable>()
+    private var dataSource: UICollectionViewDiffableDataSource<FeedCellType, Feed>!
+    private var collectionViewSnapshot: NSDiffableDataSourceSnapshot<FeedCellType, Feed>!
 
-    private let viewWillAppearPublisher = PassthroughSubject<Void, Never>()
-    private let viewWillDisappearPublisher = PassthroughSubject<Void, Never>()
+    private let viewModel: ScrapPageViewModel
+
+    let coordinatorPublisher = PassthroughSubject<ScrapPageCoordinatorEvent, Never>()
     private let paginationPublisher = PassthroughSubject<Void, Never>()
+    private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Initializer
 
@@ -45,19 +46,23 @@ final class ScrapPageViewController: UIViewController {
     }
 
     override func viewDidLoad() {
-        bind()
         collectionViewDelegate()
+        configureDataSource()
+        bind()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureNavigationBar()
-        viewWillAppearPublisher.send(Void())
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        viewWillDisappearPublisher.send(Void())
+    private func collectionViewDelegate() {
+        scrapPageView.collectionViewDelegate(viewController: self)
+    }
+
+    private func configureNavigationBar() {
+        navigationController?.navigationBar.topItem?.title = "모아보기"
+        navigationController?.isNavigationBarHidden = false
     }
 
     // MARK: - Methods
@@ -66,19 +71,27 @@ final class ScrapPageViewController: UIViewController {
         guard let refreshControl = scrapPageView.collectionView.refreshControl
         else { return }
 
+        let viewDidLoadJust = Just(Void()).eraseToAnyPublisher()
+
         let input = ScrapPageViewModel.Input(
-            viewWillAppear: viewWillAppearPublisher.eraseToAnyPublisher(),
-            viewWillDisappear: viewWillDisappearPublisher.eraseToAnyPublisher(),
+            viewDidLoad: viewDidLoadJust,
             viewDidRefresh: refreshControl.refreshPublisher,
             pagination: paginationPublisher.eraseToAnyPublisher()
         )
 
         let output = viewModel.transform(input: input)
 
-        output.reloadData
+        output.recentScrapFeed
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.scrapPageView.collectionView.reloadData()
+            .sink { [weak self] scrapFeedList in
+                self?.refreshScrapFeedList(scrapFeedList: scrapFeedList)
+            }
+            .store(in: &cancelBag)
+
+        output.moreFeed
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] scrapFeedList in
+                self?.reloadScrapFeedList(additional: scrapFeedList)
             }
             .store(in: &cancelBag)
 
@@ -95,15 +108,40 @@ final class ScrapPageViewController: UIViewController {
                 self?.scrapPageView.endCollectionViewRefreshing()
             }
             .store(in: &cancelBag)
+
+        output.showToast
+            .receive(on: DispatchQueue.main)
+            .sink { message in
+                self.showToastMessage(text: message)
+            }
+            .store(in: &cancelBag)
     }
 
-    private func collectionViewDelegate() {
-        scrapPageView.collectionViewDelegate(viewController: self)
-    }
+    private func bindNormalFeedCell(_ cell: NormalFeedCell, feedUUID: String) {
 
-    private func configureNavigationBar() {
-        navigationController?.navigationBar.topItem?.title = "모아보기"
-        navigationController?.isNavigationBarHidden = false
+        let scrapButtonDidTap = cell.getButtonTapPublisher()
+            .map { _  in
+                cell.footerView.scrapButton.isEnabled = false
+                return feedUUID
+            }
+            .eraseToAnyPublisher()
+
+        let cellInput = ScrapPageViewModel.CellInput(
+            scrapButtonDidTap: scrapButtonDidTap
+        )
+
+        let output = viewModel.transform(cellInput: cellInput, cellCancelBag: &cell.cancelBag)
+
+        output.scrapSuccess
+            .receive(on: DispatchQueue.main)
+            .sink { updatedFeed in
+                if feedUUID == updatedFeed.feedUUID {
+                    cell.footerView.countLabel.text = updatedFeed.scrapCount.description
+                    cell.footerView.scrapButton.isOn = updatedFeed.isScraped
+                    cell.footerView.scrapButton.isEnabled = true
+                }
+            }
+            .store(in: &cell.cancelBag)
     }
 
     private func paginateFeed() {
@@ -111,38 +149,7 @@ final class ScrapPageViewController: UIViewController {
     }
 }
 
-extension ScrapPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        numberOfItemsInSection section: Int
-    ) -> Int {
-        if viewModel.scrapFeedData.isEmpty {
-            collectionView.configureEmptyView()
-        } else {
-            collectionView.resetEmptyView()
-        }
-        return viewModel.scrapFeedData.count
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: NormalFeedCell.identifier,
-            for: indexPath
-        ) as? NormalFeedCell
-        else {
-            return UICollectionViewCell()
-        }
-        let index = indexPath.row
-        let feed = viewModel.scrapFeedData[index]
-        let cellViewModel = viewModel.dequeueCellViewModel(at: index)
-
-        cell.updateFeedCell(with: feed)
-
-        return cell
-    }
+extension ScrapPageViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(
         _ collectionView: UICollectionView,
@@ -163,7 +170,63 @@ extension ScrapPageViewController: UICollectionViewDelegateFlowLayout, UICollect
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        let feed = viewModel.scrapFeedData[indexPath.row]
+        let feed = viewModel.scrapFeedList[indexPath.row]
         coordinatorPublisher.send(.moveToFeedDetail(feed: feed))
+    }
+}
+
+// MARK: - DataSource
+extension ScrapPageViewController {
+    private func configureDataSource() {
+        let cellRegistration = UICollectionView.CellRegistration<NormalFeedCell, Feed> { cell, _, feed in
+            self.bindNormalFeedCell(cell, feedUUID: feed.feedUUID)
+            cell.updateFeedCell(with: feed)
+        }
+        dataSource = UICollectionViewDiffableDataSource(
+            collectionView: scrapPageView.collectionView,
+            cellProvider: { collectionView, indexPath, feed in
+                return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: feed)
+            })
+
+        collectionViewSnapshot = NSDiffableDataSourceSnapshot<FeedCellType, Feed>()
+        collectionViewSnapshot.appendSections([.normal])
+        collectionViewSnapshot.appendItems(viewModel.scrapFeedList, toSection: .normal)
+        dataSource.apply(collectionViewSnapshot, animatingDifferences: false)
+    }
+
+    private func refreshScrapFeedList(scrapFeedList: [Feed]) {
+        let previousScrapFeedData = collectionViewSnapshot.itemIdentifiers(inSection: .normal)
+        collectionViewSnapshot.deleteItems(previousScrapFeedData)
+
+        collectionViewSnapshot.appendItems(scrapFeedList, toSection: .normal)
+        dataSource.apply(collectionViewSnapshot, animatingDifferences: false)
+        configureEmptyView()
+    }
+
+    private func reloadScrapFeedList(additional scrapFeedList: [Feed]) {
+        collectionViewSnapshot.appendItems(scrapFeedList, toSection: .normal)
+        dataSource.apply(collectionViewSnapshot, animatingDifferences: false)
+    }
+
+    private func configureEmptyView() {
+        if viewModel.scrapFeedList.isEmpty {
+            scrapPageView.collectionView.configureEmptyView()
+        } else {
+            scrapPageView.collectionView.resetEmptyView()
+        }
+    }
+}
+
+extension ScrapPageViewController: ContainFeedDetailViewController {
+    func configure(scrapUpdatePublisher: AnyPublisher<Feed, Never>) {
+        scrapUpdatePublisher
+            .sink { [weak self] feed in
+                guard let feedList = self?.viewModel.updateScrapFeed(feed) else {
+                    self?.showAlert(message: "피드 업데이트 중 에러가 발생했습니다.")
+                    return
+                }
+                self?.refreshScrapFeedList(scrapFeedList: feedList)
+            }
+            .store(in: &cancelBag)
     }
 }

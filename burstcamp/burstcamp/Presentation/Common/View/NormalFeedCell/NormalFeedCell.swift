@@ -68,10 +68,6 @@ final class NormalFeedCell: UICollectionViewCell {
             $0.height.equalTo(Constant.Cell.normalFooterHeight)
         }
     }
-
-    func getButtonTapPublisher() -> AnyPublisher<Void, Never> {
-        return footerView.scrapButton.tapPublisher
-    }
 }
 
 extension NormalFeedCell {
@@ -79,5 +75,9 @@ extension NormalFeedCell {
         userInfoView.updateView(feedWriter: feed.writer)
         mainView.updateView(feed: feed)
         footerView.updateView(feed: feed)
+    }
+
+    func getButtonTapPublisher() -> AnyPublisher<Void, Never> {
+        return footerView.scrapButton.tapPublisher
     }
 }

@@ -16,4 +16,5 @@ enum FirestoreServiceError: Error, Equatable {
     case batch
     case lastFetch
     case userListener
+    case scrapIsEmpty
 }

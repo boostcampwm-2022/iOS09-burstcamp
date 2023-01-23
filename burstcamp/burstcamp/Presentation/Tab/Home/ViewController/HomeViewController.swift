@@ -89,14 +89,14 @@ final class HomeViewController: UIViewController {
         output.recentFeed
             .receive(on: DispatchQueue.main)
             .sink { [weak self] homeFeedList in
-                self?.reloadSnapshot(homeFeedList: homeFeedList)
+                self?.reloadHomeFeedList(homeFeedList: homeFeedList)
             }
             .store(in: &cancelBag)
 
         output.moreFeed
             .receive(on: DispatchQueue.main)
             .sink { [weak self] normalFeed in
-                self?.reloadSnapshot(normalFeedList: normalFeed)
+                self?.reloadHomeFeedList(additional: normalFeed)
             }
             .store(in: &cancelBag)
 
@@ -193,38 +193,32 @@ extension HomeViewController: UICollectionViewDelegate {
 // MARK: - DataSource
 extension HomeViewController {
     private func configureDataSource() {
+        let recommendFeedCellRegistration = UICollectionView.CellRegistration<RecommendFeedCell, Feed> { cell, _, feed in
+            cell.updateFeedCell(with: feed)
+        }
+
+        let normalFeedCellRegistration = UICollectionView.CellRegistration<NormalFeedCell, Feed> { cell, indexPath, feed in
+            self.bindNormalFeedCell(cell, index: indexPath.row, feedUUID: feed.feedUUID)
+            cell.updateFeedCell(with: feed)
+        }
+
         dataSource = UICollectionViewDiffableDataSource(
             collectionView: homeView.collectionView,
-            cellProvider: { collectionView, indexPath, _ in
+            cellProvider: { collectionView, indexPath, feed in
                 let feedCellType = FeedCellType(index: indexPath.section)
-
                 switch feedCellType {
                 case .recommend:
-                    guard let cell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: RecommendFeedCell.identifier,
-                        for: indexPath
-                    ) as? RecommendFeedCell
-                    else {
-                        return UICollectionViewCell()
-                    }
-                    let index = indexPath.row % 3
-                    let feed = self.viewModel.recommendFeedData[index]
-                    cell.updateView(with: feed)
-                    return cell
+                    return collectionView.dequeueConfiguredReusableCell(
+                        using: recommendFeedCellRegistration,
+                        for: indexPath,
+                        item: feed
+                    )
                 case .normal:
-                    guard let cell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: NormalFeedCell.identifier,
-                        for: indexPath
-                    ) as? NormalFeedCell
-                    else {
-                        return UICollectionViewCell()
-                    }
-                    let index = indexPath.row
-                    let feed = self.viewModel.normalFeedData[index]
-
-                    self.bindNormalFeedCell(cell, index: index, feedUUID: feed.feedUUID)
-                    cell.updateFeedCell(with: feed)
-                    return cell
+                    return collectionView.dequeueConfiguredReusableCell(
+                        using: normalFeedCellRegistration,
+                        for: indexPath,
+                        item: feed
+                    )
                 case .none:
                     return UICollectionViewCell()
                 }
@@ -262,7 +256,7 @@ extension HomeViewController {
         }
     }
 
-    private func reloadSnapshot(homeFeedList: HomeFeedList) {
+    private func reloadHomeFeedList(homeFeedList: HomeFeedList) {
         let previousRecommendFeedData = collectionViewSnapShot.itemIdentifiers(inSection: .recommend)
         let previousNormalFeedData = collectionViewSnapShot.itemIdentifiers(inSection: .normal)
         collectionViewSnapShot.deleteItems(previousRecommendFeedData)
@@ -274,13 +268,16 @@ extension HomeViewController {
         dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
     }
 
-    private func reloadSnapshot(normalFeedList: [Feed]) {
+    private func reloadHomeFeedList(additional normalFeedList: [Feed]) {
         collectionViewSnapShot.appendItems(normalFeedList, toSection: .normal)
         dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
     }
 
-    private func reloadNormalFeedSection() {
-        collectionViewSnapShot.reloadSections([.normal])
+    private func reloadNormalFeedSection(normalFeedList: [Feed]) {
+        let previousNormalFeedData = collectionViewSnapShot.itemIdentifiers(inSection: .normal)
+        collectionViewSnapShot.deleteItems(previousNormalFeedData)
+
+        collectionViewSnapShot.appendItems(normalFeedList)
         dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
     }
 }
@@ -309,8 +306,11 @@ extension HomeViewController: ContainFeedDetailViewController {
     func configure(scrapUpdatePublisher: AnyPublisher<Feed, Never>) {
         scrapUpdatePublisher
             .sink { [weak self] feed in
-                self?.reloadNormalFeedSection()
-                self?.viewModel.updateNormalFeed(feed)
+                guard let normalFeedList = self?.viewModel.updateNormalFeed(feed) else {
+                    self?.showAlert(message: "피드 업데이트 중 에러가 발생했습니다.")
+                    return
+                }
+                self?.reloadNormalFeedSection(normalFeedList: normalFeedList)
             }
             .store(in: &cancelBag)
     }

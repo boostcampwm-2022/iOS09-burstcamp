@@ -101,7 +101,8 @@ extension DependencyFactory {
     }
 
     func createScrapPageViewModel() -> ScrapPageViewModel {
-        let scrapPageUseCase = DefaultScrapPageUseCase()
+        let feedRepository = DefaultFeedRepository(bcFirestoreService: BCFirestoreService())
+        let scrapPageUseCase = DefaultScrapPageUseCase(feedRepository: feedRepository)
         return ScrapPageViewModel(scrapPageUseCase: scrapPageUseCase)
     }
 

@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 protocol ScrapPageCoordinatorProtocol: TabBarChildCoordinator {
-    func moveToFeedDetail(feed: Feed)
+    func moveToFeedDetail(feed: Feed, scrapPageViewController: ScrapPageViewController)
 }
 
 final class ScrapPageCoordinator: ScrapPageCoordinatorProtocol, ContainFeedDetailCoordinator {
@@ -34,15 +34,15 @@ extension ScrapPageCoordinator {
             .sink { [weak self] event in
                 switch event {
                 case .moveToFeedDetail(let feed):
-                    self?.moveToFeedDetail(feed: feed)
+                    self?.moveToFeedDetail(feed: feed, scrapPageViewController: scrapPageViewController)
                 }
             }
             .store(in: &cancelBag)
     }
 
-    func moveToFeedDetail(feed: Feed) {
+    func moveToFeedDetail(feed: Feed, scrapPageViewController: ScrapPageViewController) {
         let feedDetailViewController = prepareFeedDetailViewController(feed: feed)
-        sinkFeedViewController(feedDetailViewController)
+        sink(feedDetailViewController, parentViewController: scrapPageViewController)
         self.navigationController.pushViewController(feedDetailViewController, animated: true)
     }
 }

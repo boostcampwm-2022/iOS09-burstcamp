@@ -89,7 +89,6 @@ final class FeedDetailViewModel {
         let userUUID = UserManager.shared.user.userUUID
         Task { [weak self] in
             let updatedFeed = try await feedDetailUseCase.scrapFeed(feed, userUUID: userUUID)
-            print(updatedFeed)
             self?.feedPublisher.value = updatedFeed
             self?.scrapPublisher.send(updatedFeed)
         }

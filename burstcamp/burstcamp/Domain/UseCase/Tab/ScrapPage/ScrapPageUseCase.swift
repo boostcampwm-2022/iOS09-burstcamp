@@ -8,4 +8,7 @@
 import Foundation
 
 protocol ScrapPageUseCase {
+    func fetchRecentScrapFeed() async throws -> [Feed]
+    func fetchMoreScrapFeed() async throws -> [Feed]
+    func scrapFeed(_ feed: Feed, userUUID: String) async throws -> Feed
 }
