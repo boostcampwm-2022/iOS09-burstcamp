@@ -19,13 +19,16 @@ final class ScrapPageViewController: UIViewController {
         return view
     }
 
-    let coordinatorPublisher = PassthroughSubject<ScrapPageCoordinatorEvent, Never>()
-    private let viewModel: ScrapPageViewModel
-    private var cancelBag = Set<AnyCancellable>()
+    private var dataSource: UICollectionViewDiffableDataSource<FeedCellType, Feed>!
+    private var collectionViewSnapshot: NSDiffableDataSourceSnapshot<FeedCellType, Feed>!
 
+    private let viewModel: ScrapPageViewModel
+
+    let coordinatorPublisher = PassthroughSubject<ScrapPageCoordinatorEvent, Never>()
     private let viewWillAppearPublisher = PassthroughSubject<Void, Never>()
     private let viewWillDisappearPublisher = PassthroughSubject<Void, Never>()
     private let paginationPublisher = PassthroughSubject<Void, Never>()
+    private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Initializer
 
@@ -45,6 +48,7 @@ final class ScrapPageViewController: UIViewController {
     }
 
     override func viewDidLoad() {
+        configureDataSource()
         bind()
         collectionViewDelegate()
     }
@@ -58,6 +62,15 @@ final class ScrapPageViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         viewWillDisappearPublisher.send(Void())
+    }
+
+    private func collectionViewDelegate() {
+        scrapPageView.collectionViewDelegate(viewController: self)
+    }
+
+    private func configureNavigationBar() {
+        navigationController?.navigationBar.topItem?.title = "모아보기"
+        navigationController?.isNavigationBarHidden = false
     }
 
     // MARK: - Methods
@@ -97,21 +110,40 @@ final class ScrapPageViewController: UIViewController {
             .store(in: &cancelBag)
     }
 
-    private func collectionViewDelegate() {
-        scrapPageView.collectionViewDelegate(viewController: self)
-    }
+    private func bindNormalFeedCell(_ cell: NormalFeedCell, index: Int, feedUUID: String) {
 
-    private func configureNavigationBar() {
-        navigationController?.navigationBar.topItem?.title = "모아보기"
-        navigationController?.isNavigationBarHidden = false
+        let scrapButtonDidTap = cell.getButtonTapPublisher()
+            .map { _  in
+                cell.footerView.scrapButton.isEnabled = false
+                return index
+            }
+            .eraseToAnyPublisher()
+
+        let cellInput = ScrapPageViewModel.CellInput(
+            scrapButtonDidTap: scrapButtonDidTap
+        )
+
+        let output = viewModel.transform(cellInput: cellInput, cellCancelBag: &cell.cancelBag)
+
+        output.scrapSuccess
+            .receive(on: DispatchQueue.main)
+            .sink { updatedFeed in
+                if feedUUID == updatedFeed.feedUUID {
+                    cell.footerView.countLabel.text = updatedFeed.scrapCount.description
+                    cell.footerView.scrapButton.isOn = updatedFeed.isScraped
+                    cell.footerView.scrapButton.isEnabled = true
+                }
+            }
+            .store(in: &cell.cancelBag)
     }
 
     private func paginateFeed() {
-        paginationPublisher.send(Void())
+        print("스크롤")
+//        paginationPublisher.send(Void())
     }
 }
 
-extension ScrapPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension ScrapPageViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
@@ -122,26 +154,6 @@ extension ScrapPageViewController: UICollectionViewDelegateFlowLayout, UICollect
             collectionView.resetEmptyView()
         }
         return viewModel.scrapFeedData.count
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: NormalFeedCell.identifier,
-            for: indexPath
-        ) as? NormalFeedCell
-        else {
-            return UICollectionViewCell()
-        }
-        let index = indexPath.row
-        let feed = viewModel.scrapFeedData[index]
-        let cellViewModel = viewModel.dequeueCellViewModel(at: index)
-
-        cell.updateFeedCell(with: feed)
-
-        return cell
     }
 
     func collectionView(
@@ -165,5 +177,45 @@ extension ScrapPageViewController: UICollectionViewDelegateFlowLayout, UICollect
     ) {
         let feed = viewModel.scrapFeedData[indexPath.row]
         coordinatorPublisher.send(.moveToFeedDetail(feed: feed))
+    }
+}
+
+// MARK: - DataSource
+extension ScrapPageViewController {
+    private func configureDataSource() {
+        dataSource = UICollectionViewDiffableDataSource(
+            collectionView: scrapPageView.collectionView,
+            cellProvider: { collectionView, indexPath, itemIdentifier in
+                guard let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: NormalFeedCell.identifier,
+                    for: indexPath
+                ) as? NormalFeedCell
+                else {
+                    return UICollectionViewCell()
+                }
+                let index = indexPath.row
+                let feed = self.viewModel.scrapFeedData[index]
+                self.bindNormalFeedCell(cell, index: index, feedUUID: feed.feedUUID)
+                cell.updateFeedCell(with: feed)
+                return cell
+            })
+
+        collectionViewSnapshot = NSDiffableDataSourceSnapshot<FeedCellType, Feed>()
+        collectionViewSnapshot.appendSections([.normal])
+        collectionViewSnapshot.appendItems(viewModel.scrapFeedData, toSection: .normal)
+        dataSource.apply(collectionViewSnapshot, animatingDifferences: false)
+    }
+
+    private func refreshSnapshot(scrapFeedData: [Feed]) {
+        let previousScrapFeedData = collectionViewSnapshot.itemIdentifiers(inSection: .normal)
+        collectionViewSnapshot.deleteItems(previousScrapFeedData)
+
+        collectionViewSnapshot.appendItems(scrapFeedData, toSection: .normal)
+        dataSource.apply(collectionViewSnapshot, animatingDifferences: false)
+    }
+
+    private func reloadSnapshot(scrapFeedData: [Feed]) {
+        collectionViewSnapshot.appendItems(scrapFeedData, toSection: .normal)
+        dataSource.apply(collectionViewSnapshot, animatingDifferences: false)
     }
 }

@@ -16,6 +16,8 @@ final class ScrapPageViewModel {
 
     var scrapFeedData: [Feed] = []
 
+    private let scrapSuccess = CurrentValueSubject<Feed?, Never>(nil)
+
     private var cancelBag = Set<AnyCancellable>()
     private var temporaryCancelBag = Set<AnyCancellable>()
 
@@ -57,10 +59,18 @@ final class ScrapPageViewModel {
         let pagination: AnyPublisher<Void, Never>
     }
 
+    struct CellInput {
+        let scrapButtonDidTap: AnyPublisher<Int, Never>
+    }
+
     struct Output {
         let reloadData: AnyPublisher<Void, Never>
         let hideIndicator: AnyPublisher<Void, Never>
         let showAlert: AnyPublisher<Error, Never>
+    }
+
+    struct CellOutput {
+        let scrapSuccess: AnyPublisher<Feed, Never>
     }
 
     func transform(input: Input) -> Output {
@@ -101,10 +111,33 @@ final class ScrapPageViewModel {
         )
     }
 
-    func dequeueCellViewModel(at index: Int) -> ScrapViewModel {
-        let scrapViewModel = ScrapViewModel(
-            feedUUID: scrapFeedData[index].feedUUID
+    func transform(cellInput: CellInput, cellCancelBag: inout Set<AnyCancellable>) -> CellOutput {
+        cellInput.scrapButtonDidTap
+            .sink { [weak self] normalFeedIndex in
+                self?.scrapFeed(index: normalFeedIndex)
+            }
+            .store(in: &cellCancelBag)
+
+        return CellOutput(
+            scrapSuccess: scrapSuccess.unwrap().eraseToAnyPublisher()
         )
-        return scrapViewModel
+    }
+
+    private func scrapFeed(index: Int) {
+        if index < scrapFeedData.count {
+            let feed = scrapFeedData[index]
+            let userUUID = UserManager.shared.user.userUUID
+            Task { [weak self] in
+                guard let self = self else {
+                    showAlert.send(HomeViewModelError.feedUpdate)
+                    return
+                }
+//                let updatedFeed = try await self.scrapPageUseCase.scrapFeed(feed, userUUID: userUUID)
+//                self.updateNormalFeed(updatedFeed)
+//                self.scrapSuccess.send(updatedFeed)
+            }
+        } else {
+            showAlert.send(HomeViewModelError.feedIndex)
+        }
     }
 }
