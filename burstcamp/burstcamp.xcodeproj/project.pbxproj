@@ -45,6 +45,7 @@
 		143D93A6292E484100C67C27 /* burstcampTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143D93A5292E484100C67C27 /* burstcampTests.swift */; };
 		143D93AD292E48C100C67C27 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 143D93AC292E48C100C67C27 /* FirebaseAuth */; };
 		143D93B1292E4B9500C67C27 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 143D93B0292E4B9500C67C27 /* FirebaseFirestore */; };
+		145842B4297FF5C800C81878 /* DiffableFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145842B3297FF5C800C81878 /* DiffableFeed.swift */; };
 		1458C6952928FB1B00E00B80 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458C6942928FB1B00E00B80 /* HomeView.swift */; };
 		1459C3BA292910B300FA885D /* RecommendFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3B9292910B300FA885D /* RecommendFeedCell.swift */; };
 		1459C3BC2929150200FA885D /* FeedCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3BB2929150200FA885D /* FeedCellType.swift */; };
@@ -296,6 +297,7 @@
 		143185F7292B5C88008CE459 /* ContainCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainCollectionView.swift; sourceTree = "<group>"; };
 		143D93A3292E484100C67C27 /* burstcampTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = burstcampTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		143D93A5292E484100C67C27 /* burstcampTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = burstcampTests.swift; sourceTree = "<group>"; };
+		145842B3297FF5C800C81878 /* DiffableFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffableFeed.swift; sourceTree = "<group>"; };
 		1458C6942928FB1B00E00B80 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		1459C3B9292910B300FA885D /* RecommendFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedCell.swift; sourceTree = "<group>"; };
 		1459C3BB2929150200FA885D /* FeedCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellType.swift; sourceTree = "<group>"; };
@@ -1239,6 +1241,7 @@
 			children = (
 				B5FF711D2948DCA0008E69F2 /* RealmModel */,
 				141344DA292F82BE00187B86 /* Feed.swift */,
+				145842B3297FF5C800C81878 /* DiffableFeed.swift */,
 				14A93D412936F00F00790034 /* FeedWriter.swift */,
 				1459C3BB2929150200FA885D /* FeedCellType.swift */,
 			);
@@ -1877,6 +1880,7 @@
 				148A05622972F7B900664CCB /* MyPageUseCase.swift in Sources */,
 				B5DAD681292E58BF00C4A126 /* DefaultMultilLineLabel.swift in Sources */,
 				3B061FDD2928E8E300BFA71D /* SignUpCamperIDViewController.swift in Sources */,
+				145842B4297FF5C800C81878 /* DiffableFeed.swift in Sources */,
 				1496CF1E294070A3008F312F /* ContainFeedDetailCoordinator.swift in Sources */,
 				140438C0293F77DD004D035C /* Factory.swift in Sources */,
 				140FBEE529750D0B006B7857 /* LoginViewModelError.swift in Sources */,
