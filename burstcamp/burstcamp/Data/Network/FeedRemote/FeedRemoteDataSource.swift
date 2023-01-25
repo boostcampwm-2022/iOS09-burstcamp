@@ -50,7 +50,7 @@ final class FeedRemoteDataSource {
         return Future {
             // feed의 스크랩 상태를 변경 해준다.
             var newFeed = feed
-            newFeed.toggleScrap()
+//            newFeed.toggleScrap()
 
             switch feed.isScraped {
             case true:

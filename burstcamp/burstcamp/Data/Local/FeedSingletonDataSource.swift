@@ -112,7 +112,7 @@ extension FeedSingletonDataSource {
     func toggleScrapFeed(modifiedFeed: Feed) {
         updateFeed(feedUUID: modifiedFeed.feedUUID) { feed in
             var newFeed = feed
-            newFeed.toggleScrap()
+//            newFeed.toggleScrap()
             updateScrapFeedList(changedFeed: newFeed)
             return newFeed
         }

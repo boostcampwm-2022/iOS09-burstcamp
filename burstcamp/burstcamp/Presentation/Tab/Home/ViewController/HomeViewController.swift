@@ -21,8 +21,8 @@ final class HomeViewController: UIViewController {
     }
     private var loadingView: LoadingView!
 
-    private var dataSource: UICollectionViewDiffableDataSource<FeedCellType, Feed>!
-    private var collectionViewSnapShot: NSDiffableDataSourceSnapshot<FeedCellType, Feed>!
+    private var dataSource: UICollectionViewDiffableDataSource<FeedCellType, DiffableFeed>!
+    private var collectionViewSnapShot: NSDiffableDataSourceSnapshot<FeedCellType, DiffableFeed>!
 
     private var viewModel: HomeViewModel
     private var cancelBag = Set<AnyCancellable>()
@@ -204,23 +204,21 @@ extension HomeViewController {
 
         dataSource = UICollectionViewDiffableDataSource(
             collectionView: homeView.collectionView,
-            cellProvider: { collectionView, indexPath, feed in
-                let feedCellType = FeedCellType(index: indexPath.section)
-                switch feedCellType {
-                case .recommend:
+            cellProvider: { collectionView, indexPath, diffableFeed in
+
+                switch diffableFeed {
+                case .recommend(let feed):
                     return collectionView.dequeueConfiguredReusableCell(
                         using: recommendFeedCellRegistration,
                         for: indexPath,
                         item: feed
                     )
-                case .normal:
+                case .normal(let feed):
                     return collectionView.dequeueConfiguredReusableCell(
                         using: normalFeedCellRegistration,
                         for: indexPath,
                         item: feed
                     )
-                case .none:
-                    return UICollectionViewCell()
                 }
             })
 
@@ -228,10 +226,8 @@ extension HomeViewController {
             return self?.dataSourceSupplementary(collectionView: collectionView, kind: kind, indexPath: indexPath)
         }
 
-        collectionViewSnapShot = NSDiffableDataSourceSnapshot<FeedCellType, Feed>()
+        collectionViewSnapShot = NSDiffableDataSourceSnapshot<FeedCellType, DiffableFeed>()
         collectionViewSnapShot.appendSections([.recommend, .normal])
-        collectionViewSnapShot.appendItems(viewModel.recommendFeedData, toSection: .recommend)
-        collectionViewSnapShot.appendItems(viewModel.normalFeedData, toSection: .normal)
         dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
     }
 
@@ -262,14 +258,13 @@ extension HomeViewController {
         collectionViewSnapShot.deleteItems(previousRecommendFeedData)
         collectionViewSnapShot.deleteItems(previousNormalFeedData)
 
-        // TODO: Recommend Feed
-//        collectionViewSnapShot.appendItems(homeFeedList.recommendFeed, toSection: .recommend)
-        collectionViewSnapShot.appendItems(homeFeedList.normalFeed, toSection: .normal)
+        snapShotAppend(feedList: homeFeedList.recommendFeed, toSection: .recommend)
+        snapShotAppend(feedList: homeFeedList.normalFeed, toSection: .normal)
         dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
     }
 
     private func reloadHomeFeedList(additional normalFeedList: [Feed]) {
-        collectionViewSnapShot.appendItems(normalFeedList, toSection: .normal)
+        snapShotAppend(feedList: normalFeedList, toSection: .normal)
         dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
     }
 
@@ -277,8 +272,16 @@ extension HomeViewController {
         let previousNormalFeedData = collectionViewSnapShot.itemIdentifiers(inSection: .normal)
         collectionViewSnapShot.deleteItems(previousNormalFeedData)
 
-        collectionViewSnapShot.appendItems(normalFeedList)
+        snapShotAppend(feedList: normalFeedList, toSection: .normal)
         dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
+    }
+
+    private func snapShotAppend(feedList: [Feed], toSection: FeedCellType) {
+        if toSection == .normal {
+            feedList.forEach { collectionViewSnapShot.appendItems([DiffableFeed.normal($0)], toSection: .normal) }
+        } else if toSection == .recommend {
+            feedList.forEach { collectionViewSnapShot.appendItems([DiffableFeed.recommend($0)], toSection: .recommend) }
+        }
     }
 }
 
