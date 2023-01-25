@@ -259,21 +259,13 @@ extension HomeViewController {
         collectionViewSnapShot.deleteItems(previousRecommendFeedData)
         collectionViewSnapShot.deleteItems(previousNormalFeedData)
 
-        // TODO: Recommend Feed
-//        collectionViewSnapShot.appendItems(homeFeedList.recommendFeed, toSection: .recommend)
-//        collectionViewSnapShot.appendItems(homeFeedList.normalFeed, toSection: .normal)
-        homeFeedList.recommendFeed.forEach {
-            collectionViewSnapShot.appendItems([DiffableFeed.recommend($0)], toSection: .recommend)
-        }
-        homeFeedList.normalFeed.forEach {
-            collectionViewSnapShot.appendItems([DiffableFeed.normal($0)], toSection: .normal)
-        }
+        snapShotAppend(feedList: homeFeedList.recommendFeed, toSection: .recommend)
+        snapShotAppend(feedList: homeFeedList.normalFeed, toSection: .normal)
         dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
     }
 
     private func reloadHomeFeedList(additional normalFeedList: [Feed]) {
-        normalFeedList.forEach { collectionViewSnapShot.appendItems([DiffableFeed.normal($0)], toSection: .normal) }
-//        collectionViewSnapShot.appendItems(normalFeedList, toSection: .normal)
+        snapShotAppend(feedList: normalFeedList, toSection: .normal)
         dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
     }
 
@@ -281,9 +273,16 @@ extension HomeViewController {
         let previousNormalFeedData = collectionViewSnapShot.itemIdentifiers(inSection: .normal)
         collectionViewSnapShot.deleteItems(previousNormalFeedData)
 
-        normalFeedList.forEach { collectionViewSnapShot.appendItems([DiffableFeed.normal($0)], toSection: .normal) }
-//        collectionViewSnapShot.appendItems(normalFeedList)
+        snapShotAppend(feedList: normalFeedList, toSection: .normal)
         dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
+    }
+
+    private func snapShotAppend(feedList: [Feed], toSection: FeedCellType) {
+        if toSection == .normal {
+            feedList.forEach { collectionViewSnapShot.appendItems([DiffableFeed.normal($0)], toSection: .normal) }
+        } else if toSection == .recommend {
+            feedList.forEach { collectionViewSnapShot.appendItems([DiffableFeed.recommend($0)], toSection: .recommend) }
+        }
     }
 }
 
