@@ -27,6 +27,7 @@ enum TabBarCoordinatorEvent {
 
 enum HomeCoordinatorEvent {
     case moveToFeedDetail(feed: Feed)
+    case moveToBlogSafari(url: URL)
 }
 
 enum ScrapPageCoordinatorEvent {
