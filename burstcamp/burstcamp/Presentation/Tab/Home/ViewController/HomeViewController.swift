@@ -172,14 +172,22 @@ extension HomeViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        let feedCellType = FeedCellType(index: indexPath.section) ?? .normal
+        let feedCellType = FeedCellType(index: indexPath.section)
+
         switch feedCellType {
         case .recommend:
-            // TODO: 사파리로 보여주기
+            let recommendFeed = viewModel.recommendFeedData[indexPath.row]
+            guard let url = URL(string: recommendFeed.url) else {
+                showAlert(message: "블로그 URL이 올바르지 않습니다.")
+                return
+            }
+            coordinatorPublisher.send(.moveToBlogSafari(url: url))
             return
         case .normal:
             let feed = viewModel.normalFeedData[indexPath.row]
             coordinatorPublisher.send(.moveToFeedDetail(feed: feed))
+        case .none:
+            showAlert(message: "피드 데이터가 올바르지 않습니다.")
         }
     }
 

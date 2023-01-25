@@ -37,6 +37,8 @@ extension HomeCoordinator {
                 switch event {
                 case .moveToFeedDetail(let feed):
                     self?.moveToFeedDetail(feed: feed, homeViewController: homeViewController)
+                case .moveToBlogSafari(let url):
+                    self?.moveToBlogSafari(url: url)
                 }
             }
             .store(in: &cancelBag)
