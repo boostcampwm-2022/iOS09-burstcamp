@@ -206,7 +206,6 @@ extension HomeViewController {
             collectionView: homeView.collectionView,
             cellProvider: { collectionView, indexPath, diffableFeed in
 
-                let feedCellType = FeedCellType(index: indexPath.section)
                 switch diffableFeed {
                 case .recommend(let feed):
                     return collectionView.dequeueConfiguredReusableCell(

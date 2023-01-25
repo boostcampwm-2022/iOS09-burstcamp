@@ -21,7 +21,8 @@ final class DefaultHomeUseCase: HomeUseCase {
         let normalFeed = homeFeedList.normalFeed.map({ feed in
             return userScrapFeedUUIDs.contains(feed.feedUUID) ? feed.setIsScraped(true) : feed
         })
-        return HomeFeedList(recommendFeed: homeFeedList.recommendFeed, normalFeed: normalFeed)
+        let recommendFeed = recommendFeedForCarousel(homeFeedList.recommendFeed)
+        return HomeFeedList(recommendFeed: recommendFeed, normalFeed: normalFeed)
     }
 
     func fetchMoreNormalFeed() async throws -> [Feed] {
@@ -35,5 +36,18 @@ final class DefaultHomeUseCase: HomeUseCase {
         return feed.isScraped
         ? try await feedRepository.unScrapFeed(feed, userUUID: userUUID)
         : try await feedRepository.scrapFeed(feed, userUUID: userUUID)
+    }
+
+    // Carousel View를 위해 추천 피드를 2개 씩 복사해줘야 함
+    private func recommendFeedForCarousel(_ recommendFeedList: [Feed]) -> [Feed] {
+        let newArrayOne = makeMockUpRecommendFeed(recommendFeedList)
+        let newArrayTwo = makeMockUpRecommendFeed(recommendFeedList)
+        return newArrayOne + recommendFeedList + newArrayTwo
+    }
+
+    private func makeMockUpRecommendFeed(_ recommendFeedList: [Feed]) -> [Feed] {
+        return recommendFeedList.map {
+            return $0.getMockUpFeed()
+        }
     }
 }

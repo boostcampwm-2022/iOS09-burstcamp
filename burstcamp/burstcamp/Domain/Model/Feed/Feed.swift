@@ -70,24 +70,6 @@ extension Feed {
         )
     }
 
-    mutating func toggleScrap() {
-        isScraped ? unScrap() : scrap()
-    }
-
-    mutating func scrap() {
-        scrapCount += 1
-        isScraped = true
-        scrapDate = Date()
-    }
-
-    mutating func unScrap() {
-        if scrapCount > 0 {
-            scrapCount -= 1
-        }
-        isScraped = false
-        scrapDate = nil
-    }
-
     func setIsScraped(_ isScraped: Bool) -> Feed {
         return Feed(
             feedUUID: self.feedUUID,
@@ -99,6 +81,20 @@ extension Feed {
             content: self.content,
             scrapCount: self.scrapCount,
             isScraped: isScraped
+        )
+    }
+
+    func getMockUpFeed() -> Feed {
+        return Feed(
+            feedUUID: UUID().uuidString,
+            writer: self.writer,
+            title: self.title,
+            pubDate: self.pubDate,
+            url: self.url,
+            thumbnailURL: self.thumbnailURL,
+            content: self.content,
+            scrapCount: self.scrapCount,
+            isScraped: self.isScraped
         )
     }
 }
