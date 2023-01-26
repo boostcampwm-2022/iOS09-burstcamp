@@ -4,6 +4,7 @@ import { getBlogTitle } from './service/feedAPI.js';
 import { updateFeedDB, updateRecommendFeedDB, deleteRecommendFeeds } from './service/firestoreManager.js'
 import { sendNotification } from './service/apnsManager.js'
 import { deleteUserInfo } from './service/withdrawalManager.js'
+import { createMockUpUser } from './service/test/mockUpService.js';
 
 // Initialize
 if ( !getApps().length ) initializeApp()
@@ -38,4 +39,8 @@ export const deleteUser = https
 export const scheduledSendNotification = pubsub.schedule('every day 12:16').timeZone("Asia/Seoul")
 .onRun(async (context) => {
 	sendNotification()
+})
+
+export const createMockUpUserToFirestore  = https.onRequest(async (context) => {
+	createMockUpUser()
 })
