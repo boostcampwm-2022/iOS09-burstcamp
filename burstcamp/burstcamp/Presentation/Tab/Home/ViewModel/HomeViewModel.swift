@@ -65,14 +65,14 @@ final class HomeViewModel {
         input.viewDidLoad
             .merge(with: input.viewDidRefresh)
             .sink { [weak self] _ in
-                self?.fetchHomeFeedList()
+//                self?.fetchHomeFeedList()
                 self?.hideIndicator.send(Void())
             }
             .store(in: &cancelBag)
 
         input.pagination
             .sink { [weak self] _ in
-                self?.paginateNormalFeed()
+//                self?.paginateNormalFeed()
             }
             .store(in: &cancelBag)
 

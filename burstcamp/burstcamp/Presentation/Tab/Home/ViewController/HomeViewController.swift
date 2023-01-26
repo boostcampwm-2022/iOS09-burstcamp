@@ -8,6 +8,7 @@
 import Combine
 import UIKit
 
+import SkeletonView
 import SnapKit
 import Then
 
@@ -45,6 +46,7 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        configureAttributes()
         collectionViewDelegate()
         configureDataSource()
         bind()
@@ -57,6 +59,11 @@ final class HomeViewController: UIViewController {
     }
 
     private func configureUI() {}
+
+    private func configureAttributes() {
+//        homeView.collectionView.isSkeletonable = true
+//        homeView.collectionView.showSkeleton()
+    }
 
     private func configureNavigationBar() {
         navigationController?.navigationBar.topItem?.title = "홈"
@@ -156,6 +163,7 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController: UICollectionViewDelegate {
 
+    // TODO: - 지워
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
@@ -203,6 +211,7 @@ extension HomeViewController {
     private func configureDataSource() {
         let recommendFeedCellRegistration = UICollectionView.CellRegistration<RecommendFeedCell, Feed> { cell, _, feed in
             cell.updateFeedCell(with: feed)
+//            cell.isSkeletonable = true
         }
 
         let normalFeedCellRegistration = UICollectionView.CellRegistration<NormalFeedCell, Feed> { cell, indexPath, feed in
