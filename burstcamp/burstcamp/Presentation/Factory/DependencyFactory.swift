@@ -97,7 +97,8 @@ extension DependencyFactory {
 
     func createHomeViewModel() -> HomeViewModel {
         let feedRepository = DefaultFeedRepository(bcFirestoreService: BCFirestoreService())
-        let homeUseCase = DefaultHomeUseCase(feedRepository: feedRepository)
+        let userRepository = createUserRepository()
+        let homeUseCase = DefaultHomeUseCase(feedRepository: feedRepository, userRepository: userRepository)
         return HomeViewModel(homeUseCase: homeUseCase)
     }
 

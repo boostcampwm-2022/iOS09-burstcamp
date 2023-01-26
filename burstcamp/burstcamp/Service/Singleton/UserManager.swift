@@ -24,7 +24,6 @@ final class UserManager {
     private func userByKeyChain() {
         if let user = KeyChainManager.readUser() {
             self.user = user
-            print("키체인 매니저", user)
         }
     }
 

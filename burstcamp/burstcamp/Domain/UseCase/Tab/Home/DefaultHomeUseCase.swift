@@ -10,9 +10,11 @@ import Foundation
 final class DefaultHomeUseCase: HomeUseCase {
 
     private let feedRepository: FeedRepository
+    private let userRepository: UserRepository
 
-    init(feedRepository: FeedRepository) {
+    init(feedRepository: FeedRepository, userRepository: UserRepository) {
         self.feedRepository = feedRepository
+        self.userRepository = userRepository
     }
 
     func fetchRecentHomeFeedList() async throws -> HomeFeedList {
@@ -36,6 +38,13 @@ final class DefaultHomeUseCase: HomeUseCase {
         return feed.isScraped
         ? try await feedRepository.unScrapFeed(feed, userUUID: userUUID)
         : try await feedRepository.scrapFeed(feed, userUUID: userUUID)
+    }
+
+    func updateUserPushState(to pushState: Bool) async throws {
+        let userUUID = UserManager.shared.user.userUUID
+        if !userUUID.isEmpty {
+            try await userRepository.updateUserPushState(userUUID: userUUID, isPushOn: pushState)
+        }
     }
 
     // Carousel View를 위해 추천 피드를 2개 씩 복사해줘야 함
