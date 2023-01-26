@@ -8,12 +8,17 @@
 import Combine
 import UIKit
 
+import SkeletonView
 import SnapKit
 
 final class NormalFeedCell: UICollectionViewCell {
 
-    private lazy var userInfoView = DefaultUserInfoView()
-    private lazy var mainView = NormalFeedCellMain()
+    private lazy var userInfoView = DefaultUserInfoView().then {
+        $0.isSkeletonable = true
+    }
+    private lazy var mainView = NormalFeedCellMain().then {
+        $0.isSkeletonable = true
+    }
     lazy var footerView = NormalFeedCellFooter()
 
     var cancelBag = Set<AnyCancellable>()
@@ -34,8 +39,9 @@ final class NormalFeedCell: UICollectionViewCell {
     }
 
     private func configureUI() {
-        addSubViews([userInfoView, mainView, footerView])
+        contentView.addSubViews([userInfoView, mainView, footerView])
         configureCell()
+        configureSkeletonView()
         configureHeaderStackView()
         configureMainStackView()
         configureFooterStackView()
@@ -43,6 +49,10 @@ final class NormalFeedCell: UICollectionViewCell {
 
     private func configureCell() {
         backgroundColor = .clear
+    }
+
+    private func configureSkeletonView() {
+        isSkeletonable = true
     }
 
     private func configureHeaderStackView() {

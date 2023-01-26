@@ -14,7 +14,6 @@ class DefaultUserInfoView: UIStackView {
     private lazy var profileImageView = UIImageView().then {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = Constant.Image.profileSmall.cgFloat / 2
-        $0.image = UIImage(named: "AppIcon")
         $0.contentMode = .scaleAspectFill
     }
 
@@ -22,6 +21,7 @@ class DefaultUserInfoView: UIStackView {
         $0.textColor = UIColor.systemGray
         $0.font = UIFont.extraBold12
         $0.text = ""
+        $0.isSkeletonable = true
     }
 
     private lazy var badgeStackView = DefaultBadgeView()

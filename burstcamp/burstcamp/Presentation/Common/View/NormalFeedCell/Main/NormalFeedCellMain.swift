@@ -7,6 +7,7 @@
 
 import UIKit
 
+import SkeletonView
 import SnapKit
 
 class NormalFeedCellMain: UIView {
@@ -16,13 +17,16 @@ class NormalFeedCellMain: UIView {
         $0.textColor = UIColor.dynamicBlack
         $0.font = UIFont.bold14
         $0.numberOfLines = 3
+        $0.isSkeletonable = true
+        $0.linesCornerRadius = Constant.CornerRadius.radius4
     }
 
     private lazy var thumbnailImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
         $0.layer.cornerRadius = Constant.Image.thumbnailCornerRadius.cgFloat
-        $0.backgroundColor = UIColor.systemGray2
+        $0.backgroundColor = UIColor.systemGray5
+        $0.isSkeletonable = true
     }
 
     override init(frame: CGRect) {

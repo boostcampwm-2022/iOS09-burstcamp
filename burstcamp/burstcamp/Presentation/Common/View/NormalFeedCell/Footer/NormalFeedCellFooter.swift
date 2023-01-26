@@ -12,7 +12,7 @@ class NormalFeedCellFooter: UIView {
     lazy var scrapButton = ToggleButton(
         image: UIImage(systemName: "bookmark.fill"),
         onColor: .main,
-        offColor: .systemGray4
+        offColor: .systemGray5
     )
 
     lazy var countLabel = UILabel().then {

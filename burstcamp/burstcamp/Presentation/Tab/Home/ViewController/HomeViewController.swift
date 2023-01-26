@@ -8,6 +8,7 @@
 import Combine
 import UIKit
 
+import SkeletonView
 import SnapKit
 import Then
 
@@ -48,6 +49,7 @@ final class HomeViewController: UIViewController {
         collectionViewDelegate()
         configureDataSource()
         bind()
+        configureAttributes()
         configurePushNotification()
     }
 
@@ -57,6 +59,11 @@ final class HomeViewController: UIViewController {
     }
 
     private func configureUI() {}
+
+    private func configureAttributes() {
+        homeView.collectionView.isSkeletonable = true
+        homeView.collectionView.showSkeleton(usingColor: .systemGray5)
+    }
 
     private func configureNavigationBar() {
         navigationController?.navigationBar.topItem?.title = "홈"
@@ -72,6 +79,14 @@ final class HomeViewController: UIViewController {
         homeView.collectionViewScrollToTop()
     }
 
+    private func paginateFeed() {
+        paginationPublisher.send(Void())
+    }
+}
+
+// MARK: Bind
+
+extension HomeViewController {
     private func bind() {
         guard let refreshControl = homeView.collectionView.refreshControl
         else { return }
@@ -89,6 +104,7 @@ final class HomeViewController: UIViewController {
         output.recentFeed
             .receive(on: DispatchQueue.main)
             .sink { [weak self] homeFeedList in
+                self?.homeView.hideSkeleton()
                 self?.reloadHomeFeedList(homeFeedList: homeFeedList)
             }
             .store(in: &cancelBag)
@@ -148,26 +164,9 @@ final class HomeViewController: UIViewController {
             }
             .store(in: &cell.cancelBag)
     }
-
-    private func paginateFeed() {
-        paginationPublisher.send(Void())
-    }
 }
 
 extension HomeViewController: UICollectionViewDelegate {
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        numberOfItemsInSection section: Int
-    ) -> Int {
-        let feedCellType = FeedCellType(index: section)
-        switch feedCellType {
-        case .recommend: return viewModel.recommendFeedData.count * 3
-        case .normal: return viewModel.normalFeedData.count
-        case .none: return 0
-        }
-    }
-
     func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
@@ -201,6 +200,17 @@ extension HomeViewController: UICollectionViewDelegate {
 // MARK: - DataSource
 extension HomeViewController {
     private func configureDataSource() {
+        dataSource = getHomeFeedListDataSource()
+
+        dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
+            return self?.dataSourceSupplementary(collectionView: collectionView, kind: kind, indexPath: indexPath)
+        }
+
+        initSnapShot()
+    }
+
+    private func getHomeFeedListDataSource() -> UICollectionViewDiffableDataSource<FeedCellType, DiffableFeed> {
+
         let recommendFeedCellRegistration = UICollectionView.CellRegistration<RecommendFeedCell, Feed> { cell, _, feed in
             cell.updateFeedCell(with: feed)
         }
@@ -210,10 +220,9 @@ extension HomeViewController {
             cell.updateFeedCell(with: feed)
         }
 
-        dataSource = UICollectionViewDiffableDataSource(
+        return HomeFeedListSkeletonDiffableDatasource(
             collectionView: homeView.collectionView,
             cellProvider: { collectionView, indexPath, diffableFeed in
-
                 switch diffableFeed {
                 case .recommend(let feed):
                     return collectionView.dequeueConfiguredReusableCell(
@@ -229,14 +238,6 @@ extension HomeViewController {
                     )
                 }
             })
-
-        dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
-            return self?.dataSourceSupplementary(collectionView: collectionView, kind: kind, indexPath: indexPath)
-        }
-
-        collectionViewSnapShot = NSDiffableDataSourceSnapshot<FeedCellType, DiffableFeed>()
-        collectionViewSnapShot.appendSections([.recommend, .normal])
-        dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
     }
 
     private func dataSourceSupplementary(
@@ -258,6 +259,16 @@ extension HomeViewController {
         default:
             return nil
         }
+    }
+}
+
+// MARK: Snapshot
+
+extension HomeViewController {
+    private func initSnapShot() {
+        collectionViewSnapShot = NSDiffableDataSourceSnapshot<FeedCellType, DiffableFeed>()
+        collectionViewSnapShot.appendSections([.recommend, .normal])
+        dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
     }
 
     private func reloadHomeFeedList(homeFeedList: HomeFeedList) {
