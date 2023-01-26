@@ -53,7 +53,8 @@ final class DependencyFactory: DependencyFactoryProtocol {
 extension DependencyFactory {
     func createLoginUseCase() -> LoginUseCase {
         let loginRepository = createLoginRepository()
-        return DefaultLoginUseCase(loginRepository: loginRepository)
+        let userRepository = createUserRepository()
+        return DefaultLoginUseCase(loginRepository: loginRepository, userRepository: userRepository)
     }
 
     // MARK: - ViewModel

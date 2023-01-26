@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+enum LoginUseCaseError: Error {
+    case fetchUser
+}

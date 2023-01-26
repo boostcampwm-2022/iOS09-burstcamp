@@ -44,6 +44,12 @@ final class LogInViewModel {
     func login(code: String) async throws {
         let (userNickname, userUUID) = try await loginUseCase.login(code: code)
         UserManager.shared.setUserUUID(userUUID)
-        logInPublisher.send(.moveToDomainScreen(userNickname: userNickname))
+
+        let isUserExist = try await loginUseCase.checkIsExist(userUUID: userUUID)
+        if isUserExist {
+            logInPublisher.send(.moveToTabBarScreen)
+        } else {
+            logInPublisher.send(.moveToDomainScreen(userNickname: userNickname))
+        }
     }
 }

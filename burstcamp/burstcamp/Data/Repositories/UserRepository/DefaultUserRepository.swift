@@ -19,7 +19,15 @@ final class DefaultUserRepository: UserRepository {
     // MARK: User
 
     func fetchUser(_ userUUID: String) async throws -> User {
-        return try await User(userAPIModel: bcFirestoreService.fetchUser(userUUID: userUUID))
+        do {
+            return try await User(userAPIModel: bcFirestoreService.fetchUser(userUUID: userUUID))
+        } catch {
+            if let error = error as? FirestoreServiceError, error == .getDocument {
+                throw UserRepositoryError.userNotExist
+            } else {
+                throw error
+            }
+        }
     }
 
     func saveUser(_ user: User) async throws {

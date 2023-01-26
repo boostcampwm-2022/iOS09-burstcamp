@@ -37,7 +37,7 @@ final class UserManager {
     }
 
     func addUserListener() {
-        if user.userUUID.isEmpty { fatalError("Listenr를 위한 UserUUID가 없음")}
+        if user.userUUID.isEmpty { fatalError("Listenr를 위한 UserUUID가 없음") }
         bCFirestoreUserListener.userPublisher(userUUID: user.userUUID)
             .sink { error in
                 fatalError("유저 정보를 불러오는데 실패 \(error)")

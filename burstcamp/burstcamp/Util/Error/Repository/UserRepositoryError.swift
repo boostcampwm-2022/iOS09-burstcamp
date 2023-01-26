@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+enum UserRepositoryError: Error {
+    case userNotExist
+}
