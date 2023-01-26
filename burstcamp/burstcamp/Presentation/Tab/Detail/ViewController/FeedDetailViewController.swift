@@ -28,7 +28,7 @@ final class FeedDetailViewController: UIViewController {
     private let scrapButton = ToggleButton(
         image: UIImage(systemName: "bookmark.fill"),
         onColor: .main,
-        offColor: .systemGray4
+        offColor: .systemGray5
     )
     private lazy var scrapBarButtonItem = UIBarButtonItem(customView: scrapButton)
 

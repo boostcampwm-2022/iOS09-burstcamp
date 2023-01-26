@@ -73,6 +73,7 @@ enum Constant {
     }
 
     enum CornerRadius {
+        static let radius4 = 4
         static let radius8 = 8
         static let radius12 = 12
     }

@@ -27,7 +27,7 @@ final class ToggleButton: UIButton {
         self.onImage = onImage?.withTintColor(onColor, renderingMode: .alwaysOriginal)
         self.offImage = offImage?.withTintColor(offColor, renderingMode: .alwaysOriginal)
         super.init(frame: .zero)
-        configure()
+//        configure()
     }
 
     convenience init(
@@ -51,7 +51,7 @@ final class ToggleButton: UIButton {
             onImage: onImage,
             onColor: .systemBlue,
             offImage: offImage,
-            offColor: .systemBlue
+            offColor: .systemGray5
         )
     }
 

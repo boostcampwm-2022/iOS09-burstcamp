@@ -72,7 +72,7 @@ final class HomeViewModel {
 
         input.pagination
             .sink { [weak self] _ in
-//                self?.paginateNormalFeed()
+                self?.paginateNormalFeed()
             }
             .store(in: &cancelBag)
 

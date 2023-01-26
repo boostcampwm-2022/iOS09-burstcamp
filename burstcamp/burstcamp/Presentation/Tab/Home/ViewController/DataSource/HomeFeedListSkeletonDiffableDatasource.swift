@@ -33,8 +33,18 @@ extension HomeFeedListSkeletonDiffableDatasource: SkeletonCollectionViewDataSour
         }
     }
 
+    func numSections(in collectionSkeletonView: UICollectionView) -> Int {
+        return FeedCellType.count
+    }
+
     // 초기 목업 데이터용
     func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        guard let feedCellType = FeedCellType(index: section) else { fatalError("Reusable Identifier 에러") }
+        switch feedCellType {
+        case .recommend:
+            return 6
+        case .normal:
+            return 6
+        }
     }
 }

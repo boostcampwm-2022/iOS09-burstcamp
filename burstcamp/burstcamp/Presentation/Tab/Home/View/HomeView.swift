@@ -23,7 +23,6 @@ final class HomeView: UIView, ContainCollectionView {
         $0.contentInset = .zero
         $0.backgroundColor = .clear
         $0.clipsToBounds = true
-        // TODO: 지워
         $0.register(
             RecommendFeedHeader.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,

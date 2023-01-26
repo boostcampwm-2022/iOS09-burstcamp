@@ -20,9 +20,10 @@ final class DefaultBadgeLabel: UILabel {
 
     override var intrinsicContentSize: CGSize {
         var contentSize = super.intrinsicContentSize
-        contentSize.height += padding.top + padding.bottom
-        contentSize.width += padding.left + padding.right
-
+        if contentSize.height != 0 && contentSize.width != 0 {
+            contentSize.height += padding.top + padding.bottom
+            contentSize.width += padding.left + padding.right
+        }
         return contentSize
     }
 

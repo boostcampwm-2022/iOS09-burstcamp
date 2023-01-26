@@ -62,7 +62,7 @@ final class HomeViewController: UIViewController {
 
     private func configureAttributes() {
         homeView.collectionView.isSkeletonable = true
-        homeView.collectionView.showSkeleton()
+        homeView.collectionView.showSkeleton(usingColor: .systemGray5)
     }
 
     private func configureNavigationBar() {
@@ -211,7 +211,6 @@ extension HomeViewController: UICollectionViewDelegate {
 extension HomeViewController {
     private func configureDataSource() {
         let recommendFeedCellRegistration = UICollectionView.CellRegistration<RecommendFeedCell, Feed> { cell, _, feed in
-            print("recommend Cell 업데이트")
             cell.updateFeedCell(with: feed)
         }
 
