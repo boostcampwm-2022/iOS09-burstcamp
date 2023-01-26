@@ -44,3 +44,11 @@ export const scheduledSendNotification = pubsub.schedule('every day 12:16').time
 export const createMockUpUserToFirestore  = https.onRequest(async (context) => {
 	createMockUpUser()
 })
+
+export const deleteMockUpUser = https
+	.onRequest(async (context) => {
+		await deleteUserInfo('hello2burstcamp')
+		return {
+			isFinish: true
+		}
+	})

@@ -246,11 +246,16 @@ export async function deleteFCMToken(userUUID) {
  * @returns 해당 유저가 쓴 글
  */
 export async function getUserFeedsUUIDs(userUUID) {
-	logger.log('feed에서 유저가 쓴 글의 정보를 가져온다.')
+	logger.log('feed에서 유저 가 쓴 글의 정보를 가져온다.', userUUID)
 	const querySnapshot = await feedRef
 		.where('writerUUID', '==', userUUID)
 		.get()
-	
+
+		logger.log('querysnapShot - ', querySnapshot)
+	if (querySnapshot.empty) {
+		logger.log('유저가 작성한 글이 없다.')
+		return
+	}
 	const feedUUIDs = querySnapshot.docs.map(doc => {
 		return doc.data()['feedUUID']
 	})
