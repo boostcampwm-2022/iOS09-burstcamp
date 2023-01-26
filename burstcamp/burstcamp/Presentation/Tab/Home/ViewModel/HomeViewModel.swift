@@ -159,6 +159,18 @@ final class HomeViewModel {
     }
 }
 
+extension HomeViewModel {
+    func updateUserScrapState(to scrapState: Bool) {
+        Task { [weak self] in
+            do {
+                try await self?.homeUseCase.updateUserPushState(to: scrapState)
+            } catch {
+                showAlert.send(HomeViewModelError.pushState)
+            }
+        }
+    }
+}
+
 // FeedDetail에서 변경된 Feed 업데이트
 extension HomeViewModel {
     func updateNormalFeed(_ updatedFeed: Feed) -> [Feed] {
