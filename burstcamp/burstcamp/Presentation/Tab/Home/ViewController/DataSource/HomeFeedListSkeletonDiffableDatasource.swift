@@ -32,4 +32,9 @@ extension HomeFeedListSkeletonDiffableDatasource: SkeletonCollectionViewDataSour
             return NormalFeedCell.identifier
         }
     }
+
+    // 초기 목업 데이터용
+    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 6
+    }
 }

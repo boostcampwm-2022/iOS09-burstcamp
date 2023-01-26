@@ -7,6 +7,7 @@
 
 import UIKit
 
+import SkeletonView
 import SnapKit
 
 final class RecommendFeedCell: UICollectionViewCell {
@@ -38,15 +39,20 @@ final class RecommendFeedCell: UICollectionViewCell {
     }
 
     private func configureUI() {
-        addSubview(stackView)
+        contentView.addSubview(stackView)
         stackView.addArrangedSubViews([titleLabel, userView])
         configureCell()
+        configureSkeleton()
         configureStackView()
     }
 
     private func configureCell() {
-        backgroundColor = .customGreen
         layer.cornerRadius = Constant.space24.cgFloat
+    }
+
+    private func configureSkeleton() {
+        isSkeletonable = true
+        skeletonCornerRadius = Constant.space24.float
     }
 
     private func configureStackView() {

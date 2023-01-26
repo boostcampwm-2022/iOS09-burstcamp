@@ -12,7 +12,6 @@ final class RecommendFeedUserView: UIStackView {
     private lazy var profileImageView = UIImageView().then {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = Constant.Image.profileSmall.cgFloat / 2
-        $0.image = UIImage(named: "AppIcon")
         $0.contentMode = .scaleAspectFill
     }
 

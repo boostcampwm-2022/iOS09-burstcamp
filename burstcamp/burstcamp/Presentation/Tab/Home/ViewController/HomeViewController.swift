@@ -46,10 +46,10 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        configureAttributes()
         collectionViewDelegate()
         configureDataSource()
         bind()
+        configureAttributes()
         configurePushNotification()
     }
 
@@ -61,8 +61,8 @@ final class HomeViewController: UIViewController {
     private func configureUI() {}
 
     private func configureAttributes() {
-//        homeView.collectionView.isSkeletonable = true
-//        homeView.collectionView.showSkeleton()
+        homeView.collectionView.isSkeletonable = true
+        homeView.collectionView.showSkeleton()
     }
 
     private func configureNavigationBar() {
@@ -96,6 +96,7 @@ final class HomeViewController: UIViewController {
         output.recentFeed
             .receive(on: DispatchQueue.main)
             .sink { [weak self] homeFeedList in
+                self?.homeView.hideSkeleton()
                 self?.reloadHomeFeedList(homeFeedList: homeFeedList)
             }
             .store(in: &cancelBag)
@@ -210,8 +211,8 @@ extension HomeViewController: UICollectionViewDelegate {
 extension HomeViewController {
     private func configureDataSource() {
         let recommendFeedCellRegistration = UICollectionView.CellRegistration<RecommendFeedCell, Feed> { cell, _, feed in
+            print("recommend Cell 업데이트")
             cell.updateFeedCell(with: feed)
-//            cell.isSkeletonable = true
         }
 
         let normalFeedCellRegistration = UICollectionView.CellRegistration<NormalFeedCell, Feed> { cell, indexPath, feed in
@@ -219,10 +220,9 @@ extension HomeViewController {
             cell.updateFeedCell(with: feed)
         }
 
-        dataSource = UICollectionViewDiffableDataSource(
+        dataSource = HomeFeedListSkeletonDiffableDatasource(
             collectionView: homeView.collectionView,
             cellProvider: { collectionView, indexPath, diffableFeed in
-
                 switch diffableFeed {
                 case .recommend(let feed):
                     return collectionView.dequeueConfiguredReusableCell(
