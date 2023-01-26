@@ -4,6 +4,7 @@ import { getBlogTitle } from './service/feedAPI.js';
 import { updateFeedDB, updateRecommendFeedDB, deleteRecommendFeeds } from './service/firestoreManager.js'
 import { sendNotification } from './service/apnsManager.js'
 import { deleteUserInfo } from './service/withdrawalManager.js'
+import { createMockUpUser } from './service/test/mockUpService.js';
 
 // Initialize
 if ( !getApps().length ) initializeApp()
@@ -39,3 +40,15 @@ export const scheduledSendNotification = pubsub.schedule('every day 12:16').time
 .onRun(async (context) => {
 	sendNotification()
 })
+
+export const createMockUpUserToFirestore  = https.onRequest(async (context) => {
+	createMockUpUser()
+})
+
+export const deleteMockUpUser = https
+	.onRequest(async (context) => {
+		await deleteUserInfo('hello2burstcamp')
+		return {
+			isFinish: true
+		}
+	})
