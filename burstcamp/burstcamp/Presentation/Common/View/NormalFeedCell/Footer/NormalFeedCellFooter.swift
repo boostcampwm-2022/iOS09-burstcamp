@@ -13,9 +13,7 @@ class NormalFeedCellFooter: UIView {
         image: UIImage(systemName: "bookmark.fill"),
         onColor: .main,
         offColor: .systemGray5
-    ).then {
-        $0.isSkeletonable = true
-    }
+    )
 
     lazy var countLabel = UILabel().then {
         $0.textColor = UIColor.systemGray2

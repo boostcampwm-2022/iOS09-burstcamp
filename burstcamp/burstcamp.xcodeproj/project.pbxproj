@@ -548,6 +548,16 @@
 			path = Factory;
 			sourceTree = "<group>";
 		};
+		1404DA2D298249EC00228E50 /* RecommendCell */ = {
+			isa = PBXGroup;
+			children = (
+				1459C3B9292910B300FA885D /* RecommendFeedCell.swift */,
+				14927E1D2929C71C001F2E97 /* RecommendFeedUserView.swift */,
+				14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */,
+			);
+			path = RecommendCell;
+			sourceTree = "<group>";
+		};
 		140E210029443D2200D6E2E5 /* Firestore */ = {
 			isa = PBXGroup;
 			children = (
@@ -629,13 +639,6 @@
 			path = Singleton;
 			sourceTree = "<group>";
 		};
-		141A7A6E297E4D75003DD926 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
 		142C9340292F51A500F6428E /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -670,7 +673,6 @@
 			isa = PBXGroup;
 			children = (
 				1458C6942928FB1B00E00B80 /* HomeView.swift */,
-				1459C3B82929102400FA885D /* RecommendFeedSection */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -729,16 +731,6 @@
 				D89AE4FA2935F1BD00446AB3 /* ValidationTest.swift */,
 			);
 			path = burstcampTests;
-			sourceTree = "<group>";
-		};
-		1459C3B82929102400FA885D /* RecommendFeedSection */ = {
-			isa = PBXGroup;
-			children = (
-				1459C3B9292910B300FA885D /* RecommendFeedCell.swift */,
-				14927E1D2929C71C001F2E97 /* RecommendFeedUserView.swift */,
-				14927E1F2929CCA0001F2E97 /* RecommendFeedHeader.swift */,
-			);
-			path = RecommendFeedSection;
 			sourceTree = "<group>";
 		};
 		145F21FF297AE6EE0081C489 /* Network */ = {
@@ -1596,7 +1588,7 @@
 		B5BA278B2927B08800BDCE08 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				141A7A6E297E4D75003DD926 /* Cell */,
+				1404DA2D298249EC00228E50 /* RecommendCell */,
 				B50A27AE29279F5D00DF3E1F /* NormalFeedCell */,
 				D8494D492927CBD4008157F1 /* DefaultButton.swift */,
 				D8494D4B2927CD6C008157F1 /* DefaultProfileImageView.swift */,
