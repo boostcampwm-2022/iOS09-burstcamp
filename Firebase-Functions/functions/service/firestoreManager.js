@@ -3,6 +3,7 @@ import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { fetchContent, fetchParsedRSS, fetchParsedRSSList } from './feedAPI.js';
 import { logger } from 'firebase-functions';
 import { convertURL } from '../util.js';
+import firebase from 'firebase-messaging';
 
 if (!getApps().length) initializeApp()
 const db = getFirestore()
@@ -341,6 +342,42 @@ export async function deleteUserUUIDAtScrapFeed(userUUID, feedUUIDs) {
 			.doc(userUUID)
 			.delete()
 			})
+}
+
+/**
+ * User - ScrapFeed 컬렉션을 지움
+ * @param {String} userUUID 
+ */
+export async function deleteUserScrapFeed(userUUID) {
+	logger.log('User - ScrapFeed 지우기', userUUID)
+
+	const userScrapFeedRef = userRef.doc(userUUID).collection('scrapFeeds');
+	const query = userScrapFeedRef.orderBy('feedUUID').limit(100)
+
+	return new Promise((resolve, reject) => {
+		deleteQueryBatch(db, query, resolve).catch(reject);
+	})
+}
+
+async function deleteQueryBatch(db, query, resolve) {
+	const snapshot = await query.get()
+
+	const batchSize = snapshot.size
+	if (batchSize == 0 ) {
+		resolve()
+		return;
+	}
+
+	const batch = db.batch()
+	snapshot.docs.forEach((doc) => {
+		batch.delete(doc.ref);
+	});
+	await batch.commit();
+
+	// 재귀적으로 호출하는데, 스택이 넘치지 않도록 프로세스의 다음 tick에서 실행함
+	process.nextTick(() => {
+		deleteQueryBatch(db, query, resolve)
+	})
 }
 
 // 3. FireStore User 삭제

@@ -1,7 +1,7 @@
 // import { logger } from 'firebase-functions';
 import { initializeApp, getApps } from 'firebase-admin/app';
 import { logger } from 'firebase-functions/v1';
-import { deleteFCMToken, getUserFeedsUUIDs, updateUserScrapFeedUUIDs } from './firestoreManager.js'
+import { deleteFCMToken, deleteUserScrapFeed, getUserFeedsUUIDs, updateUserScrapFeedUUIDs } from './firestoreManager.js'
 import { deleteFeedsAndUpdateRecommendFeed, getUserScrapFeedsUUIDs } from './firestoreManager.js'
 import { deleteUserUUIDAtScrapFeed, deleteUser } from './firestoreManager.js'
 
@@ -29,8 +29,8 @@ export async function deleteUserInfo(userUUID) {
         await deleteUserUUIDAtScrapFeed(userUUID, userScrapFeedUUIDs)
     }
 
-
     // 6. User - ScrapFeed를 지운다.
+    await deleteUserScrapFeed(userUUID)
 
     // 7. 유저의 FCM Token을 삭제한다.
     await deleteFCMToken(userUUID)
