@@ -18,6 +18,10 @@ final class DefaultUserRepository: UserRepository {
     }
     // MARK: User
 
+    func fetchUser(_ userUUID: String) async throws -> User {
+        return try await User(userAPIModel: bcFirestoreService.fetchUser(userUUID: userUUID))
+    }
+
     func saveUser(_ user: User) async throws {
         let userAPIModel = userToAPIModel(user)
         try await bcFirestoreService.saveUser(userUUID: user.userUUID, user: userAPIModel)

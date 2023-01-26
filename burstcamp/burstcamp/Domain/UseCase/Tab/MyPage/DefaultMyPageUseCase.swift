@@ -18,7 +18,7 @@ final class DefaultMyPageUseCase: MyPageUseCase {
         self.userRepository = userRepository
         self.imageRepository = imageRepository
     }
-
+    
     func withdrawal(code: String, userUUID: String) async throws {
         let isSuccess = try await loginRepository.withdrawal(code: code)
         try await imageRepository.deleteProfileImage(userUUID: userUUID)

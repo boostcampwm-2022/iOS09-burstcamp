@@ -8,6 +8,7 @@
 import Foundation
 
 protocol UserRepository {
+    func fetchUser(_ userUUID: String) async throws -> User
     func saveUser(_ user: User) async throws
     func updateUser(_ user: User) async throws
     func updateUserPushState(userUUID: String, isPushOn: Bool) async throws
