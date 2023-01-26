@@ -97,6 +97,7 @@
 		14D8C4D4297C0C0200DFE71F /* FeedDetailViewModelError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C4D3297C0C0200DFE71F /* FeedDetailViewModelError.swift */; };
 		14D8C4D6297C103800DFE71F /* ContainFeedDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C4D5297C103800DFE71F /* ContainFeedDetailViewController.swift */; };
 		14F94BE62939E16D0058A79A /* UICollectionView+emptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */; };
+		14FFB9AC29822E1A00FDC8B5 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 14FFB9AB29822E1A00FDC8B5 /* SkeletonView */; };
 		3B061FD82928CC5600BFA71D /* SignUpDomainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FD72928CC5600BFA71D /* SignUpDomainViewController.swift */; };
 		3B061FDA2928CF7E00BFA71D /* SighUpDomainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FD92928CF7E00BFA71D /* SighUpDomainView.swift */; };
 		3B061FDD2928E8E300BFA71D /* SignUpCamperIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B061FDC2928E8E300BFA71D /* SignUpCamperIDViewController.swift */; };
@@ -471,6 +472,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14FFB9AC29822E1A00FDC8B5 /* SkeletonView in Frameworks */,
 				B5BA27832927AEC600BDCE08 /* FirebaseMessaging in Frameworks */,
 				B52A7F272927A88F00E271D2 /* Then in Frameworks */,
 				B5BC81BA2945BB5D0077BF29 /* BCFetcher.framework in Frameworks */,
@@ -1728,6 +1730,7 @@
 				B5BA27802927AEC600BDCE08 /* FirebaseFunctions */,
 				B5BA27822927AEC600BDCE08 /* FirebaseMessaging */,
 				B5BA27842927AEC600BDCE08 /* FirebaseStorage */,
+				14FFB9AB29822E1A00FDC8B5 /* SkeletonView */,
 			);
 			productName = Eoljuga;
 			productReference = B50A277129279F2600DF3E1F /* burstcamp.app */;
@@ -1766,6 +1769,7 @@
 				B52A7F282927A89C00E271D2 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				B5BA277B2927AEC600BDCE08 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				B572EF9D294772FB00A9413C /* XCRemoteSwiftPackageReference "realm-swift" */,
+				14FFB9AA29822E1A00FDC8B5 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 			);
 			productRefGroup = B50A277229279F2600DF3E1F /* Products */;
 			projectDirPath = "";
@@ -2328,6 +2332,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		14FFB9AA29822E1A00FDC8B5 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView";
+			requirement = {
+				kind = exactVersion;
+				version = 1.30.4;
+			};
+		};
 		B52A7F252927A88F00E271D2 /* XCRemoteSwiftPackageReference "Then" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/devxoul/Then.git";
@@ -2372,6 +2384,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B5BA277B2927AEC600BDCE08 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		14FFB9AB29822E1A00FDC8B5 /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 14FFB9AA29822E1A00FDC8B5 /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
 		};
 		B52A7F262927A88F00E271D2 /* Then */ = {
 			isa = XCSwiftPackageProductDependency;
