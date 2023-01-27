@@ -95,13 +95,11 @@ class NormalFeedCellMain: UIView {
             updateEmptyImageView()
             updateTitleLabelWithEmptyImageView()
             hasThumbnailImage = false
-            TestCounter.up()
         } else if !hasThumbnailImage && newFeedHaveImage(urlString) {
             updateThumbnailImageView()
             updateTitleLabel()
             self.thumbnailImageView.setImage(urlString: urlString)
             hasThumbnailImage = true
-            TestCounter.up()
         }
     }
 
