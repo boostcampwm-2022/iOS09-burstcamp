@@ -105,6 +105,7 @@ extension NormalFeedCellMain {
         DispatchQueue.main.async {
             self.titleLabel.text = feed.title
         }
+//        self.thumbnailImageView.setImage(urlString: feed.thumbnailURL)
         self.setThumbnailImage(urlString: feed.thumbnailURL)
     }
 }
