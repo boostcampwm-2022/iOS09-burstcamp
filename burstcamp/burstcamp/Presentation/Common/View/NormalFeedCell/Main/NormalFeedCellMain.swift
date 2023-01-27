@@ -44,6 +44,8 @@ class NormalFeedCellMain: UIView {
         configureTitleLabel()
     }
 
+    // MARK: - 초기화 시 Constraints 설정
+
     private func configureThumbnailImageView() {
         thumbnailImageView.snp.makeConstraints {
             $0.height.equalToSuperview()
@@ -59,6 +61,43 @@ class NormalFeedCellMain: UIView {
             $0.trailing.equalTo(thumbnailImageView.snp.leading).offset(-Constant.space8)
         }
     }
+
+    // MARK: - Image 업데이트 시 설정
+
+    private func updateThumbnailImageView() {
+        thumbnailImageView.snp.updateConstraints {
+            $0.width.equalTo(Constant.Image.thumbnailWidth)
+        }
+    }
+
+    private func updateEmptyImageView() {
+        thumbnailImageView.snp.updateConstraints {
+            $0.width.equalTo(0)
+        }
+    }
+
+    private func updateTitleLabel() {
+        titleLabel.snp.updateConstraints {
+            $0.trailing.equalTo(thumbnailImageView.snp.leading).offset(-Constant.space8)
+        }
+    }
+
+    private func updateTitleLabelWithEmptyImageView() {
+        titleLabel.snp.updateConstraints {
+            $0.trailing.equalTo(thumbnailImageView.snp.leading)
+        }
+    }
+
+    private func setThumbnailImage(urlString: String) {
+        if urlString.isEmpty {
+            updateEmptyImageView()
+            updateTitleLabelWithEmptyImageView()
+        } else {
+            updateThumbnailImageView()
+            updateTitleLabel()
+            self.thumbnailImageView.setImage(urlString: urlString)
+        }
+    }
 }
 
 extension NormalFeedCellMain {
@@ -66,6 +105,6 @@ extension NormalFeedCellMain {
         DispatchQueue.main.async {
             self.titleLabel.text = feed.title
         }
-        self.thumbnailImageView.setImage(urlString: feed.thumbnailURL)
+        self.setThumbnailImage(urlString: feed.thumbnailURL)
     }
 }
