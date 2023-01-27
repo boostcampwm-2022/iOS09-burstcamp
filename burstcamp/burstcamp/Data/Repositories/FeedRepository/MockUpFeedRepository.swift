@@ -12,7 +12,7 @@ final class MockUpFeedRepository: FeedRepository {
     let mockUpFeedData = MockUpFeedData()
 
     func fetchRecentHomeFeedList() async throws -> HomeFeedList {
-        let mockUpNormalFeedList = createMockUpNormalFeedList(imageFeedCount: 950, noImageFeedCount: 50)
+        let mockUpNormalFeedList = createMockUpNormalFeedList(imageFeedCount: 500, noImageFeedCount: 500)
         return HomeFeedList(recommendFeed: [], normalFeed: mockUpNormalFeedList)
     }
 

@@ -12,6 +12,8 @@ import SnapKit
 
 class NormalFeedCellMain: UIView {
 
+    private var hasThumbnailImage: Bool = true
+
     private lazy var titleLabel = DefaultMultiLineLabel().then {
         $0.textAlignment = .left
         $0.textColor = UIColor.dynamicBlack
@@ -89,14 +91,20 @@ class NormalFeedCellMain: UIView {
     }
 
     private func setThumbnailImage(urlString: String) {
-        if urlString.isEmpty {
+        if hasThumbnailImage && !newFeedHaveImage(urlString) {
             updateEmptyImageView()
             updateTitleLabelWithEmptyImageView()
-        } else {
+            hasThumbnailImage = false
+        } else if !hasThumbnailImage && newFeedHaveImage(urlString) {
             updateThumbnailImageView()
             updateTitleLabel()
             self.thumbnailImageView.setImage(urlString: urlString)
+            hasThumbnailImage = true
         }
+    }
+
+    private func newFeedHaveImage(_ urlString: String) -> Bool {
+        return !urlString.isEmpty
     }
 }
 
@@ -105,7 +113,6 @@ extension NormalFeedCellMain {
         DispatchQueue.main.async {
             self.titleLabel.text = feed.title
         }
-//        self.thumbnailImageView.setImage(urlString: feed.thumbnailURL)
         self.setThumbnailImage(urlString: feed.thumbnailURL)
     }
 }
