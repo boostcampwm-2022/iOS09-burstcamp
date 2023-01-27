@@ -58,6 +58,7 @@
 		14755A4C2973FA8C0036B71D /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14755A4B2973FA8C0036B71D /* LoginRepository.swift */; };
 		14755A4E2973FAA50036B71D /* DefaultLoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14755A4D2973FAA50036B71D /* DefaultLoginRepository.swift */; };
 		1481B10D2941D1AB0093E591 /* UIResponder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481B10C2941D1AB0093E591 /* UIResponder+.swift */; };
+		148867B229839D5100B54415 /* TestCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148867B129839D5100B54415 /* TestCounter.swift */; };
 		148A05442972F3DA00664CCB /* DependencyFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A05432972F3DA00664CCB /* DependencyFactoryProtocol.swift */; };
 		148A05462972F51C00664CCB /* DependencyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A05452972F51C00664CCB /* DependencyFactory.swift */; };
 		148A054B2972F5CC00664CCB /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A054A2972F5CC00664CCB /* LoginUseCase.swift */; };
@@ -314,6 +315,7 @@
 		14755A4B2973FA8C0036B71D /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
 		14755A4D2973FAA50036B71D /* DefaultLoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoginRepository.swift; sourceTree = "<group>"; };
 		1481B10C2941D1AB0093E591 /* UIResponder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+.swift"; sourceTree = "<group>"; };
+		148867B129839D5100B54415 /* TestCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCounter.swift; sourceTree = "<group>"; };
 		148A05432972F3DA00664CCB /* DependencyFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyFactoryProtocol.swift; sourceTree = "<group>"; };
 		148A05452972F51C00664CCB /* DependencyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyFactory.swift; sourceTree = "<group>"; };
 		148A054A2972F5CC00664CCB /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
@@ -871,6 +873,14 @@
 				14755A4B2973FA8C0036B71D /* LoginRepository.swift */,
 			);
 			path = LoginRepository;
+			sourceTree = "<group>";
+		};
+		148867B029839D4500B54415 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				148867B129839D5100B54415 /* TestCounter.swift */,
+			);
+			path = Test;
 			sourceTree = "<group>";
 		};
 		148A05422972E74C00664CCB /* Factory */ = {
@@ -1592,6 +1602,7 @@
 		B50A28002927A16F00DF3E1F /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				148867B029839D4500B54415 /* Test */,
 				1496CF1F294080E6008F312F /* Firebase */,
 				14A34D38297417E400501A66 /* GithubAPIKey */,
 				14129970297660F000159C02 /* Singleton */,
@@ -1979,6 +1990,7 @@
 				1404DA43298259A100228E50 /* UserRepositoryError.swift in Sources */,
 				D89AE4E62933AEF900446AB3 /* UIImageView+Cache.swift in Sources */,
 				B50A27CF29279F5D00DF3E1F /* Constant.swift in Sources */,
+				148867B229839D5100B54415 /* TestCounter.swift in Sources */,
 				D8576F3629378F51002885FE /* URLRegularExpression.swift in Sources */,
 				D88295FC292A4452005B4273 /* HTTPMethod.swift in Sources */,
 				D84452F2292CCA80008E811B /* SettingSection.swift in Sources */,
