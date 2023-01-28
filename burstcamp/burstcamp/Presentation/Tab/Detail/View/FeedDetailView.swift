@@ -79,6 +79,32 @@ final class FeedDetailView: UIView {
             $0.height.equalTo(height)
         }
     }
+
+    private func showContent(feedContent: String) {
+        if feedContent.isEmpty {
+            removeContentView()
+            showEmptyFeedView()
+        } else {
+            contentView.loadFormattedHTMLString(feedContent)
+        }
+    }
+
+    private func removeContentView() {
+        contentView.snp.removeConstraints()
+        contentView.removeFromSuperview()
+    }
+
+    private func showEmptyFeedView() {
+        let emptyFeedView = EmptyFeedView()
+        scrollView.addSubview(emptyFeedView)
+        emptyFeedView.backgroundColor = .systemPink
+
+        emptyFeedView.snp.makeConstraints {
+            $0.width.equalToSuperview().inset(Constant.Padding.horizontal)
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalTo(self)
+        }
+    }
 }
 
 extension FeedDetailView: WKNavigationDelegate {
@@ -91,10 +117,9 @@ extension FeedDetailView: WKNavigationDelegate {
 }
 
 extension FeedDetailView {
-
     func configure(with feed: Feed) {
         userInfoStackView.updateView(feedWriter: feed.writer)
         feedInfoStackView.updateView(feed: feed)
-        contentView.loadFormattedHTMLString(feed.content)
+        showContent(feedContent: feed.content)
     }
 }
