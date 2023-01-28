@@ -1,4 +1,5 @@
 import { Readability } from '@mozilla/readability'
+import { logger } from 'firebase-functions/v1';
 import { JSDOM } from 'jsdom'
 import fetch from 'node-fetch'
 import { convertURL } from '../util.js';
@@ -47,8 +48,13 @@ export async function getBlogTitle(blogURL) {
  * @returns 
  */
 export async function fetchContent(url) {
-  const response = await fetch(url)
-  const html = await response.text()
+  try {
+    const response = await fetch(url)
+    const html = await response.text()
+  } catch {
+    logger.log("html을 가져오는 중 에러 발생")
+    return { content: "", thumbnailURL: "" }
+  }
   const document = new JSDOM(html).window.document
   const thumbnailURL = getThumnailURL(document)
   const compatibleDocument = makeCompatibleWithMobile(document)
