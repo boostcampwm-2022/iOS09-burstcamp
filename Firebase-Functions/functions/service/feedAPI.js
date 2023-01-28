@@ -50,9 +50,13 @@ export async function fetchContent(url) {
   const response = await fetch(url)
   const html = await response.text()
   const document = new JSDOM(html).window.document
+  const thumbnailURL = getThumnailURL(document)
   const compatibleDocument = makeCompatibleWithMobile(document)
   const readableDocument = makeReadable(compatibleDocument)
-  return readableDocument
+  return {
+    content: readableDocument, 
+    thumbnailURL: thumbnailURL
+  }
 }
 
 /**
@@ -79,4 +83,15 @@ function makeCompatibleWithMobile(dom) {
     code.innerHTML = code.innerHTML.replace(/    /g, "\&emsp\;")
   })
   return dom
+}
+
+ /**
+  * html 에서 썸네일이미지를 파싱해 가져옴
+ * @param {document} JSDOMD.document 
+ * @returns {String} thumbnailURL
+ */
+
+ async function getThumnailURL(document) {
+  const thumnailURL = document.head.querySelector(`[property~="og:image"][content]`).content
+  return thumnailURL
 }

@@ -5,6 +5,7 @@ import { updateFeedDB, updateRecommendFeedDB, deleteRecommendFeeds } from './ser
 import { sendNotification } from './service/apnsManager.js'
 import { deleteUserInfo } from './service/withdrawalManager.js'
 import { createMockUpUser } from './service/test/mockUpService.js';
+import { testYouTakBlog } from './service/test/testRSSParsing.js';
 
 // Initialize
 if ( !getApps().length ) initializeApp()
@@ -51,4 +52,12 @@ export const deleteMockUpUser = https
 		return {
 			isFinish: true
 		}
-	})
+})
+
+export const testBlogParsing = https
+	.onRequest(async (context) => {
+		await testYouTakBlog()
+		return {
+			isFinish: true
+		}
+})

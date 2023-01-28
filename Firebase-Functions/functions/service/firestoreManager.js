@@ -81,7 +81,9 @@ async function updateFeedDBFromSingleBlog(parsedRSS, writer) {
  * @param {JSON} feed RSS를 JSON으로 파싱한 정보
  */
 async function createFeedDataIfNeeded(docRef, writer, feedUUID, feed) {
-	const content = await fetchContent(feed.link)
+	const feedInfo = await fetchContent(feed.link)
+	const content = feedInfo.content
+	const thumbnailURL = feedInfo.thumbnailURL
 	docRef.set({
 		// TODO: User db에서 UUID를 찾아 대입해주기
 		feedUUID: feedUUID,
@@ -89,7 +91,7 @@ async function createFeedDataIfNeeded(docRef, writer, feedUUID, feed) {
 		pubDate: Timestamp.fromDate(new Date(feed.pubDate)),
 		regDate: Timestamp.now(),
 		url: feed.link,
-		thumbnailURL: feed.thumbnail,
+		thumbnailURL: thumbnailURL,
 		content: content,
 		scrapCount: 0,
 		writerUUID: writer['userUUID'],
