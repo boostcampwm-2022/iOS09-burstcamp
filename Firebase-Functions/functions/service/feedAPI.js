@@ -1,4 +1,5 @@
 import { Readability } from '@mozilla/readability'
+import { logger } from 'firebase-functions/v1';
 import { JSDOM } from 'jsdom'
 import fetch from 'node-fetch'
 import { convertURL } from '../util.js';
@@ -47,12 +48,21 @@ export async function getBlogTitle(blogURL) {
  * @returns 
  */
 export async function fetchContent(url) {
-  const response = await fetch(url)
-  const html = await response.text()
+  try {
+    const response = await fetch(url)
+    const html = await response.text()
+  } catch {
+    logger.log("html을 가져오는 중 에러 발생")
+    return { content: "", thumbnailURL: "" }
+  }
   const document = new JSDOM(html).window.document
+  const thumbnailURL = getThumnailURL(document)
   const compatibleDocument = makeCompatibleWithMobile(document)
   const readableDocument = makeReadable(compatibleDocument)
-  return readableDocument
+  return {
+    content: readableDocument, 
+    thumbnailURL: thumbnailURL
+  }
 }
 
 /**
@@ -79,4 +89,19 @@ function makeCompatibleWithMobile(dom) {
     code.innerHTML = code.innerHTML.replace(/    /g, "\&emsp\;")
   })
   return dom
+}
+
+ /**
+  * html 에서 썸네일이미지를 파싱해 가져옴
+ * @param {document} JSDOMD.document 
+ * @returns {String} thumbnailURL
+ */
+
+ function getThumnailURL(document) {
+  const thumnailURL = document.head.querySelector(`[property~="og:image"][content]`).content
+  const tistoryDefaultImage = "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Ftistory_admin%2Fstatic%2Fimages%2FopenGraph%2Fopengraph.png"
+  if (thumnailURL == tistoryDefaultImage ) {
+    return ""
+  }
+  return thumnailURL
 }
