@@ -10,7 +10,7 @@ import UIKit
 final class EmptyFeedView: UIView {
 
     private let imageView = UIImageView().then {
-        $0.image = UIImage.burstcamper
+        $0.image = UIImage.burstcamperStun
     }
 
     private let descriptionLabel =  DefaultMultiLineLabel().then {

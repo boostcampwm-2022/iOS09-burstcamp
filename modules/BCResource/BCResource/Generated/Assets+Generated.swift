@@ -45,6 +45,7 @@ public enum Assets {
   }
   public enum Image {
     public static let burstcamper100 = ImageAsset(name: "burstcamper100")
+    public static let burstcamperStun100 = ImageAsset(name: "burstcamperStun100")
     public static let github = ImageAsset(name: "github")
   }
 }
