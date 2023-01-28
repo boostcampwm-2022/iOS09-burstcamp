@@ -48,20 +48,33 @@ export async function getBlogTitle(blogURL) {
  * @returns 
  */
 export async function fetchContent(url) {
+    const html = await fetchHTML(url)
+    const document = new JSDOM(html).window.document
+    const thumbnailURL = getThumnailURL(document)
+    const compatibleDocument = makeCompatibleWithMobile(document)
+    const readableDocument = makeReadable(compatibleDocument)
+
+    return {
+      content: readableDocument, 
+      thumbnailURL: thumbnailURL
+    }
+}
+
+/**
+ * url을 받아 html String을 리턴함
+ * 가져오면서 에러 발생시 빈 값 리턴
+ * @param {String} url 
+ * @returns {String}
+ */
+
+async function fetchHTML(url) {
   try {
     const response = await fetch(url)
     const html = await response.text()
+    return html
   } catch {
     logger.log("html을 가져오는 중 에러 발생")
-    return { content: "", thumbnailURL: "" }
-  }
-  const document = new JSDOM(html).window.document
-  const thumbnailURL = getThumnailURL(document)
-  const compatibleDocument = makeCompatibleWithMobile(document)
-  const readableDocument = makeReadable(compatibleDocument)
-  return {
-    content: readableDocument, 
-    thumbnailURL: thumbnailURL
+    return ""
   }
 }
 
@@ -84,10 +97,12 @@ function makeReadable(dom) {
  */
 function makeCompatibleWithMobile(dom) {
   const codeTags = dom.querySelectorAll('code')
-  codeTags.forEach(code => {
-    code.innerHTML = code.innerHTML.replace(/\n/g, "<br />")
-    code.innerHTML = code.innerHTML.replace(/    /g, "\&emsp\;")
-  })
+  if (codeTags != null) {
+    codeTags.forEach(code => {
+      code.innerHTML = code.innerHTML.replace(/\n/g, "<br />")
+      code.innerHTML = code.innerHTML.replace(/    /g, "\&emsp\;")
+    })
+  }
   return dom
 }
 
