@@ -91,7 +91,11 @@ function makeCompatibleWithMobile(dom) {
  * @returns {String} thumbnailURL
  */
 
- async function getThumnailURL(document) {
+ function getThumnailURL(document) {
   const thumnailURL = document.head.querySelector(`[property~="og:image"][content]`).content
+  const tistoryDefaultImage = "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Ftistory_admin%2Fstatic%2Fimages%2FopenGraph%2Fopengraph.png"
+  if (thumnailURL == tistoryDefaultImage ) {
+    return ""
+  }
   return thumnailURL
 }
