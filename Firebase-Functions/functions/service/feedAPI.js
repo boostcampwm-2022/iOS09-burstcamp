@@ -51,8 +51,7 @@ export async function fetchContent(url) {
     const html = await fetchHTML(url)
     const document = new JSDOM(html).window.document
     const thumbnailURL = getThumnailURL(document)
-    const imgLoadingLazyDocumnet = addAtttibuteLoading(document)
-    const compatibleDocument = makeCompatibleWithMobile(imgLoadingLazyDocumnet)
+    const compatibleDocument = makeCompatibleWithMobile(document)
     const readableDocument = makeReadable(compatibleDocument)
 
     return {
@@ -89,7 +88,7 @@ function makeReadable(dom) {
   const content = reader.parse().content;
   return content
 }
-``
+
 /**
  * Firestore에 저장된 html을 WKWebView에서 예쁘게 보여주기 위해
  * code block의 줄바꿈과 탭을 html 태그로 변환한다.
