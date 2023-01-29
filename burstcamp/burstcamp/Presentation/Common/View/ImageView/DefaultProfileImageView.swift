@@ -18,7 +18,7 @@ final class DefaultProfileImageView: UIImageView {
         clipsToBounds = true
         image = UIImage(systemName: "person.fill")?.withTintColor(.white, renderingMode: .alwaysOriginal)
         contentMode = .scaleAspectFill
-        backgroundColor = .systemGray2
+        backgroundColor = .systemGray5
     }
 
     required init?(coder: NSCoder) {

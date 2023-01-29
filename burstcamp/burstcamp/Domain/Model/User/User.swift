@@ -38,8 +38,8 @@ extension User {
         self.userUUID = dictionary["userUUID"] as? String ?? ""
         self.nickname = dictionary["nickname"] as? String ?? ""
         self.profileImageURL = dictionary["profileImageURL"] as? String ?? ""
-        let domainString = dictionary["domain"] as? String ?? "iOS"
-        self.domain = Domain(rawValue: domainString) ?? .iOS
+        let domainString = dictionary["domain"] as? String ?? ""
+        self.domain = Domain(rawValue: domainString) ?? .guest
         self.camperID = dictionary["camperID"] as? String ?? ""
         self.ordinalNumber = dictionary["ordinalNumber"] as? Int ?? 7
         self.blogURL = dictionary["blogURL"] as? String ?? ""
