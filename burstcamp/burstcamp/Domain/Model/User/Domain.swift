@@ -13,12 +13,14 @@ enum Domain: String, Codable, PersistableEnum {
     case iOS = "iOS"
     case android = "Android"
     case web = "Web"
+    case guest = "Guest"
 
     var color: UIColor {
         switch self {
         case .iOS: return UIColor.customOrange
         case .android: return UIColor.customGreen
         case .web: return UIColor.customYellow
+        case .guest: return UIColor.systemGray
         }
     }
 
@@ -27,6 +29,7 @@ enum Domain: String, Codable, PersistableEnum {
         case .iOS: return UIColor.brightOrange
         case .android: return UIColor.brightGreen
         case .web: return UIColor.brightYellow
+        case .guest: return UIColor.systemGray
         }
     }
 
@@ -35,6 +38,7 @@ enum Domain: String, Codable, PersistableEnum {
         case .iOS: return "S"
         case .android: return "K"
         case .web: return "J"
+        case .guest: return "Guest"
         }
     }
 }
