@@ -44,7 +44,7 @@ final class DefaultLoginUseCase: LoginUseCase {
         return try await loginRepository.loginWithApple(idTokenString: idTokenString, nonce: nonce)
     }
 
-    func withdrawalWithApple(idTokenString: String, nonce: String) async throws {
-        try await loginRepository.withdrawalWithApple(idTokenString: idTokenString, nonce: nonce)
+    func createGuest(userUUID: String) async throws {
+        try await userRepository.saveGuest(userUUID: userUUID)
     }
 }

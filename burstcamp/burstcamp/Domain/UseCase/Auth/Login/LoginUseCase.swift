@@ -14,5 +14,6 @@ protocol LoginUseCase {
     func loginWithGithub(code: String) async throws -> (userNickname: String, userUUID: String)
 
     func loginWithApple(idTokenString: String, nonce: String) async throws -> String
-    func withdrawalWithApple(idTokenString: String, nonce: String) async throws
+
+    func createGuest(userUUID: String) async throws
 }

@@ -70,4 +70,17 @@ final class DefaultUserRepository: UserRepository {
             isPushOn: user.isPushOn
         )
     }
+
+    // MARK: Guest
+    func saveGuest(userUUID: String) async throws {
+        let nickname = try getNickname(userUUID: userUUID)
+        let guestUser = User(userUUID: userUUID, nickname: nickname)
+        let guestUserAPIModel = userToAPIModel(guestUser)
+        try await bcFirestoreService.saveUser(userUUID: guestUser.userUUID, user: guestUserAPIModel)
+    }
+
+    private func getNickname(userUUID: String) throws -> String {
+        if userUUID.count < 6 { throw UserRepositoryError.createGuestID }
+        return "Guest-" + String(userUUID.prefix(6))
+    }
 }

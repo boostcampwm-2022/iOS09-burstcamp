@@ -5,12 +5,16 @@
 //  Created by 김기훈 on 2022/11/18.
 //
 
+import AuthenticationServices
 import Combine
 import Foundation
 
 final class LogInViewModel {
 
     private let loginUseCase: LoginUseCase
+
+    private(set) var currentNonce: String?
+
     private var logInPublisher = PassthroughSubject<AuthCoordinatorEvent, Never>()
 
     init(loginUseCase: LoginUseCase) {
@@ -18,16 +22,16 @@ final class LogInViewModel {
     }
 
     struct Input {
-        let logInButtonDidTap: AnyPublisher<Void, Never>
+        let githubLogInButtonDidTap: AnyPublisher<Void, Never>
     }
 
     struct Output {
-        let openLogInView: AnyPublisher<Void, Never>
+        let openGithubLogInView: AnyPublisher<Void, Never>
         let moveToOtherView: AnyPublisher<AuthCoordinatorEvent, Never>
     }
 
     func transform(input: Input) -> Output {
-        let openLogInView = input.logInButtonDidTap
+        let openLogInView = input.githubLogInButtonDidTap
             .throttle(for: 1, scheduler: DispatchQueue.main, latest: false)
             .eraseToAnyPublisher()
 
@@ -36,7 +40,7 @@ final class LogInViewModel {
             .eraseToAnyPublisher()
 
         return Output(
-            openLogInView: openLogInView,
+            openGithubLogInView: openLogInView,
             moveToOtherView: moveToOtherView
         )
     }
@@ -58,10 +62,22 @@ final class LogInViewModel {
         UserManager.shared.setUserUUID(userUUID)
 
         let isUserExist = try await loginUseCase.checkIsExist(userUUID: userUUID)
-        if isUserExist {
-            logInPublisher.send(.moveToTabBarScreen)
-        } else {
-            // Guest로 계정 생성
+        if !isUserExist {
+            try await loginUseCase.createGuest(userUUID: userUUID)
         }
+        logInPublisher.send(.moveToTabBarScreen)
+    }
+}
+
+extension LogInViewModel {
+    func getAppleLoginRequest() -> ASAuthorizationAppleIDRequest {
+        let nonce = String.randomNonceString()
+        currentNonce = nonce
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        request.nonce = nonce.sha256()
+
+        return request
     }
 }
