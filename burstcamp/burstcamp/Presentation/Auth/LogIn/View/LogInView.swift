@@ -5,6 +5,7 @@
 //  Created by 김기훈 on 2022/11/18.
 //
 
+import AuthenticationServices
 import UIKit
 
 import SnapKit
@@ -27,45 +28,15 @@ final class LogInView: UIView {
         $0.font = UIFont.regular14
     }
 
-    lazy var camperAuthButton: UIButton = {
-        let button = UIButton()
+    let appleAuthButton = AuthButton(
+        text: "Apple로 로그인",
+        image: UIImage(systemName: "apple.logo")?.withTintColor(UIColor.dynamicWhite, renderingMode: .alwaysOriginal)
+    )
 
-        if #available(iOS 15.0, *) {
-            var string = AttributedString("캠퍼 인증 시작하기")
-            string.font = UIFont.extraBold14
-            string.foregroundColor = .dynamicWhite
-
-            var configuration = UIButton.Configuration.filled()
-            configuration.attributedTitle = string
-            configuration.titleAlignment = .center
-
-            configuration.image = UIImage.github
-            configuration.imagePlacement = .leading
-            configuration.imagePadding = 50
-
-            configuration.baseBackgroundColor = .dynamicBlack
-            configuration.cornerStyle = .medium
-
-            button.configuration = configuration
-
-            return button
-        } else {
-            button.setTitle("캠퍼 인증 시작하기", for: .normal)
-            button.titleLabel?.font = UIFont.extraBold14
-            button.setTitleColor(.dynamicWhite, for: .normal)
-            button.titleLabel?.textAlignment = .center
-
-            button.setImage(UIImage.github, for: .normal)
-
-            button.backgroundColor = .dynamicBlack
-            button.layer.cornerRadius = CGFloat(Constant.CornerRadius.radius8)
-
-            return button
-        }
-    }()
+    let camperAuthButton = AuthButton(text: "Github으로 로그인", image: .github)
 
     private lazy var camperAuthLabel: UILabel = UILabel().then {
-        $0.text = "캠퍼 인증을 위해 Github으로 로그인을 해주세요."
+        $0.text = "Github 로그인을 통해 캠퍼인증을 하고 내 글을 등록할 수 있어요."
         $0.font = UIFont.regular12
         $0.textColor = .systemGray2
     }
@@ -101,6 +72,7 @@ final class LogInView: UIView {
         addSubview(titleImage)
         addSubview(titleLabel)
         addSubview(identitySentenceLabel)
+        addSubview(appleAuthButton)
         addSubview(camperAuthButton)
         addSubview(camperAuthLabel)
         addSubview(activityIndicator)
@@ -130,13 +102,10 @@ final class LogInView: UIView {
             $0.bottom.equalToSuperview().multipliedBy(0.9)
         }
 
-        camperAuthButton.imageView?.snp.makeConstraints {
-            $0.trailing.equalToSuperview().multipliedBy(0.15)
-            $0.centerY.equalToSuperview()
-        }
-
-        camperAuthButton.titleLabel?.snp.makeConstraints {
-            $0.center.equalToSuperview()
+        appleAuthButton.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(Constant.space16)
+            $0.height.equalTo(Constant.Button.camperAuthButtonHeight)
+            $0.bottom.equalTo(camperAuthButton.snp.top).offset(-Constant.space12)
         }
 
         camperAuthLabel.snp.makeConstraints {

@@ -38,8 +38,8 @@ extension User {
         self.userUUID = dictionary["userUUID"] as? String ?? ""
         self.nickname = dictionary["nickname"] as? String ?? ""
         self.profileImageURL = dictionary["profileImageURL"] as? String ?? ""
-        let domainString = dictionary["domain"] as? String ?? "iOS"
-        self.domain = Domain(rawValue: domainString) ?? .iOS
+        let domainString = dictionary["domain"] as? String ?? ""
+        self.domain = Domain(rawValue: domainString) ?? .guest
         self.camperID = dictionary["camperID"] as? String ?? ""
         self.ordinalNumber = dictionary["ordinalNumber"] as? Int ?? 7
         self.blogURL = dictionary["blogURL"] as? String ?? ""
@@ -83,6 +83,24 @@ extension User {
         self.scrapFeedUUIDs = userAPIModel.scrapFeedUUIDs
         self.signupDate = userAPIModel.signupDate
         self.isPushOn = userAPIModel.isPushOn
+    }
+
+    /// Guest 생성을 위한 이니셜라이저
+    /// - Parameters:
+    ///   - userUUID: 로그인을 통해 얻은 userUUID
+    ///   - nickname: 게스트 닉네임
+    init (userUUID: String, nickname: String) {
+        self.userUUID = userUUID
+        self.nickname = nickname
+        self.profileImageURL = ""
+        self.domain = .guest
+        self.camperID = ""
+        self.ordinalNumber = 7
+        self.blogURL = ""
+        self.blogTitle = ""
+        self.scrapFeedUUIDs = []
+        self.signupDate = Date()
+        self.isPushOn = false
     }
 
     var toFeedWriter: FeedWriter {

@@ -5,6 +5,7 @@
 //  Created by neuli on 2022/11/21.
 //
 
+import AuthenticationServices
 import Combine
 import UIKit
 
@@ -98,6 +99,14 @@ extension UIRefreshControl {
         controlPublisher(for: .valueChanged)
             .compactMap { $0 as? UIRefreshControl }
             .filter { $0.isRefreshing == true }
+            .mapToVoid()
+            .eraseToAnyPublisher()
+    }
+}
+
+extension ASAuthorizationAppleIDButton {
+    var tapPublisher: AnyPublisher<Void, Never> {
+        controlPublisher(for: .touchUpInside)
             .mapToVoid()
             .eraseToAnyPublisher()
     }

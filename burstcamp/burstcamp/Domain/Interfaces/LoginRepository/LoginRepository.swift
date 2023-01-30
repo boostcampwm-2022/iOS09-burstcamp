@@ -9,6 +9,10 @@ import Foundation
 
 protocol LoginRepository {
     func isLoggedIn() -> Bool
-    func login(code: String) async throws -> (userNickname: String, userUUID: String)
-    func withdrawal(code: String) async throws -> Bool
+
+    func loginWithGithub(code: String) async throws -> (userNickname: String, userUUID: String)
+    func withdrawalWithGithub(code: String, userUUID: String) async throws -> Bool
+
+    func loginWithApple(idTokenString: String, nonce: String) async throws -> String
+    func withdrawalWithApple(idTokenString: String, nonce: String, userUUID: String) async throws -> Bool
 }

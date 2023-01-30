@@ -14,6 +14,10 @@
 		140438C0293F77DD004D035C /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438BF293F77DD004D035C /* Factory.swift */; };
 		1404DA43298259A100228E50 /* UserRepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404DA42298259A100228E50 /* UserRepositoryError.swift */; };
 		1404DA4529825A2E00228E50 /* LoginUseCaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404DA4429825A2E00228E50 /* LoginUseCaseError.swift */; };
+		140B8751298775A300436F65 /* String+sha256.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B8750298775A300436F65 /* String+sha256.swift */; };
+		140B87532987870F00436F65 /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B87522987870F00436F65 /* AuthButton.swift */; };
+		140B87562987993300436F65 /* LoginProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B87552987993300436F65 /* LoginProvider.swift */; };
+		140B87592987B6EF00436F65 /* AppleAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B87582987B6EF00436F65 /* AppleAuthViewController.swift */; };
 		140E210429443E6300D6E2E5 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E210329443E6300D6E2E5 /* FirestoreService.swift */; };
 		140E21062944519E00D6E2E5 /* BCFirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E21052944519E00D6E2E5 /* BCFirestoreService.swift */; };
 		140E21092944688B00D6E2E5 /* Future+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E21082944688B00D6E2E5 /* Future+Async.swift */; };
@@ -273,6 +277,10 @@
 		140438BF293F77DD004D035C /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
 		1404DA42298259A100228E50 /* UserRepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepositoryError.swift; sourceTree = "<group>"; };
 		1404DA4429825A2E00228E50 /* LoginUseCaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCaseError.swift; sourceTree = "<group>"; };
+		140B8750298775A300436F65 /* String+sha256.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+sha256.swift"; sourceTree = "<group>"; };
+		140B87522987870F00436F65 /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
+		140B87552987993300436F65 /* LoginProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProvider.swift; sourceTree = "<group>"; };
+		140B87582987B6EF00436F65 /* AppleAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthViewController.swift; sourceTree = "<group>"; };
 		140E210329443E6300D6E2E5 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		140E21052944519E00D6E2E5 /* BCFirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCFirestoreService.swift; sourceTree = "<group>"; };
 		140E21082944688B00D6E2E5 /* Future+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Future+Async.swift"; sourceTree = "<group>"; };
@@ -571,6 +579,7 @@
 			children = (
 				B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */,
 				D8494D492927CBD4008157F1 /* DefaultButton.swift */,
+				140B87522987870F00436F65 /* AuthButton.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -632,6 +641,22 @@
 				14FF7A2B2983854F001D6EDF /* UserRepository */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		140B87542987992600436F65 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				140B87552987993300436F65 /* LoginProvider.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		140B87572987B6E500436F65 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				140B87582987B6EF00436F65 /* AppleAuthViewController.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		140E210029443D2200D6E2E5 /* Firestore */ = {
@@ -740,6 +765,7 @@
 				141344D2292F801100187B86 /* TypeConversion.swift */,
 				D89AE4F02935AE7800446AB3 /* Encodable+dictionary.swift */,
 				D89AE4F22935AFE100446AB3 /* Notification+.swift */,
+				140B8750298775A300436F65 /* String+sha256.swift */,
 			);
 			path = Type;
 			sourceTree = "<group>";
@@ -1248,6 +1274,7 @@
 		149304A92963F1EE00B9BC71 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				140B87542987992600436F65 /* Login */,
 				D89AE5002936221600446AB3 /* ScrapUser.swift */,
 				D8494D532927D0DC008157F1 /* User.swift */,
 				D8494D4D2927CE64008157F1 /* Domain.swift */,
@@ -1690,6 +1717,7 @@
 		B5BA278A2927B08100BDCE08 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				140B87572987B6E500436F65 /* Base */,
 				B5BA278B2927B08800BDCE08 /* View */,
 			);
 			path = Common;
@@ -1987,6 +2015,7 @@
 				148A05622972F7B900664CCB /* MyPageUseCase.swift in Sources */,
 				B5DAD681292E58BF00C4A126 /* DefaultMultilLineLabel.swift in Sources */,
 				3B061FDD2928E8E300BFA71D /* SignUpCamperIDViewController.swift in Sources */,
+				140B8751298775A300436F65 /* String+sha256.swift in Sources */,
 				145842B4297FF5C800C81878 /* DiffableFeed.swift in Sources */,
 				1496CF1E294070A3008F312F /* ContainFeedDetailCoordinator.swift in Sources */,
 				140438C0293F77DD004D035C /* Factory.swift in Sources */,
@@ -2059,12 +2088,14 @@
 				141344D5292F801100187B86 /* TypeConversion.swift in Sources */,
 				141A7A70297E5BDC003DD926 /* ScrapViewModelError.swift in Sources */,
 				D89AE4E82933AF1E00446AB3 /* ImageCacheManager.swift in Sources */,
+				140B87592987B6EF00436F65 /* AppleAuthViewController.swift in Sources */,
 				1459C3BA292910B300FA885D /* RecommendFeedCell.swift in Sources */,
 				1404DA4529825A2E00228E50 /* LoginUseCaseError.swift in Sources */,
 				B50A27E529279F5D00DF3E1F /* LogInView.swift in Sources */,
 				148EF12C29791B0F00190471 /* DefaultImageRepository.swift in Sources */,
 				D8494D4E2927CE64008157F1 /* Domain.swift in Sources */,
 				3B061FDA2928CF7E00BFA71D /* SighUpDomainView.swift in Sources */,
+				140B87562987993300436F65 /* LoginProvider.swift in Sources */,
 				D8494D482927C9E8008157F1 /* MyPageViewModel.swift in Sources */,
 				14A34D3C2974192800501A66 /* GithubAPI.swift in Sources */,
 				14FF7A29298384FB001D6EDF /* MockUpFeedRepository.swift in Sources */,
@@ -2162,6 +2193,7 @@
 				141344CF292F800300187B86 /* UIStackView+addArrangedSubviews.swift in Sources */,
 				140FBEEB297511DB006B7857 /* URLSessionServiceError.swift in Sources */,
 				14D8C4C6297BEDB900DFE71F /* HomeViewModelError.swift in Sources */,
+				140B87532987870F00436F65 /* AuthButton.swift in Sources */,
 				1418960229377593005A42D4 /* UIScrollView+.swift in Sources */,
 				3B74920D293DCCAC00A4BEA0 /* GithubError.swift in Sources */,
 				143185EE292B4ABC008CE459 /* ScrapPageView.swift in Sources */,

@@ -16,9 +16,9 @@ final class DefaultProfileImageView: UIImageView {
         super.init(frame: .zero)
         layer.cornerRadius = imageSize.cgFloat / 2
         clipsToBounds = true
-        image = UIImage(systemName: "person.fill")
+        image = UIImage(systemName: "person.fill")?.withTintColor(.white, renderingMode: .alwaysOriginal)
         contentMode = .scaleAspectFill
-        backgroundColor = .systemGray2
+        backgroundColor = .systemGray5
     }
 
     required init?(coder: NSCoder) {

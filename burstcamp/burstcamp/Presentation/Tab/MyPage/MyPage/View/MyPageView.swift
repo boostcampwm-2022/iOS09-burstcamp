@@ -18,8 +18,11 @@ final class MyPageView: UIView, ContainCollectionView {
 
     private let myInfoEditButton = DefaultButton(
         title: "내 정보 수정하기",
-        font: .bold14
-    )
+        font: .bold14,
+        backgroundColor: .systemGray5
+    ).then {
+        $0.isEnabled = false
+    }
 
     lazy var collectionView = UICollectionView(
         frame: .zero,
@@ -47,7 +50,7 @@ final class MyPageView: UIView, ContainCollectionView {
     }
 
     lazy var loadingLabel: UILabel = UILabel().then {
-        $0.text = "유저 정보 삭제 중"
+        $0.text = "탈퇴 중이에요"
         $0.font = .bold12
         $0.textColor = .dynamicBlack
         $0.isHidden = true
@@ -56,6 +59,8 @@ final class MyPageView: UIView, ContainCollectionView {
     lazy var myInfoEditButtonTapPublisher = myInfoEditButton.tapPublisher
     lazy var darkModeSwitchStatePublisher = darkModeSwitch.statePublisher
     lazy var notificationSwitchStatePublisher = notificationSwitch.statePublisher
+
+    private var isButtonUpdated: Bool = false
 
     // MARK: - Initializer
 
@@ -137,12 +142,22 @@ final class MyPageView: UIView, ContainCollectionView {
         }
     }
 
+    private func updateMyInfoEditButton(domain: Domain) {
+        guard domain != .guest && !isButtonUpdated else { return }
+        myInfoEditButton.isEnabled = true
+        myInfoEditButton.backgroundColor = .main
+        isButtonUpdated = true
+    }
+}
+
+extension MyPageView {
     func setCollectionViewDelegate(viewController: UICollectionViewDelegate) {
         collectionView.delegate = viewController
     }
 
     func updateView(user: User) {
         myPageProfileView.updateView(user: user)
+        updateMyInfoEditButton(domain: user.domain)
         notificationSwitch.setOn(user.isPushOn, animated: true)
     }
 

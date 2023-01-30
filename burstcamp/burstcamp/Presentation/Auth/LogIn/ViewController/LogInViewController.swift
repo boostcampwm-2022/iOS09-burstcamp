@@ -5,6 +5,7 @@
 //  Created by youtak on 2022/11/15.
 //
 
+import AuthenticationServices
 import Combine
 import SafariServices
 import UIKit
@@ -12,7 +13,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class LogInViewController: UIViewController {
+final class LogInViewController: AppleAuthViewController {
 
     private var logInView: LogInView {
         guard let view = view as? LogInView else { return LogInView() }
@@ -42,11 +43,11 @@ final class LogInViewController: UIViewController {
         bind()
     }
 
-    func showIndicator() {
+    func showIndicator(text: String = "") {
         DispatchQueue.main.async {
             self.logInView.activityIndicator.startAnimating()
             self.logInView.loadingLabel.isHidden = false
-            self.logInView.camperAuthButton.isEnabled = false
+            self.logInView.loadingLabel.text = text
             self.setUserInteraction(isEnabled: false)
         }
     }
@@ -55,16 +56,15 @@ final class LogInViewController: UIViewController {
         DispatchQueue.main.async {
             self.logInView.activityIndicator.stopAnimating()
             self.logInView.loadingLabel.isHidden = true
-            self.logInView.camperAuthButton.isEnabled = true
             self.setUserInteraction(isEnabled: true)
         }
     }
 
-    func login(code: String) {
+    func loginWithGithub(code: String) {
         Task { [weak self] in
-            self?.showIndicator()
+            self?.showIndicator(text: "캠퍼 인증 중이에요")
             do {
-                try await self?.viewModel.login(code: code)
+                try await self?.viewModel.loginWithGithub(code: code)
             } catch {
                 self?.showAlert(message: error.localizedDescription)
             }
@@ -73,13 +73,14 @@ final class LogInViewController: UIViewController {
     }
 
     private func bind() {
+
         let input = LogInViewModel.Input(
-            logInButtonDidTap: logInView.camperAuthButton.tapPublisher
+            githubLogInButtonDidTap: logInView.camperAuthButton.tapPublisher
         )
 
         let output = viewModel.transform(input: input)
 
-        output.openLogInView
+        output.openGithubLogInView
             .sink { [weak self] _ in
                 self?.coordinatorPublisher.send(.moveToGithubLogIn)
             }
@@ -103,5 +104,59 @@ final class LogInViewController: UIViewController {
                 }
             }
             .store(in: &cancelBag)
+
+        // MARK: - Apple 로그인
+
+        logInView.appleAuthButton.tapPublisher
+            .sink { [weak self] _ in
+                self?.startSignInWithAppleFlow()
+            }
+            .store(in: &cancelBag)
+    }
+
+    private func loginWithApple(idTokenString: String, nonce: String) {
+        Task { [weak self] in
+            self?.showIndicator(text: "로그인 중이에요")
+            do {
+                try await self?.viewModel.loginWithApple(idTokenString: idTokenString, nonce: nonce)
+            } catch {
+                self?.showAlert(message: "애플 로그인에 실패했습니다. \(error.localizedDescription)")
+            }
+            self?.hideIndicator()
+        }
+    }
+}
+
+extension LogInViewController: ASAuthorizationControllerDelegate {
+    func startSignInWithAppleFlow() {
+        let request = getAppleLoginRequest()
+
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+
+    func authorizationController(
+        controller: ASAuthorizationController,
+        didCompleteWithAuthorization authorization: ASAuthorization
+    ) {
+        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            guard let nonce = currentNonce else {
+                fatalError("Invalid state: A login callback was received, but no login request was sent.")
+            }
+
+            guard let appleIDToken = appleIDCredential.identityToken else {
+                print("Unable to fetch identity token")
+                return
+            }
+
+            guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+                print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
+                return
+            }
+
+            loginWithApple(idTokenString: idTokenString, nonce: nonce)
+        }
     }
 }

@@ -13,6 +13,7 @@ final class MyPageViewModel {
     private let myPageUseCase: MyPageUseCase
 
     private var updateUserValue = CurrentValueSubject<User, Never>(UserManager.shared.user)
+    private var loginProviderPublisher = PassthroughSubject<LoginProvider, Never>()
     private var withdrawalStop = PassthroughSubject<Void, Never>()
     private var signOutFailMessage = PassthroughSubject<String, Never>()
 
@@ -33,8 +34,8 @@ final class MyPageViewModel {
             Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
         )
         var signOutFailMessage = PassthroughSubject<String, Never>()
-        var moveToLoginFlow = PassthroughSubject<Void, Never>()
         var withdrawalStop = PassthroughSubject<Void, Never>()
+        var loginProviderPublisher: AnyPublisher<LoginProvider, Never>
     }
 
     private var cancelBag = Set<AnyCancellable>()
@@ -56,10 +57,17 @@ final class MyPageViewModel {
             }
             .store(in: &cancelBag)
 
+        input.withdrawDidTap
+            .sink { [weak self] _ in
+                self?.sendUserProvider()
+            }
+            .store(in: &cancelBag)
+
         let output = Output(
             updateUserValue: updateUserValue,
             signOutFailMessage: signOutFailMessage,
-            withdrawalStop: withdrawalStop
+            withdrawalStop: withdrawalStop,
+            loginProviderPublisher: loginProviderPublisher.eraseToAnyPublisher()
         )
 
         UserManager.shared.userUpdatePublisher
@@ -72,9 +80,29 @@ final class MyPageViewModel {
         return output
     }
 
-    func deleteUserInfo(code: String) async throws {
+    private func sendUserProvider() {
+        if updateUserValue.value.domain == .guest {
+            loginProviderPublisher.send(.apple)
+        } else {
+            loginProviderPublisher.send(.github)
+        }
+    }
+}
+
+extension MyPageViewModel {
+    func withdrawalWithGithub(code: String) async throws {
         do {
-            try await myPageUseCase.withdrawal(code: code, userUUID: UserManager.shared.user.userUUID)
+            try await myPageUseCase.withdrawalWithGithub(code: code)
+        } catch {
+            print(error.localizedDescription)
+            withdrawalStop.send()
+            signOutFailMessage.send("탈퇴에 실패했어요.")
+        }
+    }
+
+    func withdrawalWithApple(idTokenString: String, nonce: String) async throws {
+        do {
+            try await myPageUseCase.withdrawalWithApple(idTokenString: idTokenString, nonce: nonce)
         } catch {
             print(error.localizedDescription)
             withdrawalStop.send()

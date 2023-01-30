@@ -36,7 +36,16 @@ final class DefaultLoginUseCase: LoginUseCase {
         return loginRepository.isLoggedIn() && KeyChainManager.readUser() != nil
     }
 
-    func login(code: String) async throws ->  (userNickname: String, userUUID: String) {
-        return try await loginRepository.login(code: code)
+    func loginWithGithub(code: String) async throws -> (userNickname: String, userUUID: String) {
+        return try await loginRepository.loginWithGithub(code: code)
+    }
+
+    func loginWithApple(idTokenString: String, nonce: String) async throws -> String {
+        return try await loginRepository.loginWithApple(idTokenString: idTokenString, nonce: nonce)
+    }
+
+    func createGuest(userUUID: String) async throws {
+        let guestUser = try await userRepository.saveGuest(userUUID: userUUID)
+        UserManager.shared.setUser(guestUser)
     }
 }

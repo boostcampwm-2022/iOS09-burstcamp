@@ -19,9 +19,22 @@ final class DefaultMyPageUseCase: MyPageUseCase {
         self.imageRepository = imageRepository
     }
 
-    func withdrawal(code: String, userUUID: String) async throws {
-        let isSuccess = try await loginRepository.withdrawal(code: code)
+    func withdrawalWithGithub(code: String) async throws {
+        let userUUID = UserManager.shared.user.userUUID
+        let isSuccess = try await loginRepository.withdrawalWithGithub(code: code, userUUID: userUUID)
         try await imageRepository.deleteProfileImage(userUUID: userUUID)
+        deleteLocalUser()
+        if !isSuccess { throw MyPageUseCaseError.withdrawal }
+    }
+
+    func withdrawalWithApple(idTokenString: String, nonce: String) async throws {
+        let userUUID = UserManager.shared.user.userUUID
+        let isSuccess = try await loginRepository.withdrawalWithApple(
+            idTokenString: idTokenString,
+            nonce: nonce,
+            userUUID: userUUID
+        )
+        deleteLocalUser()
         if !isSuccess { throw MyPageUseCaseError.withdrawal }
     }
 
@@ -35,5 +48,11 @@ final class DefaultMyPageUseCase: MyPageUseCase {
 
     func updateLocalUser(_ user: User) {
         KeyChainManager.save(user: user)
+    }
+
+    private func deleteLocalUser() {
+        KeyChainManager.deleteUser()
+        UserManager.shared.removeUserListener()
+        UserManager.shared.deleteUserInfo()
     }
 }
