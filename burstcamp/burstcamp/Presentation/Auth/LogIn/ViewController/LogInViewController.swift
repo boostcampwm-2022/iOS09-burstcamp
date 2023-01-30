@@ -76,6 +76,7 @@ final class LogInViewController: UIViewController {
     }
 
     private func bind() {
+
         let input = LogInViewModel.Input(
             logInButtonDidTap: logInView.camperAuthButton.tapPublisher
         )

@@ -15,6 +15,7 @@
 		1404DA43298259A100228E50 /* UserRepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404DA42298259A100228E50 /* UserRepositoryError.swift */; };
 		1404DA4529825A2E00228E50 /* LoginUseCaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404DA4429825A2E00228E50 /* LoginUseCaseError.swift */; };
 		140B8751298775A300436F65 /* String+sha256.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B8750298775A300436F65 /* String+sha256.swift */; };
+		140B87532987870F00436F65 /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B87522987870F00436F65 /* AuthButton.swift */; };
 		140E210429443E6300D6E2E5 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E210329443E6300D6E2E5 /* FirestoreService.swift */; };
 		140E21062944519E00D6E2E5 /* BCFirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E21052944519E00D6E2E5 /* BCFirestoreService.swift */; };
 		140E21092944688B00D6E2E5 /* Future+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E21082944688B00D6E2E5 /* Future+Async.swift */; };
@@ -275,6 +276,7 @@
 		1404DA42298259A100228E50 /* UserRepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepositoryError.swift; sourceTree = "<group>"; };
 		1404DA4429825A2E00228E50 /* LoginUseCaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCaseError.swift; sourceTree = "<group>"; };
 		140B8750298775A300436F65 /* String+sha256.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+sha256.swift"; sourceTree = "<group>"; };
+		140B87522987870F00436F65 /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 		140E210329443E6300D6E2E5 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		140E21052944519E00D6E2E5 /* BCFirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCFirestoreService.swift; sourceTree = "<group>"; };
 		140E21082944688B00D6E2E5 /* Future+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Future+Async.swift"; sourceTree = "<group>"; };
@@ -573,6 +575,7 @@
 			children = (
 				B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */,
 				D8494D492927CBD4008157F1 /* DefaultButton.swift */,
+				140B87522987870F00436F65 /* AuthButton.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -2166,6 +2169,7 @@
 				141344CF292F800300187B86 /* UIStackView+addArrangedSubviews.swift in Sources */,
 				140FBEEB297511DB006B7857 /* URLSessionServiceError.swift in Sources */,
 				14D8C4C6297BEDB900DFE71F /* HomeViewModelError.swift in Sources */,
+				140B87532987870F00436F65 /* AuthButton.swift in Sources */,
 				1418960229377593005A42D4 /* UIScrollView+.swift in Sources */,
 				3B74920D293DCCAC00A4BEA0 /* GithubError.swift in Sources */,
 				143185EE292B4ABC008CE459 /* ScrapPageView.swift in Sources */,

@@ -5,6 +5,7 @@
 //  Created by 김기훈 on 2022/11/18.
 //
 
+import AuthenticationServices
 import UIKit
 
 import SnapKit
@@ -27,45 +28,10 @@ final class LogInView: UIView {
         $0.font = UIFont.regular14
     }
 
-    lazy var camperAuthButton: UIButton = {
-        let button = UIButton()
-
-        if #available(iOS 15.0, *) {
-            var string = AttributedString("캠퍼 인증 시작하기")
-            string.font = UIFont.extraBold14
-            string.foregroundColor = .dynamicWhite
-
-            var configuration = UIButton.Configuration.filled()
-            configuration.attributedTitle = string
-            configuration.titleAlignment = .center
-
-            configuration.image = UIImage.github
-            configuration.imagePlacement = .leading
-            configuration.imagePadding = 50
-
-            configuration.baseBackgroundColor = .dynamicBlack
-            configuration.cornerStyle = .medium
-
-            button.configuration = configuration
-
-            return button
-        } else {
-            button.setTitle("캠퍼 인증 시작하기", for: .normal)
-            button.titleLabel?.font = UIFont.extraBold14
-            button.setTitleColor(.dynamicWhite, for: .normal)
-            button.titleLabel?.textAlignment = .center
-
-            button.setImage(UIImage.github, for: .normal)
-
-            button.backgroundColor = .dynamicBlack
-            button.layer.cornerRadius = CGFloat(Constant.CornerRadius.radius8)
-
-            return button
-        }
-    }()
+    let camperAuthButton = AuthButton(text: "Github으로 캠퍼 로그인", image: .github)
 
     private lazy var camperAuthLabel: UILabel = UILabel().then {
-        $0.text = "캠퍼 인증을 위해 Github으로 로그인을 해주세요."
+        $0.text = "Github 로그인을 통해 캠퍼인증을 하고 내 글을 등록할 수 있어요."
         $0.font = UIFont.regular12
         $0.textColor = .systemGray2
     }
