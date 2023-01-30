@@ -24,7 +24,7 @@ final class MyPageViewController: UIViewController {
 
     var coordinatorPublisher = PassthroughSubject<MyPageCoordinatorEvent, Never>()
     var toastMessagePublisher = PassthroughSubject<String, Never>()
-    var withdrawalPublisher = PassthroughSubject<Void, Never>()
+    var withdrawalButtonPublisher = PassthroughSubject<Void, Never>()
 
     // MARK: - Initializer
 
@@ -70,7 +70,7 @@ final class MyPageViewController: UIViewController {
         let input = MyPageViewModel.Input(
             notificationDidSwitch: myPageView.notificationSwitchStatePublisher,
             darkModeDidSwitch: myPageView.darkModeSwitchStatePublisher,
-            withdrawDidTap: withdrawalPublisher
+            withdrawDidTap: withdrawalButtonPublisher
         )
 
         let output = viewModel.transform(input: input)
@@ -102,9 +102,15 @@ final class MyPageViewController: UIViewController {
             }
             .store(in: &cancelBag)
 
-        output.moveToLoginFlow
-            .sink { _ in
-                self.moveToAuthFlow()
+        output.loginProviderPublisher
+            .sink { [weak self] event in
+                switch event {
+                case .github:
+                    self?.coordinatorPublisher.send(.moveToGithubLogIn)
+                case .apple:
+                    // apple 인증 띄우기
+                    return
+                }
             }
             .store(in: &cancelBag)
 
@@ -140,9 +146,9 @@ final class MyPageViewController: UIViewController {
         let okAction = UIAlertAction(
             title: Alert.yes,
             style: .default
-        ) { _ in
-            self.showIndicator()
-            self.coordinatorPublisher.send(.moveToGithubLogIn)
+        ) { [weak self] _ in
+            self?.showIndicator()
+            self?.withdrawal()
         }
         let cancelAction = UIAlertAction(
             title: Alert.no,
@@ -153,6 +159,10 @@ final class MyPageViewController: UIViewController {
             message: Alert.withdrawalMessage,
             alertActions: [okAction, cancelAction]
         )
+    }
+
+    private func withdrawal() {
+        self.coordinatorPublisher.send(.moveToGithubLogIn)
     }
 
     private func showIndicator() {
@@ -209,8 +219,10 @@ extension MyPageViewController {
     }
 }
 
+// MARK: - AppDelegate에서 Github으로부터 code를 받아 함수를 호출해줘야 함
+
 extension MyPageViewController {
-    func withDrawal(code: String) {
+    func withDrawalUser(code: String) {
         Task {
             do {
                 print("탈퇴하기")

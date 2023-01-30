@@ -13,8 +13,6 @@ final class LogInViewModel {
 
     private let loginUseCase: LoginUseCase
 
-    private(set) var currentNonce: String?
-
     private var logInPublisher = PassthroughSubject<AuthCoordinatorEvent, Never>()
 
     init(loginUseCase: LoginUseCase) {
@@ -66,18 +64,5 @@ final class LogInViewModel {
             try await loginUseCase.createGuest(userUUID: userUUID)
         }
         logInPublisher.send(.moveToTabBarScreen)
-    }
-}
-
-extension LogInViewModel {
-    func getAppleLoginRequest() -> ASAuthorizationAppleIDRequest {
-        let nonce = String.randomNonceString()
-        currentNonce = nonce
-        let appleIDProvider = ASAuthorizationAppleIDProvider()
-        let request = appleIDProvider.createRequest()
-        request.requestedScopes = [.fullName, .email]
-        request.nonce = nonce.sha256()
-
-        return request
     }
 }

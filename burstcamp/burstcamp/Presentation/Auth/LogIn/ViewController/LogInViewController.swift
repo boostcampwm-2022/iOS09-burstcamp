@@ -13,14 +13,12 @@ import UIKit
 import SnapKit
 import Then
 
-final class LogInViewController: UIViewController {
+final class LogInViewController: AppleAuthViewController {
 
     private var logInView: LogInView {
         guard let view = view as? LogInView else { return LogInView() }
         return view
     }
-
-    private var currentNonce: String?
 
     var coordinatorPublisher = PassthroughSubject<AuthCoordinatorEvent, Never>()
     private var cancelBag = Set<AnyCancellable>()
@@ -129,16 +127,9 @@ final class LogInViewController: UIViewController {
     }
 }
 
-extension LogInViewController: ASAuthorizationControllerPresentationContextProviding,
-                                ASAuthorizationControllerDelegate {
-
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        guard let window = self.view.window else { fatalError("애플 로그인 ASPresentationAnchor 에러")}
-        return window
-    }
-
+extension LogInViewController: ASAuthorizationControllerDelegate {
     func startSignInWithAppleFlow() {
-        let request = viewModel.getAppleLoginRequest()
+        let request = getAppleLoginRequest()
 
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
@@ -151,7 +142,7 @@ extension LogInViewController: ASAuthorizationControllerPresentationContextProvi
         didCompleteWithAuthorization authorization: ASAuthorization
     ) {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-            guard let nonce = viewModel.currentNonce else {
+            guard let nonce = currentNonce else {
                 fatalError("Invalid state: A login callback was received, but no login request was sent.")
             }
 

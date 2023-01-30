@@ -19,10 +19,14 @@ final class DefaultMyPageUseCase: MyPageUseCase {
         self.imageRepository = imageRepository
     }
 
-    func withdrawal(code: String, userUUID: String) async throws {
+    func withdrawalWithGithub(code: String, userUUID: String) async throws {
         let isSuccess = try await loginRepository.withdrawalWithGithub(code: code)
         try await imageRepository.deleteProfileImage(userUUID: userUUID)
+        KeyChainManager.deleteUser()
         if !isSuccess { throw MyPageUseCaseError.withdrawal }
+    }
+
+    func withdrawalWithApple() async throws {
     }
 
     func updateUserPushState(userUUID: String, isPushOn: Bool) async throws {
