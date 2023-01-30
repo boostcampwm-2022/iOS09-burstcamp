@@ -63,11 +63,11 @@ final class LogInViewController: UIViewController {
         }
     }
 
-    func login(code: String) {
+    func loginWithGithub(code: String) {
         Task { [weak self] in
             self?.showIndicator()
             do {
-                try await self?.viewModel.login(code: code)
+                try await self?.viewModel.loginWithGithub(code: code)
             } catch {
                 self?.showAlert(message: error.localizedDescription)
             }
@@ -110,13 +110,13 @@ final class LogInViewController: UIViewController {
 
     private func loginWithApple(idTokenString: String, nonce: String) {
         Task { [weak self] in
+            self?.showIndicator()
             do {
-                self?.showIndicator()
                 try await self?.viewModel.loginWithApple(idTokenString: idTokenString, nonce: nonce)
-                self?.hideIndicator()
             } catch {
                 self?.showAlert(message: "애플 로그인에 실패했습니다. \(error.localizedDescription)")
             }
+            self?.hideIndicator()
         }
     }
 }

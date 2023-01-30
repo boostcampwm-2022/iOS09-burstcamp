@@ -41,8 +41,8 @@ final class LogInViewModel {
         )
     }
 
-    func login(code: String) async throws {
-        let (userNickname, userUUID) = try await loginUseCase.login(code: code)
+    func loginWithGithub(code: String) async throws {
+        let (userNickname, userUUID) = try await loginUseCase.loginWithGithub(code: code)
         UserManager.shared.setUserUUID(userUUID)
 
         let isUserExist = try await loginUseCase.checkIsExist(userUUID: userUUID)

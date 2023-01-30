@@ -11,8 +11,12 @@ import FirebaseAuth
 
 protocol BCFirebaseAuthServiceProtocol {
     func getCurrentUserUid() throws -> String
-    func signInToFirebase(token: String) async throws -> String
-    func withdrawal(token: String) async throws
+
+    func loginWithGithub(token: String) async throws -> String
+    func withdrawalWithGithub(token: String) async throws
+
+    func loginWithApple(idTokenString: String, nonce: String) async throws -> String
+    func withdrawalWithApple(idTokenString: String, nonce: String) async throws
 }
 
 final class BCFirebaseAuthService: BCFirebaseAuthServiceProtocol {
@@ -26,21 +30,14 @@ final class BCFirebaseAuthService: BCFirebaseAuthServiceProtocol {
         throw FirebaseAuthError.currentUserNil
     }
 
-    func signInToFirebase(token: String) async throws -> String {
-        try await withCheckedThrowingContinuation({ continuation in
-            let credential = GitHubAuthProvider.credential(withToken: token)
+    func loginWithGithub(token: String) async throws -> String {
+        let credential = GitHubAuthProvider.credential(withToken: token)
 
-            auth.signIn(with: credential) { result, error in
-                guard let result = result, error == nil else {
-                    continuation.resume(throwing: FirebaseAuthError.failSignIn)
-                    return
-                }
-                continuation.resume(returning: result.user.uid)
-            }
-        })
+        let result = try await auth.signIn(with: credential)
+        return result.user.uid
     }
 
-    func withdrawal(token: String) async throws {
+    func withdrawalWithGithub(token: String) async throws {
         let credential = GitHubAuthProvider.credential(withToken: token)
         try await auth.currentUser?.reauthenticate(with: credential)
         try await auth.currentUser?.delete()

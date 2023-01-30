@@ -31,16 +31,16 @@ final class DefaultLoginRepository: LoginRepository {
         }
     }
 
-    func login(code: String) async throws ->  (userNickname: String, userUUID: String) {
+    func loginWithGithub(code: String) async throws ->  (userNickname: String, userUUID: String) {
         let (userNickname, token) = try await authorizeBoostcamp(code: code)
         // auth로 로그인
-        let userUUID = try await bcFirebaseAuthService.signInToFirebase(token: token)
+        let userUUID = try await bcFirebaseAuthService.loginWithGithub(token: token)
         return (userNickname, userUUID)
     }
 
-    func withdrawal(code: String) async throws -> Bool {
+    func withdrawalWithGithub(code: String) async throws -> Bool {
         let githubToken = try await githubLoginDataSource.requestGithubToken(code: code)
-        try await bcFirebaseAuthService.withdrawal(token: githubToken.accessToken)
+        try await bcFirebaseAuthService.withdrawalWithGithub(token: githubToken.accessToken)
 
         KeyChainManager.deleteUser()
         let userUUID = UserManager.shared.user.userUUID
@@ -55,8 +55,14 @@ final class DefaultLoginRepository: LoginRepository {
         return try await bcFirebaseAuthService.loginWithApple(idTokenString: idTokenString, nonce: nonce)
     }
 
-    func withdrawalWithApple(idTokenString: String, nonce: String) async throws {
+    func withdrawalWithApple(idTokenString: String, nonce: String) async throws -> Bool {
         try await bcFirebaseAuthService.withdrawalWithApple(idTokenString: idTokenString, nonce: nonce)
+
+        KeyChainManager.deleteUser()
+        let userUUID = UserManager.shared.user.userUUID
+        UserManager.shared.removeUserListener()
+        UserManager.shared.deleteUserInfo()
+        return try await bcFirebaseFunctionService.deleteUser(userUUID: userUUID)
     }
 
     private func authorizeBoostcamp(code: String) async throws -> (userNickname: String, token: String) {
