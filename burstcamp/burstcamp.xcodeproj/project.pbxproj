@@ -14,6 +14,7 @@
 		140438C0293F77DD004D035C /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438BF293F77DD004D035C /* Factory.swift */; };
 		1404DA43298259A100228E50 /* UserRepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404DA42298259A100228E50 /* UserRepositoryError.swift */; };
 		1404DA4529825A2E00228E50 /* LoginUseCaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404DA4429825A2E00228E50 /* LoginUseCaseError.swift */; };
+		140B8751298775A300436F65 /* String+sha256.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B8750298775A300436F65 /* String+sha256.swift */; };
 		140E210429443E6300D6E2E5 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E210329443E6300D6E2E5 /* FirestoreService.swift */; };
 		140E21062944519E00D6E2E5 /* BCFirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E21052944519E00D6E2E5 /* BCFirestoreService.swift */; };
 		140E21092944688B00D6E2E5 /* Future+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140E21082944688B00D6E2E5 /* Future+Async.swift */; };
@@ -273,6 +274,7 @@
 		140438BF293F77DD004D035C /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
 		1404DA42298259A100228E50 /* UserRepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepositoryError.swift; sourceTree = "<group>"; };
 		1404DA4429825A2E00228E50 /* LoginUseCaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCaseError.swift; sourceTree = "<group>"; };
+		140B8750298775A300436F65 /* String+sha256.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+sha256.swift"; sourceTree = "<group>"; };
 		140E210329443E6300D6E2E5 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		140E21052944519E00D6E2E5 /* BCFirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCFirestoreService.swift; sourceTree = "<group>"; };
 		140E21082944688B00D6E2E5 /* Future+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Future+Async.swift"; sourceTree = "<group>"; };
@@ -740,6 +742,7 @@
 				141344D2292F801100187B86 /* TypeConversion.swift */,
 				D89AE4F02935AE7800446AB3 /* Encodable+dictionary.swift */,
 				D89AE4F22935AFE100446AB3 /* Notification+.swift */,
+				140B8750298775A300436F65 /* String+sha256.swift */,
 			);
 			path = Type;
 			sourceTree = "<group>";
@@ -1987,6 +1990,7 @@
 				148A05622972F7B900664CCB /* MyPageUseCase.swift in Sources */,
 				B5DAD681292E58BF00C4A126 /* DefaultMultilLineLabel.swift in Sources */,
 				3B061FDD2928E8E300BFA71D /* SignUpCamperIDViewController.swift in Sources */,
+				140B8751298775A300436F65 /* String+sha256.swift in Sources */,
 				145842B4297FF5C800C81878 /* DiffableFeed.swift in Sources */,
 				1496CF1E294070A3008F312F /* ContainFeedDetailCoordinator.swift in Sources */,
 				140438C0293F77DD004D035C /* Factory.swift in Sources */,

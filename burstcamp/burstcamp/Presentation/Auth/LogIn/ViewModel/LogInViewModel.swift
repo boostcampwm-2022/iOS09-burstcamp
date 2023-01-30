@@ -52,4 +52,16 @@ final class LogInViewModel {
             logInPublisher.send(.moveToDomainScreen(userNickname: userNickname))
         }
     }
+
+    func loginWithApple(idTokenString: String, nonce: String) async throws {
+        let userUUID = try await loginUseCase.loginWithApple(idTokenString: idTokenString, nonce: nonce)
+        UserManager.shared.setUserUUID(userUUID)
+
+        let isUserExist = try await loginUseCase.checkIsExist(userUUID: userUUID)
+        if isUserExist {
+            logInPublisher.send(.moveToTabBarScreen)
+        } else {
+            // Guest로 계정 생성
+        }
+    }
 }

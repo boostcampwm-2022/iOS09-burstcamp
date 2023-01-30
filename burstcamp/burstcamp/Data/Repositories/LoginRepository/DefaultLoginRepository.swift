@@ -44,10 +44,19 @@ final class DefaultLoginRepository: LoginRepository {
 
         KeyChainManager.deleteUser()
         let userUUID = UserManager.shared.user.userUUID
-        // TODO: Listener 제거
         UserManager.shared.removeUserListener()
         UserManager.shared.deleteUserInfo()
         return try await bcFirebaseFunctionService.deleteUser(userUUID: userUUID)
+    }
+
+    /// 애플 로그인
+    /// - Returns: user UUID
+    func loginWithApple(idTokenString: String, nonce: String) async throws -> String {
+        return try await bcFirebaseAuthService.loginWithApple(idTokenString: idTokenString, nonce: nonce)
+    }
+
+    func withdrawalWithApple(idTokenString: String, nonce: String) async throws {
+        try await bcFirebaseAuthService.withdrawalWithApple(idTokenString: idTokenString, nonce: nonce)
     }
 
     private func authorizeBoostcamp(code: String) async throws -> (userNickname: String, token: String) {

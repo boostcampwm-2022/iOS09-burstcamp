@@ -39,4 +39,12 @@ final class DefaultLoginUseCase: LoginUseCase {
     func login(code: String) async throws ->  (userNickname: String, userUUID: String) {
         return try await loginRepository.login(code: code)
     }
+
+    func loginWithApple(idTokenString: String, nonce: String) async throws -> String {
+        return try await loginRepository.loginWithApple(idTokenString: idTokenString, nonce: nonce)
+    }
+
+    func withdrawalWithApple(idTokenString: String, nonce: String) async throws {
+        try await loginRepository.withdrawalWithApple(idTokenString: idTokenString, nonce: nonce)
+    }
 }
