@@ -8,7 +8,6 @@
 import Foundation
 
 final class DefaultLoginRepository: LoginRepository {
-
     private let bcFirebaseAuthService: BCFirebaseAuthService
     private let bcFirebaseFunctionService: BCFirebaseFunctionService
     private let githubLoginDataSource: GithubLoginDatasource
@@ -38,14 +37,10 @@ final class DefaultLoginRepository: LoginRepository {
         return (userNickname, userUUID)
     }
 
-    func withdrawalWithGithub(code: String) async throws -> Bool {
+    func withdrawalWithGithub(code: String, userUUID: String) async throws -> Bool {
         let githubToken = try await githubLoginDataSource.requestGithubToken(code: code)
         try await bcFirebaseAuthService.withdrawalWithGithub(token: githubToken.accessToken)
 
-        KeyChainManager.deleteUser()
-        let userUUID = UserManager.shared.user.userUUID
-        UserManager.shared.removeUserListener()
-        UserManager.shared.deleteUserInfo()
         return try await bcFirebaseFunctionService.deleteUser(userUUID: userUUID)
     }
 
@@ -55,13 +50,8 @@ final class DefaultLoginRepository: LoginRepository {
         return try await bcFirebaseAuthService.loginWithApple(idTokenString: idTokenString, nonce: nonce)
     }
 
-    func withdrawalWithApple(idTokenString: String, nonce: String) async throws -> Bool {
+    func withdrawalWithApple(idTokenString: String, nonce: String, userUUID: String) async throws -> Bool {
         try await bcFirebaseAuthService.withdrawalWithApple(idTokenString: idTokenString, nonce: nonce)
-
-        KeyChainManager.deleteUser()
-        let userUUID = UserManager.shared.user.userUUID
-        UserManager.shared.removeUserListener()
-        UserManager.shared.deleteUserInfo()
         return try await bcFirebaseFunctionService.deleteUser(userUUID: userUUID)
     }
 

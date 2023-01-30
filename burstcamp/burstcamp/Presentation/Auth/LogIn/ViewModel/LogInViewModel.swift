@@ -46,6 +46,7 @@ final class LogInViewModel {
     func loginWithGithub(code: String) async throws {
         let (userNickname, userUUID) = try await loginUseCase.loginWithGithub(code: code)
         UserManager.shared.setUserUUID(userUUID)
+        UserManager.shared.addUserListener()
 
         let isUserExist = try await loginUseCase.checkIsExist(userUUID: userUUID)
         if isUserExist {
@@ -63,6 +64,7 @@ final class LogInViewModel {
         if !isUserExist {
             try await loginUseCase.createGuest(userUUID: userUUID)
         }
+        UserManager.shared.addUserListener()
         logInPublisher.send(.moveToTabBarScreen)
     }
 }

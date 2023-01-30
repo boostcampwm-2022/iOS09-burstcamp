@@ -43,6 +43,8 @@ final class LogInViewController: AppleAuthViewController {
         bind()
     }
 
+    // TODO: 인자 받아서 label 분기 처리
+
     func showIndicator() {
         DispatchQueue.main.async {
             self.logInView.activityIndicator.startAnimating()
@@ -107,6 +109,7 @@ final class LogInViewController: AppleAuthViewController {
             .store(in: &cancelBag)
 
         // MARK: - Apple 로그인
+
         logInView.appleAuthButton.tapPublisher
             .sink { [weak self] _ in
                 self?.startSignInWithAppleFlow()

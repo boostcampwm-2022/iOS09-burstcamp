@@ -45,6 +45,7 @@ final class DefaultLoginUseCase: LoginUseCase {
     }
 
     func createGuest(userUUID: String) async throws {
-        try await userRepository.saveGuest(userUUID: userUUID)
+        let guestUser = try await userRepository.saveGuest(userUUID: userUUID)
+        UserManager.shared.setUser(guestUser)
     }
 }

@@ -72,11 +72,12 @@ final class DefaultUserRepository: UserRepository {
     }
 
     // MARK: Guest
-    func saveGuest(userUUID: String) async throws {
+    func saveGuest(userUUID: String) async throws -> User {
         let nickname = try getNickname(userUUID: userUUID)
         let guestUser = User(userUUID: userUUID, nickname: nickname)
         let guestUserAPIModel = userToAPIModel(guestUser)
         try await bcFirestoreService.saveUser(userUUID: guestUser.userUUID, user: guestUserAPIModel)
+        return guestUser
     }
 
     private func getNickname(userUUID: String) throws -> String {

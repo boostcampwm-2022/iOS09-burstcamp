@@ -15,5 +15,5 @@ protocol UserRepository {
     func removeUser(_ user: User) async throws
     func saveFCMToken(_ token: String, to userUUID: String) async throws
 
-    func saveGuest(userUUID: String) async throws
+    func saveGuest(userUUID: String) async throws -> User
 }

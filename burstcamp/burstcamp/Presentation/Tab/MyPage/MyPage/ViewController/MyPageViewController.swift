@@ -5,11 +5,12 @@
 //  Created by youtak on 2022/11/15.
 //
 
+import AuthenticationServices
 import Combine
 import SafariServices
 import UIKit
 
-final class MyPageViewController: UIViewController {
+final class MyPageViewController: AppleAuthViewController {
 
     // MARK: - Properties
 
@@ -108,8 +109,7 @@ final class MyPageViewController: UIViewController {
                 case .github:
                     self?.coordinatorPublisher.send(.moveToGithubLogIn)
                 case .apple:
-                    // apple 인증 띄우기
-                    return
+                    self?.startSignInWithAppleFlow()
                 }
             }
             .store(in: &cancelBag)
@@ -162,7 +162,7 @@ final class MyPageViewController: UIViewController {
     }
 
     private func withdrawal() {
-        self.coordinatorPublisher.send(.moveToGithubLogIn)
+        self.withdrawalButtonPublisher.send(Void())
     }
 
     private func showIndicator() {
@@ -178,6 +178,19 @@ final class MyPageViewController: UIViewController {
             self.myPageView.indicatorView.stopAnimating()
             self.myPageView.loadingLabel.isHidden = true
             self.setUserInteraction(isEnabled: true)
+        }
+    }
+
+    private func withdrawalWithApple(idTokenString: String, nonce: String) {
+        Task { [weak self] in
+            self?.showIndicator()
+            do {
+                try await viewModel.withdrawalWithApple(idTokenString: idTokenString, nonce: nonce)
+            } catch {
+                self?.showAlert(message: "애플 로그인에 실패했습니다. \(error.localizedDescription)")
+            }
+            self?.hideIndicator()
+            self?.coordinatorPublisher.send(.moveToAuthFlow)
         }
     }
 }
@@ -226,12 +239,46 @@ extension MyPageViewController {
         Task {
             do {
                 print("탈퇴하기")
-                try await viewModel.deleteUserInfo(code: code)
+                try await viewModel.withdrawalWithGithub(code: code)
                 self.moveToAuthFlow()
             } catch {
                 debugPrint(error.localizedDescription)
                 showAlert(message: error.localizedDescription)
             }
+        }
+    }
+}
+
+extension MyPageViewController: ASAuthorizationControllerDelegate {
+    func startSignInWithAppleFlow() {
+        let request = getAppleLoginRequest()
+
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+
+    func authorizationController(
+        controller: ASAuthorizationController,
+        didCompleteWithAuthorization authorization: ASAuthorization
+    ) {
+        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            guard let nonce = currentNonce else {
+                fatalError("Invalid state: A login callback was received, but no login request was sent.")
+            }
+
+            guard let appleIDToken = appleIDCredential.identityToken else {
+                print("Unable to fetch identity token")
+                return
+            }
+
+            guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+                print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
+                return
+            }
+
+            withdrawalWithApple(idTokenString: idTokenString, nonce: nonce)
         }
     }
 }

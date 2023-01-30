@@ -8,11 +8,6 @@
 import AuthenticationServices
 import UIKit
 
-struct AppleLoginInfo {
-    let nonce: String
-    let idTokenString: String
-}
-
 class AppleAuthViewController: UIViewController,
                                 ASAuthorizationControllerPresentationContextProviding {
 

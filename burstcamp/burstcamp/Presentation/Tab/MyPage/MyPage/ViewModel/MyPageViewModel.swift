@@ -90,9 +90,19 @@ final class MyPageViewModel {
 }
 
 extension MyPageViewModel {
-    func deleteUserInfo(code: String) async throws {
+    func withdrawalWithGithub(code: String) async throws {
         do {
-            try await myPageUseCase.withdrawalWithGithub(code: code, userUUID: UserManager.shared.user.userUUID)
+            try await myPageUseCase.withdrawalWithGithub(code: code)
+        } catch {
+            print(error.localizedDescription)
+            withdrawalStop.send()
+            signOutFailMessage.send("탈퇴에 실패했어요.")
+        }
+    }
+
+    func withdrawalWithApple(idTokenString: String, nonce: String) async throws {
+        do {
+            try await myPageUseCase.withdrawalWithApple(idTokenString: idTokenString, nonce: nonce)
         } catch {
             print(error.localizedDescription)
             withdrawalStop.send()
