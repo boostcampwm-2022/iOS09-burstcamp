@@ -11,7 +11,7 @@ final class AuthButton: UIButton {
 
     init(
         text: String,
-        image: UIImage
+        image: UIImage?
     ) {
         super.init(frame: .zero)
 
@@ -25,10 +25,12 @@ final class AuthButton: UIButton {
 
         configuration.image = image
         configuration.imagePlacement = .leading
-        configuration.imagePadding = 50
+        configuration.imagePadding = 20
 
         configuration.baseBackgroundColor = .dynamicBlack
         configuration.cornerStyle = .medium
+
+        configuration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 20)
 
         self.configuration = configuration
     }
