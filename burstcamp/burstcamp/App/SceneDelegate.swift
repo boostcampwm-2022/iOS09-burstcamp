@@ -28,7 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                   let myPageViewController = tabBarController.children.first(where: {
                       $0 as? MyPageViewController != nil
                   }) as? MyPageViewController {
-            myPageViewController.withDrawalUser(code: code)
+            myPageViewController.withdrawalWithGithub(code: code)
         }
         else { // 탈퇴
             fatalError("로그인, 로그아웃 불가능")

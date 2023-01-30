@@ -165,11 +165,18 @@ final class MyPageViewController: AppleAuthViewController {
         self.withdrawalButtonPublisher.send(Void())
     }
 
-    private func showIndicator() {
+    private func showIndicator(text: String = "탈퇴 중이에요") {
         DispatchQueue.main.async {
             self.myPageView.indicatorView.startAnimating()
+            self.myPageView.loadingLabel.text = text
             self.myPageView.loadingLabel.isHidden = false
             self.setUserInteraction(isEnabled: false)
+        }
+    }
+
+    private func updateIndicator(text: String) {
+        DispatchQueue.main.async {
+            self.myPageView.loadingLabel.text = text
         }
     }
 
@@ -183,14 +190,14 @@ final class MyPageViewController: AppleAuthViewController {
 
     private func withdrawalWithApple(idTokenString: String, nonce: String) {
         Task { [weak self] in
-            self?.showIndicator()
+            self?.updateIndicator(text: "유저 정보 삭제 중")
             do {
                 try await viewModel.withdrawalWithApple(idTokenString: idTokenString, nonce: nonce)
+                self?.moveToAuthFlow()
             } catch {
                 self?.showAlert(message: "애플 로그인에 실패했습니다. \(error.localizedDescription)")
             }
             self?.hideIndicator()
-            self?.coordinatorPublisher.send(.moveToAuthFlow)
         }
     }
 }
@@ -235,12 +242,12 @@ extension MyPageViewController {
 // MARK: - AppDelegate에서 Github으로부터 code를 받아 함수를 호출해줘야 함
 
 extension MyPageViewController {
-    func withDrawalUser(code: String) {
-        Task {
+    func withdrawalWithGithub(code: String) {
+        Task { [weak self] in
+            updateIndicator(text: "유저 정보 삭제 중")
             do {
-                print("탈퇴하기")
-                try await viewModel.withdrawalWithGithub(code: code)
-                self.moveToAuthFlow()
+                try await self?.viewModel.withdrawalWithGithub(code: code)
+                self?.moveToAuthFlow()
             } catch {
                 debugPrint(error.localizedDescription)
                 showAlert(message: error.localizedDescription)

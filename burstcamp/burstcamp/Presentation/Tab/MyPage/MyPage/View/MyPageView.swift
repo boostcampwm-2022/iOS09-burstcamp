@@ -50,7 +50,7 @@ final class MyPageView: UIView, ContainCollectionView {
     }
 
     lazy var loadingLabel: UILabel = UILabel().then {
-        $0.text = "유저 정보 삭제 중"
+        $0.text = "탈퇴 중이에요"
         $0.font = .bold12
         $0.textColor = .dynamicBlack
         $0.isHidden = true
