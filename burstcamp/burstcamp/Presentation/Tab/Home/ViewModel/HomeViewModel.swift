@@ -125,15 +125,15 @@ final class HomeViewModel {
                         debugPrint("normalFeed 페이지네이션 언래핑 에러")
                         return
                     }
+                    guard !normalFeed.isEmpty else {
+                        isLastFetch = true
+                        showToast.send("모든 피드를 불러왔어요")
+                        return
+                    }
                     self?.normalFeedData.append(contentsOf: normalFeed)
                     self?.moreFeed.send(normalFeed)
                 } catch {
-                    if let error = error as? FirestoreServiceError, error == .lastFetch {
-                        showToast.send("모든 피드를 불러왔어요")
-                        isLastFetch = true
-                    } else {
-                        showAlert.send(error)
-                    }
+                    showAlert.send(error)
                 }
                 isFetching = false
             }

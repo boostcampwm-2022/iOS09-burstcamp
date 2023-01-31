@@ -120,36 +120,30 @@ final class ScrapPageViewModel {
             self?.isLastFetch = false
             if !isFetching {
                 isFetching = true
-
                 do {
                     let scrapFeed = try await self?.scrapPageUseCase.fetchRecentScrapFeed()
+
                     guard let scrapFeed = scrapFeed else {
                         debugPrint("scrapFeedList 언래핑 에러")
                         isFetching = false
                         return
                     }
+
+                    guard !scrapFeed.isEmpty else {
+                        isLastFetch = true
+                        isFetching = false
+                        self?.scrapFeedList = []
+                        self?.recentScrapFeed.send([])
+                        return
+                    }
+
                     self?.scrapFeedList = scrapFeed
                     self?.recentScrapFeed.send(scrapFeed)
                 } catch {
-                    if let error = error as? FirestoreServiceError {
-                        self?.handleFirestoreServiceError(error)
-                    } else {
-                        showAlert.send(error)
-                    }
+                    showAlert.send(error)
                 }
                 isFetching = false
             }
-        }
-    }
-
-    private func handleFirestoreServiceError(_ error: FirestoreServiceError) {
-        if error == .scrapIsEmpty {
-            self.scrapFeedList = []
-            self.recentScrapFeed.send([])
-            isLastFetch = true
-        } else if error == .lastFetch {
-            showToast.send("스크랩 피드를 모두 불러왔어요")
-            isLastFetch = true
         }
     }
 
@@ -159,20 +153,24 @@ final class ScrapPageViewModel {
                 isFetching = true
                 do {
                     let scrapFeed = try await self?.scrapPageUseCase.fetchMoreScrapFeed()
+
                     guard let scrapFeed = scrapFeed else {
                         debugPrint("normalFeed 페이지네이션 언래핑 에러")
                         isFetching = false
                         return
                     }
+
+                    guard !scrapFeed.isEmpty else {
+                        isLastFetch = true
+                        isFetching = false
+                        showToast.send("모든 피드를 불러왔어요")
+                        return
+                    }
+
                     self?.scrapFeedList.append(contentsOf: scrapFeed)
                     self?.moreFeed.send(scrapFeed)
                 } catch {
-                    if let error = error as? FirestoreServiceError, error == .lastFetch {
-                        showToast.send("스크랩 피드를 모두 불러왔어요")
-                        isLastFetch = true
-                    } else {
-                        showAlert.send(error)
-                    }
+                    showAlert.send(error)
                 }
                 isFetching = false
             }
