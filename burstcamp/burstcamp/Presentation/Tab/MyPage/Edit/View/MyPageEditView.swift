@@ -78,6 +78,12 @@ final class MyPageEditView: UIView {
 
     private let finishEditButton = DefaultButton(title: "수정완료")
 
+    private let descriptionLabel = UILabel().then {
+        $0.text = "유저 정보는 30일에 1회 수정이 가능해요"
+        $0.textColor = .systemGray2
+        $0.font = .regular12
+    }
+
     lazy var cameraButtonTapPublisher = cameraButton.tapPublisher
     lazy var nickNameTextFieldTextPublisher = nickNameTextField.textPublisher
     lazy var blogLinkTextFieldTextPublisher = blogLinkTextField.textPublisher
@@ -128,6 +134,12 @@ final class MyPageEditView: UIView {
         addSubview(editStackView)
         editStackView.snp.makeConstraints { make in
             make.top.equalTo(profileImageView.snp.bottom).offset(Constant.space48)
+            make.horizontalEdges.equalToSuperview().inset(Constant.space16)
+        }
+
+        addSubview(descriptionLabel)
+        descriptionLabel.snp.makeConstraints { make in
+            make.top.equalTo(editStackView.snp.bottom).offset(Constant.space12)
             make.horizontalEdges.equalToSuperview().inset(Constant.space16)
         }
     }

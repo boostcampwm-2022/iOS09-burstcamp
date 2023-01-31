@@ -18,7 +18,7 @@ struct User: Codable, Equatable {
     let blogTitle: String
     private(set) var scrapFeedUUIDs: [String]
     let signupDate: Date
-    let updateDate: Date
+    private(set) var updateDate: Date
     let isPushOn: Bool
 
     mutating func setNickname(_ nickname: String) {
