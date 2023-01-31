@@ -52,4 +52,16 @@ extension FeedWriter {
         self.profileImageURL = ""
         self.blogTitle = ""
     }
+
+    static func getBurcam(domain: Domain) -> FeedWriter {
+        return FeedWriter(
+            userUUID: UUID().uuidString,
+            nickname: "버캠이",
+            camperID: "",
+            ordinalNumber: 7,
+            domain: .iOS,
+            profileImageURL: "",
+            blogTitle: "버스트캠프 운영진"
+        )
+    }
 }

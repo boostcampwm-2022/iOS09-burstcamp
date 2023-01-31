@@ -10,14 +10,17 @@ import Foundation
 final class DefaultFeedRepository: FeedRepository {
 
     private let bcFirestoreService: BCFirestoreService
+    private let feedMockUpDataSource: FeedMockUpDataSource
 
-    init(bcFirestoreService: BCFirestoreService) {
+    init(bcFirestoreService: BCFirestoreService, feedMockUpDataSource: FeedMockUpDataSource) {
         self.bcFirestoreService = bcFirestoreService
+        self.feedMockUpDataSource = feedMockUpDataSource
     }
 
     // MARK: - Home Feed 불러오기
     func fetchRecentHomeFeedList() async throws -> HomeFeedList {
         async let recommendFeed = bcFirestoreService.fetchRecommendFeed().map { Feed(feedAPIModel: $0) }
+
         do {
             async let normalFeed = try bcFirestoreService.fetchLatestNormalFeeds().map { Feed(feedAPIModel: $0) }
             return HomeFeedList(
@@ -87,5 +90,10 @@ final class DefaultFeedRepository: FeedRepository {
         let unScrapedFeed = feed.getUnScrapFeed()
         try await bcFirestoreService.unScrapFeed(FeedAPIModel(feed: unScrapedFeed), with: userUUID)
         return unScrapedFeed
+    }
+
+    // MARK: - 목업 추천 피드
+    func createMockUpRecommendFeedList(count: Int) -> [Feed] {
+        return feedMockUpDataSource.createMockUpRecommendFeedList(count: count)
     }
 }

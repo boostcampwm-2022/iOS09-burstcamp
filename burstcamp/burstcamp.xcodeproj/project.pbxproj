@@ -41,6 +41,7 @@
 		141344D9292F803800187B86 /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344D8292F803800187B86 /* UIControl+Combine.swift */; };
 		141344DB292F82BE00187B86 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141344DA292F82BE00187B86 /* Feed.swift */; };
 		14152B812988EAFE00FF5999 /* FeedRepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14152B802988EAFE00FF5999 /* FeedRepositoryError.swift */; };
+		14152B832988F3D000FF5999 /* FeedMockUpDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14152B822988F3D000FF5999 /* FeedMockUpDatasource.swift */; };
 		1418960229377593005A42D4 /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1418960129377593005A42D4 /* UIScrollView+.swift */; };
 		141A7A70297E5BDC003DD926 /* ScrapViewModelError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141A7A6F297E5BDC003DD926 /* ScrapViewModelError.swift */; };
 		1422C62F292F08BC00337710 /* BCDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1422C62E292F08BC00337710 /* BCDateFormatter.swift */; };
@@ -305,6 +306,7 @@
 		141344D8292F803800187B86 /* UIControl+Combine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Combine.swift"; sourceTree = "<group>"; };
 		141344DA292F82BE00187B86 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		14152B802988EAFE00FF5999 /* FeedRepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRepositoryError.swift; sourceTree = "<group>"; };
+		14152B822988F3D000FF5999 /* FeedMockUpDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedMockUpDatasource.swift; sourceTree = "<group>"; };
 		1418960129377593005A42D4 /* UIScrollView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
 		141A7A6F297E5BDC003DD926 /* ScrapViewModelError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapViewModelError.swift; sourceTree = "<group>"; };
 		1422C62E292F08BC00337710 /* BCDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCDateFormatter.swift; sourceTree = "<group>"; };
@@ -1098,6 +1100,7 @@
 		149304902963EC3100B9BC71 /* Local */ = {
 			isa = PBXGroup;
 			children = (
+				14152B822988F3D000FF5999 /* FeedMockUpDatasource.swift */,
 				B5BC81BC2945BD500077BF29 /* FeedSingletonDataSource.swift */,
 				B5FF71452948EDB8008E69F2 /* FeedLocalDataSource.swift */,
 				B572F01F2948768100A9413C /* FeedRealmDataSource.swift */,
@@ -2120,6 +2123,7 @@
 				D89AE4E42933AEE900446AB3 /* ImageCacheError.swift in Sources */,
 				B50A27E929279F5D00DF3E1F /* NormalFeedCellFooter.swift in Sources */,
 				14755A472973FA3A0036B71D /* GithubLoginDatasource.swift in Sources */,
+				14152B832988F3D000FF5999 /* FeedMockUpDatasource.swift in Sources */,
 				143185F8292B5C88008CE459 /* ContainCollectionView.swift in Sources */,
 				B572EF832945E1CA00A9413C /* Publisher+Async.swift in Sources */,
 				B5DAD67B292E4C6800C4A126 /* FeedDetailViewController.swift in Sources */,

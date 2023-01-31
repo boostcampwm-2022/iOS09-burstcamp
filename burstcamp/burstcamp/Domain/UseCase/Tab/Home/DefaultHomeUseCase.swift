@@ -23,8 +23,9 @@ final class DefaultHomeUseCase: HomeUseCase {
         let normalFeed = homeFeedList.normalFeed.map({ feed in
             return userScrapFeedUUIDs.contains(feed.feedUUID) ? feed.setIsScraped(true) : feed
         })
-        let recommendFeed = recommendFeedForCarousel(homeFeedList.recommendFeed)
-        return HomeFeedList(recommendFeed: recommendFeed, normalFeed: normalFeed)
+        let recommendFeed = addBurstcampNoticeIfNeed(recommendFeedList: homeFeedList.recommendFeed)
+        let tripleRecommendFeed = recommendFeedForCarousel(recommendFeed)
+        return HomeFeedList(recommendFeed: tripleRecommendFeed, normalFeed: normalFeed)
     }
 
     func fetchMoreNormalFeed() async throws -> [Feed] {
@@ -47,7 +48,16 @@ final class DefaultHomeUseCase: HomeUseCase {
         }
     }
 
-    // Carousel View를 위해 추천 피드를 2개 씩 복사해줘야 함
+    // MARK: RecommendFeed가 없는 경우 버스트 캠프 공지
+
+    private func addBurstcampNoticeIfNeed(recommendFeedList: [Feed]) -> [Feed] {
+        let targetCount = 3
+        let noticeFeed = feedRepository.createMockUpRecommendFeedList(count: 3 - recommendFeedList.count)
+        return recommendFeedList + noticeFeed
+    }
+
+    // MARK: - Carousel View를 위해 추천 피드를 2개씩 복사해줘야 함
+
     private func recommendFeedForCarousel(_ recommendFeedList: [Feed]) -> [Feed] {
         let newArrayOne = makeMockUpRecommendFeed(recommendFeedList)
         let newArrayTwo = makeMockUpRecommendFeed(recommendFeedList)
