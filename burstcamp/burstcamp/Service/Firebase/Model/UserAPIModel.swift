@@ -52,7 +52,7 @@ extension UserAPIModel {
             "ordinalNumber": ordinalNumber,
             "blogURL": blogURL,
             "blogTitle": blogTitle,
-            "scrapFeedUUUIDs": scrapFeedUUIDs,
+            "scrapFeedUUIDs": scrapFeedUUIDs,
             "signupDate": Timestamp(date: signupDate),
             "updateDate": Timestamp(date: updateDate),
             "isPushOn": isPushOn
