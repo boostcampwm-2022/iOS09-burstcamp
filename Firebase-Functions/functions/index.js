@@ -6,6 +6,7 @@ import { sendNotification } from './service/apnsManager.js'
 import { deleteUserInfo } from './service/withdrawalManager.js'
 import { createMockUpUser } from './service/test/mockUpService.js';
 import { testYouTakBlog } from './service/test/testRSSParsing.js';
+import { testIsAlgorithmFeed } from './service/test/testAlgorithmFeed.js';
 
 // Initialize
 if ( !getApps().length ) initializeApp()
@@ -57,6 +58,14 @@ export const deleteMockUpUser = https
 export const testBlogParsing = https
 	.onRequest(async (context) => {
 		await testYouTakBlog()
+		return {
+			isFinish: true
+		}
+})
+
+export const testCheckAlgorithm = https
+	.onRequest(async (context) => {
+		await testIsAlgorithmFeed()
 		return {
 			isFinish: true
 		}

@@ -1,4 +1,4 @@
-export const mockUpHTMLData = `
+export const mockUpHTMLData_ThumbnailImage = `
 <!DOCTYPE html>
 <html id="__hELLO" lang="ko" data-theme="light">
 

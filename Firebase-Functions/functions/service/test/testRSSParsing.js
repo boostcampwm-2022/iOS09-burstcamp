@@ -9,6 +9,6 @@ export async function testYouTakBlog() {
 
 async function testUpdateRSS(blogURL) {
   const feedInfo = await fetchContent("https://malchafrappuccino.tistory.com/148")
-  logger.log(feedInfo.content)``
+  logger.log(feedInfo.content)
   logger.log(feedInfo.thumbnailURL)
 }
