@@ -53,11 +53,19 @@ final class RecommendFeedUserView: UIStackView {
             $0.width.height.equalTo(Constant.Image.profileSmall)
         }
     }
+
+    private func updateProfileImage(profileImageURL: String) {
+        if profileImageURL.isEmpty {
+            profileImageView.image = .burstcamper
+        } else {
+            profileImageView.setImage(urlString: profileImageURL)
+        }
+    }
 }
 
 extension RecommendFeedUserView {
     func updateView(feedWriter: FeedWriter) {
-        profileImageView.setImage(urlString: feedWriter.profileImageURL)
+        updateProfileImage(profileImageURL: feedWriter.profileImageURL)
         nicknameLabel.text = feedWriter.nickname
         blogTitleLabel.text = feedWriter.blogTitle
     }

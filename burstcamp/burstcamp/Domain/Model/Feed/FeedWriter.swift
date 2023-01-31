@@ -59,9 +59,9 @@ extension FeedWriter {
             nickname: "버캠이",
             camperID: "",
             ordinalNumber: 7,
-            domain: .iOS,
+            domain: domain,
             profileImageURL: "",
-            blogTitle: "버스트캠프 운영진"
+            blogTitle: ""
         )
     }
 }

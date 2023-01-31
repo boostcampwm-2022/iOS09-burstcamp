@@ -61,10 +61,22 @@ final class RecommendFeedCell: UICollectionViewCell {
             $0.leading.trailing.equalToSuperview().inset(20)
         }
     }
+
+    private func setUserInteractionEnabled(url: String) {
+        if url.isEmpty {
+            isUserInteractionEnabled = false
+        } else {
+            isUserInteractionEnabled = true
+        }
+    }
+
+    private func setUserImageToBurstcamper() {
+    }
 }
 
 extension RecommendFeedCell {
     func updateFeedCell(with feed: Feed) {
+        setUserInteractionEnabled(url: feed.url)
         titleLabel.text = feed.title
         userView.updateView(feedWriter: feed.writer)
         backgroundColor = feed.writer.domain.brightColor
