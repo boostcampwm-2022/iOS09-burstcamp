@@ -48,6 +48,10 @@ extension MockUpFeedRepository {
     func unScrapFeed(_ feed: Feed, userUUID: String) async throws -> Feed {
         throw MockUpFeedRepositoryError.noImplementation
     }
+
+    func createMockUpRecommendFeedList(count: Int) -> [Feed] {
+        return []
+    }
 }
 
 struct MockUpFeedData {

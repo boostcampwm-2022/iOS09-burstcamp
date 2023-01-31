@@ -16,4 +16,6 @@ protocol FeedRepository {
 
     func scrapFeed(_ feed: Feed, userUUID: String) async throws -> Feed
     func unScrapFeed(_ feed: Feed, userUUID: String) async throws -> Feed
+
+    func createMockUpRecommendFeedList(count: Int) -> [Feed]
 }

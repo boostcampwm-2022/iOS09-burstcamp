@@ -22,6 +22,15 @@ final class DependencyFactory: DependencyFactoryProtocol {
     }
 
     // MARK: - Repository
+    private func createFeedRepository() -> FeedRepository {
+        let bcFirestoreService = BCFirestoreService()
+        let feedMockUpDatSource = DefaultFeedMockUpDataSource()
+        return DefaultFeedRepository(
+            bcFirestoreService: bcFirestoreService,
+            feedMockUpDataSource: feedMockUpDatSource
+        )
+    }
+
     private func createLoginRepository() -> LoginRepository {
         let bcFirebaseAuthService = BCFirebaseAuthService()
         let bcFirebaseFunctionService = BCFirebaseFunctionService()
@@ -96,26 +105,26 @@ extension DependencyFactory {
     }
 
     func createHomeViewModel() -> HomeViewModel {
-        let feedRepository = DefaultFeedRepository(bcFirestoreService: BCFirestoreService())
+        let feedRepository = createFeedRepository()
         let userRepository = createUserRepository()
         let homeUseCase = DefaultHomeUseCase(feedRepository: feedRepository, userRepository: userRepository)
         return HomeViewModel(homeUseCase: homeUseCase)
     }
 
     func createScrapPageViewModel() -> ScrapPageViewModel {
-        let feedRepository = DefaultFeedRepository(bcFirestoreService: BCFirestoreService())
+        let feedRepository = createFeedRepository()
         let scrapPageUseCase = DefaultScrapPageUseCase(feedRepository: feedRepository)
         return ScrapPageViewModel(scrapPageUseCase: scrapPageUseCase)
     }
 
     func createFeedDetailViewModel(feed: Feed) -> FeedDetailViewModel {
-        let feedRepository = DefaultFeedRepository(bcFirestoreService: BCFirestoreService())
+        let feedRepository = createFeedRepository()
         let feedDetailUseCase = DefaultFeedDetailUseCase(feedRepository: feedRepository)
         return FeedDetailViewModel(feedDetailUseCase: feedDetailUseCase, feed: feed)
     }
 
     func createFeedDetailViewModel(feedUUID: String) -> FeedDetailViewModel {
-        let feedRepository = DefaultFeedRepository(bcFirestoreService: BCFirestoreService())
+        let feedRepository = createFeedRepository()
         let feedDetailUseCase = DefaultFeedDetailUseCase(feedRepository: feedRepository)
         return FeedDetailViewModel(feedDetailUseCase: feedDetailUseCase, feedUUID: feedUUID)
     }
