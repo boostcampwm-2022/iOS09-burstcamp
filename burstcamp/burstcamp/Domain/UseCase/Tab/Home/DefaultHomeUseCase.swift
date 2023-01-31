@@ -52,7 +52,7 @@ final class DefaultHomeUseCase: HomeUseCase {
 
     private func addBurstcampNoticeIfNeed(recommendFeedList: [Feed]) -> [Feed] {
         let targetCount = 3
-        let noticeFeed = feedRepository.createMockUpRecommendFeedList(count: 3 - recommendFeedList.count)
+        let noticeFeed = feedRepository.createMockUpRecommendFeedList(count: targetCount - recommendFeedList.count)
         return recommendFeedList + noticeFeed
     }
 
