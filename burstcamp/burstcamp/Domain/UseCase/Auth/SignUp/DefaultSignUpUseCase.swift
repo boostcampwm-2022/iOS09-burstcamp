@@ -64,7 +64,6 @@ final class DefaultSignUpUseCase: SignUpUseCase {
         try await userRepository.saveUser(user)
         KeyChainManager.save(user: user)
         UserManager.shared.setUser(user)
-        UserManager.shared.addUserListener()
     }
 
     func saveFCMToken(_ token: String, to userUUID: String) async throws {

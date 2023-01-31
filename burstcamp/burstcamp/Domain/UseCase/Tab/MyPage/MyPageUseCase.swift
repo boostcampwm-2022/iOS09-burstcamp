@@ -11,6 +11,9 @@ protocol MyPageUseCase {
     func withdrawalWithGithub(code: String) async throws
     func withdrawalWithApple(idTokenString: String, nonce: String) async throws
 
+    func canUpdateMyInfo() -> Bool
+    func getNextUpdateDate() -> Date
+
     func updateUserPushState(userUUID: String, isPushOn: Bool) async throws
     func updateUserDarkModeState(appearance: Appearance)
     func updateLocalUser(_ user: User)

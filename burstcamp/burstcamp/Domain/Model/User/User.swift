@@ -18,6 +18,7 @@ struct User: Codable, Equatable {
     let blogTitle: String
     private(set) var scrapFeedUUIDs: [String]
     let signupDate: Date
+    private(set) var updateDate: Date
     let isPushOn: Bool
 
     mutating func setNickname(_ nickname: String) {
@@ -30,6 +31,10 @@ struct User: Codable, Equatable {
 
     mutating func setBlogURL(_ blogURL: String) {
         self.blogURL = blogURL
+    }
+
+    mutating func setUpdateDate() {
+        self.updateDate = Date()
     }
 }
 
@@ -46,8 +51,11 @@ extension User {
         self.blogTitle = dictionary["blogTitle"] as? String ?? ""
         self.scrapFeedUUIDs = dictionary["scrapFeedUUIDs"] as? [String] ?? []
         self.signupDate = dictionary["signupDate"] as? Date ?? Date()
+        self.updateDate = dictionary["updateDate"] as? Date ?? Date(timeIntervalSince1970: 0)
         self.isPushOn = dictionary["isPushOn"] as? Bool ?? false
     }
+
+    // MARK: - 회원가입을 위한 유저 이니셜라이져
 
     init?(userUUID: String, signUpUser: SignUpUser, blogTitle: String) {
         self.userUUID = userUUID
@@ -68,8 +76,11 @@ extension User {
         self.blogTitle = blogTitle
         self.scrapFeedUUIDs = []
         self.signupDate = Date()
+        self.updateDate = Date(timeIntervalSince1970: 0)
         self.isPushOn = false
     }
+
+    // MARK: - UserAPIModel -> User
 
     init(userAPIModel: UserAPIModel) {
         self.userUUID = userAPIModel.userUUID
@@ -82,6 +93,7 @@ extension User {
         self.blogTitle = userAPIModel.blogTitle
         self.scrapFeedUUIDs = userAPIModel.scrapFeedUUIDs
         self.signupDate = userAPIModel.signupDate
+        self.updateDate = userAPIModel.updateDate
         self.isPushOn = userAPIModel.isPushOn
     }
 
@@ -89,6 +101,7 @@ extension User {
     /// - Parameters:
     ///   - userUUID: 로그인을 통해 얻은 userUUID
     ///   - nickname: 게스트 닉네임
+    ///
     init (userUUID: String, nickname: String) {
         self.userUUID = userUUID
         self.nickname = nickname
@@ -100,6 +113,7 @@ extension User {
         self.blogTitle = ""
         self.scrapFeedUUIDs = []
         self.signupDate = Date()
+        self.updateDate = Date(timeIntervalSince1970: 0)
         self.isPushOn = false
     }
 

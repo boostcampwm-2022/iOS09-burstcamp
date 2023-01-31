@@ -67,6 +67,7 @@ final class DefaultUserRepository: UserRepository {
             blogTitle: user.blogTitle,
             scrapFeedUUIDs: user.scrapFeedUUIDs,
             signupDate: user.signupDate,
+            updateDate: user.updateDate,
             isPushOn: user.isPushOn
         )
     }

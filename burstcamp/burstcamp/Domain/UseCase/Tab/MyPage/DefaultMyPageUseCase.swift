@@ -38,6 +38,20 @@ final class DefaultMyPageUseCase: MyPageUseCase {
         if !isSuccess { throw MyPageUseCaseError.withdrawal }
     }
 
+    // MARK: - 마이페이지 수정
+
+    func canUpdateMyInfo() -> Bool {
+        let updateDate = UserManager.shared.user.updateDate
+        return updateDate.isPassed30Days()
+    }
+
+    func getNextUpdateDate() -> Date {
+        let updateDate = UserManager.shared.user.updateDate
+        return updateDate.after30Days()
+    }
+
+    // MARK: - 설정
+
     func updateUserPushState(userUUID: String, isPushOn: Bool) async throws {
         try await userRepository.updateUserPushState(userUUID: userUUID, isPushOn: isPushOn)
     }

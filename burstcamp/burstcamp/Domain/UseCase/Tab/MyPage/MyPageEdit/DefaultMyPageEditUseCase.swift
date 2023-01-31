@@ -52,6 +52,7 @@ final class DefaultMyPageEditUseCase: MyPageEditUseCase {
     }
 
     func updateUser() async throws {
+        editedUser.setUpdateDate()
         try await updateFirestorageImage(imageData)
         try await userRepository.updateUser(editedUser)
     }
