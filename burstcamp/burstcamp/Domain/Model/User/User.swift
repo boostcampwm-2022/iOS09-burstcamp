@@ -32,6 +32,10 @@ struct User: Codable, Equatable {
     mutating func setBlogURL(_ blogURL: String) {
         self.blogURL = blogURL
     }
+
+    mutating func setUpdateDate() {
+        self.updateDate = Date()
+    }
 }
 
 extension User {
