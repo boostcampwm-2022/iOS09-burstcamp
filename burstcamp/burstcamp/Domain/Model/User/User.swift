@@ -72,7 +72,7 @@ extension User {
         self.blogTitle = blogTitle
         self.scrapFeedUUIDs = []
         self.signupDate = Date()
-        self.updateDate = Date()
+        self.updateDate = Date(timeIntervalSince1970: 0)
         self.isPushOn = false
     }
 
