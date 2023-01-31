@@ -18,8 +18,10 @@ final class DefaultFeedMockUpDataSource: FeedMockUpDataSource {
             return [createMockUpRecommendFeed1(), createMockUpRecommendFeed2(), createMockUpRecommendFeed3()]
         } else if count == 2 {
             return [createMockUpRecommendFeed1(), createMockUpRecommendFeed2()]
-        } else {
+        } else if count == 1 {
             return [createMockUpRecommendFeed1()]
+        } else {
+            return []
         }
     }
 

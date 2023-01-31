@@ -51,8 +51,8 @@ final class DefaultHomeUseCase: HomeUseCase {
     // MARK: RecommendFeed가 없는 경우 버스트 캠프 공지
 
     private func addBurstcampNoticeIfNeed(recommendFeedList: [Feed]) -> [Feed] {
-        let targetCount = 3
-        let noticeFeed = feedRepository.createMockUpRecommendFeedList(count: 3 - recommendFeedList.count)
+        let targetCount = 4
+        let noticeFeed = feedRepository.createMockUpRecommendFeedList(count: targetCount - recommendFeedList.count)
         return recommendFeedList + noticeFeed
     }
 

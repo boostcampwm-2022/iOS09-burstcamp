@@ -11,7 +11,7 @@ import SnapKit
 
 final class HomeView: UIView, ContainCollectionView {
 
-    private let recommendFeedCount = 3
+    private var recommendFeedCount = 3
 
     lazy var collectionView = UICollectionView(
         frame: .zero,
@@ -130,6 +130,7 @@ final class HomeView: UIView, ContainCollectionView {
         let leftLimitOffsetX = startOffsetX + contentSize
         let rightLimitOffsetX = startOffsetX + contentSize * (2 * contentCount + 1).cgFloat
         let currentOffsetX = offset.x
+        print(recommendFeedCount, leftLimitOffsetX, rightLimitOffsetX, currentOffsetX)
         if currentOffsetX <= leftLimitOffsetX || currentOffsetX >= rightLimitOffsetX {
             scrollToCenter()
         }
@@ -137,8 +138,9 @@ final class HomeView: UIView, ContainCollectionView {
 
     private func scrollToCenter() {
         DispatchQueue.main.async { [weak self] in
-            self?.collectionView.scrollToItem(
-                at: IndexPath(row: Constant.recommendFeed + 1, section: 0),
+            guard let self = self else { return }
+            self.collectionView.scrollToItem(
+                at: IndexPath(row: self.recommendFeedCount + 1, section: 0),
                 at: .centeredHorizontally,
                 animated: false
             )
@@ -218,5 +220,11 @@ final class HomeView: UIView, ContainCollectionView {
         case .normal:
             return []
         }
+    }
+}
+
+extension HomeView {
+    func setRecommendFeedCount(_ count: Int) {
+        recommendFeedCount = count
     }
 }

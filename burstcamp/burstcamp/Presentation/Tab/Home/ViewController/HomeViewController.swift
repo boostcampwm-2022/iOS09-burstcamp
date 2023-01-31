@@ -104,8 +104,7 @@ extension HomeViewController {
         output.recentFeed
             .receive(on: DispatchQueue.main)
             .sink { [weak self] homeFeedList in
-                self?.homeView.hideSkeleton()
-                self?.reloadHomeFeedList(homeFeedList: homeFeedList)
+                self?.receiveHomeFeedList(homeFeedList: homeFeedList)
             }
             .store(in: &cancelBag)
 
@@ -163,6 +162,15 @@ extension HomeViewController {
                 }
             }
             .store(in: &cell.cancelBag)
+    }
+
+    // MARK: - bind 내부 함수들 추출
+
+    private func receiveHomeFeedList(homeFeedList: HomeFeedList) {
+        homeView.hideSkeleton()
+        // carousel View를 위한 설정 -> 2개씩 복사 해줬으므로 진짜 개수는 3으로 나눠줘야 함
+        homeView.setRecommendFeedCount(homeFeedList.recommendFeed.count / 3)
+        reloadHomeFeedList(homeFeedList: homeFeedList)
     }
 }
 
