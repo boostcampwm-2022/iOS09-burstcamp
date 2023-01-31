@@ -49,7 +49,6 @@ final class LogInViewModel {
 
         let isUserExist = try await loginUseCase.checkIsExist(userUUID: userUUID)
         if isUserExist {
-            UserManager.shared.addUserListener()
             logInPublisher.send(.moveToTabBarScreen)
         } else {
             logInPublisher.send(.moveToDomainScreen(userNickname: userNickname))
@@ -64,7 +63,6 @@ final class LogInViewModel {
         if !isUserExist {
             try await loginUseCase.createGuest(userUUID: userUUID)
         }
-        UserManager.shared.addUserListener()
         logInPublisher.send(.moveToTabBarScreen)
     }
 }

@@ -69,6 +69,7 @@ final class MyPageViewController: AppleAuthViewController {
 
     private func bind() {
         let input = MyPageViewModel.Input(
+            myInfoEditButtonTap: myPageView.myInfoEditButtonTapPublisher,
             notificationDidSwitch: myPageView.notificationSwitchStatePublisher,
             darkModeDidSwitch: myPageView.darkModeSwitchStatePublisher,
             withdrawDidTap: withdrawalButtonPublisher
@@ -120,15 +121,17 @@ final class MyPageViewController: AppleAuthViewController {
             }
             .store(in: &cancelBag)
 
+        output.myInfoEditButtonTap
+            .sink { [weak self] canEdit in
+                self?.editMyInfoEdit(canEdit: canEdit)
+            }
+            .store(in: &cancelBag)
+
         myPageView.notificationSwitchStatePublisher
             .sink { isOn in
                 let text = isOn ? "알림이 켜졌어요." : "알림이 꺼졌어요."
                 self.showToastMessage(text: text, icon: UIImage(systemName: "bell.fill"))
             }
-            .store(in: &cancelBag)
-
-        myPageView.myInfoEditButtonTapPublisher
-            .sink { _ in self.moveToMyPageEditScreen() }
             .store(in: &cancelBag)
 
         toastMessagePublisher
@@ -185,6 +188,15 @@ final class MyPageViewController: AppleAuthViewController {
             self.myPageView.indicatorView.stopAnimating()
             self.myPageView.loadingLabel.isHidden = true
             self.setUserInteraction(isEnabled: true)
+        }
+    }
+
+    private func editMyInfoEdit(canEdit: Bool) {
+        if canEdit {
+            moveToMyPageEditScreen()
+        } else {
+            let nextUpdateDate = viewModel.getNextUpdateDate().yearMonthDateFormatString
+            showAlert(message: "한 달에 1회 수정 가능해요. 다음 수정 가능 날짜는 \(nextUpdateDate) 이에요.")
         }
     }
 

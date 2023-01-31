@@ -22,6 +22,7 @@ final class MyPageViewModel {
     }
 
     struct Input {
+        let myInfoEditButtonTap: AnyPublisher<Void, Never>
         let notificationDidSwitch: AnyPublisher<Bool, Never>
         let darkModeDidSwitch: AnyPublisher<Bool, Never>
         let withdrawDidTap: PassthroughSubject<Void, Never>
@@ -36,6 +37,7 @@ final class MyPageViewModel {
         var signOutFailMessage = PassthroughSubject<String, Never>()
         var withdrawalStop = PassthroughSubject<Void, Never>()
         var loginProviderPublisher: AnyPublisher<LoginProvider, Never>
+        let myInfoEditButtonTap: AnyPublisher<Bool, Never>
     }
 
     private var cancelBag = Set<AnyCancellable>()
@@ -63,11 +65,18 @@ final class MyPageViewModel {
             }
             .store(in: &cancelBag)
 
+        let myInfoEditButtonTap = input.myInfoEditButtonTap
+            .map { _ in
+                self.canUpdateMyInfo()
+            }
+            .eraseToAnyPublisher()
+
         let output = Output(
             updateUserValue: updateUserValue,
             signOutFailMessage: signOutFailMessage,
             withdrawalStop: withdrawalStop,
-            loginProviderPublisher: loginProviderPublisher.eraseToAnyPublisher()
+            loginProviderPublisher: loginProviderPublisher.eraseToAnyPublisher(),
+            myInfoEditButtonTap: myInfoEditButtonTap
         )
 
         UserManager.shared.userUpdatePublisher
@@ -86,6 +95,10 @@ final class MyPageViewModel {
         } else {
             loginProviderPublisher.send(.github)
         }
+    }
+
+    private func canUpdateMyInfo() -> Bool {
+        return myPageUseCase.canUpdateMyInfo()
     }
 }
 
@@ -108,5 +121,9 @@ extension MyPageViewModel {
             withdrawalStop.send()
             signOutFailMessage.send("탈퇴에 실패했어요.")
         }
+    }
+
+    func getNextUpdateDate() -> Date {
+        return myPageUseCase.getNextUpdateDate()
     }
 }
