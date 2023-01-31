@@ -11,11 +11,11 @@ import { testIsAlgorithmFeed } from './service/test/testAlgorithmFeed.js';
 // Initialize
 if ( !getApps().length ) initializeApp()
 
-export const scheduledUpdateFeedDB = pubsub.schedule('every 30 minutes').onRun(async (context) => {
+export const scheduledUpdateFeedDB = pubsub.schedule('every 30 minutes').timeZone("Asia/Seoul").onRun(async (context) => {
 	updateFeedDB()
 })
 
-export const scheduledUpdateRecommendFeedDB = pubsub.schedule('every monday 00:00').onRun(async (context) => {
+export const scheduledUpdateRecommendFeedDB = pubsub.schedule('every monday 00:00').timeZone("Asia/Seoul").onRun(async (context) => {
 	updateRecommendFeedDB()
 })
 
