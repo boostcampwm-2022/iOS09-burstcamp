@@ -20,6 +20,7 @@ struct UserAPIModel {
     let blogTitle: String
     var scrapFeedUUIDs: [String]
     let signupDate: Date
+    let updateDate: Date
     let isPushOn: Bool
 }
 
@@ -33,9 +34,11 @@ extension UserAPIModel {
         self.ordinalNumber = data["ordinalNumber"] as? Int ?? 7
         self.blogURL = data["blogURL"] as? String ?? ""
         self.blogTitle = data["blogTitle"] as? String ?? ""
-        let timeStampDate = data["signupDate"] as? Timestamp ?? Timestamp()
         self.scrapFeedUUIDs = data["scrapFeedUUIDs"] as? [String] ?? []
-        self.signupDate = timeStampDate.dateValue()
+        let timestampSignupDate = data["signupDate"] as? Timestamp ?? Timestamp()
+        self.signupDate = timestampSignupDate.dateValue()
+        let timestampUpdateDate = data["updateDate"] as? Timestamp ?? Timestamp(date: Date(timeIntervalSince1970: 0))
+        self.updateDate = timestampUpdateDate.dateValue()
         self.isPushOn = data["isPushOn"] as? Bool ?? false
     }
 
@@ -51,6 +54,7 @@ extension UserAPIModel {
             "blogTitle": blogTitle,
             "scrapFeedUUUIDs": scrapFeedUUIDs,
             "signupDate": Timestamp(date: signupDate),
+            "updateDate": Timestamp(date: updateDate),
             "isPushOn": isPushOn
         ]
     }
