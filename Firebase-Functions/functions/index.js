@@ -6,15 +6,16 @@ import { sendNotification } from './service/apnsManager.js'
 import { deleteUserInfo } from './service/withdrawalManager.js'
 import { createMockUpUser } from './service/test/mockUpService.js';
 import { testYouTakBlog } from './service/test/testRSSParsing.js';
+import { testIsAlgorithmFeed } from './service/test/testAlgorithmFeed.js';
 
 // Initialize
 if ( !getApps().length ) initializeApp()
 
-export const scheduledUpdateFeedDB = pubsub.schedule('every 30 minutes').onRun(async (context) => {
+export const scheduledUpdateFeedDB = pubsub.schedule('every 30 minutes').timeZone("Asia/Seoul").onRun(async (context) => {
 	updateFeedDB()
 })
 
-export const scheduledUpdateRecommendFeedDB = pubsub.schedule('every monday 00:00').onRun(async (context) => {
+export const scheduledUpdateRecommendFeedDB = pubsub.schedule('every monday 00:00').timeZone("Asia/Seoul").onRun(async (context) => {
 	updateRecommendFeedDB()
 })
 
@@ -57,6 +58,14 @@ export const deleteMockUpUser = https
 export const testBlogParsing = https
 	.onRequest(async (context) => {
 		await testYouTakBlog()
+		return {
+			isFinish: true
+		}
+})
+
+export const testCheckAlgorithm = https
+	.onRequest(async (context) => {
+		await testIsAlgorithmFeed()
 		return {
 			isFinish: true
 		}

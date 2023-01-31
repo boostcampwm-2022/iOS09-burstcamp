@@ -2,7 +2,7 @@ import { initializeApp, getApps } from 'firebase-admin/app';
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { fetchContent, fetchParsedRSS, fetchParsedRSSList } from './feedAPI.js';
 import { logger } from 'firebase-functions';
-import { convertURL } from '../util.js';
+import { convertURL, isContainBaekJoonLink, isSolvingAlgorithm } from '../util.js';
 import firebase from 'firebase-messaging';
 
 if (!getApps().length) initializeApp()
@@ -81,9 +81,20 @@ async function updateFeedDBFromSingleBlog(parsedRSS, writer) {
  * @param {JSON} feed RSS를 JSON으로 파싱한 정보
  */
 async function createFeedDataIfNeeded(docRef, writer, feedUUID, feed) {
+	if (isSolvingAlgorithm(feed.title)) { 
+		logger.log("알고리즘 문제라 제외됐습니다. - ", feed.title)
+		return
+	}
+
 	const feedInfo = await fetchContent(feed.link)
 	const content = feedInfo.content
 	const thumbnailURL = feedInfo.thumbnailURL
+
+	if (isContainBaekJoonLink(content)) {
+		logger.log("알고리즘 문제라 제외됐습니다. - ", feed.title)
+		return
+	}
+
 	docRef.set({
 		// TODO: User db에서 UUID를 찾아 대입해주기
 		feedUUID: feedUUID,
