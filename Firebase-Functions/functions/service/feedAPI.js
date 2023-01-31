@@ -120,28 +120,3 @@ function makeCompatibleWithMobile(dom) {
   }
   return thumnailURL
 }
-
- /**
-  * 제목에 백준, 프로그래머스 들어가 false
- * @param {String} feed.title
- * @returns {Bool} 
- */
-
-export function isSolvingAlgorithm(title) {
-  let algorithmSite = ["백준", "프로그래머스"]
-  for (let i = 0; i < algorithmSite.length; i++) {
-    if (title.includes(algorithmSite[i])) { return true }
-  }
-  return false
-}
-
- /**
-  * html 내용에 백준 링크가 있다면 false 
- * @param {String} html
- * @returns {Bool} 
- */
-
- export function isContainBaekJoonLink(html) {
-  let baekJoonLink = "https://www.acmicpc.net/"
-  return html.includes(baekJoonLink) ? true : false
-}

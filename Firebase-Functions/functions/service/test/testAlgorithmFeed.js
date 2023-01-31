@@ -1,5 +1,6 @@
 import { logger } from "firebase-functions/v1";
-import { fetchContent, isContainBaekJoonLink, isSolvingAlgorithm } from "../feedAPI.js";
+import { fetchContent } from "../feedAPI.js";
+import { isSolvingAlgorithm, isContainBaekJoonLink } from "../../util.js";
 
 export async function testIsAlgorithmFeed() {
 
