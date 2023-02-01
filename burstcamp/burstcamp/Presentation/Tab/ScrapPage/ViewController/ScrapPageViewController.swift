@@ -19,14 +19,18 @@ final class ScrapPageViewController: UIViewController {
         return view
     }
 
+    private let viewModel: ScrapPageViewModel
+
     private var dataSource: UICollectionViewDiffableDataSource<FeedCellType, Feed>!
     private var collectionViewSnapshot: NSDiffableDataSourceSnapshot<FeedCellType, Feed>!
 
-    private let viewModel: ScrapPageViewModel
-
     let coordinatorPublisher = PassthroughSubject<ScrapPageCoordinatorEvent, Never>()
     private let paginationPublisher = PassthroughSubject<Void, Never>()
+
     private var cancelBag = Set<AnyCancellable>()
+
+    private var isFetching: Bool = false
+    private var isLastFetch: Bool = false
 
     // MARK: - Initializer
 
@@ -68,51 +72,40 @@ final class ScrapPageViewController: UIViewController {
     // MARK: - Methods
 
     private func bind() {
-        guard let refreshControl = scrapPageView.collectionView.refreshControl
-        else { return }
 
-        let viewDidLoadJust = Just(Void()).eraseToAnyPublisher()
+        let viewDidLoadPublisher = createViewDidLoadPublisher()
+        let viewRefreshPublisher = createViewRefreshPublisher()
+        let paginationPublisher = createPaginationPublisher()
 
         let input = ScrapPageViewModel.Input(
-            viewDidLoad: viewDidLoadJust,
-            viewDidRefresh: refreshControl.refreshPublisher,
-            pagination: paginationPublisher.eraseToAnyPublisher()
+            viewDidLoad: viewDidLoadPublisher,
+            viewDidRefresh: viewRefreshPublisher,
+            pagination: paginationPublisher
         )
 
         let output = viewModel.transform(input: input)
 
         output.recentScrapFeed
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] scrapFeedList in
-                self?.refreshScrapFeedList(scrapFeedList: scrapFeedList)
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error): self?.showAlert(message: error.localizedDescription)
+                case .finished: return
+                }
+            } receiveValue: { [weak self] scrapFeedList in
+                self?.handleRecentScrapFeedList(scrapFeedList)
             }
             .store(in: &cancelBag)
 
-        output.moreFeed
+        output.paginateScrapFeed
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] scrapFeedList in
-                self?.reloadScrapFeedList(additional: scrapFeedList)
-            }
-            .store(in: &cancelBag)
-
-        output.showAlert
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] error in
-                self?.showAlert(message: error.localizedDescription)
-            }
-            .store(in: &cancelBag)
-
-        output.hideIndicator
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.scrapPageView.endCollectionViewRefreshing()
-            }
-            .store(in: &cancelBag)
-
-        output.showToast
-            .receive(on: DispatchQueue.main)
-            .sink { message in
-                self.showToastMessage(text: message)
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error): self?.showAlert(message: error.localizedDescription)
+                case .finished: return
+                }
+            } receiveValue: { [weak self] scrapFeedList in
+                self?.handleAdditionalScrapFeedList(scrapFeedList)
             }
             .store(in: &cancelBag)
     }
@@ -130,18 +123,104 @@ final class ScrapPageViewController: UIViewController {
             scrapButtonDidTap: scrapButtonDidTap
         )
 
-        let output = viewModel.transform(cellInput: cellInput, cellCancelBag: &cell.cancelBag)
+        let cellOutput = viewModel.transform(cellInput: cellInput, cellCancelBag: &cell.cancelBag)
 
-        output.scrapSuccess
+        cellOutput.scrapSuccess
             .receive(on: DispatchQueue.main)
-            .sink { updatedFeed in
-                if feedUUID == updatedFeed.feedUUID {
-                    cell.footerView.countLabel.text = updatedFeed.scrapCount.description
-                    cell.footerView.scrapButton.isOn = updatedFeed.isScraped
-                    cell.footerView.scrapButton.isEnabled = true
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error): self?.showAlert(message: error.localizedDescription)
+                case .finished: return
+                }
+            } receiveValue: { [weak self] updateFeed in
+                self?.handleUpdateFeed(updateFeed: updateFeed, cell: cell, feedUUID: feedUUID)
+            }
+            .store(in: &cancelBag)
+    }
+
+    private func createViewDidLoadPublisher() -> AnyPublisher<Void, Never> {
+        return Just(Void())
+            .filter { _ in
+                if !isFetching {
+                    isFetching = true
+                    return true
+                } else {
+                    return false
                 }
             }
-            .store(in: &cell.cancelBag)
+            .eraseToAnyPublisher()
+    }
+
+    private func createViewRefreshPublisher() -> AnyPublisher<Void, Never> {
+        guard let refreshControl = scrapPageView.collectionView.refreshControl else {
+            fatalError("리프레쉬 컨트롤러가 존재하지 않아요.")
+        }
+        return refreshControl.refreshPublisher
+            .filter { _ in
+                self.isLastFetch = false
+                if !self.isFetching {
+                    self.isFetching = true
+                    return true
+                } else {
+                    return false
+                }
+            }
+            .eraseToAnyPublisher()
+    }
+
+    private func createPaginationPublisher() -> AnyPublisher<Void, Never> {
+        return paginationPublisher
+            .filter { _ in
+                if !self.isFetching && !self.isLastFetch {
+                    self.isFetching = true
+                    return true
+                } else {
+                    return false
+                }
+            }
+            .eraseToAnyPublisher()
+    }
+
+    private func handleRecentScrapFeedList(_ scrapFeedList: [Feed]?) {
+        guard let scrapFeedList = scrapFeedList else {
+            showAlert(message: "피드 데이터를 가져오는데 에러가 발생했어요")
+            return
+        }
+
+        if scrapFeedList.isEmpty {
+            isLastFetch = true
+        }
+
+        refreshScrapFeedList(scrapFeedList: scrapFeedList)
+        scrapPageView.endCollectionViewRefreshing()
+        isFetching = false
+    }
+
+    private func handleAdditionalScrapFeedList(_ scrapFeedList: [Feed]?) {
+        guard let scrapFeedList = scrapFeedList else {
+            showAlert(message: "피드 데이터를 가져오는데 에러가 발생했어요")
+            return
+        }
+
+        if scrapFeedList.isEmpty {
+            isLastFetch = true
+        } else {
+            reloadScrapFeedList(additional: scrapFeedList)
+        }
+        isFetching = false
+    }
+
+    private func handleUpdateFeed(updateFeed: Feed?, cell: NormalFeedCell, feedUUID: String) {
+        guard let updateFeed = updateFeed else {
+            showAlert(message: "업데이트할 피드가 없습니다.")
+            return
+        }
+
+        if feedUUID == updateFeed.feedUUID {
+            cell.footerView.countLabel.text = updateFeed.scrapCount.description
+            cell.footerView.scrapButton.isOn = updateFeed.isScraped
+            cell.footerView.scrapButton.isEnabled = true
+        }
     }
 
     private func paginateFeed() {
