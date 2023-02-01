@@ -62,14 +62,14 @@ extension UIViewController {
 
         DispatchQueue.main.async {
             self.view.addSubview(toastMessageLabel)
-        }
 
-        // https://github.com/realm/SwiftLint/issues/3581
-        // swiftlint:disable:next multiline_arguments
-        UIView.animate(withDuration: 2.0, delay: 1.0, options: [.curveEaseOut]) {
-            toastMessageLabel.alpha = 0.0
-        } completion: { _ in
-            toastMessageLabel.removeFromSuperview()
+            // https://github.com/realm/SwiftLint/issues/3581
+            // swiftlint:disable:next multiline_arguments
+            UIView.animate(withDuration: 2.0, delay: 1.0, options: [.curveEaseOut]) {
+                toastMessageLabel.alpha = 0.0
+            } completion: { _ in
+                toastMessageLabel.removeFromSuperview()
+            }
         }
     }
 }
