@@ -41,17 +41,6 @@ final class LogInView: UIView {
         $0.textColor = .systemGray2
     }
 
-    lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView().then {
-        $0.style = .medium
-    }
-
-    lazy var loadingLabel: UILabel = UILabel().then {
-        $0.text = "캠퍼 인증 중"
-        $0.font = .bold12
-        $0.textColor = .dynamicBlack
-        $0.isHidden = true
-    }
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -75,8 +64,6 @@ final class LogInView: UIView {
         addSubview(appleAuthButton)
         addSubview(camperAuthButton)
         addSubview(camperAuthLabel)
-        addSubview(activityIndicator)
-        addSubview(loadingLabel)
     }
 
     private func configureLayout() {
@@ -111,15 +98,6 @@ final class LogInView: UIView {
         camperAuthLabel.snp.makeConstraints {
             $0.top.equalTo(camperAuthButton.snp.bottom).offset(Constant.space12)
             $0.centerX.equalToSuperview()
-        }
-
-        activityIndicator.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
-        }
-
-        loadingLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(activityIndicator.snp.bottom).offset(Constant.space10)
         }
     }
 }

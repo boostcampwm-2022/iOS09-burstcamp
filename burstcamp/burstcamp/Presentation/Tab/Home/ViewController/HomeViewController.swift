@@ -56,10 +56,6 @@ final class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureNavigationBar()
-        showAnimatedActivityIndicatorView(description: "Hello world")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.hideAnimatedActivityIndicatorView()
-        }
     }
 
     private func configureUI() {}

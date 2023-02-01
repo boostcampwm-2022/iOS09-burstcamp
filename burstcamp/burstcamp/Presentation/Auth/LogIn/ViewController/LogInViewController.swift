@@ -43,35 +43,6 @@ final class LogInViewController: AppleAuthViewController {
         bind()
     }
 
-    func showIndicator(text: String = "") {
-        DispatchQueue.main.async {
-            self.logInView.activityIndicator.startAnimating()
-            self.logInView.loadingLabel.isHidden = false
-            self.logInView.loadingLabel.text = text
-            self.setUserInteraction(isEnabled: false)
-        }
-    }
-
-    func hideIndicator() {
-        DispatchQueue.main.async {
-            self.logInView.activityIndicator.stopAnimating()
-            self.logInView.loadingLabel.isHidden = true
-            self.setUserInteraction(isEnabled: true)
-        }
-    }
-
-    func loginWithGithub(code: String) {
-        Task { [weak self] in
-            self?.showIndicator(text: "캠퍼 인증 중이에요")
-            do {
-                try await self?.viewModel.loginWithGithub(code: code)
-            } catch {
-                self?.showAlert(message: error.localizedDescription)
-            }
-            self?.hideIndicator()
-        }
-    }
-
     private func bind() {
 
         let input = LogInViewModel.Input(
@@ -88,10 +59,6 @@ final class LogInViewController: AppleAuthViewController {
 
         output.moveToOtherView
             .sink { [weak self] logInEvent in
-                self?.logInView.activityIndicator.stopAnimating()
-                self?.logInView.loadingLabel.isHidden = true
-                self?.logInView.camperAuthButton.isEnabled = true
-
                 switch logInEvent {
                 case .moveToDomainScreen(let userNickname):
                     self?.coordinatorPublisher.send(.moveToDomainScreen(userNickname: userNickname))
@@ -116,13 +83,29 @@ final class LogInViewController: AppleAuthViewController {
 
     private func loginWithApple(idTokenString: String, nonce: String) {
         Task { [weak self] in
-            self?.showIndicator(text: "로그인 중이에요")
+            self?.showAnimatedActivityIndicatorView(description: "로그인 중이에요")
             do {
                 try await self?.viewModel.loginWithApple(idTokenString: idTokenString, nonce: nonce)
             } catch {
                 self?.showAlert(message: "애플 로그인에 실패했습니다. \(error.localizedDescription)")
             }
-            self?.hideIndicator()
+            self?.hideAnimatedActivityIndicatorView()
+        }
+    }
+}
+
+// MARK: - Scene Delegate에서 호출
+
+extension LogInViewController {
+    func loginWithGithub(code: String) {
+        Task { [weak self] in
+            self?.showAnimatedActivityIndicatorView(description: "캠퍼 인증 중이에요")
+            do {
+                try await self?.viewModel.loginWithGithub(code: code)
+            } catch {
+                self?.showAlert(message: error.localizedDescription)
+            }
+            self?.hideAnimatedActivityIndicatorView()
         }
     }
 }

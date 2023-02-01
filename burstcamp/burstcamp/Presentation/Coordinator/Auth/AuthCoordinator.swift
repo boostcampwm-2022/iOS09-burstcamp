@@ -29,15 +29,6 @@ final class AuthCoordinator: AuthCoordinatorProtocol, GithubLogInCoordinator {
         self.dependencyFactory = dependencyFactory
     }
 
-    func displayIndicator() {
-        guard let logInViewController = navigationController.viewControllers.first(
-            where: { $0 is LogInViewController }) as? LogInViewController
-        else {
-            return
-        }
-        logInViewController.showIndicator()
-    }
-
     func start() {
         let loginViewModel = dependencyFactory.createLoginViewModel()
         let logInViewController = LogInViewController(viewModel: loginViewModel)
