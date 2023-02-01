@@ -19,10 +19,6 @@ final class HomeViewModel {
 
     var recommendFeedList: [Feed] = []
     var normalFeedList: [Feed] = []
-    private var updateFeed: Feed?
-
-    private var isFetching: Bool = false
-    private var isLastFetch: Bool = false
 
     private let homeUseCase: HomeUseCase
 
@@ -41,8 +37,8 @@ final class HomeViewModel {
     }
 
     struct Output {
-        let recentHomeFeedList: AnyPublisher<HomeFeedList, Error>
-        let paginateNormalFeedList: AnyPublisher<[Feed], Error>
+        let recentHomeFeedList: AnyPublisher<HomeFeedList?, Error>
+        let paginateNormalFeedList: AnyPublisher<[Feed]?, Error>
     }
 
     struct CellOutput {
@@ -52,19 +48,14 @@ final class HomeViewModel {
     func transform(input: Input) -> Output {
         let recentHomeFeedList = input.viewDidLoad
             .merge(with: input.viewDidRefresh)
-            .tryMap {  _ in
-                try self.fetchHomeFeedList()
-                return HomeFeedList(
-                    recommendFeed: self.recommendFeedList,
-                    normalFeed: self.normalFeedList
-                )
+            .asyncMap { [weak self] _ in
+                return try await self?.fetchHomeFeedList()
             }
             .eraseToAnyPublisher()
 
         let paginateNormalFeedList = input.pagination
-            .tryMap { _ in
-                try self.paginateNormalFeed()
-                return self.normalFeedList
+            .asyncMap { [weak self] _ in
+                return try await self?.paginateNormalFeed()
             }
             .eraseToAnyPublisher()
 
@@ -76,9 +67,8 @@ final class HomeViewModel {
 
     func transform(cellInput: CellInput, cellCancelBag: inout Set<AnyCancellable>) -> CellOutput {
         let scrapSuccess = cellInput.scrapButtonDidTap
-            .tryMap { [weak self] normalFeedIndex in
-                try self?.scrapFeed(index: normalFeedIndex)
-                return self?.updateFeed
+            .asyncMap { [weak self] normalFeedIndex in
+                return try await self?.scrapFeed(index: normalFeedIndex)
             }
             .eraseToAnyPublisher()
 
@@ -87,62 +77,36 @@ final class HomeViewModel {
         )
     }
 
-    private func fetchHomeFeedList() throws {
-        Task { [weak self] in
-            self?.isLastFetch = false
-            if !isFetching {
-                isFetching = true
-                do {
-                    let homeFeedList = try await self?.homeUseCase.fetchRecentHomeFeedList()
-                    guard let homeFeedList = homeFeedList else {
-                        debugPrint("homeFeedList 언래핑 에러")
-                        return
-                    }
-                    self?.recommendFeedList = homeFeedList.recommendFeed
-                    self?.normalFeedList = homeFeedList.normalFeed
-                } catch {
-                    throw HomeViewModelError.fetchHomeFeedList
-                }
-                isFetching = false
-            }
+    private func fetchHomeFeedList() async throws -> HomeFeedList {
+        do {
+            let homeFeedList = try await homeUseCase.fetchRecentHomeFeedList()
+            self.recommendFeedList = homeFeedList.recommendFeed
+            self.normalFeedList = homeFeedList.normalFeed
+            return homeFeedList
+        } catch {
+            throw HomeViewModelError.fetchHomeFeedList
         }
     }
 
-    private func paginateNormalFeed() throws {
-        Task { [weak self] in
-            if !isFetching && !isLastFetch {
-                isFetching = true
-                do {
-                    let normalFeed = try await self?.homeUseCase.fetchMoreNormalFeed()
-                    guard let normalFeed = normalFeed else {
-                        debugPrint("normalFeed 페이지네이션 언래핑 에러")
-                        return
-                    }
-                    guard !normalFeed.isEmpty else {
-                        isLastFetch = true
-                        return
-                    }
-                    self?.normalFeedList.append(contentsOf: normalFeed)
-                } catch {
-                    throw error
-                }
-                isFetching = false
+    private func paginateNormalFeed() async throws -> [Feed] {
+        do {
+            let normalFeed = try await homeUseCase.fetchMoreNormalFeed()
+            guard !normalFeed.isEmpty else {
+                return []
             }
+            normalFeedList.append(contentsOf: normalFeed)
+            return normalFeed
+        } catch {
+            throw error
         }
     }
 
-    private func scrapFeed(index: Int) throws {
+    private func scrapFeed(index: Int) async throws -> Feed {
         if index < normalFeedList.count {
             let feed = normalFeedList[index]
             let userUUID = UserManager.shared.user.userUUID
-
-            Task { [weak self] in
-                guard let self = self else {
-                    throw HomeViewModelError.feedUpdate
-                }
-                let updatedFeed = try await self.homeUseCase.scrapFeed(feed, userUUID: userUUID)
-                self.updateFeed = updatedFeed
-            }
+            let updatedFeed = try await homeUseCase.scrapFeed(feed, userUUID: userUUID)
+            return updatedFeed
         } else {
             throw HomeViewModelError.feedIndex
         }
@@ -152,7 +116,7 @@ final class HomeViewModel {
 // MARK: - 홈 화면에서 알람 설정을 위한 인터페이스
 
 extension HomeViewModel {
-    func updateUserScrapState(to scrapState: Bool) throws  {
+    func updateUserScrapState(to scrapState: Bool) throws {
         Task { [weak self] in
             do {
                 try await self?.homeUseCase.updateUserPushState(to: scrapState)

@@ -22,13 +22,18 @@ final class HomeViewController: UIViewController {
     }
     private var loadingView: LoadingView!
 
+    private var viewModel: HomeViewModel
+
     private var dataSource: UICollectionViewDiffableDataSource<FeedCellType, DiffableFeed>!
     private var collectionViewSnapShot: NSDiffableDataSourceSnapshot<FeedCellType, DiffableFeed>!
 
-    private var viewModel: HomeViewModel
-    private var cancelBag = Set<AnyCancellable>()
     let coordinatorPublisher = PassthroughSubject<HomeCoordinatorEvent, Never>()
     private let paginationPublisher = PassthroughSubject<Void, Never>()
+
+    private var cancelBag = Set<AnyCancellable>()
+
+    private var isFetching: Bool = false
+    private var isLastFetch: Bool = false
 
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
@@ -88,15 +93,15 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController {
     private func bind() {
-        guard let refreshControl = homeView.collectionView.refreshControl
-        else { return }
 
-        let viewDidLoadJust = Just(Void()).eraseToAnyPublisher()
+        let viewDidLoadJust = createViewDidLoadPublisher()
+        let viewDidRefresh = createRefreshPublisher()
+        let pagination = createPaginationPublisher()
 
         let input = HomeViewModel.Input(
             viewDidLoad: viewDidLoadJust,
-            viewDidRefresh: refreshControl.refreshPublisher,
-            pagination: paginationPublisher.eraseToAnyPublisher()
+            viewDidRefresh: viewDidRefresh,
+            pagination: pagination
         )
 
         let output = viewModel.transform(input: input)
@@ -104,12 +109,13 @@ extension HomeViewController {
         output.recentHomeFeedList
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
+                self?.isFetching = false
                 switch completion {
                 case .failure(let error): self?.showAlert(message: error.localizedDescription)
                 case .finished: return
                 }
             } receiveValue: { [weak self] homeFeedList in
-                self?.reloadHomeFeedList(homeFeedList: homeFeedList)
+                self?.receiveHomeFeedList(homeFeedList: homeFeedList)
             }
             .store(in: &cancelBag)
 
@@ -156,19 +162,75 @@ extension HomeViewController {
 
     // MARK: - bind 내부 함수들 빼줌
 
-    private func receiveHomeFeedList(homeFeedList: HomeFeedList) {
+    private func createViewDidLoadPublisher() -> AnyPublisher<Void, Never> {
+        return Just(Void())
+            .filter { _ in
+                if !isFetching {
+                    isFetching = true
+                    return true
+                } else {
+                    return false
+                }
+            }
+            .eraseToAnyPublisher()
+    }
+
+    private func createRefreshPublisher() -> AnyPublisher<Void, Never> {
+        guard let refreshControl = homeView.collectionView.refreshControl else {
+            fatalError("리프레쉬 컨트롤러가 존재하지 않아요.")
+        }
+        return refreshControl.refreshPublisher
+            .filter { _ in
+                self.isLastFetch = false
+                if !self.isFetching {
+                    self.isFetching = true
+                    return true
+                } else {
+                    return false
+                }
+            }
+            .eraseToAnyPublisher()
+    }
+
+    private func createPaginationPublisher() -> AnyPublisher<Void, Never> {
+        return paginationPublisher
+            .filter { _ in
+                if !self.isFetching && !self.isLastFetch {
+                    self.isFetching = true
+                    return true
+                } else {
+                    return false
+                }
+            }
+            .eraseToAnyPublisher()
+    }
+
+    private func receiveHomeFeedList(homeFeedList: HomeFeedList?) {
         homeView.hideSkeleton()
+        guard let homeFeedList = homeFeedList else {
+            showAlert(message: "피드 데이터를 가져오는데 에러가 발생했어요")
+            return
+        }
         // carousel View를 위한 설정 -> 2개씩 복사 해줬으므로 진짜 개수는 3으로 나눠줘야 함
         homeView.setRecommendFeedCount(homeFeedList.recommendFeed.count / 3)
         reloadHomeFeedList(homeFeedList: homeFeedList)
+        homeView.endCollectionViewRefreshing()
+        isFetching = false
     }
 
-    private func handleAdditionalNormalFeed(_ normalFeed: [Feed]) {
+    private func handleAdditionalNormalFeed(_ normalFeed: [Feed]?) {
+        guard let normalFeed = normalFeed else {
+            showAlert(message: "피드 데이터를 가져오는데 에러가 발생했어요")
+            return
+        }
+
         if normalFeed.isEmpty {
+            isLastFetch = true
             showToastMessage(text: "모든 피드를 불러왔어요")
         } else {
             reloadHomeFeedList(additional: normalFeed)
         }
+        isFetching = false
     }
 
     private func handleUpdateFeed(updateFeed: Feed?, cell: NormalFeedCell, feedUUID: String) {
