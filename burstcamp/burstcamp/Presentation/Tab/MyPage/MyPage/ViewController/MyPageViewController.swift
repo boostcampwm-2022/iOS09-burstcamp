@@ -117,7 +117,7 @@ final class MyPageViewController: AppleAuthViewController {
 
         output.withdrawalStop
             .sink { [weak self] _ in
-                self?.hideIndicator()
+                self?.hideAnimatedActivityIndicatorView()
             }
             .store(in: &cancelBag)
 
@@ -150,7 +150,7 @@ final class MyPageViewController: AppleAuthViewController {
             title: Alert.yes,
             style: .default
         ) { [weak self] _ in
-            self?.showIndicator()
+            self?.showAnimatedActivityIndicatorView()
             self?.withdrawal()
         }
         let cancelAction = UIAlertAction(
@@ -168,29 +168,6 @@ final class MyPageViewController: AppleAuthViewController {
         self.withdrawalButtonPublisher.send(Void())
     }
 
-    private func showIndicator(text: String = "탈퇴 중이에요") {
-        DispatchQueue.main.async {
-            self.myPageView.indicatorView.startAnimating()
-            self.myPageView.loadingLabel.text = text
-            self.myPageView.loadingLabel.isHidden = false
-            self.setUserInteraction(isEnabled: false)
-        }
-    }
-
-    private func updateIndicator(text: String) {
-        DispatchQueue.main.async {
-            self.myPageView.loadingLabel.text = text
-        }
-    }
-
-    private func hideIndicator() {
-        DispatchQueue.main.async {
-            self.myPageView.indicatorView.stopAnimating()
-            self.myPageView.loadingLabel.isHidden = true
-            self.setUserInteraction(isEnabled: true)
-        }
-    }
-
     private func editMyInfoEdit(canEdit: Bool) {
         if canEdit {
             moveToMyPageEditScreen()
@@ -202,14 +179,14 @@ final class MyPageViewController: AppleAuthViewController {
 
     private func withdrawalWithApple(idTokenString: String, nonce: String) {
         Task { [weak self] in
-            self?.updateIndicator(text: "유저 정보 삭제 중")
+            self?.updateActivityOverlayDescriptionLabel("유저 정보 삭제 중")
             do {
                 try await viewModel.withdrawalWithApple(idTokenString: idTokenString, nonce: nonce)
                 self?.moveToAuthFlow()
             } catch {
                 self?.showAlert(message: "애플 로그인에 실패했습니다. \(error.localizedDescription)")
             }
-            self?.hideIndicator()
+            self?.hideAnimatedActivityIndicatorView()
         }
     }
 }
@@ -256,7 +233,7 @@ extension MyPageViewController {
 extension MyPageViewController {
     func withdrawalWithGithub(code: String) {
         Task { [weak self] in
-            updateIndicator(text: "유저 정보 삭제 중")
+            self?.updateActivityOverlayDescriptionLabel("유저 정보 삭제 중")
             do {
                 try await self?.viewModel.withdrawalWithGithub(code: code)
                 self?.moveToAuthFlow()

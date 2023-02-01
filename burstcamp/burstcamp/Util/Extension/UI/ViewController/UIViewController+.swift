@@ -101,6 +101,7 @@ extension UIViewController {
 
 // MARK: - Indicator
 
+// swiftlint:disable private_over_fileprivate
 fileprivate let overlayViewTag: Int = 998
 fileprivate let descriptionLabel: Int = 999
 fileprivate let activityIndicatorViewTag: Int = 1000
@@ -113,20 +114,22 @@ extension UIViewController {
         return view
     }
 
-    func showAnimatedActivityIndicatorView(description: String = "") {
+    public func showAnimatedActivityIndicatorView(description: String = "") {
+        guard !isShowingActivityIndicatorOverlay() else { return }
+
         let overlayView = createOverlayView()
 
         overlayContainerView.addSubview(overlayView)
 
         getActivityIndicatorView()?.startAnimating()
-      getDescriptionLabel()?.text = description
+        getDescriptionLabel()?.text = description
 
         overlayView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
 
-    func hideAnimatedActivityIndicatorView() {
+    public func hideAnimatedActivityIndicatorView() {
         guard let overlayView = getOverlayView(),
               let activityIndicatorView = getActivityIndicatorView(),
               let descriptionLabel = getDescriptionLabel()
@@ -143,6 +146,10 @@ extension UIViewController {
             descriptionLabel.removeFromSuperview()
             overlayView.removeFromSuperview()
         }
+    }
+
+    public func updateActivityOverlayDescriptionLabel(_ text: String) {
+        getDescriptionLabel()?.text = text
     }
 
     private func createOverlayView() -> UIView {

@@ -45,17 +45,6 @@ final class MyPageView: UIView, ContainCollectionView {
         $0.textColor = .systemGray2
     }
 
-    lazy var indicatorView = UIActivityIndicatorView().then {
-        $0.style = .medium
-    }
-
-    lazy var loadingLabel: UILabel = UILabel().then {
-        $0.text = "탈퇴 중이에요"
-        $0.font = .bold12
-        $0.textColor = .dynamicBlack
-        $0.isHidden = true
-    }
-
     lazy var myInfoEditButtonTapPublisher = myInfoEditButton.tapPublisher
     lazy var darkModeSwitchStatePublisher = darkModeSwitch.statePublisher
     lazy var notificationSwitchStatePublisher = notificationSwitch.statePublisher
@@ -102,17 +91,6 @@ final class MyPageView: UIView, ContainCollectionView {
             make.horizontalEdges.equalToSuperview().inset(Constant.Padding.horizontal)
             make.bottom.equalToSuperview()
         }
-
-        addSubview(indicatorView)
-        indicatorView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-        }
-
-        addSubview(loadingLabel)
-        loadingLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(indicatorView.snp.bottom).offset(Constant.space10)
-        }
     }
 
     private func configureCollectionView() {
@@ -132,7 +110,6 @@ final class MyPageView: UIView, ContainCollectionView {
                 )
             }
         )
-
         makeSnapshot()
     }
 
