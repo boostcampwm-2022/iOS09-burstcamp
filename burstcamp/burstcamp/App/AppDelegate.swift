@@ -15,14 +15,14 @@ import FirebaseCore
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    private var bcFireStoreService: BCFirestoreService!
+    private var notificationUseCase: NotificationUseCase!
 
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         FirebaseApp.configure()
-        bcFireStoreService = BCFirestoreService()
+        makeDependency()
         RealmConfig.serialQueue.async {
             FeedRealmDataSource.shared.configure()
         }
@@ -67,10 +67,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
-        let userInfo = response.notification.request.content.userInfo
-        guard let feedUUID = userInfo[NotificationKey.feedUUID] as? String else { return }
-        UserDefaultsManager.save(notificationFeedUUID: feedUUID)
-        NotificationCenter.default.post(name: .Push, object: nil, userInfo: userInfo)
+        notificationUseCase.didReceiveNotification(response: response)
     }
 }
 
@@ -80,17 +77,8 @@ extension AppDelegate: MessagingDelegate {
     private func configureMessaging() {
         Messaging.messaging().delegate = self
         Messaging.messaging().token { token, error in
-            if let token = token,
-               let savedToken = UserDefaultsManager.fcmToken(),
-               token != savedToken {
-                // TODO: 삭제
-                print("현재 UserManager에 있는 userUUID", UserManager.shared.user.userUUID)
-                print("의 토큰 값: ", token)
-                print("저장되어있던 토큰 값: ", savedToken)
-                UserDefaultsManager.save(fcmToken: token)
-                Task { [weak self] in
-                    try await self?.bcFireStoreService.saveFCMToken(token, to: UserManager.shared.user.userUUID)
-                }
+            Task { [weak self] in
+                try await self?.notificationUseCase.saveIfDifferentFromTheStoredToken(fcmToken: token)
             }
         }
     }
@@ -102,12 +90,8 @@ extension AppDelegate: MessagingDelegate {
     ) {
         if let fcmToken = fcmToken {
             print("리프레쉬 fcmToken", fcmToken)
-            if UserManager.shared.user.userUUID.isEmpty {
-                UserDefaultsManager.save(fcmToken: fcmToken)
-            } else {
-                Task { [weak self] in
-                    try await self?.bcFireStoreService.saveFCMToken(fcmToken, to: UserManager.shared.user.userUUID)
-                }
+            Task {
+                try await notificationUseCase.refresh(fcmToken: fcmToken)
             }
         }
     }
@@ -120,5 +104,17 @@ extension AppDelegate {
         UserDefaultsManager.removeAllEtags()
         KeyChainManager.deleteUser()
         KeyChainManager.save(user: UserManager.shared.user)
+    }
+}
+
+extension AppDelegate {
+    func makeDependency() {
+        let userDefaultsService = DefaultUserDefaultsService()
+        let bcFireStoreService = BCFirestoreService()
+        let notificationRepository = DefaultNotificationRepository(
+            userDefaultsService: userDefaultsService,
+            bcFirestoreService: bcFireStoreService
+        )
+        notificationUseCase = DefaultNotificationUseCase(notificationRepository: notificationRepository)
     }
 }
