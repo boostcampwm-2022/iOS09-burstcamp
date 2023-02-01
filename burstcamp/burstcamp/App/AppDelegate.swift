@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             FeedRealmDataSource.shared.configure()
         }
         UserManager.shared.appStart()
+
         print("Auth.auth().currentUser?.uid 값이에오: ", Auth.auth().currentUser?.uid)
         print("키체인에 있던 유저의 UUID 값이에오: ", UserManager.shared.user.userUUID)
         configurePushNotification(application)

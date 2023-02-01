@@ -17,7 +17,7 @@ protocol BCFirebaseAuthServiceProtocol {
 
     func loginWithApple(idTokenString: String, nonce: String) async throws -> String
     func withdrawalWithApple(idTokenString: String, nonce: String) async throws
-    
+
     func signOut() throws
 }
 
