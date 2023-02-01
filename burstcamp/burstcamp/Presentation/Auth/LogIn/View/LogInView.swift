@@ -28,12 +28,9 @@ final class LogInView: UIView {
         $0.font = UIFont.regular14
     }
 
-    let appleAuthButton = AuthButton(
-        text: "Apple로 로그인",
-        image: UIImage(systemName: "apple.logo")?.withTintColor(UIColor.dynamicWhite, renderingMode: .alwaysOriginal)
-    )
+    let appleAuthButton = AuthButton(kind: .apple)
 
-    let camperAuthButton = AuthButton(text: "Github으로 로그인", image: .github)
+    let camperAuthButton = AuthButton(kind: .github)
 
     private lazy var camperAuthLabel: UILabel = UILabel().then {
         $0.text = "Github 로그인을 통해 캠퍼인증을 하고 내 글을 등록할 수 있어요."
