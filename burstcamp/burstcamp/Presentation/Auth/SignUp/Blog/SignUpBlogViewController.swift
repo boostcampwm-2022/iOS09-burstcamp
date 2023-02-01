@@ -48,7 +48,7 @@ final class SignUpBlogViewController: UIViewController {
             .sink { [weak self] _ in
                 let confirmAction = UIAlertAction(title: "예", style: .default) { _ in
                     skipConfirmSubject.send()
-                    self?.showIndicator(indicatorText: "가입 중")
+                    self?.showAnimatedActivityIndicatorView(description: "가입 중")
                 }
                 let cancelAction = UIAlertAction(title: "아니오", style: .destructive)
                 self?.showAlert(
@@ -61,7 +61,7 @@ final class SignUpBlogViewController: UIViewController {
         signUpBlogView.nextButton.tapPublisher
             .sink { [weak self] _ in
                 nextButtonSubject.send()
-                self?.showIndicator(indicatorText: "블로그 이름 확인 중")
+                self?.showAnimatedActivityIndicatorView(description: "블로그 이름 확인 중")
             }
             .store(in: &cancelBag)
 
@@ -85,14 +85,14 @@ final class SignUpBlogViewController: UIViewController {
         output.signUpWithNextButton
             .sink { [weak self] blogTitle in
                 DispatchQueue.main.async {
-                    self?.hideIndicator()
+                    self?.hideAnimatedActivityIndicatorView()
 
                     if blogTitle.isEmpty {
                         self?.showAlert(message: "블로그 주소를 확인해주세요.")
                     } else {
                         let confirmAction = UIAlertAction(title: "네", style: .default) { _ in
                             blogTitleConfirmSubject.send(blogTitle)
-                            self?.showIndicator(indicatorText: "가입 중")
+                            self?.showAnimatedActivityIndicatorView(description: "가입 중")
                         }
                         let cancelAction = UIAlertAction(title: "아니오", style: .destructive)
                         self?.showAlert(
@@ -106,7 +106,8 @@ final class SignUpBlogViewController: UIViewController {
 
         output.signUpWithBlogTitle
             .sink(receiveCompletion: { [weak self] result in
-                self?.hideIndicator()
+                self?.hideAnimatedActivityIndicatorView()
+
                 if case .failure = result {
                     self?.showAlert(message: "회원가입에 실패했습니다.")
                 }
@@ -118,7 +119,8 @@ final class SignUpBlogViewController: UIViewController {
 
         output.signUpWithSkipButton
             .sink(receiveCompletion: { [weak self] result in
-                self?.hideIndicator()
+                self?.hideAnimatedActivityIndicatorView()
+
                 if case .failure = result {
                     self?.showAlert(message: "회원가입에 실패했습니다.")
                 }
@@ -127,24 +129,5 @@ final class SignUpBlogViewController: UIViewController {
                 self?.coordinatorPublisher.send(.moveToTabBarFlow)
             })
             .store(in: &cancelBag)
-    }
-
-    private func showIndicator(indicatorText: String = "") {
-        DispatchQueue.main.async {
-            self.signUpBlogView.activityIndicator.startAnimating()
-            self.signUpBlogView.indicatorLabel.isHidden = false
-            self.signUpBlogView.indicatorLabel.text = indicatorText
-            self.signUpBlogView.nextButton.isEnabled = false
-            self.setUserInteraction(isEnabled: false)
-        }
-    }
-
-    private func hideIndicator() {
-        DispatchQueue.main.async {
-            self.signUpBlogView.activityIndicator.stopAnimating()
-            self.signUpBlogView.indicatorLabel.isHidden = true
-            self.signUpBlogView.nextButton.isEnabled = true
-            self.setUserInteraction(isEnabled: true)
-        }
     }
 }

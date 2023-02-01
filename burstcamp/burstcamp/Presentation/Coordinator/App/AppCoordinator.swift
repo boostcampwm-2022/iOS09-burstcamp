@@ -37,15 +37,6 @@ final class AppCoordinator: AppCoordinatorProtocol {
         navigationController.dismiss(animated: true)
     }
 
-    func displayIndicator() {
-        guard let authCoordinator = childCoordinators.first(
-            where: { $0 is AuthCoordinator }) as? AuthCoordinator
-        else {
-            return
-        }
-        authCoordinator.displayIndicator()
-    }
-
     func start() {
         animateLoadingView()
         let loginUseCase = dependencyFactory.createLoginUseCase()

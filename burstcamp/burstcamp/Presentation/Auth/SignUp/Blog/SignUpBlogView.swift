@@ -59,16 +59,6 @@ final class SignUpBlogView: UIView {
         $0.alpha = 0.3
     }
 
-    lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView().then {
-        $0.style = .medium
-    }
-
-    lazy var indicatorLabel: UILabel = UILabel().then {
-        $0.text = "가입 중"
-        $0.font = .bold12
-        $0.isHidden = true
-    }
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -89,8 +79,6 @@ final class SignUpBlogView: UIView {
         addSubview(subLabel)
         addSubview(blogTextField)
         addSubview(skipButton)
-        addSubview(activityIndicator)
-        addSubview(indicatorLabel)
     }
 
     private func configureLayout() {
@@ -121,15 +109,6 @@ final class SignUpBlogView: UIView {
 
         nextButton.snp.makeConstraints {
             $0.height.equalTo(Constant.space48)
-        }
-
-        activityIndicator.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
-        }
-
-        indicatorLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(activityIndicator.snp.bottom).offset(Constant.space10)
         }
     }
 }

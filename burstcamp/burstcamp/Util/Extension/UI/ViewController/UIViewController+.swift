@@ -7,6 +7,20 @@
 
 import UIKit
 
+import SnapKit
+import Then
+
+// MARK: - Interaction
+
+extension UIViewController {
+    func setUserInteraction(isEnabled: Bool) {
+        view.isUserInteractionEnabled = isEnabled
+        navigationController?.view.isUserInteractionEnabled = isEnabled
+    }
+}
+
+// MARK: Toast
+
 extension UIViewController {
 
     var toastFrame: CGRect {
@@ -58,7 +72,11 @@ extension UIViewController {
             toastMessageLabel.removeFromSuperview()
         }
     }
+}
 
+// MARK: - Alert
+
+extension UIViewController {
     func showAlert(title: String = "", message: String, alertActions: [UIAlertAction] = []) {
         let sheet = UIAlertController(
             title: title,
@@ -79,9 +97,111 @@ extension UIViewController {
             self.present(sheet, animated: true)
         }
     }
+}
 
-    func setUserInteraction(isEnabled: Bool) {
-        view.isUserInteractionEnabled = isEnabled
-        navigationController?.view.isUserInteractionEnabled = isEnabled
+// MARK: - Indicator
+
+// swiftlint:disable private_over_fileprivate
+fileprivate let overlayViewTag: Int = 998
+fileprivate let descriptionLabel: Int = 999
+fileprivate let activityIndicatorViewTag: Int = 1000
+
+extension UIViewController {
+    private var overlayContainerView: UIView {
+        if let navigationView: UIView = navigationController?.view {
+            return navigationView
+        }
+        return view
+    }
+
+    public func showAnimatedActivityIndicatorView(description: String = "") {
+        guard !isShowingActivityIndicatorOverlay() else { return }
+
+        let overlayView = createOverlayView()
+
+        overlayContainerView.addSubview(overlayView)
+
+        getActivityIndicatorView()?.startAnimating()
+        getDescriptionLabel()?.text = description
+
+        overlayView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
+
+    public func hideAnimatedActivityIndicatorView() {
+        guard let overlayView = getOverlayView(),
+              let activityIndicatorView = getActivityIndicatorView(),
+              let descriptionLabel = getDescriptionLabel()
+        else {
+            return
+        }
+
+        // swiftlint:disable multiline_arguments
+        UIView.animate(withDuration: 0.2) {
+            overlayView.alpha = 0.0
+            activityIndicatorView.stopAnimating()
+        } completion: { _ in
+            activityIndicatorView.removeFromSuperview()
+            descriptionLabel.removeFromSuperview()
+            overlayView.removeFromSuperview()
+        }
+    }
+
+    public func updateActivityOverlayDescriptionLabel(_ text: String) {
+        getDescriptionLabel()?.text = text
+    }
+
+    private func createOverlayView() -> UIView {
+        let overlayView = UIView().then {
+            $0.layer.backgroundColor = UIColor.black.cgColor.copy(alpha: 0.3)
+            $0.tag = overlayViewTag
+        }
+
+        let activityIndicatorView = createActivityIndicatorView()
+        let descriptionLabel = createDescriptionLabel()
+
+        overlayView.addSubViews([activityIndicatorView, descriptionLabel])
+
+        activityIndicatorView.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+        }
+
+        descriptionLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(activityIndicatorView.snp.bottom).offset(Constant.space10)
+        }
+
+        return overlayView
+    }
+
+    private func createDescriptionLabel() -> UILabel {
+        return UILabel().then {
+            $0.font = .bold12
+            $0.textColor = .dynamicBlack
+            $0.tag = descriptionLabel
+        }
+    }
+
+    private func createActivityIndicatorView() -> UIActivityIndicatorView {
+        return UIActivityIndicatorView(style: .medium).then {
+            $0.tag = activityIndicatorViewTag
+        }
+    }
+
+    private func isShowingActivityIndicatorOverlay() -> Bool {
+        return getOverlayView() != nil && getActivityIndicatorView() != nil && getDescriptionLabel() != nil
+    }
+
+    private func getOverlayView() -> UIView? {
+        return self.overlayContainerView.viewWithTag(overlayViewTag)
+    }
+
+    private func getActivityIndicatorView() -> UIActivityIndicatorView? {
+        return self.overlayContainerView.viewWithTag(activityIndicatorViewTag) as? UIActivityIndicatorView
+    }
+
+    private func getDescriptionLabel() -> UILabel? {
+        return self.overlayContainerView.viewWithTag(descriptionLabel) as? UILabel
     }
 }
