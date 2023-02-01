@@ -17,6 +17,8 @@ protocol BCFirebaseAuthServiceProtocol {
 
     func loginWithApple(idTokenString: String, nonce: String) async throws -> String
     func withdrawalWithApple(idTokenString: String, nonce: String) async throws
+    
+    func signOut() throws
 }
 
 final class BCFirebaseAuthService: BCFirebaseAuthServiceProtocol {
@@ -55,6 +57,10 @@ final class BCFirebaseAuthService: BCFirebaseAuthServiceProtocol {
         let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
         try await auth.currentUser?.reauthenticate(with: credential)
         try await auth.currentUser?.delete()
+        try auth.signOut()
+    }
+
+    func signOut() throws {
         try auth.signOut()
     }
 }
