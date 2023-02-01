@@ -7,6 +7,7 @@
 
 import Foundation
 
+// TODO: 삭제될 아이입니다.
 struct UserDefaultsManager {
 
     private static let appearanceKey = "AppearanceKey"
