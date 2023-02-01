@@ -15,10 +15,10 @@ final class SignUpBlogViewController: UIViewController {
         return view
     }
 
+    private let viewModel: SignUpBlogViewModel
+
     var coordinatorPublisher = PassthroughSubject<AppCoordinatorEvent, Never>()
     private var cancelBag = Set<AnyCancellable>()
-
-    private let viewModel: SignUpBlogViewModel
 
     init(viewModel: SignUpBlogViewModel) {
         self.viewModel = viewModel
@@ -42,7 +42,6 @@ final class SignUpBlogViewController: UIViewController {
         let nextButtonSubject = PassthroughSubject<Void, Never>()
         let skipConfirmSubject = PassthroughSubject<Void, Never>()
         let blogTitleConfirmSubject = PassthroughSubject<String, Never>()
-        let saveFCMToken = PassthroughSubject<Void, Never>()
 
         signUpBlogView.skipButton.tapPublisher
             .sink { [weak self] _ in
@@ -69,8 +68,7 @@ final class SignUpBlogViewController: UIViewController {
             blogAddressTextFieldDidEdit: signUpBlogView.blogTextField.textPublisher,
             nextButtonDidTap: nextButtonSubject,
             skipConfirmDidTap: skipConfirmSubject,
-            blogTitleConfirmDidTap: blogTitleConfirmSubject,
-            saveFCMToken: saveFCMToken
+            blogTitleConfirmDidTap: blogTitleConfirmSubject
         )
 
         let output = viewModel.transform(input: input)
@@ -112,7 +110,6 @@ final class SignUpBlogViewController: UIViewController {
                     self?.showAlert(message: "회원가입에 실패했습니다.")
                 }
             }, receiveValue: { [weak self] _ in
-                saveFCMToken.send()
                 self?.coordinatorPublisher.send(.moveToTabBarFlow)
             })
             .store(in: &cancelBag)
@@ -125,7 +122,6 @@ final class SignUpBlogViewController: UIViewController {
                     self?.showAlert(message: "회원가입에 실패했습니다.")
                 }
             }, receiveValue: { [weak self] _ in
-                saveFCMToken.send()
                 self?.coordinatorPublisher.send(.moveToTabBarFlow)
             })
             .store(in: &cancelBag)
