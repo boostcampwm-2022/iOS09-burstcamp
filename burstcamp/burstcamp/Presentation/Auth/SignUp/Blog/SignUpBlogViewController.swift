@@ -48,6 +48,7 @@ final class SignUpBlogViewController: UIViewController {
                 let confirmAction = UIAlertAction(title: "예", style: .default) { _ in
                     skipConfirmSubject.send()
                     self?.showAnimatedActivityIndicatorView(description: "가입 중")
+                    self?.disableSignupButton()
                 }
                 let cancelAction = UIAlertAction(title: "아니오", style: .destructive)
                 self?.showAlert(
@@ -61,6 +62,7 @@ final class SignUpBlogViewController: UIViewController {
             .sink { [weak self] _ in
                 nextButtonSubject.send()
                 self?.showAnimatedActivityIndicatorView(description: "블로그 이름 확인 중")
+                self?.disableSignupButton()
             }
             .store(in: &cancelBag)
 
@@ -105,12 +107,13 @@ final class SignUpBlogViewController: UIViewController {
         output.signUpWithBlogTitle
             .sink(receiveCompletion: { [weak self] result in
                 self?.hideAnimatedActivityIndicatorView()
-
+                self?.enableSignupButton()
                 if case .failure = result {
                     self?.showAlert(message: "회원가입에 실패했습니다.")
                 }
             }, receiveValue: { [weak self] _ in
                 self?.hideAnimatedActivityIndicatorView()
+                self?.enableSignupButton()
                 self?.coordinatorPublisher.send(.moveToTabBarFlow)
             })
             .store(in: &cancelBag)
@@ -118,14 +121,25 @@ final class SignUpBlogViewController: UIViewController {
         output.signUpWithSkipButton
             .sink(receiveCompletion: { [weak self] result in
                 self?.hideAnimatedActivityIndicatorView()
-
+                self?.enableSignupButton()
                 if case .failure = result {
                     self?.showAlert(message: "회원가입에 실패했습니다.")
                 }
             }, receiveValue: { [weak self] _ in
                 self?.hideAnimatedActivityIndicatorView()
+                self?.enableSignupButton()
                 self?.coordinatorPublisher.send(.moveToTabBarFlow)
             })
             .store(in: &cancelBag)
+    }
+
+    private func enableSignupButton() {
+        signUpBlogView.skipButton.isEnabled = true
+        signUpBlogView.nextButton.isEnabled = true
+    }
+    
+    private func disableSignupButton() {
+        signUpBlogView.skipButton.isEnabled = false
+        signUpBlogView.nextButton.isEnabled = false
     }
 }
