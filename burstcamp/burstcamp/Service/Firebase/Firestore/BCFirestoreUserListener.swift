@@ -29,7 +29,7 @@ final class BCFirestoreUserListener {
         let userPath = FirestoreCollection.user.path
         let documentReference = firestoreService.getDocumentReference(userPath, document: userUUID)
 
-        self.userListener = documentReference.addSnapshotListener{ [weak self] documentSnapshot, error in
+        self.userListener = documentReference.addSnapshotListener { [weak self] documentSnapshot, error in
             if let error = error {
                 self?.userListenerPublisher.send(completion: .failure(error))
             }
