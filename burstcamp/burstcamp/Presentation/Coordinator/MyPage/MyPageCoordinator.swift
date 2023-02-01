@@ -107,6 +107,6 @@ extension MyPageCoordinator {
         toastMessage: String
     ) {
         navigationController.popViewController(animated: true)
-        myPageViewController.toastMessagePublisher.send(toastMessage)
+        myPageViewController.showEditCompleteToastMessage(message: toastMessage)
     }
 }

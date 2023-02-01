@@ -135,7 +135,7 @@ final class ScrapPageViewController: UIViewController {
             } receiveValue: { [weak self] updateFeed in
                 self?.handleUpdateFeed(updateFeed: updateFeed, cell: cell, feedUUID: feedUUID)
             }
-            .store(in: &cancelBag)
+        .store(in: &cancelBag)
     }
 
     private func createViewDidLoadPublisher() -> AnyPublisher<Void, Never> {

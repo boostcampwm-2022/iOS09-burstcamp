@@ -110,6 +110,7 @@ final class SignUpBlogViewController: UIViewController {
                     self?.showAlert(message: "회원가입에 실패했습니다.")
                 }
             }, receiveValue: { [weak self] _ in
+                self?.hideAnimatedActivityIndicatorView()
                 self?.coordinatorPublisher.send(.moveToTabBarFlow)
             })
             .store(in: &cancelBag)
@@ -122,6 +123,7 @@ final class SignUpBlogViewController: UIViewController {
                     self?.showAlert(message: "회원가입에 실패했습니다.")
                 }
             }, receiveValue: { [weak self] _ in
+                self?.hideAnimatedActivityIndicatorView()
                 self?.coordinatorPublisher.send(.moveToTabBarFlow)
             })
             .store(in: &cancelBag)

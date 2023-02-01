@@ -12,10 +12,7 @@ final class MyPageViewModel {
 
     private let myPageUseCase: MyPageUseCase
 
-    private var updateUserValue = CurrentValueSubject<User, Never>(UserManager.shared.user)
-    private var loginProviderPublisher = PassthroughSubject<LoginProvider, Never>()
-    private var withdrawalStop = PassthroughSubject<Void, Never>()
-    private var signOutFailMessage = PassthroughSubject<String, Never>()
+    private var user = UserManager.shared.user
 
     init(myPageUseCase: MyPageUseCase) {
         self.myPageUseCase = myPageUseCase
@@ -29,41 +26,28 @@ final class MyPageViewModel {
     }
 
     struct Output {
-        var updateUserValue = CurrentValueSubject<User, Never>(UserManager.shared.user)
-        var darkModeInitialValue = Just<Appearance>(DarkModeManager.currentAppearance)
-        var appVersionValue = Just<String>(
-            Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-        )
-        var signOutFailMessage = PassthroughSubject<String, Never>()
-        var withdrawalStop = PassthroughSubject<Void, Never>()
-        var loginProviderPublisher: AnyPublisher<LoginProvider, Never>
-        let myInfoEditButtonTap: AnyPublisher<Bool, Never>
+        let updateUserValue: AnyPublisher<User, Error>
+        let myInfoEdit: AnyPublisher<Bool, Never>
+        let notificationValue: AnyPublisher<Bool, Error>
+        let darkModeValue: AnyPublisher<Appearance, Never>
+        let loginProvider: AnyPublisher<LoginProvider, Never>
+        let appVersionValue: AnyPublisher<String, Never>
     }
 
-    private var cancelBag = Set<AnyCancellable>()
-
     func transform(input: Input) -> Output {
-        input.notificationDidSwitch
-            .sink { isOn in
-                let userUUID = UserManager.shared.user.userUUID
-                Task { [weak self] in
-                    try await self?.myPageUseCase.updateUserPushState(userUUID: userUUID, isPushOn: isOn)
-                }
-            }
-            .store(in: &cancelBag)
 
-        input.darkModeDidSwitch
-            .compactMap { Appearance.appearance(isOn: $0) }
-            .sink { appearance in
-                self.myPageUseCase.updateUserDarkModeState(appearance: appearance)
-            }
-            .store(in: &cancelBag)
+        let viewDidLoad = Just(user)
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
 
-        input.withdrawDidTap
-            .sink { [weak self] _ in
-                self?.sendUserProvider()
+        let updateUserValue = UserManager.shared.userUpdatePublisher
+            .merge(with: viewDidLoad)
+            .tryMap { user in
+                self.myPageUseCase.updateLocalUser(user)
+                self.user = user
+                return user
             }
-            .store(in: &cancelBag)
+            .eraseToAnyPublisher()
 
         let myInfoEditButtonTap = input.myInfoEditButtonTap
             .map { _ in
@@ -71,56 +55,69 @@ final class MyPageViewModel {
             }
             .eraseToAnyPublisher()
 
+        let notificationValue = input.notificationDidSwitch
+            .asyncMap { [weak self] isOn in
+                let userUUID = UserManager.shared.user.userUUID
+                try await self?.myPageUseCase.updateUserPushState(userUUID: userUUID, isPushOn: isOn)
+                return isOn
+            }
+            .eraseToAnyPublisher()
+
+        let initialDarkModeValue = Just(DarkModeManager.currentAppearance)
+
+        let darkModeValue = input.darkModeDidSwitch
+            .compactMap { isOn in
+                let appearance = Appearance.appearance(isOn: isOn)
+                self.myPageUseCase.updateUserDarkModeState(appearance: appearance)
+                return appearance
+            }
+            .merge(with: initialDarkModeValue)
+            .eraseToAnyPublisher()
+
+        let loginProvider = input.withdrawDidTap
+            .map { _ in
+                self.createLoginProvider()
+            }
+            .eraseToAnyPublisher()
+
+        let appVersionValue = Just(getAppVersion()).eraseToAnyPublisher()
+
         let output = Output(
             updateUserValue: updateUserValue,
-            signOutFailMessage: signOutFailMessage,
-            withdrawalStop: withdrawalStop,
-            loginProviderPublisher: loginProviderPublisher.eraseToAnyPublisher(),
-            myInfoEditButtonTap: myInfoEditButtonTap
+            myInfoEdit: myInfoEditButtonTap,
+            notificationValue: notificationValue,
+            darkModeValue: darkModeValue,
+            loginProvider: loginProvider,
+            appVersionValue: appVersionValue
         )
-
-        UserManager.shared.userUpdatePublisher
-            .sink { [weak self] user in
-                self?.myPageUseCase.updateLocalUser(user)
-                self?.updateUserValue.send(user)
-            }
-            .store(in: &cancelBag)
 
         return output
     }
 
-    private func sendUserProvider() {
-        if updateUserValue.value.domain == .guest {
-            loginProviderPublisher.send(.apple)
+    private func createLoginProvider() -> LoginProvider {
+        if user.domain == .guest {
+            return .apple
         } else {
-            loginProviderPublisher.send(.github)
+            return .github
         }
     }
 
     private func canUpdateMyInfo() -> Bool {
         return myPageUseCase.canUpdateMyInfo()
     }
+
+    private func getAppVersion() -> String {
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+    }
 }
 
 extension MyPageViewModel {
     func withdrawalWithGithub(code: String) async throws {
-        do {
-            try await myPageUseCase.withdrawalWithGithub(code: code)
-        } catch {
-            print(error.localizedDescription)
-            withdrawalStop.send()
-            signOutFailMessage.send("탈퇴에 실패했어요.")
-        }
+        try await myPageUseCase.withdrawalWithGithub(code: code)
     }
 
     func withdrawalWithApple(idTokenString: String, nonce: String) async throws {
-        do {
-            try await myPageUseCase.withdrawalWithApple(idTokenString: idTokenString, nonce: nonce)
-        } catch {
-            print(error.localizedDescription)
-            withdrawalStop.send()
-            signOutFailMessage.send("탈퇴에 실패했어요.")
-        }
+        try await myPageUseCase.withdrawalWithApple(idTokenString: idTokenString, nonce: nonce)
     }
 
     func getNextUpdateDate() -> Date {

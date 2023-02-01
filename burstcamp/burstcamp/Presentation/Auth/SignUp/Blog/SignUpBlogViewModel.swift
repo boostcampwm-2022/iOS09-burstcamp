@@ -102,7 +102,7 @@ final class SignUpBlogViewModel {
                     }
 
                     if blogTitle.isEmpty { assert(user.blogURL.isEmpty) }
-
+                    try await self?.signUpUseCase.signUp(user)
                     self?.saveFCMToken()
                     promise(.success(user))
                 } catch {

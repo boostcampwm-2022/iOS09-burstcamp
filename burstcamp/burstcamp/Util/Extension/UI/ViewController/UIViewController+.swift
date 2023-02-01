@@ -45,22 +45,22 @@ extension UIViewController {
         text: String,
         icon: UIImage? = UIImage(systemName: "eyes.inverse")
     ) {
-        let toastMessageLabel = DefaultImageLabel(
-            icon: icon,
-            text: " \(text)",
-            frame: toastFrame,
-            iconBounds: toastIconBounds,
-            iconColor: .white,
-            font: .extraBold16,
-            textColor: .white
-        )
-        toastMessageLabel.textAlignment = .center
-        toastMessageLabel.alpha = 1.0
-        toastMessageLabel.backgroundColor = .systemGray2
-        toastMessageLabel.layer.cornerRadius = Constant.CornerRadius.radius8.cgFloat
-        toastMessageLabel.clipsToBounds = true
-
         DispatchQueue.main.async {
+            let toastMessageLabel = DefaultImageLabel(
+                icon: icon,
+                text: " \(text)",
+                frame: self.toastFrame,
+                iconBounds: self.toastIconBounds,
+                iconColor: .white,
+                font: .extraBold16,
+                textColor: .white
+            )
+            toastMessageLabel.textAlignment = .center
+            toastMessageLabel.alpha = 1.0
+            toastMessageLabel.backgroundColor = .systemGray2
+            toastMessageLabel.layer.cornerRadius = Constant.CornerRadius.radius8.cgFloat
+            toastMessageLabel.clipsToBounds = true
+
             self.view.addSubview(toastMessageLabel)
 
             // https://github.com/realm/SwiftLint/issues/3581
@@ -103,7 +103,7 @@ extension UIViewController {
 
 // swiftlint:disable private_over_fileprivate
 fileprivate let overlayViewTag: Int = 998
-fileprivate let descriptionLabel: Int = 999
+fileprivate let descriptionLabelTag: Int = 999
 fileprivate let activityIndicatorViewTag: Int = 1000
 
 extension UIViewController {
@@ -138,13 +138,15 @@ extension UIViewController {
         }
 
         // swiftlint:disable multiline_arguments
-        UIView.animate(withDuration: 0.2) {
-            overlayView.alpha = 0.0
-            activityIndicatorView.stopAnimating()
-        } completion: { _ in
-            activityIndicatorView.removeFromSuperview()
-            descriptionLabel.removeFromSuperview()
-            overlayView.removeFromSuperview()
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.2) {
+                overlayView.alpha = 0.0
+                activityIndicatorView.stopAnimating()
+            } completion: { _ in
+                activityIndicatorView.removeFromSuperview()
+                descriptionLabel.removeFromSuperview()
+                overlayView.removeFromSuperview()
+            }
         }
     }
 
@@ -179,7 +181,7 @@ extension UIViewController {
         return UILabel().then {
             $0.font = .bold12
             $0.textColor = .dynamicBlack
-            $0.tag = descriptionLabel
+            $0.tag = descriptionLabelTag
         }
     }
 
@@ -202,6 +204,6 @@ extension UIViewController {
     }
 
     private func getDescriptionLabel() -> UILabel? {
-        return self.overlayContainerView.viewWithTag(descriptionLabel) as? UILabel
+        return self.overlayContainerView.viewWithTag(descriptionLabelTag) as? UILabel
     }
 }

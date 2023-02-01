@@ -50,13 +50,13 @@ final class ScrapPageViewModel {
 
         let recentScrapFeedPublisher = input.viewDidLoad
             .merge(with: input.viewDidRefresh)
-            .asyncMap{ [weak self] _ in
+            .asyncMap { [weak self] _ in
                 try await self?.fetchRecentScrapFeed()
             }
             .eraseToAnyPublisher()
 
         let paginationPublisher = input.pagination
-            .asyncMap{ [weak self] _ in
+            .asyncMap { [weak self] _ in
                 try await self?.paginateScrapFeed()
             }
             .eraseToAnyPublisher()
@@ -69,7 +69,7 @@ final class ScrapPageViewModel {
 
     func transform(cellInput: CellInput, cellCancelBag: inout Set<AnyCancellable>) -> CellOutput {
         let scrapSuccessPublisher = cellInput.scrapButtonDidTap
-            .asyncMap{ [weak self] feedUUID in
+            .asyncMap { [weak self] feedUUID in
                 try await self?.scrapFeed(feedUUID: feedUUID)
             }
             .eraseToAnyPublisher()

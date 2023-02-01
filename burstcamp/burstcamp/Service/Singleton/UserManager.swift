@@ -15,7 +15,7 @@ final class UserManager {
     private(set) var user = User(dictionary: [:])
     private let bCFirestoreUserListener = BCFirestoreUserListener()
     private let bcFirebaseAuthService = BCFirebaseAuthService()
-    let userUpdatePublisher = PassthroughSubject<User, Never>()
+    let userUpdatePublisher = PassthroughSubject<User, Error>()
 
     private var cancelBag = Set<AnyCancellable>()
 
@@ -38,9 +38,13 @@ final class UserManager {
     func addUserListener() {
         if user.userUUID.isEmpty { fatalError("Listenr를 위한 UserUUID가 없음") }
         bCFirestoreUserListener.userPublisher(userUUID: user.userUUID)
-            .sink { error in
-                fatalError("유저 정보를 불러오는데 실패 \(error)")
-            } receiveValue: { [weak self] userAPIModel in
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error): self?.userUpdatePublisher.send(completion: .failure(error))
+                case .finished: return
+                }
+            }
+            receiveValue: { [weak self] userAPIModel in
                 let user = User(userAPIModel: userAPIModel)
                 self?.user = user
                 self?.userUpdatePublisher.send(user)
