@@ -152,11 +152,6 @@
 		B572EF7A2945D81D00A9413C /* Publisher+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EF792945D81D00A9413C /* Publisher+Extension.swift */; };
 		B572EF812945E19C00A9413C /* Sequence+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EF802945E19C00A9413C /* Sequence+Async.swift */; };
 		B572EF832945E1CA00A9413C /* Publisher+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EF822945E1CA00A9413C /* Publisher+Async.swift */; };
-		B572EFA129479D1500A9413C /* FeedRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EFA029479D1500A9413C /* FeedRealmModel.swift */; };
-		B572EFA329479FEC00A9413C /* FeedWriterRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EFA229479FEC00A9413C /* FeedWriterRealmModel.swift */; };
-		B572F01C2948688000A9413C /* Feed+RealmCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572F01B2948688000A9413C /* Feed+RealmCompatible.swift */; };
-		B572F01E29486C0500A9413C /* FeedWriter+RealmCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572F01D29486C0500A9413C /* FeedWriter+RealmCompatible.swift */; };
-		B572F0202948768100A9413C /* FeedRealmDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572F01F2948768100A9413C /* FeedRealmDataSource.swift */; };
 		B597F9552935B94B0022D3E6 /* DefaultToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */; };
 		B59EDAD529408DAF00D451CC /* BCResource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59EDAD429408D8000D451CC /* BCResource.framework */; };
 		B59EDAD629408DAF00D451CC /* BCResource.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B59EDAD429408D8000D451CC /* BCResource.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -166,15 +161,12 @@
 		B5BA27832927AEC600BDCE08 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = B5BA27822927AEC600BDCE08 /* FirebaseMessaging */; };
 		B5BA27852927AEC600BDCE08 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = B5BA27842927AEC600BDCE08 /* FirebaseStorage */; };
 		B5BA27872927AEF600BDCE08 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5BA27862927AEF600BDCE08 /* GoogleService-Info.plist */; };
-		B5BC81BD2945BD500077BF29 /* FeedSingletonDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BC81BC2945BD500077BF29 /* FeedSingletonDataSource.swift */; };
-		B5BC81BF2945BFA30077BF29 /* FeedRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BC81BE2945BFA30077BF29 /* FeedRemoteDataSource.swift */; };
 		B5DAD679292E4C6800C4A126 /* FeedDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD674292E4C6800C4A126 /* FeedDetailViewModel.swift */; };
 		B5DAD67A292E4C6800C4A126 /* FeedDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD676292E4C6800C4A126 /* FeedDetailView.swift */; };
 		B5DAD67B292E4C6800C4A126 /* FeedDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD678292E4C6800C4A126 /* FeedDetailViewController.swift */; };
 		B5DAD681292E58BF00C4A126 /* DefaultMultilLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD680292E58BF00C4A126 /* DefaultMultilLineLabel.swift */; };
 		B5E0D94C292F750D001727F5 /* FeedContentWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E0D94B292F750D001727F5 /* FeedContentWebView.swift */; };
 		B5F4B036293CC0B300947250 /* FirestoreCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F4B035293CC0B300947250 /* FirestoreCollection.swift */; };
-		B5FF71462948EDB8008E69F2 /* FeedLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FF71452948EDB8008E69F2 /* FeedLocalDataSource.swift */; };
 		D8095C69293B718C00964537 /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8095C68293B718C00964537 /* KeyChainManager.swift */; };
 		D84452EC292CA55F008E811B /* MyPageEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452EB292CA55F008E811B /* MyPageEditView.swift */; };
 		D84452EE292CA569008E811B /* MyPageEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452ED292CA569008E811B /* MyPageEditViewModel.swift */; };
@@ -395,23 +387,15 @@
 		B572EF792945D81D00A9413C /* Publisher+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Extension.swift"; sourceTree = "<group>"; };
 		B572EF802945E19C00A9413C /* Sequence+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Async.swift"; sourceTree = "<group>"; };
 		B572EF822945E1CA00A9413C /* Publisher+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Async.swift"; sourceTree = "<group>"; };
-		B572EFA029479D1500A9413C /* FeedRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRealmModel.swift; sourceTree = "<group>"; };
-		B572EFA229479FEC00A9413C /* FeedWriterRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedWriterRealmModel.swift; sourceTree = "<group>"; };
-		B572F01B2948688000A9413C /* Feed+RealmCompatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Feed+RealmCompatible.swift"; sourceTree = "<group>"; };
-		B572F01D29486C0500A9413C /* FeedWriter+RealmCompatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedWriter+RealmCompatible.swift"; sourceTree = "<group>"; };
-		B572F01F2948768100A9413C /* FeedRealmDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRealmDataSource.swift; sourceTree = "<group>"; };
 		B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultToggleButton.swift; sourceTree = "<group>"; };
 		B59EDACF29408D8000D451CC /* BCResource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BCResource.xcodeproj; path = ../../modules/BCResource/BCResource.xcodeproj; sourceTree = "<group>"; };
 		B5BA27862927AEF600BDCE08 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		B5BC81BC2945BD500077BF29 /* FeedSingletonDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSingletonDataSource.swift; sourceTree = "<group>"; };
-		B5BC81BE2945BFA30077BF29 /* FeedRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRemoteDataSource.swift; sourceTree = "<group>"; };
 		B5DAD674292E4C6800C4A126 /* FeedDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailViewModel.swift; sourceTree = "<group>"; };
 		B5DAD676292E4C6800C4A126 /* FeedDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailView.swift; sourceTree = "<group>"; };
 		B5DAD678292E4C6800C4A126 /* FeedDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailViewController.swift; sourceTree = "<group>"; };
 		B5DAD680292E58BF00C4A126 /* DefaultMultilLineLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMultilLineLabel.swift; sourceTree = "<group>"; };
 		B5E0D94B292F750D001727F5 /* FeedContentWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedContentWebView.swift; sourceTree = "<group>"; };
 		B5F4B035293CC0B300947250 /* FirestoreCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreCollection.swift; sourceTree = "<group>"; };
-		B5FF71452948EDB8008E69F2 /* FeedLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLocalDataSource.swift; sourceTree = "<group>"; };
 		D8095C68293B718C00964537 /* KeyChainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
 		D84452EB292CA55F008E811B /* MyPageEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditView.swift; sourceTree = "<group>"; };
 		D84452ED292CA569008E811B /* MyPageEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewModel.swift; sourceTree = "<group>"; };
@@ -858,14 +842,6 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
-		14755A442973FA1F0036B71D /* FeedRemote */ = {
-			isa = PBXGroup;
-			children = (
-				B5BC81BE2945BFA30077BF29 /* FeedRemoteDataSource.swift */,
-			);
-			path = FeedRemote;
-			sourceTree = "<group>";
-		};
 		14755A452973FA280036B71D /* GithubLogin */ = {
 			isa = PBXGroup;
 			children = (
@@ -1068,7 +1044,6 @@
 			isa = PBXGroup;
 			children = (
 				14755A452973FA280036B71D /* GithubLogin */,
-				14755A442973FA1F0036B71D /* FeedRemote */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1077,9 +1052,6 @@
 			isa = PBXGroup;
 			children = (
 				14152B822988F3D000FF5999 /* FeedMockUpDatasource.swift */,
-				B5BC81BC2945BD500077BF29 /* FeedSingletonDataSource.swift */,
-				B5FF71452948EDB8008E69F2 /* FeedLocalDataSource.swift */,
-				B572F01F2948768100A9413C /* FeedRealmDataSource.swift */,
 			);
 			path = Local;
 			sourceTree = "<group>";
@@ -1339,7 +1311,6 @@
 		14A93D3E2936EFEE00790034 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				B5FF711D2948DCA0008E69F2 /* RealmModel */,
 				141344DA292F82BE00187B86 /* Feed.swift */,
 				145842B3297FF5C800C81878 /* DiffableFeed.swift */,
 				14A93D412936F00F00790034 /* FeedWriter.swift */,
@@ -1740,17 +1711,6 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		B5FF711D2948DCA0008E69F2 /* RealmModel */ = {
-			isa = PBXGroup;
-			children = (
-				B572F01B2948688000A9413C /* Feed+RealmCompatible.swift */,
-				B572EFA029479D1500A9413C /* FeedRealmModel.swift */,
-				B572F01D29486C0500A9413C /* FeedWriter+RealmCompatible.swift */,
-				B572EFA229479FEC00A9413C /* FeedWriterRealmModel.swift */,
-			);
-			path = RealmModel;
-			sourceTree = "<group>";
-		};
 		D8494D572927E8FB008157F1 /* Enum */ = {
 			isa = PBXGroup;
 			children = (
@@ -1942,7 +1902,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B572EFA329479FEC00A9413C /* FeedWriterRealmModel.swift in Sources */,
 				148EF12F29791C2500190471 /* ImageRepository.swift in Sources */,
 				3B061FE5292A1F1E00BFA71D /* SignUpBlogViewController.swift in Sources */,
 				148A05622972F7B900664CCB /* MyPageUseCase.swift in Sources */,
@@ -1967,14 +1926,11 @@
 				D8576F3629378F51002885FE /* URLRegularExpression.swift in Sources */,
 				D88295FC292A4452005B4273 /* HTTPMethod.swift in Sources */,
 				D84452F2292CCA80008E811B /* SettingSection.swift in Sources */,
-				B5FF71462948EDB8008E69F2 /* FeedLocalDataSource.swift in Sources */,
 				1412996F29765AC300159C02 /* BCFirestoreUserListener.swift in Sources */,
-				B572F01E29486C0500A9413C /* FeedWriter+RealmCompatible.swift in Sources */,
 				148A05672972F84100664CCB /* MyPageEditUseCase.swift in Sources */,
 				B572EF812945E19C00A9413C /* Sequence+Async.swift in Sources */,
 				D8494D502927CEAA008157F1 /* DefaultBadgeLabel.swift in Sources */,
 				14927E1E2929C71C001F2E97 /* RecommendFeedUserView.swift in Sources */,
-				B5BC81BD2945BD500077BF29 /* FeedSingletonDataSource.swift in Sources */,
 				14FF7A2D29838561001D6EDF /* MockUpFeedRepositoryError.swift in Sources */,
 				14A93D402936EFF900790034 /* FeedAPIModel.swift in Sources */,
 				D84C8132292F0A1E00C984E8 /* UIViewController+.swift in Sources */,
@@ -1982,7 +1938,6 @@
 				D84452F0292CA57D008E811B /* MyPageEditViewController.swift in Sources */,
 				14A34D4729743E8B00501A66 /* UserRepository.swift in Sources */,
 				D84452FC292DB7DE008E811B /* CellIndexPath.swift in Sources */,
-				B572EFA129479D1500A9413C /* FeedRealmModel.swift in Sources */,
 				D8E979CA293A6D430092EBF6 /* Alert.swift in Sources */,
 				140438BB293F6FD7004D035C /* HomeCoordinator.swift in Sources */,
 				14D8C4D6297C103800DFE71F /* ContainFeedDetailViewController.swift in Sources */,
@@ -2008,14 +1963,12 @@
 				D89AE4F12935AE7800446AB3 /* Encodable+dictionary.swift in Sources */,
 				D8C38674292B8D82005A2563 /* Appearance.swift in Sources */,
 				148A05512972F63D00664CCB /* DefaultSignUpUseCase.swift in Sources */,
-				B5BC81BF2945BFA30077BF29 /* FeedRemoteDataSource.swift in Sources */,
 				B50A27F729279F5D00DF3E1F /* TabBarCoordinator.swift in Sources */,
 				141344D9292F803800187B86 /* UIControl+Combine.swift in Sources */,
 				143185EA292B4A8D008CE459 /* ScrapPageViewController.swift in Sources */,
 				B5DAD67A292E4C6800C4A126 /* FeedDetailView.swift in Sources */,
 				148A05572972F6DE00664CCB /* FeedDetailUseCase.swift in Sources */,
 				14A34D4D29743F1100501A66 /* DefaultUserRepository.swift in Sources */,
-				B572F01C2948688000A9413C /* Feed+RealmCompatible.swift in Sources */,
 				148A054F2972F62600664CCB /* SignUpUseCase.swift in Sources */,
 				3B7491E92938DCCD00A4BEA0 /* SignUpDomainViewModel.swift in Sources */,
 				14152B812988EAFE00FF5999 /* FeedRepositoryError.swift in Sources */,
@@ -2105,7 +2058,6 @@
 				3B061FD82928CC5600BFA71D /* SignUpDomainViewController.swift in Sources */,
 				14A34D55297444F000501A66 /* SignUpUseCaseError.swift in Sources */,
 				148A05462972F51C00664CCB /* DependencyFactory.swift in Sources */,
-				B572F0202948768100A9413C /* FeedRealmDataSource.swift in Sources */,
 				B50A27DA29279F5D00DF3E1F /* ReusableView.swift in Sources */,
 				D84C812E292E590300C984E8 /* MyPageEditValidationResult.swift in Sources */,
 				D8494D4C2927CD6C008157F1 /* DefaultProfileImageView.swift in Sources */,

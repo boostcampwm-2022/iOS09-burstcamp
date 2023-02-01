@@ -23,9 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         FirebaseApp.configure()
         bcFireStoreService = BCFirestoreService()
-        RealmConfig.serialQueue.async {
-            FeedRealmDataSource.shared.configure()
-        }
         UserManager.shared.appStart()
 
         print("Auth.auth().currentUser?.uid 값이에오: ", Auth.auth().currentUser?.uid)

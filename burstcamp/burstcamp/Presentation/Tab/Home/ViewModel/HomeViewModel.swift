@@ -8,8 +8,6 @@
 import Combine
 import Foundation
 
-import BCFetcher
-
 struct HomeFeedList: Equatable {
     let recommendFeed: [Feed]
     let normalFeed: [Feed]
