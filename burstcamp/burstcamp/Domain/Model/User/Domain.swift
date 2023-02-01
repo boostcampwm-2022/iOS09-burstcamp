@@ -7,9 +7,7 @@
 
 import UIKit
 
-import RealmSwift
-
-enum Domain: String, Codable, PersistableEnum {
+enum Domain: String, Codable {
     case iOS = "iOS"
     case android = "Android"
     case web = "Web"
