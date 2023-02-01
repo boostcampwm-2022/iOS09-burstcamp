@@ -21,7 +21,6 @@ final class SignUpBlogViewModel {
         let nextButtonDidTap: PassthroughSubject<Void, Never>
         let skipConfirmDidTap: PassthroughSubject<Void, Never>
         let blogTitleConfirmDidTap: PassthroughSubject<String, Never>
-        let saveFCMToken: PassthroughSubject<Void, Never>
     }
 
     struct Output {
@@ -30,8 +29,6 @@ final class SignUpBlogViewModel {
         let signUpWithBlogTitle: AnyPublisher<User, Error>
         let signUpWithSkipButton: AnyPublisher<User, Error>
     }
-
-    private var cancelBag = Set<AnyCancellable>()
 
     func transform(input: Input) -> Output {
         let validateBlogAddress = input.blogAddressTextFieldDidEdit
@@ -67,12 +64,6 @@ final class SignUpBlogViewModel {
             }
             .eraseToAnyPublisher()
 
-        input.saveFCMToken
-            .sink { [weak self] _ in
-                self?.saveFCMToken()
-            }
-            .store(in: &cancelBag)
-
         return Output(
             validateBlogAddress: validateBlogAddress,
             signUpWithNextButton: signUpWithNextButton,
@@ -90,6 +81,7 @@ final class SignUpBlogViewModel {
                     }
                     let blogURL = self.signUpUseCase.getUserBlogURL()
                     let blogTitle = try await self.signUpUseCase.getBlogTitle(blogURL: blogURL)
+
                     promise(.success(blogTitle))
                 } catch {
                     print(error)
@@ -110,8 +102,8 @@ final class SignUpBlogViewModel {
                     }
 
                     if blogTitle.isEmpty { assert(user.blogURL.isEmpty) }
-
                     try await self?.signUpUseCase.signUp(user)
+                    self?.saveFCMToken()
                     promise(.success(user))
                 } catch {
                     print(error)

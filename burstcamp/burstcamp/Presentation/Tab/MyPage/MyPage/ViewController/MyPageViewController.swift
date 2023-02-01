@@ -24,7 +24,6 @@ final class MyPageViewController: AppleAuthViewController {
     private var cancelBag = Set<AnyCancellable>()
 
     var coordinatorPublisher = PassthroughSubject<MyPageCoordinatorEvent, Never>()
-    var toastMessagePublisher = PassthroughSubject<String, Never>()
     var withdrawalButtonPublisher = PassthroughSubject<Void, Never>()
 
     // MARK: - Initializer
@@ -67,6 +66,7 @@ final class MyPageViewController: AppleAuthViewController {
         navigationController?.navigationBar.topItem?.title = "마이페이지"
     }
 
+    // swiftlint:disable function_body_length
     private func bind() {
         let input = MyPageViewModel.Input(
             myInfoEditButtonTap: myPageView.myInfoEditButtonTapPublisher,
@@ -78,65 +78,53 @@ final class MyPageViewController: AppleAuthViewController {
         let output = viewModel.transform(input: input)
 
         output.updateUserValue
-            .sink { [weak self] user in
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error): self?.showAlert(message: "유저 업데이트 중 오류가 발생했어요. \(error.localizedDescription)")
+                case .finished: return
+                }
+            } receiveValue: { [weak self] user in
                 self?.myPageView.updateView(user: user)
             }
             .store(in: &cancelBag)
 
-        output.darkModeInitialValue
+        output.myInfoEdit
+            .sink { [weak self] canEdit in
+                self?.editMyInfoEdit(canEdit: canEdit)
+            }
+            .store(in: &cancelBag)
+
+        output.notificationValue
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error): self?.showAlert(message: "알람 업데이트 중 오류가 발생했어요. \(error.localizedDescription)")
+                case .finished: return
+                }
+            } receiveValue: { [weak self] isOn in
+                self?.handleNotificationValue(isOn: isOn)
+            }
+            .store(in: &cancelBag)
+
+        output.darkModeValue
             .sink { [weak self] appearance in
                 self?.myPageView.updateDarkModeSwitch(appearance: appearance)
+            }
+            .store(in: &cancelBag)
+
+        output.loginProvider
+            .sink { [weak self] loginProvider in
+                switch loginProvider {
+                case .apple:
+                    self?.startSignInWithAppleFlow()
+                case .github:
+                    self?.coordinatorPublisher.send(.moveToGithubLogIn)
+                }
             }
             .store(in: &cancelBag)
 
         output.appVersionValue
             .sink { [weak self] appVersion in
                 self?.myPageView.updateAppVersionLabel(appVersion: appVersion)
-            }
-            .store(in: &cancelBag)
-
-        output.signOutFailMessage
-            .sink { [weak self] message in
-                self?.showToastMessage(
-                    text: message,
-                    icon: UIImage(systemName: "exclamationmark.octagon.fill")
-                )
-            }
-            .store(in: &cancelBag)
-
-        output.loginProviderPublisher
-            .sink { [weak self] event in
-                switch event {
-                case .github:
-                    self?.coordinatorPublisher.send(.moveToGithubLogIn)
-                case .apple:
-                    self?.startSignInWithAppleFlow()
-                }
-            }
-            .store(in: &cancelBag)
-
-        output.withdrawalStop
-            .sink { [weak self] _ in
-                self?.hideAnimatedActivityIndicatorView()
-            }
-            .store(in: &cancelBag)
-
-        output.myInfoEditButtonTap
-            .sink { [weak self] canEdit in
-                self?.editMyInfoEdit(canEdit: canEdit)
-            }
-            .store(in: &cancelBag)
-
-        myPageView.notificationSwitchStatePublisher
-            .sink { isOn in
-                let text = isOn ? "알림이 켜졌어요." : "알림이 꺼졌어요."
-                self.showToastMessage(text: text, icon: UIImage(systemName: "bell.fill"))
-            }
-            .store(in: &cancelBag)
-
-        toastMessagePublisher
-            .sink { message in
-                self.showToastMessage(text: message)
             }
             .store(in: &cancelBag)
     }
@@ -165,7 +153,8 @@ final class MyPageViewController: AppleAuthViewController {
     }
 
     private func withdrawal() {
-        self.withdrawalButtonPublisher.send(Void())
+        showAnimatedActivityIndicatorView(description: "탈퇴 중")
+        withdrawalButtonPublisher.send(Void())
     }
 
     private func editMyInfoEdit(canEdit: Bool) {
@@ -175,6 +164,11 @@ final class MyPageViewController: AppleAuthViewController {
             let nextUpdateDate = viewModel.getNextUpdateDate().yearMonthDateFormatString
             showAlert(message: "한 달에 1회 수정 가능해요. 다음 수정 가능 날짜는 \(nextUpdateDate) 이에요.")
         }
+    }
+
+    private func handleNotificationValue(isOn: Bool) {
+        let text = isOn ? "알림이 켜졌어요" : "알림이 꺼졌어요"
+        showToastMessage(text: text, icon: UIImage(systemName: "bell.fill"))
     }
 
     private func withdrawalWithApple(idTokenString: String, nonce: String) {
@@ -228,6 +222,12 @@ extension MyPageViewController {
     }
 }
 
+extension MyPageViewController {
+    func showEditCompleteToastMessage(message: String) {
+        self.showToastMessage(text: message)
+    }
+}
+
 // MARK: - AppDelegate에서 Github으로부터 code를 받아 함수를 호출해줘야 함
 
 extension MyPageViewController {
@@ -239,8 +239,9 @@ extension MyPageViewController {
                 self?.moveToAuthFlow()
             } catch {
                 debugPrint(error.localizedDescription)
-                showAlert(message: error.localizedDescription)
+                showAlert(message: "유저 정보 삭제 중 에러가 발생했어요. \(error.localizedDescription)")
             }
+            self?.hideAnimatedActivityIndicatorView()
         }
     }
 }

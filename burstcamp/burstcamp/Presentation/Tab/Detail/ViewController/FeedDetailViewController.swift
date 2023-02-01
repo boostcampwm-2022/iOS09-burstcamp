@@ -96,8 +96,7 @@ final class FeedDetailViewController: UIViewController {
         feedDetailOutput.feedDidUpdate
             .receive(on: DispatchQueue.main)
             .sink { [weak self] feed in
-                self?.scrapButton.isOn = feed.isScraped
-                self?.feedDetailView.configure(with: feed)
+                self?.handleFeedDidUpdate(feed)
             }
             .store(in: &cancelBag)
 
@@ -123,20 +122,31 @@ final class FeedDetailViewController: UIViewController {
 
         feedDetailOutput.scrapUpdate
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] feed in
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error): self?.showAlert(message: "스크랩 중에 에러가 발생했어요. \(error.localizedDescription)")
+                case .finished: return
+                }
+            } receiveValue: { [weak self] feed in
                 self?.updateFeedScrap(feed)
-            }
-            .store(in: &cancelBag)
-
-        feedDetailOutput.showAlertPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] error in
-                self?.showAlert(message: error.localizedDescription)
             }
             .store(in: &cancelBag)
     }
 
-    private func updateFeedScrap(_ feed: Feed) {
+    private func handleFeedDidUpdate(_ feed: Feed?) {
+        guard let feed = feed else {
+            showAlert(message: "Feed 로드 중 에러가 발생했어요")
+            return
+        }
+        scrapButton.isOn = feed.isScraped
+        feedDetailView.configure(with: feed)
+    }
+
+    private func updateFeedScrap(_ feed: Feed?) {
+        guard let feed = feed else {
+            showAlert(message: "스크랩 하던 중 Feed 정보에 에러가 발생했어요")
+            return
+        }
         scrapButton.isOn = feed.isScraped
         publishUpdateFeed(feed)
         scrapButton.isEnabled = true

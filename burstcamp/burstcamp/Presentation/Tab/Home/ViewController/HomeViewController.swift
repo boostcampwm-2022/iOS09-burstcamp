@@ -22,13 +22,18 @@ final class HomeViewController: UIViewController {
     }
     private var loadingView: LoadingView!
 
+    private var viewModel: HomeViewModel
+
     private var dataSource: UICollectionViewDiffableDataSource<FeedCellType, DiffableFeed>!
     private var collectionViewSnapShot: NSDiffableDataSourceSnapshot<FeedCellType, DiffableFeed>!
 
-    private var viewModel: HomeViewModel
-    private var cancelBag = Set<AnyCancellable>()
     let coordinatorPublisher = PassthroughSubject<HomeCoordinatorEvent, Never>()
     private let paginationPublisher = PassthroughSubject<Void, Never>()
+
+    private var cancelBag = Set<AnyCancellable>()
+
+    private var isFetching: Bool = false
+    private var isLastFetch: Bool = false
 
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
@@ -88,51 +93,41 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController {
     private func bind() {
-        guard let refreshControl = homeView.collectionView.refreshControl
-        else { return }
 
-        let viewDidLoadJust = Just(Void()).eraseToAnyPublisher()
+        let viewDidLoadJust = createViewDidLoadPublisher()
+        let viewDidRefresh = createRefreshPublisher()
+        let pagination = createPaginationPublisher()
 
         let input = HomeViewModel.Input(
             viewDidLoad: viewDidLoadJust,
-            viewDidRefresh: refreshControl.refreshPublisher,
-            pagination: paginationPublisher.eraseToAnyPublisher()
+            viewDidRefresh: viewDidRefresh,
+            pagination: pagination
         )
 
         let output = viewModel.transform(input: input)
 
-        output.recentFeed
+        output.recentHomeFeedList
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] homeFeedList in
+            .sink { [weak self] completion in
+                self?.isFetching = false
+                switch completion {
+                case .failure(let error): self?.showAlert(message: error.localizedDescription)
+                case .finished: return
+                }
+            } receiveValue: { [weak self] homeFeedList in
                 self?.receiveHomeFeedList(homeFeedList: homeFeedList)
             }
             .store(in: &cancelBag)
 
-        output.moreFeed
+        output.paginateNormalFeedList
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] normalFeed in
-                self?.reloadHomeFeedList(additional: normalFeed)
-            }
-            .store(in: &cancelBag)
-
-        output.showAlert
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] error in
-                self?.showAlert(message: error.localizedDescription)
-            }
-            .store(in: &cancelBag)
-
-        output.hideIndicator
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.homeView.endCollectionViewRefreshing()
-            }
-            .store(in: &cancelBag)
-
-        output.showToast
-            .receive(on: DispatchQueue.main)
-            .sink { message in
-                self.showToastMessage(text: message)
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error): self?.showAlert(message: error.localizedDescription)
+                case .finished: return
+                }
+            } receiveValue: { [weak self] additionalNormalFeed in
+                self?.handleAdditionalNormalFeed(additionalNormalFeed)
             }
             .store(in: &cancelBag)
     }
@@ -154,23 +149,101 @@ extension HomeViewController {
 
         output.scrapSuccess
             .receive(on: DispatchQueue.main)
-            .sink { updatedFeed in
-                if feedUUID == updatedFeed.feedUUID {
-                    cell.footerView.countLabel.text = updatedFeed.scrapCount.description
-                    cell.footerView.scrapButton.isOn = updatedFeed.isScraped
-                    cell.footerView.scrapButton.isEnabled = true
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error): self?.showAlert(message: error.localizedDescription)
+                case .finished: return
                 }
+            } receiveValue: { [weak self] updateFeed in
+                self?.handleUpdateFeed(updateFeed: updateFeed, cell: cell, feedUUID: feedUUID)
             }
-            .store(in: &cell.cancelBag)
+            .store(in: &cancelBag)
     }
 
-    // MARK: - bind 내부 함수들 추출
+    // MARK: - bind 내부 함수들 빼줌
 
-    private func receiveHomeFeedList(homeFeedList: HomeFeedList) {
+    private func createViewDidLoadPublisher() -> AnyPublisher<Void, Never> {
+        return Just(Void())
+            .filter { _ in
+                if !isFetching {
+                    isFetching = true
+                    return true
+                } else {
+                    return false
+                }
+            }
+            .eraseToAnyPublisher()
+    }
+
+    private func createRefreshPublisher() -> AnyPublisher<Void, Never> {
+        guard let refreshControl = homeView.collectionView.refreshControl else {
+            fatalError("리프레쉬 컨트롤러가 존재하지 않아요.")
+        }
+        return refreshControl.refreshPublisher
+            .filter { _ in
+                self.isLastFetch = false
+                if !self.isFetching {
+                    self.isFetching = true
+                    return true
+                } else {
+                    return false
+                }
+            }
+            .eraseToAnyPublisher()
+    }
+
+    private func createPaginationPublisher() -> AnyPublisher<Void, Never> {
+        return paginationPublisher
+            .filter { _ in
+                if !self.isFetching && !self.isLastFetch {
+                    self.isFetching = true
+                    return true
+                } else {
+                    return false
+                }
+            }
+            .eraseToAnyPublisher()
+    }
+
+    private func receiveHomeFeedList(homeFeedList: HomeFeedList?) {
         homeView.hideSkeleton()
+        guard let homeFeedList = homeFeedList else {
+            showAlert(message: "피드 데이터를 가져오는데 에러가 발생했어요")
+            return
+        }
         // carousel View를 위한 설정 -> 2개씩 복사 해줬으므로 진짜 개수는 3으로 나눠줘야 함
         homeView.setRecommendFeedCount(homeFeedList.recommendFeed.count / 3)
         reloadHomeFeedList(homeFeedList: homeFeedList)
+        homeView.endCollectionViewRefreshing()
+        isFetching = false
+    }
+
+    private func handleAdditionalNormalFeed(_ normalFeed: [Feed]?) {
+        guard let normalFeed = normalFeed else {
+            showAlert(message: "피드 데이터를 가져오는데 에러가 발생했어요")
+            return
+        }
+
+        if normalFeed.isEmpty {
+            isLastFetch = true
+            showToastMessage(text: "모든 피드를 불러왔어요")
+        } else {
+            reloadHomeFeedList(additional: normalFeed)
+        }
+        isFetching = false
+    }
+
+    private func handleUpdateFeed(updateFeed: Feed?, cell: NormalFeedCell, feedUUID: String) {
+        guard let updateFeed = updateFeed else {
+            showAlert(message: "업데이트할 피드가 없습니다.")
+            return
+        }
+
+        if feedUUID == updateFeed.feedUUID {
+            cell.footerView.countLabel.text = updateFeed.scrapCount.description
+            cell.footerView.scrapButton.isOn = updateFeed.isScraped
+            cell.footerView.scrapButton.isEnabled = true
+        }
     }
 }
 
@@ -183,7 +256,7 @@ extension HomeViewController: UICollectionViewDelegate {
 
         switch feedCellType {
         case .recommend:
-            let recommendFeed = viewModel.recommendFeedData[indexPath.row]
+            let recommendFeed = viewModel.recommendFeedList[indexPath.row]
             guard let url = URL(string: recommendFeed.url) else {
                 showAlert(message: "블로그 URL이 올바르지 않습니다.")
                 return
@@ -191,7 +264,7 @@ extension HomeViewController: UICollectionViewDelegate {
             coordinatorPublisher.send(.moveToBlogSafari(url: url))
             return
         case .normal:
-            let feed = viewModel.normalFeedData[indexPath.row]
+            let feed = viewModel.normalFeedList[indexPath.row]
             coordinatorPublisher.send(.moveToFeedDetail(feed: feed))
         case .none:
             showAlert(message: "피드 데이터가 올바르지 않습니다.")
@@ -319,14 +392,18 @@ extension HomeViewController: UNUserNotificationCenterDelegate {
         let application = UIApplication.shared
 
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-        UNUserNotificationCenter.current().requestAuthorization(
-            options: authOptions
-        ) { isPushOn, _ in
-            self.viewModel.updateUserScrapState(to: isPushOn)
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { isPushOn, _ in
+            do {
+                try self.viewModel.updateUserScrapState(to: isPushOn)
+            } catch {
+                self.showAlert(message: error.localizedDescription)
+            }
         }
         application.registerForRemoteNotifications()
     }
 }
+
+// MARK: - FeedDetail에서 스크랩시 HomeView에 반영
 
 extension HomeViewController: ContainFeedDetailViewController {
     func configure(scrapUpdatePublisher: AnyPublisher<Feed, Never>) {
