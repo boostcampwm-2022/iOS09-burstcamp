@@ -12,9 +12,6 @@ final class FeedDetailViewModel {
 
     private let feedDetailUseCase: FeedDetailUseCase
     private let feedPublisher = CurrentValueSubject<Feed?, Never>(nil)
-    private let scrapPublisher = CurrentValueSubject<Feed?, Never>(nil)
-    private let showAlertPublisher = CurrentValueSubject<Error?, Never>(nil)
-    private var cancelBag = Set<AnyCancellable>()
 
     init(feedDetailUseCase: FeedDetailUseCase) {
         self.feedDetailUseCase = feedDetailUseCase
@@ -28,9 +25,7 @@ final class FeedDetailViewModel {
     /// DeepLink를 통해서 진입할 때 호출하는 initializer
     convenience init(feedDetailUseCase: FeedDetailUseCase, feedUUID: String) {
         self.init(feedDetailUseCase: feedDetailUseCase)
-        // TODO: Cache에 데이터가 없을 수 있기 때문에 Remote에서 불러와야 한다.
-        let feed = FeedRealmDataSource.shared.cachedNormalFeed(feedUUID: feedUUID)
-        self.feedPublisher.send(feed)
+        // feed UUID로 feed 호출
     }
 
     struct Input {
@@ -41,19 +36,19 @@ final class FeedDetailViewModel {
     }
 
     struct Output {
-        let feedDidUpdate: AnyPublisher<Feed, Never>
+        let feedDidUpdate: AnyPublisher<Feed?, Never>
         let openBlog: AnyPublisher<URL, Never>
         let openActivityView: AnyPublisher<String, Never>
-        let scrapUpdate: AnyPublisher<Feed, Never>
-        let showAlertPublisher: AnyPublisher<Error, Never>
+        let scrapUpdate: AnyPublisher<Feed?, Error>
     }
 
     func transform(input: Input) -> Output {
-        input.scrapButtonDidTap
-            .sink { [weak self] _ in
-                self?.scrapFeed()
+
+        let scrapUpdate = input.scrapButtonDidTap
+            .asyncMap { [weak self] _ in
+                try await self?.scrapFeed()
             }
-            .store(in: &cancelBag)
+            .eraseToAnyPublisher()
 
         let openBlog = input.blogButtonDidTap
             .compactMap { [weak self] in
@@ -69,11 +64,10 @@ final class FeedDetailViewModel {
             .eraseToAnyPublisher()
 
         return Output(
-            feedDidUpdate: feedPublisher.unwrap().eraseToAnyPublisher(),
+            feedDidUpdate: feedPublisher.eraseToAnyPublisher(),
             openBlog: openBlog,
             openActivityView: openActivityView,
-            scrapUpdate: scrapPublisher.unwrap().eraseToAnyPublisher(),
-            showAlertPublisher: showAlertPublisher.unwrap().eraseToAnyPublisher()
+            scrapUpdate: scrapUpdate
         )
     }
 
@@ -81,16 +75,14 @@ final class FeedDetailViewModel {
         return feedPublisher.value
     }
 
-    private func scrapFeed() {
+    private func scrapFeed() async throws -> Feed {
         guard let feed = getFeed() else {
-            showAlertPublisher.send(FeedDetailViewModelError.feedIsNil)
-            return
+            throw FeedDetailViewModelError.feedIsNil
         }
+
         let userUUID = UserManager.shared.user.userUUID
-        Task { [weak self] in
-            let updatedFeed = try await feedDetailUseCase.scrapFeed(feed, userUUID: userUUID)
-            self?.feedPublisher.value = updatedFeed
-            self?.scrapPublisher.send(updatedFeed)
-        }
+        let updatedFeed = try await feedDetailUseCase.scrapFeed(feed, userUUID: userUUID)
+        feedPublisher.value = updatedFeed
+        return updatedFeed
     }
 }
