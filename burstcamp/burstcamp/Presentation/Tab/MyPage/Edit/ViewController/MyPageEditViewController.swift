@@ -141,10 +141,22 @@ final class MyPageEditViewController: UIViewController {
         }
 
         switch myPageEditNicknameValidation {
-        case .regexError: return
-        case .duplicateError: return
-        case .success: return
+        case .regexError:
+            failEditNickname(text: "닉네임 조건에 맞지 않아요. (한, 영, 숫자, _, -, 2-10자)")
+        case .duplicateError:
+            failEditNickname(text: "중복되는 아이디에요")
+        case .success:
+            successEditNickname()
         }
+    }
+
+    func failEditNickname(text: String) {
+        myPageEditView.updateNickNameDescriptionLabel(text: text, textColor: .customRed)
+        myPageEditView.disableEditButton()
+    }
+
+    func successEditNickname() {
+        myPageEditView.updateNickNameDescriptionLabel(text: "사용 가능한 닉네임입니다.", textColor: .customGreen)
     }
 
     func updateNicknameDescription(text: String, textColor: UIColor) {

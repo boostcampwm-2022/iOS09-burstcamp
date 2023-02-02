@@ -46,7 +46,6 @@ final class MyPageEditView: UIView {
     )
 
     private let nickNameDescriptionLabel = DefaultPaddingLabel(horizontalPadding: 6).then {
-        $0.text = "닉네임 조건에 맞지 않아요. (한, 영, 숫자, _, -, 2-10자)"
         $0.font = .regular10
     }
 
