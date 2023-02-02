@@ -162,17 +162,10 @@ final class MyPageEditViewController: UIViewController {
     private func updateNicknameDescription(text: String, textColor: UIColor) {
     }
 
-//    private func handleOutputProfileValidationResult() {
-//        switch validationResult {
-//        case .validationOK:
-//            self.coordinatorPublisher.send(
-//                .moveMyPageEditScreenToBackScreen(toastMessage: validationResult.message)
-//            )
-//        default:
-//            self.view.endEditing(true)
-//            self.showToastMessage(text: validationResult.message)
-//        }
-//    }
+    private func canEdit() {
+        // 가능하면 버튼 Enable
+        // 아니면 view.endEditing
+    }
 }
 
 // MARK: - PHPickerViewControllerDelegate

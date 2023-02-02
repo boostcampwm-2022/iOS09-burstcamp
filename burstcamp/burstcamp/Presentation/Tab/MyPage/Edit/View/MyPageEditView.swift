@@ -81,11 +81,11 @@ final class MyPageEditView: UIView {
     )
 
     private let finishEditButton = DefaultButton(title: "수정완료").then {
-        $0.backgroundColor = .systemGray2
+        $0.backgroundColor = .systemGray5
         $0.isEnabled = false
     }
 
-    private let descriptionLabel = UILabel().then {
+    private let descriptionLabel = DefaultPaddingLabel(horizontalPadding: 6).then {
         $0.text = "유저 정보는 30일에 1회 수정이 가능해요"
         $0.textColor = .systemGray2
         $0.font = .regular12
