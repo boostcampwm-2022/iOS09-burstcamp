@@ -44,6 +44,7 @@ public enum Assets {
     public static let yellow = ColorAsset(name: "yellow")
   }
   public enum Image {
+    public static let burstcampLoading = DataAsset(name: "burstcamp_loading")
     public static let burstcamper100 = ImageAsset(name: "burstcamper100")
     public static let burstcamperStun100 = ImageAsset(name: "burstcamperStun100")
     public static let github = ImageAsset(name: "github")
@@ -116,6 +117,30 @@ public extension SwiftUI.Color {
   }
 }
 #endif
+
+public struct DataAsset {
+  public fileprivate(set) var name: String
+
+  @available(iOS 9.0, tvOS 9.0, watchOS 6.0, macOS 10.11, *)
+  public var data: NSDataAsset {
+    guard let data = NSDataAsset(asset: self) else {
+      fatalError("Unable to load data asset named \(name).")
+    }
+    return data
+  }
+}
+
+@available(iOS 9.0, tvOS 9.0, watchOS 6.0, macOS 10.11, *)
+public extension NSDataAsset {
+  convenience init?(asset: DataAsset) {
+    let bundle = BundleToken.bundle
+    #if os(iOS) || os(tvOS) || os(watchOS)
+    self.init(name: asset.name, bundle: bundle)
+    #elseif os(macOS)
+    self.init(name: NSDataAsset.Name(asset.name), bundle: bundle)
+    #endif
+  }
+}
 
 public struct ImageAsset {
   public fileprivate(set) var name: String
