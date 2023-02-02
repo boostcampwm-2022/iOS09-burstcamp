@@ -38,16 +38,72 @@ export async function deleteRecommendFeeds() {
 export async function updateRecommendFeedDB() {
 	await deleteRecommendFeeds()
 
-	await feedRef
-		.orderBy('pubDate', 'desc')
-		.limit(3)
-		.get()
-		.then((querySnapshot) => {
-			querySnapshot.docs.forEach(async (doc) => {
-				const feedUUID = doc.data()['feedUUID']
-				await recommendFeedRef.doc(feedUUID).set(doc.data())
-			})
-		})
+	let feedUUIDList = await getFeedUUIDList()
+	let feedWeeklyCountList = await getfeedWeeklyCountList(feedUUIDList)
+	let topThreeFeedUUIDList = getTopThreeFeedUUIDList(feedWeeklyCountList)
+	await updateNewRecommendFeedToDB(topThreeFeedUUIDList)
+
+}
+
+async function getFeedUUIDList() {
+	const querySnapshot = await feedRef.get()
+	return querySnapshot.docs.map((doc) => {
+		return doc.data()['feedUUID']
+	})
+}
+
+async function getfeedWeeklyCountList(feedUUIDList) {
+	let aWeekAgoDate = getLastWeeksDate()
+	logger.log(aWeekAgoDate)
+	return await Promise.all(feedUUIDList.map(async (feedUUID) => {
+		let weeklyCount = await countWeeklyScrapUser(feedUUID)
+		let feedWeeklyCount = {
+			feedUUID: feedUUID,
+			count: weeklyCount
+		}
+		return feedWeeklyCount
+	}))
+}
+
+async function countWeeklyScrapUser(feedUUID) {
+	let timestamp = getLastWeeksDate()
+	const scrapUsersRef = feedRef.doc(feedUUID).collection('scrapUsers');
+	const query = scrapUsersRef.where('scrapDate', '>=', timestamp);
+	const snapshot = await query.count().get();
+	return snapshot.data().count
+}
+
+function getLastWeeksDate() {
+	var oneWeekAgo = new Date();
+	oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  return oneWeekAgo
+}
+
+function getTopThreeFeedUUIDList(feedWeeklyCountList) {
+	var topThreeFeedUUIDList = []
+
+	feedWeeklyCountList.sort((a, b) => {
+			return b.count - a.count;
+	})
+
+	for (var i = 0;  i < feedWeeklyCountList.length; i++ ) {
+		if (feedWeeklyCountList[i].count != 0) {
+			topThreeFeedUUIDList.push(feedWeeklyCountList[i])
+		}
+		if (topThreeFeedUUIDList.length == 3) {
+			break
+		}
+	}
+	return topThreeFeedUUIDList
+}
+
+async function updateNewRecommendFeedToDB(newRecommendFeedList) {
+	newRecommendFeedList.forEach(async (newFeed) => {
+		const newFeedRef =  feedRef.doc(newFeed.feedUUID)
+		const doc = await newFeedRef.get();
+		const newRecommendFeed = doc.data()
+		await recommendFeedRef.doc(newRecommendFeed.feedUUID).set(newRecommendFeed)
+	})
 }
 
 /**
