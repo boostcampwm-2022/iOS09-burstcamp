@@ -11,7 +11,7 @@ import SwiftyGif
 
 final class LoadingFeedView: UIView {
 
-    private let imageView = UIImageView()
+    private var imageView = UIImageView()
 
     private let descriptionLabel =  DefaultMultiLineLabel().then {
         $0.text = "로딩 중이에요"
@@ -37,10 +37,11 @@ final class LoadingFeedView: UIView {
 
     private func configureImageView() {
         do {
-            let gifImage = try UIImage(gifName: "burstcamp_loading.gif")
+            let gifImage = try UIImage(gifName: "LoadingBurstcamper.gif")
             let imageView = UIImageView(gifImage: gifImage, loopCount: -1)
+            self.imageView = imageView
         } catch {
-            debugPrint("gif 설정 실패")
+            debugPrint("gif 설정 실패 \(error.localizedDescription)")
             imageView.image = UIImage.burstcamper
         }
     }

@@ -85,7 +85,8 @@ final class FeedDetailView: UIView {
             removeContentView()
             showEmptyFeedView()
         } else {
-            contentView.loadFormattedHTMLString(feedContent)
+            showLoadingFeedView()
+//            contentView.loadFormattedHTMLString(feedContent)
         }
     }
 
@@ -100,6 +101,17 @@ final class FeedDetailView: UIView {
         emptyFeedView.backgroundColor = .systemPink
 
         emptyFeedView.snp.makeConstraints {
+            $0.width.equalToSuperview().inset(Constant.Padding.horizontal)
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalTo(self)
+        }
+    }
+
+    private func showLoadingFeedView() {
+        let loadingFeedView = LoadingFeedView()
+        scrollView.addSubview(loadingFeedView)
+
+        loadingFeedView.snp.makeConstraints {
             $0.width.equalToSuperview().inset(Constant.Padding.horizontal)
             $0.centerX.equalToSuperview()
             $0.centerY.equalTo(self)
