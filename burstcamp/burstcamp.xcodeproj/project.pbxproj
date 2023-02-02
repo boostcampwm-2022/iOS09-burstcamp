@@ -14,7 +14,7 @@
 		140438C0293F77DD004D035C /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438BF293F77DD004D035C /* Factory.swift */; };
 		1404DA43298259A100228E50 /* UserRepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404DA42298259A100228E50 /* UserRepositoryError.swift */; };
 		1404DA4529825A2E00228E50 /* LoginUseCaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404DA4429825A2E00228E50 /* LoginUseCaseError.swift */; };
-		140B8751298775A300436F65 /* String+sha256.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B8750298775A300436F65 /* String+sha256.swift */; };
+		140B8751298775A300436F65 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B8750298775A300436F65 /* String+.swift */; };
 		140B87532987870F00436F65 /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B87522987870F00436F65 /* AuthButton.swift */; };
 		140B87562987993300436F65 /* LoginProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B87552987993300436F65 /* LoginProvider.swift */; };
 		140B87592987B6EF00436F65 /* AppleAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B87582987B6EF00436F65 /* AppleAuthViewController.swift */; };
@@ -251,7 +251,7 @@
 		140438BF293F77DD004D035C /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
 		1404DA42298259A100228E50 /* UserRepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepositoryError.swift; sourceTree = "<group>"; };
 		1404DA4429825A2E00228E50 /* LoginUseCaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCaseError.swift; sourceTree = "<group>"; };
-		140B8750298775A300436F65 /* String+sha256.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+sha256.swift"; sourceTree = "<group>"; };
+		140B8750298775A300436F65 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		140B87522987870F00436F65 /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 		140B87552987993300436F65 /* LoginProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProvider.swift; sourceTree = "<group>"; };
 		140B87582987B6EF00436F65 /* AppleAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthViewController.swift; sourceTree = "<group>"; };
@@ -729,7 +729,7 @@
 				141344D2292F801100187B86 /* TypeConversion.swift */,
 				D89AE4F02935AE7800446AB3 /* Encodable+dictionary.swift */,
 				D89AE4F22935AFE100446AB3 /* Notification+.swift */,
-				140B8750298775A300436F65 /* String+sha256.swift */,
+				140B8750298775A300436F65 /* String+.swift */,
 			);
 			path = Type;
 			sourceTree = "<group>";
@@ -1907,7 +1907,7 @@
 				148A05622972F7B900664CCB /* MyPageUseCase.swift in Sources */,
 				B5DAD681292E58BF00C4A126 /* DefaultMultilLineLabel.swift in Sources */,
 				3B061FDD2928E8E300BFA71D /* SignUpCamperIDViewController.swift in Sources */,
-				140B8751298775A300436F65 /* String+sha256.swift in Sources */,
+				140B8751298775A300436F65 /* String+.swift in Sources */,
 				145842B4297FF5C800C81878 /* DiffableFeed.swift in Sources */,
 				1496CF1E294070A3008F312F /* ContainFeedDetailCoordinator.swift in Sources */,
 				140438C0293F77DD004D035C /* Factory.swift in Sources */,

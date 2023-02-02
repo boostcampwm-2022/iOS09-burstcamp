@@ -8,6 +8,8 @@
 import CryptoKit
 import Foundation
 
+// MARK: - 애플 로그인을 위한 암호화
+
 extension String {
 
     static func randomNonceString(length: Int = 32) -> String {
@@ -49,5 +51,18 @@ extension String {
         let hashedData = SHA256.hash(data: inputData)
         let hashString = hashedData.compactMap { String(format: "%02x", $0) }.joined()
         return hashString
+    }
+}
+
+// MARK: - 정규식 만족 확인
+
+extension String {
+    func isValidNickname() -> Bool {
+        let nicknameRegex = "[가-힣a-zA-Z0-9_-]{2,10}"
+        return isValidRegex(regex: nicknameRegex)
+    }
+
+    func isValidRegex(regex: String) -> Bool {
+        return self.range(of: regex, options: .regularExpression) != nil
     }
 }
