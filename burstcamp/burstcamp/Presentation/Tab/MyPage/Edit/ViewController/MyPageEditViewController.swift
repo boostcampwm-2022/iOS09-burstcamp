@@ -131,7 +131,7 @@ final class MyPageEditViewController: UIViewController {
     }
 
     private func handleOutputProfileImage() {
-        showToastMessage(text: "이미지 설정에 성공했어요.")
+        showToastMessage(text: "이미지를 바꿨어요")
     }
 
     private func handleOutputNicknameValidate(_ myPageEditNicknameValidation: MyPageEditNicknameValidation?) {
@@ -150,16 +150,16 @@ final class MyPageEditViewController: UIViewController {
         }
     }
 
-    func failEditNickname(text: String) {
+    private func failEditNickname(text: String) {
         myPageEditView.updateNickNameDescriptionLabel(text: text, textColor: .customRed)
         myPageEditView.disableEditButton()
     }
 
-    func successEditNickname() {
+    private func successEditNickname() {
         myPageEditView.updateNickNameDescriptionLabel(text: "사용 가능한 닉네임입니다.", textColor: .customGreen)
     }
 
-    func updateNicknameDescription(text: String, textColor: UIColor) {
+    private func updateNicknameDescription(text: String, textColor: UIColor) {
     }
 
 //    private func handleOutputProfileValidationResult() {
@@ -186,6 +186,7 @@ extension MyPageEditViewController: PHPickerViewControllerDelegate {
             itemProvider.loadObject(ofClass: UIImage.self) { image, _ in
                 DispatchQueue.main.async {
                     let image = image as? UIImage
+                    self.myPageEditView.updateImage(image)
                     let imageData = image?.jpegData(compressionQuality: 0.2)
                     self.imagePickerPublisher.send(imageData)
                 }

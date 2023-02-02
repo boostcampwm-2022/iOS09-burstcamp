@@ -165,6 +165,12 @@ extension MyPageEditView {
         }
     }
 
+    func updateImage(_ image: UIImage?) {
+        DispatchQueue.main.async {
+            self.profileImageView.image = image
+        }
+    }
+
     func updateNickNameDescriptionLabel(text: String, textColor: UIColor) {
         DispatchQueue.main.async {
             self.nickNameDescriptionLabel.text = text
