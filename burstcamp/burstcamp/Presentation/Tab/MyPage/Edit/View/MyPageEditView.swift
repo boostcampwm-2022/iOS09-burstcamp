@@ -41,9 +41,14 @@ final class MyPageEditView: UIView {
     }
 
     private let nickNameTextField = DefaultTextField(
-        placeholder: "닉네임을 입력해주세요.",
+        placeholder: "닉네임을 입력해주세요. (한, 영, 숫자, _, -, 2-10자)",
         clearButton: true
     )
+
+    private let nickNameDescriptionLabel = DefaultPaddingLabel(horizontalPadding: 6).then {
+        $0.text = "닉네임 조건에 맞지 않아요. (한, 영, 숫자, _, -, 2-10자)"
+        $0.font = .regular10
+    }
 
     private let blogLinkLabel = UILabel().then {
         $0.text = "블로그 주소"
@@ -52,7 +57,7 @@ final class MyPageEditView: UIView {
     }
 
     private lazy var nickNameStackView = UIStackView(
-        views: [nickNameLabel, nickNameTextField],
+        views: [nickNameLabel, nickNameTextField, nickNameDescriptionLabel],
         spacing: Constant.space8
     )
 
