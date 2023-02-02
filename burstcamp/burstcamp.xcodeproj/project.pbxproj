@@ -186,10 +186,9 @@
 		D8494D522927D086008157F1 /* MyPageProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D512927D085008157F1 /* MyPageProfileView.swift */; };
 		D8494D542927D0DC008157F1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D532927D0DC008157F1 /* User.swift */; };
 		D8494D562927D6EB008157F1 /* DefaultBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D552927D6EB008157F1 /* DefaultBadgeView.swift */; };
-		D84C812E292E590300C984E8 /* MyPageEditValidationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84C812D292E590300C984E8 /* MyPageEditValidationResult.swift */; };
+		D84C812E292E590300C984E8 /* MyPageEditValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84C812D292E590300C984E8 /* MyPageEditValidation.swift */; };
 		D84C8132292F0A1E00C984E8 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84C8131292F0A1E00C984E8 /* UIViewController+.swift */; };
 		D8576F32293779D4002885FE /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8576F31293779D4002885FE /* UserManager.swift */; };
-		D8576F3629378F51002885FE /* URLRegularExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8576F3529378F50002885FE /* URLRegularExpression.swift */; };
 		D88295EF292A43EB005B4273 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295EE292A43EB005B4273 /* NetworkError.swift */; };
 		D88295FC292A4452005B4273 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295FB292A4452005B4273 /* HTTPMethod.swift */; };
 		D88295FE292A4459005B4273 /* URLSessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88295FD292A4459005B4273 /* URLSessionService.swift */; };
@@ -416,10 +415,9 @@
 		D8494D512927D085008157F1 /* MyPageProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageProfileView.swift; sourceTree = "<group>"; };
 		D8494D532927D0DC008157F1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D8494D552927D6EB008157F1 /* DefaultBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBadgeView.swift; sourceTree = "<group>"; };
-		D84C812D292E590300C984E8 /* MyPageEditValidationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditValidationResult.swift; sourceTree = "<group>"; };
+		D84C812D292E590300C984E8 /* MyPageEditValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditValidation.swift; sourceTree = "<group>"; };
 		D84C8131292F0A1E00C984E8 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		D8576F31293779D4002885FE /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
-		D8576F3529378F50002885FE /* URLRegularExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRegularExpression.swift; sourceTree = "<group>"; };
 		D88295EE292A43EB005B4273 /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		D88295FB292A4452005B4273 /* HTTPMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		D88295FD292A4459005B4273 /* URLSessionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionService.swift; sourceTree = "<group>"; };
@@ -1634,7 +1632,6 @@
 			isa = PBXGroup;
 			children = (
 				B50A278B29279F5D00DF3E1F /* Constant.swift */,
-				D8576F3529378F50002885FE /* URLRegularExpression.swift */,
 				D8E979C9293A6D430092EBF6 /* Alert.swift */,
 			);
 			path = Constant;
@@ -1727,7 +1724,7 @@
 			isa = PBXGroup;
 			children = (
 				D89AE4F82935EC6E00446AB3 /* Validator.swift */,
-				D84C812D292E590300C984E8 /* MyPageEditValidationResult.swift */,
+				D84C812D292E590300C984E8 /* MyPageEditValidation.swift */,
 			);
 			path = Validator;
 			sourceTree = "<group>";
@@ -1926,7 +1923,6 @@
 				D89AE4E62933AEF900446AB3 /* UIImageView+Cache.swift in Sources */,
 				B50A27CF29279F5D00DF3E1F /* Constant.swift in Sources */,
 				148867B229839D5100B54415 /* TestCounter.swift in Sources */,
-				D8576F3629378F51002885FE /* URLRegularExpression.swift in Sources */,
 				D88295FC292A4452005B4273 /* HTTPMethod.swift in Sources */,
 				D84452F2292CCA80008E811B /* SettingSection.swift in Sources */,
 				1412996F29765AC300159C02 /* BCFirestoreUserListener.swift in Sources */,
@@ -2063,7 +2059,7 @@
 				14A34D55297444F000501A66 /* SignUpUseCaseError.swift in Sources */,
 				148A05462972F51C00664CCB /* DependencyFactory.swift in Sources */,
 				B50A27DA29279F5D00DF3E1F /* ReusableView.swift in Sources */,
-				D84C812E292E590300C984E8 /* MyPageEditValidationResult.swift in Sources */,
+				D84C812E292E590300C984E8 /* MyPageEditValidation.swift in Sources */,
 				D8494D4C2927CD6C008157F1 /* DefaultProfileImageView.swift in Sources */,
 				140E21062944519E00D6E2E5 /* BCFirestoreService.swift in Sources */,
 				B5DAD679292E4C6800C4A126 /* FeedDetailViewModel.swift in Sources */,

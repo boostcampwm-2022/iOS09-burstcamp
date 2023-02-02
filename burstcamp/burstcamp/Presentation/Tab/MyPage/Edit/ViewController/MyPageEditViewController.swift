@@ -88,23 +88,32 @@ final class MyPageEditViewController: UIViewController {
         )
 
         let output = viewModel.transform(input: input)
-        output.currentUserInfo
-            .sink { userInfo in
-                self.myPageEditView.updateCurrentUserInfo(user: userInfo)
+
+        output.profileImage
+            .sink { [weak self] _ in
+                self?.handleOutputProfileImage()
+            }
+            .store(in: &cancelBag)
+
+        output.nicknameValidate
+            .sink { [weak self] isValidNickname in
+            }
+            .store(in: &cancelBag)
+
+        output.blogResult
+            .sink { _ in
+                return
             }
             .store(in: &cancelBag)
 
         output.validationResult
-            .sink { validationResult in
-                switch validationResult {
-                case .validationOK:
-                    self.coordinatorPublisher.send(
-                        .moveMyPageEditScreenToBackScreen(toastMessage: validationResult.message)
-                    )
-                default:
-                    self.view.endEditing(true)
-                    self.showToastMessage(text: validationResult.message)
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error): self?.showAlert(message: "정보 수정에 실패했어요. \(error.localizedDescription)")
+                case .finished: return
                 }
+            } receiveValue: { [weak self] validationResult in
+                self?.handleOutputProfileValidationResult(validationResult)
             }
             .store(in: &cancelBag)
 
@@ -114,6 +123,29 @@ final class MyPageEditViewController: UIViewController {
                 self.present(self.phpickerViewController, animated: true)
             }
             .store(in: &cancelBag)
+    }
+
+    private func handleOutputProfileImage() {
+        showToastMessage(text: "이미지 설정에 성공했어요.")
+    }
+
+    private func handleOutputNicknameValidate(isValid: Bool) {
+    }
+
+    private func handleOutputProfileValidationResult(_ validationResult: MyPageEditValidationResult?) {
+        guard let validationResult = validationResult else {
+            showAlert(message: "유효성 검사를 할 수 없어요")
+            return
+        }
+        switch validationResult {
+        case .validationOK:
+            self.coordinatorPublisher.send(
+                .moveMyPageEditScreenToBackScreen(toastMessage: validationResult.message)
+            )
+        default:
+            self.view.endEditing(true)
+            self.showToastMessage(text: validationResult.message)
+        }
     }
 }
 
@@ -128,7 +160,6 @@ extension MyPageEditViewController: PHPickerViewControllerDelegate {
             itemProvider.loadObject(ofClass: UIImage.self) { image, _ in
                 DispatchQueue.main.async {
                     let image = image as? UIImage
-                    self.myPageEditView.profileImageView.image = image
                     let imageData = image?.jpegData(compressionQuality: 0.2)
                     self.imagePickerPublisher.send(imageData)
                 }

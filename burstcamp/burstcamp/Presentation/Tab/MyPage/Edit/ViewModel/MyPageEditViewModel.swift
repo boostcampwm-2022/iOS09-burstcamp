@@ -12,7 +12,6 @@ import UIKit.UIImage
 final class MyPageEditViewModel {
 
     private let myPageEditUseCase: MyPageEditUseCase
-    private var cancelBag = Set<AnyCancellable>()
 
     init(myPageEditUseCase: MyPageEditUseCase) {
         self.myPageEditUseCase = myPageEditUseCase
@@ -26,61 +25,51 @@ final class MyPageEditViewModel {
     }
 
     struct Output {
-        var currentUserInfo = CurrentValueSubject<User, Never>(
-            UserManager.shared.user
-        )
-        var validationResult = PassthroughSubject<MyPageEditValidationResult, Never>()
+        let profileImage: AnyPublisher<Void, Never>
+        let nicknameValidate: AnyPublisher<Bool, Never>
+        let blogResult: AnyPublisher<Void, Never>
+        let validationResult: AnyPublisher<MyPageEditValidationResult?, Error>
     }
 
     func transform(input: Input) -> Output {
-        configureInput(input: input)
-        return createOutput(from: input)
-    }
 
-    private func configureInput(input: Input) {
-
-        input.imagePickerPublisher
-            .sink { profileImageData in
-                self.myPageEditUseCase.setImageData(profileImageData)
+        let profileImage = input.imagePickerPublisher
+            .map { [weak self] profileImageData in
+                self?.myPageEditUseCase.setImageData(profileImageData)
+                return
             }
-            .store(in: &cancelBag)
+            .eraseToAnyPublisher()
 
-        input.nickNameTextFieldDidEdit
-            .sink { nickname in
+        let nicknameValidate = input.nickNameTextFieldDidEdit
+            .map { nickname in
                 self.myPageEditUseCase.setUserNickname(nickname)
+                return true // 유효성 검사
             }
-            .store(in: &cancelBag)
+            .eraseToAnyPublisher()
 
-        input.blogLinkFieldDidEdit
-            .sink { blogURL in
+        let blogResult = input.blogLinkFieldDidEdit
+            .map { blogURL in
                 self.myPageEditUseCase.setUserBlogURL(blogURL)
             }
-            .store(in: &cancelBag)
-    }
+            .eraseToAnyPublisher()
 
-    private func createOutput(from input: Input) -> Output {
-        let output = Output()
-
-        input.finishEditButtonDidTap
-            .sink { _ in
-                let validationResult = self.myPageEditUseCase.validateResult()
-                output.validationResult.send(validationResult)
+        let validationResult = input.finishEditButtonDidTap
+            .asyncMap { [weak self] _ in
+                let validationResult = self?.myPageEditUseCase.validateResult()
                 if case .validationOK = validationResult {
-                    self.updateUser()
+                    try await self?.myPageEditUseCase.updateUser()
                 }
+                return validationResult
             }
-            .store(in: &cancelBag)
+            .eraseToAnyPublisher()
+
+        let output = Output(
+            profileImage: profileImage,
+            nicknameValidate: nicknameValidate,
+            blogResult: blogResult,
+            validationResult: validationResult
+        )
 
         return output
-    }
-
-    func updateUser() {
-        Task { [weak self] in
-            do {
-                try await self?.myPageEditUseCase.updateUser()
-            } catch {
-                debugPrint(error)
-            }
-        }
     }
 }

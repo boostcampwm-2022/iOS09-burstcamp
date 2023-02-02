@@ -9,20 +9,17 @@ import Combine
 import Foundation
 
 struct Validator {
+    static let nickname = "[가-힣a-zA-Z0-9_-]{2,10}"
+
+    static let tistory = #"^https://?[a-z0-9-]{4,32}.tistory.com[/]{0,1}$"#
+    static let velog = #"^https://velog.io/@?[A-Za-z0-9-_]{3,16}$"#
+
     static func validate(nickname: String) -> Bool {
-        return nickname.isEmpty ? false : true
+        return nickname.isValidRegex(regex: nickname)
     }
 
     static func validate(blogLink: String) -> Bool {
-        if blogLink.range(
-            of: URLRegularExpression.tistory,
-            options: .regularExpression
-        ) != nil {
-            return true
-        } else if blogLink.range(
-            of: URLRegularExpression.velog,
-            options: .regularExpression
-        ) != nil {
+        if blogLink.isValidRegex(regex: tistory) || blogLink.isValidRegex(regex: velog) {
             return true
         }
         return false
@@ -30,15 +27,7 @@ struct Validator {
 
     static func validateIsEmpty(blogLink: String) -> Bool {
         if blogLink.isEmpty { return true }
-        if blogLink.range(
-            of: URLRegularExpression.tistory,
-            options: .regularExpression
-        ) != nil {
-            return true
-        } else if blogLink.range(
-            of: URLRegularExpression.velog,
-            options: .regularExpression
-        ) != nil {
+        if blogLink.isValidRegex(regex: tistory) || blogLink.isValidRegex(regex: velog) {
             return true
         }
         return false

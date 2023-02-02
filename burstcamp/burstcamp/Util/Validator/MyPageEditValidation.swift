@@ -7,6 +7,10 @@
 
 import Foundation
 
+// MARK: - 닉네임 유효성
+
+// MARK: - 최종 유효성
+
 enum MyPageEditValidationResult {
     case validationOK
     case nicknameError

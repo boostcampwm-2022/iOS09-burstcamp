@@ -57,11 +57,6 @@ extension String {
 // MARK: - 정규식 만족 확인
 
 extension String {
-    func isValidNickname() -> Bool {
-        let nicknameRegex = "[가-힣a-zA-Z0-9_-]{2,10}"
-        return isValidRegex(regex: nicknameRegex)
-    }
-
     func isValidRegex(regex: String) -> Bool {
         return self.range(of: regex, options: .regularExpression) != nil
     }
