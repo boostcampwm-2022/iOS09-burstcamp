@@ -11,8 +11,7 @@ import UIKit.UIImage
 
 final class MyPageEditViewModel {
 
-    private var beforeUser = CurrentValueSubject<User, Never>(UserManager.shared.user)
-    private var afterUser = CurrentValueSubject<User, Never>(UserManager.shared.user)
+    private var editingUser: User = UserManager.shared.user
     private var changedProfileImage: Data?
 
     private let myPageEditUseCase: MyPageEditUseCase
@@ -33,11 +32,12 @@ final class MyPageEditViewModel {
         let profileImage: AnyPublisher<Void, Never>
         let nicknameValidate: AnyPublisher<MyPageEditNicknameValidation?, Error>
         let blogResult: AnyPublisher<MyPageEditBlogValidation?, Never>
+        let editResult: AnyPublisher<Void, Error>
     }
 
     func transform(input: Input) -> Output {
 
-        let editedUser = afterUser.eraseToAnyPublisher()
+        let editedUser = Just(editingUser).eraseToAnyPublisher()
 
         let profileImage = input.imagePickerPublisher
             .map { [weak self] profileImageData in
@@ -60,11 +60,19 @@ final class MyPageEditViewModel {
             }
             .eraseToAnyPublisher()
 
+        let editResult = input.finishEditButtonDidTap
+            .asyncMap { [weak self] _ in
+                try await self?.updateUser()
+                return
+            }
+            .eraseToAnyPublisher()
+
         let output = Output(
             editedUser: editedUser,
             profileImage: profileImage,
             nicknameValidate: nicknameValidate,
-            blogResult: blogResult
+            blogResult: blogResult,
+            editResult: editResult
         )
 
         return output
@@ -78,12 +86,16 @@ final class MyPageEditViewModel {
         return myPageEditUseCase.isValidBlogURL(blogURL)
     }
 
+    func updateUser() async throws {
+        try await myPageEditUseCase.updateUser(user: editingUser, imageData: changedProfileImage)
+    }
+
     func setUserNickname(_ nickname: String) {
-        afterUser.value.setNickname(nickname)
+        editingUser.setNickname(nickname)
     }
 
     func setUserBlogURL(_ blogURL: String) {
-        afterUser.value.setBlogURL(blogURL)
+        editingUser.setBlogURL(blogURL)
     }
 
     func setImageData(_ imageData: Data?) {

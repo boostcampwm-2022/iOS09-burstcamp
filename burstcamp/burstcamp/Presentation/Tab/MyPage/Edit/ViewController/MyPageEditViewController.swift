@@ -84,11 +84,17 @@ final class MyPageEditViewController: UIViewController {
 
     private func bind() {
 
+        let finishEditButtonDidTapPublisher = myPageEditView.finishEditButtonTapPublisher
+            .map { _ in
+                self.showAnimatedActivityIndicatorView(description: "수정 중")
+            }
+            .eraseToAnyPublisher()
+
         let input = MyPageEditViewModel.Input(
             imagePickerPublisher: imagePickerPublisher,
             nickNameTextFieldDidEdit: myPageEditView.nickNameTextFieldTextPublisher,
             blogLinkFieldDidEdit: myPageEditView.blogLinkTextFieldTextPublisher,
-            finishEditButtonDidTap: myPageEditView.finishEditButtonTapPublisher
+            finishEditButtonDidTap: finishEditButtonDidTapPublisher
         )
 
         let output = viewModel.transform(input: input)
@@ -124,6 +130,17 @@ final class MyPageEditViewController: UIViewController {
             }
             .store(in: &cancelBag)
 
+        output.editResult
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error): self?.showAlert(message: "닉네임 수정 중 에러가 발생했어요 \(error.localizedDescription)")
+                case .finished: return
+                }
+            } receiveValue: { [weak self] _ in
+                self?.handleUserEditResult()
+            }
+            .store(in: &cancelBag)
+
         myPageEditView.cameraButtonTapPublisher
             .sink { [weak self] _ in
                 guard let self = self else { return }
@@ -139,6 +156,8 @@ final class MyPageEditViewController: UIViewController {
     private func handleOutputProfileImage() {
         showToastMessage(text: "이미지를 바꿨어요")
     }
+
+    // MARK: - 닉네임 유효성에 따른 View 처리
 
     private func handleOutputNicknameValidate(_ myPageEditNicknameValidation: MyPageEditNicknameValidation?) {
         guard let myPageEditNicknameValidation = myPageEditNicknameValidation else {
@@ -167,9 +186,11 @@ final class MyPageEditViewController: UIViewController {
         canChangeNickname = true
     }
 
+    // MARK: - Blog 유효성에 따른 View 처리
+
     private func handleOutputBlogValidation(_ myPageEditBlogValidation: MyPageEditBlogValidation?) {
         guard let myPageEditBlogValidation = myPageEditBlogValidation else {
-            showAlert(message: "블로그 검사 에러가 발생했어요. (언래핑)")
+            showAlert(message: "블로그 검사 에러가 발생했어요.(언래핑)")
             return
         }
 
@@ -201,6 +222,15 @@ final class MyPageEditViewController: UIViewController {
         } else {
             myPageEditView.disableEditButton()
         }
+    }
+
+    // MARK: - 유저 수정 결과에 따른 처리
+
+    private func handleUserEditResult() {
+        hideAnimatedActivityIndicatorView()
+        self.coordinatorPublisher.send(
+            .moveMyPageEditScreenToBackScreen(toastMessage: "유저 정보 수정에 성공했어요")
+        )
     }
 }
 
