@@ -23,6 +23,8 @@ final class FeedDetailView: UIView {
     private lazy var blogButton = DefaultButton(title: "블로그 바로가기")
     lazy var blogButtonTapPublisher = blogButton.tapPublisher
 
+    private let loadingFeedViewTag = 1000
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -86,7 +88,7 @@ final class FeedDetailView: UIView {
             showEmptyFeedView()
         } else {
             showLoadingFeedView()
-//            contentView.loadFormattedHTMLString(feedContent)
+            contentView.loadFormattedHTMLString(feedContent)
         }
     }
 
@@ -109,6 +111,8 @@ final class FeedDetailView: UIView {
 
     private func showLoadingFeedView() {
         let loadingFeedView = LoadingFeedView()
+        loadingFeedView.tag = loadingFeedViewTag
+
         scrollView.addSubview(loadingFeedView)
 
         loadingFeedView.snp.makeConstraints {
@@ -120,7 +124,11 @@ final class FeedDetailView: UIView {
 }
 
 extension FeedDetailView: WKNavigationDelegate {
+
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        DispatchQueue.main.async {
+            self.viewWithTag(self.loadingFeedViewTag)?.removeFromSuperview()
+        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             let contentViewHeight = webView.scrollView.contentSize.height
             self.updateContentViewConstraints(height: contentViewHeight)
