@@ -64,7 +64,7 @@ extension UIControl {
 
 extension UITextField {
     var textPublisher: AnyPublisher<String, Never> {
-        controlPublisher(for: .editingChanged)
+        controlPublisher(for: .editingDidEnd)
             .compactMap { $0 as? UITextField }
             .compactMap { $0.text }
             .eraseToAnyPublisher()

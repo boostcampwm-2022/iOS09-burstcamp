@@ -91,6 +91,13 @@ final class FirestoreService {
         return documentData
     }
 
+    public func getDocument(_ collectionPath: String, field: String, isEqualTo: Any) async throws -> [FirestoreData] {
+        let collectionRef = database.collection(collectionPath)
+        let query = collectionRef.whereField(field, isEqualTo: isEqualTo)
+        let documentSnapshot = try await query.getDocuments()
+        return documentSnapshot.documents.map { $0.data() }
+    }
+
     public func createDocument(
         _ collectionPath: String,
         document: String,

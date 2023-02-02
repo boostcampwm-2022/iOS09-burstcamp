@@ -24,6 +24,7 @@ protocol BCFirestoreServiceProtocol {
     func updateUser(userUUID: String, user: UserAPIModel) async throws
     func updateUserPushState(userUUID: String, isPushOn: Bool) async throws
     func deleteUser(userUUID: String) async throws
+    func isExistNickname(_ nickname: String) async throws -> Bool
 
     func scrapFeed(_ feed: ScrapFeedAPIModel, with userUUID: String) async throws
     func unScrapFeed(_ feed: FeedAPIModel, with userUUID: String) async throws
@@ -169,6 +170,15 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
     func deleteUser(userUUID: String) async throws {
         let userPath = FirestoreCollection.user.path
         try await firestoreService.deleteDocument(userPath, document: userUUID)
+    }
+
+    func isExistNickname(_ nickname: String) async throws -> Bool {
+        let userPath = FirestoreCollection.user.path
+        let sameNicknameUser = try await firestoreService.getDocument(userPath, field: "nickname", isEqualTo: nickname)
+        if sameNicknameUser.first != nil {
+            return true
+        }
+        return false
     }
 
     // MARK: - 피드 스크랩

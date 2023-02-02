@@ -11,8 +11,10 @@ import UIKit.UIImage
 
 final class MyPageEditViewModel {
 
+    private var editingUser: User = UserManager.shared.user
+    private var changedProfileImage: Data?
+
     private let myPageEditUseCase: MyPageEditUseCase
-    private var cancelBag = Set<AnyCancellable>()
 
     init(myPageEditUseCase: MyPageEditUseCase) {
         self.myPageEditUseCase = myPageEditUseCase
@@ -26,61 +28,77 @@ final class MyPageEditViewModel {
     }
 
     struct Output {
-        var currentUserInfo = CurrentValueSubject<User, Never>(
-            UserManager.shared.user
-        )
-        var validationResult = PassthroughSubject<MyPageEditValidationResult, Never>()
+        let editedUser: AnyPublisher<User, Never>
+        let profileImage: AnyPublisher<Void, Never>
+        let nicknameValidate: AnyPublisher<MyPageEditNicknameValidation?, Error>
+        let blogResult: AnyPublisher<MyPageEditBlogValidation?, Never>
+        let editResult: AnyPublisher<Void, Error>
     }
 
     func transform(input: Input) -> Output {
-        configureInput(input: input)
-        return createOutput(from: input)
-    }
 
-    private func configureInput(input: Input) {
+        let editedUser = Just(editingUser).eraseToAnyPublisher()
 
-        input.imagePickerPublisher
-            .sink { profileImageData in
-                self.myPageEditUseCase.setImageData(profileImageData)
+        let profileImage = input.imagePickerPublisher
+            .map { [weak self] profileImageData in
+                self?.setImageData(profileImageData)
+                return
             }
-            .store(in: &cancelBag)
+            .eraseToAnyPublisher()
 
-        input.nickNameTextFieldDidEdit
-            .sink { nickname in
-                self.myPageEditUseCase.setUserNickname(nickname)
+        let nicknameValidate = input.nickNameTextFieldDidEdit
+            .asyncMap { [weak self] nickname in
+                self?.setUserNickname(nickname)
+                return try await self?.checkNicknameValidation(nickname)
             }
-            .store(in: &cancelBag)
+            .eraseToAnyPublisher()
 
-        input.blogLinkFieldDidEdit
-            .sink { blogURL in
-                self.myPageEditUseCase.setUserBlogURL(blogURL)
+        let blogResult = input.blogLinkFieldDidEdit
+            .map { [weak self] blogURL in
+                self?.setUserBlogURL(blogURL)
+                return self?.checkBlogURLValidation(blogURL)
             }
-            .store(in: &cancelBag)
-    }
+            .eraseToAnyPublisher()
 
-    private func createOutput(from input: Input) -> Output {
-        let output = Output()
-
-        input.finishEditButtonDidTap
-            .sink { _ in
-                let validationResult = self.myPageEditUseCase.validateResult()
-                output.validationResult.send(validationResult)
-                if case .validationOK = validationResult {
-                    self.updateUser()
-                }
+        let editResult = input.finishEditButtonDidTap
+            .asyncMap { [weak self] _ in
+                try await self?.updateUser()
+                return
             }
-            .store(in: &cancelBag)
+            .eraseToAnyPublisher()
+
+        let output = Output(
+            editedUser: editedUser,
+            profileImage: profileImage,
+            nicknameValidate: nicknameValidate,
+            blogResult: blogResult,
+            editResult: editResult
+        )
 
         return output
     }
 
-    func updateUser() {
-        Task { [weak self] in
-            do {
-                try await self?.myPageEditUseCase.updateUser()
-            } catch {
-                debugPrint(error)
-            }
-        }
+    func checkNicknameValidation(_ nickname: String) async throws -> MyPageEditNicknameValidation {
+        return try await myPageEditUseCase.isValidNickname(nickname)
+    }
+
+    func checkBlogURLValidation(_ blogURL: String) -> MyPageEditBlogValidation {
+        return myPageEditUseCase.isValidBlogURL(blogURL)
+    }
+
+    func updateUser() async throws {
+        try await myPageEditUseCase.updateUser(user: editingUser, imageData: changedProfileImage)
+    }
+
+    func setUserNickname(_ nickname: String) {
+        editingUser.setNickname(nickname)
+    }
+
+    func setUserBlogURL(_ blogURL: String) {
+        editingUser.setBlogURL(blogURL)
+    }
+
+    func setImageData(_ imageData: Data?) {
+        self.changedProfileImage = imageData
     }
 }
