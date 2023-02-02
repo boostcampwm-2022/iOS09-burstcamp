@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 struct Validator {
-    static let nicknameRegex = "[가-힣a-zA-Z0-9_-]{2,10}"
+    static let nicknameRegex = "^[가-힣a-zA-Z0-9_-]{2,10}$"
 
     static let tistoryRegex = #"^https://?[a-z0-9-]{4,32}.tistory.com[/]{0,1}$"#
     static let velogRegex = #"^https://velog.io/@?[A-Za-z0-9-_]{3,16}$"#

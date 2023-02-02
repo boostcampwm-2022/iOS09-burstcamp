@@ -106,7 +106,9 @@ extension MyPageCoordinator {
         myPageViewController: MyPageViewController,
         toastMessage: String
     ) {
-        navigationController.popViewController(animated: true)
-        myPageViewController.showEditCompleteToastMessage(message: toastMessage)
+        DispatchQueue.main.async {
+            self.navigationController.popViewController(animated: true)
+            myPageViewController.showEditCompleteToastMessage(message: toastMessage)
+        }
     }
 }

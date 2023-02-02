@@ -66,6 +66,7 @@ final class MyPageEditViewController: UIViewController {
 
     override func viewDidLoad() {
         configureUI()
+        configureAttribute()
         bind()
     }
 
@@ -80,6 +81,10 @@ final class MyPageEditViewController: UIViewController {
     // MARK: - Methods
 
     private func configureUI() {
+    }
+
+    private func configureAttribute() {
+        if myPageEditView.isBlogLinkEmpty() { canChangeBlog = true }
     }
 
     private func bind() {

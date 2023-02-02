@@ -193,4 +193,11 @@ extension MyPageEditView {
             self.finishEditButton.backgroundColor = .systemGray5
         }
     }
+
+    func isBlogLinkEmpty() -> Bool {
+        guard let text = blogLinkTextField.text else {
+            return false
+        }
+        return text.isEmpty ? true : false
+    }
 }
