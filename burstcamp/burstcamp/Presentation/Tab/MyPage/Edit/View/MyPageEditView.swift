@@ -65,13 +65,12 @@ final class MyPageEditView: UIView {
         clearButton: true
     )
 
-    private var blogTitleImageLabel = DefaultImageLabel(
-        icon: UIImage(systemName: ""),
-        text: ""
-    )
+    private let blogLinkDescriptionLabel = DefaultPaddingLabel(horizontalPadding: 6).then {
+        $0.font = .regular10
+    }
 
     private lazy var blogLinkStackView = UIStackView(
-        views: [blogLinkLabel, blogLinkTextField, blogTitleImageLabel],
+        views: [blogLinkLabel, blogLinkTextField, blogLinkDescriptionLabel],
         spacing: Constant.space8
     )
 
@@ -158,10 +157,6 @@ extension MyPageEditView {
             self.profileImageView.setImage(urlString: user.profileImageURL, isDiskCaching: true)
             self.nickNameTextField.text = user.nickname
             self.blogLinkTextField.text = user.blogURL
-            self.blogTitleImageLabel = DefaultImageLabel(
-                icon: UIImage(systemName: "book.fill"),
-                text: user.blogTitle
-            )
         }
     }
 
@@ -175,6 +170,13 @@ extension MyPageEditView {
         DispatchQueue.main.async {
             self.nickNameDescriptionLabel.text = text
             self.nickNameDescriptionLabel.textColor = textColor
+        }
+    }
+
+    func updateBlogLinkDescriptionLabel(text: String, textColor: UIColor) {
+        DispatchQueue.main.async {
+            self.blogLinkDescriptionLabel.text = text
+            self.blogLinkDescriptionLabel.textColor = textColor
         }
     }
 

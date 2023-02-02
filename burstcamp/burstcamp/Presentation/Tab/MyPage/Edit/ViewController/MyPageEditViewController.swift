@@ -17,6 +17,9 @@ final class MyPageEditViewController: UIViewController {
         static let selectionLimit = 1
     }
 
+    private var canChangeNickname = false
+    private var canChangeBlog = false
+
     private var myPageEditView: MyPageEditView {
         guard let view = view as? MyPageEditView else {
             return MyPageEditView()
@@ -25,10 +28,11 @@ final class MyPageEditViewController: UIViewController {
     }
 
     private var viewModel: MyPageEditViewModel
-    private var cancelBag = Set<AnyCancellable>()
 
     var coordinatorPublisher = PassthroughSubject<MyPageCoordinatorEvent, Never>()
     var imagePickerPublisher = PassthroughSubject<Data?, Never>()
+
+    private var cancelBag = Set<AnyCancellable>()
 
     private lazy var phpickerConfiguration: PHPickerConfiguration = {
         var configuration = PHPickerConfiguration()
@@ -109,12 +113,14 @@ final class MyPageEditViewController: UIViewController {
                 }
             } receiveValue: { [weak self] nicknameValidation in
                 self?.handleOutputNicknameValidate(nicknameValidation)
+                self?.setEditButton()
             }
             .store(in: &cancelBag)
 
         output.blogResult
-            .sink { _ in
-                return
+            .sink { [weak self] blogValidation in
+                self?.handleOutputBlogValidation(blogValidation)
+                self?.setEditButton()
             }
             .store(in: &cancelBag)
 
@@ -153,18 +159,48 @@ final class MyPageEditViewController: UIViewController {
     private func failEditNickname(text: String) {
         myPageEditView.updateNickNameDescriptionLabel(text: text, textColor: .customRed)
         myPageEditView.disableEditButton()
+        canChangeNickname = false
     }
 
     private func successEditNickname() {
-        myPageEditView.updateNickNameDescriptionLabel(text: "사용 가능한 닉네임입니다.", textColor: .customGreen)
+        myPageEditView.updateNickNameDescriptionLabel(text: "사용 가능한 닉네임이에요", textColor: .customGreen)
+        canChangeNickname = true
     }
 
-    private func updateNicknameDescription(text: String, textColor: UIColor) {
+    private func handleOutputBlogValidation(_ myPageEditBlogValidation: MyPageEditBlogValidation?) {
+        guard let myPageEditBlogValidation = myPageEditBlogValidation else {
+            showAlert(message: "블로그 검사 에러가 발생했어요. (언래핑)")
+            return
+        }
+
+        switch myPageEditBlogValidation {
+        case .regexError:
+            failEditBlogURL()
+        case .success:
+            successEditBlogURL()
+        }
     }
 
-    private func canEdit() {
-        // 가능하면 버튼 Enable
-        // 아니면 view.endEditing
+    private func failEditBlogURL() {
+        myPageEditView.updateBlogLinkDescriptionLabel(
+            text: "Blog URL을 확인해주세요. 현재 Tistory와 Velog만 지원하고 있어요",
+            textColor: .customRed
+        )
+        myPageEditView.disableEditButton()
+        canChangeBlog = false
+    }
+
+    private func successEditBlogURL() {
+        myPageEditView.updateBlogLinkDescriptionLabel(text: "사용 가능한 블로그에요 (URL 없어도 가능해요)", textColor: .customGreen)
+        canChangeBlog = true
+    }
+
+    private func setEditButton() {
+        if canChangeNickname && canChangeBlog {
+            myPageEditView.enableEditButton()
+        } else {
+            myPageEditView.disableEditButton()
+        }
     }
 }
 
