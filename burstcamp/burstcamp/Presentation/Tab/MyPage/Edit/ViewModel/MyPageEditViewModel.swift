@@ -11,6 +11,10 @@ import UIKit.UIImage
 
 final class MyPageEditViewModel {
 
+    private var beforeUser = CurrentValueSubject<User, Never>(UserManager.shared.user)
+    private var afterUser = CurrentValueSubject<User, Never>(UserManager.shared.user)
+    private var changedProfileImage: Data?
+
     private let myPageEditUseCase: MyPageEditUseCase
 
     init(myPageEditUseCase: MyPageEditUseCase) {
@@ -25,51 +29,64 @@ final class MyPageEditViewModel {
     }
 
     struct Output {
+        let editedUser: AnyPublisher<User, Never>
         let profileImage: AnyPublisher<Void, Never>
-        let nicknameValidate: AnyPublisher<Bool, Never>
-        let blogResult: AnyPublisher<Void, Never>
-        let validationResult: AnyPublisher<MyPageEditValidationResult?, Error>
+        let nicknameValidate: AnyPublisher<MyPageEditNicknameValidation?, Error>
+        let blogResult: AnyPublisher<MyPageEditBlogValidation?, Never>
     }
 
     func transform(input: Input) -> Output {
 
+        let editedUser = afterUser.eraseToAnyPublisher()
+
         let profileImage = input.imagePickerPublisher
             .map { [weak self] profileImageData in
-                self?.myPageEditUseCase.setImageData(profileImageData)
+                self?.setImageData(profileImageData)
                 return
             }
             .eraseToAnyPublisher()
 
         let nicknameValidate = input.nickNameTextFieldDidEdit
-            .map { nickname in
-                self.myPageEditUseCase.setUserNickname(nickname)
-                return true // 유효성 검사
+            .asyncMap { [weak self] nickname in
+                self?.setUserNickname(nickname)
+                return try await self?.checkNicknameValidation(nickname)
             }
             .eraseToAnyPublisher()
 
         let blogResult = input.blogLinkFieldDidEdit
-            .map { blogURL in
-                self.myPageEditUseCase.setUserBlogURL(blogURL)
-            }
-            .eraseToAnyPublisher()
-
-        let validationResult = input.finishEditButtonDidTap
-            .asyncMap { [weak self] _ in
-                let validationResult = self?.myPageEditUseCase.validateResult()
-                if case .validationOK = validationResult {
-                    try await self?.myPageEditUseCase.updateUser()
-                }
-                return validationResult
+            .map { [weak self] blogURL in
+                self?.setUserBlogURL(blogURL)
+                return self?.checkBlogURLValidation(blogURL)
             }
             .eraseToAnyPublisher()
 
         let output = Output(
+            editedUser: editedUser,
             profileImage: profileImage,
             nicknameValidate: nicknameValidate,
-            blogResult: blogResult,
-            validationResult: validationResult
+            blogResult: blogResult
         )
 
         return output
+    }
+
+    func checkNicknameValidation(_ nickname: String) async throws -> MyPageEditNicknameValidation {
+        return try await myPageEditUseCase.isValidNickname(nickname)
+    }
+
+    func checkBlogURLValidation(_ blogURL: String) -> MyPageEditBlogValidation {
+        return myPageEditUseCase.isValidBlogURL(blogURL)
+    }
+
+    func setUserNickname(_ nickname: String) {
+        afterUser.value.setNickname(nickname)
+    }
+
+    func setUserBlogURL(_ blogURL: String) {
+        afterUser.value.setBlogURL(blogURL)
+    }
+
+    func setImageData(_ imageData: Data?) {
+        self.changedProfileImage = imageData
     }
 }

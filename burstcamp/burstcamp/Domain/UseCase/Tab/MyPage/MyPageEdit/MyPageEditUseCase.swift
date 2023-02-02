@@ -8,9 +8,8 @@
 import Foundation
 
 protocol MyPageEditUseCase {
-    func setUserNickname(_ nickname: String)
-    func setUserBlogURL(_ blogURL: String)
-    func setImageData(_ imageData: Data?)
-    func validateResult() -> MyPageEditValidationResult
-    func updateUser() async throws
+    func isValidNickname(_ nickname: String) async throws -> MyPageEditNicknameValidation
+    func isValidBlogURL(_ blogURL: String) -> MyPageEditBlogValidation
+
+    func updateUser(user: User, imageData: Data?) async throws
 }

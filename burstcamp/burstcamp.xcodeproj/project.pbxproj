@@ -1084,6 +1084,7 @@
 		149304962963ED1C00B9BC71 /* Edit */ = {
 			isa = PBXGroup;
 			children = (
+				14ABC057298BC314009287B4 /* Enum */,
 				149304972963ED6500B9BC71 /* View */,
 				1493049C2963EDC300B9BC71 /* ViewModel */,
 				1493049D2963EDD900B9BC71 /* ViewController */,
@@ -1318,6 +1319,14 @@
 				1459C3BB2929150200FA885D /* FeedCellType.swift */,
 			);
 			path = Feed;
+			sourceTree = "<group>";
+		};
+		14ABC057298BC314009287B4 /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				D84C812D292E590300C984E8 /* MyPageEditValidation.swift */,
+			);
+			path = Enum;
 			sourceTree = "<group>";
 		};
 		14FF7A2A2983854A001D6EDF /* FeedRepository */ = {
@@ -1724,7 +1733,6 @@
 			isa = PBXGroup;
 			children = (
 				D89AE4F82935EC6E00446AB3 /* Validator.swift */,
-				D84C812D292E590300C984E8 /* MyPageEditValidation.swift */,
 			);
 			path = Validator;
 			sourceTree = "<group>";

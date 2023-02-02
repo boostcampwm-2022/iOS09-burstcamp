@@ -89,6 +89,12 @@ final class MyPageEditViewController: UIViewController {
 
         let output = viewModel.transform(input: input)
 
+        output.editedUser
+            .sink { [weak self] user in
+                self?.handleEditedUser(user: user)
+            }
+            .store(in: &cancelBag)
+
         output.profileImage
             .sink { [weak self] _ in
                 self?.handleOutputProfileImage()
@@ -96,24 +102,19 @@ final class MyPageEditViewController: UIViewController {
             .store(in: &cancelBag)
 
         output.nicknameValidate
-            .sink { [weak self] isValidNickname in
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error): self?.showAlert(message: "닉네임 중복 검사 중 에러가 발생했어요. \(error.localizedDescription)")
+                case .finished: return
+                }
+            } receiveValue: { [weak self] nicknameValidation in
+                self?.handleOutputNicknameValidate(nicknameValidation)
             }
             .store(in: &cancelBag)
 
         output.blogResult
             .sink { _ in
                 return
-            }
-            .store(in: &cancelBag)
-
-        output.validationResult
-            .sink { [weak self] completion in
-                switch completion {
-                case .failure(let error): self?.showAlert(message: "정보 수정에 실패했어요. \(error.localizedDescription)")
-                case .finished: return
-                }
-            } receiveValue: { [weak self] validationResult in
-                self?.handleOutputProfileValidationResult(validationResult)
             }
             .store(in: &cancelBag)
 
@@ -125,28 +126,41 @@ final class MyPageEditViewController: UIViewController {
             .store(in: &cancelBag)
     }
 
+    private func handleEditedUser(user: User) {
+        myPageEditView.updateCurrentUserInfo(user: user)
+    }
+
     private func handleOutputProfileImage() {
         showToastMessage(text: "이미지 설정에 성공했어요.")
     }
 
-    private func handleOutputNicknameValidate(isValid: Bool) {
-    }
-
-    private func handleOutputProfileValidationResult(_ validationResult: MyPageEditValidationResult?) {
-        guard let validationResult = validationResult else {
-            showAlert(message: "유효성 검사를 할 수 없어요")
+    private func handleOutputNicknameValidate(_ myPageEditNicknameValidation: MyPageEditNicknameValidation?) {
+        guard let myPageEditNicknameValidation = myPageEditNicknameValidation else {
+            showAlert(message: "닉네임 검사 에러가 발생했어요. (언래핑)")
             return
         }
-        switch validationResult {
-        case .validationOK:
-            self.coordinatorPublisher.send(
-                .moveMyPageEditScreenToBackScreen(toastMessage: validationResult.message)
-            )
-        default:
-            self.view.endEditing(true)
-            self.showToastMessage(text: validationResult.message)
+
+        switch myPageEditNicknameValidation {
+        case .regexError: return
+        case .duplicateError: return
+        case .success: return
         }
     }
+
+    func updateNicknameDescription(text: String, textColor: UIColor) {
+    }
+
+//    private func handleOutputProfileValidationResult() {
+//        switch validationResult {
+//        case .validationOK:
+//            self.coordinatorPublisher.send(
+//                .moveMyPageEditScreenToBackScreen(toastMessage: validationResult.message)
+//            )
+//        default:
+//            self.view.endEditing(true)
+//            self.showToastMessage(text: validationResult.message)
+//        }
+//    }
 }
 
 // MARK: - PHPickerViewControllerDelegate

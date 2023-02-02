@@ -85,4 +85,9 @@ final class DefaultUserRepository: UserRepository {
         if userUUID.count < 6 { throw UserRepositoryError.createGuestID }
         return "Guest-" + String(userUUID.prefix(6))
     }
+
+    // MARK: - 찾기
+    func isNicknameExist(_ nickname: String) async throws -> Bool {
+        return try await bcFirestoreService.isExistNickname(nickname)
+    }
 }

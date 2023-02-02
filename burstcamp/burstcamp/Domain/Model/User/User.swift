@@ -25,16 +25,42 @@ struct User: Codable, Equatable {
         self.nickname = nickname
     }
 
-    mutating func setProfileImageURL(_ profileImageURL: String) {
-        self.profileImageURL = profileImageURL
-    }
-
     mutating func setBlogURL(_ blogURL: String) {
         self.blogURL = blogURL
     }
 
-    mutating func setUpdateDate() {
-        self.updateDate = Date()
+    func setProfileImageURL(_ profileImageURL: String) -> User {
+        return User(
+            userUUID: self.userUUID,
+            nickname: self.nickname,
+            profileImageURL: profileImageURL,
+            domain: self.domain,
+            camperID: self.camperID,
+            ordinalNumber: self.ordinalNumber,
+            blogURL: self.blogURL,
+            blogTitle: self.blogTitle,
+            scrapFeedUUIDs: self.scrapFeedUUIDs,
+            signupDate: self.signupDate,
+            updateDate: self.updateDate,
+            isPushOn: self.isPushOn
+        )
+    }
+
+    func setUpdateDate() -> User {
+        return User(
+            userUUID: self.userUUID,
+            nickname: self.nickname,
+            profileImageURL: self.profileImageURL,
+            domain: self.domain,
+            camperID: self.camperID,
+            ordinalNumber: self.ordinalNumber,
+            blogURL: self.blogURL,
+            blogTitle: self.blogTitle,
+            scrapFeedUUIDs: self.scrapFeedUUIDs,
+            signupDate: self.signupDate,
+            updateDate: Date(),
+            isPushOn: self.isPushOn
+        )
     }
 }
 
