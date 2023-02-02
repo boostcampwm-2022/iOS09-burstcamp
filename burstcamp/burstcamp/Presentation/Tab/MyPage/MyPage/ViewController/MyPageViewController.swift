@@ -236,12 +236,13 @@ extension MyPageViewController {
             self?.updateActivityOverlayDescriptionLabel("유저 정보 삭제 중")
             do {
                 try await self?.viewModel.withdrawalWithGithub(code: code)
+                self?.hideAnimatedActivityIndicatorView()
                 self?.moveToAuthFlow()
             } catch {
+                self?.hideAnimatedActivityIndicatorView()
                 debugPrint(error.localizedDescription)
                 showAlert(message: "유저 정보 삭제 중 에러가 발생했어요. \(error.localizedDescription)")
             }
-            self?.hideAnimatedActivityIndicatorView()
         }
     }
 }
