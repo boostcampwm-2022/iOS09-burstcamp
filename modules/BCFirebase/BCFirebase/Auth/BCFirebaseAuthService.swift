@@ -23,8 +23,17 @@ public protocol BCFirebaseAuthServiceProtocol {
 
 public final class BCFirebaseAuthService: BCFirebaseAuthServiceProtocol {
 
-    private let auth = Auth.auth()
+    private let auth: Auth
 
+    public init(auth: Auth) {
+        self.auth = auth
+    }
+    
+    public convenience init() {
+        let auth = Auth.auth()
+        self.init(auth: auth)
+    }
+    
     public func getCurrentUserUid() throws -> String {
         if let user = auth.currentUser {
             return user.uid

@@ -7,6 +7,8 @@
 
 import Foundation
 
+import BCFirebase
+
 struct Feed: Hashable {
     let feedUUID: String
     let writer: FeedWriter

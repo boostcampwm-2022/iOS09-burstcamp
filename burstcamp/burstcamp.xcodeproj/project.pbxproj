@@ -56,6 +56,8 @@
 		14755A4C2973FA8C0036B71D /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14755A4B2973FA8C0036B71D /* LoginRepository.swift */; };
 		14755A4E2973FAA50036B71D /* DefaultLoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14755A4D2973FAA50036B71D /* DefaultLoginRepository.swift */; };
 		14882664298CD86800DB6D3B /* GithubLoginDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882663298CD86800DB6D3B /* GithubLoginDatasource.swift */; };
+		1488269E298CDC1600DB6D3B /* BCFirebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1488269D298CDAE200DB6D3B /* BCFirebase.framework */; };
+		1488269F298CDC1600DB6D3B /* BCFirebase.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1488269D298CDAE200DB6D3B /* BCFirebase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		148867B229839D5100B54415 /* TestCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148867B129839D5100B54415 /* TestCounter.swift */; };
 		148A05442972F3DA00664CCB /* DependencyFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A05432972F3DA00664CCB /* DependencyFactoryProtocol.swift */; };
 		148A05462972F51C00664CCB /* DependencyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A05452972F51C00664CCB /* DependencyFactory.swift */; };
@@ -215,6 +217,13 @@
 			remoteGlobalIDString = B50A277029279F2600DF3E1F;
 			remoteInfo = burstcamp;
 		};
+		1488269C298CDAE200DB6D3B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 14882698298CDAE200DB6D3B /* BCFirebase.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 14882618298CD54600DB6D3B;
+			remoteInfo = BCFirebase;
+		};
 		B59EDAD329408D8000D451CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B59EDACF29408D8000D451CC /* BCResource.xcodeproj */;
@@ -231,6 +240,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				1488269F298CDC1600DB6D3B /* BCFirebase.framework in Embed Frameworks */,
 				B59EDAD629408DAF00D451CC /* BCResource.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -287,6 +297,7 @@
 		14755A4B2973FA8C0036B71D /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
 		14755A4D2973FAA50036B71D /* DefaultLoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoginRepository.swift; sourceTree = "<group>"; };
 		14882663298CD86800DB6D3B /* GithubLoginDatasource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubLoginDatasource.swift; sourceTree = "<group>"; };
+		14882698298CDAE200DB6D3B /* BCFirebase.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BCFirebase.xcodeproj; path = ../../modules/BCFirebase/BCFirebase.xcodeproj; sourceTree = "<group>"; };
 		148867B129839D5100B54415 /* TestCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCounter.swift; sourceTree = "<group>"; };
 		148A05432972F3DA00664CCB /* DependencyFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyFactoryProtocol.swift; sourceTree = "<group>"; };
 		148A05452972F51C00664CCB /* DependencyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyFactory.swift; sourceTree = "<group>"; };
@@ -447,6 +458,7 @@
 			files = (
 				14FFB9AC29822E1A00FDC8B5 /* SkeletonView in Frameworks */,
 				B5BA27832927AEC600BDCE08 /* FirebaseMessaging in Frameworks */,
+				1488269E298CDC1600DB6D3B /* BCFirebase.framework in Frameworks */,
 				B52A7F272927A88F00E271D2 /* Then in Frameworks */,
 				B5BA277F2927AEC600BDCE08 /* FirebaseFirestore in Frameworks */,
 				B5BA27812927AEC600BDCE08 /* FirebaseFunctions in Frameworks */,
@@ -808,6 +820,14 @@
 				14755A4B2973FA8C0036B71D /* LoginRepository.swift */,
 			);
 			path = LoginRepository;
+			sourceTree = "<group>";
+		};
+		14882699298CDAE200DB6D3B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1488269D298CDAE200DB6D3B /* BCFirebase.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		148867B029839D4500B54415 /* Test */ = {
@@ -1565,6 +1585,7 @@
 		B59EDACE29408D5C00D451CC /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				14882698298CDAE200DB6D3B /* BCFirebase.xcodeproj */,
 				B59EDACF29408D8000D451CC /* BCResource.xcodeproj */,
 			);
 			path = Modules;
@@ -1815,6 +1836,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 14882699298CDAE200DB6D3B /* Products */;
+					ProjectRef = 14882698298CDAE200DB6D3B /* BCFirebase.xcodeproj */;
+				},
+				{
 					ProductGroup = B59EDAD029408D8000D451CC /* Products */;
 					ProjectRef = B59EDACF29408D8000D451CC /* BCResource.xcodeproj */;
 				},
@@ -1828,6 +1853,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		1488269D298CDAE200DB6D3B /* BCFirebase.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = BCFirebase.framework;
+			remoteRef = 1488269C298CDAE200DB6D3B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		B59EDAD429408D8000D451CC /* BCResource.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;

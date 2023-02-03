@@ -7,6 +7,8 @@
 
 import Foundation
 
+import BCFirebase
+
 final class DefaultBlogRepository: BlogRepository {
 
     private let bcFirebaseFunctionService: BCFirebaseFunctionService

@@ -8,6 +8,8 @@
 import Combine
 import Foundation
 
+import BCFirebase
+
 final class UserManager {
 
     static let shared = UserManager()

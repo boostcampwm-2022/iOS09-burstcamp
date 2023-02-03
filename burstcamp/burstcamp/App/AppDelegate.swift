@@ -9,6 +9,7 @@ import UIKit
 import UserNotifications
 
 import BCResource
+import BCFirebase
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

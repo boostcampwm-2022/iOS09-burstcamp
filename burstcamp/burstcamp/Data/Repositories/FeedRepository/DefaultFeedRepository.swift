@@ -7,6 +7,8 @@
 
 import Foundation
 
+import BCFirebase
+
 final class DefaultFeedRepository: FeedRepository {
 
     private let bcFirestoreService: BCFirestoreService

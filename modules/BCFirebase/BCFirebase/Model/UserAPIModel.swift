@@ -10,18 +10,18 @@ import Foundation
 import class FirebaseFirestore.Timestamp
 
 public struct UserAPIModel {
-    let userUUID: String
-    let nickname: String
-    let profileImageURL: String
-    let domain: String
-    let camperID: String
-    let ordinalNumber: Int
-    let blogURL: String
-    let blogTitle: String
-    var scrapFeedUUIDs: [String]
-    let signupDate: Date
-    let updateDate: Date
-    let isPushOn: Bool
+    public let userUUID: String
+    public let nickname: String
+    public let profileImageURL: String
+    public let domain: String
+    public let camperID: String
+    public let ordinalNumber: Int
+    public let blogURL: String
+    public let blogTitle: String
+    public var scrapFeedUUIDs: [String]
+    public let signupDate: Date
+    public let updateDate: Date
+    public let isPushOn: Bool
 }
 
 extension UserAPIModel {

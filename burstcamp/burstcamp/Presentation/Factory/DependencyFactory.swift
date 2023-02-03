@@ -7,6 +7,8 @@
 
 import Foundation
 
+import BCFirebase
+
 final class DependencyFactory: DependencyFactoryProtocol {
 
     private var signUpUseCase: SignUpUseCase?

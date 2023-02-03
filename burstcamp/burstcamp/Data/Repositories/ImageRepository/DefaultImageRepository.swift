@@ -7,6 +7,8 @@
 
 import Foundation
 
+import BCFirebase
+
 final class DefaultImageRepository: ImageRepository {
 
     private let bcFirestorageService: BCFireStorageService

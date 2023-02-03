@@ -13,8 +13,13 @@ public final class BCFirebaseFunctionService {
 
     private var functions: Functions
 
-    init(functions: Functions = Functions.functions()) {
+    public init(functions: Functions) {
         self.functions = functions
+    }
+    
+    public convenience init() {
+        let functions = Functions.functions()
+        self.init(functions: functions)
     }
 
     public func getBlogTitle(link: String) async throws -> String {

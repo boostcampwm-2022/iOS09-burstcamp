@@ -9,7 +9,7 @@ import Foundation
 
 import FirebaseFirestore
 
-protocol BCFirestoreServiceProtocol {
+public protocol BCFirestoreServiceProtocol {
     func fetchRecommendFeed() async throws -> [FeedAPIModel]
     func fetchLatestNormalFeeds() async throws -> [FeedAPIModel]
     func fetchMoreNormalFeeds() async throws -> [FeedAPIModel]

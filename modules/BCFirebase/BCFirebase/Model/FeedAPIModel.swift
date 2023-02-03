@@ -10,20 +10,20 @@ import Foundation
 import class FirebaseFirestore.Timestamp
 
 public struct FeedAPIModel {
-    let feedUUID: String
-    let title: String
-    let pubDate: Date
-    let url: String
-    let thumbnailURL: String
-    let content: String
-    let scrapCount: Int
-    let writerCamperID: String
-    let writerDomain: String
-    let writerNickname: String
-    let writerOrdinalNumber: Int
-    let writerProfileImageURL: String
-    let writerUUID: String
-    let writerBlogTitle: String
+    public let feedUUID: String
+    public let title: String
+    public let pubDate: Date
+    public let url: String
+    public let thumbnailURL: String
+    public let content: String
+    public let scrapCount: Int
+    public let writerCamperID: String
+    public let writerDomain: String
+    public let writerNickname: String
+    public let writerOrdinalNumber: Int
+    public let writerProfileImageURL: String
+    public let writerUUID: String
+    public let writerBlogTitle: String
 }
 
 extension FeedAPIModel {
