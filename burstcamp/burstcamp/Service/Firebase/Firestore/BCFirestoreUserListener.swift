@@ -19,7 +19,7 @@ public final class BCFirestoreUserListener {
     public init(firestoreService: FirestoreService) {
         self.firestoreService = firestoreService
     }
-    
+
     public convenience init() {
         let firestoreService = FirestoreService()
         self.init(firestoreService: firestoreService)

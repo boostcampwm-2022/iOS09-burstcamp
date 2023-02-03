@@ -98,3 +98,44 @@ extension Feed {
         )
     }
 }
+
+extension Feed {
+    func toFeedAPIModel() -> FeedAPIModel {
+        return FeedAPIModel(
+            feedUUID: self.feedUUID,
+            title: self.title,
+            pubDate: self.pubDate,
+            url: self.url,
+            thumbnailURL: self.thumbnailURL,
+            content: self.content,
+            scrapCount: self.scrapCount,
+            writerCamperID: self.writer.camperID,
+            writerDomain: self.writer.domain.rawValue,
+            writerNickname: self.writer.nickname,
+            writerOrdinalNumber: self.writer.ordinalNumber,
+            writerProfileImageURL: self.writer.profileImageURL,
+            writerUUID: self.writer.userUUID,
+            writerBlogTitle: self.writer.blogTitle
+        )
+    }
+
+    func toScrapFeedAPIModel() -> ScrapFeedAPIModel {
+        return ScrapFeedAPIModel(
+            feedUUID: self.feedUUID,
+            title: self.title,
+            pubDate: self.pubDate,
+            url: self.url,
+            thumbnailURL: self.thumbnailURL,
+            content: self.content,
+            scrapCount: self.scrapCount,
+            scrapDate: self.scrapDate ?? Date(),
+            writerCamperID: self.writer.camperID,
+            writerDomain: self.writer.domain.rawValue,
+            writerNickname: self.writer.nickname,
+            writerOrdinalNumber: self.writer.ordinalNumber,
+            writerProfileImageURL: self.writer.profileImageURL,
+            writerUUID: self.writer.userUUID,
+            writerBlogTitle: self.writer.blogTitle
+        )
+    }
+}

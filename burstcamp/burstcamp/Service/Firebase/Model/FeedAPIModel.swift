@@ -45,23 +45,6 @@ extension FeedAPIModel {
         self.writerBlogTitle = data["writerBlogTitle"] as? String ?? ""
     }
 
-    init(feed: Feed) {
-        self.feedUUID = feed.feedUUID
-        self.title = feed.title
-        self.pubDate = feed.pubDate
-        self.url = feed.url
-        self.thumbnailURL = feed.thumbnailURL
-        self.content = feed.content
-        self.scrapCount = feed.scrapCount
-        self.writerCamperID = feed.writer.camperID
-        self.writerDomain = feed.writer.domain.rawValue
-        self.writerNickname = feed.writer.nickname
-        self.writerOrdinalNumber = feed.writer.ordinalNumber
-        self.writerProfileImageURL = feed.writer.profileImageURL
-        self.writerUUID = feed.writer.userUUID
-        self.writerBlogTitle = feed.writer.blogTitle
-    }
-
     public func toScrapFirestoreData(scrapDate: Date) -> FirestoreData {
         return [
             "feedUUID": feedUUID,
