@@ -43,6 +43,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UNUserNotificationCenter.current().delegate = self
         application.registerForRemoteNotifications()
     }
+
+    private func createNotificationUseCase() {
+        let dependencyFactory = DependencyFactory()
+        self.notificationUseCase = dependencyFactory.createNotificationUseCase()
+    }
 }
 
 // MARK: - UNUserNotificationCenterDelegate
@@ -66,11 +71,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     ) {
         notificationUseCase.didReceiveNotification(response: response)
     }
-
-    private func createNotificationUseCase() {
-        let dependencyFactory = DependencyFactory()
-        self.notificationUseCase = dependencyFactory.createNotificationUseCase()
-    }
 }
 
 // MARK: - MessagingDelegate
@@ -80,7 +80,16 @@ extension AppDelegate: MessagingDelegate {
         Messaging.messaging().delegate = self
         Messaging.messaging().token { token, error in
             Task { [weak self] in
-                try await self?.notificationUseCase.saveIfDifferentFromTheStoredToken(fcmToken: token)
+                do {
+                    try await self?.notificationUseCase.saveIfDifferentFromTheStoredToken(fcmToken: token)
+                } catch {
+                    let window = UIWindow(frame: UIScreen.main.bounds)
+                    if let presentViewController = window.rootViewController {
+                        presentViewController.showAlert(message: "알람을 위한 토큰 저장 중 에러가 발생했어요.\(error.localizedDescription)")
+                    } else {
+                        fatalError("FCM 토큰 설정 중 에러")
+                    }
+                }
             }
         }
     }
@@ -90,11 +99,14 @@ extension AppDelegate: MessagingDelegate {
         _ messaging: Messaging,
         didReceiveRegistrationToken fcmToken: String?
     ) {
+        handleRefreshToken(fcmToken: fcmToken)
+    }
+
+    private func handleRefreshToken(fcmToken: String?) {
         if let fcmToken = fcmToken {
-            print("리프레쉬 fcmToken", fcmToken)
-            Task {
+            Task { [weak self] in
                 do {
-                    try await notificationUseCase.refresh(fcmToken: fcmToken)
+                    try await self?.notificationUseCase.refresh(fcmToken: fcmToken)
                 } catch {
                     let window = UIWindow(frame: UIScreen.main.bounds)
                     if let presentViewController = window.rootViewController {
