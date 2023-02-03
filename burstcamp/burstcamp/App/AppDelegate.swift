@@ -9,26 +9,22 @@ import UIKit
 import UserNotifications
 
 import BCResource
-import Firebase
-import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    private var bcFirebaseMessaging: BCFirebaseMessaging!
     private var notificationUseCase: NotificationUseCase!
 
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        FirebaseApp.configure()
+        BCFirebaseApp.startApp()
         createNotificationUseCase()
         UserManager.shared.appStart()
-
-        print("Auth.auth().currentUser?.uid 값이에오: ", Auth.auth().currentUser?.uid)
-        print("키체인에 있던 유저의 UUID 값이에오: ", UserManager.shared.user.userUUID)
         configurePushNotification(application)
-        configureMessaging()
+        configureBCFirebaseMessagingDelegate()
         return true
     }
 
@@ -36,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
     ) {
-        Messaging.messaging().apnsToken = deviceToken
+        bcFirebaseMessaging.saveApnsToken(apnsToken: deviceToken)
     }
 
     private func configurePushNotification(_ application: UIApplication) {
@@ -75,46 +71,34 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
 // MARK: - MessagingDelegate
 
-extension AppDelegate: MessagingDelegate {
-    private func configureMessaging() {
-        Messaging.messaging().delegate = self
-        Messaging.messaging().token { token, error in
-            Task { [weak self] in
-                do {
-                    try await self?.notificationUseCase.saveIfDifferentFromTheStoredToken(fcmToken: token)
-                } catch {
-                    let window = UIWindow(frame: UIScreen.main.bounds)
-                    if let presentViewController = window.rootViewController {
-                        presentViewController.showAlert(message: "알람을 위한 토큰 저장 중 에러가 발생했어요.\(error.localizedDescription)")
-                    } else {
-                        fatalError("FCM 토큰 설정 중 에러")
-                    }
-                }
+extension AppDelegate: BCFirebaseMessagingDelegate {
+
+    func configureBCFirebaseMessagingDelegate() {
+        bcFirebaseMessaging = BCFirebaseMessaging()
+        bcFirebaseMessaging.delegate = self
+        do {
+            try bcFirebaseMessaging.configureMessaging()
+        } catch {
+            handleError(error, message: "BCFirebaseMessaging Configure 에러")
+        }
+    }
+
+    func configureMessaging(token: String?) {
+        Task { [weak self] in
+            do {
+                try await self?.notificationUseCase.saveIfDifferentFromTheStoredToken(fcmToken: token)
+            } catch {
+                self?.handleError(error, message: "토큰 configure 에러")
             }
         }
     }
 
-    // token refresh monitoring
-    func messaging(
-        _ messaging: Messaging,
-        didReceiveRegistrationToken fcmToken: String?
-    ) {
-        handleRefreshToken(fcmToken: fcmToken)
-    }
-
-    private func handleRefreshToken(fcmToken: String?) {
-        if let fcmToken = fcmToken {
-            Task { [weak self] in
-                do {
-                    try await self?.notificationUseCase.refresh(fcmToken: fcmToken)
-                } catch {
-                    let window = UIWindow(frame: UIScreen.main.bounds)
-                    if let presentViewController = window.rootViewController {
-                        presentViewController.showAlert(message: "알람을 위한 토큰 설정 중 에러가 발생했어요.\(error.localizedDescription)")
-                    } else {
-                        fatalError("Refresh FCM 토큰 설정 중 에러")
-                    }
-                }
+    func refreshToken(token: String?) {
+        Task { [weak self] in
+            do {
+                try await self?.notificationUseCase.refresh(fcmToken: token)
+            } catch {
+                self?.handleError(error, message: "Token Refresh 에러")
             }
         }
     }
@@ -127,5 +111,18 @@ extension AppDelegate {
         UserDefaultsManager.removeAllEtags()
         KeyChainManager.deleteUser()
         KeyChainManager.save(user: UserManager.shared.user)
+    }
+}
+
+// MARK: - Error -> Alert
+extension AppDelegate {
+    func handleError(_ error: Error, message: String) {
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        let errorMessage = message + error.localizedDescription
+        if let presentViewController = window.rootViewController {
+            presentViewController.showAlert(message: errorMessage)
+        } else {
+            fatalError(errorMessage)
+        }
     }
 }
