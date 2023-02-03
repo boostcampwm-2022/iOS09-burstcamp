@@ -64,7 +64,6 @@
 		14755A472973FA3A0036B71D /* GithubLoginDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14755A462973FA3A0036B71D /* GithubLoginDatasource.swift */; };
 		14755A4C2973FA8C0036B71D /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14755A4B2973FA8C0036B71D /* LoginRepository.swift */; };
 		14755A4E2973FAA50036B71D /* DefaultLoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14755A4D2973FAA50036B71D /* DefaultLoginRepository.swift */; };
-		1481B10D2941D1AB0093E591 /* UIResponder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481B10C2941D1AB0093E591 /* UIResponder+.swift */; };
 		1488258A298CB33200DB6D3B /* BCFirebaseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882589298CB33200DB6D3B /* BCFirebaseApp.swift */; };
 		1488258D298CB51D00DB6D3B /* BCFirebaseMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1488258C298CB51D00DB6D3B /* BCFirebaseMessaging.swift */; };
 		148867B229839D5100B54415 /* TestCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148867B129839D5100B54415 /* TestCounter.swift */; };
@@ -313,7 +312,6 @@
 		14755A462973FA3A0036B71D /* GithubLoginDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GithubLoginDatasource.swift; path = burstcamp/Service/Firebase/Auth/GithubLoginDatasource.swift; sourceTree = SOURCE_ROOT; };
 		14755A4B2973FA8C0036B71D /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
 		14755A4D2973FAA50036B71D /* DefaultLoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoginRepository.swift; sourceTree = "<group>"; };
-		1481B10C2941D1AB0093E591 /* UIResponder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+.swift"; sourceTree = "<group>"; };
 		14882589298CB33200DB6D3B /* BCFirebaseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCFirebaseApp.swift; sourceTree = "<group>"; };
 		1488258C298CB51D00DB6D3B /* BCFirebaseMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCFirebaseMessaging.swift; sourceTree = "<group>"; };
 		148867B129839D5100B54415 /* TestCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCounter.swift; sourceTree = "<group>"; };
@@ -1240,7 +1238,6 @@
 		149304A22963F04C00B9BC71 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				1481B10C2941D1AB0093E591 /* UIResponder+.swift */,
 				D84C8131292F0A1E00C984E8 /* UIViewController+.swift */,
 				141344C7292F800300187B86 /* UINavigationController+configure.swift */,
 			);
@@ -2198,7 +2195,6 @@
 				D89AE4F92935EC6E00446AB3 /* Validator.swift in Sources */,
 				1422C62F292F08BC00337710 /* BCDateFormatter.swift in Sources */,
 				B572EF7A2945D81D00A9413C /* Publisher+Extension.swift in Sources */,
-				1481B10D2941D1AB0093E591 /* UIResponder+.swift in Sources */,
 				B597F9552935B94B0022D3E6 /* DefaultToggleButton.swift in Sources */,
 				B50A27F229279F5D00DF3E1F /* AppDelegate.swift in Sources */,
 				141344CF292F800300187B86 /* UIStackView+addArrangedSubviews.swift in Sources */,

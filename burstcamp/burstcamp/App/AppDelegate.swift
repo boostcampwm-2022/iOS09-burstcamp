@@ -82,12 +82,7 @@ extension AppDelegate: MessagingDelegate {
                 do {
                     try await self?.notificationUseCase.saveIfDifferentFromTheStoredToken(fcmToken: token)
                 } catch {
-                    let window = UIWindow(frame: UIScreen.main.bounds)
-                    if let presentViewController = window.rootViewController {
-                        presentViewController.showAlert(message: "알람을 위한 토큰 저장 중 에러가 발생했어요.\(error.localizedDescription)")
-                    } else {
-                        fatalError("FCM 토큰 설정 중 에러")
-                    }
+                    self?.handleError(error, message: "토큰 configure 에러")
                 }
             }
         }
@@ -107,12 +102,7 @@ extension AppDelegate: MessagingDelegate {
                 do {
                     try await self?.notificationUseCase.refresh(fcmToken: fcmToken)
                 } catch {
-                    let window = UIWindow(frame: UIScreen.main.bounds)
-                    if let presentViewController = window.rootViewController {
-                        presentViewController.showAlert(message: "알람을 위한 토큰 설정 중 에러가 발생했어요.\(error.localizedDescription)")
-                    } else {
-                        fatalError("Refresh FCM 토큰 설정 중 에러")
-                    }
+                    self?.handleError(error, message: "Token Refresh 에러")
                 }
             }
         }
@@ -126,5 +116,18 @@ extension AppDelegate {
         UserDefaultsManager.removeAllEtags()
         KeyChainManager.deleteUser()
         KeyChainManager.save(user: UserManager.shared.user)
+    }
+}
+
+// MARK: - Error -> Alert
+extension AppDelegate {
+    func handleError(_ error: Error, message: String) {
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        let errorMessage = message + error.localizedDescription
+        if let presentViewController = window.rootViewController {
+            presentViewController.showAlert(message: errorMessage)
+        } else {
+            fatalError(errorMessage)
+        }
     }
 }
