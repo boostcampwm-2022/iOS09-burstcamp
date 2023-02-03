@@ -88,6 +88,9 @@
 		149304A82963F1D500B9BC71 /* HomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149304A72963F1D500B9BC71 /* HomeUseCase.swift */; };
 		149304AD2963F22600B9BC71 /* FeedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149304AC2963F22600B9BC71 /* FeedRepository.swift */; };
 		149304AF2963F24B00B9BC71 /* DefaultFeedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149304AE2963F24B00B9BC71 /* DefaultFeedRepository.swift */; };
+		1494B6E1298BF3EE00DAB111 /* SwiftyGif in Frameworks */ = {isa = PBXBuildFile; productRef = 1494B6E0298BF3EE00DAB111 /* SwiftyGif */; };
+		1494B6E3298BF51400DAB111 /* LoadingFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1494B6E2298BF51400DAB111 /* LoadingFeedView.swift */; };
+		1494B6E8298BFE3F00DAB111 /* LoadingBurstcamper.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1494B6E7298BFE3F00DAB111 /* LoadingBurstcamper.gif */; };
 		1496CF1C2940679C008F312F /* CoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF1B2940679C008F312F /* CoordinatorEvent.swift */; };
 		1496CF1E294070A3008F312F /* ContainFeedDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF1D294070A3008F312F /* ContainFeedDetailCoordinator.swift */; };
 		1496CF232940AEC6008F312F /* ConvertError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF222940AEC6008F312F /* ConvertError.swift */; };
@@ -324,6 +327,8 @@
 		149304A72963F1D500B9BC71 /* HomeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUseCase.swift; sourceTree = "<group>"; };
 		149304AC2963F22600B9BC71 /* FeedRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRepository.swift; sourceTree = "<group>"; };
 		149304AE2963F24B00B9BC71 /* DefaultFeedRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFeedRepository.swift; sourceTree = "<group>"; };
+		1494B6E2298BF51400DAB111 /* LoadingFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingFeedView.swift; sourceTree = "<group>"; };
+		1494B6E7298BFE3F00DAB111 /* LoadingBurstcamper.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = LoadingBurstcamper.gif; sourceTree = "<group>"; };
 		1496CF1B2940679C008F312F /* CoordinatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorEvent.swift; sourceTree = "<group>"; };
 		1496CF1D294070A3008F312F /* ContainFeedDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainFeedDetailCoordinator.swift; sourceTree = "<group>"; };
 		1496CF222940AEC6008F312F /* ConvertError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertError.swift; sourceTree = "<group>"; };
@@ -465,6 +470,7 @@
 				B59EDAD529408DAF00D451CC /* BCResource.framework in Frameworks */,
 				B5BA277D2927AEC600BDCE08 /* FirebaseAuth in Frameworks */,
 				B52A7F2A2927A89C00E271D2 /* SnapKit in Frameworks */,
+				1494B6E1298BF3EE00DAB111 /* SwiftyGif in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -709,6 +715,7 @@
 			isa = PBXGroup;
 			children = (
 				1427986329851522005CFC4D /* EmptyFeedView.swift */,
+				1494B6E2298BF51400DAB111 /* LoadingFeedView.swift */,
 			);
 			path = EmptyView;
 			sourceTree = "<group>";
@@ -1248,6 +1255,14 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
+		1494B6E4298BFB0700DAB111 /* gif */ = {
+			isa = PBXGroup;
+			children = (
+				1494B6E7298BFE3F00DAB111 /* LoadingBurstcamper.gif */,
+			);
+			path = gif;
+			sourceTree = "<group>";
+		};
 		1496CF1F294080E6008F312F /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
@@ -1471,6 +1486,7 @@
 		B50A279829279F5D00DF3E1F /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				1494B6E4298BFB0700DAB111 /* gif */,
 				B50A279D29279F5D00DF3E1F /* Assets.xcassets */,
 			);
 			path = Resource;
@@ -1786,6 +1802,7 @@
 				B5BA27822927AEC600BDCE08 /* FirebaseMessaging */,
 				B5BA27842927AEC600BDCE08 /* FirebaseStorage */,
 				14FFB9AB29822E1A00FDC8B5 /* SkeletonView */,
+				1494B6E0298BF3EE00DAB111 /* SwiftyGif */,
 			);
 			productName = Eoljuga;
 			productReference = B50A277129279F2600DF3E1F /* burstcamp.app */;
@@ -1824,6 +1841,7 @@
 				B52A7F282927A89C00E271D2 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				B5BA277B2927AEC600BDCE08 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				14FFB9AA29822E1A00FDC8B5 /* XCRemoteSwiftPackageReference "SkeletonView" */,
+				1494B6DF298BF3EE00DAB111 /* XCRemoteSwiftPackageReference "SwiftyGif" */,
 			);
 			productRefGroup = B50A277229279F2600DF3E1F /* Products */;
 			projectDirPath = "";
@@ -1865,6 +1883,7 @@
 			files = (
 				B52A7F1B2927A4E300E271D2 /* .swiftlint.yml in Resources */,
 				B52A7F1C2927A4E300E271D2 /* .swiftlint.auto.yml in Resources */,
+				1494B6E8298BFE3F00DAB111 /* LoadingBurstcamper.gif in Resources */,
 				B52A7F242927A68F00E271D2 /* Service-Info.plist in Resources */,
 				B50A27F129279F5D00DF3E1F /* LaunchScreen.storyboard in Resources */,
 				B5BA27872927AEF600BDCE08 /* GoogleService-Info.plist in Resources */,
@@ -1947,6 +1966,7 @@
 				D84452FC292DB7DE008E811B /* CellIndexPath.swift in Sources */,
 				D8E979CA293A6D430092EBF6 /* Alert.swift in Sources */,
 				140438BB293F6FD7004D035C /* HomeCoordinator.swift in Sources */,
+				1494B6E3298BF51400DAB111 /* LoadingFeedView.swift in Sources */,
 				14D8C4D6297C103800DFE71F /* ContainFeedDetailViewController.swift in Sources */,
 				B50A27E429279F5D00DF3E1F /* GithubLoginModel.swift in Sources */,
 				B50A27ED29279F5D00DF3E1F /* NormalFeedCell.swift in Sources */,
@@ -2367,6 +2387,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1494B6DF298BF3EE00DAB111 /* XCRemoteSwiftPackageReference "SwiftyGif" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kirualex/SwiftyGif";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		14FFB9AA29822E1A00FDC8B5 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Juanpe/SkeletonView";
@@ -2411,6 +2439,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B5BA277B2927AEC600BDCE08 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		1494B6E0298BF3EE00DAB111 /* SwiftyGif */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1494B6DF298BF3EE00DAB111 /* XCRemoteSwiftPackageReference "SwiftyGif" */;
+			productName = SwiftyGif;
 		};
 		14FFB9AB29822E1A00FDC8B5 /* SkeletonView */ = {
 			isa = XCSwiftPackageProductDependency;
