@@ -93,7 +93,16 @@ extension AppDelegate: MessagingDelegate {
         if let fcmToken = fcmToken {
             print("리프레쉬 fcmToken", fcmToken)
             Task {
-                try await notificationUseCase.refresh(fcmToken: fcmToken)
+                do {
+                    try await notificationUseCase.refresh(fcmToken: fcmToken)
+                } catch {
+                    let window = UIWindow(frame: UIScreen.main.bounds)
+                    if let presentViewController = window.rootViewController {
+                        presentViewController.showAlert(message: "알람을 위한 토큰 설정 중 에러가 발생했어요.\(error.localizedDescription)")
+                    } else {
+                        fatalError("Refresh FCM 토큰 설정 중 에러")
+                    }
+                }
             }
         }
     }
