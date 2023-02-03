@@ -20,9 +20,9 @@ final class DefaultMyPageUseCase: MyPageUseCase {
     }
 
     func withdrawalWithGithub(code: String) async throws {
-        let userUUID = UserManager.shared.user.userUUID
-        let isSuccess = try await loginRepository.withdrawalWithGithub(code: code, userUUID: userUUID)
-        try await imageRepository.deleteProfileImage(userUUID: userUUID)
+        let user = UserManager.shared.user
+        let isSuccess = try await loginRepository.withdrawalWithGithub(code: code, userUUID: user.userUUID)
+        try await deleteProfileImage(userUUID: user.userUUID, profileImageURL: user.profileImageURL)
         deleteLocalUser()
         if !isSuccess { throw MyPageUseCaseError.withdrawal }
     }
@@ -36,6 +36,12 @@ final class DefaultMyPageUseCase: MyPageUseCase {
         )
         deleteLocalUser()
         if !isSuccess { throw MyPageUseCaseError.withdrawal }
+    }
+
+    private func deleteProfileImage(userUUID: String, profileImageURL: String) async throws {
+        if !profileImageURL.hasPrefix("https://github.com/") {
+            try await imageRepository.deleteProfileImage(userUUID: userUUID)
+        }
     }
 
     // MARK: - 마이페이지 수정

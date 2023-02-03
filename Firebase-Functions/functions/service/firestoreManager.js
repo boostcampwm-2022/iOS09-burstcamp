@@ -35,19 +35,120 @@ export async function deleteRecommendFeeds() {
 		})
 }
 
+/**
+ * 1. 기존 추천피드를 삭제합니다.
+ * 2. 전체 피드의 FeedUUID를 가져옵니다
+ * 3. 각 피드의 최근 일주일 간 ScrapCount를 가져옵니다.
+ * 4. scrapCount가 top3인 [FeedUUID]를 리턴합니다.
+ * 5. 4의 [FeedUUID]를 추천 피드 DB에 등록합니다
+ */
+
 export async function updateRecommendFeedDB() {
 	await deleteRecommendFeeds()
 
-	await feedRef
-		.orderBy('pubDate', 'desc')
-		.limit(3)
-		.get()
-		.then((querySnapshot) => {
-			querySnapshot.docs.forEach(async (doc) => {
-				const feedUUID = doc.data()['feedUUID']
-				await recommendFeedRef.doc(feedUUID).set(doc.data())
-			})
-		})
+	let feedUUIDList = await getFeedUUIDList()
+	let feedWeeklyCountList = await getfeedWeeklyCountList(feedUUIDList)
+	let topThreeFeedUUIDList = getTopThreeFeedUUIDList(feedWeeklyCountList)
+	await updateNewRecommendFeedToDB(topThreeFeedUUIDList)
+
+}
+
+/**
+ * 전체 피드의 FeedUUID를 가져옵니다
+ * @returns {[String]} FeedUUID 배열을 리턴
+ */
+
+async function getFeedUUIDList() {
+	const querySnapshot = await feedRef.get()
+	return querySnapshot.docs.map((doc) => {
+		return doc.data()['feedUUID']
+	})
+}
+
+/**
+ * 각 피드의 최근 일주일간 ScrapCount를 수집합니다.
+ * @param {[String]} feedUUIList 
+ * @returns {[{feedUUID: String, count: Int}]} 각 피드의 UUID와 최근 일주일 간 count를 리턴
+ */
+
+async function getfeedWeeklyCountList(feedUUIDList) {
+	let aWeekAgoDate = getLastWeeksDate()
+	logger.log("추천 피드 스크랩 카운트 기준 날짜 - ", aWeekAgoDate)
+	return await Promise.all(feedUUIDList.map(async (feedUUID) => {
+		let weeklyCount = await countScrapUserSinceDate(aWeekAgoDate, feedUUID)
+		let feedWeeklyCount = {
+			feedUUID: feedUUID,
+			count: weeklyCount
+		}
+		return feedWeeklyCount
+	}))
+}
+
+/**
+ * FeedUUID를 통해 date 로부터 ScrapCount를 수집합니다.
+ * @param {Date, String} 
+ * @returns {Int} date로 부터 스크랩 count를 리턴
+ */
+
+async function countScrapUserSinceDate(date, feedUUID) {
+	let timestamp = date
+	const scrapUsersRef = feedRef.doc(feedUUID).collection('scrapUsers');
+	const query = scrapUsersRef.where('scrapDate', '>=', timestamp);
+	const snapshot = await query.count().get();
+	return snapshot.data().count
+}
+
+/**
+ * 지금으로부터 일주일 전 날짜를 구합니다.
+ * @returns {Date}
+ */
+
+function getLastWeeksDate() {
+	var oneWeekAgo = new Date();
+	oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  return oneWeekAgo
+}
+
+/**
+ * FeedUUID & count 정보를 가진 객체를 내림차순 정렬합니다.
+ * 최상위 3개를 수집합니다. 이 때 count가 0 이면 수집하지 않습니다.
+ * @param {[{feedUUID: String, count: Int}]} feedUUID와count객체  
+ * @returns {[String]} 새로운 추천피드 [feedUUID]
+ */
+
+function getTopThreeFeedUUIDList(feedWeeklyCountList) {
+	let recommendFeedCountPolicy = 3
+	var topThreeFeedUUIDList = []
+
+	feedWeeklyCountList.sort((a, b) => {
+			return b.count - a.count;
+	})
+
+	for (var i = 0;  i < feedWeeklyCountList.length; i++ ) {
+		if (feedWeeklyCountList[i].count != 0) {
+			topThreeFeedUUIDList.push(feedWeeklyCountList[i].feedUUID)
+		}
+		if (topThreeFeedUUIDList.length == recommendFeedCountPolicy) {
+			break
+		}
+	}
+	return topThreeFeedUUIDList
+}
+
+/**
+ * [feedUUID]를 받아 해당 feedUUID를 불러옵니다.
+ * feedUUID를 기반으로 피드 DB에서 피드를 불러옵니다.
+ * 불러온 피드를 추천피드에 저장합니다.
+ * @param {[String]} feedUUIDList
+ */
+
+async function updateNewRecommendFeedToDB(newRecommendFeedUUIDList) {
+	newRecommendFeedUUIDList.forEach(async (newFeedUUID) => {
+		const newFeedRef =  feedRef.doc(newFeedUUID)
+		const doc = await newFeedRef.get();
+		const newRecommendFeed = doc.data()
+		await recommendFeedRef.doc(newRecommendFeed.feedUUID).set(newRecommendFeed)
+	})
 }
 
 /**

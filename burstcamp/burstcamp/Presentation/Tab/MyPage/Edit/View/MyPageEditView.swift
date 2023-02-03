@@ -41,8 +41,17 @@ final class MyPageEditView: UIView {
     }
 
     private let nickNameTextField = DefaultTextField(
-        placeholder: "닉네임을 입력해주세요.",
+        placeholder: "닉네임을 입력해주세요. (한, 영, 숫자, _, -, 2-10자)",
         clearButton: true
+    )
+
+    private let nickNameDescriptionLabel = DefaultPaddingLabel(horizontalPadding: 6).then {
+        $0.font = .regular10
+    }
+
+    private lazy var nickNameStackView = UIStackView(
+        views: [nickNameLabel, nickNameTextField, nickNameDescriptionLabel],
+        spacing: Constant.space8
     )
 
     private let blogLinkLabel = UILabel().then {
@@ -51,23 +60,17 @@ final class MyPageEditView: UIView {
         $0.font = .bold14
     }
 
-    private lazy var nickNameStackView = UIStackView(
-        views: [nickNameLabel, nickNameTextField],
-        spacing: Constant.space8
-    )
-
     private let blogLinkTextField = DefaultTextField(
         placeholder: "블로그 주소를 입력해주세요.",
         clearButton: true
     )
 
-    private var blogTitleImageLabel = DefaultImageLabel(
-        icon: UIImage(systemName: ""),
-        text: ""
-    )
+    private let blogLinkDescriptionLabel = DefaultPaddingLabel(horizontalPadding: 6).then {
+        $0.font = .regular10
+    }
 
     private lazy var blogLinkStackView = UIStackView(
-        views: [blogLinkLabel, blogLinkTextField, blogTitleImageLabel],
+        views: [blogLinkLabel, blogLinkTextField, blogLinkDescriptionLabel],
         spacing: Constant.space8
     )
 
@@ -76,9 +79,12 @@ final class MyPageEditView: UIView {
         spacing: Constant.space48
     )
 
-    private let finishEditButton = DefaultButton(title: "수정완료")
+    private let finishEditButton = DefaultButton(title: "수정완료").then {
+        $0.backgroundColor = .systemGray5
+        $0.isEnabled = false
+    }
 
-    private let descriptionLabel = UILabel().then {
+    private let descriptionLabel = DefaultPaddingLabel(horizontalPadding: 6).then {
         $0.text = "유저 정보는 30일에 1회 수정이 가능해요"
         $0.textColor = .systemGray2
         $0.font = .regular12
@@ -143,14 +149,55 @@ final class MyPageEditView: UIView {
             make.horizontalEdges.equalToSuperview().inset(Constant.space16)
         }
     }
+}
 
+extension MyPageEditView {
     func updateCurrentUserInfo(user: User) {
-        profileImageView.setImage(urlString: user.profileImageURL, isDiskCaching: true)
-        nickNameTextField.text = user.nickname
-        blogLinkTextField.text = user.blogURL
-        blogTitleImageLabel = DefaultImageLabel(
-            icon: UIImage(systemName: "book.fill"),
-            text: user.blogTitle
-        )
+        DispatchQueue.main.async {
+            self.profileImageView.setImage(urlString: user.profileImageURL, isDiskCaching: true)
+            self.nickNameTextField.text = user.nickname
+            self.blogLinkTextField.text = user.blogURL
+        }
+    }
+
+    func updateImage(_ image: UIImage?) {
+        DispatchQueue.main.async {
+            self.profileImageView.image = image
+        }
+    }
+
+    func updateNickNameDescriptionLabel(text: String, textColor: UIColor) {
+        DispatchQueue.main.async {
+            self.nickNameDescriptionLabel.text = text
+            self.nickNameDescriptionLabel.textColor = textColor
+        }
+    }
+
+    func updateBlogLinkDescriptionLabel(text: String, textColor: UIColor) {
+        DispatchQueue.main.async {
+            self.blogLinkDescriptionLabel.text = text
+            self.blogLinkDescriptionLabel.textColor = textColor
+        }
+    }
+
+    func enableEditButton() {
+        DispatchQueue.main.async {
+            self.finishEditButton.isEnabled = true
+            self.finishEditButton.backgroundColor = .main
+        }
+    }
+
+    func disableEditButton() {
+        DispatchQueue.main.async {
+            self.finishEditButton.isEnabled = false
+            self.finishEditButton.backgroundColor = .systemGray5
+        }
+    }
+
+    func isBlogLinkEmpty() -> Bool {
+        guard let text = blogLinkTextField.text else {
+            return false
+        }
+        return text.isEmpty ? true : false
     }
 }

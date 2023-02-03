@@ -16,4 +16,5 @@ protocol UserRepository {
     func saveFCMToken(_ token: String, to userUUID: String) async throws
 
     func saveGuest(userUUID: String) async throws -> User
+    func isNicknameExist(_ nickname: String) async throws -> Bool
 }

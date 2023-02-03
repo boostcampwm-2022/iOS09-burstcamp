@@ -8,8 +8,6 @@
 import Combine
 import Foundation
 
-import BCFetcher
-
 typealias FeedWithOrder = (order: Int, feed: Feed)
 
 final class ScrapPageViewModel {

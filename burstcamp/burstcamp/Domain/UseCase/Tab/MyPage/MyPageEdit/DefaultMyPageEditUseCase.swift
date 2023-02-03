@@ -9,70 +9,54 @@ import Foundation
 
 final class DefaultMyPageEditUseCase: MyPageEditUseCase {
 
-    private var imageData: Data?
-    private var beforeUser: User
-    private var editedUser: User
     private let imageRepository: ImageRepository
     private let userRepository: UserRepository
 
-    init(beforeUser: User, editedUser: User, imageRepository: ImageRepository, userRepository: UserRepository) {
-        self.beforeUser = beforeUser
-        self.editedUser = editedUser
+    init(imageRepository: ImageRepository, userRepository: UserRepository) {
         self.imageRepository = imageRepository
         self.userRepository = userRepository
     }
 
-    convenience init(imageRepository: ImageRepository, userRepository: UserRepository) {
-        let user = UserManager.shared.user
-        self.init(beforeUser: user, editedUser: user, imageRepository: imageRepository, userRepository: userRepository)
-    }
-
-    func setUserNickname(_ nickname: String) {
-        editedUser.setNickname(nickname)
-    }
-
-    func setUserBlogURL(_ blogURL: String) {
-        editedUser.setBlogURL(blogURL)
-    }
-
-    func setImageData(_ imageData: Data?) {
-        self.imageData = imageData
-    }
-
-    func validateResult() -> MyPageEditValidationResult {
-        let nicknameValidation = Validator.validate(nickname: editedUser.nickname)
-        let blogLinkValidation = Validator.validateIsEmpty(blogLink: editedUser.blogURL)
-        if nicknameValidation && blogLinkValidation {
-            return .validationOK
-        } else if nicknameValidation {
-            return .blogLinkError
-        } else {
-            return .nicknameError
+    func isValidNickname(_ nickname: String) async throws -> MyPageEditNicknameValidation {
+        guard Validator.validate(nickname: nickname) else {
+            return .regexError
         }
+
+        guard try await !userRepository.isNicknameExist(nickname) else {
+            return .duplicateError
+        }
+
+        return .success
     }
 
-    func updateUser() async throws {
-        editedUser.setUpdateDate()
-        try await updateFirestorageImage(imageData)
-        try await userRepository.updateUser(editedUser)
+    func isValidBlogURL(_ blogURL: String) -> MyPageEditBlogValidation {
+        return Validator.validateIsEmpty(blogLink: blogURL) ? .success : .regexError
     }
 
-    private func isUserChanged() -> Bool {
-        return editedUser != beforeUser
+    func updateUser(user: User, imageData: Data?) async throws {
+        let updateUser = user.setUpdateDate()
+        let imageUpdateUser = try await updateFirestorageImage(imageData, to: updateUser)
+        try await userRepository.updateUser(imageUpdateUser)
+        UserManager.shared.setUser(imageUpdateUser)
     }
 
-    private func isUserBlogURLChanged() -> Bool {
-        return editedUser.blogURL != beforeUser.blogURL
-    }
+//    private func isUserChanged() -> Bool {
+//        return editedUser != beforeUser
+//    }
+//
+//    private func isUserBlogURLChanged() -> Bool {
+//        return editedUser.blogURL != beforeUser.blogURL
+//    }
 
-    private func updateFirestorageImage(_ imageData: Data?) async throws {
+    private func updateFirestorageImage(_ imageData: Data?, to user: User) async throws -> User {
         // 새로운 이미지 업로드하면 기존 이미지는 덮어씌여짐. 굳이 삭제할 필요가 없음
         if let imageData = imageData {
             let newProfileImageURL = try await imageRepository.saveProfileImage(
                 imageData: imageData,
-                userUUID: editedUser.userUUID
+                userUUID: user.userUUID
             )
-            editedUser.setProfileImageURL(newProfileImageURL)
+            return user.setProfileImageURL(newProfileImageURL)
         }
+        return user
     }
 }

@@ -14,7 +14,7 @@
 		140438C0293F77DD004D035C /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140438BF293F77DD004D035C /* Factory.swift */; };
 		1404DA43298259A100228E50 /* UserRepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404DA42298259A100228E50 /* UserRepositoryError.swift */; };
 		1404DA4529825A2E00228E50 /* LoginUseCaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404DA4429825A2E00228E50 /* LoginUseCaseError.swift */; };
-		140B8751298775A300436F65 /* String+sha256.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B8750298775A300436F65 /* String+sha256.swift */; };
+		140B8751298775A300436F65 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B8750298775A300436F65 /* String+.swift */; };
 		140B87532987870F00436F65 /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B87522987870F00436F65 /* AuthButton.swift */; };
 		140B87562987993300436F65 /* LoginProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B87552987993300436F65 /* LoginProvider.swift */; };
 		140B87592987B6EF00436F65 /* AppleAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B87582987B6EF00436F65 /* AppleAuthViewController.swift */; };
@@ -88,6 +88,9 @@
 		149304A82963F1D500B9BC71 /* HomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149304A72963F1D500B9BC71 /* HomeUseCase.swift */; };
 		149304AD2963F22600B9BC71 /* FeedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149304AC2963F22600B9BC71 /* FeedRepository.swift */; };
 		149304AF2963F24B00B9BC71 /* DefaultFeedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149304AE2963F24B00B9BC71 /* DefaultFeedRepository.swift */; };
+		1494B6E1298BF3EE00DAB111 /* SwiftyGif in Frameworks */ = {isa = PBXBuildFile; productRef = 1494B6E0298BF3EE00DAB111 /* SwiftyGif */; };
+		1494B6E3298BF51400DAB111 /* LoadingFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1494B6E2298BF51400DAB111 /* LoadingFeedView.swift */; };
+		1494B6E8298BFE3F00DAB111 /* LoadingBurstcamper.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1494B6E7298BFE3F00DAB111 /* LoadingBurstcamper.gif */; };
 		1496CF1C2940679C008F312F /* CoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF1B2940679C008F312F /* CoordinatorEvent.swift */; };
 		1496CF1E294070A3008F312F /* ContainFeedDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF1D294070A3008F312F /* ContainFeedDetailCoordinator.swift */; };
 		1496CF232940AEC6008F312F /* ConvertError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496CF222940AEC6008F312F /* ConvertError.swift */; };
@@ -105,6 +108,7 @@
 		14D8C4C6297BEDB900DFE71F /* HomeViewModelError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C4C5297BEDB900DFE71F /* HomeViewModelError.swift */; };
 		14D8C4D4297C0C0200DFE71F /* FeedDetailViewModelError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C4D3297C0C0200DFE71F /* FeedDetailViewModelError.swift */; };
 		14D8C4D6297C103800DFE71F /* ContainFeedDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C4D5297C103800DFE71F /* ContainFeedDetailViewController.swift */; };
+		14E94385298B88D500C546DA /* DefaultPaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E94384298B88D500C546DA /* DefaultPaddingLabel.swift */; };
 		14F94BE62939E16D0058A79A /* UICollectionView+emptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */; };
 		14FF7A29298384FB001D6EDF /* MockUpFeedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FF7A28298384FB001D6EDF /* MockUpFeedRepository.swift */; };
 		14FF7A2D29838561001D6EDF /* MockUpFeedRepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FF7A2C29838561001D6EDF /* MockUpFeedRepositoryError.swift */; };
@@ -152,13 +156,6 @@
 		B572EF7A2945D81D00A9413C /* Publisher+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EF792945D81D00A9413C /* Publisher+Extension.swift */; };
 		B572EF812945E19C00A9413C /* Sequence+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EF802945E19C00A9413C /* Sequence+Async.swift */; };
 		B572EF832945E1CA00A9413C /* Publisher+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EF822945E1CA00A9413C /* Publisher+Async.swift */; };
-		B572EFA129479D1500A9413C /* FeedRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EFA029479D1500A9413C /* FeedRealmModel.swift */; };
-		B572EFA329479FEC00A9413C /* FeedWriterRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572EFA229479FEC00A9413C /* FeedWriterRealmModel.swift */; };
-		B572F0192948673700A9413C /* RealmManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B572F0122948670100A9413C /* RealmManager.framework */; };
-		B572F01A2948673700A9413C /* RealmManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B572F0122948670100A9413C /* RealmManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B572F01C2948688000A9413C /* Feed+RealmCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572F01B2948688000A9413C /* Feed+RealmCompatible.swift */; };
-		B572F01E29486C0500A9413C /* FeedWriter+RealmCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572F01D29486C0500A9413C /* FeedWriter+RealmCompatible.swift */; };
-		B572F0202948768100A9413C /* FeedRealmDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572F01F2948768100A9413C /* FeedRealmDataSource.swift */; };
 		B597F9552935B94B0022D3E6 /* DefaultToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */; };
 		B59EDAD529408DAF00D451CC /* BCResource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59EDAD429408D8000D451CC /* BCResource.framework */; };
 		B59EDAD629408DAF00D451CC /* BCResource.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B59EDAD429408D8000D451CC /* BCResource.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -168,17 +165,12 @@
 		B5BA27832927AEC600BDCE08 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = B5BA27822927AEC600BDCE08 /* FirebaseMessaging */; };
 		B5BA27852927AEC600BDCE08 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = B5BA27842927AEC600BDCE08 /* FirebaseStorage */; };
 		B5BA27872927AEF600BDCE08 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5BA27862927AEF600BDCE08 /* GoogleService-Info.plist */; };
-		B5BC81BA2945BB5D0077BF29 /* BCFetcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5BC81B92945BB580077BF29 /* BCFetcher.framework */; };
-		B5BC81BB2945BB5D0077BF29 /* BCFetcher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B5BC81B92945BB580077BF29 /* BCFetcher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B5BC81BD2945BD500077BF29 /* FeedSingletonDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BC81BC2945BD500077BF29 /* FeedSingletonDataSource.swift */; };
-		B5BC81BF2945BFA30077BF29 /* FeedRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BC81BE2945BFA30077BF29 /* FeedRemoteDataSource.swift */; };
 		B5DAD679292E4C6800C4A126 /* FeedDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD674292E4C6800C4A126 /* FeedDetailViewModel.swift */; };
 		B5DAD67A292E4C6800C4A126 /* FeedDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD676292E4C6800C4A126 /* FeedDetailView.swift */; };
 		B5DAD67B292E4C6800C4A126 /* FeedDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD678292E4C6800C4A126 /* FeedDetailViewController.swift */; };
 		B5DAD681292E58BF00C4A126 /* DefaultMultilLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DAD680292E58BF00C4A126 /* DefaultMultilLineLabel.swift */; };
 		B5E0D94C292F750D001727F5 /* FeedContentWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E0D94B292F750D001727F5 /* FeedContentWebView.swift */; };
 		B5F4B036293CC0B300947250 /* FirestoreCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F4B035293CC0B300947250 /* FirestoreCollection.swift */; };
-		B5FF71462948EDB8008E69F2 /* FeedLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FF71452948EDB8008E69F2 /* FeedLocalDataSource.swift */; };
 		D8095C69293B718C00964537 /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8095C68293B718C00964537 /* KeyChainManager.swift */; };
 		D84452EC292CA55F008E811B /* MyPageEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452EB292CA55F008E811B /* MyPageEditView.swift */; };
 		D84452EE292CA569008E811B /* MyPageEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84452ED292CA569008E811B /* MyPageEditViewModel.swift */; };
@@ -197,7 +189,7 @@
 		D8494D522927D086008157F1 /* MyPageProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D512927D085008157F1 /* MyPageProfileView.swift */; };
 		D8494D542927D0DC008157F1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D532927D0DC008157F1 /* User.swift */; };
 		D8494D562927D6EB008157F1 /* DefaultBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8494D552927D6EB008157F1 /* DefaultBadgeView.swift */; };
-		D84C812E292E590300C984E8 /* MyPageEditValidationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84C812D292E590300C984E8 /* MyPageEditValidationResult.swift */; };
+		D84C812E292E590300C984E8 /* MyPageEditValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84C812D292E590300C984E8 /* MyPageEditValidation.swift */; };
 		D84C8132292F0A1E00C984E8 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84C8131292F0A1E00C984E8 /* UIViewController+.swift */; };
 		D8576F32293779D4002885FE /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8576F31293779D4002885FE /* UserManager.swift */; };
 		D8576F3629378F51002885FE /* URLRegularExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8576F3529378F50002885FE /* URLRegularExpression.swift */; };
@@ -240,26 +232,12 @@
 			remoteGlobalIDString = B50A277029279F2600DF3E1F;
 			remoteInfo = burstcamp;
 		};
-		B572F0112948670100A9413C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B572F00D2948670100A9413C /* RealmManager.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B572EFE32948606300A9413C;
-			remoteInfo = RealmManager;
-		};
 		B59EDAD329408D8000D451CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B59EDACF29408D8000D451CC /* BCResource.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = B535511F29407FAF00EAEB38;
 			remoteInfo = BCResource;
-		};
-		B5BC81B82945BB580077BF29 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B5BC81B42945BB580077BF29 /* BCFetcher.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B5BC81A42945BAD60077BF29;
-			remoteInfo = BCFetcher;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -271,8 +249,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				B59EDAD629408DAF00D451CC /* BCResource.framework in Embed Frameworks */,
-				B572F01A2948673700A9413C /* RealmManager.framework in Embed Frameworks */,
-				B5BC81BB2945BB5D0077BF29 /* BCFetcher.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -287,7 +263,7 @@
 		140438BF293F77DD004D035C /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
 		1404DA42298259A100228E50 /* UserRepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepositoryError.swift; sourceTree = "<group>"; };
 		1404DA4429825A2E00228E50 /* LoginUseCaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCaseError.swift; sourceTree = "<group>"; };
-		140B8750298775A300436F65 /* String+sha256.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+sha256.swift"; sourceTree = "<group>"; };
+		140B8750298775A300436F65 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		140B87522987870F00436F65 /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 		140B87552987993300436F65 /* LoginProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProvider.swift; sourceTree = "<group>"; };
 		140B87582987B6EF00436F65 /* AppleAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthViewController.swift; sourceTree = "<group>"; };
@@ -360,6 +336,8 @@
 		149304A72963F1D500B9BC71 /* HomeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUseCase.swift; sourceTree = "<group>"; };
 		149304AC2963F22600B9BC71 /* FeedRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRepository.swift; sourceTree = "<group>"; };
 		149304AE2963F24B00B9BC71 /* DefaultFeedRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFeedRepository.swift; sourceTree = "<group>"; };
+		1494B6E2298BF51400DAB111 /* LoadingFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingFeedView.swift; sourceTree = "<group>"; };
+		1494B6E7298BFE3F00DAB111 /* LoadingBurstcamper.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = LoadingBurstcamper.gif; sourceTree = "<group>"; };
 		1496CF1B2940679C008F312F /* CoordinatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorEvent.swift; sourceTree = "<group>"; };
 		1496CF1D294070A3008F312F /* ContainFeedDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainFeedDetailCoordinator.swift; sourceTree = "<group>"; };
 		1496CF222940AEC6008F312F /* ConvertError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertError.swift; sourceTree = "<group>"; };
@@ -377,6 +355,7 @@
 		14D8C4C5297BEDB900DFE71F /* HomeViewModelError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelError.swift; sourceTree = "<group>"; };
 		14D8C4D3297C0C0200DFE71F /* FeedDetailViewModelError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailViewModelError.swift; sourceTree = "<group>"; };
 		14D8C4D5297C103800DFE71F /* ContainFeedDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainFeedDetailViewController.swift; sourceTree = "<group>"; };
+		14E94384298B88D500C546DA /* DefaultPaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPaddingLabel.swift; sourceTree = "<group>"; };
 		14F94BE52939E16D0058A79A /* UICollectionView+emptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+emptyView.swift"; sourceTree = "<group>"; };
 		14FF7A28298384FB001D6EDF /* MockUpFeedRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUpFeedRepository.swift; sourceTree = "<group>"; };
 		14FF7A2C29838561001D6EDF /* MockUpFeedRepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUpFeedRepositoryError.swift; sourceTree = "<group>"; };
@@ -423,25 +402,15 @@
 		B572EF792945D81D00A9413C /* Publisher+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Extension.swift"; sourceTree = "<group>"; };
 		B572EF802945E19C00A9413C /* Sequence+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Async.swift"; sourceTree = "<group>"; };
 		B572EF822945E1CA00A9413C /* Publisher+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Async.swift"; sourceTree = "<group>"; };
-		B572EFA029479D1500A9413C /* FeedRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRealmModel.swift; sourceTree = "<group>"; };
-		B572EFA229479FEC00A9413C /* FeedWriterRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedWriterRealmModel.swift; sourceTree = "<group>"; };
-		B572F00D2948670100A9413C /* RealmManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RealmManager.xcodeproj; path = ../../../modules/Manager/RealmManager/RealmManager.xcodeproj; sourceTree = "<group>"; };
-		B572F01B2948688000A9413C /* Feed+RealmCompatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Feed+RealmCompatible.swift"; sourceTree = "<group>"; };
-		B572F01D29486C0500A9413C /* FeedWriter+RealmCompatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedWriter+RealmCompatible.swift"; sourceTree = "<group>"; };
-		B572F01F2948768100A9413C /* FeedRealmDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRealmDataSource.swift; sourceTree = "<group>"; };
 		B597F9542935B94B0022D3E6 /* DefaultToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultToggleButton.swift; sourceTree = "<group>"; };
 		B59EDACF29408D8000D451CC /* BCResource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BCResource.xcodeproj; path = ../../modules/BCResource/BCResource.xcodeproj; sourceTree = "<group>"; };
 		B5BA27862927AEF600BDCE08 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		B5BC81B42945BB580077BF29 /* BCFetcher.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BCFetcher.xcodeproj; path = ../../modules/BCFetcher/BCFetcher.xcodeproj; sourceTree = "<group>"; };
-		B5BC81BC2945BD500077BF29 /* FeedSingletonDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSingletonDataSource.swift; sourceTree = "<group>"; };
-		B5BC81BE2945BFA30077BF29 /* FeedRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRemoteDataSource.swift; sourceTree = "<group>"; };
 		B5DAD674292E4C6800C4A126 /* FeedDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailViewModel.swift; sourceTree = "<group>"; };
 		B5DAD676292E4C6800C4A126 /* FeedDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailView.swift; sourceTree = "<group>"; };
 		B5DAD678292E4C6800C4A126 /* FeedDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailViewController.swift; sourceTree = "<group>"; };
 		B5DAD680292E58BF00C4A126 /* DefaultMultilLineLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMultilLineLabel.swift; sourceTree = "<group>"; };
 		B5E0D94B292F750D001727F5 /* FeedContentWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedContentWebView.swift; sourceTree = "<group>"; };
 		B5F4B035293CC0B300947250 /* FirestoreCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreCollection.swift; sourceTree = "<group>"; };
-		B5FF71452948EDB8008E69F2 /* FeedLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLocalDataSource.swift; sourceTree = "<group>"; };
 		D8095C68293B718C00964537 /* KeyChainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
 		D84452EB292CA55F008E811B /* MyPageEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditView.swift; sourceTree = "<group>"; };
 		D84452ED292CA569008E811B /* MyPageEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewModel.swift; sourceTree = "<group>"; };
@@ -460,10 +429,9 @@
 		D8494D512927D085008157F1 /* MyPageProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageProfileView.swift; sourceTree = "<group>"; };
 		D8494D532927D0DC008157F1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D8494D552927D6EB008157F1 /* DefaultBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBadgeView.swift; sourceTree = "<group>"; };
-		D84C812D292E590300C984E8 /* MyPageEditValidationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditValidationResult.swift; sourceTree = "<group>"; };
+		D84C812D292E590300C984E8 /* MyPageEditValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditValidation.swift; sourceTree = "<group>"; };
 		D84C8131292F0A1E00C984E8 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		D8576F31293779D4002885FE /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
-		D8576F3529378F50002885FE /* URLRegularExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRegularExpression.swift; sourceTree = "<group>"; };
 		D858A7DA2989250E005827FC /* UserDefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsService.swift; sourceTree = "<group>"; };
 		D858A7DC2989251D005827FC /* DefaultUserDefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserDefaultsService.swift; sourceTree = "<group>"; };
 		D858A7E32989263A005827FC /* UserDefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKey.swift; sourceTree = "<group>"; };
@@ -513,14 +481,13 @@
 				14FFB9AC29822E1A00FDC8B5 /* SkeletonView in Frameworks */,
 				B5BA27832927AEC600BDCE08 /* FirebaseMessaging in Frameworks */,
 				B52A7F272927A88F00E271D2 /* Then in Frameworks */,
-				B5BC81BA2945BB5D0077BF29 /* BCFetcher.framework in Frameworks */,
 				B5BA277F2927AEC600BDCE08 /* FirebaseFirestore in Frameworks */,
-				B572F0192948673700A9413C /* RealmManager.framework in Frameworks */,
 				B5BA27812927AEC600BDCE08 /* FirebaseFunctions in Frameworks */,
 				B5BA27852927AEC600BDCE08 /* FirebaseStorage in Frameworks */,
 				B59EDAD529408DAF00D451CC /* BCResource.framework in Frameworks */,
 				B5BA277D2927AEC600BDCE08 /* FirebaseAuth in Frameworks */,
 				B52A7F2A2927A89C00E271D2 /* SnapKit in Frameworks */,
+				1494B6E1298BF3EE00DAB111 /* SwiftyGif in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -618,6 +585,7 @@
 			children = (
 				B5DAD680292E58BF00C4A126 /* DefaultMultilLineLabel.swift */,
 				D84452F5292CF4BC008E811B /* DefaultImageLabel.swift */,
+				14E94384298B88D500C546DA /* DefaultPaddingLabel.swift */,
 			);
 			path = Label;
 			sourceTree = "<group>";
@@ -765,6 +733,7 @@
 			isa = PBXGroup;
 			children = (
 				1427986329851522005CFC4D /* EmptyFeedView.swift */,
+				1494B6E2298BF51400DAB111 /* LoadingFeedView.swift */,
 			);
 			path = EmptyView;
 			sourceTree = "<group>";
@@ -786,7 +755,7 @@
 				141344D2292F801100187B86 /* TypeConversion.swift */,
 				D89AE4F02935AE7800446AB3 /* Encodable+dictionary.swift */,
 				D89AE4F22935AFE100446AB3 /* Notification+.swift */,
-				140B8750298775A300436F65 /* String+sha256.swift */,
+				140B8750298775A300436F65 /* String+.swift */,
 			);
 			path = Type;
 			sourceTree = "<group>";
@@ -897,14 +866,6 @@
 				14755A422973F28C0036B71D /* BCFirebaseAuthService.swift */,
 			);
 			path = Auth;
-			sourceTree = "<group>";
-		};
-		14755A442973FA1F0036B71D /* FeedRemote */ = {
-			isa = PBXGroup;
-			children = (
-				B5BC81BE2945BFA30077BF29 /* FeedRemoteDataSource.swift */,
-			);
-			path = FeedRemote;
 			sourceTree = "<group>";
 		};
 		14755A452973FA280036B71D /* GithubLogin */ = {
@@ -1112,7 +1073,6 @@
 			isa = PBXGroup;
 			children = (
 				14755A452973FA280036B71D /* GithubLogin */,
-				14755A442973FA1F0036B71D /* FeedRemote */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1121,9 +1081,6 @@
 			isa = PBXGroup;
 			children = (
 				14152B822988F3D000FF5999 /* FeedMockUpDatasource.swift */,
-				B5BC81BC2945BD500077BF29 /* FeedSingletonDataSource.swift */,
-				B5FF71452948EDB8008E69F2 /* FeedLocalDataSource.swift */,
-				B572F01F2948768100A9413C /* FeedRealmDataSource.swift */,
 			);
 			path = Local;
 			sourceTree = "<group>";
@@ -1155,6 +1112,7 @@
 		149304962963ED1C00B9BC71 /* Edit */ = {
 			isa = PBXGroup;
 			children = (
+				14ABC057298BC314009287B4 /* Enum */,
 				149304972963ED6500B9BC71 /* View */,
 				1493049C2963EDC300B9BC71 /* ViewModel */,
 				1493049D2963EDD900B9BC71 /* ViewController */,
@@ -1318,6 +1276,14 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
+		1494B6E4298BFB0700DAB111 /* gif */ = {
+			isa = PBXGroup;
+			children = (
+				1494B6E7298BFE3F00DAB111 /* LoadingBurstcamper.gif */,
+			);
+			path = gif;
+			sourceTree = "<group>";
+		};
 		1496CF1F294080E6008F312F /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
@@ -1383,13 +1349,20 @@
 		14A93D3E2936EFEE00790034 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				B5FF711D2948DCA0008E69F2 /* RealmModel */,
 				141344DA292F82BE00187B86 /* Feed.swift */,
 				145842B3297FF5C800C81878 /* DiffableFeed.swift */,
 				14A93D412936F00F00790034 /* FeedWriter.swift */,
 				1459C3BB2929150200FA885D /* FeedCellType.swift */,
 			);
 			path = Feed;
+			sourceTree = "<group>";
+		};
+		14ABC057298BC314009287B4 /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				D84C812D292E590300C984E8 /* MyPageEditValidation.swift */,
+			);
+			path = Enum;
 			sourceTree = "<group>";
 		};
 		14FF7A2A2983854A001D6EDF /* FeedRepository */ = {
@@ -1534,6 +1507,7 @@
 		B50A279829279F5D00DF3E1F /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				1494B6E4298BFB0700DAB111 /* gif */,
 				B50A279D29279F5D00DF3E1F /* Assets.xcassets */,
 			);
 			path = Resource;
@@ -1685,27 +1659,9 @@
 			path = AsyncCompatible;
 			sourceTree = "<group>";
 		};
-		B572F00C294866D900A9413C /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				B572F00D2948670100A9413C /* RealmManager.xcodeproj */,
-			);
-			path = Manager;
-			sourceTree = "<group>";
-		};
-		B572F00E2948670100A9413C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				B572F0122948670100A9413C /* RealmManager.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		B59EDACE29408D5C00D451CC /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				B572F00C294866D900A9413C /* Manager */,
-				B5BC81B42945BB580077BF29 /* BCFetcher.xcodeproj */,
 				B59EDACF29408D8000D451CC /* BCResource.xcodeproj */,
 			);
 			path = Modules;
@@ -1723,7 +1679,6 @@
 			isa = PBXGroup;
 			children = (
 				B50A278B29279F5D00DF3E1F /* Constant.swift */,
-				D8576F3529378F50002885FE /* URLRegularExpression.swift */,
 				D8E979C9293A6D430092EBF6 /* Alert.swift */,
 				D858A7E32989263A005827FC /* UserDefaultsKey.swift */,
 			);
@@ -1767,14 +1722,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		B5BC81B52945BB580077BF29 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				B5BC81B92945BB580077BF29 /* BCFetcher.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		B5DAD672292E4C6800C4A126 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
@@ -1812,17 +1759,6 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		B5FF711D2948DCA0008E69F2 /* RealmModel */ = {
-			isa = PBXGroup;
-			children = (
-				B572F01B2948688000A9413C /* Feed+RealmCompatible.swift */,
-				B572EFA029479D1500A9413C /* FeedRealmModel.swift */,
-				B572F01D29486C0500A9413C /* FeedWriter+RealmCompatible.swift */,
-				B572EFA229479FEC00A9413C /* FeedWriterRealmModel.swift */,
-			);
-			path = RealmModel;
-			sourceTree = "<group>";
-		};
 		D8494D572927E8FB008157F1 /* Enum */ = {
 			isa = PBXGroup;
 			children = (
@@ -1836,7 +1772,6 @@
 			isa = PBXGroup;
 			children = (
 				D89AE4F82935EC6E00446AB3 /* Validator.swift */,
-				D84C812D292E590300C984E8 /* MyPageEditValidationResult.swift */,
 			);
 			path = Validator;
 			sourceTree = "<group>";
@@ -1932,6 +1867,7 @@
 				B5BA27822927AEC600BDCE08 /* FirebaseMessaging */,
 				B5BA27842927AEC600BDCE08 /* FirebaseStorage */,
 				14FFB9AB29822E1A00FDC8B5 /* SkeletonView */,
+				1494B6E0298BF3EE00DAB111 /* SwiftyGif */,
 			);
 			productName = Eoljuga;
 			productReference = B50A277129279F2600DF3E1F /* burstcamp.app */;
@@ -1969,23 +1905,15 @@
 				B52A7F252927A88F00E271D2 /* XCRemoteSwiftPackageReference "Then" */,
 				B52A7F282927A89C00E271D2 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				B5BA277B2927AEC600BDCE08 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				B572EF9D294772FB00A9413C /* XCRemoteSwiftPackageReference "realm-swift" */,
 				14FFB9AA29822E1A00FDC8B5 /* XCRemoteSwiftPackageReference "SkeletonView" */,
+				1494B6DF298BF3EE00DAB111 /* XCRemoteSwiftPackageReference "SwiftyGif" */,
 			);
 			productRefGroup = B50A277229279F2600DF3E1F /* Products */;
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = B5BC81B52945BB580077BF29 /* Products */;
-					ProjectRef = B5BC81B42945BB580077BF29 /* BCFetcher.xcodeproj */;
-				},
-				{
 					ProductGroup = B59EDAD029408D8000D451CC /* Products */;
 					ProjectRef = B59EDACF29408D8000D451CC /* BCResource.xcodeproj */;
-				},
-				{
-					ProductGroup = B572F00E2948670100A9413C /* Products */;
-					ProjectRef = B572F00D2948670100A9413C /* RealmManager.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1997,25 +1925,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		B572F0122948670100A9413C /* RealmManager.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = RealmManager.framework;
-			remoteRef = B572F0112948670100A9413C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		B59EDAD429408D8000D451CC /* BCResource.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = BCResource.framework;
 			remoteRef = B59EDAD329408D8000D451CC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B5BC81B92945BB580077BF29 /* BCFetcher.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = BCFetcher.framework;
-			remoteRef = B5BC81B82945BB580077BF29 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -2034,6 +1948,7 @@
 			files = (
 				B52A7F1B2927A4E300E271D2 /* .swiftlint.yml in Resources */,
 				B52A7F1C2927A4E300E271D2 /* .swiftlint.auto.yml in Resources */,
+				1494B6E8298BFE3F00DAB111 /* LoadingBurstcamper.gif in Resources */,
 				B52A7F242927A68F00E271D2 /* Service-Info.plist in Resources */,
 				B50A27F129279F5D00DF3E1F /* LaunchScreen.storyboard in Resources */,
 				B5BA27872927AEF600BDCE08 /* GoogleService-Info.plist in Resources */,
@@ -2079,13 +1994,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B572EFA329479FEC00A9413C /* FeedWriterRealmModel.swift in Sources */,
 				148EF12F29791C2500190471 /* ImageRepository.swift in Sources */,
 				3B061FE5292A1F1E00BFA71D /* SignUpBlogViewController.swift in Sources */,
 				148A05622972F7B900664CCB /* MyPageUseCase.swift in Sources */,
 				B5DAD681292E58BF00C4A126 /* DefaultMultilLineLabel.swift in Sources */,
 				3B061FDD2928E8E300BFA71D /* SignUpCamperIDViewController.swift in Sources */,
-				140B8751298775A300436F65 /* String+sha256.swift in Sources */,
+				140B8751298775A300436F65 /* String+.swift in Sources */,
 				145842B4297FF5C800C81878 /* DiffableFeed.swift in Sources */,
 				1496CF1E294070A3008F312F /* ContainFeedDetailCoordinator.swift in Sources */,
 				140438C0293F77DD004D035C /* Factory.swift in Sources */,
@@ -2101,18 +2015,14 @@
 				D89AE4E62933AEF900446AB3 /* UIImageView+Cache.swift in Sources */,
 				B50A27CF29279F5D00DF3E1F /* Constant.swift in Sources */,
 				148867B229839D5100B54415 /* TestCounter.swift in Sources */,
-				D8576F3629378F51002885FE /* URLRegularExpression.swift in Sources */,
 				D88295FC292A4452005B4273 /* HTTPMethod.swift in Sources */,
 				D84452F2292CCA80008E811B /* SettingSection.swift in Sources */,
-				B5FF71462948EDB8008E69F2 /* FeedLocalDataSource.swift in Sources */,
 				1412996F29765AC300159C02 /* BCFirestoreUserListener.swift in Sources */,
-				B572F01E29486C0500A9413C /* FeedWriter+RealmCompatible.swift in Sources */,
 				D858A7E42989263A005827FC /* UserDefaultsKey.swift in Sources */,
 				148A05672972F84100664CCB /* MyPageEditUseCase.swift in Sources */,
 				B572EF812945E19C00A9413C /* Sequence+Async.swift in Sources */,
 				D8494D502927CEAA008157F1 /* DefaultBadgeLabel.swift in Sources */,
 				14927E1E2929C71C001F2E97 /* RecommendFeedUserView.swift in Sources */,
-				B5BC81BD2945BD500077BF29 /* FeedSingletonDataSource.swift in Sources */,
 				14FF7A2D29838561001D6EDF /* MockUpFeedRepositoryError.swift in Sources */,
 				14A93D402936EFF900790034 /* FeedAPIModel.swift in Sources */,
 				D84C8132292F0A1E00C984E8 /* UIViewController+.swift in Sources */,
@@ -2120,9 +2030,9 @@
 				D84452F0292CA57D008E811B /* MyPageEditViewController.swift in Sources */,
 				14A34D4729743E8B00501A66 /* UserRepository.swift in Sources */,
 				D84452FC292DB7DE008E811B /* CellIndexPath.swift in Sources */,
-				B572EFA129479D1500A9413C /* FeedRealmModel.swift in Sources */,
 				D8E979CA293A6D430092EBF6 /* Alert.swift in Sources */,
 				140438BB293F6FD7004D035C /* HomeCoordinator.swift in Sources */,
+				1494B6E3298BF51400DAB111 /* LoadingFeedView.swift in Sources */,
 				14D8C4D6297C103800DFE71F /* ContainFeedDetailViewController.swift in Sources */,
 				B50A27E429279F5D00DF3E1F /* GithubLoginModel.swift in Sources */,
 				B50A27ED29279F5D00DF3E1F /* NormalFeedCell.swift in Sources */,
@@ -2147,14 +2057,12 @@
 				D89AE4F12935AE7800446AB3 /* Encodable+dictionary.swift in Sources */,
 				D8C38674292B8D82005A2563 /* Appearance.swift in Sources */,
 				148A05512972F63D00664CCB /* DefaultSignUpUseCase.swift in Sources */,
-				B5BC81BF2945BFA30077BF29 /* FeedRemoteDataSource.swift in Sources */,
 				B50A27F729279F5D00DF3E1F /* TabBarCoordinator.swift in Sources */,
 				141344D9292F803800187B86 /* UIControl+Combine.swift in Sources */,
 				143185EA292B4A8D008CE459 /* ScrapPageViewController.swift in Sources */,
 				B5DAD67A292E4C6800C4A126 /* FeedDetailView.swift in Sources */,
 				148A05572972F6DE00664CCB /* FeedDetailUseCase.swift in Sources */,
 				14A34D4D29743F1100501A66 /* DefaultUserRepository.swift in Sources */,
-				B572F01C2948688000A9413C /* Feed+RealmCompatible.swift in Sources */,
 				148A054F2972F62600664CCB /* SignUpUseCase.swift in Sources */,
 				3B7491E92938DCCD00A4BEA0 /* SignUpDomainViewModel.swift in Sources */,
 				14152B812988EAFE00FF5999 /* FeedRepositoryError.swift in Sources */,
@@ -2185,6 +2093,7 @@
 				140E21092944688B00D6E2E5 /* Future+Async.swift in Sources */,
 				B50A27F429279F5D00DF3E1F /* SceneDelegate.swift in Sources */,
 				143185EC292B4AB8008CE459 /* ScrapPageViewModel.swift in Sources */,
+				14E94385298B88D500C546DA /* DefaultPaddingLabel.swift in Sources */,
 				D89AE4ED2935AA2100446AB3 /* FCMToken.swift in Sources */,
 				148A05592972F75C00664CCB /* DefaultFeedDetailUseCase.swift in Sources */,
 				D858A7EA29892B9D005827FC /* NotificationRepositoryError.swift in Sources */,
@@ -2250,9 +2159,8 @@
 				14A34D55297444F000501A66 /* SignUpUseCaseError.swift in Sources */,
 				148A05462972F51C00664CCB /* DependencyFactory.swift in Sources */,
 				D858A7ED29892F8D005827FC /* NotificationUseCase.swift in Sources */,
-				B572F0202948768100A9413C /* FeedRealmDataSource.swift in Sources */,
 				B50A27DA29279F5D00DF3E1F /* ReusableView.swift in Sources */,
-				D84C812E292E590300C984E8 /* MyPageEditValidationResult.swift in Sources */,
+				D84C812E292E590300C984E8 /* MyPageEditValidation.swift in Sources */,
 				D8494D4C2927CD6C008157F1 /* DefaultProfileImageView.swift in Sources */,
 				140E21062944519E00D6E2E5 /* BCFirestoreService.swift in Sources */,
 				B5DAD679292E4C6800C4A126 /* FeedDetailViewModel.swift in Sources */,
@@ -2552,6 +2460,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1494B6DF298BF3EE00DAB111 /* XCRemoteSwiftPackageReference "SwiftyGif" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kirualex/SwiftyGif";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		14FFB9AA29822E1A00FDC8B5 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Juanpe/SkeletonView";
@@ -2576,14 +2492,6 @@
 				version = 5.6.0;
 			};
 		};
-		B572EF9D294772FB00A9413C /* XCRemoteSwiftPackageReference "realm-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/realm-swift.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.33.0;
-			};
-		};
 		B5BA277B2927AEC600BDCE08 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -2604,6 +2512,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B5BA277B2927AEC600BDCE08 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		1494B6E0298BF3EE00DAB111 /* SwiftyGif */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1494B6DF298BF3EE00DAB111 /* XCRemoteSwiftPackageReference "SwiftyGif" */;
+			productName = SwiftyGif;
 		};
 		14FFB9AB29822E1A00FDC8B5 /* SkeletonView */ = {
 			isa = XCSwiftPackageProductDependency;
