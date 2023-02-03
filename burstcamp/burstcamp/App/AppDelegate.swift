@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         FirebaseApp.configure()
-        makeDependency()
+        createNotificationUseCase()
         UserManager.shared.appStart()
 
         print("Auth.auth().currentUser?.uid 값이에오: ", Auth.auth().currentUser?.uid)
@@ -66,6 +66,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     ) {
         notificationUseCase.didReceiveNotification(response: response)
     }
+
+    private func createNotificationUseCase() {
+        let dependencyFactory = DependencyFactory()
+        self.notificationUseCase = dependencyFactory.createNotificationUseCase()
+    }
 }
 
 // MARK: - MessagingDelegate
@@ -101,17 +106,5 @@ extension AppDelegate {
         UserDefaultsManager.removeAllEtags()
         KeyChainManager.deleteUser()
         KeyChainManager.save(user: UserManager.shared.user)
-    }
-}
-
-extension AppDelegate {
-    func makeDependency() {
-        let userDefaultsService = DefaultUserDefaultsService()
-        let bcFireStoreService = BCFirestoreService()
-        let notificationRepository = DefaultNotificationRepository(
-            userDefaultsService: userDefaultsService,
-            bcFirestoreService: bcFireStoreService
-        )
-        notificationUseCase = DefaultNotificationUseCase(notificationRepository: notificationRepository)
     }
 }

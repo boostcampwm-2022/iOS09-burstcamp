@@ -60,6 +60,18 @@ final class DependencyFactory: DependencyFactoryProtocol {
 }
 
 extension DependencyFactory {
+
+    // MARK: - UseCase()
+    func createNotificationUseCase() -> NotificationUseCase {
+        let userDefaultsService = DefaultUserDefaultsService()
+        let bcFireStoreService = BCFirestoreService()
+        let notificationRepository = DefaultNotificationRepository(
+            userDefaultsService: userDefaultsService,
+            bcFirestoreService: bcFireStoreService
+        )
+        return DefaultNotificationUseCase(notificationRepository: notificationRepository)
+    }
+
     func createLoginUseCase() -> LoginUseCase {
         let loginRepository = createLoginRepository()
         let userRepository = createUserRepository()

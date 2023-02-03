@@ -192,7 +192,6 @@
 		D84C812E292E590300C984E8 /* MyPageEditValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84C812D292E590300C984E8 /* MyPageEditValidation.swift */; };
 		D84C8132292F0A1E00C984E8 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84C8131292F0A1E00C984E8 /* UIViewController+.swift */; };
 		D8576F32293779D4002885FE /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8576F31293779D4002885FE /* UserManager.swift */; };
-		D8576F3629378F51002885FE /* URLRegularExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8576F3529378F50002885FE /* URLRegularExpression.swift */; };
 		D858A7DB2989250E005827FC /* UserDefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D858A7DA2989250E005827FC /* UserDefaultsService.swift */; };
 		D858A7DD2989251D005827FC /* DefaultUserDefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D858A7DC2989251D005827FC /* DefaultUserDefaultsService.swift */; };
 		D858A7E42989263A005827FC /* UserDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D858A7E32989263A005827FC /* UserDefaultsKey.swift */; };
