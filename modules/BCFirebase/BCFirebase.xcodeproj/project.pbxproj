@@ -9,23 +9,6 @@
 /* Begin PBXBuildFile section */
 		1488261D298CD54600DB6D3B /* BCFirebase.docc in Sources */ = {isa = PBXBuildFile; fileRef = 1488261C298CD54600DB6D3B /* BCFirebase.docc */; };
 		1488261E298CD54600DB6D3B /* BCFirebase.h in Headers */ = {isa = PBXBuildFile; fileRef = 1488261B298CD54600DB6D3B /* BCFirebase.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		14882629298CD5F800DB6D3B /* UserAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882625298CD5F800DB6D3B /* UserAPIModel.swift */; };
-		1488262A298CD5F800DB6D3B /* ScrapFeedAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882626298CD5F800DB6D3B /* ScrapFeedAPIModel.swift */; };
-		1488262B298CD5F800DB6D3B /* FeedAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882627298CD5F800DB6D3B /* FeedAPIModel.swift */; };
-		1488262C298CD5F800DB6D3B /* FCMToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882628298CD5F800DB6D3B /* FCMToken.swift */; };
-		1488262F298CD5FE00DB6D3B /* BCFirebaseMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1488262E298CD5FE00DB6D3B /* BCFirebaseMessaging.swift */; };
-		14882636298CD60900DB6D3B /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882631298CD60900DB6D3B /* FirestoreService.swift */; };
-		14882637298CD60900DB6D3B /* FirestoreServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882632298CD60900DB6D3B /* FirestoreServiceError.swift */; };
-		14882638298CD60900DB6D3B /* BCFirestoreUserListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882633298CD60900DB6D3B /* BCFirestoreUserListener.swift */; };
-		14882639298CD60900DB6D3B /* BCFirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882634298CD60900DB6D3B /* BCFirestoreService.swift */; };
-		1488263A298CD60900DB6D3B /* FirestoreCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882635298CD60900DB6D3B /* FirestoreCollection.swift */; };
-		1488263E298CD60D00DB6D3B /* FireStorageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1488263C298CD60D00DB6D3B /* FireStorageError.swift */; };
-		1488263F298CD60D00DB6D3B /* BCFireStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1488263D298CD60D00DB6D3B /* BCFireStorageService.swift */; };
-		14882643298CD61500DB6D3B /* FirebaseFunctionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882641298CD61500DB6D3B /* FirebaseFunctionError.swift */; };
-		14882644298CD61500DB6D3B /* BCFirebaseFunctionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882642298CD61500DB6D3B /* BCFirebaseFunctionService.swift */; };
-		14882649298CD61A00DB6D3B /* BCFirebaseAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882646298CD61A00DB6D3B /* BCFirebaseAuthService.swift */; };
-		1488264A298CD61A00DB6D3B /* FirebaseAuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882647298CD61A00DB6D3B /* FirebaseAuthError.swift */; };
-		1488264E298CD61E00DB6D3B /* BCFirebaseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1488264D298CD61E00DB6D3B /* BCFirebaseApp.swift */; };
 		14882651298CD64800DB6D3B /* Encodable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882650298CD64800DB6D3B /* Encodable+.swift */; };
 		14882654298CD6B200DB6D3B /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 14882653298CD6B200DB6D3B /* FirebaseAuth */; };
 		14882656298CD6B200DB6D3B /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 14882655298CD6B200DB6D3B /* FirebaseFirestore */; };
@@ -38,23 +21,6 @@
 		14882618298CD54600DB6D3B /* BCFirebase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BCFirebase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1488261B298CD54600DB6D3B /* BCFirebase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BCFirebase.h; sourceTree = "<group>"; };
 		1488261C298CD54600DB6D3B /* BCFirebase.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = BCFirebase.docc; sourceTree = "<group>"; };
-		14882625298CD5F800DB6D3B /* UserAPIModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAPIModel.swift; sourceTree = "<group>"; };
-		14882626298CD5F800DB6D3B /* ScrapFeedAPIModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrapFeedAPIModel.swift; sourceTree = "<group>"; };
-		14882627298CD5F800DB6D3B /* FeedAPIModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedAPIModel.swift; sourceTree = "<group>"; };
-		14882628298CD5F800DB6D3B /* FCMToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMToken.swift; sourceTree = "<group>"; };
-		1488262E298CD5FE00DB6D3B /* BCFirebaseMessaging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCFirebaseMessaging.swift; sourceTree = "<group>"; };
-		14882631298CD60900DB6D3B /* FirestoreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
-		14882632298CD60900DB6D3B /* FirestoreServiceError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreServiceError.swift; sourceTree = "<group>"; };
-		14882633298CD60900DB6D3B /* BCFirestoreUserListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCFirestoreUserListener.swift; sourceTree = "<group>"; };
-		14882634298CD60900DB6D3B /* BCFirestoreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCFirestoreService.swift; sourceTree = "<group>"; };
-		14882635298CD60900DB6D3B /* FirestoreCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreCollection.swift; sourceTree = "<group>"; };
-		1488263C298CD60D00DB6D3B /* FireStorageError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireStorageError.swift; sourceTree = "<group>"; };
-		1488263D298CD60D00DB6D3B /* BCFireStorageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCFireStorageService.swift; sourceTree = "<group>"; };
-		14882641298CD61500DB6D3B /* FirebaseFunctionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseFunctionError.swift; sourceTree = "<group>"; };
-		14882642298CD61500DB6D3B /* BCFirebaseFunctionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCFirebaseFunctionService.swift; sourceTree = "<group>"; };
-		14882646298CD61A00DB6D3B /* BCFirebaseAuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCFirebaseAuthService.swift; sourceTree = "<group>"; };
-		14882647298CD61A00DB6D3B /* FirebaseAuthError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAuthError.swift; sourceTree = "<group>"; };
-		1488264D298CD61E00DB6D3B /* BCFirebaseApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCFirebaseApp.swift; sourceTree = "<group>"; };
 		14882650298CD64800DB6D3B /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,91 +59,11 @@
 		1488261A298CD54600DB6D3B /* BCFirebase */ = {
 			isa = PBXGroup;
 			children = (
-				1488264C298CD61E00DB6D3B /* App */,
-				14882645298CD61A00DB6D3B /* Auth */,
-				14882640298CD61500DB6D3B /* FireFunction */,
-				1488263B298CD60D00DB6D3B /* FireStorage */,
-				14882630298CD60900DB6D3B /* Firestore */,
-				1488262D298CD5FE00DB6D3B /* Messaging */,
-				14882624298CD5F800DB6D3B /* Model */,
 				1488264F298CD62500DB6D3B /* Util */,
 				1488261B298CD54600DB6D3B /* BCFirebase.h */,
 				1488261C298CD54600DB6D3B /* BCFirebase.docc */,
 			);
 			path = BCFirebase;
-			sourceTree = "<group>";
-		};
-		14882624298CD5F800DB6D3B /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				14882625298CD5F800DB6D3B /* UserAPIModel.swift */,
-				14882626298CD5F800DB6D3B /* ScrapFeedAPIModel.swift */,
-				14882627298CD5F800DB6D3B /* FeedAPIModel.swift */,
-				14882628298CD5F800DB6D3B /* FCMToken.swift */,
-			);
-			name = Model;
-			path = ../../../burstcamp/burstcamp/Service/Firebase/Model;
-			sourceTree = "<group>";
-		};
-		1488262D298CD5FE00DB6D3B /* Messaging */ = {
-			isa = PBXGroup;
-			children = (
-				1488262E298CD5FE00DB6D3B /* BCFirebaseMessaging.swift */,
-			);
-			name = Messaging;
-			path = ../../../burstcamp/burstcamp/Service/Firebase/Messaging;
-			sourceTree = "<group>";
-		};
-		14882630298CD60900DB6D3B /* Firestore */ = {
-			isa = PBXGroup;
-			children = (
-				14882631298CD60900DB6D3B /* FirestoreService.swift */,
-				14882632298CD60900DB6D3B /* FirestoreServiceError.swift */,
-				14882633298CD60900DB6D3B /* BCFirestoreUserListener.swift */,
-				14882634298CD60900DB6D3B /* BCFirestoreService.swift */,
-				14882635298CD60900DB6D3B /* FirestoreCollection.swift */,
-			);
-			name = Firestore;
-			path = ../../../burstcamp/burstcamp/Service/Firebase/Firestore;
-			sourceTree = "<group>";
-		};
-		1488263B298CD60D00DB6D3B /* FireStorage */ = {
-			isa = PBXGroup;
-			children = (
-				1488263C298CD60D00DB6D3B /* FireStorageError.swift */,
-				1488263D298CD60D00DB6D3B /* BCFireStorageService.swift */,
-			);
-			name = FireStorage;
-			path = ../../../burstcamp/burstcamp/Service/Firebase/FireStorage;
-			sourceTree = "<group>";
-		};
-		14882640298CD61500DB6D3B /* FireFunction */ = {
-			isa = PBXGroup;
-			children = (
-				14882641298CD61500DB6D3B /* FirebaseFunctionError.swift */,
-				14882642298CD61500DB6D3B /* BCFirebaseFunctionService.swift */,
-			);
-			name = FireFunction;
-			path = ../../../burstcamp/burstcamp/Service/Firebase/FireFunction;
-			sourceTree = "<group>";
-		};
-		14882645298CD61A00DB6D3B /* Auth */ = {
-			isa = PBXGroup;
-			children = (
-				14882646298CD61A00DB6D3B /* BCFirebaseAuthService.swift */,
-				14882647298CD61A00DB6D3B /* FirebaseAuthError.swift */,
-			);
-			name = Auth;
-			path = ../../../burstcamp/burstcamp/Service/Firebase/Auth;
-			sourceTree = "<group>";
-		};
-		1488264C298CD61E00DB6D3B /* App */ = {
-			isa = PBXGroup;
-			children = (
-				1488264D298CD61E00DB6D3B /* BCFirebaseApp.swift */,
-			);
-			name = App;
-			path = ../../../burstcamp/burstcamp/Service/Firebase/App;
 			sourceTree = "<group>";
 		};
 		1488264F298CD62500DB6D3B /* Util */ = {
@@ -277,25 +163,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14882639298CD60900DB6D3B /* BCFirestoreService.swift in Sources */,
-				14882636298CD60900DB6D3B /* FirestoreService.swift in Sources */,
-				1488263E298CD60D00DB6D3B /* FireStorageError.swift in Sources */,
-				1488262B298CD5F800DB6D3B /* FeedAPIModel.swift in Sources */,
 				1488261D298CD54600DB6D3B /* BCFirebase.docc in Sources */,
-				14882643298CD61500DB6D3B /* FirebaseFunctionError.swift in Sources */,
-				1488262F298CD5FE00DB6D3B /* BCFirebaseMessaging.swift in Sources */,
 				14882651298CD64800DB6D3B /* Encodable+.swift in Sources */,
-				1488263F298CD60D00DB6D3B /* BCFireStorageService.swift in Sources */,
-				1488263A298CD60900DB6D3B /* FirestoreCollection.swift in Sources */,
-				14882637298CD60900DB6D3B /* FirestoreServiceError.swift in Sources */,
-				1488262C298CD5F800DB6D3B /* FCMToken.swift in Sources */,
-				14882644298CD61500DB6D3B /* BCFirebaseFunctionService.swift in Sources */,
-				14882638298CD60900DB6D3B /* BCFirestoreUserListener.swift in Sources */,
-				1488264E298CD61E00DB6D3B /* BCFirebaseApp.swift in Sources */,
-				14882629298CD5F800DB6D3B /* UserAPIModel.swift in Sources */,
-				1488262A298CD5F800DB6D3B /* ScrapFeedAPIModel.swift in Sources */,
-				1488264A298CD61A00DB6D3B /* FirebaseAuthError.swift in Sources */,
-				14882649298CD61A00DB6D3B /* BCFirebaseAuthService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
