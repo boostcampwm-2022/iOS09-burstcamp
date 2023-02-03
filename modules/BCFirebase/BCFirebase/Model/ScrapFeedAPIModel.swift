@@ -25,10 +25,28 @@ public struct ScrapFeedAPIModel {
     let writerProfileImageURL: String
     let writerUUID: String
     let writerBlogTitle: String
+    
+    public init(feedUUID: String, title: String, pubDate: Date, url: String, thumbnailURL: String, content: String, scrapCount: Int, scrapDate: Date, writerCamperID: String, writerDomain: String, writerNickname: String, writerOrdinalNumber: Int, writerProfileImageURL: String, writerUUID: String, writerBlogTitle: String) {
+        self.feedUUID = feedUUID
+        self.title = title
+        self.pubDate = pubDate
+        self.url = url
+        self.thumbnailURL = thumbnailURL
+        self.content = content
+        self.scrapCount = scrapCount
+        self.scrapDate = scrapDate
+        self.writerCamperID = writerCamperID
+        self.writerDomain = writerDomain
+        self.writerNickname = writerNickname
+        self.writerOrdinalNumber = writerOrdinalNumber
+        self.writerProfileImageURL = writerProfileImageURL
+        self.writerUUID = writerUUID
+        self.writerBlogTitle = writerBlogTitle
+    }
 }
 
 extension ScrapFeedAPIModel {
-    public init(data: FirestoreData) {
+    init(data: FirestoreData) {
         self.feedUUID = data["feedUUID"] as? String ?? ""
         self.title = data["title"] as? String ?? ""
         let pubDateTimeStamp = data["pubDate"] as? Timestamp ?? Timestamp()
@@ -48,7 +66,7 @@ extension ScrapFeedAPIModel {
         self.writerBlogTitle = data["writerBlogTitle"] as? String ?? ""
     }
 
-    public func toScrapFirestoreData() -> FirestoreData {
+    func toScrapFirestoreData() -> FirestoreData {
         return [
             "feedUUID": feedUUID,
             "title": title,

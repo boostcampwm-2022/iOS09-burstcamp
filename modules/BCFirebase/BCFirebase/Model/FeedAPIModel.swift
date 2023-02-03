@@ -24,10 +24,41 @@ public struct FeedAPIModel {
     public let writerProfileImageURL: String
     public let writerUUID: String
     public let writerBlogTitle: String
+    
+    public init(feedUUID: String,
+         title: String,
+         pubDate: Date,
+         url: String,
+         thumbnailURL: String,
+         content: String,
+         scrapCount: Int,
+         writerCamperID: String,
+         writerDomain: String,
+         writerNickname: String,
+         writerOrdinalNumber: Int,
+         writerProfileImageURL: String,
+         writerUUID: String,
+         writerBlogTitle: String
+    ) {
+        self.feedUUID = feedUUID
+        self.title = title
+        self.pubDate = pubDate
+        self.url = url
+        self.thumbnailURL = thumbnailURL
+        self.content = content
+        self.scrapCount = scrapCount
+        self.writerCamperID = writerCamperID
+        self.writerDomain = writerDomain
+        self.writerNickname = writerNickname
+        self.writerOrdinalNumber = writerOrdinalNumber
+        self.writerProfileImageURL = writerProfileImageURL
+        self.writerUUID = writerUUID
+        self.writerBlogTitle = writerBlogTitle
+    }
 }
 
-extension FeedAPIModel {
-    public init(data: FirestoreData) {
+public extension FeedAPIModel {
+    init(data: FirestoreData) {
         self.feedUUID = data["feedUUID"] as? String ?? ""
         self.title = data["title"] as? String ?? ""
         let timeStampDate = data["pubDate"] as? Timestamp ?? Timestamp()
@@ -45,7 +76,7 @@ extension FeedAPIModel {
         self.writerBlogTitle = data["writerBlogTitle"] as? String ?? ""
     }
 
-    public func toScrapFirestoreData(scrapDate: Date) -> FirestoreData {
+    func toScrapFirestoreData(scrapDate: Date) -> FirestoreData {
         return [
             "feedUUID": feedUUID,
             "title": title,

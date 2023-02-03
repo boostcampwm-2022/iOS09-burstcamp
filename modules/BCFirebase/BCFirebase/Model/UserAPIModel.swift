@@ -22,10 +22,38 @@ public struct UserAPIModel {
     public let signupDate: Date
     public let updateDate: Date
     public let isPushOn: Bool
+    
+    public init(userUUID: String,
+                nickname: String,
+                profileImageURL: String,
+                domain: String,
+                camperID: String,
+                ordinalNumber: Int,
+                blogURL: String,
+                blogTitle: String,
+                scrapFeedUUIDs: [String],
+                signupDate: Date,
+                updateDate: Date,
+                isPushOn: Bool
+    ) {
+        self.userUUID = userUUID
+        self.nickname = nickname
+        self.profileImageURL = profileImageURL
+        self.domain = domain
+        self.camperID = camperID
+        self.ordinalNumber = ordinalNumber
+        self.blogURL = blogURL
+        self.blogTitle = blogTitle
+        self.scrapFeedUUIDs = scrapFeedUUIDs
+        self.signupDate = signupDate
+        self.updateDate = updateDate
+        self.isPushOn = isPushOn
+    }
 }
 
-extension UserAPIModel {
-    public init(data: FirestoreData) {
+public extension UserAPIModel {
+
+    init(data: FirestoreData) {
         self.userUUID = data["userUUID"] as? String ?? ""
         self.nickname = data["nickname"] as? String ?? ""
         self.profileImageURL = data["profileImageURL"] as? String ?? ""
@@ -42,7 +70,7 @@ extension UserAPIModel {
         self.isPushOn = data["isPushOn"] as? Bool ?? false
     }
 
-    public func toFirestoreData() -> FirestoreData {
+    func toFirestoreData() -> FirestoreData {
         return [
             "userUUID": userUUID,
             "nickname": nickname,
