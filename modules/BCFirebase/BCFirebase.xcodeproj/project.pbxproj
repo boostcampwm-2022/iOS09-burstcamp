@@ -15,6 +15,23 @@
 		14882658298CD6B200DB6D3B /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 14882657298CD6B200DB6D3B /* FirebaseFunctions */; };
 		1488265A298CD6B200DB6D3B /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 14882659298CD6B200DB6D3B /* FirebaseMessaging */; };
 		1488265C298CD6B200DB6D3B /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 1488265B298CD6B200DB6D3B /* FirebaseStorage */; };
+		1488267D298CD8D100DB6D3B /* BCFirebaseAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882666298CD8D100DB6D3B /* BCFirebaseAuthService.swift */; };
+		1488267E298CD8D100DB6D3B /* FirebaseAuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882667298CD8D100DB6D3B /* FirebaseAuthError.swift */; };
+		1488267F298CD8D100DB6D3B /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882669298CD8D100DB6D3B /* FirestoreService.swift */; };
+		14882680298CD8D100DB6D3B /* FirestoreServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1488266A298CD8D100DB6D3B /* FirestoreServiceError.swift */; };
+		14882681298CD8D100DB6D3B /* BCFirestoreUserListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1488266B298CD8D100DB6D3B /* BCFirestoreUserListener.swift */; };
+		14882682298CD8D100DB6D3B /* BCFirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1488266C298CD8D100DB6D3B /* BCFirestoreService.swift */; };
+		14882683298CD8D100DB6D3B /* FirestoreCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1488266D298CD8D100DB6D3B /* FirestoreCollection.swift */; };
+		14882684298CD8D100DB6D3B /* UserAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1488266F298CD8D100DB6D3B /* UserAPIModel.swift */; };
+		14882685298CD8D100DB6D3B /* ScrapFeedAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882670298CD8D100DB6D3B /* ScrapFeedAPIModel.swift */; };
+		14882686298CD8D100DB6D3B /* FeedAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882671298CD8D100DB6D3B /* FeedAPIModel.swift */; };
+		14882687298CD8D100DB6D3B /* FCMToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882672298CD8D100DB6D3B /* FCMToken.swift */; };
+		14882688298CD8D100DB6D3B /* BCFirebaseMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882674298CD8D100DB6D3B /* BCFirebaseMessaging.swift */; };
+		14882689298CD8D100DB6D3B /* FireStorageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882676298CD8D100DB6D3B /* FireStorageError.swift */; };
+		1488268A298CD8D100DB6D3B /* BCFireStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882677298CD8D100DB6D3B /* BCFireStorageService.swift */; };
+		1488268B298CD8D100DB6D3B /* BCFirebaseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882679298CD8D100DB6D3B /* BCFirebaseApp.swift */; };
+		1488268C298CD8D100DB6D3B /* FirebaseFunctionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1488267B298CD8D100DB6D3B /* FirebaseFunctionError.swift */; };
+		1488268D298CD8D100DB6D3B /* BCFirebaseFunctionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1488267C298CD8D100DB6D3B /* BCFirebaseFunctionService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +39,23 @@
 		1488261B298CD54600DB6D3B /* BCFirebase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BCFirebase.h; sourceTree = "<group>"; };
 		1488261C298CD54600DB6D3B /* BCFirebase.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = BCFirebase.docc; sourceTree = "<group>"; };
 		14882650298CD64800DB6D3B /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
+		14882666298CD8D100DB6D3B /* BCFirebaseAuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCFirebaseAuthService.swift; sourceTree = "<group>"; };
+		14882667298CD8D100DB6D3B /* FirebaseAuthError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAuthError.swift; sourceTree = "<group>"; };
+		14882669298CD8D100DB6D3B /* FirestoreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
+		1488266A298CD8D100DB6D3B /* FirestoreServiceError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreServiceError.swift; sourceTree = "<group>"; };
+		1488266B298CD8D100DB6D3B /* BCFirestoreUserListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCFirestoreUserListener.swift; sourceTree = "<group>"; };
+		1488266C298CD8D100DB6D3B /* BCFirestoreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCFirestoreService.swift; sourceTree = "<group>"; };
+		1488266D298CD8D100DB6D3B /* FirestoreCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreCollection.swift; sourceTree = "<group>"; };
+		1488266F298CD8D100DB6D3B /* UserAPIModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAPIModel.swift; sourceTree = "<group>"; };
+		14882670298CD8D100DB6D3B /* ScrapFeedAPIModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrapFeedAPIModel.swift; sourceTree = "<group>"; };
+		14882671298CD8D100DB6D3B /* FeedAPIModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedAPIModel.swift; sourceTree = "<group>"; };
+		14882672298CD8D100DB6D3B /* FCMToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMToken.swift; sourceTree = "<group>"; };
+		14882674298CD8D100DB6D3B /* BCFirebaseMessaging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCFirebaseMessaging.swift; sourceTree = "<group>"; };
+		14882676298CD8D100DB6D3B /* FireStorageError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireStorageError.swift; sourceTree = "<group>"; };
+		14882677298CD8D100DB6D3B /* BCFireStorageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCFireStorageService.swift; sourceTree = "<group>"; };
+		14882679298CD8D100DB6D3B /* BCFirebaseApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCFirebaseApp.swift; sourceTree = "<group>"; };
+		1488267B298CD8D100DB6D3B /* FirebaseFunctionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseFunctionError.swift; sourceTree = "<group>"; };
+		1488267C298CD8D100DB6D3B /* BCFirebaseFunctionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCFirebaseFunctionService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +93,13 @@
 		1488261A298CD54600DB6D3B /* BCFirebase */ = {
 			isa = PBXGroup;
 			children = (
+				14882678298CD8D100DB6D3B /* App */,
+				14882665298CD8D100DB6D3B /* Auth */,
+				1488267A298CD8D100DB6D3B /* FireFunction */,
+				14882675298CD8D100DB6D3B /* FireStorage */,
+				14882668298CD8D100DB6D3B /* Firestore */,
+				14882673298CD8D100DB6D3B /* Messaging */,
+				1488266E298CD8D100DB6D3B /* Model */,
 				1488264F298CD62500DB6D3B /* Util */,
 				1488261B298CD54600DB6D3B /* BCFirebase.h */,
 				1488261C298CD54600DB6D3B /* BCFirebase.docc */,
@@ -72,6 +113,72 @@
 				14882650298CD64800DB6D3B /* Encodable+.swift */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		14882665298CD8D100DB6D3B /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				14882666298CD8D100DB6D3B /* BCFirebaseAuthService.swift */,
+				14882667298CD8D100DB6D3B /* FirebaseAuthError.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		14882668298CD8D100DB6D3B /* Firestore */ = {
+			isa = PBXGroup;
+			children = (
+				14882669298CD8D100DB6D3B /* FirestoreService.swift */,
+				1488266A298CD8D100DB6D3B /* FirestoreServiceError.swift */,
+				1488266B298CD8D100DB6D3B /* BCFirestoreUserListener.swift */,
+				1488266C298CD8D100DB6D3B /* BCFirestoreService.swift */,
+				1488266D298CD8D100DB6D3B /* FirestoreCollection.swift */,
+			);
+			path = Firestore;
+			sourceTree = "<group>";
+		};
+		1488266E298CD8D100DB6D3B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1488266F298CD8D100DB6D3B /* UserAPIModel.swift */,
+				14882670298CD8D100DB6D3B /* ScrapFeedAPIModel.swift */,
+				14882671298CD8D100DB6D3B /* FeedAPIModel.swift */,
+				14882672298CD8D100DB6D3B /* FCMToken.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		14882673298CD8D100DB6D3B /* Messaging */ = {
+			isa = PBXGroup;
+			children = (
+				14882674298CD8D100DB6D3B /* BCFirebaseMessaging.swift */,
+			);
+			path = Messaging;
+			sourceTree = "<group>";
+		};
+		14882675298CD8D100DB6D3B /* FireStorage */ = {
+			isa = PBXGroup;
+			children = (
+				14882676298CD8D100DB6D3B /* FireStorageError.swift */,
+				14882677298CD8D100DB6D3B /* BCFireStorageService.swift */,
+			);
+			path = FireStorage;
+			sourceTree = "<group>";
+		};
+		14882678298CD8D100DB6D3B /* App */ = {
+			isa = PBXGroup;
+			children = (
+				14882679298CD8D100DB6D3B /* BCFirebaseApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		1488267A298CD8D100DB6D3B /* FireFunction */ = {
+			isa = PBXGroup;
+			children = (
+				1488267B298CD8D100DB6D3B /* FirebaseFunctionError.swift */,
+				1488267C298CD8D100DB6D3B /* BCFirebaseFunctionService.swift */,
+			);
+			path = FireFunction;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,8 +270,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14882688298CD8D100DB6D3B /* BCFirebaseMessaging.swift in Sources */,
+				14882687298CD8D100DB6D3B /* FCMToken.swift in Sources */,
+				14882680298CD8D100DB6D3B /* FirestoreServiceError.swift in Sources */,
+				1488268D298CD8D100DB6D3B /* BCFirebaseFunctionService.swift in Sources */,
+				1488268C298CD8D100DB6D3B /* FirebaseFunctionError.swift in Sources */,
 				1488261D298CD54600DB6D3B /* BCFirebase.docc in Sources */,
+				1488267F298CD8D100DB6D3B /* FirestoreService.swift in Sources */,
+				14882689298CD8D100DB6D3B /* FireStorageError.swift in Sources */,
+				1488268B298CD8D100DB6D3B /* BCFirebaseApp.swift in Sources */,
+				1488268A298CD8D100DB6D3B /* BCFireStorageService.swift in Sources */,
+				1488267D298CD8D100DB6D3B /* BCFirebaseAuthService.swift in Sources */,
+				14882682298CD8D100DB6D3B /* BCFirestoreService.swift in Sources */,
+				14882683298CD8D100DB6D3B /* FirestoreCollection.swift in Sources */,
 				14882651298CD64800DB6D3B /* Encodable+.swift in Sources */,
+				14882684298CD8D100DB6D3B /* UserAPIModel.swift in Sources */,
+				14882686298CD8D100DB6D3B /* FeedAPIModel.swift in Sources */,
+				14882681298CD8D100DB6D3B /* BCFirestoreUserListener.swift in Sources */,
+				1488267E298CD8D100DB6D3B /* FirebaseAuthError.swift in Sources */,
+				14882685298CD8D100DB6D3B /* ScrapFeedAPIModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
