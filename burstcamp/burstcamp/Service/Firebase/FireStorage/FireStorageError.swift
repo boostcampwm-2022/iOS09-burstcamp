@@ -7,14 +7,14 @@
 
 import Foundation
 
-enum FireStorageError: LocalizedError {
+public enum FireStorageError: LocalizedError {
     case dataUpload
     case URLDownload
     case deleteError
 }
 
 extension FireStorageError {
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .dataUpload: return "데이터 업로드 중 에러가 발생했습니다."
         case .URLDownload: return "서버에서 URL을 받아오던 중 에러가 발생했습니다."

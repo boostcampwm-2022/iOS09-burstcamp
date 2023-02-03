@@ -9,7 +9,7 @@ import Foundation
 
 import class FirebaseFirestore.Timestamp
 
-struct UserAPIModel {
+public struct UserAPIModel {
     let userUUID: String
     let nickname: String
     let profileImageURL: String
@@ -25,7 +25,7 @@ struct UserAPIModel {
 }
 
 extension UserAPIModel {
-    init(data: FirestoreData) {
+    public init(data: FirestoreData) {
         self.userUUID = data["userUUID"] as? String ?? ""
         self.nickname = data["nickname"] as? String ?? ""
         self.profileImageURL = data["profileImageURL"] as? String ?? ""
@@ -42,7 +42,7 @@ extension UserAPIModel {
         self.isPushOn = data["isPushOn"] as? Bool ?? false
     }
 
-    func toFirestoreData() -> FirestoreData {
+    public func toFirestoreData() -> FirestoreData {
         return [
             "userUUID": userUUID,
             "nickname": nickname,

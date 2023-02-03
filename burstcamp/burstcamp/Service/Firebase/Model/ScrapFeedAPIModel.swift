@@ -9,7 +9,7 @@ import Foundation
 
 import class FirebaseFirestore.Timestamp
 
-struct ScrapFeedAPIModel {
+public struct ScrapFeedAPIModel {
     let feedUUID: String
     let title: String
     let pubDate: Date
@@ -28,7 +28,7 @@ struct ScrapFeedAPIModel {
 }
 
 extension ScrapFeedAPIModel {
-    init(data: FirestoreData) {
+    public init(data: FirestoreData) {
         self.feedUUID = data["feedUUID"] as? String ?? ""
         self.title = data["title"] as? String ?? ""
         let pubDateTimeStamp = data["pubDate"] as? Timestamp ?? Timestamp()
@@ -66,7 +66,7 @@ extension ScrapFeedAPIModel {
         self.writerBlogTitle = feed.writer.blogTitle
     }
 
-    func toScrapFirestoreData() -> FirestoreData {
+    public func toScrapFirestoreData() -> FirestoreData {
         return [
             "feedUUID": feedUUID,
             "title": title,

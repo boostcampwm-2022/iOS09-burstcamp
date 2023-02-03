@@ -9,7 +9,7 @@ import Foundation
 
 import FirebaseFunctions
 
-final class BCFirebaseFunctionService {
+public final class BCFirebaseFunctionService {
 
     private var functions: Functions
 
@@ -17,7 +17,7 @@ final class BCFirebaseFunctionService {
         self.functions = functions
     }
 
-    func getBlogTitle(link: String) async throws -> String {
+    public func getBlogTitle(link: String) async throws -> String {
         let result = try await functions
             .httpsCallable(FunctionField.fetchBlogTitle)
             .call([FunctionField.blogURL: link])
@@ -30,7 +30,7 @@ final class BCFirebaseFunctionService {
         }
     }
 
-    func deleteUser(userUUID: String) async throws -> Bool {
+    public func deleteUser(userUUID: String) async throws -> Bool {
         let result = try await functions
             .httpsCallable(FunctionField.deleteUser)
             .call([FunctionField.userUUID: userUUID])
@@ -43,7 +43,7 @@ final class BCFirebaseFunctionService {
         }
     }
 
-    func updateUserDB(user: UserAPIModel) async throws {
+    public func updateUserDB(user: UserAPIModel) async throws {
         // TODO: 유저 업데이트 함수 호출
         debugPrint("유저 DB 업데이트 팡숀")
     }

@@ -10,17 +10,22 @@ import Foundation
 
 import FirebaseFirestore
 
-final class BCFirestoreUserListener {
+public final class BCFirestoreUserListener {
 
     private let firestoreService: FirestoreService
     private var userListener: ListenerRegistration?
     private var userListenerPublisher = PassthroughSubject<UserAPIModel, Error>()
 
-    init(firestoreService: FirestoreService = FirestoreService()) {
+    public init(firestoreService: FirestoreService) {
         self.firestoreService = firestoreService
     }
+    
+    public convenience init() {
+        let firestoreService = FirestoreService()
+        self.init(firestoreService: firestoreService)
+    }
 
-    func userPublisher(userUUID: String) -> AnyPublisher<UserAPIModel, Error> {
+    public func userPublisher(userUUID: String) -> AnyPublisher<UserAPIModel, Error> {
         addListener(userUUID: userUUID)
         return userListenerPublisher.eraseToAnyPublisher()
     }
@@ -44,7 +49,7 @@ final class BCFirestoreUserListener {
         }
     }
 
-    func removeUserListener() {
+    public func removeUserListener() {
         userListener?.remove()
     }
 }

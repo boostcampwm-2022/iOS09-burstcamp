@@ -31,7 +31,7 @@ protocol BCFirestoreServiceProtocol {
     func saveFCMToken(_ fcmToken: String, to userUUID: String) async throws
 }
 
-final class BCFirestoreService: BCFirestoreServiceProtocol {
+public final class BCFirestoreService: BCFirestoreServiceProtocol {
 
     private let firestoreService: FirestoreService
     private var homeLastSnapshot: QueryDocumentSnapshot?
@@ -57,12 +57,12 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
         )
     }
 
-    init(firestoreService: FirestoreService, paginateCount: Int) {
+    public init(firestoreService: FirestoreService, paginateCount: Int) {
         self.firestoreService = firestoreService
         self.paginateCount = paginateCount
     }
 
-    convenience init(paginateCount: Int = 10) {
+    public convenience init(paginateCount: Int = 10) {
         let firestoreService = FirestoreService()
         self.init(firestoreService: firestoreService, paginateCount: paginateCount)
     }
@@ -76,13 +76,13 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
     }
 
     // MARK: - Home 피드 요청
-    func fetchRecommendFeed() async throws -> [FeedAPIModel] {
+    public func fetchRecommendFeed() async throws -> [FeedAPIModel] {
         let recommendFeedPath = FirestoreCollection.recommendFeed.path
         let feedFirestoreData = try await firestoreService.getCollection(recommendFeedPath)
         return feedFirestoreData.map { FeedAPIModel(data: $0) }
     }
 
-    func fetchLatestNormalFeeds() async throws -> [FeedAPIModel] {
+    public func fetchLatestNormalFeeds() async throws -> [FeedAPIModel] {
         initHomeFeedQuery()
         let result = try await firestoreService.getCollection(query: homeFeedQuery)
         self.homeLastSnapshot = result.lastSnapshot
@@ -93,7 +93,7 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
         return result.collectionData.map { FeedAPIModel(data: $0) }
     }
 
-    func fetchMoreNormalFeeds() async throws -> [FeedAPIModel] {
+    public func fetchMoreNormalFeeds() async throws -> [FeedAPIModel] {
         let result = try await firestoreService.getCollection(query: homeFeedQuery)
         self.homeLastSnapshot = result.lastSnapshot
         if self.homeLastSnapshot == nil {
@@ -104,7 +104,7 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
     }
 
     // MARK: - Scrap Page Feed 요청
-    func fetchLatestScrapFeeds(userUUID: String) async throws -> [FeedAPIModel] {
+    public func fetchLatestScrapFeeds(userUUID: String) async throws -> [FeedAPIModel] {
         initScrapPageFeedQuery()
         let query = scrapPageFeedQuery(userUUID: userUUID)
 
@@ -121,7 +121,7 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
         return result.collectionData.map { FeedAPIModel(data: $0) }
     }
 
-    func fetchMoreScrapFeeds(userUUID: String) async throws -> [FeedAPIModel] {
+    public func fetchMoreScrapFeeds(userUUID: String) async throws -> [FeedAPIModel] {
         let query = scrapPageFeedQuery(userUUID: userUUID)
 
         let result = try await firestoreService.getCollection(query: query)
@@ -135,7 +135,7 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
 
     // MARK: - 단일 피드
 
-    func fetchFeed(feedUUID: String) async throws -> FeedAPIModel {
+    public func fetchFeed(feedUUID: String) async throws -> FeedAPIModel {
         let feedPath = FirestoreCollection.normalFeed.path
         let feedFirestoreData = try await firestoreService.getDocument(feedPath, document: feedUUID)
 
@@ -144,35 +144,35 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
 
     // MARK: - 유저
 
-    func fetchUser(userUUID: String) async throws -> UserAPIModel {
+    public func fetchUser(userUUID: String) async throws -> UserAPIModel {
         let userPath = FirestoreCollection.user.path
         let userFirestoreData = try await firestoreService.getDocument(userPath, document: userUUID)
 
         return UserAPIModel(data: userFirestoreData)
     }
 
-    func saveUser(userUUID: String, user: UserAPIModel) async throws {
+    public func saveUser(userUUID: String, user: UserAPIModel) async throws {
         let userPath = FirestoreCollection.user.path
         try await firestoreService.createDocument(userPath, document: userUUID, data: user.toFirestoreData())
     }
 
-    func updateUser(userUUID: String, user: UserAPIModel) async throws {
+    public func updateUser(userUUID: String, user: UserAPIModel) async throws {
         let userPath = FirestoreCollection.user.path
         try await firestoreService.updateDocument(userPath, document: userUUID, data: user.toFirestoreData())
     }
 
-    func updateUserPushState(userUUID: String, isPushOn: Bool) async throws {
+    public func updateUserPushState(userUUID: String, isPushOn: Bool) async throws {
         let userPath = FirestoreCollection.user.path
 
         try await firestoreService.updateDocument(userPath, document: userUUID, data: ["isPushOn": isPushOn])
     }
 
-    func deleteUser(userUUID: String) async throws {
+    public func deleteUser(userUUID: String) async throws {
         let userPath = FirestoreCollection.user.path
         try await firestoreService.deleteDocument(userPath, document: userUUID)
     }
 
-    func isExistNickname(_ nickname: String) async throws -> Bool {
+    public func isExistNickname(_ nickname: String) async throws -> Bool {
         let userPath = FirestoreCollection.user.path
         let sameNicknameUser = try await firestoreService.getDocument(userPath, field: "nickname", isEqualTo: nickname)
         if sameNicknameUser.first != nil {
@@ -183,7 +183,7 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
 
     // MARK: - 피드 스크랩
 
-    func scrapFeed(_ feed: ScrapFeedAPIModel, with userUUID: String) async throws {
+    public func scrapFeed(_ feed: ScrapFeedAPIModel, with userUUID: String) async throws {
         let batch = firestoreService.getDatabaseBatch()
         let feedUUID = feed.feedUUID
 
@@ -219,7 +219,7 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
         try await batch.commit()
     }
 
-    func unScrapFeed(_ feed: FeedAPIModel, with userUUID: String) async throws {
+    public func unScrapFeed(_ feed: FeedAPIModel, with userUUID: String) async throws {
         let batch = firestoreService.getDatabaseBatch()
         let feedUUID = feed.feedUUID
 
@@ -253,7 +253,7 @@ final class BCFirestoreService: BCFirestoreServiceProtocol {
 
     // MARK: 토큰 저장
 
-    func saveFCMToken(_ fcmToken: String, to userUUID: String) async throws {
+    public func saveFCMToken(_ fcmToken: String, to userUUID: String) async throws {
         let fcmToken = FCMToken(fcmToken: fcmToken)
         guard let data = fcmToken.asDictionary else {
             throw FirestoreServiceError.getCollection
