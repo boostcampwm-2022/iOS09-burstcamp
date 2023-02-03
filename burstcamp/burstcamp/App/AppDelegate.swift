@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         FirebaseApp.configure()
-        makeDependency()
+        createNotificationUseCase()
         UserManager.shared.appStart()
 
         print("Auth.auth().currentUser?.uid 값이에오: ", Auth.auth().currentUser?.uid)
@@ -42,6 +42,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func configurePushNotification(_ application: UIApplication) {
         UNUserNotificationCenter.current().delegate = self
         application.registerForRemoteNotifications()
+    }
+
+    private func createNotificationUseCase() {
+        let dependencyFactory = DependencyFactory()
+        self.notificationUseCase = dependencyFactory.createNotificationUseCase()
     }
 }
 
@@ -75,7 +80,16 @@ extension AppDelegate: MessagingDelegate {
         Messaging.messaging().delegate = self
         Messaging.messaging().token { token, error in
             Task { [weak self] in
-                try await self?.notificationUseCase.saveIfDifferentFromTheStoredToken(fcmToken: token)
+                do {
+                    try await self?.notificationUseCase.saveIfDifferentFromTheStoredToken(fcmToken: token)
+                } catch {
+                    let window = UIWindow(frame: UIScreen.main.bounds)
+                    if let presentViewController = window.rootViewController {
+                        presentViewController.showAlert(message: "알람을 위한 토큰 저장 중 에러가 발생했어요.\(error.localizedDescription)")
+                    } else {
+                        fatalError("FCM 토큰 설정 중 에러")
+                    }
+                }
             }
         }
     }
@@ -85,10 +99,22 @@ extension AppDelegate: MessagingDelegate {
         _ messaging: Messaging,
         didReceiveRegistrationToken fcmToken: String?
     ) {
+        handleRefreshToken(fcmToken: fcmToken)
+    }
+
+    private func handleRefreshToken(fcmToken: String?) {
         if let fcmToken = fcmToken {
-            print("리프레쉬 fcmToken", fcmToken)
-            Task {
-                try await notificationUseCase.refresh(fcmToken: fcmToken)
+            Task { [weak self] in
+                do {
+                    try await self?.notificationUseCase.refresh(fcmToken: fcmToken)
+                } catch {
+                    let window = UIWindow(frame: UIScreen.main.bounds)
+                    if let presentViewController = window.rootViewController {
+                        presentViewController.showAlert(message: "알람을 위한 토큰 설정 중 에러가 발생했어요.\(error.localizedDescription)")
+                    } else {
+                        fatalError("Refresh FCM 토큰 설정 중 에러")
+                    }
+                }
             }
         }
     }
@@ -101,17 +127,5 @@ extension AppDelegate {
         UserDefaultsManager.removeAllEtags()
         KeyChainManager.deleteUser()
         KeyChainManager.save(user: UserManager.shared.user)
-    }
-}
-
-extension AppDelegate {
-    func makeDependency() {
-        let userDefaultsService = DefaultUserDefaultsService()
-        let bcFireStoreService = BCFirestoreService()
-        let notificationRepository = DefaultNotificationRepository(
-            userDefaultsService: userDefaultsService,
-            bcFirestoreService: bcFireStoreService
-        )
-        notificationUseCase = DefaultNotificationUseCase(notificationRepository: notificationRepository)
     }
 }

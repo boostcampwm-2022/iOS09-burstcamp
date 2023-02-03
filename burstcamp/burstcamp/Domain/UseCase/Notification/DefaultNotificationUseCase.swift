@@ -35,9 +35,7 @@ final class DefaultNotificationUseCase: NotificationUseCase {
            let savedFcmToken = notificationRepository.fcmTokenInUserDefaults(),
            fcmToken != savedFcmToken {
             notificationRepository.saveToUserDefaults(fcmToken: fcmToken)
-            Task {
-                try await notificationRepository.saveFCMTokenToFirestore(fcmToken, to: userUUID)
-            }
+            try await notificationRepository.saveFCMTokenToFirestore(fcmToken, to: userUUID)
         }
     }
 
