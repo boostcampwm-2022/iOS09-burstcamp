@@ -145,7 +145,7 @@ extension HomeViewController {
             scrapButtonDidTap: scrapButtonDidTap
         )
 
-        let output = viewModel.transform(cellInput: cellInput, cellCancelBag: &cell.cancelBag)
+        let output = viewModel.transform(cellInput: cellInput)
 
         output.scrapSuccess
             .receive(on: DispatchQueue.main)
@@ -157,7 +157,7 @@ extension HomeViewController {
             } receiveValue: { [weak self] updateFeed in
                 self?.handleUpdateFeed(updateFeed: updateFeed, cell: cell, feedUUID: feedUUID)
             }
-            .store(in: &cancelBag)
+            .store(in: &cell.cancelBag)
     }
 
     // MARK: - bind 내부 함수들 빼줌

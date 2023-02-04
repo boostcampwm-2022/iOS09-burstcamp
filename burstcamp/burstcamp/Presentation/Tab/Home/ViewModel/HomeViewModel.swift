@@ -63,7 +63,7 @@ final class HomeViewModel {
         )
     }
 
-    func transform(cellInput: CellInput, cellCancelBag: inout Set<AnyCancellable>) -> CellOutput {
+    func transform(cellInput: CellInput) -> CellOutput {
         let scrapSuccess = cellInput.scrapButtonDidTap
             .asyncMap { [weak self] normalFeedIndex in
                 return try await self?.scrapFeed(index: normalFeedIndex)
