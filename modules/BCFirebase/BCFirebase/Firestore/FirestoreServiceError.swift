@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum FirestoreServiceError: Error, Equatable {
+public enum FirestoreServiceError: Error, Equatable {
     case getCollection
     case getDocument
     case lastCollection

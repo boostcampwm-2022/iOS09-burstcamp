@@ -7,6 +7,8 @@
 
 import Foundation
 
+import BCFirebase
+
 final class DefaultLoginRepository: LoginRepository {
     private let bcFirebaseAuthService: BCFirebaseAuthService
     private let bcFirebaseFunctionService: BCFirebaseFunctionService

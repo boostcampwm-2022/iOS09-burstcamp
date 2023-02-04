@@ -7,6 +7,8 @@
 
 import Foundation
 
+import BCFirebase
+
 struct User: Codable, Equatable {
     let userUUID: String
     private(set) var nickname: String

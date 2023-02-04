@@ -7,6 +7,8 @@
 
 import Foundation
 
+import BCFirebase
+
 final class DefaultNotificationRepository: NotificationRepository {
 
     // MARK: - Properties

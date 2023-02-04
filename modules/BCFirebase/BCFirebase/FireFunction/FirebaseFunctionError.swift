@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum FirebaseFunctionError: Error {
+public enum FirebaseFunctionError: Error {
     case getBlogTitle
     case deleteUser
 }

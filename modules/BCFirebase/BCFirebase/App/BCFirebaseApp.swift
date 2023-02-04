@@ -7,9 +7,9 @@
 
 import Firebase
 
-final class BCFirebaseApp {
+public final class BCFirebaseApp {
 
-    static func startApp() {
+    public static func startApp() {
         FirebaseApp.configure()
     }
 }

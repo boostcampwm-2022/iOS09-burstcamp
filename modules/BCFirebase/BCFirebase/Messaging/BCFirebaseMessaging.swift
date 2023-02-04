@@ -9,25 +9,25 @@ import Foundation
 
 import Firebase
 
-protocol BCFirebaseMessagingDelegate: AnyObject {
+public protocol BCFirebaseMessagingDelegate: AnyObject {
     func configureMessaging(token: String?)
     func refreshToken(token: String?)
 }
 
-final class BCFirebaseMessaging: NSObject, MessagingDelegate {
+public final class BCFirebaseMessaging: NSObject, MessagingDelegate {
 
     private let messaging: Messaging
-    weak var delegate: BCFirebaseMessagingDelegate?
+    public weak var delegate: BCFirebaseMessagingDelegate?
 
-    init(messaging: Messaging = Messaging.messaging()) {
+    public init(messaging: Messaging = Messaging.messaging()) {
         self.messaging = messaging
     }
 
-    func saveApnsToken(apnsToken: Data) {
+    public func saveApnsToken(apnsToken: Data) {
         messaging.apnsToken = apnsToken
     }
 
-    func configureMessaging() throws {
+    public func configureMessaging() throws {
         messaging.delegate = self
         Task { [weak self] in
             do {
@@ -40,14 +40,14 @@ final class BCFirebaseMessaging: NSObject, MessagingDelegate {
         }
     }
 
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+    public func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         if let fcmToken = fcmToken {
             delegate?.refreshToken(token: fcmToken)
         }
     }
 }
 
-enum BCFirebaseMessagingError: Error {
+public enum BCFirebaseMessagingError: Error {
     case configureMessaging
     case refreshToken
 }

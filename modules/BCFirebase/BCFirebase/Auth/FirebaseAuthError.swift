@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum FirebaseAuthError: LocalizedError {
+public enum FirebaseAuthError: LocalizedError {
     case currentUserNil
     case failSignIn
     case readToken
@@ -18,7 +18,7 @@ enum FirebaseAuthError: LocalizedError {
 }
 
 extension FirebaseAuthError {
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .currentUserNil: return "현재 유저가 없습니다."
         case .failSignIn: return "Fail to firebase auth signIn"

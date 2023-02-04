@@ -9,7 +9,7 @@ import Foundation
 
 import FirebaseAuth
 
-protocol BCFirebaseAuthServiceProtocol {
+public protocol BCFirebaseAuthServiceProtocol {
     func getCurrentUserUid() throws -> String
 
     func loginWithGithub(token: String) async throws -> String
@@ -21,46 +21,55 @@ protocol BCFirebaseAuthServiceProtocol {
     func signOut() throws
 }
 
-final class BCFirebaseAuthService: BCFirebaseAuthServiceProtocol {
+public final class BCFirebaseAuthService: BCFirebaseAuthServiceProtocol {
 
-    let auth = Auth.auth()
+    private let auth: Auth
 
-    func getCurrentUserUid() throws -> String {
+    public init(auth: Auth) {
+        self.auth = auth
+    }
+    
+    public convenience init() {
+        let auth = Auth.auth()
+        self.init(auth: auth)
+    }
+    
+    public func getCurrentUserUid() throws -> String {
         if let user = auth.currentUser {
             return user.uid
         }
         throw FirebaseAuthError.currentUserNil
     }
 
-    func loginWithGithub(token: String) async throws -> String {
+    public func loginWithGithub(token: String) async throws -> String {
         let credential = GitHubAuthProvider.credential(withToken: token)
 
         let result = try await auth.signIn(with: credential)
         return result.user.uid
     }
 
-    func withdrawalWithGithub(token: String) async throws {
+    public func withdrawalWithGithub(token: String) async throws {
         let credential = GitHubAuthProvider.credential(withToken: token)
         try await auth.currentUser?.reauthenticate(with: credential)
         try await auth.currentUser?.delete()
         try auth.signOut()
     }
 
-    func loginWithApple(idTokenString: String, nonce: String) async throws -> String {
+    public func loginWithApple(idTokenString: String, nonce: String) async throws -> String {
         let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
 
         let result = try await auth.signIn(with: credential)
         return result.user.uid
     }
 
-    func withdrawalWithApple(idTokenString: String, nonce: String) async throws {
+    public func withdrawalWithApple(idTokenString: String, nonce: String) async throws {
         let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
         try await auth.currentUser?.reauthenticate(with: credential)
         try await auth.currentUser?.delete()
         try auth.signOut()
     }
 
-    func signOut() throws {
+    public func signOut() throws {
         try auth.signOut()
     }
 }

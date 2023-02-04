@@ -7,6 +7,8 @@
 
 import Foundation
 
+import BCFirebase
+
 final class DefaultUserRepository: UserRepository {
 
     private let bcFirestoreService: BCFirestoreService

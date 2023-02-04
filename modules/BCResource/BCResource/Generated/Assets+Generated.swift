@@ -44,9 +44,9 @@ public enum Assets {
     public static let yellow = ColorAsset(name: "yellow")
   }
   public enum Image {
+    public static let github = ImageAsset(name: "Github")
     public static let burstcamper100 = ImageAsset(name: "burstcamper100")
     public static let burstcamperStun100 = ImageAsset(name: "burstcamperStun100")
-    public static let github = ImageAsset(name: "github")
   }
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

@@ -9,9 +9,9 @@ import Foundation
 
 import FirebaseFirestore
 
-typealias FirestoreData = [String: Any]
+public typealias FirestoreData = [String: Any]
 
-final class FirestoreService {
+public final class FirestoreService {
 
     private let database: Firestore
 
@@ -24,7 +24,7 @@ final class FirestoreService {
         self.init(database: database)
     }
 
-    public func createPaginateQuery(
+    func createPaginateQuery(
         _ collectionPath: String,
         field: String,
         count: Int,
@@ -44,12 +44,12 @@ final class FirestoreService {
         }
     }
 
-    public func getCollection(_ collectionPath: String) async throws -> [FirestoreData] {
+    func getCollection(_ collectionPath: String) async throws -> [FirestoreData] {
         let querySnapshot = try await database.collection(collectionPath).getDocuments()
         return querySnapshot.documents.map { $0.data() }
     }
 
-    public func getCollection(
+    func getCollection(
         _ collectionPath: String,
         _ makeQuery: (_ collection: CollectionReference) -> Query
     ) async throws -> [FirestoreData] {
@@ -57,7 +57,7 @@ final class FirestoreService {
         return querySnapshot.documents.map { $0.data() }
     }
 
-    public func getCollection(query: Query) async throws -> (
+    func getCollection(query: Query) async throws -> (
         collectionData: [FirestoreData],
         lastSnapshot: QueryDocumentSnapshot?
     ) {
@@ -68,13 +68,13 @@ final class FirestoreService {
         return(collectionData, lastSnapshot)
     }
 
-    public func countCollection(_ collectionPath: String) async throws -> Int {
+    func countCollection(_ collectionPath: String) async throws -> Int {
         let countQuery = database.collection(collectionPath).count
         let collectionCount = try await countQuery.getAggregation(source: .server).count
         return Int(truncating: collectionCount)
     }
 
-    public func countCollection(
+    func countCollection(
         _ collectionPath: String,
         _ makeQuery: (_ collection: CollectionReference) -> Query
     ) async throws -> Int {
@@ -83,7 +83,7 @@ final class FirestoreService {
         return Int(truncating: collectionCount)
     }
 
-    public func getDocument(_ collectionPath: String, document: String) async throws -> FirestoreData {
+    func getDocument(_ collectionPath: String, document: String) async throws -> FirestoreData {
         let documentSnapshot = try await database.collection(collectionPath).document(document).getDocument()
         guard let documentData = documentSnapshot.data() else {
             throw FirestoreServiceError.getDocument
@@ -91,14 +91,14 @@ final class FirestoreService {
         return documentData
     }
 
-    public func getDocument(_ collectionPath: String, field: String, isEqualTo: Any) async throws -> [FirestoreData] {
+    func getDocument(_ collectionPath: String, field: String, isEqualTo: Any) async throws -> [FirestoreData] {
         let collectionRef = database.collection(collectionPath)
         let query = collectionRef.whereField(field, isEqualTo: isEqualTo)
         let documentSnapshot = try await query.getDocuments()
         return documentSnapshot.documents.map { $0.data() }
     }
 
-    public func createDocument(
+    func createDocument(
         _ collectionPath: String,
         document: String,
         data: FirestoreData
@@ -106,7 +106,7 @@ final class FirestoreService {
         try await database.collection(collectionPath).document(document).setData(data)
     }
 
-    public func updateDocument(
+    func updateDocument(
         _ collectionPath: String,
         document: String,
         data: FirestoreData
@@ -114,19 +114,19 @@ final class FirestoreService {
         try await database.collection(collectionPath).document(document).updateData(data)
     }
 
-    public func deleteDocument(_ collectionPath: String, document: String) async throws {
+    func deleteDocument(_ collectionPath: String, document: String) async throws {
         try await database.collection(collectionPath).document(document).delete()
     }
 
-    public func getDocumentReference(_ collectionPath: String, document: String) -> DocumentReference {
+    func getDocumentReference(_ collectionPath: String, document: String) -> DocumentReference {
         return database.collection(collectionPath).document(document)
     }
 
-    public func getDatabaseBatch() -> WriteBatch {
+    func getDatabaseBatch() -> WriteBatch {
         return database.batch()
     }
 
-    public func getDocumentPath(collection: String, document: String) -> DocumentReference {
+    func getDocumentPath(collection: String, document: String) -> DocumentReference {
         return database.collection(collection).document(document)
     }
 }

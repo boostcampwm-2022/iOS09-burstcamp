@@ -9,24 +9,55 @@ import Foundation
 
 import class FirebaseFirestore.Timestamp
 
-struct FeedAPIModel {
-    let feedUUID: String
-    let title: String
-    let pubDate: Date
-    let url: String
-    let thumbnailURL: String
-    let content: String
-    let scrapCount: Int
-    let writerCamperID: String
-    let writerDomain: String
-    let writerNickname: String
-    let writerOrdinalNumber: Int
-    let writerProfileImageURL: String
-    let writerUUID: String
-    let writerBlogTitle: String
+public struct FeedAPIModel {
+    public let feedUUID: String
+    public let title: String
+    public let pubDate: Date
+    public let url: String
+    public let thumbnailURL: String
+    public let content: String
+    public let scrapCount: Int
+    public let writerCamperID: String
+    public let writerDomain: String
+    public let writerNickname: String
+    public let writerOrdinalNumber: Int
+    public let writerProfileImageURL: String
+    public let writerUUID: String
+    public let writerBlogTitle: String
+    
+    public init(feedUUID: String,
+         title: String,
+         pubDate: Date,
+         url: String,
+         thumbnailURL: String,
+         content: String,
+         scrapCount: Int,
+         writerCamperID: String,
+         writerDomain: String,
+         writerNickname: String,
+         writerOrdinalNumber: Int,
+         writerProfileImageURL: String,
+         writerUUID: String,
+         writerBlogTitle: String
+    ) {
+        self.feedUUID = feedUUID
+        self.title = title
+        self.pubDate = pubDate
+        self.url = url
+        self.thumbnailURL = thumbnailURL
+        self.content = content
+        self.scrapCount = scrapCount
+        self.writerCamperID = writerCamperID
+        self.writerDomain = writerDomain
+        self.writerNickname = writerNickname
+        self.writerOrdinalNumber = writerOrdinalNumber
+        self.writerProfileImageURL = writerProfileImageURL
+        self.writerUUID = writerUUID
+        self.writerBlogTitle = writerBlogTitle
+    }
 }
 
-extension FeedAPIModel {
+public extension FeedAPIModel {
     init(data: FirestoreData) {
         self.feedUUID = data["feedUUID"] as? String ?? ""
         self.title = data["title"] as? String ?? ""
@@ -43,23 +74,6 @@ extension FeedAPIModel {
         self.writerProfileImageURL = data["writerProfileImageURL"] as? String ?? ""
         self.writerUUID = data["writerUUID"] as? String ?? ""
         self.writerBlogTitle = data["writerBlogTitle"] as? String ?? ""
-    }
-
-    init(feed: Feed) {
-        self.feedUUID = feed.feedUUID
-        self.title = feed.title
-        self.pubDate = feed.pubDate
-        self.url = feed.url
-        self.thumbnailURL = feed.thumbnailURL
-        self.content = feed.content
-        self.scrapCount = feed.scrapCount
-        self.writerCamperID = feed.writer.camperID
-        self.writerDomain = feed.writer.domain.rawValue
-        self.writerNickname = feed.writer.nickname
-        self.writerOrdinalNumber = feed.writer.ordinalNumber
-        self.writerProfileImageURL = feed.writer.profileImageURL
-        self.writerUUID = feed.writer.userUUID
-        self.writerBlogTitle = feed.writer.blogTitle
     }
 
     func toScrapFirestoreData(scrapDate: Date) -> FirestoreData {
