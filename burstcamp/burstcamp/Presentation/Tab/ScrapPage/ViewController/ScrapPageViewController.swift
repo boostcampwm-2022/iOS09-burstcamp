@@ -182,6 +182,8 @@ final class ScrapPageViewController: UIViewController {
     }
 
     private func handleRecentScrapFeedList(_ scrapFeedList: [Feed]?) {
+        scrapPageView.endCollectionViewRefreshing()
+        
         guard let scrapFeedList = scrapFeedList else {
             showAlert(message: "피드 데이터를 가져오는데 에러가 발생했어요")
             return
@@ -192,7 +194,6 @@ final class ScrapPageViewController: UIViewController {
         }
 
         refreshScrapFeedList(scrapFeedList: scrapFeedList)
-        scrapPageView.endCollectionViewRefreshing()
         isFetching = false
     }
 
