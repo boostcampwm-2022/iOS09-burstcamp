@@ -9,6 +9,8 @@ import Foundation
 
 final class DefaultHomeUseCase: HomeUseCase {
 
+    private let recommendFeedCount = 3
+
     private let feedRepository: FeedRepository
     private let userRepository: UserRepository
 
@@ -51,8 +53,7 @@ final class DefaultHomeUseCase: HomeUseCase {
     // MARK: RecommendFeed가 없는 경우 버스트 캠프 공지
 
     private func addBurstcampNoticeIfNeed(recommendFeedList: [Feed]) -> [Feed] {
-        let targetCount = 4
-        let noticeFeed = feedRepository.createMockUpRecommendFeedList(count: targetCount - recommendFeedList.count)
+        let noticeFeed = feedRepository.createMockUpRecommendFeedList(count: self.recommendFeedCount - recommendFeedList.count)
         return recommendFeedList + noticeFeed
     }
 
