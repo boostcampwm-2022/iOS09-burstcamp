@@ -20,7 +20,9 @@ final class DefaultMyPageUseCase: MyPageUseCase {
     }
 
     func withdrawalWithGithub(code: String) async throws {
+        UserManager.shared.removeUserListener()
         let user = UserManager.shared.user
+
         let isSuccess = try await loginRepository.withdrawalWithGithub(code: code, userUUID: user.userUUID)
         try await deleteProfileImage(userUUID: user.userUUID, profileImageURL: user.profileImageURL)
         deleteLocalUser()
@@ -28,7 +30,9 @@ final class DefaultMyPageUseCase: MyPageUseCase {
     }
 
     func withdrawalWithApple(idTokenString: String, nonce: String) async throws {
+        UserManager.shared.removeUserListener()
         let userUUID = UserManager.shared.user.userUUID
+
         let isSuccess = try await loginRepository.withdrawalWithApple(
             idTokenString: idTokenString,
             nonce: nonce,
@@ -72,7 +76,6 @@ final class DefaultMyPageUseCase: MyPageUseCase {
 
     private func deleteLocalUser() {
         KeyChainManager.deleteUser()
-        UserManager.shared.removeUserListener()
         UserManager.shared.deleteUserInfo()
     }
 }
