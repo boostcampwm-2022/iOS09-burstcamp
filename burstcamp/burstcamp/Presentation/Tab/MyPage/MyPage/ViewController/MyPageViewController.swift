@@ -176,11 +176,12 @@ final class MyPageViewController: AppleAuthViewController {
             self?.updateActivityOverlayDescriptionLabel("유저 정보 삭제 중")
             do {
                 try await viewModel.withdrawalWithApple(idTokenString: idTokenString, nonce: nonce)
+                self?.hideAnimatedActivityIndicatorView()
                 self?.moveToAuthFlow()
             } catch {
+                self?.hideAnimatedActivityIndicatorView()
                 self?.showAlert(message: "애플 로그인에 실패했습니다. \(error.localizedDescription)")
             }
-            self?.hideAnimatedActivityIndicatorView()
         }
     }
 }
