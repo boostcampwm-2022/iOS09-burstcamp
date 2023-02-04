@@ -461,12 +461,21 @@ export async function deleteUserUUIDAtScrapFeed(userUUID, feedUUIDs) {
 	logger.log('유저가 스크랩 한 글의 feedUUIDs: ', feedUUIDs)
 
 	feedUUIDs.forEach(async(feedUUID) => {
-		await feedRef
-			.doc(feedUUID)
-			.collection('scrapUsers')
-			.doc(userUUID)
-			.delete()
-			})
+		await feedUpdateTransactionWhenUserWithdrawal(feedUUID, userUUID)
+	})
+}
+
+async function feedUpdateTransactionWhenUserWithdrawal(feedUUID, userUUID) {
+	const feedDocRef = feedRef.doc(feedUUID);
+	const scrapUserDocRef = feedDocRef.collection('scrapUsers').doc(userUUID);
+
+	db.runTransaction(async (t) => {
+		const feedDoc = await t.get(feedDocRef);
+		const newScrapCount = feedDoc.data().scrapCount - 1;
+
+		t.update(feedDocRef, {scrapCount: newScrapCount});
+		t.delete(scrapUserDocRef);
+	})
 }
 
 /**
