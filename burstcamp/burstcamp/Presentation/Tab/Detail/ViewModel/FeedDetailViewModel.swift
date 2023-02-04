@@ -11,7 +11,7 @@ import Foundation
 final class FeedDetailViewModel {
 
     private let feedDetailUseCase: FeedDetailUseCase
-    private let feedPublisher = CurrentValueSubject<Feed?, Never>(nil)
+    private let feedPublisher = CurrentValueSubject<Feed?, Error>(nil)
 
     init(feedDetailUseCase: FeedDetailUseCase) {
         self.feedDetailUseCase = feedDetailUseCase
@@ -25,7 +25,6 @@ final class FeedDetailViewModel {
     /// DeepLink를 통해서 진입할 때 호출하는 initializer
     convenience init(feedDetailUseCase: FeedDetailUseCase, feedUUID: String) {
         self.init(feedDetailUseCase: feedDetailUseCase)
-        handleDeepLinkFeed(feedUUID: feedUUID)
     }
 
     struct Input {
@@ -36,7 +35,7 @@ final class FeedDetailViewModel {
     }
 
     struct Output {
-        let feedDidUpdate: AnyPublisher<Feed?, Never>
+        let feedDidUpdate: AnyPublisher<Feed?, Error>
         let openBlog: AnyPublisher<URL, Never>
         let openActivityView: AnyPublisher<String, Never>
         let scrapUpdate: AnyPublisher<Feed?, Error>
@@ -87,5 +86,13 @@ final class FeedDetailViewModel {
     }
 
     private func handleDeepLinkFeed(feedUUID: String) {
+        Task { [weak self] in
+            do {
+                let feed = try await self?.feedDetailUseCase.fetchFeed(by: feedUUID)
+                feedPublisher.send(feed)
+            } catch {
+                feedPublisher.send(completion: .failure(error))
+            }
+        }
     }
 }

@@ -95,7 +95,12 @@ final class FeedDetailViewController: UIViewController {
 
         feedDetailOutput.feedDidUpdate
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] feed in
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error): self?.showAlert(message: "피드를 불러오는 중 에러가 발생했어요. \(error.localizedDescription)")
+                case .finished: return
+                }
+            } receiveValue: { [weak self] feed in
                 self?.handleFeedDidUpdate(feed)
             }
             .store(in: &cancelBag)
