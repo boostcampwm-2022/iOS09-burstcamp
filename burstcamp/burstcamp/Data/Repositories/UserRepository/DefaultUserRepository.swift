@@ -74,7 +74,14 @@ final class DefaultUserRepository: UserRepository {
         )
     }
 
-    // MARK: Guest
+    // MARK: - 가입시 블로그 업데이트
+
+    func updateBlog(with signUpUserUUID: String, blogURL: String) async throws {
+        try await bcFirebaseFunctionService.updateBlog(with: signUpUserUUID, blogURL: blogURL)
+    }
+
+    // MARK: - Guest
+
     func saveGuest(userUUID: String) async throws -> User {
         let nickname = try getNickname(userUUID: userUUID)
         let guestUser = User(userUUID: userUUID, nickname: nickname)

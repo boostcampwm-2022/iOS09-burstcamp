@@ -64,6 +64,10 @@ final class DefaultSignUpUseCase: SignUpUseCase {
         try await userRepository.saveUser(user)
         KeyChainManager.save(user: user)
         UserManager.shared.setUser(user)
+
+        if !user.blogURL.isEmpty {
+            try await userRepository.updateBlog(with: user.userUUID, blogURL: user.blogURL)
+        }
     }
 
     func saveFCMToken(_ token: String, to userUUID: String) async throws {
