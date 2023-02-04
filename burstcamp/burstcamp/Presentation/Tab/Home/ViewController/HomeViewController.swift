@@ -56,6 +56,7 @@ final class HomeViewController: UIViewController {
         bind()
         configureAttributes()
         configurePushNotification()
+        tabBarController?.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -416,5 +417,17 @@ extension HomeViewController: ContainFeedDetailViewController {
                 self?.reloadNormalFeedSection(normalFeedList: normalFeedList)
             }
             .store(in: &cancelBag)
+    }
+}
+
+extension HomeViewController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        guard let selectedViewController = tabBarController.selectedViewController else {
+            return false
+        }
+        if viewController == selectedViewController {
+            
+        }
+        return true
     }
 }
