@@ -105,4 +105,8 @@ extension ScrapPageViewModel {
         }
         return scrapFeedList
     }
+
+    func getCount() -> Int {
+        return scrapFeedList.count
+    }
 }

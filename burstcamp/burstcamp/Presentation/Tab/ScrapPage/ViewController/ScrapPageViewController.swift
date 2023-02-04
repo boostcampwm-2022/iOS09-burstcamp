@@ -31,7 +31,7 @@ final class ScrapPageViewController: UIViewController {
 
     private var isFetching: Bool = false
     private var isLastFetch: Bool = false
-
+    private let paginateCount = 10
     // MARK: - Initializer
 
     init(viewModel: ScrapPageViewModel) {
@@ -162,6 +162,7 @@ final class ScrapPageViewController: UIViewController {
                     self.isFetching = true
                     return true
                 } else {
+                    self.scrapPageView.endCollectionViewRefreshing()
                     return false
                 }
             }
@@ -171,7 +172,7 @@ final class ScrapPageViewController: UIViewController {
     private func createPaginationPublisher() -> AnyPublisher<Void, Never> {
         return paginationPublisher
             .filter { _ in
-                if !self.isFetching && !self.isLastFetch {
+                if !self.isFetching && !self.isLastFetch && self.viewModel.getCount() >= self.paginateCount {
                     self.isFetching = true
                     return true
                 } else {
@@ -182,6 +183,8 @@ final class ScrapPageViewController: UIViewController {
     }
 
     private func handleRecentScrapFeedList(_ scrapFeedList: [Feed]?) {
+        scrapPageView.endCollectionViewRefreshing()
+
         guard let scrapFeedList = scrapFeedList else {
             showAlert(message: "피드 데이터를 가져오는데 에러가 발생했어요")
             return
@@ -192,7 +195,6 @@ final class ScrapPageViewController: UIViewController {
         }
 
         refreshScrapFeedList(scrapFeedList: scrapFeedList)
-        scrapPageView.endCollectionViewRefreshing()
         isFetching = false
     }
 
