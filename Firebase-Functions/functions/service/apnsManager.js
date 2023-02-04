@@ -13,10 +13,6 @@ import { getMessaging } from 'firebase-admin/messaging';
 export async function sendNotification() {
     const userUUIDs = await getUsersIsPushOnTrue()
     const recentFeed = await getRecentFeed()
-    const writerUUID = recentFeed['writerUUID']
-    const writer = await getUser(writerUUID)
-    logger.log('작성자UUID에오', writerUUID)
-    logger.log('작성자에오', writer)
 
     const tokens = await Promise.all(
         userUUIDs.map(userUUID => {
@@ -26,7 +22,7 @@ export async function sendNotification() {
 
     logger.log('보낼 토큰들을 만들었어요', validTokens)
 
-    sendMessage(validTokens, recentFeed, writer)
+    sendMessage(validTokens, recentFeed)
 }
 
 
@@ -34,11 +30,10 @@ export async function sendNotification() {
 * 메세지를 한번에 모든 token에게 보낸다.
 * @param {[String]} token 
 * @param {Feed} feed 
-* @param {User} writer 
 */
-export async function sendMessage(tokens, feed, writer) {
+export async function sendMessage(tokens, feed) {
     logger.log('실행하는중~~~~~~~')
-    const message = makeMessage(tokens, feed, writer)
+    const message = makeMessage(tokens, feed)
     const messaging = getMessaging()
     messaging.sendMulticast(message)
     .then((response) => {
@@ -57,16 +52,16 @@ export async function sendMessage(tokens, feed, writer) {
 * @param {Feed} feed 
 * @param {User} writer 
 */
-function makeMessage(fcmTokens, feed, writer) {
-        logger.log('Feed 작성자에오, ', writer)
+function makeMessage(fcmTokens, feed) {
+        logger.log('Feed 작성자에오, ', feed.writerNickname)
         const title = feed['title']
         const feedUUID = feed['feedUUID']
-        const nickname = writer['nickname']
+        const nickname = feed['writerNickname']
         const body = title + ' 📣 by ' + nickname
     
         const message = {
             notification: {
-                title: '오늘의 피드를 확인해보세요 💙',
+                title: '오늘의 최신 피드를 확인해보세요 💙',
                 body: body
             },
             data: { feedUUID: feedUUID },

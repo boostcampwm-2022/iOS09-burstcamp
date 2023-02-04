@@ -41,6 +41,10 @@ extension MockUpFeedRepository {
         throw MockUpFeedRepositoryError.noImplementation
     }
 
+    func fetchFeed(by feedUUID: String) async throws -> Feed {
+        throw MockUpFeedRepositoryError.noImplementation
+    }
+
     func scrapFeed(_ feed: Feed, userUUID: String) async throws -> Feed {
         throw MockUpFeedRepositoryError.noImplementation
     }

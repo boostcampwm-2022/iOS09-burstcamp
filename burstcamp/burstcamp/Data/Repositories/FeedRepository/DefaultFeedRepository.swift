@@ -81,7 +81,14 @@ final class DefaultFeedRepository: FeedRepository {
         }
     }
 
-    // MARK: 피드 스크랩
+    // MARK: - 피드 호출
+    func fetchFeed(by feedUUID: String) async throws -> Feed {
+        let feedAPIModel = try await bcFirestoreService.fetchFeed(feedUUID: feedUUID)
+        return Feed(feedAPIModel: feedAPIModel)
+    }
+
+    // MARK: - 피드 스크랩
+
     func scrapFeed(_ feed: Feed, userUUID: String) async throws -> Feed {
         let scrapedFeed = feed.getScrapFeed()
         try await bcFirestoreService.scrapFeed(scrapedFeed.toScrapFeedAPIModel(), with: userUUID)
