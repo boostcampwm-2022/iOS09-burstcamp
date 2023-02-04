@@ -67,7 +67,7 @@ final class SignUpBlogViewController: UIViewController {
             .store(in: &cancelBag)
 
         let input = SignUpBlogViewModel.Input(
-            blogAddressTextFieldDidEdit: signUpBlogView.blogTextField.textPublisher,
+            blogAddressTextFieldDidEdit: signUpBlogView.blogTextField.textChangedPublisher,
             nextButtonDidTap: nextButtonSubject,
             skipConfirmDidTap: skipConfirmSubject,
             blogTitleConfirmDidTap: blogTitleConfirmSubject
