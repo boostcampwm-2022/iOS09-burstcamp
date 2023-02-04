@@ -25,6 +25,7 @@ final class FeedDetailViewModel {
     /// DeepLink를 통해서 진입할 때 호출하는 initializer
     convenience init(feedDetailUseCase: FeedDetailUseCase, feedUUID: String) {
         self.init(feedDetailUseCase: feedDetailUseCase)
+        handleDeepLinkFeed(feedUUID: feedUUID)
     }
 
     struct Input {

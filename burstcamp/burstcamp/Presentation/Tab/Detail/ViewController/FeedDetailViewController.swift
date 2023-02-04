@@ -140,7 +140,6 @@ final class FeedDetailViewController: UIViewController {
 
     private func handleFeedDidUpdate(_ feed: Feed?) {
         guard let feed = feed else {
-            showAlert(message: "Feed 로드 중 에러가 발생했어요")
             return
         }
         scrapButton.isOn = feed.isScraped
