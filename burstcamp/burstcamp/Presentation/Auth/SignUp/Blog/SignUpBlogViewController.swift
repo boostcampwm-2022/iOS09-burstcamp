@@ -45,6 +45,7 @@ final class SignUpBlogViewController: UIViewController {
 
         signUpBlogView.skipButton.tapPublisher
             .sink { [weak self] _ in
+                self?.hideKeyboard()
                 let confirmAction = UIAlertAction(title: "예", style: .default) { _ in
                     skipConfirmSubject.send()
                     self?.showAnimatedActivityIndicatorView(description: "가입 중")
@@ -60,6 +61,7 @@ final class SignUpBlogViewController: UIViewController {
 
         signUpBlogView.nextButton.tapPublisher
             .sink { [weak self] _ in
+                self?.hideKeyboard()
                 nextButtonSubject.send()
                 self?.showAnimatedActivityIndicatorView(description: "블로그 이름 확인 중")
                 self?.disableSignupButton()
@@ -131,6 +133,12 @@ final class SignUpBlogViewController: UIViewController {
                 self?.coordinatorPublisher.send(.moveToTabBarFlow)
             })
             .store(in: &cancelBag)
+    }
+
+    private func hideKeyboard() {
+        DispatchQueue.main.async {
+            self.view.endEditing(true)
+        }
     }
 
     private func enableSignupButton() {
