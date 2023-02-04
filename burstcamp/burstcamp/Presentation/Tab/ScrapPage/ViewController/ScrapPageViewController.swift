@@ -123,7 +123,7 @@ final class ScrapPageViewController: UIViewController {
             scrapButtonDidTap: scrapButtonDidTap
         )
 
-        let cellOutput = viewModel.transform(cellInput: cellInput, cellCancelBag: &cell.cancelBag)
+        let cellOutput = viewModel.transform(cellInput: cellInput)
 
         cellOutput.scrapSuccess
             .receive(on: DispatchQueue.main)
@@ -135,7 +135,7 @@ final class ScrapPageViewController: UIViewController {
             } receiveValue: { [weak self] updateFeed in
                 self?.handleUpdateFeed(updateFeed: updateFeed, cell: cell, feedUUID: feedUUID)
             }
-        .store(in: &cancelBag)
+            .store(in: &cell.cancelBag)
     }
 
     private func createViewDidLoadPublisher() -> AnyPublisher<Void, Never> {

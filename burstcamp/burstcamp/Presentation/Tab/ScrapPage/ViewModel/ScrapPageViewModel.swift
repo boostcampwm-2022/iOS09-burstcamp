@@ -65,7 +65,7 @@ final class ScrapPageViewModel {
         )
     }
 
-    func transform(cellInput: CellInput, cellCancelBag: inout Set<AnyCancellable>) -> CellOutput {
+    func transform(cellInput: CellInput) -> CellOutput {
         let scrapSuccessPublisher = cellInput.scrapButtonDidTap
             .asyncMap { [weak self] feedUUID in
                 try await self?.scrapFeed(feedUUID: feedUUID)
