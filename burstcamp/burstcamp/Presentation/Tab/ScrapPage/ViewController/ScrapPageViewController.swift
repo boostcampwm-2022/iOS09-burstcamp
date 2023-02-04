@@ -67,6 +67,12 @@ final class ScrapPageViewController: UIViewController {
     private func configureNavigationBar() {
         navigationController?.navigationBar.topItem?.title = "모아보기"
         navigationController?.isNavigationBarHidden = false
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(objcScrollToTop))
+        navigationController?.navigationBar.addGestureRecognizer(tapGesture)
+    }
+
+    @objc private func objcScrollToTop() {
+        scrollToTop()
     }
 
     // MARK: - Methods
@@ -309,5 +315,11 @@ extension ScrapPageViewController: ContainFeedDetailViewController {
                 self?.refreshScrapFeedList(scrapFeedList: feedList)
             }
             .store(in: &cancelBag)
+    }
+}
+
+extension ScrapPageViewController: ContainScrollViewController {
+    func scrollToTop() {
+        scrapPageView.collectionViewScrollToTop()
     }
 }
