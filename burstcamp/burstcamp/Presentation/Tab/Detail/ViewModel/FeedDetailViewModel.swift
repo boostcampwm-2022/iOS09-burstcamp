@@ -25,7 +25,7 @@ final class FeedDetailViewModel {
     /// DeepLink를 통해서 진입할 때 호출하는 initializer
     convenience init(feedDetailUseCase: FeedDetailUseCase, feedUUID: String) {
         self.init(feedDetailUseCase: feedDetailUseCase)
-        // feed UUID로 feed 호출
+        handleDeepLinkFeed(feedUUID: feedUUID)
     }
 
     struct Input {
@@ -84,5 +84,9 @@ final class FeedDetailViewModel {
         let updatedFeed = try await feedDetailUseCase.scrapFeed(feed, userUUID: userUUID)
         feedPublisher.value = updatedFeed
         return updatedFeed
+    }
+
+    private func handleDeepLinkFeed(feedUUID: String) {
+        
     }
 }
