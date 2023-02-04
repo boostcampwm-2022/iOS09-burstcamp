@@ -69,4 +69,8 @@ extension RecommendFeedUserView {
         nicknameLabel.text = feedWriter.nickname
         blogTitleLabel.text = feedWriter.blogTitle
     }
+
+    func resetUserImage() {
+        profileImageView.image = nil
+    }
 }

@@ -38,6 +38,11 @@ final class RecommendFeedCell: UICollectionViewCell {
         super.init(coder: coder)
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        userView.resetUserImage()
+    }
+
     private func configureUI() {
         contentView.addSubview(stackView)
         stackView.addArrangedSubViews([titleLabel, userView])
@@ -68,9 +73,6 @@ final class RecommendFeedCell: UICollectionViewCell {
         } else {
             isUserInteractionEnabled = true
         }
-    }
-
-    private func setUserImageToBurstcamper() {
     }
 }
 
