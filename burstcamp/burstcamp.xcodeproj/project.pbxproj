@@ -41,6 +41,7 @@
 		141A7A70297E5BDC003DD926 /* ScrapViewModelError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141A7A6F297E5BDC003DD926 /* ScrapViewModelError.swift */; };
 		1422C62F292F08BC00337710 /* BCDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1422C62E292F08BC00337710 /* BCDateFormatter.swift */; };
 		1427986429851522005CFC4D /* EmptyFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1427986329851522005CFC4D /* EmptyFeedView.swift */; };
+		142C3780298EC45400227D56 /* ContainScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142C377F298EC45400227D56 /* ContainScrollViewController.swift */; };
 		143185E8292B46F9008CE459 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185E7292B46F9008CE459 /* HomeViewModel.swift */; };
 		143185EA292B4A8D008CE459 /* ScrapPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185E9292B4A8D008CE459 /* ScrapPageViewController.swift */; };
 		143185EC292B4AB8008CE459 /* ScrapPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143185EB292B4AB8008CE459 /* ScrapPageViewModel.swift */; };
@@ -278,6 +279,7 @@
 		141A7A6F297E5BDC003DD926 /* ScrapViewModelError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapViewModelError.swift; sourceTree = "<group>"; };
 		1422C62E292F08BC00337710 /* BCDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCDateFormatter.swift; sourceTree = "<group>"; };
 		1427986329851522005CFC4D /* EmptyFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyFeedView.swift; sourceTree = "<group>"; };
+		142C377F298EC45400227D56 /* ContainScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainScrollViewController.swift; sourceTree = "<group>"; };
 		143185E7292B46F9008CE459 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		143185E9292B4A8D008CE459 /* ScrapPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageViewController.swift; sourceTree = "<group>"; };
 		143185EB292B4AB8008CE459 /* ScrapPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapPageViewModel.swift; sourceTree = "<group>"; };
@@ -1414,6 +1416,7 @@
 				B50A279729279F5D00DF3E1F /* ReusableView.swift */,
 				143185F7292B5C88008CE459 /* ContainCollectionView.swift */,
 				14D8C4D5297C103800DFE71F /* ContainFeedDetailViewController.swift */,
+				142C377F298EC45400227D56 /* ContainScrollViewController.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -2086,6 +2089,7 @@
 				140FBEEB297511DB006B7857 /* URLSessionServiceError.swift in Sources */,
 				14D8C4C6297BEDB900DFE71F /* HomeViewModelError.swift in Sources */,
 				140B87532987870F00436F65 /* AuthButton.swift in Sources */,
+				142C3780298EC45400227D56 /* ContainScrollViewController.swift in Sources */,
 				1418960229377593005A42D4 /* UIScrollView+.swift in Sources */,
 				3B74920D293DCCAC00A4BEA0 /* GithubError.swift in Sources */,
 				143185EE292B4ABC008CE459 /* ScrapPageView.swift in Sources */,

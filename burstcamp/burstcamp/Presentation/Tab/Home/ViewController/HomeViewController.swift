@@ -73,7 +73,7 @@ final class HomeViewController: UIViewController {
 
     private func configureNavigationBar() {
         navigationController?.navigationBar.topItem?.title = "홈"
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(scrollToTop))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(objcScrollToTop))
         navigationController?.navigationBar.addGestureRecognizer(tapGesture)
     }
 
@@ -81,8 +81,8 @@ final class HomeViewController: UIViewController {
         homeView.collectionViewDelegate(viewController: self)
     }
 
-    @objc private func scrollToTop() {
-        homeView.collectionViewScrollToTop()
+    @objc private func objcScrollToTop() {
+        scrollToTop()
     }
 
     private func paginateFeed() {
@@ -425,9 +425,16 @@ extension HomeViewController: UITabBarControllerDelegate {
         guard let selectedViewController = tabBarController.selectedViewController else {
             return false
         }
-        if viewController == selectedViewController {
-            
+        if viewController == selectedViewController,
+         let containScrollViewController = viewController as? ContainScrollViewController {
+            containScrollViewController.scrollToTop()
         }
         return true
+    }
+}
+
+extension HomeViewController: ContainScrollViewController {
+    func scrollToTop() {
+        homeView.collectionViewScrollToTop()
     }
 }

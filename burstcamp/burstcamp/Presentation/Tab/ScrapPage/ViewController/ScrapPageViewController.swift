@@ -311,3 +311,9 @@ extension ScrapPageViewController: ContainFeedDetailViewController {
             .store(in: &cancelBag)
     }
 }
+
+extension ScrapPageViewController: ContainScrollViewController {
+    func scrollToTop() {
+        scrapPageView.collectionViewScrollToTop()
+    }
+}
