@@ -98,8 +98,10 @@ class NormalFeedCellMain: UIView {
         } else if !hasThumbnailImage && newFeedHaveImage(urlString) {
             updateThumbnailImageView()
             updateTitleLabel()
-            self.thumbnailImageView.setImage(urlString: urlString)
             hasThumbnailImage = true
+        }
+        if newFeedHaveImage(urlString) {
+            self.thumbnailImageView.setImage(urlString: urlString)
         }
     }
 
@@ -114,5 +116,9 @@ extension NormalFeedCellMain {
             self.titleLabel.text = feed.title
         }
         self.setThumbnailImage(urlString: feed.thumbnailURL)
+    }
+
+    func resetThumbnailImage() {
+        thumbnailImageView.image = nil
     }
 }
