@@ -134,12 +134,16 @@ final class SignUpBlogViewController: UIViewController {
     }
 
     private func enableSignupButton() {
-        signUpBlogView.skipButton.isEnabled = true
-        signUpBlogView.nextButton.isEnabled = true
+        DispatchQueue.main.async {
+            self.signUpBlogView.skipButton.isEnabled = true
+            self.signUpBlogView.nextButton.isEnabled = true
+        }
     }
 
     private func disableSignupButton() {
-        signUpBlogView.skipButton.isEnabled = false
-        signUpBlogView.nextButton.isEnabled = false
+        DispatchQueue.main.async {
+            self.signUpBlogView.skipButton.isEnabled = false
+            self.signUpBlogView.nextButton.isEnabled = false
+        }
     }
 }
