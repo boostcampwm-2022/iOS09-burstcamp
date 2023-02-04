@@ -70,3 +70,11 @@ export const testCheckAlgorithm = https
 			isFinish: true
 		}
 })
+
+export const testMessaging = https
+.onRequest(async (context) => {
+	await sendNotification()
+	return {
+		isFinish: true
+	}
+})
