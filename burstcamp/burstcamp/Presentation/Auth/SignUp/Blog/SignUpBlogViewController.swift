@@ -110,8 +110,8 @@ final class SignUpBlogViewController: UIViewController {
             .sink(receiveCompletion: { [weak self] result in
                 self?.hideAnimatedActivityIndicatorView()
                 self?.enableSignupButton()
-                if case .failure = result {
-                    self?.showAlert(message: "회원가입에 실패했습니다.")
+                if case .failure(let error) = result {
+                    self?.showAlert(message: "회원가입에 실패했습니다. \(error.localizedDescription)")
                 }
             }, receiveValue: { [weak self] _ in
                 self?.hideAnimatedActivityIndicatorView()
@@ -124,8 +124,8 @@ final class SignUpBlogViewController: UIViewController {
             .sink(receiveCompletion: { [weak self] result in
                 self?.hideAnimatedActivityIndicatorView()
                 self?.enableSignupButton()
-                if case .failure = result {
-                    self?.showAlert(message: "회원가입에 실패했습니다.")
+                if case .failure(let error) = result {
+                    self?.showAlert(message: "회원가입에 실패했습니다. \(error.localizedDescription)")
                 }
             }, receiveValue: { [weak self] _ in
                 self?.hideAnimatedActivityIndicatorView()

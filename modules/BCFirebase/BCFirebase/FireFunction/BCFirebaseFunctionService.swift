@@ -54,21 +54,12 @@ public final class BCFirebaseFunctionService {
     }
     
     public func updateBlog(with signUpUserUUID: String, blogURL: String) async throws {
-        let result = try await functions
+        _ = try await functions
             .httpsCallable(FunctionField.updateFeedWithNewUser)
             .call([
                 FunctionField.userUUID: signUpUserUUID,
                 FunctionField.blogURL: blogURL
             ])
-        
-        if let data = result.data as? [String: Any],
-           let isFinish = data[FunctionField.isFinish] as? Bool {
-            if !isFinish {
-                throw FireStorageError.userSignUp
-            }
-        } else {
-            throw FireStorageError.userSignUp
-        }
     }
 }
 
