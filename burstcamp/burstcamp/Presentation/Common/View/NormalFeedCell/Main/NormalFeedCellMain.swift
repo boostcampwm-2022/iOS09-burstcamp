@@ -117,4 +117,8 @@ extension NormalFeedCellMain {
         }
         self.setThumbnailImage(urlString: feed.thumbnailURL)
     }
+
+    func resetThumbnailImage() {
+        thumbnailImageView.image = nil
+    }
 }
