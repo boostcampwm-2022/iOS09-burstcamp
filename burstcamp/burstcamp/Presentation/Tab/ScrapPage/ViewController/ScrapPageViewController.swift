@@ -31,7 +31,7 @@ final class ScrapPageViewController: UIViewController {
 
     private var isFetching: Bool = false
     private var isLastFetch: Bool = false
-
+    private let paginateCount = 10
     // MARK: - Initializer
 
     init(viewModel: ScrapPageViewModel) {
@@ -171,7 +171,7 @@ final class ScrapPageViewController: UIViewController {
     private func createPaginationPublisher() -> AnyPublisher<Void, Never> {
         return paginationPublisher
             .filter { _ in
-                if !self.isFetching && !self.isLastFetch {
+                if !self.isFetching && !self.isLastFetch && self.viewModel.getCount() >= self.paginateCount {
                     self.isFetching = true
                     return true
                 } else {
