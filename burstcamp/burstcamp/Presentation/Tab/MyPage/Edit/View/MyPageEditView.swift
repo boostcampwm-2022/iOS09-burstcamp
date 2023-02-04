@@ -91,8 +91,8 @@ final class MyPageEditView: UIView {
     }
 
     lazy var cameraButtonTapPublisher = cameraButton.tapPublisher
-    lazy var nickNameTextFieldTextPublisher = nickNameTextField.textPublisher
-    lazy var blogLinkTextFieldTextPublisher = blogLinkTextField.textPublisher
+    lazy var nickNameTextFieldTextPublisher = nickNameTextField.textEditingEndPublisher
+    lazy var blogLinkTextFieldTextPublisher = blogLinkTextField.textEditingEndPublisher
     lazy var finishEditButtonTapPublisher = finishEditButton.tapPublisher
 
     // MARK: - Initializer

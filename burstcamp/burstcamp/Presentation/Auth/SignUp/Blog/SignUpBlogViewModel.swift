@@ -103,7 +103,7 @@ final class SignUpBlogViewModel {
 
                     if blogTitle.isEmpty { assert(user.blogURL.isEmpty) }
                     try await self?.signUpUseCase.signUp(user)
-                    self?.saveFCMToken()
+                    try await self?.saveFCMToken(userUUID: userUUID)
                     promise(.success(user))
                 } catch {
                     print(error)
@@ -114,11 +114,8 @@ final class SignUpBlogViewModel {
         .eraseToAnyPublisher()
     }
 
-    private func saveFCMToken() {
+    private func saveFCMToken(userUUID: String) async throws {
         guard let fcmToken = UserDefaultsManager.fcmToken() else { return }
-        let userUUID = UserManager.shared.user.userUUID
-        Task { [weak self] in
-            try await self?.signUpUseCase.saveFCMToken(fcmToken, to: userUUID)
-        }
+        try await signUpUseCase.saveFCMToken(fcmToken, to: userUUID)
     }
 }

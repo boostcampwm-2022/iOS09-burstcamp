@@ -24,6 +24,17 @@ export async function updateFeedDB() {
 	})
 }
 
+export async function updateFeedDBWhenSignup(userUUID, blogURL) {
+	logger.log("회원 가입에 따른 DB Update - Blog URL : ", blogURL);
+	const doc = await userRef.doc(userUUID).get();
+	const userData = doc.data();
+	if (blogURL === '') { return }
+
+	const rssURL = convertURL(blogURL);
+	const parsedRss = await fetchParsedRSS(rssURL);
+	await updateFeedDBFromSingleBlog(parsedRss, userData);
+}
+
 export async function deleteRecommendFeeds() {
 	await recommendFeedRef
 		.get()

@@ -1,7 +1,7 @@
 import { initializeApp, getApps } from 'firebase-admin/app';
-import { pubsub, https } from 'firebase-functions';
+import { pubsub, https, logger } from 'firebase-functions';
 import { getBlogTitle } from './service/feedAPI.js';
-import { updateFeedDB, updateRecommendFeedDB, deleteRecommendFeeds } from './service/firestoreManager.js'
+import { updateFeedDB, updateRecommendFeedDB, updateFeedDBWhenSignup } from './service/firestoreManager.js'
 import { sendNotification } from './service/apnsManager.js'
 import { deleteUserInfo } from './service/withdrawalManager.js'
 import { createMockUpUser } from './service/test/mockUpService.js';
@@ -19,8 +19,10 @@ export const scheduledUpdateRecommendFeedDB = pubsub.schedule('every monday 00:0
 	updateRecommendFeedDB()
 })
 
-export const updateFeedDBWhenSignup = https.onCall(async (context) => {
-	updateFeedDB()
+export const updateFeedWithNewUser = https.onCall(async (data, context) => {
+	const userUUID = data.userUUID
+	const blogURL = data.blogURL
+	updateFeedDBWhenSignup(userUUID, blogURL)
 })
 
 export const fetchBlogTitle = https.onCall(async (data, context) => {

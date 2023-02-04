@@ -46,7 +46,7 @@ final class SignUpCamperIDViewController: UIViewController {
 
     private func bind() {
         let input = SignUpCamperIDViewModel.Input(
-            camperIDTextFieldDidEdit: signUpCamperIDView.idTextField.textPublisher,
+            camperIDTextFieldDidEdit: signUpCamperIDView.idTextField.textChangedPublisher,
             nextButtonDidTap: signUpCamperIDView.nextButton.tapPublisher
         )
 

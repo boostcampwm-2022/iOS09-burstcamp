@@ -45,6 +45,7 @@ final class SignUpBlogViewController: UIViewController {
 
         signUpBlogView.skipButton.tapPublisher
             .sink { [weak self] _ in
+                self?.hideKeyboard()
                 let confirmAction = UIAlertAction(title: "예", style: .default) { _ in
                     skipConfirmSubject.send()
                     self?.showAnimatedActivityIndicatorView(description: "가입 중")
@@ -60,6 +61,7 @@ final class SignUpBlogViewController: UIViewController {
 
         signUpBlogView.nextButton.tapPublisher
             .sink { [weak self] _ in
+                self?.hideKeyboard()
                 nextButtonSubject.send()
                 self?.showAnimatedActivityIndicatorView(description: "블로그 이름 확인 중")
                 self?.disableSignupButton()
@@ -67,7 +69,7 @@ final class SignUpBlogViewController: UIViewController {
             .store(in: &cancelBag)
 
         let input = SignUpBlogViewModel.Input(
-            blogAddressTextFieldDidEdit: signUpBlogView.blogTextField.textPublisher,
+            blogAddressTextFieldDidEdit: signUpBlogView.blogTextField.textChangedPublisher,
             nextButtonDidTap: nextButtonSubject,
             skipConfirmDidTap: skipConfirmSubject,
             blogTitleConfirmDidTap: blogTitleConfirmSubject
@@ -108,8 +110,8 @@ final class SignUpBlogViewController: UIViewController {
             .sink(receiveCompletion: { [weak self] result in
                 self?.hideAnimatedActivityIndicatorView()
                 self?.enableSignupButton()
-                if case .failure = result {
-                    self?.showAlert(message: "회원가입에 실패했습니다.")
+                if case .failure(let error) = result {
+                    self?.showAlert(message: "회원가입에 실패했습니다. \(error.localizedDescription)")
                 }
             }, receiveValue: { [weak self] _ in
                 self?.hideAnimatedActivityIndicatorView()
@@ -122,8 +124,8 @@ final class SignUpBlogViewController: UIViewController {
             .sink(receiveCompletion: { [weak self] result in
                 self?.hideAnimatedActivityIndicatorView()
                 self?.enableSignupButton()
-                if case .failure = result {
-                    self?.showAlert(message: "회원가입에 실패했습니다.")
+                if case .failure(let error) = result {
+                    self?.showAlert(message: "회원가입에 실패했습니다. \(error.localizedDescription)")
                 }
             }, receiveValue: { [weak self] _ in
                 self?.hideAnimatedActivityIndicatorView()
@@ -133,13 +135,23 @@ final class SignUpBlogViewController: UIViewController {
             .store(in: &cancelBag)
     }
 
+    private func hideKeyboard() {
+        DispatchQueue.main.async {
+            self.view.endEditing(true)
+        }
+    }
+
     private func enableSignupButton() {
-        signUpBlogView.skipButton.isEnabled = true
-        signUpBlogView.nextButton.isEnabled = true
+        DispatchQueue.main.async {
+            self.signUpBlogView.skipButton.isEnabled = true
+            self.signUpBlogView.nextButton.isEnabled = true
+        }
     }
 
     private func disableSignupButton() {
-        signUpBlogView.skipButton.isEnabled = false
-        signUpBlogView.nextButton.isEnabled = false
+        DispatchQueue.main.async {
+            self.signUpBlogView.skipButton.isEnabled = false
+            self.signUpBlogView.nextButton.isEnabled = false
+        }
     }
 }
