@@ -16,9 +16,9 @@ final class DefaultFeedDetailUseCase: FeedDetailUseCase {
     }
 
     func fetchFeed(by feedUUID: String) async throws -> Feed {
-        
+        return try await feedRepository.fetchFeed(by: feedUUID)
     }
-    
+
     func scrapFeed(_ feed: Feed, userUUID: String) async throws -> Feed {
         return feed.isScraped
         ? try await feedRepository.unScrapFeed(feed, userUUID: userUUID)

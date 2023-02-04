@@ -87,6 +87,5 @@ final class FeedDetailViewModel {
     }
 
     private func handleDeepLinkFeed(feedUUID: String) {
-        
     }
 }
