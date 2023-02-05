@@ -1,0 +1,29 @@
+input_dir: ${TARGETNAME}/Resource/
+output_dir: ${TARGETNAME}/Generated/
+
+xcassets:
+  inputs:
+    - Color.xcassets
+    - Image.xcassets
+  outputs:
+    - templateName: swift5
+      params:
+        forceProvidesNamespaces: true
+        enumName: Assets
+        publicAccess: public
+      output: Assets+Generated.swift
+    
+    
+fonts:
+  inputs:
+    - Fonts
+  outputs:
+    - templateName: swift5
+      params:
+        forceProvidesNamespaces: true
+        enumName: Fonts
+        publicAccess: public
+      output: Fonts+Generated.swift
+
+## For more info, use `swiftgen config doc` to open the full documentation on GitHub.
+## https://github.com/SwiftGen/SwiftGen/tree/6.5.1/Documentation/
