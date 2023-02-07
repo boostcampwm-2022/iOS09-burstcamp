@@ -120,10 +120,28 @@ final class MyPageView: UIView, ContainCollectionView {
     }
 
     private func updateMyInfoEditButton(domain: Domain) {
-        guard domain != .guest && !isButtonUpdated else { return }
+        guard !isButtonUpdated else { return }
+        if domain == .guest {
+            removeMyInfoEditButton()
+        } else {
+            enableMyEditInfoButton()
+        }
+    }
+
+    private func removeMyInfoEditButton() {
+        myInfoEditButton.snp.removeConstraints()
+        myInfoEditButton.removeFromSuperview()
+        collectionView.snp.remakeConstraints { make in
+            make.top.equalTo(myPageProfileView.snp.bottom)
+            make.horizontalEdges.equalToSuperview().inset(Constant.Padding.horizontal)
+            make.bottom.equalToSuperview()
+        }
+    }
+
+    private func enableMyEditInfoButton() {
+        isButtonUpdated = true
         myInfoEditButton.isEnabled = true
         myInfoEditButton.backgroundColor = .main
-        isButtonUpdated = true
     }
 }
 

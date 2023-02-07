@@ -11,6 +11,8 @@ import UserNotifications
 import BCResource
 import BCFirebase
 
+import FirebaseAuth
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -23,6 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         BCFirebaseApp.startApp()
         createNotificationUseCase()
+//        do {
+//            try Auth.auth().signOut()
+//            KeyChainManager.deleteUser()
+//        } catch {
+//            print(error)
+//        }
         UserManager.shared.appStart()
         configurePushNotification(application)
         configureBCFirebaseMessagingDelegate()
