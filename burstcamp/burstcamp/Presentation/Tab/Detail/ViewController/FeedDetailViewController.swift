@@ -92,8 +92,8 @@ final class FeedDetailViewController: UIViewController {
             .eraseToAnyPublisher()
 
         ellipsisButton.tapPublisher
-            .sink { _ in
-                self.showActionSheet()
+            .sink { [weak self] _ in
+                self?.showActionSheet()
             }
             .store(in: &cancelBag)
 

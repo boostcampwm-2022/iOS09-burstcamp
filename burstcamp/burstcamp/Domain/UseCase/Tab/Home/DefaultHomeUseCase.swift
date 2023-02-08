@@ -13,10 +13,12 @@ final class DefaultHomeUseCase: HomeUseCase {
 
     private let feedRepository: FeedRepository
     private let userRepository: UserRepository
+    private var reportFeedUUID: [String: String]
 
     init(feedRepository: FeedRepository, userRepository: UserRepository) {
         self.feedRepository = feedRepository
         self.userRepository = userRepository
+        self.reportFeedUUID = [:]
     }
 
     func fetchRecentHomeFeedList() async throws -> HomeFeedList {
@@ -25,9 +27,12 @@ final class DefaultHomeUseCase: HomeUseCase {
         let normalFeed = homeFeedList.normalFeed.map({ feed in
             return userScrapFeedUUIDs.contains(feed.feedUUID) ? feed.setIsScraped(true) : feed
         })
+
+        let filterReportFeed = filterReportFeed(normalFeed)
+
         let recommendFeed = addBurstcampNoticeIfNeed(recommendFeedList: homeFeedList.recommendFeed)
         let tripleRecommendFeed = recommendFeedForCarousel(recommendFeed)
-        return HomeFeedList(recommendFeed: tripleRecommendFeed, normalFeed: normalFeed)
+        return HomeFeedList(recommendFeed: tripleRecommendFeed, normalFeed: filterReportFeed)
     }
 
     func fetchMoreNormalFeed() async throws -> [Feed] {
@@ -68,6 +73,21 @@ final class DefaultHomeUseCase: HomeUseCase {
     private func makeMockUpRecommendFeed(_ recommendFeedList: [Feed]) -> [Feed] {
         return recommendFeedList.map {
             return $0.getMockUpFeed()
+        }
+    }
+
+    private func arrayToDictionary(reportFeedList: [String]) -> [String: String] {
+        return Dictionary(uniqueKeysWithValues: reportFeedList.map { ($0, $0)})
+    }
+
+    private func updateReportFeedUUID() {
+        self.reportFeedUUID = arrayToDictionary(reportFeedList: UserManager.shared.user.reportFeedUUIDs)
+    }
+
+    private func filterReportFeed(_ feedList: [Feed]) -> [Feed] {
+        updateReportFeedUUID()
+        return feedList.filter { feed in
+            return reportFeedUUID[feed.feedUUID] == nil ? true: false
         }
     }
 }
