@@ -19,6 +19,7 @@ struct User: Codable, Equatable {
     private(set) var blogURL: String
     let blogTitle: String
     private(set) var scrapFeedUUIDs: [String]
+    private(set) var reportFeedUUIDs: [String]
     let signupDate: Date
     private(set) var updateDate: Date
     let isPushOn: Bool
@@ -42,6 +43,7 @@ struct User: Codable, Equatable {
             blogURL: self.blogURL,
             blogTitle: self.blogTitle,
             scrapFeedUUIDs: self.scrapFeedUUIDs,
+            reportFeedUUIDs: self.reportFeedUUIDs,
             signupDate: self.signupDate,
             updateDate: self.updateDate,
             isPushOn: self.isPushOn
@@ -59,6 +61,7 @@ struct User: Codable, Equatable {
             blogURL: self.blogURL,
             blogTitle: self.blogTitle,
             scrapFeedUUIDs: self.scrapFeedUUIDs,
+            reportFeedUUIDs: self.reportFeedUUIDs,
             signupDate: self.signupDate,
             updateDate: Date(),
             isPushOn: self.isPushOn
@@ -78,6 +81,7 @@ extension User {
         self.blogURL = dictionary["blogURL"] as? String ?? ""
         self.blogTitle = dictionary["blogTitle"] as? String ?? ""
         self.scrapFeedUUIDs = dictionary["scrapFeedUUIDs"] as? [String] ?? []
+        self.reportFeedUUIDs = dictionary["reportFeedUUIDs"] as? [String] ?? []
         self.signupDate = dictionary["signupDate"] as? Date ?? Date()
         self.updateDate = dictionary["updateDate"] as? Date ?? Date(timeIntervalSince1970: 0)
         self.isPushOn = dictionary["isPushOn"] as? Bool ?? false
@@ -103,6 +107,7 @@ extension User {
         self.blogURL = signUpUser.getBlogURL()
         self.blogTitle = blogTitle
         self.scrapFeedUUIDs = []
+        self.reportFeedUUIDs = []
         self.signupDate = Date()
         self.updateDate = Date(timeIntervalSince1970: 0)
         self.isPushOn = false
@@ -120,6 +125,7 @@ extension User {
         self.blogURL = userAPIModel.blogURL
         self.blogTitle = userAPIModel.blogTitle
         self.scrapFeedUUIDs = userAPIModel.scrapFeedUUIDs
+        self.reportFeedUUIDs = userAPIModel.reportFeedUUIDs
         self.signupDate = userAPIModel.signupDate
         self.updateDate = userAPIModel.updateDate
         self.isPushOn = userAPIModel.isPushOn
@@ -140,6 +146,7 @@ extension User {
         self.blogURL = ""
         self.blogTitle = ""
         self.scrapFeedUUIDs = []
+        self.reportFeedUUIDs = []
         self.signupDate = Date()
         self.updateDate = Date(timeIntervalSince1970: 0)
         self.isPushOn = false
