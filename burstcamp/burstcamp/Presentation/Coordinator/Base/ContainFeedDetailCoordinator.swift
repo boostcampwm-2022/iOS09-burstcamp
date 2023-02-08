@@ -25,7 +25,7 @@ extension ContainFeedDetailCoordinator {
                 case .moveToBlogSafari(let url):
                     self?.moveToBlogSafari(url: url)
                 case .moveToPreviousScreen:
-                    self?.popFeedDetailViewController(feedDetailViewController)
+                    self?.popFeedDetailViewController()
                 }
             }
             .store(in: &cancelBag)
@@ -38,7 +38,7 @@ extension ContainFeedDetailCoordinator {
                 case .moveToBlogSafari(let url):
                     self?.moveToBlogSafari(url: url)
                 case .moveToPreviousScreen:
-                    self?.popFeedDetailViewController(feedDetailViewController)
+                    self?.popFeedDetailViewController()
                 }
             }
             .store(in: &cancelBag)
@@ -67,11 +67,9 @@ extension ContainFeedDetailCoordinator {
         return feedDetailViewController
     }
 
-    func popFeedDetailViewController(
-        _ feedDetailViewController: FeedDetailViewController
-    ) {
-        DispatchQueue.main.async {
-            self.navigationController.popViewController(animated: true)
+    func popFeedDetailViewController() {
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController.popViewController(animated: true)
         }
     }
 }
