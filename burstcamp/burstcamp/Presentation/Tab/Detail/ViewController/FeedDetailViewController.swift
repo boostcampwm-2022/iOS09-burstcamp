@@ -20,7 +20,7 @@ final class FeedDetailViewController: UIViewController {
     }
 
     private lazy var barButtonStackView = UIStackView().then {
-        $0.addArrangedSubViews([scrapButton, shareButton])
+        $0.addArrangedSubViews([scrapButton, shareButton, ellipsisButton])
         $0.spacing = Constant.space24.cgFloat
     }
     private lazy var barButtonStackViewItem = UIBarButtonItem(customView: barButtonStackView)
@@ -30,20 +30,26 @@ final class FeedDetailViewController: UIViewController {
         onColor: .main,
         offColor: .systemGray5
     )
-    private lazy var scrapBarButtonItem = UIBarButtonItem(customView: scrapButton)
-
     private let shareButton = UIButton().then {
         $0.setImage(
             UIImage(systemName: "square.and.arrow.up"),
             for: .normal
         )
     }
-    private lazy var shareBarButtonItem = UIBarButtonItem(customView: shareButton)
+
+    private let ellipsisButton = UIButton().then {
+        $0.setImage(
+            UIImage(systemName: "ellipsis"),
+            for: .normal
+        )
+    }
 
     private let feedDetailViewModel: FeedDetailViewModel
 
     let coordinatorPublisher = PassthroughSubject<FeedDetailCoordinatorEvent, Never>()
     private var updateFeedPublisher = PassthroughSubject<Feed, Never>()
+    private var deleteFeedPublisher = PassthroughSubject<Feed, Never>()
+    private var actionSheetPublisher = PassthroughSubject<ActionSheetEvent, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
     init(
@@ -85,11 +91,18 @@ final class FeedDetailViewController: UIViewController {
             }
             .eraseToAnyPublisher()
 
+        ellipsisButton.tapPublisher
+            .sink { [weak self] _ in
+                self?.showActionSheet()
+            }
+            .store(in: &cancelBag)
+
         let feedDetailInput = FeedDetailViewModel.Input(
             viewDidLoad: Just(Void()).eraseToAnyPublisher(),
             blogButtonDidTap: feedDetailView.blogButtonTapPublisher,
             shareButtonDidTap: shareButton.tapPublisher,
-            scrapButtonDidTap: scrapButtonDidTap
+            scrapButtonDidTap: scrapButtonDidTap,
+            actionSheetEvent: actionSheetPublisher.eraseToAnyPublisher()
         )
         let feedDetailOutput = feedDetailViewModel.transform(input: feedDetailInput)
 
@@ -136,6 +149,18 @@ final class FeedDetailViewController: UIViewController {
                 self?.updateFeedScrap(feed)
             }
             .store(in: &cancelBag)
+
+        feedDetailOutput.actionSheetResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error): self?.showAlert(message: "에러가 발생했어요. \(error.localizedDescription)")
+                case .finished: return
+                }
+            } receiveValue: { [weak self] feed in
+                self?.handleBlockReportFeed(feed)
+            }
+            .store(in: &cancelBag)
     }
 
     private func handleFeedDidUpdate(_ feed: Feed?) {
@@ -159,10 +184,48 @@ final class FeedDetailViewController: UIViewController {
     private func publishUpdateFeed(_ feed: Feed) {
         updateFeedPublisher.send(feed)
     }
+
+    private func handleBlockReportFeed(_ feed: Feed?) {
+        guard let feed = feed else {
+            debugPrint("피드 없음")
+            return
+        }
+        // 부모 뷰 CollectionView에 feed 전달
+        deleteFeedPublisher.send(feed)
+        coordinatorPublisher.send(.moveToPreviousScreen)
+    }
 }
 
 extension FeedDetailViewController {
     func getUpdateFeedPublisher() -> AnyPublisher<Feed, Never> {
         return updateFeedPublisher.eraseToAnyPublisher()
+    }
+
+    func getDeleteFeedPublisher() -> AnyPublisher<Feed, Never> {
+        return deleteFeedPublisher.eraseToAnyPublisher()
+    }
+}
+
+extension FeedDetailViewController {
+    func showActionSheet() {
+        let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let firstAction: UIAlertAction = UIAlertAction(title: "신고하기", style: .default) { _ in
+            self.actionSheetPublisher.send(.report)
+        }
+
+        let secondAction: UIAlertAction = UIAlertAction(title: "차단하기", style: .default) { _ in
+            self.actionSheetPublisher.send(.report)
+        }
+
+        let cancelAction: UIAlertAction = UIAlertAction(title: "취소", style: .cancel)
+
+        // add actions
+        actionSheetController.addAction(firstAction)
+        actionSheetController.addAction(secondAction)
+        actionSheetController.addAction(cancelAction)
+
+        DispatchQueue.main.async {
+            self.present(actionSheetController, animated: true)
+        }
     }
 }

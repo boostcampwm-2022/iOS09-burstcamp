@@ -45,4 +45,5 @@ enum MyPageCoordinatorEvent {
 
 enum FeedDetailCoordinatorEvent {
     case moveToBlogSafari(url: URL)
+    case moveToPreviousScreen
 }

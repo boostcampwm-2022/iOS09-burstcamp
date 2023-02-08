@@ -33,6 +33,7 @@ final class FeedDetailViewModel {
         let blogButtonDidTap: AnyPublisher<Void, Never>
         let shareButtonDidTap: AnyPublisher<Void, Never>
         let scrapButtonDidTap: AnyPublisher<Void, Never>
+        let actionSheetEvent: AnyPublisher<ActionSheetEvent, Never>
     }
 
     struct Output {
@@ -40,6 +41,7 @@ final class FeedDetailViewModel {
         let openBlog: AnyPublisher<URL, Never>
         let openActivityView: AnyPublisher<String, Never>
         let scrapUpdate: AnyPublisher<Feed?, Error>
+        let actionSheetResult: AnyPublisher<Feed?, Error>
     }
 
     func transform(input: Input) -> Output {
@@ -63,11 +65,23 @@ final class FeedDetailViewModel {
             }
             .eraseToAnyPublisher()
 
+        let actionSheetResult = input.actionSheetEvent
+            .asyncMap { [weak self] event in
+                switch event {
+                case .report:
+                    return try await self?.report()
+                case .block:
+                    return try await self?.block()
+                }
+            }
+            .eraseToAnyPublisher()
+
         return Output(
             feedDidUpdate: feedPublisher.eraseToAnyPublisher(),
             openBlog: openBlog,
             openActivityView: openActivityView,
-            scrapUpdate: scrapUpdate
+            scrapUpdate: scrapUpdate,
+            actionSheetResult: actionSheetResult
         )
     }
 
@@ -95,5 +109,21 @@ final class FeedDetailViewModel {
                 feedPublisher.send(completion: .failure(error))
             }
         }
+    }
+
+    private func report() async throws -> Feed {
+        guard let feed = feedPublisher.value else {
+            throw FeedDetailViewModelError.feedIsNil
+        }
+        try await feedDetailUseCase.reportFeed(feed)
+        return feed
+    }
+
+    private func block() async throws -> Feed? {
+        guard let feed = feedPublisher.value else {
+            throw FeedDetailViewModelError.feedIsNil
+        }
+        try await feedDetailUseCase.blockFeed(feed)
+        return feed
     }
 }

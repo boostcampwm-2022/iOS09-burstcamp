@@ -29,6 +29,7 @@ final class HomeViewController: UIViewController {
 
     let coordinatorPublisher = PassthroughSubject<HomeCoordinatorEvent, Never>()
     private let paginationPublisher = PassthroughSubject<Void, Never>()
+    private let feedDeletePublisher = PassthroughSubject<Feed, Never>()
 
     private var cancelBag = Set<AnyCancellable>()
 
@@ -102,7 +103,8 @@ extension HomeViewController {
         let input = HomeViewModel.Input(
             viewDidLoad: viewDidLoadJust,
             viewDidRefresh: viewDidRefresh,
-            pagination: pagination
+            pagination: pagination,
+            feedDeletePublisher: feedDeletePublisher.eraseToAnyPublisher()
         )
 
         let output = viewModel.transform(input: input)
@@ -129,6 +131,14 @@ extension HomeViewController {
                 }
             } receiveValue: { [weak self] additionalNormalFeed in
                 self?.handleAdditionalNormalFeed(additionalNormalFeed)
+            }
+            .store(in: &cancelBag)
+
+        output.deleteFeed
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] feed in
+                self?.deleteSnapshot(feed: feed)
+                self?.showAlert(title: "신고 및 차단 완료", message: "앞으로 게시물이 보이지 않습니다. \n신고된 게시물은 24시간 안에 처리됩니다.")
             }
             .store(in: &cancelBag)
     }
@@ -384,6 +394,16 @@ extension HomeViewController {
             feedList.forEach { collectionViewSnapShot.appendItems([DiffableFeed.recommend($0)], toSection: .recommend) }
         }
     }
+
+    private func deleteSnapshot(feed: Feed?) {
+        guard let feed = feed else {
+            debugPrint("삭제 feed가 nil")
+            return
+        }
+
+        collectionViewSnapShot.deleteItems([DiffableFeed.normal(feed)])
+        dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
+    }
 }
 
 // MARK: - UNUserNotificationCenterDelegate
@@ -407,7 +427,10 @@ extension HomeViewController: UNUserNotificationCenterDelegate {
 // MARK: - FeedDetail에서 스크랩시 HomeView에 반영
 
 extension HomeViewController: ContainFeedDetailViewController {
-    func configure(scrapUpdatePublisher: AnyPublisher<Feed, Never>) {
+    func configure(
+        scrapUpdatePublisher: AnyPublisher<Feed, Never>,
+        deletePublisher: AnyPublisher<Feed, Never>
+    ) {
         scrapUpdatePublisher
             .sink { [weak self] feed in
                 guard let normalFeedList = self?.viewModel.updateNormalFeed(feed) else {
@@ -415,6 +438,12 @@ extension HomeViewController: ContainFeedDetailViewController {
                     return
                 }
                 self?.reloadNormalFeedSection(normalFeedList: normalFeedList)
+            }
+            .store(in: &cancelBag)
+
+        deletePublisher
+            .sink { [weak self] feed in
+                self?.feedDeletePublisher.send(feed)
             }
             .store(in: &cancelBag)
     }

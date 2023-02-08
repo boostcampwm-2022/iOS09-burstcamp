@@ -19,6 +19,7 @@ public struct UserAPIModel {
     public let blogURL: String
     public let blogTitle: String
     public var scrapFeedUUIDs: [String]
+    public var reportFeedUUIDs: [String]
     public let signupDate: Date
     public let updateDate: Date
     public let isPushOn: Bool
@@ -32,6 +33,7 @@ public struct UserAPIModel {
                 blogURL: String,
                 blogTitle: String,
                 scrapFeedUUIDs: [String],
+                reportFeedUUIDs: [String],
                 signupDate: Date,
                 updateDate: Date,
                 isPushOn: Bool
@@ -45,6 +47,7 @@ public struct UserAPIModel {
         self.blogURL = blogURL
         self.blogTitle = blogTitle
         self.scrapFeedUUIDs = scrapFeedUUIDs
+        self.reportFeedUUIDs = reportFeedUUIDs
         self.signupDate = signupDate
         self.updateDate = updateDate
         self.isPushOn = isPushOn
@@ -63,6 +66,7 @@ public extension UserAPIModel {
         self.blogURL = data["blogURL"] as? String ?? ""
         self.blogTitle = data["blogTitle"] as? String ?? ""
         self.scrapFeedUUIDs = data["scrapFeedUUIDs"] as? [String] ?? []
+        self.reportFeedUUIDs = data["reportFeedUUIDs"] as? [String] ?? []
         let timestampSignupDate = data["signupDate"] as? Timestamp ?? Timestamp()
         self.signupDate = timestampSignupDate.dateValue()
         let timestampUpdateDate = data["updateDate"] as? Timestamp ?? Timestamp(date: Date(timeIntervalSince1970: 0))
@@ -81,6 +85,7 @@ public extension UserAPIModel {
             "blogURL": blogURL,
             "blogTitle": blogTitle,
             "scrapFeedUUIDs": scrapFeedUUIDs,
+            "reportFeedUUIDs": reportFeedUUIDs,
             "signupDate": Timestamp(date: signupDate),
             "updateDate": Timestamp(date: updateDate),
             "isPushOn": isPushOn

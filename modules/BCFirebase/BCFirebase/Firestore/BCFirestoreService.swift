@@ -29,6 +29,9 @@ public protocol BCFirestoreServiceProtocol {
     func scrapFeed(_ feed: ScrapFeedAPIModel, with userUUID: String) async throws
     func unScrapFeed(_ feed: FeedAPIModel, with userUUID: String) async throws
     func saveFCMToken(_ fcmToken: String, to userUUID: String) async throws
+    
+    func reportFeed(_ feedUUID: String, with userUUID: String) async throws
+    func blockFeed(_ feed: FeedAPIModel, with userUUID: String, wasScraped: Bool) async throws
 }
 
 public final class BCFirestoreService: BCFirestoreServiceProtocol {
@@ -261,5 +264,61 @@ public final class BCFirestoreService: BCFirestoreServiceProtocol {
         let path = FirestoreCollection.fcmToken.path
 
         try await firestoreService.createDocument(path, document: userUUID, data: data)
+    }
+    
+    // MARK: 피드 신고
+
+    public func reportFeed(_ feedUUID: String, with userUUID: String) async throws {
+        let reportFeedPath = FirestoreCollection.reportFeed.path
+
+        try await firestoreService.createDocument(
+            reportFeedPath,
+            document: feedUUID,
+            data: [
+                "userUUID": userUUID,
+                "reportDate": Date()
+            ]
+        )
+    }
+
+    // MARK: 피드 차단
+    
+    public func blockFeed(_ feed: FeedAPIModel, with userUUID: String, wasScraped: Bool) async throws {
+        let batch = firestoreService.getDatabaseBatch()
+        let feedUUID = feed.feedUUID
+
+        if wasScraped { // 기존에 스크랩 피드라면
+            // feed - scrapUser에 userUUID 삭제
+            let scrapUserPath = firestoreService.getDocumentPath(
+                collection: FirestoreCollection.scrapUsers(feedUUID: feedUUID).path,
+                document: userUUID
+            )
+            batch.deleteDocument(scrapUserPath)
+
+            // user - scrapFeedUUIDs 배열에 feedUUID 삭제
+            let userPath = firestoreService.getDocumentPath(collection: FirestoreCollection.user.path, document: userUUID)
+            batch.updateData([FirestoreCollection.scrapFeedUUIDs: FieldValue.arrayRemove([feedUUID])], forDocument: userPath)
+
+            // user - feed에 feed 데이터 삭제
+            let scrapFeedPath = firestoreService.getDocumentPath(
+                collection: FirestoreCollection.scrapFeeds(userUUID: userUUID).path,
+                document: feedUUID
+            )
+            batch.deleteDocument(scrapFeedPath)
+
+            // feed - scrapCount-1
+            let feedPath = firestoreService.getDocumentPath(
+                collection: FirestoreCollection.normalFeed.path,
+                document: feedUUID
+            )
+            batch.updateData(["scrapCount": feed.scrapCount], forDocument: feedPath)
+            // user - scrapFeed에서 삭제
+        }
+        
+        // user - reportFeedUUID 배열에 feedUUID 추가
+        let userPath = firestoreService.getDocumentPath(collection: FirestoreCollection.user.path, document: userUUID)
+        batch.updateData([FirestoreCollection.reportFeedUUIDs: FieldValue.arrayUnion([feedUUID])], forDocument: userPath)
+
+        try await batch.commit()
     }
 }

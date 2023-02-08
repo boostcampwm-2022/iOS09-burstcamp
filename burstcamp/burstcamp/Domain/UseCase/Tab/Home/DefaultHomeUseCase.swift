@@ -13,28 +13,32 @@ final class DefaultHomeUseCase: HomeUseCase {
 
     private let feedRepository: FeedRepository
     private let userRepository: UserRepository
+    private var scarpFeedUUID: [String: String]
+    private var reportFeedUUID: [String: String]
 
     init(feedRepository: FeedRepository, userRepository: UserRepository) {
         self.feedRepository = feedRepository
         self.userRepository = userRepository
+        self.scarpFeedUUID = [:]
+        self.reportFeedUUID = [:]
     }
 
     func fetchRecentHomeFeedList() async throws -> HomeFeedList {
-        let userScrapFeedUUIDs = UserManager.shared.user.scrapFeedUUIDs
         let homeFeedList = try await feedRepository.fetchRecentHomeFeedList()
-        let normalFeed = homeFeedList.normalFeed.map({ feed in
-            return userScrapFeedUUIDs.contains(feed.feedUUID) ? feed.setIsScraped(true) : feed
-        })
+
+        let filterReportFeed = filterReportFeed(homeFeedList.normalFeed)
+        let filterScarpFeed = filterScrapFeed(filterReportFeed)
+
         let recommendFeed = addBurstcampNoticeIfNeed(recommendFeedList: homeFeedList.recommendFeed)
         let tripleRecommendFeed = recommendFeedForCarousel(recommendFeed)
-        return HomeFeedList(recommendFeed: tripleRecommendFeed, normalFeed: normalFeed)
+        return HomeFeedList(recommendFeed: tripleRecommendFeed, normalFeed: filterScarpFeed)
     }
 
     func fetchMoreNormalFeed() async throws -> [Feed] {
-        let userScrapFeedUUIDs = UserManager.shared.user.scrapFeedUUIDs
-        return try await feedRepository.fetchMoreNormalFeed().map { feed in
-            return userScrapFeedUUIDs.contains(feed.feedUUID) ? feed.setIsScraped(true) : feed
-        }
+        let normalFeed = try await feedRepository.fetchMoreNormalFeed()
+        let filterReportFeed = filterReportFeed(normalFeed)
+        let filterScarpFeed = filterScrapFeed(filterReportFeed)
+        return filterScarpFeed
     }
 
     func scrapFeed(_ feed: Feed, userUUID: String) async throws -> Feed {
@@ -68,6 +72,36 @@ final class DefaultHomeUseCase: HomeUseCase {
     private func makeMockUpRecommendFeed(_ recommendFeedList: [Feed]) -> [Feed] {
         return recommendFeedList.map {
             return $0.getMockUpFeed()
+        }
+    }
+
+    private func arrayToDictionary(reportFeedList: [String]) -> [String: String] {
+        return Dictionary(uniqueKeysWithValues: reportFeedList.map { ($0, $0)})
+    }
+
+    // MARK: 스크랩 피드 필터링
+
+    private func updateScrapFeedUUID() {
+        self.scarpFeedUUID = arrayToDictionary(reportFeedList: UserManager.shared.user.scrapFeedUUIDs)
+    }
+
+    private func filterScrapFeed(_ feedList: [Feed]) -> [Feed] {
+        updateScrapFeedUUID()
+        return feedList.map { feed in
+            return scarpFeedUUID[feed.feedUUID] != nil ? feed.setIsScraped(true) : feed
+        }
+    }
+
+    // MARK: - 차단 피드 필터링
+
+    private func updateReportFeedUUID() {
+        self.reportFeedUUID = arrayToDictionary(reportFeedList: UserManager.shared.user.reportFeedUUIDs)
+    }
+
+    private func filterReportFeed(_ feedList: [Feed]) -> [Feed] {
+        updateReportFeedUUID()
+        return feedList.filter { feed in
+            return reportFeedUUID[feed.feedUUID] == nil ? true: false
         }
     }
 }

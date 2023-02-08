@@ -17,8 +17,10 @@ enum FirestoreCollection {
     case scrapFeeds(userUUID: String)
     case admin
     case fcmToken
+    case reportFeed
 
     static let scrapFeedUUIDs = "scrapFeedUUIDs"
+    static let reportFeedUUIDs = "reportFeedUUIDs"
 }
 
 extension FirestoreCollection {
@@ -32,6 +34,7 @@ extension FirestoreCollection {
         case .scrapFeeds(let userUUID): return "user/\(userUUID)/scrapFeeds"
         case .admin: return "admin"
         case .fcmToken: return "fcmToken"
+        case .reportFeed: return "reportFeed"
         }
     }
 }
