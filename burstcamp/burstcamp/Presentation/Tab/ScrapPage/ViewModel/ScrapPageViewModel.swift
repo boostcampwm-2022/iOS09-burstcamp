@@ -29,6 +29,7 @@ final class ScrapPageViewModel {
         let viewDidLoad: AnyPublisher<Void, Never>
         let viewDidRefresh: AnyPublisher<Void, Never>
         let pagination: AnyPublisher<Void, Never>
+        let feedDeletePublisher: AnyPublisher<Feed, Never>
     }
 
     struct CellInput {
@@ -38,6 +39,7 @@ final class ScrapPageViewModel {
     struct Output {
         let recentScrapFeed: AnyPublisher<[Feed]?, Error>
         let paginateScrapFeed: AnyPublisher<[Feed]?, Error>
+        let deleteFeed: AnyPublisher<Feed?, Never>
     }
 
     struct CellOutput {
@@ -59,9 +61,16 @@ final class ScrapPageViewModel {
             }
             .eraseToAnyPublisher()
 
+        let deleteFeed = input.feedDeletePublisher
+            .map { [weak self] feed in
+                self?.deleteFeedFromList(feed)
+            }
+            .eraseToAnyPublisher()
+
         return Output(
             recentScrapFeed: recentScrapFeedPublisher,
-            paginateScrapFeed: paginationPublisher
+            paginateScrapFeed: paginationPublisher,
+            deleteFeed: deleteFeed
         )
     }
 
@@ -95,6 +104,11 @@ final class ScrapPageViewModel {
         let scrapFeed = try await scrapPageUseCase.fetchMoreScrapFeed()
         scrapFeedList.append(contentsOf: scrapFeed)
         return scrapFeed
+    }
+
+    private func deleteFeedFromList(_ feed: Feed) -> Feed {
+        scrapFeedList = scrapFeedList.filter { $0 != feed }
+        return feed
     }
 }
 

@@ -26,6 +26,7 @@ final class ScrapPageViewController: UIViewController {
 
     let coordinatorPublisher = PassthroughSubject<ScrapPageCoordinatorEvent, Never>()
     private let paginationPublisher = PassthroughSubject<Void, Never>()
+    private let feedDeletePublisher = PassthroughSubject<Feed, Never>()
 
     private var cancelBag = Set<AnyCancellable>()
 
@@ -86,7 +87,8 @@ final class ScrapPageViewController: UIViewController {
         let input = ScrapPageViewModel.Input(
             viewDidLoad: viewDidLoadPublisher,
             viewDidRefresh: viewRefreshPublisher,
-            pagination: paginationPublisher
+            pagination: paginationPublisher,
+            feedDeletePublisher: feedDeletePublisher.eraseToAnyPublisher()
         )
 
         let output = viewModel.transform(input: input)
@@ -112,6 +114,14 @@ final class ScrapPageViewController: UIViewController {
                 }
             } receiveValue: { [weak self] scrapFeedList in
                 self?.handleAdditionalScrapFeedList(scrapFeedList)
+            }
+            .store(in: &cancelBag)
+
+        output.deleteFeed
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] feed in
+                self?.deleteSnapshot(feed: feed)
+                self?.showAlert(title: "신고 및 차단 완료", message: "앞으로 게시물이 보이지 않습니다. \n신고된 게시물은 24시간 안에 처리됩니다.")
             }
             .store(in: &cancelBag)
     }
@@ -302,6 +312,15 @@ extension ScrapPageViewController {
             scrapPageView.collectionView.resetEmptyView()
         }
     }
+
+    private func deleteSnapshot(feed: Feed?) {
+        guard let feed = feed else {
+            debugPrint("삭제 feed가 nil")
+            return
+        }
+        collectionViewSnapshot.deleteItems([feed])
+        dataSource.apply(collectionViewSnapshot, animatingDifferences: false)
+    }
 }
 
 extension ScrapPageViewController: ContainFeedDetailViewController {
@@ -316,6 +335,12 @@ extension ScrapPageViewController: ContainFeedDetailViewController {
                     return
                 }
                 self?.refreshScrapFeedList(scrapFeedList: feedList)
+            }
+            .store(in: &cancelBag)
+
+        deletePublisher
+            .sink { [weak self] feed in
+                self?.feedDeletePublisher.send(feed)
             }
             .store(in: &cancelBag)
     }
