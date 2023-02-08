@@ -33,6 +33,7 @@ final class FeedDetailViewModel {
         let blogButtonDidTap: AnyPublisher<Void, Never>
         let shareButtonDidTap: AnyPublisher<Void, Never>
         let scrapButtonDidTap: AnyPublisher<Void, Never>
+        let actionSheetEvent: AnyPublisher<ActionSheetEvent, Never>
     }
 
     struct Output {
@@ -40,6 +41,7 @@ final class FeedDetailViewModel {
         let openBlog: AnyPublisher<URL, Never>
         let openActivityView: AnyPublisher<String, Never>
         let scrapUpdate: AnyPublisher<Feed?, Error>
+        let actionSheetResult: AnyPublisher<ActionSheetEvent, Never>
     }
 
     func transform(input: Input) -> Output {
@@ -63,11 +65,25 @@ final class FeedDetailViewModel {
             }
             .eraseToAnyPublisher()
 
+        let actionSheetResult = input.actionSheetEvent
+            .map { event in
+                switch event {
+                case .report:
+                    print("report")
+                    return ActionSheetEvent.report
+                case .block:
+                    print("block")
+                    return ActionSheetEvent.block
+                }
+            }
+            .eraseToAnyPublisher()
+
         return Output(
             feedDidUpdate: feedPublisher.eraseToAnyPublisher(),
             openBlog: openBlog,
             openActivityView: openActivityView,
-            scrapUpdate: scrapUpdate
+            scrapUpdate: scrapUpdate,
+            actionSheetResult: actionSheetResult
         )
     }
 

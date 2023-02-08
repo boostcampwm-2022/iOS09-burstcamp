@@ -48,6 +48,7 @@ final class FeedDetailViewController: UIViewController {
 
     let coordinatorPublisher = PassthroughSubject<FeedDetailCoordinatorEvent, Never>()
     private var updateFeedPublisher = PassthroughSubject<Feed, Never>()
+    private var actionSheetPublisher = PassthroughSubject<ActionSheetEvent, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
     init(
@@ -89,17 +90,18 @@ final class FeedDetailViewController: UIViewController {
             }
             .eraseToAnyPublisher()
 
-        let ellipsisDidTap = ellipsisButton.tapPublisher
-            .map { _ in
+        ellipsisButton.tapPublisher
+            .sink { _ in
                 self.showActionSheet()
             }
-            .eraseToAnyPublisher()
+            .store(in: &cancelBag)
 
         let feedDetailInput = FeedDetailViewModel.Input(
             viewDidLoad: Just(Void()).eraseToAnyPublisher(),
             blogButtonDidTap: feedDetailView.blogButtonTapPublisher,
             shareButtonDidTap: shareButton.tapPublisher,
-            scrapButtonDidTap: scrapButtonDidTap
+            scrapButtonDidTap: scrapButtonDidTap,
+            actionSheetEvent: actionSheetPublisher.eraseToAnyPublisher()
         )
         let feedDetailOutput = feedDetailViewModel.transform(input: feedDetailInput)
 
@@ -146,6 +148,18 @@ final class FeedDetailViewController: UIViewController {
                 self?.updateFeedScrap(feed)
             }
             .store(in: &cancelBag)
+
+        feedDetailOutput.actionSheetResult
+            .receive(on: DispatchQueue.main)
+            .sink { event in
+                switch event {
+                case .report:
+                    print("VC report")
+                case .block:
+                    print("VC report")
+                }
+            }
+            .store(in: &cancelBag)
     }
 
     private func handleFeedDidUpdate(_ feed: Feed?) {
@@ -180,12 +194,12 @@ extension FeedDetailViewController {
 extension FeedDetailViewController {
     func showActionSheet() {
         let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let firstAction: UIAlertAction = UIAlertAction(title: "신고하기", style: .default) { action in
-            
+        let firstAction: UIAlertAction = UIAlertAction(title: "신고하기", style: .default) { _ in
+            self.actionSheetPublisher.send(.report)
         }
 
-        let secondAction: UIAlertAction = UIAlertAction(title: "차단하기", style: .default) { action in
-            
+        let secondAction: UIAlertAction = UIAlertAction(title: "차단하기", style: .default) { _ in
+            self.actionSheetPublisher.send(.report)
         }
 
         let cancelAction: UIAlertAction = UIAlertAction(title: "취소", style: .cancel)
@@ -199,9 +213,4 @@ extension FeedDetailViewController {
             self.present(actionSheetController, animated: true)
         }
     }
-}
-
-enum ActionSheetEvent {
-    case report
-    case block
 }

@@ -54,6 +54,7 @@
 		1458C6952928FB1B00E00B80 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458C6942928FB1B00E00B80 /* HomeView.swift */; };
 		1459C3BA292910B300FA885D /* RecommendFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3B9292910B300FA885D /* RecommendFeedCell.swift */; };
 		1459C3BC2929150200FA885D /* FeedCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1459C3BB2929150200FA885D /* FeedCellType.swift */; };
+		1473D8542993209C00408C9B /* ActionSheetEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1473D8532993209C00408C9B /* ActionSheetEvent.swift */; };
 		14755A4C2973FA8C0036B71D /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14755A4B2973FA8C0036B71D /* LoginRepository.swift */; };
 		14755A4E2973FAA50036B71D /* DefaultLoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14755A4D2973FAA50036B71D /* DefaultLoginRepository.swift */; };
 		14882664298CD86800DB6D3B /* GithubLoginDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882663298CD86800DB6D3B /* GithubLoginDatasource.swift */; };
@@ -291,6 +292,7 @@
 		1458C6942928FB1B00E00B80 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		1459C3B9292910B300FA885D /* RecommendFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendFeedCell.swift; sourceTree = "<group>"; };
 		1459C3BB2929150200FA885D /* FeedCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellType.swift; sourceTree = "<group>"; };
+		1473D8532993209C00408C9B /* ActionSheetEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetEvent.swift; sourceTree = "<group>"; };
 		14755A4B2973FA8C0036B71D /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
 		14755A4D2973FAA50036B71D /* DefaultLoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoginRepository.swift; sourceTree = "<group>"; };
 		14882663298CD86800DB6D3B /* GithubLoginDatasource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubLoginDatasource.swift; sourceTree = "<group>"; };
@@ -1653,6 +1655,7 @@
 			isa = PBXGroup;
 			children = (
 				B5DAD674292E4C6800C4A126 /* FeedDetailViewModel.swift */,
+				1473D8532993209C00408C9B /* ActionSheetEvent.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -2003,6 +2006,7 @@
 				141344D7292F801100187B86 /* TimeInterval+.swift in Sources */,
 				141299542976376500159C02 /* UserManagerError.swift in Sources */,
 				D8494D4A2927CBD4008157F1 /* DefaultButton.swift in Sources */,
+				1473D8542993209C00408C9B /* ActionSheetEvent.swift in Sources */,
 				D89AE4F32935AFE100446AB3 /* Notification+.swift in Sources */,
 				1458C6952928FB1B00E00B80 /* HomeView.swift in Sources */,
 				B50A27FE29279F5D00DF3E1F /* Coordinator.swift in Sources */,
