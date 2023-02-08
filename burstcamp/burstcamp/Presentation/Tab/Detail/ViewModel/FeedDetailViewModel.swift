@@ -41,7 +41,7 @@ final class FeedDetailViewModel {
         let openBlog: AnyPublisher<URL, Never>
         let openActivityView: AnyPublisher<String, Never>
         let scrapUpdate: AnyPublisher<Feed?, Error>
-        let actionSheetResult: AnyPublisher<ActionSheetEvent, Never>
+        let actionSheetResult: AnyPublisher<Feed?, Error>
     }
 
     func transform(input: Input) -> Output {
@@ -66,14 +66,12 @@ final class FeedDetailViewModel {
             .eraseToAnyPublisher()
 
         let actionSheetResult = input.actionSheetEvent
-            .map { event in
+            .asyncMap { [weak self] event in
                 switch event {
                 case .report:
-                    print("report")
-                    return ActionSheetEvent.report
+                    return try await self?.report()
                 case .block:
-                    print("block")
-                    return ActionSheetEvent.block
+                    return try await self?.block()
                 }
             }
             .eraseToAnyPublisher()
@@ -111,5 +109,21 @@ final class FeedDetailViewModel {
                 feedPublisher.send(completion: .failure(error))
             }
         }
+    }
+
+    private func report() async throws -> Feed {
+        guard let feed = feedPublisher.value else {
+            throw FeedDetailViewModelError.feedIsNil
+        }
+        try await feedDetailUseCase.reportFeed(feed)
+        return feed
+    }
+
+    private func block() async throws -> Feed? {
+        guard let feed = feedPublisher.value else {
+            throw FeedDetailViewModelError.feedIsNil
+        }
+        try await feedDetailUseCase.blockFeed(feed)
+        return feed
     }
 }

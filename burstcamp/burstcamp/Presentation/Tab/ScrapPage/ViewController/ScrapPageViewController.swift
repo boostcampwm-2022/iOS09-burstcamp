@@ -305,7 +305,10 @@ extension ScrapPageViewController {
 }
 
 extension ScrapPageViewController: ContainFeedDetailViewController {
-    func configure(scrapUpdatePublisher: AnyPublisher<Feed, Never>) {
+    func configure(
+        scrapUpdatePublisher: AnyPublisher<Feed, Never>,
+        deletePublisher: AnyPublisher<Feed, Never>
+    ) {
         scrapUpdatePublisher
             .sink { [weak self] feed in
                 guard let feedList = self?.viewModel.updateScrapFeed(feed) else {

@@ -24,6 +24,8 @@ extension ContainFeedDetailCoordinator {
                 switch event {
                 case .moveToBlogSafari(let url):
                     self?.moveToBlogSafari(url: url)
+                case .moveToPreviousScreen:
+                    self?.popFeedDetailViewController(feedDetailViewController)
                 }
             }
             .store(in: &cancelBag)
@@ -35,12 +37,18 @@ extension ContainFeedDetailCoordinator {
                 switch event {
                 case .moveToBlogSafari(let url):
                     self?.moveToBlogSafari(url: url)
+                case .moveToPreviousScreen:
+                    self?.popFeedDetailViewController(feedDetailViewController)
                 }
             }
             .store(in: &cancelBag)
 
         let updateFeedPublisher = feedDetailViewController.getUpdateFeedPublisher()
-        parentViewController.configure(scrapUpdatePublisher: updateFeedPublisher)
+        let deleteFeedPublisher = feedDetailViewController.getDeleteFeedPublisher()
+        parentViewController.configure(
+            scrapUpdatePublisher: updateFeedPublisher,
+            deletePublisher: deleteFeedPublisher
+        )
     }
 
     func prepareFeedDetailViewController(feed: Feed) -> FeedDetailViewController {
@@ -57,5 +65,13 @@ extension ContainFeedDetailCoordinator {
             feedDetailViewModel: feedDetailViewModel
         )
         return feedDetailViewController
+    }
+
+    func popFeedDetailViewController(
+        _ feedDetailViewController: FeedDetailViewController
+    ) {
+        DispatchQueue.main.async {
+            self.navigationController.popViewController(animated: true)
+        }
     }
 }

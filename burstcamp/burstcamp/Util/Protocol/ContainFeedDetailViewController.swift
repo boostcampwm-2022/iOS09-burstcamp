@@ -9,5 +9,8 @@ import Combine
 import Foundation
 
 protocol ContainFeedDetailViewController {
-    func configure(scrapUpdatePublisher: AnyPublisher<Feed, Never>)
+    func configure(
+        scrapUpdatePublisher: AnyPublisher<Feed, Never>,
+        deletePublisher: AnyPublisher<Feed, Never>
+    )
 }

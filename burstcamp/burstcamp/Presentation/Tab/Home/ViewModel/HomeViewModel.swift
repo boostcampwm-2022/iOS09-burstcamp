@@ -28,6 +28,7 @@ final class HomeViewModel {
         let viewDidLoad: AnyPublisher<Void, Never>
         let viewDidRefresh: AnyPublisher<Void, Never>
         let pagination: AnyPublisher<Void, Never>
+        let feedDeletePublisher: AnyPublisher<Feed, Never>
     }
 
     struct CellInput {
@@ -37,6 +38,7 @@ final class HomeViewModel {
     struct Output {
         let recentHomeFeedList: AnyPublisher<HomeFeedList?, Error>
         let paginateNormalFeedList: AnyPublisher<[Feed]?, Error>
+        let deleteFeed: AnyPublisher<Feed, Never>
     }
 
     struct CellOutput {
@@ -57,9 +59,16 @@ final class HomeViewModel {
             }
             .eraseToAnyPublisher()
 
+        let deleteFeed = input.feedDeletePublisher
+            .map { feed in
+                self.deleteFeedFromList(feed)
+            }
+            .eraseToAnyPublisher()
+
         return Output(
             recentHomeFeedList: recentHomeFeedList,
-            paginateNormalFeedList: paginateNormalFeedList
+            paginateNormalFeedList: paginateNormalFeedList,
+            deleteFeed: deleteFeed
         )
     }
 
@@ -108,6 +117,11 @@ final class HomeViewModel {
         } else {
             throw HomeViewModelError.feedIndex
         }
+    }
+
+    private func deleteFeedFromList(_ feed: Feed) -> Feed {
+        normalFeedList = normalFeedList.filter { $0 != feed }
+        return feed
     }
 }
 

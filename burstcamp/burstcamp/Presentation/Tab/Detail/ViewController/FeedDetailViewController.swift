@@ -48,6 +48,7 @@ final class FeedDetailViewController: UIViewController {
 
     let coordinatorPublisher = PassthroughSubject<FeedDetailCoordinatorEvent, Never>()
     private var updateFeedPublisher = PassthroughSubject<Feed, Never>()
+    private var deleteFeedPublisher = PassthroughSubject<Feed, Never>()
     private var actionSheetPublisher = PassthroughSubject<ActionSheetEvent, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
@@ -151,13 +152,13 @@ final class FeedDetailViewController: UIViewController {
 
         feedDetailOutput.actionSheetResult
             .receive(on: DispatchQueue.main)
-            .sink { event in
-                switch event {
-                case .report:
-                    print("VC report")
-                case .block:
-                    print("VC report")
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error): self?.showAlert(message: "에러가 발생했어요. \(error.localizedDescription)")
+                case .finished: return
                 }
+            } receiveValue: { [weak self] feed in
+                self?.handleBlockReportFeed(feed)
             }
             .store(in: &cancelBag)
     }
@@ -183,11 +184,25 @@ final class FeedDetailViewController: UIViewController {
     private func publishUpdateFeed(_ feed: Feed) {
         updateFeedPublisher.send(feed)
     }
+
+    private func handleBlockReportFeed(_ feed: Feed?) {
+        guard let feed = feed else {
+            debugPrint("피드 없음")
+            return
+        }
+        // 부모 뷰 CollectionView에 feed 전달
+        deleteFeedPublisher.send(feed)
+        coordinatorPublisher.send(.moveToPreviousScreen)
+    }
 }
 
 extension FeedDetailViewController {
     func getUpdateFeedPublisher() -> AnyPublisher<Feed, Never> {
         return updateFeedPublisher.eraseToAnyPublisher()
+    }
+
+    func getDeleteFeedPublisher() -> AnyPublisher<Feed, Never> {
+        return deleteFeedPublisher.eraseToAnyPublisher()
     }
 }
 
