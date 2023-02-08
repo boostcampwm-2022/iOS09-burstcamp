@@ -105,4 +105,12 @@ final class DefaultFeedRepository: FeedRepository {
     func createMockUpRecommendFeedList(count: Int) -> [Feed] {
         return feedMockUpDataSource.createMockUpRecommendFeedList(count: count)
     }
+
+    func blockFeed(_ feed: Feed, userUUID: String, wasScraped: Bool) async throws {
+        try await bcFirestoreService.blockFeed(feed.toFeedAPIModel(), with: userUUID, wasScraped: true)
+    }
+
+    func reportFeed(_ feed: Feed, userUUID: String) async throws {
+        try await bcFirestoreService.reportFeed(feed.feedUUID, with: userUUID)
+    }
 }

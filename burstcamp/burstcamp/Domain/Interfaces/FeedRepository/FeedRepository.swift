@@ -20,4 +20,7 @@ protocol FeedRepository {
     func unScrapFeed(_ feed: Feed, userUUID: String) async throws -> Feed
 
     func createMockUpRecommendFeedList(count: Int) -> [Feed]
+
+    func blockFeed(_ feed: Feed, userUUID: String, wasScraped: Bool) async throws
+    func reportFeed(_ feed: Feed, userUUID: String) async throws
 }
