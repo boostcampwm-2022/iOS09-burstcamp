@@ -20,7 +20,7 @@ final class FeedDetailViewController: UIViewController {
     }
 
     private lazy var barButtonStackView = UIStackView().then {
-        $0.addArrangedSubViews([scrapButton, shareButton])
+        $0.addArrangedSubViews([scrapButton, shareButton, ellipsisButton])
         $0.spacing = Constant.space24.cgFloat
     }
     private lazy var barButtonStackViewItem = UIBarButtonItem(customView: barButtonStackView)
@@ -30,15 +30,19 @@ final class FeedDetailViewController: UIViewController {
         onColor: .main,
         offColor: .systemGray5
     )
-    private lazy var scrapBarButtonItem = UIBarButtonItem(customView: scrapButton)
-
     private let shareButton = UIButton().then {
         $0.setImage(
             UIImage(systemName: "square.and.arrow.up"),
             for: .normal
         )
     }
-    private lazy var shareBarButtonItem = UIBarButtonItem(customView: shareButton)
+
+    private let ellipsisButton = UIButton().then {
+        $0.setImage(
+            UIImage(systemName: "ellipsis"),
+            for: .normal
+        )
+    }
 
     private let feedDetailViewModel: FeedDetailViewModel
 
@@ -82,6 +86,12 @@ final class FeedDetailViewController: UIViewController {
             .map { [weak self] _ in
                 self?.scrapButton.isEnabled = false
                 return
+            }
+            .eraseToAnyPublisher()
+
+        let ellipsisDidTap = ellipsisButton.tapPublisher
+            .map { _ in
+                self.showActionSheet()
             }
             .eraseToAnyPublisher()
 
@@ -165,4 +175,33 @@ extension FeedDetailViewController {
     func getUpdateFeedPublisher() -> AnyPublisher<Feed, Never> {
         return updateFeedPublisher.eraseToAnyPublisher()
     }
+}
+
+extension FeedDetailViewController {
+    func showActionSheet() {
+        let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let firstAction: UIAlertAction = UIAlertAction(title: "신고하기", style: .default) { action in
+            
+        }
+
+        let secondAction: UIAlertAction = UIAlertAction(title: "차단하기", style: .default) { action in
+            
+        }
+
+        let cancelAction: UIAlertAction = UIAlertAction(title: "취소", style: .cancel)
+
+        // add actions
+        actionSheetController.addAction(firstAction)
+        actionSheetController.addAction(secondAction)
+        actionSheetController.addAction(cancelAction)
+
+        DispatchQueue.main.async {
+            self.present(actionSheetController, animated: true)
+        }
+    }
+}
+
+enum ActionSheetEvent {
+    case report
+    case block
 }
