@@ -395,7 +395,12 @@ extension HomeViewController {
         }
     }
 
-    private func deleteSnapshot(feed: Feed) {
+    private func deleteSnapshot(feed: Feed?) {
+        guard let feed = feed else {
+            debugPrint("삭제 feed가 nil")
+            return
+        }
+
         collectionViewSnapShot.deleteItems([DiffableFeed.normal(feed)])
         dataSource.apply(collectionViewSnapShot, animatingDifferences: false)
     }

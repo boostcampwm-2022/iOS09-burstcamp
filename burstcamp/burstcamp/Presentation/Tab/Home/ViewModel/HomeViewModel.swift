@@ -38,7 +38,7 @@ final class HomeViewModel {
     struct Output {
         let recentHomeFeedList: AnyPublisher<HomeFeedList?, Error>
         let paginateNormalFeedList: AnyPublisher<[Feed]?, Error>
-        let deleteFeed: AnyPublisher<Feed, Never>
+        let deleteFeed: AnyPublisher<Feed?, Never>
     }
 
     struct CellOutput {
@@ -60,8 +60,8 @@ final class HomeViewModel {
             .eraseToAnyPublisher()
 
         let deleteFeed = input.feedDeletePublisher
-            .map { feed in
-                self.deleteFeedFromList(feed)
+            .map { [weak self] feed in
+                self?.deleteFeedFromList(feed)
             }
             .eraseToAnyPublisher()
 
