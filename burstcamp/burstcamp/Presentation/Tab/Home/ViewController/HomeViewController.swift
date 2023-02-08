@@ -138,6 +138,7 @@ extension HomeViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] feed in
                 self?.deleteSnapshot(feed: feed)
+                self?.showAlert(title: "신고 및 차단 완료", message: "앞으로 게시물이 보이지 않습니다. \n신고된 게시물은 24시간 안에 처리됩니다.")
             }
             .store(in: &cancelBag)
     }
