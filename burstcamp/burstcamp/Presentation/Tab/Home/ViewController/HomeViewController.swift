@@ -35,6 +35,7 @@ final class HomeViewController: UIViewController {
 
     private var isFetching: Bool = false
     private var isLastFetch: Bool = false
+    private var isDataLoaded = false
 
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
@@ -69,7 +70,11 @@ final class HomeViewController: UIViewController {
 
     private func configureAttributes() {
         homeView.collectionView.isSkeletonable = true
-        homeView.collectionView.showSkeleton(usingColor: .systemGray5)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            if !self.isDataLoaded {
+                self.homeView.collectionView.showSkeleton(usingColor: .systemGray5)
+            }
+        }
     }
 
     private func configureNavigationBar() {
@@ -217,6 +222,7 @@ extension HomeViewController {
     }
 
     private func receiveHomeFeedList(homeFeedList: HomeFeedList?) {
+        isDataLoaded = true
         homeView.hideSkeleton()
         guard let homeFeedList = homeFeedList else {
             showAlert(message: "피드 데이터를 가져오는데 에러가 발생했어요")
