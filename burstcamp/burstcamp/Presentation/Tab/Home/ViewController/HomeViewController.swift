@@ -70,11 +70,6 @@ final class HomeViewController: UIViewController {
 
     private func configureAttributes() {
         homeView.collectionView.isSkeletonable = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            if !self.isDataLoaded {
-                self.homeView.collectionView.showSkeleton(usingColor: .systemGray5)
-            }
-        }
     }
 
     private func configureNavigationBar() {
@@ -93,6 +88,15 @@ final class HomeViewController: UIViewController {
 
     private func paginateFeed() {
         paginationPublisher.send(Void())
+    }
+
+    private func showSkeletonView(header: RecommendFeedHeader) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            if !self.isDataLoaded {
+                self.homeView.collectionView.showSkeleton(usingColor: .systemGray5)
+                header.showSkeleton(usingColor: .systemGray5)
+            }
+        }
     }
 }
 
@@ -352,7 +356,8 @@ extension HomeViewController {
             ) as? RecommendFeedHeader else {
                 return UICollectionReusableView()
             }
-
+            header.isSkeletonable = true
+            showSkeletonView(header: header)
             return header
         default:
             return nil

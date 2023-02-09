@@ -216,6 +216,7 @@ final class HomeView: UIView, ContainCollectionView {
                 bottom: 0,
                 trailing: horizontalPadding
             )
+
             return [header]
         case .normal:
             return []
