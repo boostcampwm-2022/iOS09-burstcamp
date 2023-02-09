@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SkeletonView
+
 final class RecommendFeedHeader: UICollectionReusableView {
 
     private let titleText = "이번 주\n캠퍼들의 PICK"
@@ -29,13 +31,13 @@ final class RecommendFeedHeader: UICollectionReusableView {
     }
 
     private lazy var titleLabel = DefaultMultiLineLabel().then {
-        $0.attributedText  = titleAttributeText
         $0.numberOfLines = 2
     }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
+        configureSkeleton()
     }
 
     required init?(coder: NSCoder) {
@@ -50,6 +52,21 @@ final class RecommendFeedHeader: UICollectionReusableView {
     private func configureTitleLabel() {
         titleLabel.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+    }
+
+    private func configureSkeleton() {
+        titleLabel.isSkeletonable = true
+        titleLabel.skeletonTextNumberOfLines = 2
+        titleLabel.linesCornerRadius = Constant.CornerRadius.radius4
+        titleLabel.skeletonTextLineHeight = .fixed(28)
+    }
+}
+
+extension RecommendFeedHeader {
+    func updateTitleLabel() {
+        DispatchQueue.main.async {
+            self.titleLabel.attributedText = self.titleAttributeText
         }
     }
 }

@@ -35,6 +35,7 @@ final class HomeViewController: UIViewController {
 
     private var isFetching: Bool = false
     private var isLastFetch: Bool = false
+    private var isDataLoaded = false
 
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
@@ -69,7 +70,6 @@ final class HomeViewController: UIViewController {
 
     private func configureAttributes() {
         homeView.collectionView.isSkeletonable = true
-        homeView.collectionView.showSkeleton(usingColor: .systemGray5)
     }
 
     private func configureNavigationBar() {
@@ -88,6 +88,15 @@ final class HomeViewController: UIViewController {
 
     private func paginateFeed() {
         paginationPublisher.send(Void())
+    }
+
+    private func showSkeletonView(header: RecommendFeedHeader) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            if !self.isDataLoaded {
+                self.homeView.collectionView.showSkeleton(usingColor: .systemGray5)
+                header.showSkeleton(usingColor: .systemGray5)
+            }
+        }
     }
 }
 
@@ -217,13 +226,14 @@ extension HomeViewController {
     }
 
     private func receiveHomeFeedList(homeFeedList: HomeFeedList?) {
+        isDataLoaded = true
         homeView.hideSkeleton()
         guard let homeFeedList = homeFeedList else {
             showAlert(message: "피드 데이터를 가져오는데 에러가 발생했어요")
             return
         }
         // carousel View를 위한 설정 -> 2개씩 복사 해줬으므로 진짜 개수는 3으로 나눠줘야 함
-        homeView.setRecommendFeedCount(homeFeedList.recommendFeed.count / 3)
+        homeView.updateRecommendSection(recommendFeedCount: homeFeedList.recommendFeed.count / 3)
         reloadHomeFeedList(homeFeedList: homeFeedList)
         homeView.endCollectionViewRefreshing()
         isFetching = false
@@ -346,7 +356,8 @@ extension HomeViewController {
             ) as? RecommendFeedHeader else {
                 return UICollectionReusableView()
             }
-
+            header.isSkeletonable = true
+            showSkeletonView(header: header)
             return header
         default:
             return nil
