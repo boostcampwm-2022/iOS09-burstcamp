@@ -221,10 +221,23 @@ final class HomeView: UIView, ContainCollectionView {
             return []
         }
     }
+
+    private func setRecommendFeedCount(_ count: Int) {
+        recommendFeedCount = count
+    }
+
+    private func updateHeader() {
+        if let recommendFeedHeader = collectionView.visibleSupplementaryViews(
+            ofKind: UICollectionView.elementKindSectionHeader
+        ).first as? RecommendFeedHeader {
+            recommendFeedHeader.updateTitleLabel()
+        }
+    }
 }
 
 extension HomeView {
-    func setRecommendFeedCount(_ count: Int) {
-        recommendFeedCount = count
+    func updateRecommendSection(recommendFeedCount: Int) {
+        setRecommendFeedCount(recommendFeedCount)
+        updateHeader()
     }
 }

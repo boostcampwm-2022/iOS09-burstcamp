@@ -229,7 +229,7 @@ extension HomeViewController {
             return
         }
         // carousel View를 위한 설정 -> 2개씩 복사 해줬으므로 진짜 개수는 3으로 나눠줘야 함
-        homeView.setRecommendFeedCount(homeFeedList.recommendFeed.count / 3)
+        homeView.updateRecommendSection(recommendFeedCount: homeFeedList.recommendFeed.count / 3)
         reloadHomeFeedList(homeFeedList: homeFeedList)
         homeView.endCollectionViewRefreshing()
         isFetching = false

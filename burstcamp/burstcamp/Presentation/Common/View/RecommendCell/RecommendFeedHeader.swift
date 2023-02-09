@@ -29,7 +29,6 @@ final class RecommendFeedHeader: UICollectionReusableView {
     }
 
     private lazy var titleLabel = DefaultMultiLineLabel().then {
-        $0.attributedText  = titleAttributeText
         $0.numberOfLines = 2
     }
 
@@ -50,6 +49,14 @@ final class RecommendFeedHeader: UICollectionReusableView {
     private func configureTitleLabel() {
         titleLabel.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+    }
+}
+
+extension RecommendFeedHeader {
+    func updateTitleLabel() {
+        DispatchQueue.main.async {
+            self.titleLabel.attributedText = self.titleAttributeText
         }
     }
 }
