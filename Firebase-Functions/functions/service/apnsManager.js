@@ -19,15 +19,15 @@ export async function sendNotification() {
         return
     }
 
-    // const tokens = await Promise.all(
-    //     userUUIDs.map(userUUID => {
-    //     return getFCMToken(userUUID)
-    // }))
-    // const validTokens = tokens.filter(fcmToken => fcmToken !== '')
+    const tokens = await Promise.all(
+        userUUIDs.map(userUUID => {
+        return getFCMToken(userUUID)
+    }))
+    const validTokens = tokens.filter(fcmToken => fcmToken !== '')
 
-    // logger.log('보낼 토큰들을 만들었어요', validTokens)
+    logger.log('보낼 토큰들을 만들었어요', validTokens)
 
-    // sendMessage(validTokens, recentFeed)
+    sendMessage(validTokens, recentFeed)
 }
 
 /**
