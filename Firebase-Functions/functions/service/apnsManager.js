@@ -15,18 +15,19 @@ export async function sendNotification() {
     const recentFeed = await getRecentFeed()
     
     if (isCheckBeforeFeed(recentFeed)) {
+        logger.log('알림을 보내지 않습니다.')
         return
     }
 
-    const tokens = await Promise.all(
-        userUUIDs.map(userUUID => {
-        return getFCMToken(userUUID)
-    }))
-    const validTokens = tokens.filter(fcmToken => fcmToken !== '')
+    // const tokens = await Promise.all(
+    //     userUUIDs.map(userUUID => {
+    //     return getFCMToken(userUUID)
+    // }))
+    // const validTokens = tokens.filter(fcmToken => fcmToken !== '')
 
-    logger.log('보낼 토큰들을 만들었어요', validTokens)
+    // logger.log('보낼 토큰들을 만들었어요', validTokens)
 
-    sendMessage(validTokens, recentFeed)
+    // sendMessage(validTokens, recentFeed)
 }
 
 /**
@@ -38,13 +39,11 @@ function isCheckBeforeFeed(feed) {
     const pubDate = feed['pubDate'].toDate()
 
     const now = new Date(); // 현재 시간
-    const utcNow = now.getTime() + (now.getTimezoneOffset() * 60 * 1000); // 현재 시간을 utc로 변환한 밀리세컨드값
-    const koreaTimeDiff = 9 * 60 * 60 * 1000; // 한국 시간은 UTC보다 9시간 빠름(9시간의 밀리세컨드 표현)
-    const koreaNow = new Date(utcNow + koreaTimeDiff); // utc로 변환된 값을 한국 시간으로 변환시키기 위해 9시간(밀리세컨드)를 더함
-    const koreaYesterday = new Date(koreaNow.setDate(koreaNow.getDate() - 1));
-    logger.log("pubDate", pubDate)
-    logger.log("현재 1일전", koreaYesterday)
-    return pubDate <= koreaYesterday
+    const yesterday = new Date(now.setDate(now.getDate() - 1));
+    logger.log("게시글의 pubDate", pubDate)
+    logger.log("현재 1일전", yesterday)
+    logger.log('알림 보낼지 확인', yesterday <= pubDate)
+    return yesterday <= pubDate
 }
 
 
