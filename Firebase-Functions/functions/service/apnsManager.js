@@ -14,7 +14,7 @@ export async function sendNotification() {
     const userUUIDs = await getUsersIsPushOnTrue()
     const recentFeed = await getRecentFeed()
     
-    if (isCheckBeforeFeed(recentFeed)) {
+    if (!isCheckBeforeFeed(recentFeed)) {
         logger.log('알림을 보내지 않습니다.')
         return
     }
