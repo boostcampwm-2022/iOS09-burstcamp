@@ -58,8 +58,6 @@
 		14755A4C2973FA8C0036B71D /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14755A4B2973FA8C0036B71D /* LoginRepository.swift */; };
 		14755A4E2973FAA50036B71D /* DefaultLoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14755A4D2973FAA50036B71D /* DefaultLoginRepository.swift */; };
 		14882664298CD86800DB6D3B /* GithubLoginDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14882663298CD86800DB6D3B /* GithubLoginDatasource.swift */; };
-		1488269E298CDC1600DB6D3B /* BCFirebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1488269D298CDAE200DB6D3B /* BCFirebase.framework */; };
-		1488269F298CDC1600DB6D3B /* BCFirebase.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1488269D298CDAE200DB6D3B /* BCFirebase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		148867B229839D5100B54415 /* TestCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148867B129839D5100B54415 /* TestCounter.swift */; };
 		148A05442972F3DA00664CCB /* DependencyFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A05432972F3DA00664CCB /* DependencyFactoryProtocol.swift */; };
 		148A05462972F51C00664CCB /* DependencyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148A05452972F51C00664CCB /* DependencyFactory.swift */; };
@@ -98,6 +96,7 @@
 		14A34D5029743F2A00501A66 /* DefaultBlogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D4F29743F2A00501A66 /* DefaultBlogRepository.swift */; };
 		14A34D55297444F000501A66 /* SignUpUseCaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A34D54297444F000501A66 /* SignUpUseCaseError.swift */; };
 		14A93D422936F00F00790034 /* FeedWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A93D412936F00F00790034 /* FeedWriter.swift */; };
+		14B41F17299BBD6400CF3C98 /* BCFirebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1488269D298CDAE200DB6D3B /* BCFirebase.framework */; };
 		14D8C4C6297BEDB900DFE71F /* HomeViewModelError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C4C5297BEDB900DFE71F /* HomeViewModelError.swift */; };
 		14D8C4D4297C0C0200DFE71F /* FeedDetailViewModelError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C4D3297C0C0200DFE71F /* FeedDetailViewModelError.swift */; };
 		14D8C4D6297C103800DFE71F /* ContainFeedDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C4D5297C103800DFE71F /* ContainFeedDetailViewController.swift */; };
@@ -237,7 +236,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1488269F298CDC1600DB6D3B /* BCFirebase.framework in Embed Frameworks */,
 				B59EDAD629408DAF00D451CC /* BCResource.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -456,8 +454,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				14FFB9AC29822E1A00FDC8B5 /* SkeletonView in Frameworks */,
-				1488269E298CDC1600DB6D3B /* BCFirebase.framework in Frameworks */,
 				B52A7F272927A88F00E271D2 /* Then in Frameworks */,
+				14B41F17299BBD6400CF3C98 /* BCFirebase.framework in Frameworks */,
 				B59EDAD529408DAF00D451CC /* BCResource.framework in Frameworks */,
 				B52A7F2A2927A89C00E271D2 /* SnapKit in Frameworks */,
 				1494B6E1298BF3EE00DAB111 /* SwiftyGif in Frameworks */,
