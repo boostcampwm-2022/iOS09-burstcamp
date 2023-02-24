@@ -10,7 +10,10 @@
   부스트캠퍼들의 동기부여와 지속적인 발전을 위한 커뮤니티, **burstcamp** 입니다.    
   자신의 성장을 공유하고 싶지만, 부끄럽거나 바쁜 캠퍼들을 위해 블로그 글을 자동으로 공유합니다.   
   앱을 통해 캠퍼들의 다양한 소식들을 접하며 동기부여를 얻고, 내적 친밀감을 쌓을 수 있습니다.  
-
+  <br/>
+  
+  <a href="https://apps.apple.com/kr/app/burstcamp/id6444737479" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-US?size=250x83&amp" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
+  
 </div>
 
 <br>
