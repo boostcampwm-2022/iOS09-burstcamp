@@ -170,6 +170,7 @@ async function updateNewRecommendFeedToDB(newRecommendFeedUUIDList) {
 async function updateFeedDBFromSingleBlog(parsedRSS, writer) {
 	logger.log(writer['nickname'])
 	logger.log(writer['blogURL'])
+	if (parsedRSS.items === undefined) { return }
 	await parsedRSS.items.forEach(async (item) => {
 		const feedUUID = item.link.hashCode()
 		const docRef = feedRef.doc(feedUUID);
@@ -210,7 +211,7 @@ async function createFeedDataIfNeeded(docRef, writer, feedUUID, feed) {
 	docRef.set({
 		// TODO: User db에서 UUID를 찾아 대입해주기
 		feedUUID: feedUUID,
-		title: feed.title,
+		title: unescapeHtml(feed.title),
 		pubDate: Timestamp.fromDate(new Date(feed.pubDate)),
 		regDate: Timestamp.now(),
 		url: feed.link,
@@ -225,6 +226,17 @@ async function createFeedDataIfNeeded(docRef, writer, feedUUID, feed) {
 		writerProfileImageURL: writer['profileImageURL'],
 		writerBlogTitle: writer['blogTitle'],
 	})
+}
+
+function unescapeHtml(text) {
+    const str = text
+    return str
+		.replaceAll('&amp;', '&')
+		.replaceAll('&lt;', '<')
+		.replaceAll('&gt;', '>')
+		.replaceAll('&quot;', '"')
+		.replaceAll('&#039;', "'")
+	return str
 }
 
 /**
