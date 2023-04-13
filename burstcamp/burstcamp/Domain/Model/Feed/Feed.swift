@@ -29,7 +29,7 @@ extension Feed {
     ) {
         self.feedUUID = feedAPIModel.feedUUID
         self.writer = FeedWriter(feedAPIModel: feedAPIModel)
-        self.title = feedAPIModel.title
+        self.title = feedAPIModel.title.changeEscapeString()
         self.pubDate = feedAPIModel.pubDate
         self.url = feedAPIModel.url
         self.thumbnailURL = feedAPIModel.thumbnailURL
